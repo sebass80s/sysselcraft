@@ -75,6 +75,11 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
       this.load.svg("tree-oak", "/assets/village/tree-oak.svg");
       this.load.svg("child", "/assets/village/child.svg");
       this.load.svg("linus", "/assets/village/linus.svg");
+      this.load.svg("road-dirt", "/assets/village/road-dirt.svg");
+      this.load.svg("fence-segment", "/assets/village/fence-segment.svg");
+      this.load.svg("quest-board", "/assets/village/quest-board.svg");
+      this.load.svg("bench", "/assets/village/bench.svg");
+      this.load.svg("crate", "/assets/village/crate.svg");
     }
     create(){
       this.cameras.main.setBackgroundColor("#82ad68"); this.drawVillage();
@@ -88,8 +93,8 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
     private px(x:number,y:number,w:number,h:number,color:number,depth=2,alpha=1){ return this.add.rectangle(x,y,w,h,color,alpha).setDepth(depth); }
     private drawTree(x:number,y:number){ this.add.image(x,y+32,"tree-oak").setOrigin(.5,1).setDepth(9); }
     private drawHouse(){ this.add.image(150,250,"family-house").setOrigin(.5,1).setDepth(7); }
-    private drawFence(x:number,y:number,count:number){ for(let i=0;i<count;i++){this.px(x+i*20,y,5,27,0x98734d,4);this.px(x+i*20,y-11,7,5,0xb58b5b,5);} this.px(x+(count-1)*10,y-5,count*20,4,0x8a6747,4); }
-    private drawQuestBoard(){ this.px(315,257,8,39,0x70513a,5); this.px(315,235,54,34,0x8a603d,6); this.px(315,235,45,25,0xd2b476,7); this.px(302,230,9,7,0xe9dfb3,8); this.px(322,240,13,8,0xe8d9a8,8); }
+    private drawFence(x:number,y:number,count:number){ this.add.image(x+count*10,y,"fence-segment").setDisplaySize(count*20,48).setDepth(6); }
+    private drawQuestBoard(){ this.add.image(315,267,"quest-board").setOrigin(.5,1).setDepth(8); }
     private createQuestMarker(){ const shadow=this.add.rectangle(3,4,42,42,0x4b3d21,.2); const bubble=this.add.rectangle(0,0,42,42,0xf4cf55).setStrokeStyle(4,0x704f17); const shine=this.add.rectangle(-11,-11,8,5,0xffed98); const label=this.add.text(0,-1,"!",{color:"#493507",fontSize:"25px",fontStyle:"bold"}).setOrigin(.5).setName("label"); this.questMarker=this.add.container(150,72,[shadow,bubble,shine,label]).setDepth(40).setSize(54,54).setInteractive({useHandCursor:true}); this.questMarker.on("pointerdown",(_p:Input.Pointer,_x:number,_y:number,event:Types.Input.EventData)=>{event.stopPropagation();callbacks.onQuestOpen();}); this.tweens.add({targets:this.questMarker,y:65,duration:850,yoyo:true,repeat:-1,ease:"Sine.InOut"}); }
     private triggerApprovalEvent(){ if(this.approvedTriggered)return;this.approvedTriggered=true;const truck=this.add.container(1030,350).setDepth(25);truck.add([this.add.rectangle(0,0,88,42,0xc95843).setStrokeStyle(4,0x65372e),this.add.rectangle(30,-11,28,20,0xe8c98e).setStrokeStyle(3,0x65372e),this.add.rectangle(-31,25,20,20,0x303030),this.add.rectangle(31,25,20,20,0x303030)]);this.tweens.add({targets:truck,x:785,y:365,duration:1700,ease:"Sine.Out",onComplete:()=>{this.add.rectangle(735,445,54,34,0xb88955).setStrokeStyle(3,0x6e543a).setDepth(12);this.add.rectangle(790,447,44,28,0xc69a64).setStrokeStyle(3,0x6e543a).setDepth(12);this.tweens.add({targets:this.linus,y:"-=10",duration:180,yoyo:true,repeat:3});this.time.delayedCall(900,()=>this.tweens.add({targets:truck,x:1030,y:350,duration:1500,ease:"Sine.In",onComplete:()=>truck.destroy(true)}));}}); }
     private getKeyboardVector(){ const v=new Phaser.Math.Vector2();if(this.cursors?.up.isDown||this.wasd?.up.isDown)v.y--;if(this.cursors?.down.isDown||this.wasd?.down.isDown)v.y++;if(this.cursors?.left.isDown||this.wasd?.left.isDown)v.x--;if(this.cursors?.right.isDown||this.wasd?.right.isDown)v.x++;return v; }
@@ -97,15 +102,15 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
     private drawVillage(){
       const grass=[0x87b66b,0x8cba6e,0x83b168,0x91bd73]; for(let y=0;y<WORLD_HEIGHT;y+=24)for(let x=0;x<WORLD_WIDTH;x+=24)this.px(x+12,y+12,24,24,grass[(x/24*3+y/24*5)%grass.length],0);
       for(let i=0;i<95;i++){const x=(i*137+53)%WORLD_WIDTH,y=(i*83+71)%WORLD_HEIGHT;this.px(x,y,3+(i%2)*2,2, i%4===0?0x6d9858:0x79a45e,1,.75);}
-      const road=this.add.rectangle(490,360,1100,90,0xc4aa78).setAngle(-18).setDepth(1);road.setStrokeStyle(6,0xa98e62,.55);
-      for(let i=0;i<15;i++){this.px(25+i*70,520-i*23,34,5,0xd7c08c,2,.48).setAngle(-18); if(i%2===0)this.px(55+i*70,500-i*23,9,6,0x9b815e,2,.45).setAngle(-18);}
+      this.add.image(490,360,"road-dirt").setScale(1.8,.95).setAngle(-18).setDepth(1);
       this.drawHouse(); this.drawFence(50,270,7); this.drawFence(820,238,6); this.drawQuestBoard();
+      this.add.image(282,298,"bench").setOrigin(.5,1).setDepth(7);
+      this.add.image(34,400,"crate").setOrigin(.5,1).setScale(.8).setDepth(7);
+      this.add.image(925,205,"crate").setOrigin(.5,1).setScale(.65).setDepth(7);
       this.linus=this.add.image(575,285,"linus").setOrigin(.5,.9).setDepth(12);this.add.text(549,236,"Linus",{color:"#263f53",fontSize:"13px",backgroundColor:"#fff4d9e8",padding:{x:5,y:3}}).setDepth(13);
       this.px(675,405,180,105,0x6e955b,3,.12); [[105,115],[155,485],[410,105],[790,120],[875,475]].forEach(([x,y])=>this.drawTree(x,y));
       [[320,530],[350,520],[630,110],[720,535],[535,505],[260,92],[450,560],[742,180],[905,320]].forEach(([x,y],i)=>{this.px(x,y,4,7,0x537b45,2);this.px(x+5,y-4,4,4,i%3===0?0xe3cf68:0xd6e2b0,3);});
       [[365,300],[610,475],[695,260],[245,455],[840,365]].forEach(([x,y],i)=>{this.px(x,y,10+i%2*4,5,0x7d8062,2);this.px(x-2,y-2,6,2,0xa3a07a,3);});
-      this.px(282,296,44,8,0x76573c,4); this.px(268,280,6,36,0x76573c,4); this.px(296,280,6,36,0x76573c,4);
-      this.px(34,385,20,16,0x71634c,3); this.px(40,379,10,5,0x9d8c68,4); this.px(925,190,16,12,0x786c55,3);
       this.add.text(18,18,"Sysselcraft · byn vaknar",{color:"#31412b",fontSize:"14px",backgroundColor:"#fff4d9dd",padding:{x:7,y:5}}).setDepth(30);
     }
   }
