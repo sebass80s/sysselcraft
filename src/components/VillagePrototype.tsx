@@ -28,7 +28,6 @@ export default function VillagePrototype() {
       }
 
       gameRef.current = handle;
-      handle.setQuestState(questState);
     }
 
     boot();

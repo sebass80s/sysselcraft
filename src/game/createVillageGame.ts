@@ -121,7 +121,6 @@ function findPath(startPoint: Point, endPoint: Point): Point[] {
 
 export async function createVillageGame(parent: HTMLElement, callbacks: Callbacks): Promise<VillageGameHandle> {
   const Phaser = await import("phaser");
-  let sceneRef: VillageScene | undefined;
   let requestedQuestState: QuestState = "available";
 
   class VillageScene extends Phaser.Scene {
@@ -134,8 +133,11 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
     private linus?: GameObjects.Arc;
     private approvedTriggered = false;
 
+    constructor() {
+      super("VillageScene");
+    }
+
     create() {
-      sceneRef = this;
       this.cameras.main.setBackgroundColor("#9fc77c");
       this.drawVillage();
       this.player = this.add.circle(430, 405, PLAYER_RADIUS, 0xefc04f).setStrokeStyle(4, 0x6e531d).setDepth(20);
@@ -288,7 +290,9 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
     destroy: () => game.destroy(true),
     setQuestState: (state: QuestState) => {
       requestedQuestState = state;
-      sceneRef?.applyQuestState(state);
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).applyQuestState(state);
+      }
     },
   };
 }
