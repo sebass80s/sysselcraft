@@ -12,7 +12,7 @@ export default function VillagePrototype() {
     async function boot() {
       const { createVillageGame } = await import("../game/createVillageGame");
       if (cancelled || !hostRef.current) return;
-      destroyGame = createVillageGame(hostRef.current);
+      destroyGame = await createVillageGame(hostRef.current);
     }
 
     boot();
