@@ -73,45 +73,64 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
     preload(){
       this.load.svg("family-house", "/assets/village/family-house.svg");
       this.load.svg("tree-oak", "/assets/village/tree-oak.svg");
+      this.load.svg("tree-birch", "/assets/village/tree-birch.svg");
+      this.load.svg("tree-pine", "/assets/village/tree-pine.svg");
       this.load.svg("child", "/assets/village/child.svg");
       this.load.svg("linus", "/assets/village/linus.svg");
       this.load.svg("road-dirt", "/assets/village/road-dirt.svg");
+      this.load.svg("grass-tile", "/assets/village/grass-tile.svg");
       this.load.svg("fence-segment", "/assets/village/fence-segment.svg");
       this.load.svg("quest-board", "/assets/village/quest-board.svg");
       this.load.svg("bench", "/assets/village/bench.svg");
       this.load.svg("crate", "/assets/village/crate.svg");
+      this.load.svg("flower-patch", "/assets/village/flower-patch.svg");
+      this.load.svg("rock-cluster", "/assets/village/rock-cluster.svg");
+      this.load.svg("signpost", "/assets/village/signpost.svg");
+      this.load.svg("lamp-post", "/assets/village/lamp-post.svg");
+      this.load.svg("woodpile", "/assets/village/woodpile.svg");
+      this.load.svg("mailbox", "/assets/village/mailbox.svg");
     }
     create(){
       this.cameras.main.setBackgroundColor("#82ad68"); this.drawVillage();
-      this.player=this.add.image(430,405,"child").setOrigin(.5,.86).setDepth(20);
-      this.targetMarker=this.add.circle(430,405,7,0xfff4c7,.35).setStrokeStyle(2,0x53623e,.7).setVisible(false); this.createQuestMarker(); this.applyQuestState(requestedQuestState);
+      this.player=this.add.image(430,405,"child").setOrigin(.5,.86).setDepth(1405);
+      this.targetMarker=this.add.circle(430,405,7,0xfff4c7,.35).setStrokeStyle(2,0x53623e,.7).setVisible(false).setDepth(900);
+      this.createQuestMarker(); this.applyQuestState(requestedQuestState);
       if(this.input.keyboard){ this.cursors=this.input.keyboard.createCursorKeys(); this.wasd=this.input.keyboard.addKeys({up:"W",down:"S",left:"A",right:"D"}) as Record<"up"|"down"|"left"|"right",Input.Keyboard.Key>; }
       this.input.on("pointerdown",(pointer:Input.Pointer)=>{ if(!this.player)return; this.path=findPath({x:this.player.x,y:this.player.y},{x:pointer.worldX,y:pointer.worldY}); const finalPoint=this.path.at(-1); if(finalPoint)this.targetMarker?.setPosition(finalPoint.x,finalPoint.y).setVisible(true); });
     }
     applyQuestState(state:QuestState){ requestedQuestState=state; if(!this.questMarker)return; const label=this.questMarker.getByName("label") as GameObjects.Text; if(state==="available"){this.questMarker.setVisible(true).setAlpha(1);label.setText("!");} else if(state==="pending"){this.questMarker.setVisible(true).setAlpha(.72);label.setText("…");} else {this.questMarker.setVisible(false);this.triggerApprovalEvent();} }
-    update(_:number,delta:number){ if(!this.player)return; const v=this.getKeyboardVector(); if(v.lengthSq()>0){this.path=[];this.targetMarker?.setVisible(false);v.normalize().scale(190*(delta/1000));this.tryMove(v.x,v.y);return;} const next=this.path[0];if(!next)return;const current={x:this.player.x,y:this.player.y},remaining=distance(current,next);if(remaining<4){this.path.shift();if(!this.path.length)this.targetMarker?.setVisible(false);return;}const speed=Math.min(180*(delta/1000),remaining),angle=Math.atan2(next.y-current.y,next.x-current.x);this.tryMove(Math.cos(angle)*speed,Math.sin(angle)*speed); }
-    private px(x:number,y:number,w:number,h:number,color:number,depth=2,alpha=1){ return this.add.rectangle(x,y,w,h,color,alpha).setDepth(depth); }
-    private drawTree(x:number,y:number){ this.add.image(x,y+32,"tree-oak").setOrigin(.5,1).setDepth(9); }
-    private drawHouse(){ this.add.image(150,250,"family-house").setOrigin(.5,1).setDepth(7); }
-    private drawFence(x:number,y:number,count:number){ this.add.image(x+count*10,y,"fence-segment").setDisplaySize(count*20,48).setDepth(6); }
-    private drawQuestBoard(){ this.add.image(315,267,"quest-board").setOrigin(.5,1).setDepth(8); }
-    private createQuestMarker(){ const shadow=this.add.rectangle(3,4,42,42,0x4b3d21,.2); const bubble=this.add.rectangle(0,0,42,42,0xf4cf55).setStrokeStyle(4,0x704f17); const shine=this.add.rectangle(-11,-11,8,5,0xffed98); const label=this.add.text(0,-1,"!",{color:"#493507",fontSize:"25px",fontStyle:"bold"}).setOrigin(.5).setName("label"); this.questMarker=this.add.container(150,72,[shadow,bubble,shine,label]).setDepth(40).setSize(54,54).setInteractive({useHandCursor:true}); this.questMarker.on("pointerdown",(_p:Input.Pointer,_x:number,_y:number,event:Types.Input.EventData)=>{event.stopPropagation();callbacks.onQuestOpen();}); this.tweens.add({targets:this.questMarker,y:65,duration:850,yoyo:true,repeat:-1,ease:"Sine.InOut"}); }
-    private triggerApprovalEvent(){ if(this.approvedTriggered)return;this.approvedTriggered=true;const truck=this.add.container(1030,350).setDepth(25);truck.add([this.add.rectangle(0,0,88,42,0xc95843).setStrokeStyle(4,0x65372e),this.add.rectangle(30,-11,28,20,0xe8c98e).setStrokeStyle(3,0x65372e),this.add.rectangle(-31,25,20,20,0x303030),this.add.rectangle(31,25,20,20,0x303030)]);this.tweens.add({targets:truck,x:785,y:365,duration:1700,ease:"Sine.Out",onComplete:()=>{this.add.rectangle(735,445,54,34,0xb88955).setStrokeStyle(3,0x6e543a).setDepth(12);this.add.rectangle(790,447,44,28,0xc69a64).setStrokeStyle(3,0x6e543a).setDepth(12);this.tweens.add({targets:this.linus,y:"-=10",duration:180,yoyo:true,repeat:3});this.time.delayedCall(900,()=>this.tweens.add({targets:truck,x:1030,y:350,duration:1500,ease:"Sine.In",onComplete:()=>truck.destroy(true)}));}}); }
+    update(_:number,delta:number){
+      if(!this.player)return; this.player.setDepth(1000+Math.round(this.player.y));
+      const v=this.getKeyboardVector(); if(v.lengthSq()>0){this.path=[];this.targetMarker?.setVisible(false);v.normalize().scale(190*(delta/1000));this.tryMove(v.x,v.y);return;}
+      const next=this.path[0];if(!next)return;const current={x:this.player.x,y:this.player.y},remaining=distance(current,next);if(remaining<4){this.path.shift();if(!this.path.length)this.targetMarker?.setVisible(false);return;}const speed=Math.min(180*(delta/1000),remaining),angle=Math.atan2(next.y-current.y,next.x-current.x);this.tryMove(Math.cos(angle)*speed,Math.sin(angle)*speed);
+    }
+    private worldImage(x:number,y:number,key:string,scale=1,originY=1){ return this.add.image(x,y,key).setOrigin(.5,originY).setScale(scale).setDepth(1000+Math.round(y)); }
+    private drawTree(x:number,y:number,key="tree-oak",scale=1){ this.worldImage(x,y+32,key,scale); }
+    private drawHouse(){ this.add.image(150,250,"family-house").setOrigin(.5,1).setDepth(1250); }
+    private drawFence(x:number,y:number,count:number){ this.add.image(x+count*10,y,"fence-segment").setDisplaySize(count*20,48).setDepth(1000+y); }
+    private drawQuestBoard(){ this.worldImage(315,267,"quest-board"); }
+    private createQuestMarker(){ const shadow=this.add.rectangle(3,4,42,42,0x4b3d21,.2); const bubble=this.add.rectangle(0,0,42,42,0xf4cf55).setStrokeStyle(4,0x704f17); const shine=this.add.rectangle(-11,-11,8,5,0xffed98); const label=this.add.text(0,-1,"!",{color:"#493507",fontSize:"25px",fontStyle:"bold"}).setOrigin(.5).setName("label"); this.questMarker=this.add.container(150,72,[shadow,bubble,shine,label]).setDepth(3000).setSize(54,54).setInteractive({useHandCursor:true}); this.questMarker.on("pointerdown",(_p:Input.Pointer,_x:number,_y:number,event:Types.Input.EventData)=>{event.stopPropagation();callbacks.onQuestOpen();}); this.tweens.add({targets:this.questMarker,y:65,duration:850,yoyo:true,repeat:-1,ease:"Sine.InOut"}); }
+    private triggerApprovalEvent(){ if(this.approvedTriggered)return;this.approvedTriggered=true;const truck=this.add.container(1030,350).setDepth(2400);truck.add([this.add.rectangle(0,0,88,42,0xc95843).setStrokeStyle(4,0x65372e),this.add.rectangle(30,-11,28,20,0xe8c98e).setStrokeStyle(3,0x65372e),this.add.rectangle(-31,25,20,20,0x303030),this.add.rectangle(31,25,20,20,0x303030)]);this.tweens.add({targets:truck,x:785,y:365,duration:1700,ease:"Sine.Out",onComplete:()=>{this.add.rectangle(735,445,54,34,0xb88955).setStrokeStyle(3,0x6e543a).setDepth(1445);this.add.rectangle(790,447,44,28,0xc69a64).setStrokeStyle(3,0x6e543a).setDepth(1447);this.tweens.add({targets:this.linus,y:"-=10",duration:180,yoyo:true,repeat:3});this.time.delayedCall(900,()=>this.tweens.add({targets:truck,x:1030,y:350,duration:1500,ease:"Sine.In",onComplete:()=>truck.destroy(true)}));}}); }
     private getKeyboardVector(){ const v=new Phaser.Math.Vector2();if(this.cursors?.up.isDown||this.wasd?.up.isDown)v.y--;if(this.cursors?.down.isDown||this.wasd?.down.isDown)v.y++;if(this.cursors?.left.isDown||this.wasd?.left.isDown)v.x--;if(this.cursors?.right.isDown||this.wasd?.right.isDown)v.x++;return v; }
     private tryMove(dx:number,dy:number){if(!this.player)return;const nx={x:this.player.x+dx,y:this.player.y};if(isWalkable(nx))this.player.x=nx.x;const ny={x:this.player.x,y:this.player.y+dy};if(isWalkable(ny))this.player.y=ny.y;}
     private drawVillage(){
-      const grass=[0x87b66b,0x8cba6e,0x83b168,0x91bd73]; for(let y=0;y<WORLD_HEIGHT;y+=24)for(let x=0;x<WORLD_WIDTH;x+=24)this.px(x+12,y+12,24,24,grass[(x/24*3+y/24*5)%grass.length],0);
-      for(let i=0;i<95;i++){const x=(i*137+53)%WORLD_WIDTH,y=(i*83+71)%WORLD_HEIGHT;this.px(x,y,3+(i%2)*2,2, i%4===0?0x6d9858:0x79a45e,1,.75);}
-      this.add.image(490,360,"road-dirt").setScale(1.8,.95).setAngle(-18).setDepth(1);
+      this.add.tileSprite(WORLD_WIDTH/2,WORLD_HEIGHT/2,WORLD_WIDTH,WORLD_HEIGHT,"grass-tile").setDepth(0);
+      this.add.image(490,360,"road-dirt").setScale(1.8,.95).setAngle(-18).setDepth(20);
+
       this.drawHouse(); this.drawFence(50,270,7); this.drawFence(820,238,6); this.drawQuestBoard();
-      this.add.image(282,298,"bench").setOrigin(.5,1).setDepth(7);
-      this.add.image(34,400,"crate").setOrigin(.5,1).setScale(.8).setDepth(7);
-      this.add.image(925,205,"crate").setOrigin(.5,1).setScale(.65).setDepth(7);
-      this.linus=this.add.image(575,285,"linus").setOrigin(.5,.9).setDepth(12);this.add.text(549,236,"Linus",{color:"#263f53",fontSize:"13px",backgroundColor:"#fff4d9e8",padding:{x:5,y:3}}).setDepth(13);
-      this.px(675,405,180,105,0x6e955b,3,.12); [[105,115],[155,485],[410,105],[790,120],[875,475]].forEach(([x,y])=>this.drawTree(x,y));
-      [[320,530],[350,520],[630,110],[720,535],[535,505],[260,92],[450,560],[742,180],[905,320]].forEach(([x,y],i)=>{this.px(x,y,4,7,0x537b45,2);this.px(x+5,y-4,4,4,i%3===0?0xe3cf68:0xd6e2b0,3);});
-      [[365,300],[610,475],[695,260],[245,455],[840,365]].forEach(([x,y],i)=>{this.px(x,y,10+i%2*4,5,0x7d8062,2);this.px(x-2,y-2,6,2,0xa3a07a,3);});
-      this.add.text(18,18,"Sysselcraft · byn vaknar",{color:"#31412b",fontSize:"14px",backgroundColor:"#fff4d9dd",padding:{x:7,y:5}}).setDepth(30);
+      this.worldImage(282,298,"bench"); this.worldImage(34,400,"crate",.8); this.worldImage(925,205,"crate",.65);
+      this.worldImage(257,266,"mailbox",.82); this.worldImage(78,261,"woodpile",.72); this.worldImage(660,300,"signpost",.78); this.worldImage(365,337,"lamp-post",.72);
+
+      this.linus=this.add.image(575,285,"linus").setOrigin(.5,.9).setDepth(1285);
+      this.add.text(549,236,"Linus",{color:"#f8edcf",fontSize:"13px",backgroundColor:"#26342bea",padding:{x:5,y:3}}).setDepth(2900);
+
+      this.add.rectangle(675,405,180,105,0x6e955b,.10).setDepth(8);
+      this.drawTree(105,115,"tree-birch",.95); this.drawTree(155,485,"tree-oak",1.05); this.drawTree(410,105,"tree-pine",.9); this.drawTree(790,120,"tree-birch",1); this.drawTree(875,475,"tree-pine",1.05);
+
+      [[310,527,.8],[347,514,.65],[623,112,.75],[718,532,.8],[529,504,.7],[255,91,.65],[445,559,.8],[744,181,.7],[903,320,.75],[208,294,.65],[805,287,.72]].forEach(([x,y,s])=>this.worldImage(x,y,"flower-patch",s));
+      [[365,300,.72],[610,475,.78],[695,260,.65],[245,455,.7],[840,365,.75],[520,126,.62],[90,350,.65]].forEach(([x,y,s])=>this.worldImage(x,y,"rock-cluster",s));
+
+      this.add.text(18,18,"Sysselcraft · byn vaknar",{color:"#f6edcf",fontSize:"14px",backgroundColor:"#26342bea",padding:{x:8,y:6}}).setDepth(3000);
     }
   }
   const game=new Phaser.Game({type:Phaser.AUTO,parent,width:WORLD_WIDTH,height:WORLD_HEIGHT,backgroundColor:"#82ad68",pixelArt:true,antialias:false,roundPixels:true,scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH,width:WORLD_WIDTH,height:WORLD_HEIGHT},scene:VillageScene});
