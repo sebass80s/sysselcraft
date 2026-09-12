@@ -88,15 +88,33 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
       this.px(x-25,y-21,7,7,0x5b9d51,9); this.px(x+17,y-6,6,6,0x2e6337,9);
     }
     private drawHouse(){
-      this.px(154,232,214,16,0x4d593b,3,.18); this.px(150,183,190,89,0xd5ad78,5); this.px(150,219,190,12,0xc09262,6);
+      // Keep every decorative pixel clipped conceptually to the house silhouette. The previous pass scattered roof tiles outside the roof triangle.
+      this.px(154,232,214,16,0x4d593b,3,.18);
+      this.px(150,183,190,89,0xd5ad78,5);
+      this.px(150,219,190,12,0xc09262,6);
       for(let x=68;x<=232;x+=20) this.px(x,177,3,76,0xc79b6b,6,.7);
+
+      // Roof first, then only a few deliberate highlights that stay inside its silhouette.
       this.add.triangle(150,112,55,70,245,70,150,12,0x934b3e).setStrokeStyle(5,0x62372f).setDepth(7);
-      for(let y=78;y<=122;y+=12) for(let x=88+(y%24?8:0);x<=212;x+=25) this.px(x,y,19,4,0xb76550,8);
-      this.px(210,70,24,48,0x6e4c42,6); this.px(210,48,29,7,0x574038,8);
+      this.px(150,83,128,5,0xaa5948,8);
+      this.px(150,101,88,4,0xb4614d,8);
+      this.px(150,118,48,4,0xa95847,8);
+      this.px(113,72,28,4,0xc1745c,8,.75);
+      this.px(187,72,28,4,0xc1745c,8,.75);
+
+      // Chimney sits behind the roof edge instead of floating through the facade.
+      this.px(207,61,22,38,0x6e4c42,6);
+      this.px(207,42,28,7,0x574038,8);
+      this.px(203,53,4,4,0x8d6658,8);
+
+      // Front door and two symmetrical windows.
       this.px(150,192,34,70,0x7d5239,8); this.px(150,192,22,58,0x986344,9); this.px(160,193,4,4,0xe6c26e,10);
       [100,200].forEach((x)=>{this.px(x,166,40,36,0x674b38,8);this.px(x,166,31,27,0x91c5cf,9);this.px(x,166,3,27,0xe5e0c4,10);this.px(x,166,31,3,0xe5e0c4,10);this.px(x+7,158,8,7,0xc7e3e4,10,.7);});
+
+      // Small porch details anchored to the wall/base, no free-floating fragments.
       this.px(150,133,18,8,0xead4a3,8); this.px(150,132,12,3,0x8b6749,9);
       this.px(58,211,32,6,0x6c573f,7); this.px(242,211,32,6,0x6c573f,7);
+      this.px(150,230,48,5,0x9a7651,8);
     }
     private drawFence(x:number,y:number,count:number){ for(let i=0;i<count;i++){this.px(x+i*20,y,5,27,0x98734d,4);this.px(x+i*20,y-11,7,5,0xb58b5b,5);} this.px(x+(count-1)*10,y-5,count*20,4,0x8a6747,4); }
     private drawQuestBoard(){ this.px(315,257,8,39,0x70513a,5); this.px(315,235,54,34,0x8a603d,6); this.px(315,235,45,25,0xd2b476,7); this.px(302,230,9,7,0xe9dfb3,8); this.px(322,240,13,8,0xe8d9a8,8); }
