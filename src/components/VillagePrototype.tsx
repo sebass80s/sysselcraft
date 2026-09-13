@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import type { QuestState, VillageGameHandle } from "../game/createVillageGame";
 import { linusIntroDialogue } from "../game/dialogues";
+import { loadSaveState, saveSaveState } from "../game/saveState";
 
 export default function VillagePrototype() {
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
+  const [saveReady, setSaveReady] = useState(false);
   const [questState, setQuestState] = useState<QuestState>("available");
   const [questOpen, setQuestOpen] = useState(false);
   const [diamonds, setDiamonds] = useState(0);
@@ -21,6 +23,64 @@ export default function VillagePrototype() {
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
 
   useEffect(() => {
+    let cancelled = false;
+
+    async function restore() {
+      const saved = await loadSaveState();
+      if (cancelled) return;
+
+      if (saved) {
+        setQuestState(saved.questStates.makeBed);
+        setDiamonds(saved.diamonds);
+        setSysselBux(saved.sysselBux);
+        setIntroComplete(saved.introComplete);
+        setDialogueOpen(saved.dialogueOpen);
+        setDialogueIndex(saved.dialogueIndex);
+        setDogName(saved.dogName);
+        setDogVisible(saved.dogVisible);
+      }
+
+      setSaveReady(true);
+    }
+
+    restore();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!saveReady) return;
+
+    void saveSaveState({
+      version: 1,
+      questStates: { makeBed: questState },
+      diamonds,
+      sysselBux,
+      introComplete,
+      dialogueOpen,
+      dialogueIndex,
+      dogName,
+      dogVisible,
+      worldFlags: {
+        firstDeliveryComplete: questState === "approved",
+      },
+    });
+  }, [
+    saveReady,
+    questState,
+    diamonds,
+    sysselBux,
+    introComplete,
+    dialogueOpen,
+    dialogueIndex,
+    dogName,
+    dogVisible,
+  ]);
+
+  useEffect(() => {
+    if (!saveReady) return;
+
     let cancelled = false;
 
     async function boot() {
@@ -41,6 +101,9 @@ export default function VillagePrototype() {
       }
 
       gameRef.current = handle;
+      handle.setDogVisible(dogVisible);
+      handle.setIntroComplete(introComplete);
+      handle.setQuestState(questState);
     }
 
     boot();
@@ -50,7 +113,7 @@ export default function VillagePrototype() {
       gameRef.current?.destroy();
       gameRef.current = null;
     };
-  }, []);
+  }, [saveReady]);
 
   useEffect(() => {
     gameRef.current?.setQuestState(questState);
