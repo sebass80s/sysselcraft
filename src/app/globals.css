@@ -65,7 +65,7 @@ main { min-height: 100dvh; }
 .debug-reset-button:disabled { opacity: .3; cursor: default; }
 
 /* Dedicated React parent surface. Kept outside Phaser on purpose. */
-.parent-page { min-height:100dvh; overflow:auto; padding:clamp(1rem,4vw,3rem); background:linear-gradient(#e8eedb,#d8e2c8); }
+.parent-page { height:100dvh; min-height:100dvh; overflow-x:hidden; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior-y:contain; padding:clamp(1rem,4vw,3rem); padding-bottom:max(clamp(1rem,4vw,3rem),env(safe-area-inset-bottom)); background:linear-gradient(#e8eedb,#d8e2c8); }
 .parent-dashboard,.parent-login { width:min(860px,100%); margin:0 auto; }
 .parent-dashboard>header { display:flex; justify-content:space-between; gap:1rem; align-items:flex-start; margin-bottom:1rem; }
 .parent-dashboard h1,.parent-login h1 { margin:.2rem 0; font-size:clamp(1.8rem,5vw,2.7rem); color:#31442d; }
