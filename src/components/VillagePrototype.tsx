@@ -11,6 +11,10 @@ import {
   type QuestId,
 } from "../game/quests";
 import { clearSaveState, loadSaveState, saveSaveState } from "../game/saveState";
+import {
+  deriveRecyclingCenterStage,
+  getRecyclingCenterStatus,
+} from "../game/worldProgression";
 
 export default function VillagePrototype() {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -39,6 +43,8 @@ export default function VillagePrototype() {
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
   const pendingCount = questState === "pending" ? 1 : 0;
+  const recyclingCenterStage = deriveRecyclingCenterStage(progression);
+  const recyclingCenterStatus = getRecyclingCenterStatus(recyclingCenterStage);
 
   useEffect(() => {
     let cancelled = false;
@@ -91,7 +97,8 @@ export default function VillagePrototype() {
       dogName,
       dogVisible,
       worldFlags: {
-        firstDeliveryComplete: questState === "approved",
+        firstDeliveryComplete: recyclingCenterStage >= 1,
+        recyclingCenterStage,
       },
     });
   }, [
@@ -108,6 +115,7 @@ export default function VillagePrototype() {
     childName,
     dogName,
     dogVisible,
+    recyclingCenterStage,
   ]);
 
   useEffect(() => {
@@ -376,6 +384,12 @@ export default function VillagePrototype() {
                 <span>Barn</span>
                 <strong>{childName || "Inte namngivet ännu"}</strong>
                 {dogName && <small>Kompis: 🐶 {dogName}</small>}
+              </div>
+
+              <div className="parent-profile-card">
+                <span>Byutveckling</span>
+                <strong>🏗️ {recyclingCenterStatus.title}</strong>
+                <small>{recyclingCenterStatus.status}</small>
               </div>
 
               <div className="parent-section-heading">

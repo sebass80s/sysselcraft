@@ -9,6 +9,10 @@ import {
   type ProgressionState,
   type QuestId,
 } from "./quests";
+import {
+  normalizeRecyclingCenterStage,
+  type RecyclingCenterStage,
+} from "./worldProgression";
 
 const SAVE_KEY = "sysselcraft.save.v1";
 const CHILD_NAME_STEP = linusIntroDialogue.findIndex((step) => step.kind === "name-child");
@@ -41,6 +45,7 @@ export type SaveStateV1 = {
   dogVisible: boolean;
   worldFlags: {
     firstDeliveryComplete: boolean;
+    recyclingCenterStage: RecyclingCenterStage;
   };
 };
 
@@ -58,7 +63,10 @@ export function createDefaultSaveState(): SaveStateV1 {
     childName: "",
     dogName: "",
     dogVisible: false,
-    worldFlags: { firstDeliveryComplete: false },
+    worldFlags: {
+      firstDeliveryComplete: false,
+      recyclingCenterStage: 0,
+    },
   };
 }
 
@@ -113,6 +121,11 @@ function normalizeSaveState(value: unknown): SaveStateV1 | null {
   }
   progression ??= createEmptyProgression();
 
+  const recyclingCenterStage = normalizeRecyclingCenterStage(
+    candidate.worldFlags?.recyclingCenterStage,
+    progression,
+  );
+
   let dialogueIndex =
     typeof candidate.dialogueIndex === "number" && Number.isInteger(candidate.dialogueIndex)
       ? Math.min(LAST_DIALOGUE_STEP, Math.max(0, candidate.dialogueIndex))
@@ -156,7 +169,8 @@ function normalizeSaveState(value: unknown): SaveStateV1 | null {
     dogName,
     dogVisible,
     worldFlags: {
-      firstDeliveryComplete: makeBed === "approved",
+      firstDeliveryComplete: recyclingCenterStage >= 1,
+      recyclingCenterStage,
     },
   };
 }
