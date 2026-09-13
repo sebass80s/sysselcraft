@@ -39,13 +39,18 @@ export const OPENING_AMBIENT_OBJECTS: AmbientWorldObject[] = [
   // Existing practical clutter near storage rather than introducing a new destination.
   { x: 12, y: 365, texture: "old-barrel", scale: 0.72, baseY: 373 },
 
-  // Construction-site hint, kept outside the known collision rectangle at x=675/y=405.
-  { x: 790, y: 382, texture: "wheelbarrow", scale: 0.78, baseY: 392 },
-
   // Quiet environmental traces at the edges.
   { x: -278, y: 468, texture: "tree-stump", scale: 0.82, baseY: 475 },
   { x: 1238, y: 252, texture: "tree-stump", scale: 0.74, baseY: 260 },
 
   // Ground decal kept off the main road and interaction corridor.
   { x: 1045, y: 430, texture: "puddle", scale: 0.86, originY: 0.5, baseY: 28 },
+];
+
+/**
+ * Props that should materialize together with the first delivery rather than telegraphing
+ * construction before the child has earned the first visible world consequence.
+ */
+export const FIRST_DELIVERY_AMBIENT_OBJECTS: AmbientWorldObject[] = [
+  { x: 790, y: 382, texture: "wheelbarrow", scale: 0.78, baseY: 392 },
 ];
