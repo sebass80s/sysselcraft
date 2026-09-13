@@ -1,7 +1,11 @@
 import { Preferences } from "@capacitor/preferences";
 import type { QuestState } from "./createVillageGame";
+import { linusIntroDialogue } from "./dialogues";
 
 const SAVE_KEY = "sysselcraft.save.v1";
+const CHILD_NAME_STEP = linusIntroDialogue.findIndex((step) => step.kind === "name-child");
+const DOG_REVEAL_STEP = linusIntroDialogue.findIndex((step) => step.kind === "reveal-dog");
+const LAST_DIALOGUE_STEP = Math.max(0, linusIntroDialogue.length - 1);
 
 export type SaveStateV1 = {
   version: 1;
@@ -41,48 +45,72 @@ function isQuestState(value: unknown): value is QuestState {
   return value === "available" || value === "pending" || value === "approved";
 }
 
+function normalizeName(value: unknown) {
+  return typeof value === "string" ? value.trim().slice(0, 18) : "";
+}
+
+function normalizeNonNegativeNumber(value: unknown, fallback: number) {
+  return typeof value === "number" && Number.isFinite(value) ? Math.max(0, value) : fallback;
+}
+
 function normalizeSaveState(value: unknown): SaveStateV1 | null {
   if (!value || typeof value !== "object") return null;
   const candidate = value as Partial<SaveStateV1>;
   if (candidate.version !== 1) return null;
 
   const defaults = createDefaultSaveState();
-  const makeBed = candidate.questStates?.makeBed;
+  const rawMakeBed = candidate.questStates?.makeBed;
+  const makeBed = isQuestState(rawMakeBed) ? rawMakeBed : defaults.questStates.makeBed;
+  const childName = normalizeName(candidate.childName);
+  const dogName = normalizeName(candidate.dogName);
+
+  let dialogueIndex =
+    typeof candidate.dialogueIndex === "number" && Number.isInteger(candidate.dialogueIndex)
+      ? Math.min(LAST_DIALOGUE_STEP, Math.max(0, candidate.dialogueIndex))
+      : defaults.dialogueIndex;
+
+  // A save cannot legitimately have passed the child-name prompt without a child name.
+  if (!childName && CHILD_NAME_STEP >= 0 && dialogueIndex > CHILD_NAME_STEP) {
+    dialogueIndex = CHILD_NAME_STEP;
+  }
+
+  // Once a quest has been submitted, the intro necessarily finished first.
+  const questHasStarted = makeBed === "pending" || makeBed === "approved";
+  const introComplete = questHasStarted
+    ? true
+    : typeof candidate.introComplete === "boolean"
+      ? candidate.introComplete
+      : defaults.introComplete;
+
+  // Finished intro/active quest and an open intro dialogue are mutually exclusive.
+  const dialogueOpen = introComplete
+    ? false
+    : typeof candidate.dialogueOpen === "boolean"
+      ? candidate.dialogueOpen
+      : defaults.dialogueOpen;
+
+  const reachedDogReveal = DOG_REVEAL_STEP >= 0 && dialogueIndex > DOG_REVEAL_STEP;
+  const dogVisible =
+    introComplete ||
+    Boolean(dogName) ||
+    reachedDogReveal ||
+    (typeof candidate.dogVisible === "boolean" ? candidate.dogVisible : defaults.dogVisible);
 
   return {
     version: 1,
-    questStates: {
-      makeBed: isQuestState(makeBed) ? makeBed : defaults.questStates.makeBed,
-    },
-    diamonds:
-      typeof candidate.diamonds === "number" && Number.isFinite(candidate.diamonds)
-        ? Math.max(0, candidate.diamonds)
-        : defaults.diamonds,
-    sysselBux:
-      typeof candidate.sysselBux === "number" && Number.isFinite(candidate.sysselBux)
-        ? Math.max(0, candidate.sysselBux)
-        : defaults.sysselBux,
-    introComplete:
-      typeof candidate.introComplete === "boolean"
-        ? candidate.introComplete
-        : defaults.introComplete,
-    dialogueOpen:
-      typeof candidate.dialogueOpen === "boolean"
-        ? candidate.dialogueOpen
-        : defaults.dialogueOpen,
-    dialogueIndex:
-      typeof candidate.dialogueIndex === "number" && Number.isInteger(candidate.dialogueIndex)
-        ? Math.max(0, candidate.dialogueIndex)
-        : defaults.dialogueIndex,
-    childName: typeof candidate.childName === "string" ? candidate.childName.slice(0, 18) : "",
-    dogName: typeof candidate.dogName === "string" ? candidate.dogName.slice(0, 18) : "",
-    dogVisible:
-      typeof candidate.dogVisible === "boolean" ? candidate.dogVisible : defaults.dogVisible,
+    questStates: { makeBed },
+    diamonds: normalizeNonNegativeNumber(candidate.diamonds, defaults.diamonds),
+    sysselBux: normalizeNonNegativeNumber(candidate.sysselBux, defaults.sysselBux),
+    introComplete,
+    dialogueOpen,
+    dialogueIndex,
+    childName,
+    dogName,
+    dogVisible,
     worldFlags: {
-      firstDeliveryComplete:
-        typeof candidate.worldFlags?.firstDeliveryComplete === "boolean"
-          ? candidate.worldFlags.firstDeliveryComplete
-          : makeBed === "approved",
+      // The first delivery is the visible consequence of approving this quest.
+      // Derive it from the authoritative quest state so stale flags cannot replay or erase it.
+      firstDeliveryComplete: makeBed === "approved",
     },
   };
 }
