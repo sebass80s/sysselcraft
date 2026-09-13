@@ -1,6 +1,6 @@
 # Sysselcraft Technical Handoff
 
-> This handoff contains older implementation history below. **The mobile/native architecture decision in this section supersedes browser-only assumptions elsewhere in the document.**
+> This handoff contains older implementation history below. **Current-state sections and the Nova handoff manifest supersede stale historical assumptions.**
 
 ## 2026-09-13 architecture decision: native app direction
 
@@ -17,7 +17,7 @@ Target architecture:
 - **React** = app shell and non-world UI
 - **Phaser** = village/game rendering, movement and moment-to-moment world interaction
 - **Capacitor** = thin native iOS/Android container and bridge to native device capabilities
-- **Supabase** = planned future persistence/backend for accounts, households, child profiles, quests and progression; still intentionally not connected until the UX loop is proven
+- **Supabase** = connected backend for accounts, households, child profiles, parent-created quests, pairing and server-authoritative rewards
 - **Web/Vercel** = development, preview and fallback surface, not necessarily the primary production play experience
 
 ### Mobile presentation
@@ -40,7 +40,7 @@ This preserves one shared game/client codebase for iOS, Android and web while al
 This separation matters because it:
 
 1. keeps React, Phaser and Capacitor responsibilities clear;
-2. makes Supabase integration safer later;
+2. makes Supabase integration safer;
 3. lets web and native builds share the same domain logic;
 4. leaves open a future renderer/client migration if Sysselcraft eventually outgrows Phaser.
 
@@ -49,38 +49,37 @@ A future move to Godot/Unity should only be reconsidered if the game grows into 
 ### Development/build implications
 
 - Continue normal GitHub-based development.
-- Once Capacitor is introduced, native device testing can use Xcode/iOS tooling and later TestFlight; Android can use the corresponding native tooling.
-- Vercel remains useful for browser previews but **should not be required for every gameplay iteration** once a practical native development loop exists.
-- **The resource to minimize is Vercel deployments, not Git commits.** Small/frequent commits are welcome when they improve traceability, rollback safety or development flow.
+- Capacitor/iOS has already been generated locally and successfully run on a physical iPhone. Do not restart the Capacitor migration or run `npx cap add ios` again.
+- Native device testing uses Xcode/iOS tooling and can later move toward TestFlight; Android can use the corresponding native tooling.
+- Vercel remains useful for browser previews but **should not be required for every gameplay iteration**.
+- **The resource to minimize is Vercel deployments, not Git commits or ordinary GitHub Actions CI.**
+- The repository is public. As of 2026-09-13, the user has explicitly approved autonomous use of normal GitHub-hosted Actions for this public repository. Standard CI/build/test runs are not to be treated as a scarce paid-minute budget and do not require per-run approval.
+- Do not select larger/billed GitHub-hosted runners, paid third-party runners/services, or other explicitly chargeable compute without approval.
+- `[skip ci]` is no longer required for the purpose of saving Actions minutes. Skip CI only when there is a technical reason to do so.
 - **Important observed Vercel behavior:** the current Git integration also creates preview deployments for pushes to non-`main` branches. A remote work branch therefore does *not* by itself reduce total Vercel deployments; it merely changes them from production deployments to preview deployments.
-- To genuinely minimize Vercel usage, distinguish **committing** from **pushing**. Make as many useful local commits as needed, but batch GitHub pushes whenever practical. Push a coherent tested package rather than every intermediate commit.
-- When remote collaboration/backup requires a work-branch push, remember that it may intentionally spend a preview deployment. Do not assume branches are deployment-free.
-- Related work should still reach `main` in deliberate batches, but minimizing `main` pushes alone is insufficient. The real goal is to minimize unnecessary **remote Git pushes that Vercel watches**, while preserving sensible Git history.
-- Do not apologize for or avoid useful commits merely to reduce commit count. Instead, control how often deploy-triggering changes are pushed to GitHub.
-- Introducing Capacitor will add native project/dependency files. Do this deliberately as a dedicated migration step, not piecemeal during unrelated gameplay work.
+- To genuinely minimize Vercel usage, distinguish **committing** from **pushing** where the development environment permits it, and batch coherent deploy-triggering pushes whenever practical.
+- Related work should reach `main` in deliberate batches. The real quota pressure is unnecessary Vercel builds, not CI validation.
 
 ### Current status of this decision
 
-This is an **approved architectural direction**, not yet an implemented Capacitor migration. The current repository is still Next.js + React + Phaser deployed through Vercel. Do not tell the user that a native build exists until the Capacitor project has actually been added and tested on-device.
+This architecture is implemented far enough to have run successfully on a physical iPhone. Supabase backend work is also underway/connected. Verify current repository state and handoff manifest for exact current implementation before changing it.
 
 ---
 
 ## Historical implementation handoff
 
-The repository already contains the playable village prototype, pathfinding, quest approval loop, reusable visual assets, data-driven Linus intro and puppy companion work developed during the web prototype phase. Preserve those systems when introducing Capacitor. Before making implementation claims, verify current `main`, CI and Vercel because older commit/deployment identifiers in historical handoff material may be stale.
+The repository contains the playable village prototype, pathfinding, quest approval loop, reusable visual assets, data-driven Linus intro and puppy companion work developed during the web prototype phase. Preserve those systems. Before making implementation claims, verify current `main`, CI and Vercel because older commit/deployment identifiers in historical handoff material may be stale.
 
 ### Core invariants to preserve
 
 - Next.js/React + Phaser current client.
 - Phaser remains browser-only dynamically imported where required by Next.js SSR.
 - Tap-to-move/pathfinding and desktop WASD/arrow movement.
-- Quest flow: `available -> pending -> approved`, or pending back to available via `Behöver kompletteras`.
+- Quest flow: `available -> pending -> approved`, or pending back to available via return/completion-needed flow.
 - No rewards/progression before adult approval.
-- Current prototype approval reward: 5 diamonds + 10 SysselBux.
-- Supabase remains intentionally disconnected for now.
 - Repository is public: never commit secrets, private family/child data, service keys or private environment files.
 - No `package-lock.json` should be introduced casually; freeze dependencies deliberately.
-- Standard GitHub-hosted Actions are acceptable; avoid billed larger runners.
+- Standard GitHub-hosted Actions are acceptable for this public repository; avoid explicitly billed larger runners.
 - Public game URL during the web phase: `https://sysselcraft.vercel.app`.
 
 ### Interaction invariant
@@ -104,6 +103,6 @@ The family arrives in a nearly abandoned village. Linus is genuinely glad that s
 
 The first-loop proof remains the priority: child does real task → submits → adult approves → reward → truck/material event → visible world change. Do not rush into Henning, Sol or the full building roster before this loop feels magical.
 
-### Next technical step after this documentation checkpoint
+### Current technical priority
 
-Do not spend another substantial pass perfecting iPhone Safari fullscreen/canvas behavior before deciding the migration sequence. The next architectural implementation package should plan and introduce Capacitor cleanly while preserving the existing web build as a preview/fallback. Landscape should be the primary mobile/tablet presentation target.
+Complete and validate the parent → paired child → backend quest → child submit → parent approval → exactly-once server reward loop, while preserving the existing local save until reconciliation has been tested. Use normal GitHub Actions CI freely for build/test validation on the public repository, but continue conserving Vercel deployments.
