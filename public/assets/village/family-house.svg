@@ -1,19 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="260" height="206" viewBox="0 0 260 206" shape-rendering="crispEdges">
 <rect width="260" height="206" fill="none"/>
-<rect x="24" y="180" width="212" height="12" fill="#405238" opacity=".24"/>
-<rect x="39" y="93" width="177" height="86" fill="#a9473f"/><rect x="48" y="100" width="159" height="72" fill="#c45a4d"/>
-<rect x="39" y="162" width="177" height="17" fill="#7b6855"/><rect x="48" y="164" width="159" height="8" fill="#9a8469"/>
-<g fill="#8f3a35"><rect x="61" y="101" width="4" height="61"/><rect x="98" y="101" width="4" height="61"/><rect x="151" y="101" width="4" height="61"/><rect x="188" y="101" width="4" height="61"/></g>
-<path d="M21 97h220L188 47 130 16 72 47z" fill="#65322d"/><path d="M33 89h194L182 51 130 24 78 51z" fill="#984837"/>
-<g fill="#be6850"><rect x="56" y="58" width="29" height="5"/><rect x="91" y="47" width="26" height="5"/><rect x="127" y="42" width="28" height="5"/><rect x="160" y="50" width="26" height="5"/><rect x="44" y="74" width="30" height="5"/><rect x="81" y="70" width="31" height="5"/><rect x="119" y="67" width="31" height="5"/><rect x="157" y="71" width="31" height="5"/><rect x="195" y="77" width="17" height="5"/></g>
-<rect x="170" y="24" width="23" height="49" fill="#705046"/><rect x="167" y="20" width="29" height="7" fill="#50413b"/><rect x="176" y="34" width="6" height="7" fill="#8f6758"/>
+<!-- soft pixel shadow -->
+<rect x="20" y="181" width="220" height="10" fill="#405238" opacity=".20"/><rect x="34" y="191" width="192" height="4" fill="#31452f" opacity=".13"/>
+<!-- timber wall, deliberately a little weathered -->
+<rect x="39" y="93" width="177" height="86" fill="#963f39"/><rect x="48" y="100" width="159" height="72" fill="#c45a4d"/>
+<g fill="#b44c43"><rect x="51" y="105" width="48" height="4"/><rect x="105" y="105" width="42" height="4"/><rect x="153" y="105" width="49" height="4"/><rect x="51" y="153" width="48" height="3"/><rect x="153" y="153" width="49" height="3"/></g>
+<g fill="#d16a58" opacity=".9"><rect x="53" y="111" width="24" height="3"/><rect x="176" y="109" width="25" height="3"/><rect x="52" y="158" width="31" height="3"/><rect x="173" y="159" width="28" height="3"/></g>
+<rect x="39" y="162" width="177" height="17" fill="#705e4e"/><rect x="48" y="164" width="159" height="8" fill="#9a8469"/><rect x="52" y="172" width="151" height="3" fill="#5e5044"/>
+<g fill="#843630"><rect x="61" y="101" width="4" height="61"/><rect x="98" y="101" width="4" height="61"/><rect x="151" y="101" width="4" height="61"/><rect x="188" y="101" width="4" height="61"/></g>
+<!-- roof with broken-up tile texture -->
+<path d="M21 97h220L188 47 130 16 72 47z" fill="#5d302c"/><path d="M33 89h194L182 51 130 24 78 51z" fill="#984837"/>
+<g fill="#b85e48"><rect x="56" y="58" width="29" height="5"/><rect x="91" y="47" width="26" height="5"/><rect x="127" y="42" width="28" height="5"/><rect x="160" y="50" width="26" height="5"/><rect x="44" y="74" width="30" height="5"/><rect x="81" y="70" width="31" height="5"/><rect x="119" y="67" width="31" height="5"/><rect x="157" y="71" width="31" height="5"/><rect x="195" y="77" width="17" height="5"/></g>
+<g fill="#71352f" opacity=".9"><rect x="70" y="52" width="14" height="4"/><rect x="105" y="61" width="18" height="4"/><rect x="146" y="55" width="16" height="4"/><rect x="174" y="80" width="19" height="4"/><rect x="51" y="82" width="16" height="4"/></g>
+<g fill="#d17a5d"><rect x="84" y="55" width="10" height="3"/><rect x="135" y="31" width="12" height="3"/><rect x="191" y="67" width="11" height="3"/></g>
+<!-- chimney -->
+<rect x="170" y="24" width="23" height="49" fill="#705046"/><rect x="167" y="20" width="29" height="7" fill="#50413b"/><rect x="176" y="34" width="6" height="7" fill="#8f6758"/><rect x="185" y="43" width="5" height="12" fill="#4e3b36" opacity=".55"/>
+<!-- pale trim -->
 <rect x="34" y="89" width="196" height="6" fill="#e8dfc7"/><rect x="126" y="33" width="8" height="59" fill="#e8dfc7"/>
-<rect x="108" y="115" width="40" height="57" fill="#305747"/><rect x="113" y="120" width="30" height="48" fill="#3f6b58"/><rect x="138" y="143" width="4" height="4" fill="#edce72"/>
-<g><rect x="60" y="116" width="31" height="31" fill="#ece4cc"/><rect x="65" y="121" width="21" height="21" fill="#8cc4cf"/><rect x="74" y="121" width="3" height="21" fill="#fff0c8"/><rect x="65" y="130" width="21" height="3" fill="#fff0c8"/><rect x="166" y="116" width="31" height="31" fill="#ece4cc"/><rect x="171" y="121" width="21" height="21" fill="#8cc4cf"/><rect x="180" y="121" width="3" height="21" fill="#fff0c8"/><rect x="171" y="130" width="21" height="3" fill="#fff0c8"/></g>
-<rect x="117" y="68" width="26" height="20" fill="#e8dfc7"/><rect x="122" y="73" width="16" height="10" fill="#8fc5cf"/>
-<rect x="99" y="171" width="58" height="7" fill="#78624f"/><rect x="104" y="178" width="48" height="6" fill="#a08566"/>
+<rect x="108" y="115" width="40" height="57" fill="#294d40"/><rect x="113" y="120" width="30" height="48" fill="#3f6b58"/><rect x="116" y="124" width="24" height="5" fill="#527c67"/><rect x="138" y="143" width="4" height="4" fill="#edce72"/>
+<!-- windows with curtains/reflection -->
+<g><rect x="60" y="116" width="31" height="31" fill="#ece4cc"/><rect x="65" y="121" width="21" height="21" fill="#78b3c1"/><rect x="65" y="121" width="21" height="5" fill="#a8d5d6"/><rect x="74" y="121" width="3" height="21" fill="#fff0c8"/><rect x="65" y="130" width="21" height="3" fill="#fff0c8"/><rect x="67" y="134" width="5" height="6" fill="#d7b86e"/><rect x="166" y="116" width="31" height="31" fill="#ece4cc"/><rect x="171" y="121" width="21" height="21" fill="#78b3c1"/><rect x="171" y="121" width="21" height="5" fill="#a8d5d6"/><rect x="180" y="121" width="3" height="21" fill="#fff0c8"/><rect x="171" y="130" width="21" height="3" fill="#fff0c8"/><rect x="186" y="134" width="4" height="6" fill="#d7b86e"/></g>
+<rect x="117" y="68" width="26" height="20" fill="#e8dfc7"/><rect x="122" y="73" width="16" height="10" fill="#8fc5cf"/><rect x="123" y="74" width="14" height="3" fill="#b8dde0"/>
+<!-- porch -->
+<rect x="99" y="171" width="58" height="7" fill="#78624f"/><rect x="104" y="178" width="48" height="6" fill="#a08566"/><rect x="108" y="184" width="40" height="4" fill="#655545"/>
 <rect x="89" y="147" width="11" height="27" fill="#5c4638"/><rect x="87" y="143" width="15" height="5" fill="#7a5d47"/><rect x="155" y="148" width="11" height="26" fill="#5c4638"/><rect x="153" y="144" width="15" height="5" fill="#7a5d47"/>
-<rect x="83" y="142" width="88" height="6" fill="#71513f"/><rect x="87" y="137" width="80" height="5" fill="#8a6650"/>
-<rect x="91" y="148" width="7" height="24" fill="#e1dcc9"/><rect x="157" y="149" width="7" height="23" fill="#e1dcc9"/>
+<rect x="83" y="142" width="88" height="6" fill="#71513f"/><rect x="87" y="137" width="80" height="5" fill="#8a6650"/><rect x="91" y="148" width="7" height="24" fill="#e1dcc9"/><rect x="157" y="149" width="7" height="23" fill="#e1dcc9"/>
+<!-- little lived-in details -->
 <g fill="#4e8047"><rect x="46" y="156" width="15" height="10"/><rect x="198" y="155" width="14" height="10"/></g><g fill="#f0d36c"><rect x="51" y="152" width="5" height="5"/><rect x="202" y="151" width="5" height="5"/></g>
+<g fill="#6f9b55"><rect x="43" y="166" width="5" height="8"/><rect x="211" y="164" width="5" height="10"/></g>
+<rect x="70" y="174" width="17" height="4" fill="#5b4434"/><rect x="73" y="170" width="11" height="4" fill="#876548"/>
 </svg>
