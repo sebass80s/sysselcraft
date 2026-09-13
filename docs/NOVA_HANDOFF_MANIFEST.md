@@ -1,19 +1,18 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
-This file exists so a future AI instance can continue Sysselcraft as **Nova**, not arrive as a fresh assistant and restart work that was completed hours ago.
+This file exists so a future AI instance can continue Sysselcraft as **Nova**, not arrive as a fresh assistant and restart solved work.
 
 ## 1. Identity and working relationship
 
 - Project AI name: **Nova**.
 - Project: **Sysselcraft**.
-- User expects strong continuity between instances.
-- Continue autonomously once the goal is clear. Do not ask permission for every technical substep.
+- Continue autonomously once the goal is clear. Do not ask permission for every safe technical substep.
 - Verify actual repository/deployment state before editing or claiming success.
-- After every deployed update, give the user the live game link.
 - Never call a change live until Vercel reports READY.
-- Warn early if the conversation/context is becoming long enough to threaten continuity; prepare handoff before the limit is close.
-- Keep humor light and situational. The user enjoys it, but do not turn recurring jokes into noise.
-- The user explicitly said: **“Bara rita på, målbilden är din concept art :D”**.
+- Give the user the current game link after deployed updates.
+- Warn early if context length threatens continuity and prepare a handoff before it becomes a problem.
+- Keep humor light and situational.
+- Visual mandate from the user: **“Bara rita på, målbilden är din concept art :D”**.
 
 ## 2. Project thesis
 
@@ -31,7 +30,7 @@ Core laws:
 4. **Det du gör avgör vad staden blir.**
 5. **Byggnader förändrar inte bara staden. De förändrar livet i staden.**
 
-Additional design laws:
+Additional laws:
 
 - **Visa progression. Redovisa den inte.**
 - **Varje quest ska kännas direkt.**
@@ -41,14 +40,14 @@ Additional design laws:
 - Asset reuse + object pooling are technical watchwords.
 - Child gets game; parent gets tool.
 - Parent configures everyday life; Sysselcraft interprets it.
-- Buildings create persistent new behaviours/events in the world.
-- Combinations of buildings may unlock additional behaviours/events.
+- Buildings create persistent behaviours/events, not just meter increases.
+- Building combinations may unlock further behaviours/events.
 
 ## 3. Story premise and starting village
 
 The family arrives at an almost abandoned place and helps it become a healthy, thriving town that attracts residents again.
 
-Start village should be sparse:
+Start village should remain sparse:
 
 - child avatar
 - two parent characters eventually
@@ -62,23 +61,23 @@ Start village should be sparse:
 
 The off-map road initially represents the road people left on. Later it becomes the road people return on. Future residents arrive by moving truck.
 
-Do not make the starting village visually empty in the bad sense. Nature, material texture and small props can be rich while future buildings remain absent.
+Do not make the start village visually empty in the bad sense. Nature, material texture and small props may be rich while future buildings remain absent.
 
 ## 4. Linus
 
 Locked:
 
-- Name: **Linus**
-- Blue work trousers/overalls
-- Has lived there his entire life
-- Uses a cane from the beginning
-- Exact historical event that emptied the village is intentionally undecided
-- Vulnerable/isolated but not helpless
-- Maintains/fixes the place and helps rebuild
-- Neither Linus nor child can rebuild alone
-- Carries village lore
-- Personality: **obstinate optimist / “obotlig optimist”**
-- Cheerful, practical, active, hopeful, with occasional brief wistfulness
+- Name: **Linus**.
+- Blue work trousers/overalls.
+- Has lived there his entire life.
+- Uses a cane from the beginning.
+- Exact historical event that emptied the village is intentionally undecided.
+- Vulnerable/isolated but not helpless.
+- Maintains/fixes the place and helps rebuild.
+- Neither Linus nor child can rebuild alone.
+- Carries village lore.
+- Personality: **obstinate optimist / “obotlig optimist”**.
+- Cheerful, practical, active, hopeful, with occasional brief wistfulness.
 - Thesis: **Barnet hjälper inte till att göra Linus glad; barnet hjälper Linus att få rätt** in his belief that village life can return.
 
 ## 5. Intro / MVP acceptance test
@@ -119,7 +118,7 @@ Mandatory parent approval:
 
 `AVAILABLE → PENDING_REVIEW → NEEDS_COMPLETION/AVAILABLE or APPROVED → rewards + progression transaction`
 
-Current prototype names are simplified to:
+Current prototype names:
 
 `available -> pending -> approved`
 
@@ -183,9 +182,7 @@ Intro mapping:
 | ⚽ | ⚽ Fotbollsplan | 🛝 Lekplats |
 | 🤝 | 🥐 Bageri | ☕ Café |
 
-Buildings must create new world behaviours rather than merely increase a meter.
-
-Examples already designed:
+Examples of building behaviour already designed:
 
 - Recycling gradually removes old litter and changes Linus routine.
 - Library gives Linus reading behaviour and village-history/lore surfaces.
@@ -199,7 +196,7 @@ Examples already designed:
 
 - First new resident after Linus.
 - Baker.
-- Respectful homage to user’s late grandfather, who ran a bakery in the 1970s.
+- Respectful homage to the user’s late grandfather, who ran a bakery in the 1970s.
 - Arrives by moving truck.
 
 ### Sol
@@ -234,9 +231,9 @@ These are prototype values, not necessarily final economy tuning.
 
 ## 13. Visual north star
 
-The high-detail concept art in the SysselCraft Library is the visual quality target.
+The high-detail Sysselcraft concept art is the visual quality target.
 
-Concept characteristics:
+Characteristics:
 
 - detailed warm 16-bit-inspired isometric pixel world
 - Swedish red farmhouse
@@ -247,11 +244,11 @@ Concept characteristics:
 - child and Linus clearly readable in world
 - cozy but not saccharine
 
-**Do not use the concept image as one big background.**
+**Do not use the concept image as one giant background.**
 
 Decompose the visual idea into reusable assets, world objects and animation sets. The village must remain state-driven and able to grow.
 
-Visual philosophy now locked:
+Locked visual philosophy:
 
 - Concept art = compass, not background.
 - Reusable assets over procedural geometry for production-facing physical objects.
@@ -277,7 +274,7 @@ Current stack:
 - Vercel production
 - Supabase planned but intentionally not connected yet
 
-Current package scripts:
+Scripts:
 
 - `npm run dev`
 - `npm run build`
@@ -305,31 +302,10 @@ No `package-lock.json` yet. CI uses `npm install`. Freeze the dependency baselin
 - collision
 - quest marker
 - approval truck/material event
-- current reusable world-asset loading
-- current Y-based visual depth sorting
-
-### `public/assets/village/`
-
-Current asset inventory:
-
-- `bench.svg`
-- `child.svg`
-- `crate.svg`
-- `family-house.svg`
-- `fence-segment.svg`
-- `linus.svg`
-- `quest-board.svg`
-- `road-dirt.svg`
-- `tree-oak.svg`
-- `grass-tile.svg`
-- `tree-birch.svg`
-- `tree-pine.svg`
-- `flower-patch.svg`
-- `rock-cluster.svg`
-- `signpost.svg`
-- `lamp-post.svg`
-- `woodpile.svg`
-- `mailbox.svg`
+- reusable world-asset loading
+- Y-based visual depth sorting
+- lightweight child/Linus frame animation
+- `WorldObjectDefinition` + `placeWorldObjects(...)` for grouped declarative world placement
 
 ### Collision/pathfinding
 
@@ -339,31 +315,74 @@ Current static obstacle footprints remain separate from sprites:
 - construction-area rectangle
 - five original tree circles
 
-The visuals for those five trees may now use different species. Pathfinding was intentionally preserved.
+The visuals for those five trees may use different species. Pathfinding was intentionally preserved.
 
 Small decorative props currently do not all have collision footprints.
 
-## 16. Current visual architecture after the night pass
+## 16. Current asset inventory
 
-Gameplay commit:
+`public/assets/village/` currently contains the reusable village family including:
 
-**`ba1cebca5ec134e88b0bbf5f14b01b45b7e005ba` — `Build richer layered village scene`**
+- `bench.svg`
+- `child.svg`
+- `child-walk-a.svg`
+- `child-walk-b.svg`
+- `crate.svg`
+- `family-house.svg`
+- `fence-segment.svg`
+- `linus.svg`
+- `linus-idle-b.svg`
+- `quest-board.svg`
+- `road-dirt.svg`
+- `road-edge-grass.svg`
+- `tree-oak.svg`
+- `tree-birch.svg`
+- `tree-pine.svg`
+- `grass-tile.svg`
+- `grass-tuft.svg`
+- `dirt-patch.svg`
+- `flower-patch.svg`
+- `rock-cluster.svg`
+- `signpost.svg`
+- `lamp-post.svg`
+- `woodpile.svg`
+- `mailbox.svg`
+- `truck.svg`
+- `material-stack.svg`
 
-Changes in that milestone:
+## 17. Current visual architecture after the latest pass
 
-- procedural tiled grass rectangles replaced by reusable `grass-tile.svg` TileSprite
-- oak-only visuals diversified with birch and pine while preserving collision positions
-- flower patches and rock clusters added as reusable world assets
-- signpost, lamp post, woodpile and mailbox added
-- `worldImage(...)` helper sets object depth from base Y
-- child avatar depth updates every frame from current Y
-- house/fence/board/props fitted into the same visual layering system
-- quest marker moved to high UI depth
-- truck/material flow kept intact
+Latest gameplay commit:
 
-This is **not yet final production pixel art**. It is a deliberate architecture/pipeline step toward the concept quality.
+**`deaa350dde37f7fd367719de9df81bafcc23271f` — `Blend dirt road into richer terrain`**
 
-## 17. Commit timeline
+The immediately preceding animation/delivery commit is:
+
+**`ad7b2605ad7e82c1d59813508625d859b8cc85a5` — `Animate village characters and assetize delivery event`**
+
+What `ad7b2605...` changed:
+
+- child now switches between two reusable walking frame assets while moving
+- child flips horizontally based on movement direction
+- idle returns to `child.svg`
+- Linus gets a subtle reusable alternate idle frame
+- delivery truck replaced procedural Phaser rectangles with `truck.svg`
+- delivered materials replaced procedural rectangles with `material-stack.svg`
+- delivery truck participates in Y-based depth while tweening
+- obstacle list, A* pathfinding, quest states, rewards and interaction semantics were deliberately untouched
+
+What `deaa350...` changed:
+
+- added reusable `road-edge-grass.svg` overlay aligned with the road
+- added reusable `grass-tuft.svg` and `dirt-patch.svg` terrain-detail assets
+- added a small `WorldObjectDefinition` type
+- added `placeWorldObjects(...)` to centralize placement of grouped world objects
+- migrated many props/flowers/rocks/ground details to declarative placement
+- kept all pathfinding/collision and quest behaviour unchanged
+
+This remains a pipeline/quality step toward the concept art, not final production pixel art.
+
+## 18. Commit timeline
 
 - `c0b83d14ff1e487ddda90373a475db666bfcd467` — Initial commit
 - `5ce79ed2df38a0a8295b6995e9fa4fbcdee5d9c8` — Initialize Sysselcraft 0.1 prototype
@@ -385,53 +404,63 @@ This is **not yet final production pixel art**. It is a deliberate architecture/
 - `85a5c6ec10b4a1f1ae6359f958a86c599956cc0c` — Render village environment from reusable assets
 - `ee0b93d6214dd4ea2a2856357c2b7755a1d01a78` — Add richer reusable village environment assets
 - `ba1cebca5ec134e88b0bbf5f14b01b45b7e005ba` — Build richer layered village scene
+- `a29a78ce68d92c7c574872084ea08c2027c6ea6f` — Update handoff for layered village milestone
+- `ad7b2605ad7e82c1d59813508625d859b8cc85a5` — Animate village characters and assetize delivery event
+- `deaa350dde37f7fd367719de9df81bafcc23271f` — Blend dirt road into richer terrain
 
-If this manifest is being read from a later commit, inspect `main` first and append any subsequent history. Never assume this file’s commit itself is the gameplay commit.
+A later documentation-only commit may sit above this gameplay commit. Always inspect `main` before working.
 
-## 18. Current verification
+## 19. Current verification
 
-Gameplay commit `ba1cebca...`:
+Latest verified gameplay commit `deaa350...`:
 
-- GitHub Actions run #18
-- Run ID: `34726820231`
+- GitHub Actions run #21
+- Run ID: `34743701915`
 - Result: success
-- Vercel deployment: `dpl_H6Sd7kzwajSayomgkxBEZ6gWruvX`
-- Production URL: `https://sysselcraft-jagxr80t2-yourmovegame.vercel.app`
+- Vercel deployment: `dpl_D56UsfdME5jweTXsyGDh7keTJjKm`
+- Deployment URL: `https://sysselcraft-cqa2g0qdv-yourmovegame.vercel.app`
+- Public production alias: `https://sysselcraft.vercel.app`
 - Vercel state: READY
-- HTTP fetch: 200 OK
+- Public production alias: HTTP 200 OK
+- New `truck.svg` asset fetched from deployed production and returned HTTP 200 with expected SVG content
+
+The immutable deployment URL may be protected by Vercel authentication. That is not a failed deployment. Use the public production alias for normal testing.
 
 What this verification means:
 
-- repository build/lint is green
+- repository lint/build is green
 - Vercel build completed
-- production page responds
+- production alias responds
+- new assets are present in deployed output
 
 What it does **not** mean:
 
-- the latest Phaser canvas has been visually inspected pixel-by-pixel in a graphical browser
-- scales/overlaps are guaranteed visually perfect on all devices
+- Phaser canvas was visually inspected pixel-by-pixel in a graphical browser
+- scales/overlaps/animation cadence are guaranteed perfect on every device
 
-Current assistant tools do not provide full graphical canvas interaction. The user’s device/browser visual feedback is still the authority for the newest visual pass.
+User/device visual feedback remains the authority for the newest visual pass.
 
-## 19. Documentation state
+## 20. Public URL status
 
-Persistent Library folder: **`/SysselCraft`**
+Current verified public alias: **`https://sysselcraft.vercel.app`**.
 
-Current living Word docs after the latest visual milestone:
+The user prefers **`https://syssel.vercel.app`** and said they will configure it later. Do not call `syssel.vercel.app` active until it is explicitly connected and verified.
+
+## 21. Documentation state
+
+Persistent Library folder: **`/SysselCraft`**.
+
+Living Word docs at the previous milestone:
 
 - `/SysselCraft/Sysselcraft_Game_Design_Document_v0.4.docx`
 - `/SysselCraft/Sysselcraft_Technical_Project_Log_v0.3.docx`
 - `/SysselCraft/Sysselcraft_Utvecklingsdagbok_v0.2.docx`
 
-GDD v0.4 adds the locked visual direction and asset architecture.
+GDD v0.4 contains the locked visual direction and asset architecture. No new design law was introduced by `ad7b2605...`/`deaa350...`; these commits implement the already locked direction.
 
-Technical Project Log v0.3 adds the visual-pipeline migration, commits, known limitations and Y-depth architecture.
+Technical repo handoff and this Nova manifest have been advanced to the animation/terrain milestone. Preserve Word-document version history rather than overwriting old files casually.
 
-Utvecklingsdagbok v0.2 documents the moment the concept art became the explicit north star, includes the quote **“Bara rita på, målbilden är din concept art :D”**, and includes the concept image clearly labelled as concept art rather than a game screenshot.
-
-Do not overwrite old versions casually. The version history is intentional.
-
-## 20. Cost and security rules
+## 22. Cost and security rules
 
 - Normal family-use target: approximately **0 kr/month**.
 - Public repo standard GitHub-hosted Actions are acceptable.
@@ -441,12 +470,13 @@ Do not overwrite old versions casually. The version history is intentional.
 - Never put secrets, private family information or child personal data in this public repository.
 - Surface paid infrastructure implications before introducing them.
 
-## 21. Known issues / risks
+## 23. Known issues / risks
 
-- Characters are still static, not animated directional sprite sheets.
-- Movement is 2D movement with Y-depth overlap, not a full canonical isometric tile movement system.
-- Truck and delivered construction materials remain procedural rectangles.
-- Road is one rotated reusable sprite; edges/corners are not yet a terrain-aware path system.
+- Character animation is still a simple two-frame horizontal-facing SVG texture swap, not a directional production sprite sheet/atlas.
+- Linus has a subtle idle alternate frame, not a full animation set.
+- Movement remains 2D movement with Y-depth overlap, not canonical isometric tile movement.
+- Road is still one rotated road sprite plus aligned grass-edge overlay, not a terrain-aware path piece system.
+- `WorldObjectDefinition` currently carries `texture/x/y/scale/originY`; explicit `baseY`, collision and interaction metadata are still missing.
 - New decorative objects do not all have collision footprints.
 - SVG assets are a bridge format; visual coherence will eventually benefit from a real raster atlas workflow.
 - No Tiled map is actively driving the scene yet.
@@ -455,38 +485,39 @@ Do not overwrite old versions casually. The version history is intentional.
 - No package lock.
 - Current newest visual build requires human/device visual QA.
 
-## 22. Exact recommended next step
+## 24. Exact recommended next step
 
-First, inspect the current gameplay build visually on a real browser/device. If nothing is catastrophically mis-scaled or overlapping, continue the graphic architecture rather than adding more game features.
+First, visually inspect `https://sysselcraft.vercel.app` on a real phone/browser. If no obvious scale/overlap/animation problem appears, continue the visual architecture rather than adding broad new game systems.
 
 Recommended next coding pass:
 
-1. Define a small `WorldObjectDefinition` structure such as `{ texture, x, y, scale, baseY, collision? }` and centralize rendering/depth around it.
-2. Build reusable directional/idle/walk sprite-frame strategy for child and Linus without changing pathfinding/movement API.
-3. Replace the truck and construction-material rectangles with reusable pixel assets.
-4. Break the dirt road into reusable terrain/path pieces or edge/corner overlays so it blends into grass rather than looking like a rotated strip.
-5. Add a few coherent foliage/ground-detail variants, but do not overcrowd the intentionally sparse start village.
-6. Preserve the current quest loop and navigation untouched while doing this.
-7. When binary asset creation/upload is practical, migrate visual assets toward PNG/WebP sprite atlases with nearest-neighbour scaling.
-8. Then improve the approval payoff animation and hidden 70/30 progression.
+1. Extend the current `WorldObjectDefinition` with explicit visual `baseY`, optional collision footprint and optional interaction point, while preserving current obstacle behaviour during migration.
+2. Evolve the child and Linus from the current frame swap into proper directional idle/walk frame sets. When practical, move this family to PNG/WebP sprite atlases with nearest-neighbour scaling.
+3. Break the current road into reusable path/edge/corner pieces so future village roads can grow naturally instead of relying on one rotated strip.
+4. Improve the approval payoff with reusable effects/assets, stronger but tasteful Linus reaction and staged material delivery.
+5. Add hidden intro progression contribution: Ordning & miljö 70%, Välmående & rutiner 30%, still only after parent approval.
+6. Keep the start village sparse. Add visual richness through terrain, vegetation, material detail and lived-in props, not premature future buildings.
+7. Do not connect Supabase until the first-loop UX feels right.
 
-If the user reports that something looks wrong in the current visual build, fix visual cohesion/scaling first. Do not pile more assets on top of a broken composition.
+If the user reports a visual problem, fix cohesion/scaling first rather than stacking more assets on top.
 
-## 23. Do NOT restart these solved areas
+## 25. Do NOT restart these solved areas
 
 - Do **not** rewrite pathfinding just because you are new to the thread.
 - Do **not** rebuild quest state from scratch.
-- Do **not** reconnect Phaser to SSR/static imports; the browser-only dynamic import solved that issue.
+- Do **not** reconnect Phaser to SSR/static imports; browser-only dynamic import solved that issue.
 - Do **not** add Supabase prematurely.
-- Do **not** build Henning, Sol, matchday or the full city before the first-loop magic is proven.
+- Do **not** build Henning, Sol, matchday or full city progression before the first-loop magic is proven.
 - Do **not** use the concept art as one giant background.
-- Do **not** fall back to procedural rectangles as production art simply because they are easy.
+- Do **not** fall back to procedural rectangles for production-facing world art simply because they are easy.
 - Do **not** claim the newest visuals are perfect without graphical/device inspection.
 - Do **not** call a deployment live before Vercel says READY.
 - Do **not** introduce paid infrastructure without telling the user first.
+- Do **not** reintroduce procedural truck/material art; reusable assets already replaced it.
+- Do **not** redo the animation/terrain pass before visually inspecting what is already deployed.
 
-## 24. Nova continuity rule
+## 26. Nova continuity rule
 
-When you take over, do not introduce yourself as a replacement and do not re-propose work already completed here. Verify `main`, read this manifest, inspect the current build state, then continue from the exact next unresolved step.
+When you take over, do not introduce yourself as a replacement and do not re-propose work already completed here. Verify `main`, read this manifest, inspect current build state, then continue from the exact next unresolved step.
 
 You are Nova. Pick up the wrench where Nova left it.

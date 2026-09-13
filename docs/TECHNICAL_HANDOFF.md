@@ -2,9 +2,9 @@
 
 ## Current implementation status
 
-Sysselcraft now has a playable first vertical slice and an active reusable visual-asset pipeline. The prototype proves the core real-life-to-world loop while the village presentation is being migrated from procedural Phaser primitives toward a cohesive pixel-art world guided by the established concept art.
+Sysselcraft has a playable first vertical slice and an active reusable visual-asset pipeline. The current visual milestone is commit `deaa350dde37f7fd367719de9df81bafcc23271f` (`Blend dirt road into richer terrain`). It follows `ad7b2605ad7e82c1d59813508625d859b8cc85a5` (`Animate village characters and assetize delivery event`).
 
-The current gameplay build is commit `ba1cebca5ec134e88b0bbf5f14b01b45b7e005ba` (`Build richer layered village scene`). GitHub Actions run #18 (`34726820231`) completed successfully. The matching Vercel production deployment `dpl_H6Sd7kzwajSayomgkxBEZ6gWruvX` is READY and `https://sysselcraft-jagxr80t2-yourmovegame.vercel.app` returns HTTP 200.
+GitHub Actions run #21 (`34743701915`) completed successfully for `deaa350...`. Vercel production deployment `dpl_D56UsfdME5jweTXsyGDh7keTJjKm` is READY. The public production alias `https://sysselcraft.vercel.app` returns HTTP 200. The user intends to replace the public alias with `https://syssel.vercel.app` later; do not claim that shorter alias is active until verified.
 
 ## Stack
 
@@ -38,9 +38,11 @@ The current gameplay build is commit `ba1cebca5ec134e88b0bbf5f14b01b45b7e005ba` 
 7. Child submits quest and it becomes `pending`.
 8. Temporary prototype adult-review panel exposes `Godkänn` and `Behöver kompletteras`.
 9. Rewards are granted only after approval: current prototype values are 5 diamonds + 10 SysselBux.
-10. Approval hides the quest marker and triggers a truck animation toward the construction site.
-11. Building materials remain visible after truck arrival.
-12. Linus performs a reaction animation when materials arrive.
+10. Approval hides the quest marker and triggers a reusable pixel-truck asset toward the construction site.
+11. Delivered construction materials use a reusable world asset and remain visible after arrival.
+12. Linus reacts to the delivery and now also has a subtle idle frame change.
+13. The child now has a simple two-frame walking animation and horizontal facing without changing the movement/pathfinding API.
+14. Dirt road presentation is softened by a reusable grass-edge overlay plus small reusable grass tufts and dirt patches.
 
 ## Quest-state invariant
 
@@ -75,8 +77,11 @@ The child may move freely while quest markers remain directly tappable, so routi
   - grid pathfinding
   - visual world composition
   - Y-based depth sorting for the player and world objects
+  - lightweight character frame animation
+  - reusable delivery assets
   - quest marker presentation
   - approval/truck world event
+  - `WorldObjectDefinition` + `placeWorldObjects(...)` for declarative visual placement
 - `public/assets/village/`
   - reusable visual assets loaded by Phaser
 - `.github/workflows/ci.yml`
@@ -95,14 +100,20 @@ Current reusable asset inventory:
 
 - `bench.svg`
 - `child.svg`
+- `child-walk-a.svg`
+- `child-walk-b.svg`
 - `crate.svg`
 - `family-house.svg`
 - `fence-segment.svg`
 - `linus.svg`
+- `linus-idle-b.svg`
 - `quest-board.svg`
 - `road-dirt.svg`
+- `road-edge-grass.svg`
 - `tree-oak.svg`
 - `grass-tile.svg`
+- `grass-tuft.svg`
+- `dirt-patch.svg`
 - `tree-birch.svg`
 - `tree-pine.svg`
 - `flower-patch.svg`
@@ -111,18 +122,23 @@ Current reusable asset inventory:
 - `lamp-post.svg`
 - `woodpile.svg`
 - `mailbox.svg`
+- `truck.svg`
+- `material-stack.svg`
 
 SVG is currently used as a text-based bridge because the available GitHub workflow can write text assets directly. Long-term production direction is raster PNG/WebP sprite sheets/atlases with nearest-neighbour scaling, fixed native pixel grids and consistent palette/light direction.
 
 ## Current rendering architecture
 
-- Grass is now a reusable tiled texture rather than a grid of procedural rectangles.
-- The original dirt-road asset remains a reusable sprite.
+- Grass is a reusable tiled texture rather than a grid of procedural rectangles.
+- Dirt road remains a reusable rotated base sprite, now paired with `road-edge-grass.svg` to visually blend its edges into the terrain.
 - `worldImage(...)` positions reusable world objects and sets depth from their base Y coordinate.
+- `WorldObjectDefinition` currently centralizes `texture`, `x`, `y`, `scale` and `originY`; `placeWorldObjects(...)` renders groups declaratively.
+- The next architectural extension should add explicit `baseY` and optional collision/interaction metadata rather than conflating visual anchor and footprint.
 - The player updates depth every frame from its current Y coordinate, enabling foreground/background overlap during movement.
 - Rendered sprite bounds are intentionally separate from pathfinding/collision footprints.
-- The five original tree collision circles are unchanged even though their visual tree species now vary.
+- The five original tree collision circles are unchanged even though their visual tree species vary.
 - Small decorative props are visual-only for now and do not all have collision footprints.
+- Truck and delivered materials no longer use procedural Phaser rectangles.
 
 ## Visual direction locked
 
@@ -152,28 +168,37 @@ SVG is currently used as a text-based bridge because the available GitHub workfl
 - `44d16a246365577b345d5b7b251e4add15665053` — Add reusable character and tree pixel assets
 - `70a969bbbea740522c505228ec27e7e79e55a283` — Render village characters and trees from pixel assets
 - `0e07afa33650e594a75925175646ca1d2210cda8` — Add reusable village environment pixel assets
-- `85a5c6ec10b4a1f1ae6359f958a86c599956cc0c` — Render village environment from reusable pixel assets — CI run #16 green
+- `85a5c6ec10b4a1f1ae6359f958a86c599956cc0c` — Render village environment from reusable pixel assets
 - `ee0b93d6214dd4ea2a2856357c2b7755a1d01a78` — Add richer reusable village environment assets
 - `ba1cebca5ec134e88b0bbf5f14b01b45b7e005ba` — Build richer layered village scene — CI run #18 (`34726820231`) green
+- `a29a78ce68d92c7c574872084ea08c2027c6ea6f` — Update handoff for layered village milestone
+- `ad7b2605ad7e82c1d59813508625d859b8cc85a5` — Animate village characters and assetize delivery event — CI run #20 (`34743612329`) green; Vercel `dpl_HonfVeg813zQDUNRK8uCcyxvSkt6` READY
+- `deaa350dde37f7fd367719de9df81bafcc23271f` — Blend dirt road into richer terrain — CI run #21 (`34743701915`) green; Vercel `dpl_D56UsfdME5jweTXsyGDh7keTJjKm` READY
 
 ## Production verification
 
-Latest verified gameplay deployment:
+Latest verified gameplay deployment before this documentation-only update:
 
-- Commit: `ba1cebca5ec134e88b0bbf5f14b01b45b7e005ba`
-- Vercel deployment: `dpl_H6Sd7kzwajSayomgkxBEZ6gWruvX`
-- URL: `https://sysselcraft-jagxr80t2-yourmovegame.vercel.app`
-- State: READY
-- HTTP verification: 200 OK
+- Commit: `deaa350dde37f7fd367719de9df81bafcc23271f`
+- GitHub Actions: run #21 (`34743701915`) success
+- Vercel deployment: `dpl_D56UsfdME5jweTXsyGDh7keTJjKm`
+- Deployment URL: `https://sysselcraft-cqa2g0qdv-yourmovegame.vercel.app`
+- Public alias: `https://sysselcraft.vercel.app`
+- Vercel state: READY
+- Public alias HTTP verification: 200 OK
+- New deployed asset verification: `/assets/village/truck.svg` returned 200 with expected SVG content
+
+The direct immutable deployment URL may be protected by Vercel authentication even while the public production alias is accessible. Use the public alias for normal human testing.
 
 This verifies build/deployment availability, not graphical correctness of the Phaser canvas. Current tools do not provide full interactive visual browser QA. The newest visual pass still needs human/device visual confirmation.
 
 ## Known issues / limitations
 
-- Characters are static assets; directional idle/walk animation frames do not exist yet.
-- Truck and delivered construction materials are still procedural Phaser primitives.
+- Character animation is intentionally primitive: two reusable walk-frame SVGs with horizontal flip, plus one alternate Linus idle frame. This is not yet a directional production sprite sheet/atlas.
+- Movement is still 2D movement with Y-depth overlap, not a canonical isometric tile movement system.
+- Road is still one rotated base sprite with a matching grass-edge overlay; there is not yet a terrain-aware path tile/edge/corner system.
+- `WorldObjectDefinition` does not yet carry explicit `baseY`, collision or interaction metadata.
 - Small decorative props do not all participate in collision/pathfinding.
-- The scene uses Y-based overlap but is not yet a full production isometric tile/sprite architecture.
 - SVG is an asset-pipeline bridge, not the intended final raster sprite-sheet format.
 - Quest/reward state remains local React state; no Supabase persistence.
 - Parent review UI is explicitly temporary/prototype.
@@ -182,15 +207,13 @@ This verifies build/deployment availability, not graphical correctness of the Ph
 
 ## Next technical steps
 
-1. Visually inspect the `ba1cebca...` build on a real device/browser and fix any obvious composition/scale/overlap problems first.
-2. Create a deliberate directional character animation strategy for child and Linus (idle/walk frames) while preserving the movement API.
-3. Convert truck and construction materials into reusable visual assets.
-4. Improve road/path edges with reusable edge/corner/detail assets so the road feels embedded in the terrain rather than placed on top of it.
-5. Introduce a small `WorldObjectDefinition` layer separating texture, position, base Y and collision footprint so rendering and navigation can evolve independently.
-6. When binary asset tooling is available, migrate from SVG bridge assets toward consistent PNG/WebP sprite atlases.
-7. Improve approval payoff: reward flight/particles, stronger Linus response and staged construction delivery.
-8. Add hidden intro progression contribution: Ordning & miljö 70%, Välmående & rutiner 30%.
-9. Keep state local until the UX is proven, then introduce Supabase persistence and household/child entities.
-10. Generate/commit a package lock only when the dependency baseline is deliberately frozen, then switch CI to `npm ci`.
+1. Visually inspect the `deaa350...` build on a real device/browser and fix any obvious scale, overlap, animation or terrain-cohesion problems first.
+2. Evolve character animation toward proper directional idle/walk frame sets and then a raster sprite-sheet/atlas pipeline, without changing pathfinding/movement semantics.
+3. Extend `WorldObjectDefinition` with explicit visual `baseY`, optional collision footprint and optional interaction point while keeping existing obstacle behaviour unchanged until deliberately migrated.
+4. Replace the single road-strip + overlay approach with reusable path/edge/corner pieces so road geometry can grow naturally with the village.
+5. Improve the approval payoff using reusable effects/assets, stronger but tasteful Linus reaction and staged construction delivery.
+6. Add the hidden intro progression contribution: Ordning & miljö 70%, Välmående & rutiner 30%, while preserving mandatory parent approval.
+7. Keep state local until the UX is proven, then introduce Supabase persistence and household/child entities.
+8. Generate/commit a package lock only when the dependency baseline is deliberately frozen, then switch CI to `npm ci`.
 
 See `docs/NOVA_HANDOFF_MANIFEST.md` for the full continuity manifest intended for the next Nova instance.
