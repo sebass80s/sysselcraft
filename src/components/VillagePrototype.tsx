@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { QuestState, VillageGameHandle } from "../game/createVillageGame";
 import { linusIntroDialogue } from "../game/dialogues";
-import { loadSaveState, saveSaveState } from "../game/saveState";
+import { clearSaveState, loadSaveState, saveSaveState } from "../game/saveState";
 
 export default function VillagePrototype() {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -24,6 +24,7 @@ export default function VillagePrototype() {
   const [dogNameDraft, setDogNameDraft] = useState("");
   const [dogName, setDogName] = useState("");
   const [dogVisible, setDogVisible] = useState(false);
+  const [resettingSave, setResettingSave] = useState(false);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
 
@@ -59,7 +60,7 @@ export default function VillagePrototype() {
   }, []);
 
   useEffect(() => {
-    if (!saveReady) return;
+    if (!saveReady || resettingSave) return;
 
     void saveSaveState({
       version: 1,
@@ -78,6 +79,7 @@ export default function VillagePrototype() {
     });
   }, [
     saveReady,
+    resettingSave,
     questState,
     diamonds,
     sysselBux,
@@ -171,19 +173,39 @@ export default function VillagePrototype() {
   }
 
   function submitQuest() {
+    if (questState !== "available") return;
     setQuestState("pending");
     setQuestOpen(false);
   }
 
   function approveQuest() {
+    if (questState !== "pending") return;
     setQuestState("approved");
     setDiamonds((value) => value + 5);
     setSysselBux((value) => value + 10);
   }
 
   function needsCompletion() {
+    if (questState !== "pending") return;
     setQuestState("available");
     setQuestOpen(true);
+  }
+
+  async function resetPrototypeSave() {
+    if (resettingSave) return;
+    const confirmed = window.confirm(
+      "Nollställ Sysselcraft-testet? Barnnamn, hundnamn, quest, resurser och världsläge raderas på den här enheten.",
+    );
+    if (!confirmed) return;
+
+    setResettingSave(true);
+    try {
+      await clearSaveState();
+      window.location.reload();
+    } catch {
+      setResettingSave(false);
+      window.alert("Det gick inte att nollställa sparningen.");
+    }
   }
 
   const speakerName =
@@ -210,6 +232,17 @@ export default function VillagePrototype() {
       <div className="game-wrap">
         <div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" />
         <div className="game-hint">{introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
+
+        <button
+          className="debug-reset-button"
+          type="button"
+          onClick={resetPrototypeSave}
+          disabled={!saveReady || resettingSave}
+          aria-label="Nollställ testsparning"
+          title="Utvecklarverktyg: nollställ testsparning"
+        >
+          ↺ Test
+        </button>
 
         {dialogueOpen && dialogueStep && (
           <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite">
