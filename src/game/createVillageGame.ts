@@ -61,6 +61,18 @@ function clamp(v: number, min: number, max: number) {
   return Math.min(max, Math.max(min, v));
 }
 
+function isTextControlFocused() {
+  const active = document.activeElement;
+  if (!(active instanceof HTMLElement)) return false;
+
+  return (
+    active instanceof HTMLInputElement ||
+    active instanceof HTMLTextAreaElement ||
+    active instanceof HTMLSelectElement ||
+    active.isContentEditable
+  );
+}
+
 function isWalkable(p: Point) {
   if (
     p.x < WORLD_MIN_X + PLAYER_RADIUS ||
@@ -382,6 +394,14 @@ export async function createVillageGame(
       if (!this.player) return;
       this.player.setDepth(1000 + Math.round(this.player.y));
       this.updateDog();
+
+      if (isTextControlFocused()) {
+        this.linusInteractionPending = false;
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+        this.animatePlayer(0, 0, false, delta);
+        return;
+      }
 
       const v = this.getKeyboardVector();
       if (v.lengthSq() > 0) {
