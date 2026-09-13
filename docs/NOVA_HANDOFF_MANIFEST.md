@@ -6,7 +6,7 @@ This file exists so a future AI instance can continue Sysselcraft as **Nova**, n
 
 **Sysselcraft has successfully run as a real native app on the user's physical iPhone via Capacitor/Xcode. Do not restart the native migration.**
 
-The scrolling/adaptive Phaser world, tap-to-move, Linus intro, puppy, quest flow and local save system have all reached physical-device testing. The current work is continuing the first gameplay loop and hardening iOS naming input.
+The scrolling/adaptive Phaser world, tap-to-move, Linus intro, puppy, quest flow and local save system have all reached physical-device testing. The current work includes the Supabase-backed parent/child quest loop and continued visual development.
 
 ### Current local Mac/Xcode state
 
@@ -20,11 +20,12 @@ The scrolling/adaptive Phaser world, tap-to-move, Linus intro, puppy, quest flow
 
 ## Approved architecture direction
 
-Keep React + Phaser with Capacitor as the native iOS/Android shell. Supabase remains intentionally deferred until the UX loop is proven.
+Keep React + Phaser with Capacitor as the native iOS/Android shell. Supabase is now connected as the shared family/quest backend while local Capacitor Preferences remain in place during reconciliation/testing.
 
 - React = app shell / non-world UI
 - Phaser = village rendering and moment-to-moment gameplay
 - Capacitor = native container and capability bridge
+- Supabase = household, child, pairing, parent-created quest and server-authoritative reward backend
 - Vercel/web = development preview/fallback
 
 Mobile/tablet is landscape-first.
@@ -77,7 +78,7 @@ Do not duplicate or casually override canonical story decisions here.
 
 ## 5. Quest/progression invariants
 
-Current prototype state: `available → pending → approved`, or pending → available via `Behöver kompletteras`.
+Quest state: `available → pending → approved`, or pending → available via return/completion-needed flow.
 
 Before approval: no currency, achievement/progression or world/building progression.
 
@@ -85,7 +86,7 @@ Intro hidden progression mapping: **Bädda sängen = Ordning & miljö 70% + Väl
 
 Five progression classes: Ordning & miljö; Kunskap & skapande; Välmående & rutiner; Rörelse & aktivitet; Gemenskap.
 
-Quest definitions are being moved into domain data outside the React/Phaser UI so later quests can reuse the same architecture.
+Quest definitions and lifecycle logic live outside the React/Phaser renderer. Backend-created family quests use the same lifecycle semantics with server-authoritative approval/rewards.
 
 ## 6. PRIVATE DEVELOPMENT DIARY — REQUIRED CONTINUITY RULE
 
@@ -123,17 +124,18 @@ Before a thread becomes too long, proactively make sure the diary is caught up a
 
 ## 7. Repository / deployment cost / security
 
-Repository: `sebass80s/sysselcraft`, default branch `main`, public repo.
+Repository: `sebass80s/sysselcraft`, default branch `main`, **public repo**.
 
-Stack: Next.js 16.3.3 + React 19.2 + TypeScript + Phaser 3.90 + Capacitor 8. Supabase planned but intentionally not connected.
+Stack: Next.js 16.3.3 + React 19.2 + TypeScript + Phaser 3.90 + Capacitor 8 + Supabase.
 
 - Never commit secrets, private family/child data, service keys or private env files.
 - The resource to minimize is Vercel deployments, not useful Git commits.
 - Current Vercel Git integration also creates preview deployments for pushed non-main branches.
 - Therefore a remote work branch is NOT deploy-free.
-- Make useful local commits freely, but batch remote GitHub pushes whenever practical.
-- Minimize unnecessary remote pushes that Vercel watches.
-- GitHub Actions minutes must never be used without the user's explicit permission.
+- Make useful commits freely, but batch remote GitHub pushes whenever practical to conserve Vercel deployment quota.
+- **GitHub Actions policy (updated 2026-09-13): this repository is public, so normal GitHub-hosted Actions for public repositories may be used autonomously. They are no longer treated as a scarce paid-minute budget and do NOT require per-run permission.**
+- Prefer standard GitHub-hosted runners and ordinary CI/build/test workflows. Do not opt into larger/billed runners, paid third-party CI, or other explicitly chargeable compute without user approval.
+- `[skip ci]` is therefore no longer required merely to conserve Actions minutes. Use it only when intentionally skipping CI makes technical sense.
 - Public web game URL: `https://sysselcraft.vercel.app`.
 
 ## 8. Technical systems to preserve
@@ -148,7 +150,8 @@ Stack: Next.js 16.3.3 + React 19.2 + TypeScript + Phaser 3.90 + Capacitor 8. Sup
 - Quest marker and approval event.
 - Truck/material delivery event, including persisted completed-delivery state without replay after restart.
 - Capacitor Preferences local save/restore.
-- Parent approval semantics and idempotent rewards.
+- Supabase family/child/pairing/parent-quest backend boundary.
+- Parent approval semantics and idempotent server rewards.
 
 Current SVG assets are a bridge. Long-term visual direction is coherent raster PNG/WebP sprite atlases with nearest-neighbour scaling, fixed native pixel grid and consistent palette/light direction.
 
@@ -162,7 +165,8 @@ Current SVG assets are a bridge. Long-term visual direction is coherent raster P
 6. Verify Vercel before saying web changes are READY/live.
 7. Prefer coherent batched remote pushes because Vercel watches remote branches.
 8. Preserve pathfinding, quest semantics and locked story/design decisions.
-9. Do not add Supabase prematurely.
-10. Do not turn dialogue into heavy RPG branching, make the child silent, or turn the puppy into a progression machine.
-11. Keep the development diary private and update it automatically at meaningful checkpoints.
-12. Warn early before context length threatens continuity, and ensure both technical handoff and diary are current before switching threads.
+9. Supabase is already connected; do not restart or replace the backend foundation. Preserve local persistence until reconciliation is physically tested.
+10. Normal GitHub Actions CI is allowed without asking because the repo is public; avoid explicitly billed/larger runners without approval.
+11. Do not turn dialogue into heavy RPG branching, make the child silent, or turn the puppy into a progression machine.
+12. Keep the development diary private and update it automatically at meaningful checkpoints.
+13. Warn early before context length threatens continuity, and ensure both technical handoff and diary are current before switching threads.
