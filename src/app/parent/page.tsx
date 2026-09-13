@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import {
   getBackendAuthState,
   sendParentMagicLink,
@@ -40,11 +40,14 @@ export default function ParentModePage() {
   const [draft, setDraft] = useState<ParentQuestDraft>(emptyDraft);
   const [pairingCode, setPairingCode] = useState("");
 
-  async function loadChildQuests(id: string) {
+  const loadChildQuests = useCallback(async (id: string) => {
     setQuests(id ? await listChildQuests(id) : []);
-  }
+  }, []);
 
-  async function refreshFamily(preferredHousehold?: string, preferredChild?: string) {
+  const refreshFamily = useCallback(async (
+    preferredHousehold?: string,
+    preferredChild?: string,
+  ) => {
     const hs = await listHouseholds();
     setHouseholds(hs);
 
@@ -77,7 +80,7 @@ export default function ParentModePage() {
 
     setChildId(nextChildId);
     await loadChildQuests(nextChildId);
-  }
+  }, [childId, householdId, loadChildQuests]);
 
   useEffect(() => {
     let cancelled = false;
@@ -111,7 +114,7 @@ export default function ParentModePage() {
       cancelled = true;
       unsubscribe();
     };
-  }, []);
+  }, [refreshFamily]);
 
   async function magicLink(event: FormEvent) {
     event.preventDefault();
