@@ -6,6 +6,7 @@ import {
   type PairedDeviceReconciliation,
   type PairedDeviceReconciliationInspection,
 } from "@/backend/deviceReconciliation";
+import { decideReconciliation } from "@/backend/reconciliationPolicy";
 import styles from "./ReconciliationDiagnostics.module.css";
 
 function subscribeToLocation() {
@@ -105,6 +106,10 @@ export default function ReconciliationDiagnostics() {
     return `${result.childId.slice(0, 8)}…${result.childId.slice(-4)}`;
   }, [result]);
 
+  const decision = useMemo(() => {
+    return result ? decideReconciliation(result.report) : null;
+  }, [result]);
+
   if (!enabled) return null;
 
   return (
@@ -185,6 +190,18 @@ export default function ReconciliationDiagnostics() {
               </span>
             </div>
           </section>
+
+          {decision && (
+            <section className={styles.section}>
+              <strong>Migrationspolicy</strong>
+              <div>Fas: <code>{decision.phase}</code></div>
+              <div>Automatisk skrivning: <strong>{decision.automaticWriteAllowed ? "tillåten" : "LÅST"}</strong></div>
+              <div>Nästa steg: <code>{decision.nextStep}</code></div>
+              {decision.reasons.map((reason) => (
+                <small key={reason}>• {reason}</small>
+              ))}
+            </section>
+          )}
         </>
       ) : (
         <p className={styles.message}>{message || "Läser paired-device state…"}</p>
