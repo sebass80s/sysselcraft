@@ -16,6 +16,7 @@ export type VillageGameHandle = {
   setQuestState: (state: QuestState) => void;
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
+  setFirstDeliveryComplete: (complete: boolean) => void;
 };
 
 type Callbacks = { onQuestOpen: () => void; onLinusInteract: () => void };
@@ -186,6 +187,7 @@ export async function createVillageGame(
   let requestedQuestState: QuestState = "available";
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
+  let requestedFirstDeliveryComplete = false;
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -203,7 +205,9 @@ export async function createVillageGame(
     private targetMarker?: GameObjects.Arc;
     private questMarker?: GameObjects.Container;
     private linus?: GameObjects.Image;
+    private materialStack?: GameObjects.Image;
     private approvedTriggered = false;
+    private firstDeliveryComplete = false;
     private playerFrameClock = 0;
     private playerFrameIndex = 0;
     private playerFacing: Facing = "south";
@@ -286,6 +290,7 @@ export async function createVillageGame(
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
 
       this.createQuestMarker();
+      this.setFirstDeliveryComplete(requestedFirstDeliveryComplete);
       this.setIntroComplete(requestedIntroComplete);
       this.applyQuestState(requestedQuestState);
 
@@ -337,6 +342,15 @@ export async function createVillageGame(
       this.dog?.setVisible(visible);
     }
 
+    setFirstDeliveryComplete(complete: boolean) {
+      requestedFirstDeliveryComplete = complete;
+      this.firstDeliveryComplete = complete;
+      if (complete) {
+        this.approvedTriggered = true;
+        this.ensureMaterialStack();
+      }
+    }
+
     applyQuestState(state: QuestState) {
       requestedQuestState = state;
       if (!this.questMarker) return;
@@ -353,7 +367,8 @@ export async function createVillageGame(
         label.setText("…");
       } else {
         this.questMarker.setVisible(false);
-        this.triggerApprovalEvent();
+        if (this.firstDeliveryComplete) this.ensureMaterialStack();
+        else this.triggerApprovalEvent();
       }
     }
 
@@ -533,6 +548,11 @@ export async function createVillageGame(
       });
     }
 
+    private ensureMaterialStack() {
+      if (this.materialStack?.active) return;
+      this.materialStack = this.worldImage(760, 458, "material-stack", 1);
+    }
+
     private triggerApprovalEvent() {
       if (this.approvedTriggered) return;
       this.approvedTriggered = true;
@@ -545,7 +565,9 @@ export async function createVillageGame(
         ease: "Sine.Out",
         onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
         onComplete: () => {
-          this.worldImage(760, 458, "material-stack", 1);
+          this.firstDeliveryComplete = true;
+          requestedFirstDeliveryComplete = true;
+          this.ensureMaterialStack();
           this.tweens.add({ targets: this.linus, y: "-=10", duration: 180, yoyo: true, repeat: 3 });
           this.time.delayedCall(900, () =>
             this.tweens.add({
@@ -756,6 +778,12 @@ export async function createVillageGame(
       requestedDogVisible = visible;
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setDogVisible(visible);
+      }
+    },
+    setFirstDeliveryComplete: (complete: boolean) => {
+      requestedFirstDeliveryComplete = complete;
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setFirstDeliveryComplete(complete);
       }
     },
   };
