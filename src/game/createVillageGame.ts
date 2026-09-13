@@ -10,7 +10,8 @@ export type VillageGameHandle = { destroy: () => void; setQuestState: (state: Qu
 type Callbacks = { onQuestOpen: () => void };
 type Point = { x: number; y: number };
 type Obstacle = { type: "rect"; x: number; y: number; width: number; height: number } | { type: "circle"; x: number; y: number; radius: number };
-type WorldObjectDefinition = { x: number; y: number; texture: string; scale?: number; originY?: number };
+type Facing = "north" | "south" | "east" | "west";
+type WorldObjectDefinition = { x: number; y: number; texture: string; scale?: number; originY?: number; baseY?: number };
 
 const obstacles: Obstacle[] = [
   { type: "rect", x: 150, y: 165, width: 190, height: 125 },
@@ -70,8 +71,10 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
     private player?: GameObjects.Image; private path: Point[]=[]; private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up"|"down"|"left"|"right",Input.Keyboard.Key>; private targetMarker?: GameObjects.Arc;
     private questMarker?: GameObjects.Container; private linus?: GameObjects.Image; private approvedTriggered=false;
-    private playerFrameClock=0; private playerFrameIndex=0;
+    private playerFrameClock=0; private playerFrameIndex=0; private playerFacing:Facing="south";
+
     constructor(){ super("VillageScene"); }
+
     preload(){
       this.load.svg("family-house", "/assets/village/family-house.svg");
       this.load.svg("tree-oak", "/assets/village/tree-oak.svg");
@@ -80,15 +83,21 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
       this.load.svg("child", "/assets/village/child.svg");
       this.load.svg("child-walk-a", "/assets/village/child-walk-a.svg");
       this.load.svg("child-walk-b", "/assets/village/child-walk-b.svg");
+      this.load.svg("child-north-a", "/assets/village/child-north-a.svg");
+      this.load.svg("child-north-b", "/assets/village/child-north-b.svg");
+      this.load.svg("child-south-a", "/assets/village/child-south-a.svg");
+      this.load.svg("child-south-b", "/assets/village/child-south-b.svg");
       this.load.svg("linus", "/assets/village/linus.svg");
       this.load.svg("linus-idle-b", "/assets/village/linus-idle-b.svg");
       this.load.svg("truck", "/assets/village/truck.svg");
       this.load.svg("material-stack", "/assets/village/material-stack.svg");
-      this.load.svg("road-dirt", "/assets/village/road-dirt.svg");
-      this.load.svg("road-edge-grass", "/assets/village/road-edge-grass.svg");
+      this.load.svg("road-segment", "/assets/village/road-segment.svg");
+      this.load.svg("road-bend", "/assets/village/road-bend.svg");
+      this.load.svg("footpath", "/assets/village/footpath.svg");
       this.load.svg("grass-tile", "/assets/village/grass-tile.svg");
       this.load.svg("grass-tuft", "/assets/village/grass-tuft.svg");
       this.load.svg("dirt-patch", "/assets/village/dirt-patch.svg");
+      this.load.svg("bush", "/assets/village/bush.svg");
       this.load.svg("fence-segment", "/assets/village/fence-segment.svg");
       this.load.svg("quest-board", "/assets/village/quest-board.svg");
       this.load.svg("bench", "/assets/village/bench.svg");
@@ -100,42 +109,65 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
       this.load.svg("woodpile", "/assets/village/woodpile.svg");
       this.load.svg("mailbox", "/assets/village/mailbox.svg");
     }
+
     create(){
       this.cameras.main.setBackgroundColor("#82ad68"); this.drawVillage();
-      this.player=this.add.image(430,405,"child").setOrigin(.5,.86).setDepth(1405);
+      this.player=this.add.image(430,405,"child-south-a").setOrigin(.5,.86).setDepth(1405);
       this.targetMarker=this.add.circle(430,405,7,0xfff4c7,.35).setStrokeStyle(2,0x53623e,.7).setVisible(false).setDepth(900);
       this.createQuestMarker(); this.applyQuestState(requestedQuestState);
       this.time.addEvent({delay:1800,loop:true,callback:()=>{if(!this.linus)return;this.linus.setTexture("linus-idle-b");this.time.delayedCall(260,()=>this.linus?.setTexture("linus"));}});
       if(this.input.keyboard){ this.cursors=this.input.keyboard.createCursorKeys(); this.wasd=this.input.keyboard.addKeys({up:"W",down:"S",left:"A",right:"D"}) as Record<"up"|"down"|"left"|"right",Input.Keyboard.Key>; }
       this.input.on("pointerdown",(pointer:Input.Pointer)=>{ if(!this.player)return; this.path=findPath({x:this.player.x,y:this.player.y},{x:pointer.worldX,y:pointer.worldY}); const finalPoint=this.path.at(-1); if(finalPoint)this.targetMarker?.setPosition(finalPoint.x,finalPoint.y).setVisible(true); });
     }
+
     applyQuestState(state:QuestState){ requestedQuestState=state; if(!this.questMarker)return; const label=this.questMarker.getByName("label") as GameObjects.Text; if(state==="available"){this.questMarker.setVisible(true).setAlpha(1);label.setText("!");} else if(state==="pending"){this.questMarker.setVisible(true).setAlpha(.72);label.setText("…");} else {this.questMarker.setVisible(false);this.triggerApprovalEvent();} }
+
     update(_:number,delta:number){
       if(!this.player)return; this.player.setDepth(1000+Math.round(this.player.y));
       const v=this.getKeyboardVector();
-      if(v.lengthSq()>0){this.path=[];this.targetMarker?.setVisible(false);v.normalize();this.animatePlayer(v.x,true,delta);v.scale(190*(delta/1000));this.tryMove(v.x,v.y);return;}
+      if(v.lengthSq()>0){this.path=[];this.targetMarker?.setVisible(false);v.normalize();this.animatePlayer(v.x,v.y,true,delta);v.scale(190*(delta/1000));this.tryMove(v.x,v.y);return;}
       const next=this.path[0];
-      if(!next){this.animatePlayer(0,false,delta);return;}
+      if(!next){this.animatePlayer(0,0,false,delta);return;}
       const current={x:this.player.x,y:this.player.y},remaining=distance(current,next);
-      if(remaining<4){this.path.shift();if(!this.path.length)this.targetMarker?.setVisible(false);this.animatePlayer(0,this.path.length>0,delta);return;}
+      if(remaining<4){this.path.shift();if(!this.path.length)this.targetMarker?.setVisible(false);this.animatePlayer(0,0,this.path.length>0,delta);return;}
       const speed=Math.min(180*(delta/1000),remaining),angle=Math.atan2(next.y-current.y,next.x-current.x),dx=Math.cos(angle),dy=Math.sin(angle);
-      this.animatePlayer(dx,true,delta);this.tryMove(dx*speed,dy*speed);
+      this.animatePlayer(dx,dy,true,delta);this.tryMove(dx*speed,dy*speed);
     }
-    private animatePlayer(dx:number,moving:boolean,delta:number){
+
+    private animatePlayer(dx:number,dy:number,moving:boolean,delta:number){
       if(!this.player)return;
-      if(dx<-.1)this.player.setFlipX(true);else if(dx>.1)this.player.setFlipX(false);
-      if(!moving){this.playerFrameClock=0;this.playerFrameIndex=0;if(this.player.texture.key!=="child")this.player.setTexture("child");return;}
+      if(Math.abs(dx)>.18 || Math.abs(dy)>.18){
+        this.playerFacing=Math.abs(dx)>Math.abs(dy)?(dx<0?"west":"east"):(dy<0?"north":"south");
+      }
+      const isSide=this.playerFacing==="east"||this.playerFacing==="west";
+      this.player.setFlipX(this.playerFacing==="west");
+      const frames:Record<Facing,[string,string]> = {
+        north:["child-north-a","child-north-b"],
+        south:["child-south-a","child-south-b"],
+        east:["child-walk-a","child-walk-b"],
+        west:["child-walk-a","child-walk-b"],
+      };
+      if(!moving){
+        this.playerFrameClock=0; this.playerFrameIndex=0;
+        const idle=isSide?"child":frames[this.playerFacing][0];
+        if(this.player.texture.key!==idle)this.player.setTexture(idle);
+        return;
+      }
       this.playerFrameClock+=delta;
-      if(this.playerFrameClock<120)return;
-      this.playerFrameClock=0;this.playerFrameIndex=(this.playerFrameIndex+1)%2;this.player.setTexture(this.playerFrameIndex===0?"child-walk-a":"child-walk-b");
+      if(this.playerFrameClock>=125){this.playerFrameClock=0;this.playerFrameIndex=(this.playerFrameIndex+1)%2;}
+      const nextTexture=frames[this.playerFacing][this.playerFrameIndex];
+      if(this.player.texture.key!==nextTexture)this.player.setTexture(nextTexture);
     }
-    private worldImage(x:number,y:number,key:string,scale=1,originY=1){ return this.add.image(x,y,key).setOrigin(.5,originY).setScale(scale).setDepth(1000+Math.round(y)); }
-    private placeWorldObjects(objects:WorldObjectDefinition[]){objects.forEach(({x,y,texture,scale=1,originY=1})=>this.worldImage(x,y,texture,scale,originY));}
+
+    private worldImage(x:number,y:number,key:string,scale=1,originY=1,baseY=y){ return this.add.image(x,y,key).setOrigin(.5,originY).setScale(scale).setDepth(1000+Math.round(baseY)); }
+    private placeWorldObjects(objects:WorldObjectDefinition[]){objects.forEach(({x,y,texture,scale=1,originY=1,baseY=y})=>this.worldImage(x,y,texture,scale,originY,baseY));}
     private drawTree(x:number,y:number,key="tree-oak",scale=1){ this.worldImage(x,y+32,key,scale); }
     private drawHouse(){ this.add.image(150,250,"family-house").setOrigin(.5,1).setDepth(1250); }
     private drawFence(x:number,y:number,count:number){ this.add.image(x+count*10,y,"fence-segment").setDisplaySize(count*20,48).setDepth(1000+y); }
     private drawQuestBoard(){ this.worldImage(315,267,"quest-board"); }
+
     private createQuestMarker(){ const shadow=this.add.rectangle(3,4,42,42,0x4b3d21,.2); const bubble=this.add.rectangle(0,0,42,42,0xf4cf55).setStrokeStyle(4,0x704f17); const shine=this.add.rectangle(-11,-11,8,5,0xffed98); const label=this.add.text(0,-1,"!",{color:"#493507",fontSize:"25px",fontStyle:"bold"}).setOrigin(.5).setName("label"); this.questMarker=this.add.container(150,72,[shadow,bubble,shine,label]).setDepth(3000).setSize(54,54).setInteractive({useHandCursor:true}); this.questMarker.on("pointerdown",(_p:Input.Pointer,_x:number,_y:number,event:Types.Input.EventData)=>{event.stopPropagation();callbacks.onQuestOpen();}); this.tweens.add({targets:this.questMarker,y:65,duration:850,yoyo:true,repeat:-1,ease:"Sine.InOut"}); }
+
     private triggerApprovalEvent(){
       if(this.approvedTriggered)return;this.approvedTriggered=true;
       const truck=this.add.image(1030,350,"truck").setOrigin(.5,1).setDepth(1350);
@@ -145,17 +177,24 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
         this.time.delayedCall(900,()=>this.tweens.add({targets:truck,x:1030,y:350,duration:1500,ease:"Sine.In",onUpdate:()=>truck.setDepth(1000+Math.round(truck.y)),onComplete:()=>truck.destroy()}));
       }});
     }
+
     private getKeyboardVector(){ const v=new Phaser.Math.Vector2();if(this.cursors?.up.isDown||this.wasd?.up.isDown)v.y--;if(this.cursors?.down.isDown||this.wasd?.down.isDown)v.y++;if(this.cursors?.left.isDown||this.wasd?.left.isDown)v.x--;if(this.cursors?.right.isDown||this.wasd?.right.isDown)v.x++;return v; }
     private tryMove(dx:number,dy:number){if(!this.player)return;const nx={x:this.player.x+dx,y:this.player.y};if(isWalkable(nx))this.player.x=nx.x;const ny={x:this.player.x,y:this.player.y+dy};if(isWalkable(ny))this.player.y=ny.y;}
+
     private drawVillage(){
       this.add.tileSprite(WORLD_WIDTH/2,WORLD_HEIGHT/2,WORLD_WIDTH,WORLD_HEIGHT,"grass-tile").setDepth(0);
-      this.add.image(490,360,"road-dirt").setScale(1.8,.95).setAngle(-18).setDepth(20);
-      this.add.image(490,360,"road-edge-grass").setScale(1.8,.95).setAngle(-18).setDepth(21);
+
+      this.add.image(155,455,"road-segment").setAngle(-12).setDepth(20);
+      this.add.image(390,402,"road-segment").setAngle(-12).setDepth(20);
+      this.add.image(625,349,"road-segment").setAngle(-12).setDepth(20);
+      this.add.image(842,300,"road-bend").setAngle(-4).setDepth(20);
+      this.add.image(244,323,"footpath").setAngle(41).setDepth(19);
 
       this.drawHouse(); this.drawFence(50,270,7); this.drawFence(820,238,6); this.drawQuestBoard();
       this.placeWorldObjects([
         {x:282,y:298,texture:"bench"},{x:34,y:400,texture:"crate",scale:.8},{x:925,y:205,texture:"crate",scale:.65},
-        {x:257,y:266,texture:"mailbox",scale:.82},{x:78,y:261,texture:"woodpile",scale:.72},{x:660,y:300,texture:"signpost",scale:.78},{x:365,y:337,texture:"lamp-post",scale:.72}
+        {x:257,y:266,texture:"mailbox",scale:.82},{x:78,y:261,texture:"woodpile",scale:.72},{x:660,y:300,texture:"signpost",scale:.78},{x:365,y:337,texture:"lamp-post",scale:.72},
+        {x:325,y:190,texture:"bush",scale:.74},{x:720,y:208,texture:"bush",scale:.82},{x:895,y:392,texture:"bush",scale:.9},{x:118,y:555,texture:"bush",scale:.86}
       ]);
 
       this.linus=this.add.image(575,285,"linus").setOrigin(.5,.9).setDepth(1285);
@@ -174,6 +213,7 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
       this.add.text(18,18,"Sysselcraft · byn vaknar",{color:"#f6edcf",fontSize:"14px",backgroundColor:"#26342bea",padding:{x:8,y:6}}).setDepth(3000);
     }
   }
+
   const game=new Phaser.Game({type:Phaser.AUTO,parent,width:WORLD_WIDTH,height:WORLD_HEIGHT,backgroundColor:"#82ad68",pixelArt:true,antialias:false,roundPixels:true,scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH,width:WORLD_WIDTH,height:WORLD_HEIGHT},scene:VillageScene});
   return {destroy:()=>game.destroy(true),setQuestState:(state:QuestState)=>{requestedQuestState=state;if(game.scene.isActive("VillageScene"))(game.scene.getScene("VillageScene") as VillageScene).applyQuestState(state);}};
 }
