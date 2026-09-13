@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { QuestState, VillageGameHandle } from "../game/createVillageGame";
+import { linusIntroDialogue } from "../game/dialogues";
 
 export default function VillagePrototype() {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -10,6 +11,14 @@ export default function VillagePrototype() {
   const [questOpen, setQuestOpen] = useState(false);
   const [diamonds, setDiamonds] = useState(0);
   const [sysselBux, setSysselBux] = useState(0);
+  const [introComplete, setIntroComplete] = useState(false);
+  const [dialogueOpen, setDialogueOpen] = useState(false);
+  const [dialogueIndex, setDialogueIndex] = useState(0);
+  const [dogNameDraft, setDogNameDraft] = useState("");
+  const [dogName, setDogName] = useState("");
+  const [dogVisible, setDogVisible] = useState(false);
+
+  const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
 
   useEffect(() => {
     let cancelled = false;
@@ -20,6 +29,10 @@ export default function VillagePrototype() {
 
       const handle = await createVillageGame(hostRef.current, {
         onQuestOpen: () => setQuestOpen(true),
+        onLinusInteract: () => {
+          setDialogueIndex(0);
+          setDialogueOpen(true);
+        },
       });
 
       if (cancelled) {
@@ -42,6 +55,36 @@ export default function VillagePrototype() {
   useEffect(() => {
     gameRef.current?.setQuestState(questState);
   }, [questState]);
+
+  useEffect(() => {
+    gameRef.current?.setIntroComplete(introComplete);
+  }, [introComplete]);
+
+  useEffect(() => {
+    gameRef.current?.setDogVisible(dogVisible);
+  }, [dogVisible]);
+
+  function advanceDialogue() {
+    const nextIndex = dialogueIndex + 1;
+    const nextStep = linusIntroDialogue[nextIndex];
+    if (!nextStep) return;
+    if (nextStep.kind === "reveal-dog") {
+      setDogVisible(true);
+      setDialogueIndex(nextIndex + 1);
+      return;
+    }
+    setDialogueIndex(nextIndex);
+  }
+
+  function finishNaming() {
+    const trimmed = dogNameDraft.trim();
+    if (!trimmed) return;
+    setDogName(trimmed);
+    setDogVisible(true);
+    setDialogueOpen(false);
+    setIntroComplete(true);
+    setQuestOpen(true);
+  }
 
   function submitQuest() {
     setQuestState("pending");
@@ -67,6 +110,7 @@ export default function VillagePrototype() {
           <p>Första spelbara kärnloopen</p>
         </div>
         <div className="resource-hud" aria-label="Resurser">
+          {dogName && <strong>🐶 {dogName}</strong>}
           <strong>💎 {diamonds}</strong>
           <strong>🪙 {sysselBux}</strong>
         </div>
@@ -74,9 +118,37 @@ export default function VillagePrototype() {
 
       <div className="game-wrap">
         <div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" />
-        <div className="game-hint">Tryck i byn för att gå · tryck på questmarkören vid huset</div>
+        <div className="game-hint">{introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
 
-        {questOpen && (
+        {dialogueOpen && dialogueStep && (
+          <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite">
+            {dialogueStep.kind === "line" && (
+              <>
+                <span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{dialogueStep.speaker}</span>
+                <p>{dialogueStep.text}</p>
+                <button className="primary-button dialogue-next" onClick={advanceDialogue}>Fortsätt</button>
+              </>
+            )}
+            {dialogueStep.kind === "name-dog" && (
+              <>
+                <span className="dialogue-speaker dog">🐶 Din nya kompis</span>
+                <h2>Vad ska valpen heta?</h2>
+                <input
+                  className="dog-name-input"
+                  value={dogNameDraft}
+                  onChange={(event) => setDogNameDraft(event.target.value)}
+                  onKeyDown={(event) => event.key === "Enter" && finishNaming()}
+                  maxLength={18}
+                  autoFocus
+                  placeholder="Skriv ett namn"
+                />
+                <button className="primary-button dialogue-next" onClick={finishNaming} disabled={!dogNameDraft.trim()}>Det blir namnet!</button>
+              </>
+            )}
+          </div>
+        )}
+
+        {questOpen && introComplete && (
           <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="quest-title">
             <button className="close-button" onClick={() => setQuestOpen(false)} aria-label="Stäng">×</button>
             <span className="quest-kicker">Dagens första quest</span>
