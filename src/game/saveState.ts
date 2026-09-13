@@ -105,3 +105,12 @@ export async function saveSaveState(state: SaveStateV1): Promise<void> {
     console.warn("Sysselcraft save could not be written", error);
   }
 }
+
+export async function clearSaveState(): Promise<void> {
+  try {
+    await Preferences.remove({ key: SAVE_KEY });
+  } catch (error) {
+    console.warn("Sysselcraft save could not be cleared", error);
+    throw error;
+  }
+}
