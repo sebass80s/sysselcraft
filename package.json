@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "eslint",
+    "lint": "eslint --max-warnings=0",
     "verify": "npm run lint && npm run build",
     "cap:sync": "npx cap sync",
     "cap:copy": "npx cap copy",
