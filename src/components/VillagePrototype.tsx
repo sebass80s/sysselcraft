@@ -3,7 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import type { QuestState, VillageGameHandle } from "../game/createVillageGame";
 import { linusIntroDialogue } from "../game/dialogues";
-import { makeBedQuest } from "../game/quests";
+import {
+  applyQuestProgression,
+  createEmptyProgression,
+  makeBedQuest,
+  type ProgressionState,
+  type QuestId,
+} from "../game/quests";
 import { clearSaveState, loadSaveState, saveSaveState } from "../game/saveState";
 
 export default function VillagePrototype() {
@@ -12,11 +18,14 @@ export default function VillagePrototype() {
   const restoredFirstDeliveryCompleteRef = useRef(false);
   const childNameInputRef = useRef<HTMLInputElement>(null);
   const dogNameInputRef = useRef<HTMLInputElement>(null);
+  const approvalLockRef = useRef(false);
   const [saveReady, setSaveReady] = useState(false);
   const [questState, setQuestState] = useState<QuestState>("available");
   const [questOpen, setQuestOpen] = useState(false);
   const [diamonds, setDiamonds] = useState(0);
   const [sysselBux, setSysselBux] = useState(0);
+  const [completedQuestIds, setCompletedQuestIds] = useState<QuestId[]>([]);
+  const [progression, setProgression] = useState<ProgressionState>(createEmptyProgression);
   const [introComplete, setIntroComplete] = useState(false);
   const [dialogueOpen, setDialogueOpen] = useState(false);
   const [dialogueIndex, setDialogueIndex] = useState(0);
@@ -25,9 +34,11 @@ export default function VillagePrototype() {
   const [dogVisible, setDogVisible] = useState(false);
   const [childNameCanSubmit, setChildNameCanSubmit] = useState(false);
   const [dogNameCanSubmit, setDogNameCanSubmit] = useState(false);
+  const [parentMenuOpen, setParentMenuOpen] = useState(false);
   const [resettingSave, setResettingSave] = useState(false);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
+  const pendingCount = questState === "pending" ? 1 : 0;
 
   useEffect(() => {
     let cancelled = false;
@@ -40,6 +51,8 @@ export default function VillagePrototype() {
         setQuestState(saved.questStates.makeBed);
         setDiamonds(saved.diamonds);
         setSysselBux(saved.sysselBux);
+        setCompletedQuestIds(saved.completedQuestIds);
+        setProgression(saved.progression);
         setIntroComplete(saved.introComplete);
         setDialogueOpen(saved.dialogueOpen);
         setDialogueIndex(saved.dialogueIndex);
@@ -49,6 +62,7 @@ export default function VillagePrototype() {
         setChildNameCanSubmit(Boolean(saved.childName.trim()));
         setDogNameCanSubmit(Boolean(saved.dogName.trim()));
         restoredFirstDeliveryCompleteRef.current = saved.worldFlags.firstDeliveryComplete;
+        approvalLockRef.current = saved.completedQuestIds.includes(makeBedQuest.id);
       }
 
       setSaveReady(true);
@@ -66,6 +80,8 @@ export default function VillagePrototype() {
     void saveSaveState({
       version: 1,
       questStates: { makeBed: questState },
+      completedQuestIds,
+      progression,
       diamonds,
       sysselBux,
       introComplete,
@@ -82,6 +98,8 @@ export default function VillagePrototype() {
     saveReady,
     resettingSave,
     questState,
+    completedQuestIds,
+    progression,
     diamonds,
     sysselBux,
     introComplete,
@@ -180,15 +198,27 @@ export default function VillagePrototype() {
   }
 
   function approveQuest() {
-    if (questState !== "pending") return;
+    if (
+      questState !== "pending" ||
+      approvalLockRef.current ||
+      completedQuestIds.includes(makeBedQuest.id)
+    ) {
+      return;
+    }
+
+    approvalLockRef.current = true;
     setQuestState("approved");
+    setCompletedQuestIds((ids) => [...ids, makeBedQuest.id]);
+    setProgression((value) => applyQuestProgression(value, makeBedQuest));
     setDiamonds((value) => value + makeBedQuest.reward.diamonds);
     setSysselBux((value) => value + makeBedQuest.reward.sysselBux);
+    setParentMenuOpen(false);
   }
 
   function needsCompletion() {
     if (questState !== "pending") return;
     setQuestState("available");
+    setParentMenuOpen(false);
     setQuestOpen(true);
   }
 
@@ -219,8 +249,17 @@ export default function VillagePrototype() {
   return (
     <section className="prototype-shell">
       <header className="prototype-header">
-        <div>
+        <div className="prototype-brand-row">
           <h1>Sysselcraft</h1>
+          <button
+            className="parent-menu-button"
+            type="button"
+            onClick={() => setParentMenuOpen(true)}
+            aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}
+          >
+            🔐 Vuxenläge
+            {pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}
+          </button>
           <p>Första spelbara kärnloopen</p>
         </div>
         <div className="resource-hud" aria-label="Resurser">
@@ -232,24 +271,19 @@ export default function VillagePrototype() {
 
       <div className="game-wrap">
         <div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" />
-        <div className="game-hint">{introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
-
-        <button
-          className="debug-reset-button"
-          type="button"
-          onClick={resetPrototypeSave}
-          disabled={!saveReady || resettingSave}
-          aria-label="Nollställ testsparning"
-          title="Utvecklarverktyg: nollställ testsparning"
-        >
-          ↺ Test
-        </button>
+        <div className="game-hint">
+          {introComplete
+            ? "Tryck i byn för att gå · tryck på questmarkören vid huset"
+            : "Tryck på Linus för att gå fram och hälsa"}
+        </div>
 
         {dialogueOpen && dialogueStep && (
           <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite">
             {dialogueStep.kind === "line" && (
               <>
-                <span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{speakerName}</span>
+                <span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>
+                  {speakerName}
+                </span>
                 <p>{dialogueStep.text}</p>
                 <button className="primary-button dialogue-next" onClick={advanceDialogue}>Fortsätt</button>
               </>
@@ -274,7 +308,9 @@ export default function VillagePrototype() {
                   enterKeyHint="done"
                   placeholder="Skriv ditt namn"
                 />
-                <button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>Det är jag!</button>
+                <button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>
+                  Det är jag!
+                </button>
               </>
             )}
             {dialogueStep.kind === "name-dog" && (
@@ -297,7 +333,9 @@ export default function VillagePrototype() {
                   enterKeyHint="done"
                   placeholder="Skriv ett namn"
                 />
-                <button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>Det blir namnet!</button>
+                <button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>
+                  Det blir namnet!
+                </button>
               </>
             )}
           </div>
@@ -309,22 +347,73 @@ export default function VillagePrototype() {
             <span className="quest-kicker">Dagens första quest</span>
             <h2 id="quest-title">{makeBedQuest.icon} {makeBedQuest.title}</h2>
             <p>{makeBedQuest.description}</p>
-            <div className="quest-reward">Belöning: 💎 {makeBedQuest.reward.diamonds} · 🪙 {makeBedQuest.reward.sysselBux}</div>
-            {questState === "available" && <button className="primary-button" onClick={submitQuest}>Jag har bäddat klart</button>}
+            <div className="quest-reward">
+              Belöning: 💎 {makeBedQuest.reward.diamonds} · 🪙 {makeBedQuest.reward.sysselBux}
+            </div>
+            {questState === "available" && (
+              <button className="primary-button" onClick={submitQuest}>Jag har bäddat klart</button>
+            )}
             {questState === "pending" && <div className="pending-message">⏳ Väntar på en vuxen</div>}
             {questState === "approved" && <div className="approved-message">✓ Godkänd!</div>}
           </div>
         )}
 
-        {questState === "pending" && (
-          <aside className="parent-review" aria-label="Vuxenläge prototyp">
-            <span>🔐 Vuxenläge · prototyp</span>
-            <strong>{makeBedQuest.title}</strong>
-            <div>
-              <button className="primary-button compact" onClick={approveQuest}>Godkänn</button>
-              <button className="secondary-button compact" onClick={needsCompletion}>Behöver kompletteras</button>
-            </div>
-          </aside>
+        {parentMenuOpen && (
+          <div className="parent-menu-backdrop" role="presentation" onMouseDown={() => setParentMenuOpen(false)}>
+            <section
+              className="parent-menu-panel"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="parent-menu-title"
+              onMouseDown={(event) => event.stopPropagation()}
+            >
+              <button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button>
+              <span className="parent-menu-kicker">🔐 Vuxenläge · prototyp</span>
+              <h2 id="parent-menu-title">Föräldrameny</h2>
+              <p className="parent-menu-note">Här hanteras sådant barnet inte ska godkänna själv. PIN och familjekonto kommer senare.</p>
+
+              <div className="parent-profile-card">
+                <span>Barn</span>
+                <strong>{childName || "Inte namngivet ännu"}</strong>
+                {dogName && <small>Kompis: 🐶 {dogName}</small>}
+              </div>
+
+              <div className="parent-section-heading">
+                <h3>Att godkänna</h3>
+                {pendingCount > 0 && <span>{pendingCount}</span>}
+              </div>
+
+              {questState === "pending" ? (
+                <article className="parent-quest-card">
+                  <div>
+                    <span>{makeBedQuest.icon}</span>
+                    <div>
+                      <strong>{makeBedQuest.title}</strong>
+                      <small>Barnet har markerat uppgiften som klar.</small>
+                    </div>
+                  </div>
+                  <div className="parent-quest-actions">
+                    <button className="primary-button compact" onClick={approveQuest}>Godkänn</button>
+                    <button className="secondary-button compact" onClick={needsCompletion}>Behöver kompletteras</button>
+                  </div>
+                </article>
+              ) : (
+                <div className="parent-empty-state">✓ Inget väntar på godkännande just nu.</div>
+              )}
+
+              <div className="parent-menu-footer">
+                <span>Nästa steg: skapa och schemalägga quests härifrån.</span>
+                <button
+                  className="debug-reset-button"
+                  type="button"
+                  onClick={resetPrototypeSave}
+                  disabled={!saveReady || resettingSave}
+                >
+                  ↺ Nollställ testsparning
+                </button>
+              </div>
+            </section>
+          </div>
         )}
       </div>
     </section>
