@@ -1,7 +1,7 @@
 export type AmbientWorldObject = {
   x: number;
   y: number;
-  texture: AmbientTextureKey;
+  texture: AmbientTextureKey | "construction-stakes";
   scale?: number;
   originY?: number;
   baseY?: number;
@@ -50,7 +50,11 @@ export const OPENING_AMBIENT_OBJECTS: AmbientWorldObject[] = [
 /**
  * Props that should materialize together with the first delivery rather than telegraphing
  * construction before the child has earned the first visible world consequence.
+ *
+ * The stakes intentionally live here too. Before the first approved quest the site should read
+ * as an empty, slightly neglected patch of village rather than an announced future building.
  */
 export const FIRST_DELIVERY_AMBIENT_OBJECTS: AmbientWorldObject[] = [
+  { x: 676, y: 390, texture: "construction-stakes", scale: 0.94, baseY: 410 },
   { x: 790, y: 382, texture: "wheelbarrow", scale: 0.78, baseY: 392 },
 ];
