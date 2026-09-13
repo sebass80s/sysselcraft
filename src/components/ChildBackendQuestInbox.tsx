@@ -5,6 +5,7 @@ import { getBackendAuthState } from "@/backend/auth";
 import { getPairedChildId } from "@/backend/childDeviceBinding";
 import { getChildGameState, listChildQuests, submitQuest } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
+import styles from "./ChildBackendQuestInbox.module.css";
 
 export default function ChildBackendQuestInbox() {
   const [childId, setChildId] = useState<string | null>(null);
@@ -85,24 +86,24 @@ export default function ChildBackendQuestInbox() {
     }
   }
 
-  return <aside className={`child-quest-dock ${open ? "open" : ""}`} aria-label="Föräldrauppdrag">
-    <button className="child-quest-toggle" type="button" onClick={() => setOpen(value => !value)}>
+  return <aside className={styles.dock} aria-label="Föräldrauppdrag">
+    <button className={styles.toggle} type="button" onClick={() => setOpen(value => !value)}>
       📜 Uppdrag
       {(availableCount + pendingCount) > 0 && <span>{availableCount + pendingCount}</span>}
     </button>
-    {open && <section className="child-quest-panel">
+    {open && <section className={styles.panel}>
       <header>
         <div><strong>Uppdrag hemifrån</strong><small>Skickade av en vuxen</small></div>
-        {gameState && <div className="child-backend-wallet">💎 {gameState.diamonds} · 🪙 {gameState.sysselBux}</div>}
+        {gameState && <div className={styles.wallet}>💎 {gameState.diamonds} · 🪙 {gameState.sysselBux}</div>}
       </header>
-      {visibleQuests.length === 0 ? <div className="parent-empty-state">Inga nya uppdrag just nu. 🌱</div> : visibleQuests.map(quest => <article className="child-backend-quest" key={quest.instanceId}>
+      {visibleQuests.length === 0 ? <div className="parent-empty-state">Inga nya uppdrag just nu. 🌱</div> : visibleQuests.map(quest => <article className={styles.quest} key={quest.instanceId}>
         <strong>{quest.title}</strong>
         <p>{quest.description}</p>
         <small>Belöning: 💎 {quest.reward.diamonds} · 🪙 {quest.reward.sysselBux}</small>
         {quest.state === "available" ? <button className="primary-button compact" disabled={busy} onClick={() => markDone(quest.instanceId)}>Jag är klar</button> : <div className="pending-message">⏳ Väntar på en vuxen</div>}
       </article>)}
-      {message && <p className="child-quest-message">{message}</p>}
-      <div className="child-quest-footer"><button className="secondary-button compact" disabled={busy} onClick={refreshNow}>↻ Uppdatera</button><a href="/pair">Koppla om</a></div>
+      {message && <p className={styles.message}>{message}</p>}
+      <div className={styles.footer}><button className="secondary-button compact" disabled={busy} onClick={refreshNow}>↻ Uppdatera</button><a href="/pair">Koppla om</a></div>
     </section>}
   </aside>;
 }
