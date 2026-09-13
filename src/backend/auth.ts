@@ -1,3 +1,4 @@
+import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "./supabaseClient";
 
 export type BackendAuthState = {
@@ -6,7 +7,7 @@ export type BackendAuthState = {
   userId: string | null;
 };
 
-function toBackendAuthState(session: Awaited<ReturnType<ReturnType<typeof getSupabaseBrowserClient>["auth"]["getSession"]>>["data"]["session"]): BackendAuthState {
+function toBackendAuthState(session: Session | null): BackendAuthState {
   return {
     signedIn: Boolean(session),
     isAnonymous: Boolean(session?.user.is_anonymous),
