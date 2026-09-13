@@ -8,6 +8,7 @@ import { loadSaveState, saveSaveState } from "../game/saveState";
 export default function VillagePrototype() {
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
+  const restoredFirstDeliveryCompleteRef = useRef(false);
   const childNameInputRef = useRef<HTMLInputElement>(null);
   const dogNameInputRef = useRef<HTMLInputElement>(null);
   const [saveReady, setSaveReady] = useState(false);
@@ -45,6 +46,7 @@ export default function VillagePrototype() {
         setDogName(saved.dogName);
         setDogNameDraft(saved.dogName);
         setDogVisible(saved.dogVisible);
+        restoredFirstDeliveryCompleteRef.current = saved.worldFlags.firstDeliveryComplete;
       }
 
       setSaveReady(true);
@@ -111,6 +113,7 @@ export default function VillagePrototype() {
 
       gameRef.current = handle;
       handle.setDogVisible(dogVisible);
+      handle.setFirstDeliveryComplete(restoredFirstDeliveryCompleteRef.current);
       handle.setIntroComplete(introComplete);
       handle.setQuestState(questState);
     }
