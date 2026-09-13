@@ -8,6 +8,7 @@ import { loadSaveState, saveSaveState } from "../game/saveState";
 export default function VillagePrototype() {
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
+  const dogNameInputRef = useRef<HTMLInputElement>(null);
   const [saveReady, setSaveReady] = useState(false);
   const [questState, setQuestState] = useState<QuestState>("available");
   const [questOpen, setQuestOpen] = useState(false);
@@ -140,8 +141,9 @@ export default function VillagePrototype() {
   }
 
   function finishNaming() {
-    const trimmed = dogNameDraft.trim();
+    const trimmed = (dogNameInputRef.current?.value ?? dogNameDraft).trim();
     if (!trimmed) return;
+    setDogNameDraft(trimmed);
     setDogName(trimmed);
     setDogVisible(true);
     setDialogueOpen(false);
@@ -197,12 +199,18 @@ export default function VillagePrototype() {
                 <span className="dialogue-speaker dog">🐶 Din nya kompis</span>
                 <h2>Vad ska valpen heta?</h2>
                 <input
+                  ref={dogNameInputRef}
                   className="dog-name-input"
                   value={dogNameDraft}
                   onChange={(event) => setDogNameDraft(event.target.value)}
+                  onInput={(event) => setDogNameDraft(event.currentTarget.value)}
                   onKeyDown={(event) => event.key === "Enter" && finishNaming()}
                   maxLength={18}
                   autoFocus
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="words"
+                  spellCheck={false}
                   placeholder="Skriv ett namn"
                 />
                 <button className="primary-button dialogue-next" onClick={finishNaming} disabled={!dogNameDraft.trim()}>Det blir namnet!</button>
