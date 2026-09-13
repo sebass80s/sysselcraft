@@ -71,14 +71,18 @@ export type ParentQuestDraft = {
   };
 };
 
+function normalizeRewardAmount(value: number): number {
+  return Number.isFinite(value) ? Math.max(0, Math.round(value)) : 0;
+}
+
 export function normalizeParentQuestDraft(draft: ParentQuestDraft): ParentQuestDraft {
   return {
     title: draft.title.trim().slice(0, 60),
     description: draft.description.trim().slice(0, 240),
     progressionClass: draft.progressionClass,
     reward: {
-      diamonds: Math.max(0, Math.round(draft.reward.diamonds)),
-      sysselBux: Math.max(0, Math.round(draft.reward.sysselBux)),
+      diamonds: normalizeRewardAmount(draft.reward.diamonds),
+      sysselBux: normalizeRewardAmount(draft.reward.sysselBux),
     },
   };
 }
