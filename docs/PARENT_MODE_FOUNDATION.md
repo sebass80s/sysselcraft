@@ -1,6 +1,6 @@
 # Parent Mode Foundation
 
-Status: READY TO START PARENT MODE
+Status: READY TO BUILD PARENT MODE ON BACKEND FOUNDATION
 
 This document defines the boundary that must stay intact while Sysselcraft's first real parent mode is built.
 
@@ -14,6 +14,7 @@ This document defines the boundary that must stay intact while Sysselcraft's fir
 - The recycling center is a persisted world progression target, with the first material delivery as stage 1.
 - Parent-facing data can be projected through `createParentModeSnapshot()` instead of reading Phaser scene state.
 - A normalized `ParentQuestDraft` contract exists for the first create-quest form.
+- A Supabase backend boundary now exists for households, adults, children, parent-created quests, child-device pairing and server-authoritative rewards.
 
 ## Parent mode v1 scope
 
@@ -36,7 +37,9 @@ Domain modules own quest definitions, quest lifecycle, rewards, progression and 
 
 Phaser consumes state and renders the village. Parent mode must never reach into a Phaser scene to read or mutate domain state.
 
-Persistence remains local through Capacitor Preferences during this UX phase. Supabase is intentionally deferred until the single-device parent/child flow is proven. Moving persistence later must not require rewriting the quest or progression domain models.
+The backend boundary lives under `src/backend/`. Supabase owns shared family identity, cross-device quest state and server-authoritative reward issuance. Capacitor Preferences remains as the local/offline save during rollout. Do not delete or silently replace local persistence until a reconciliation/migration strategy has been tested on a physical iPhone.
+
+The parent UI should depend on the backend repository rather than importing Supabase directly. Moving or extending persistence must not require rewriting the quest or progression domain models.
 
 ## Quest creation contract
 
@@ -54,20 +57,26 @@ Scheduling/recurrence is deliberately not part of the first create form. Add it 
 
 ## Security boundary
 
-The current `Vuxenläge` control is a prototype boundary, not real access control.
+The old `Vuxenläge` control is a prototype entry point, not real access control.
 
-Do not pretend a front-end-only PIN is secure. Real family accounts, parent authentication and multi-device authorization belong with the future backend phase. For local prototype testing, a lightweight parent-entry friction mechanism may be added for UX only, clearly treated as such.
+Real parent access uses Supabase Auth. Child devices use anonymous Auth sessions paired to a child profile with a short-lived one-time code. RLS restricts reads, and direct client table mutations are revoked for authoritative domain changes.
+
+The child may submit an available quest, but only the parent review RPC can approve it and issue rewards. A unique reward-ledger entry makes approval idempotent.
+
+Never expose a Supabase service-role key to the browser or Capacitor app.
 
 ## First implementation slice
 
-The next implementation slice may now begin directly in parent mode:
+After the Supabase project is provisioned and environment variables are configured, parent mode can proceed directly:
 
-1. Extract/replace the current prototype parent modal with a dedicated React parent-mode surface.
-2. Build the one-off quest creation form using `ParentQuestDraft`.
-3. Persist parent-created quest instances in save state.
-4. Render created available quests on the child side using the same lifecycle contract.
-5. Reuse the existing approval path for pending quests.
-6. Verify save/restart and physical-iPhone behavior before adding scheduling.
+1. Replace the prototype parent modal with a dedicated React parent-mode surface.
+2. Add parent sign-in and household/child bootstrap.
+3. Build the one-off quest creation form using `ParentQuestDraft` and `createParentQuest()`.
+4. Pair the physical child iPhone with a one-time code.
+5. Render backend-created available quests on the child side using the same lifecycle contract.
+6. Submit child completion through `submitQuest()` and review through `reviewQuest()`.
+7. Verify the reward is issued exactly once and reflected on both devices.
+8. Design and verify local-save/backend reconciliation before backend game state becomes authoritative for the rest of the village.
 
 ## Non-negotiable invariants
 
@@ -78,6 +87,8 @@ The next implementation slice may now begin directly in parent mode:
 - Child-facing gameplay stays game-like; parent mode may be functional and information-dense.
 - Domain logic does not move into Phaser.
 - Do not expose hidden progression percentages to the child.
+- Child devices never receive parent authorization powers.
+- No service-role secret is shipped to a client.
 
 ## Deployment discipline
 
@@ -85,4 +96,4 @@ Git commits are cheap; Vercel deployments are scarce.
 
 Batch coherent remote pushes. A remote branch push may also trigger a preview deployment, so creating a work branch does not automatically save Vercel resources. Prefer local/internal reasoning and checks, then one remote push for a coherent tested package.
 
-GitHub Actions minutes must not be used without explicit user approval.
+GitHub Actions minutes must not be used without explicit user approval. When intentionally pushing without CI, use a GitHub-supported skip annotation in the commit message and verify that no workflow run started.
