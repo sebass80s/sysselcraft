@@ -8,6 +8,10 @@ This file exists so a future AI instance can continue Sysselcraft as **Nova**, n
 
 The scrolling/adaptive Phaser world, tap-to-move, Linus intro, puppy, quest flow and local save system have all reached physical-device testing. The current work includes the Supabase-backed parent/child quest loop and continued visual development.
 
+A batched migration-hardening package is currently being prepared in draft PR **#6** from branch `nova/vercel-free-batch`. The purpose is to accumulate useful non-Vercel work before spending another deployment. The batch includes safer child re-pairing, stronger background quest refresh, reconciliation diagnostics/policy, warning-free CI enforcement, clearer separation between the local prototype parent control and real `/parent`, updated visual/reconciliation docs, and a state-ownership document.
+
+**Do not merge or deploy this batch merely because it exists.** First verify current PR head/CI and decide whether the batch is ready for the next deliberate Vercel verification deployment.
+
 ### Current local Mac/Xcode state
 
 - Repo cloned to `~/Documents/sysselcraft`.
@@ -129,6 +133,7 @@ Repository: `sebass80s/sysselcraft`, default branch `main`, **public repo**.
 Stack: Next.js 16.3.3 + React 19.2 + TypeScript + Phaser 3.90 + Capacitor 8 + Supabase.
 
 - Never commit secrets, private family/child data, service keys or private env files.
+- **Vercel has a limited deployment quota and deploys are the scarce resource.** Accumulate related work into larger coherent batches before using Vercel for browser verification.
 - The resource to minimize is Vercel deployments, not useful Git commits.
 - Current Vercel Git integration also creates preview deployments for pushed non-main branches.
 - Therefore a remote work branch is NOT deploy-free.
@@ -138,7 +143,20 @@ Stack: Next.js 16.3.3 + React 19.2 + TypeScript + Phaser 3.90 + Capacitor 8 + Su
 - `[skip ci]` is therefore no longer required merely to conserve Actions minutes. Use it only when intentionally skipping CI makes technical sense.
 - Public web game URL: `https://sysselcraft.vercel.app`.
 
-## 8. Technical systems to preserve
+## 8. State ownership / migration boundary
+
+Read `docs/STATE_OWNERSHIP.md` and `docs/RECONCILIATION_PLAN.md` before changing persistence authority.
+
+Current migration law:
+
+- pairing identifies a backend child but does **not** migrate the existing local save;
+- local built-in prototype state and backend parent-created quest state remain separate ledgers for now;
+- reconciliation is **observe-only**;
+- recommendations such as `backend-ahead` or `local-ahead` are diagnostics, not write permission;
+- no max-value merge, reward replay, retroactive reward-event fabrication or silent overwrite is allowed;
+- migrate one state family at a time only after the physical two-device reconciliation test produces real before/after evidence.
+
+## 9. Technical systems to preserve
 
 - Scrolling/adaptive Phaser world and camera.
 - Grid A*-style tap-to-move pathfinding.
@@ -155,11 +173,11 @@ Stack: Next.js 16.3.3 + React 19.2 + TypeScript + Phaser 3.90 + Capacitor 8 + Su
 
 Current SVG assets are a bridge. Long-term visual direction is coherent raster PNG/WebP sprite atlases with nearest-neighbour scaling, fixed native pixel grid and consistent palette/light direction.
 
-## 9. Working rules for next Nova
+## 10. Working rules for next Nova
 
-1. Read this file, `docs/TECHNICAL_HANDOFF.md`, and `docs/STORY_DESIGN.md` before meaningful repo work.
+1. Read this file, `docs/TECHNICAL_HANDOFF.md`, `docs/STORY_DESIGN.md`, `docs/STATE_OWNERSHIP.md` and `docs/RECONCILIATION_PLAN.md` before meaningful repo work.
 2. Retrieve and read the newest private `Sysselcraft_Utvecklingsdagbok_v*.docx` from File Library and keep it alive throughout development.
-3. Verify current `main` rather than trusting stale SHAs.
+3. Verify current `main` and any active migration PR rather than trusting stale SHAs.
 4. Do not restart Capacitor setup or run `npx cap add ios` again.
 5. Review local diff before asking the user to discard/commit local files.
 6. Verify Vercel before saying web changes are READY/live.
