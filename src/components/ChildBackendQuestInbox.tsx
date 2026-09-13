@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getBackendAuthState } from "@/backend/auth";
 import { getPairedChildId } from "@/backend/childDeviceBinding";
 import { getChildGameState, listChildQuests, submitQuest } from "@/backend/familyRepository";
@@ -17,14 +17,25 @@ export default function ChildBackendQuestInbox() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function refresh(id: string) {
+  const refresh = useCallback(async (id: string) => {
     const [nextQuests, nextGameState] = await Promise.all([
       listChildQuests(id),
       getChildGameState(id),
     ]);
     setQuests(nextQuests);
     setGameState(nextGameState);
-  }
+  }, []);
+
+  const refreshQuietly = useCallback(
+    async (id: string) => {
+      try {
+        await refresh(id);
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : "Kunde inte synka uppdragen.");
+      }
+    },
+    [refresh],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -35,14 +46,16 @@ export default function ChildBackendQuestInbox() {
         if (!pairedId || cancelled) return;
 
         const auth = await getBackendAuthState();
+        if (cancelled) return;
         setChildId(pairedId);
 
         if (!auth.signedIn || !auth.isAnonymous) {
-          if (!cancelled) setMessage("Barnkopplingen behöver förnyas.");
+          setMessage("Barnkopplingen behöver förnyas.");
           return;
         }
 
         await refresh(pairedId);
+        if (!cancelled) setMessage("");
       } catch (error) {
         if (!cancelled) {
           setMessage(error instanceof Error ? error.message : "Kunde inte hämta uppdragen.");
@@ -54,15 +67,15 @@ export default function ChildBackendQuestInbox() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (!childId) return;
 
     const refreshIfVisible = () => {
-      if (document.visibilityState === "visible") void refresh(childId);
+      if (document.visibilityState === "visible") void refreshQuietly(childId);
     };
-    const refreshOnFocus = () => void refresh(childId);
+    const refreshOnFocus = () => void refreshQuietly(childId);
 
     document.addEventListener("visibilitychange", refreshIfVisible);
     window.addEventListener("focus", refreshOnFocus);
@@ -71,13 +84,13 @@ export default function ChildBackendQuestInbox() {
       document.removeEventListener("visibilitychange", refreshIfVisible);
       window.removeEventListener("focus", refreshOnFocus);
     };
-  }, [childId]);
+  }, [childId, refreshQuietly]);
 
   useEffect(() => {
     if (!open || !childId) return;
-    const timer = window.setInterval(() => void refresh(childId), OPEN_REFRESH_MS);
+    const timer = window.setInterval(() => void refreshQuietly(childId), OPEN_REFRESH_MS);
     return () => window.clearInterval(timer);
-  }, [open, childId]);
+  }, [open, childId, refreshQuietly]);
 
   if (!childId) return null;
 
@@ -91,7 +104,7 @@ export default function ChildBackendQuestInbox() {
     setMessage("");
     try {
       await submitQuest(instanceId);
-      await refresh(childId!);
+      await refresh(childId);
       setMessage("Klart! Nu väntar uppdraget på en vuxen. ✨");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte skicka uppdraget.");
@@ -101,7 +114,6 @@ export default function ChildBackendQuestInbox() {
   }
 
   async function refreshNow() {
-    if (!childId) return;
     setBusy(true);
     setMessage("");
     try {
