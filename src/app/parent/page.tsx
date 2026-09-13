@@ -18,7 +18,7 @@ import {
   reviewQuest,
 } from "@/backend/familyRepository";
 import type { BackendChild, BackendHousehold, BackendQuest } from "@/backend/types";
-import type { ParentQuestDraft } from "@/game/parentMode";
+import { isParentQuestDraftReady, type ParentQuestDraft } from "@/game/parentMode";
 
 const emptyDraft: ParentQuestDraft = {
   title: "",
@@ -116,6 +116,27 @@ export default function ParentModePage() {
     };
   }, [refreshFamily]);
 
+  useEffect(() => {
+    if (!signedIn || !childId) return;
+
+    const refreshQuietly = () => {
+      void loadChildQuests(childId).catch(() => {
+        // Keep the last known parent view if a background refresh fails.
+      });
+    };
+    const refreshIfVisible = () => {
+      if (document.visibilityState === "visible") refreshQuietly();
+    };
+
+    window.addEventListener("focus", refreshQuietly);
+    document.addEventListener("visibilitychange", refreshIfVisible);
+
+    return () => {
+      window.removeEventListener("focus", refreshQuietly);
+      document.removeEventListener("visibilitychange", refreshIfVisible);
+    };
+  }, [childId, loadChildQuests, signedIn]);
+
   async function magicLink(event: FormEvent) {
     event.preventDefault();
     setBusy(true);
@@ -152,7 +173,10 @@ export default function ParentModePage() {
 
   async function submitDraft(event: FormEvent) {
     event.preventDefault();
-    if (!householdId || !childId) return;
+    if (!householdId || !childId || !isParentQuestDraftReady(draft)) {
+      setMessage("Fyll i både uppdrag och beskrivning innan du skickar det.");
+      return;
+    }
 
     setBusy(true);
     setMessage("");
@@ -262,6 +286,7 @@ export default function ParentModePage() {
   const active = quests.filter((quest) => quest.state === "available");
   const approved = quests.filter((quest) => quest.state === "approved");
   const child = children.find((candidate) => candidate.id === childId);
+  const draftReady = isParentQuestDraftReady(draft);
 
   return (
     <main className="parent-page">
@@ -436,7 +461,7 @@ export default function ParentModePage() {
                     />
                   </label>
                 </div>
-                <button className="primary-button" disabled={busy || !childId}>
+                <button className="primary-button" disabled={busy || !childId || !draftReady}>
                   Skapa uppdrag
                 </button>
               </form>
