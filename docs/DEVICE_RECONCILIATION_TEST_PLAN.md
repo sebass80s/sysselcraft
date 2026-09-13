@@ -72,8 +72,11 @@ This baseline is useful because the first successful real loop should produce an
 
 8. **Reconciliation inspection**
    - Open `/?debug=reconciliation` on the paired device.
+   - Before changing backend state, press **Kopiera snapshot** and preserve the JSON capture as the baseline.
    - Record recommendation plus all economy/progression/world-flag deltas.
    - Confirm a missing prerequisite is reported specifically (for example not paired, local save missing or backend state missing) rather than as an undifferentiated failure.
+   - Complete the backend quest/reward loop, refresh the panel, and press **Kopiera snapshot** again.
+   - Compare `capturedAt`, report deltas and migration decision between the before/after captures. The capture format is versioned and contains no auth token or service secret.
    - Do not write either side based on the report yet.
 
 ## Pass criteria
@@ -91,7 +94,8 @@ The backend loop passes only if all of the following are true:
 - child game state reflects exactly one reward;
 - child and parent both observe the same backend lifecycle after refresh;
 - local Preferences save remains intact;
-- reconciliation inspection performs no writes.
+- reconciliation inspection performs no writes;
+- before/after reconciliation snapshots can be captured without mutating either persistence domain.
 
 ## After a successful pass
 

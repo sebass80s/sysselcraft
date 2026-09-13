@@ -6,6 +6,7 @@ import {
   type PairedDeviceReconciliation,
   type PairedDeviceReconciliationInspection,
 } from "@/backend/deviceReconciliation";
+import { serializeReconciliationCapture } from "@/backend/reconciliationCapture";
 import { decideReconciliation } from "@/backend/reconciliationPolicy";
 import styles from "./ReconciliationDiagnostics.module.css";
 
@@ -50,6 +51,7 @@ export default function ReconciliationDiagnostics() {
   const [result, setResult] = useState<PairedDeviceReconciliation | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
+  const [captureMessage, setCaptureMessage] = useState("");
 
   async function readInspection() {
     const inspection = await inspectPairedDeviceReconciliationDetailed();
@@ -65,6 +67,7 @@ export default function ReconciliationDiagnostics() {
   async function refresh() {
     setBusy(true);
     setMessage("");
+    setCaptureMessage("");
     try {
       await readInspection();
     } catch (error) {
@@ -72,6 +75,19 @@ export default function ReconciliationDiagnostics() {
       setMessage(error instanceof Error ? error.message : "Kunde inte läsa reconciliation-läget.");
     } finally {
       setBusy(false);
+    }
+  }
+
+  async function copyCapture() {
+    if (!result) return;
+    const serialized = serializeReconciliationCapture(result);
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(serialized);
+      setCaptureMessage("Snapshot kopierad. Spara den som före/efter-underlag. ✅");
+    } catch {
+      window.prompt("Kopiera reconciliation-snapshoten:", serialized);
+      setCaptureMessage("Snapshot visad för manuell kopiering.");
     }
   }
 
@@ -208,8 +224,14 @@ export default function ReconciliationDiagnostics() {
       )}
 
       {message && result && <p className={styles.message}>{message}</p>}
+      {captureMessage && <p className={styles.message}>{captureMessage}</p>}
 
       <div className={styles.actions}>
+        {result && (
+          <button type="button" disabled={busy} onClick={copyCapture}>
+            Kopiera snapshot
+          </button>
+        )}
         <button type="button" disabled={busy} onClick={refresh}>
           {busy ? "Läser…" : "↻ Läs igen"}
         </button>
