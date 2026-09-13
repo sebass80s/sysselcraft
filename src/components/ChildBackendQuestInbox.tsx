@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getBackendAuthState } from "@/backend/auth";
+import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { getPairedChildId } from "@/backend/childDeviceBinding";
 import { getChildGameState, listChildQuests, submitQuest } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
@@ -11,6 +11,7 @@ const OPEN_REFRESH_MS = 15_000;
 
 export default function ChildBackendQuestInbox() {
   const [childId, setChildId] = useState<string | null>(null);
+  const [sessionReady, setSessionReady] = useState(false);
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [gameState, setGameState] = useState<BackendChildGameState | null>(null);
   const [open, setOpen] = useState(false);
@@ -45,19 +46,24 @@ export default function ChildBackendQuestInbox() {
         const pairedId = await getPairedChildId();
         if (!pairedId || cancelled) return;
 
+        setChildId(pairedId);
         const auth = await getBackendAuthState();
         if (cancelled) return;
-        setChildId(pairedId);
 
         if (!auth.signedIn || !auth.isAnonymous) {
+          setSessionReady(false);
+          setQuests([]);
+          setGameState(null);
           setMessage("Barnkopplingen behöver förnyas.");
           return;
         }
 
+        setSessionReady(true);
         await refresh(pairedId);
         if (!cancelled) setMessage("");
       } catch (error) {
         if (!cancelled) {
+          setSessionReady(false);
           setMessage(error instanceof Error ? error.message : "Kunde inte hämta uppdragen.");
         }
       }
@@ -72,6 +78,24 @@ export default function ChildBackendQuestInbox() {
   useEffect(() => {
     if (!childId) return;
 
+    return subscribeBackendAuth((state) => {
+      const ready = state.signedIn && state.isAnonymous;
+      setSessionReady(ready);
+
+      if (!ready) {
+        setQuests([]);
+        setGameState(null);
+        setMessage("Barnkopplingen behöver förnyas.");
+        return;
+      }
+
+      void refreshQuietly(childId);
+    });
+  }, [childId, refreshQuietly]);
+
+  useEffect(() => {
+    if (!childId || !sessionReady) return;
+
     const refreshIfVisible = () => {
       if (document.visibilityState === "visible") void refreshQuietly(childId);
     };
@@ -84,13 +108,13 @@ export default function ChildBackendQuestInbox() {
       document.removeEventListener("visibilitychange", refreshIfVisible);
       window.removeEventListener("focus", refreshOnFocus);
     };
-  }, [childId, refreshQuietly]);
+  }, [childId, refreshQuietly, sessionReady]);
 
   useEffect(() => {
-    if (!open || !childId) return;
+    if (!open || !childId || !sessionReady) return;
     const timer = window.setInterval(() => void refreshQuietly(childId), OPEN_REFRESH_MS);
     return () => window.clearInterval(timer);
-  }, [open, childId, refreshQuietly]);
+  }, [open, childId, refreshQuietly, sessionReady]);
 
   if (!childId) return null;
 
@@ -100,7 +124,7 @@ export default function ChildBackendQuestInbox() {
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
 
   async function markDone(instanceId: string) {
-    if (!childId) return;
+    if (!childId || !sessionReady) return;
     setBusy(true);
     setMessage("");
     try {
@@ -115,7 +139,7 @@ export default function ChildBackendQuestInbox() {
   }
 
   async function refreshNow() {
-    if (!childId) return;
+    if (!childId || !sessionReady) return;
     setBusy(true);
     setMessage("");
     try {
@@ -164,7 +188,7 @@ export default function ChildBackendQuestInbox() {
                 {quest.state === "available" ? (
                   <button
                     className="primary-button compact"
-                    disabled={busy}
+                    disabled={busy || !sessionReady}
                     onClick={() => markDone(quest.instanceId)}
                   >
                     Jag är klar
@@ -179,7 +203,7 @@ export default function ChildBackendQuestInbox() {
           {message && <p className={styles.message}>{message}</p>}
 
           <div className={styles.footer}>
-            <button className="secondary-button compact" disabled={busy} onClick={refreshNow}>
+            <button className="secondary-button compact" disabled={busy || !sessionReady} onClick={refreshNow}>
               ↻ Uppdatera
             </button>
             <a href="/pair">Koppla om</a>

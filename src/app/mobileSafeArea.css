@@ -1,0 +1,29 @@
+/* Native/iPhone safe-area hardening kept separate from the main prototype styles.
+   This file only adjusts viewport edges; it does not change gameplay layout or Phaser state. */
+
+.parent-page {
+  padding-top: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-top));
+  padding-right: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-right));
+  padding-bottom: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-bottom));
+  padding-left: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-left));
+}
+
+.quest-card,
+.dialogue-card {
+  width: min(
+    760px,
+    calc(100% - max(.6rem, env(safe-area-inset-left)) - max(.6rem, env(safe-area-inset-right)))
+  );
+}
+
+.quest-card {
+  max-width: 520px;
+}
+
+.game-hint {
+  max-width: calc(
+    100% - max(.65rem, env(safe-area-inset-left)) - max(.65rem, env(safe-area-inset-right))
+  );
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
