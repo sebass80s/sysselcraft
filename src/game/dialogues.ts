@@ -9,7 +9,7 @@ export const linusIntroDialogue: IntroDialogueStep[] = [
   { kind: "line", speaker: "Linus", text: "Inte längre. Förr bodde det folk överallt här. Det var liv och rörelse från morgon till kväll." },
   { kind: "line", speaker: "Linus", text: "Nu är det mest jag kvar. Så du anar inte hur glad jag är att se er." },
   { kind: "line", speaker: "Barnet", text: "Kanske flyttar det hit fler?" },
-  { kind: "line", speaker: "Linus", text: "Det hoppas jag. Det skulle vara fint att få lite liv i byn igen." },
+  { kind: "line", speaker: "Linus", text: "Det hoppas jag. Jag saknar tiden när det bodde mycket folk här. Det skulle vara fint att få lite liv i byn igen." },
   { kind: "line", speaker: "Linus", text: "Förresten... det är någon mer som har väntat på att ni skulle komma." },
   { kind: "reveal-dog" },
   { kind: "line", speaker: "Barnet", text: "En hund!" },
