@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { inspectPairedDeviceReconciliation } from "@/backend/deviceReconciliation";
-import type { PairedDeviceReconciliation } from "@/backend/deviceReconciliation";
+import {
+  inspectPairedDeviceReconciliationDetailed,
+  type PairedDeviceReconciliation,
+  type PairedDeviceReconciliationInspection,
+} from "@/backend/deviceReconciliation";
 import styles from "./ReconciliationDiagnostics.module.css";
 
 function subscribeToLocation() {
@@ -26,22 +29,45 @@ function recommendationLabel(value: PairedDeviceReconciliation["report"]["recomm
   }
 }
 
+function inspectionMessage(inspection: PairedDeviceReconciliationInspection) {
+  switch (inspection.status) {
+    case "not-paired":
+      return "Enheten är inte kopplad till ett barn ännu. Öppna /pair först.";
+    case "local-save-missing":
+      return "Barnkopplingen finns, men ingen lokal Sysselcraft-save kunde läsas på den här enheten.";
+    case "backend-state-missing":
+      return "Barnkopplingen finns, men backend saknar child_game_state för barnet.";
+    case "local-and-backend-state-missing":
+      return "Barnkopplingen finns, men varken lokal save eller backend-state kunde läsas.";
+    case "ready":
+      return "";
+  }
+}
+
 export default function ReconciliationDiagnostics() {
   const enabled = useSyncExternalStore(subscribeToLocation, getDiagnosticsSnapshot, () => false);
   const [result, setResult] = useState<PairedDeviceReconciliation | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
+  async function readInspection() {
+    const inspection = await inspectPairedDeviceReconciliationDetailed();
+    if (inspection.status === "ready") {
+      setResult(inspection.value);
+      setMessage("");
+      return;
+    }
+    setResult(null);
+    setMessage(inspectionMessage(inspection));
+  }
+
   async function refresh() {
     setBusy(true);
     setMessage("");
     try {
-      const next = await inspectPairedDeviceReconciliation();
-      setResult(next);
-      if (!next) {
-        setMessage("Ingen komplett paired-device reconciliation kunde byggas ännu.");
-      }
+      await readInspection();
     } catch (error) {
+      setResult(null);
       setMessage(error instanceof Error ? error.message : "Kunde inte läsa reconciliation-läget.");
     } finally {
       setBusy(false);
@@ -52,14 +78,20 @@ export default function ReconciliationDiagnostics() {
     if (!enabled) return;
     let cancelled = false;
 
-    inspectPairedDeviceReconciliation()
-      .then((next) => {
+    inspectPairedDeviceReconciliationDetailed()
+      .then((inspection) => {
         if (cancelled) return;
-        setResult(next);
-        if (!next) setMessage("Ingen komplett paired-device reconciliation kunde byggas ännu.");
+        if (inspection.status === "ready") {
+          setResult(inspection.value);
+          setMessage("");
+          return;
+        }
+        setResult(null);
+        setMessage(inspectionMessage(inspection));
       })
       .catch((error) => {
         if (cancelled) return;
+        setResult(null);
         setMessage(error instanceof Error ? error.message : "Kunde inte läsa reconciliation-läget.");
       });
 
@@ -90,7 +122,9 @@ export default function ReconciliationDiagnostics() {
       {result ? (
         <>
           <section className={styles.section}>
-            <div>Barn: <code>{shortChildId}</code></div>
+            <div>
+              Barn: <code>{shortChildId}</code>
+            </div>
             <div className={styles.row}>
               <strong>Ekonomi</strong>
               <span>Lokalt</span>
@@ -101,13 +135,23 @@ export default function ReconciliationDiagnostics() {
               <span>Diamanter</span>
               <span>{result.report.economy.local.diamonds}</span>
               <span>{result.report.economy.backend.diamonds}</span>
-              <span>{result.report.economy.backend.diamonds - result.report.economy.local.diamonds >= 0 ? "+" : ""}{result.report.economy.backend.diamonds - result.report.economy.local.diamonds}</span>
+              <span>
+                {result.report.economy.backend.diamonds - result.report.economy.local.diamonds >= 0
+                  ? "+"
+                  : ""}
+                {result.report.economy.backend.diamonds - result.report.economy.local.diamonds}
+              </span>
             </div>
             <div className={styles.row}>
               <span>SysselBux</span>
               <span>{result.report.economy.local.sysselBux}</span>
               <span>{result.report.economy.backend.sysselBux}</span>
-              <span>{result.report.economy.backend.sysselBux - result.report.economy.local.sysselBux >= 0 ? "+" : ""}{result.report.economy.backend.sysselBux - result.report.economy.local.sysselBux}</span>
+              <span>
+                {result.report.economy.backend.sysselBux - result.report.economy.local.sysselBux >= 0
+                  ? "+"
+                  : ""}
+                {result.report.economy.backend.sysselBux - result.report.economy.local.sysselBux}
+              </span>
             </div>
           </section>
 
@@ -118,7 +162,10 @@ export default function ReconciliationDiagnostics() {
                 <code>{entry.key}</code>
                 <span>{entry.local}</span>
                 <span>{entry.backend}</span>
-                <span>{entry.delta >= 0 ? "+" : ""}{entry.delta}</span>
+                <span>
+                  {entry.delta >= 0 ? "+" : ""}
+                  {entry.delta}
+                </span>
               </div>
             ))}
           </section>
@@ -129,7 +176,13 @@ export default function ReconciliationDiagnostics() {
               <span>world flag</span>
               <span>{String(result.report.worldFlags.localFirstDeliveryComplete)}</span>
               <span>{String(result.report.worldFlags.backendFirstDeliveryComplete)}</span>
-              <span>{result.report.worldFlags.matches === null ? "?" : result.report.worldFlags.matches ? "✓" : "≠"}</span>
+              <span>
+                {result.report.worldFlags.matches === null
+                  ? "?"
+                  : result.report.worldFlags.matches
+                    ? "✓"
+                    : "≠"}
+              </span>
             </div>
           </section>
         </>
