@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { inspectPairedDeviceReconciliation } from "@/backend/deviceReconciliation";
 import type { PairedDeviceReconciliation } from "@/backend/deviceReconciliation";
 import styles from "./ReconciliationDiagnostics.module.css";
 
-function shouldShowDiagnostics() {
-  if (typeof window === "undefined") return false;
+function subscribeToLocation() {
+  return () => {};
+}
+
+function getDiagnosticsSnapshot() {
   return new URLSearchParams(window.location.search).get("debug") === "reconciliation";
 }
 
@@ -24,14 +27,10 @@ function recommendationLabel(value: PairedDeviceReconciliation["report"]["recomm
 }
 
 export default function ReconciliationDiagnostics() {
-  const [enabled, setEnabled] = useState(false);
+  const enabled = useSyncExternalStore(subscribeToLocation, getDiagnosticsSnapshot, () => false);
   const [result, setResult] = useState<PairedDeviceReconciliation | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    setEnabled(shouldShowDiagnostics());
-  }, []);
 
   async function refresh() {
     setBusy(true);
@@ -51,7 +50,22 @@ export default function ReconciliationDiagnostics() {
 
   useEffect(() => {
     if (!enabled) return;
-    void refresh();
+    let cancelled = false;
+
+    inspectPairedDeviceReconciliation()
+      .then((next) => {
+        if (cancelled) return;
+        setResult(next);
+        if (!next) setMessage("Ingen komplett paired-device reconciliation kunde byggas ännu.");
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setMessage(error instanceof Error ? error.message : "Kunde inte läsa reconciliation-läget.");
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [enabled]);
 
   const shortChildId = useMemo(() => {
