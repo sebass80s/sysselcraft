@@ -1,5 +1,32 @@
 import { getSupabaseBrowserClient } from "./supabaseClient";
 
+export type BackendAuthState = {
+  signedIn: boolean;
+  isAnonymous: boolean;
+  userId: string | null;
+};
+
+function toBackendAuthState(session: Awaited<ReturnType<ReturnType<typeof getSupabaseBrowserClient>["auth"]["getSession"]>>["data"]["session"]): BackendAuthState {
+  return {
+    signedIn: Boolean(session),
+    isAnonymous: Boolean(session?.user.is_anonymous),
+    userId: session?.user.id ?? null,
+  };
+}
+
+export async function getBackendAuthState(): Promise<BackendAuthState> {
+  const { data, error } = await getSupabaseBrowserClient().auth.getSession();
+  if (error) throw error;
+  return toBackendAuthState(data.session);
+}
+
+export function subscribeBackendAuth(listener: (state: BackendAuthState) => void): () => void {
+  const { data } = getSupabaseBrowserClient().auth.onAuthStateChange((_event, session) => {
+    listener(toBackendAuthState(session));
+  });
+  return () => data.subscription.unsubscribe();
+}
+
 export async function sendParentMagicLink(email: string, redirectTo?: string): Promise<void> {
   const normalizedEmail = email.trim().toLowerCase();
   if (!normalizedEmail) throw new Error("Email is required.");
@@ -16,7 +43,14 @@ export async function ensureChildAnonymousSession(): Promise<string> {
   const supabase = getSupabaseBrowserClient();
   const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
   if (sessionError) throw sessionError;
-  if (sessionData.session?.user.id) return sessionData.session.user.id;
+
+  const currentSession = sessionData.session;
+  if (currentSession?.user.id) {
+    if (!currentSession.user.is_anonymous) {
+      throw new Error("Den här webbläsaren är inloggad som förälder. Öppna barnparningen på barnets enhet eller i ett privat fönster.");
+    }
+    return currentSession.user.id;
+  }
 
   const { data, error } = await supabase.auth.signInAnonymously();
   if (error) throw error;
