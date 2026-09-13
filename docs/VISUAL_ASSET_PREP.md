@@ -41,11 +41,12 @@ The ambient pack is now data-driven through `src/game/worldDecor.ts` rather than
 4. two `tree-stump` placements toward the outer village edges;
 5. `puddle` as a low-depth ground detail away from the primary route.
 
-`FIRST_DELIVERY_AMBIENT_OBJECTS` currently adds:
+`FIRST_DELIVERY_AMBIENT_OBJECTS` now adds the complete first earned construction-site reveal:
 
-- `wheelbarrow` at the material/construction area only after the first delivery is complete.
+- `construction-stakes` at the future work area;
+- `wheelbarrow` beside the delivered materials.
 
-This is deliberate. The wheelbarrow should not telegraph construction before the child earns the first visible consequence from an approved real-world quest.
+The permanent `material-stack` is created by the scene at the same moment. Before the first approved quest, the construction stakes are no longer visible. This is deliberate: the opening village should contain an empty, neglected patch rather than advertise a future building before the child has caused the first world change.
 
 No collision has been added for these props. Collision must remain separate from rendered bounds and should only be introduced if an actual playtest shows that a prop needs a physical footprint.
 
@@ -57,10 +58,11 @@ When native/browser verification capacity is available:
 
 1. Verify pathfinding around all current ambient placements.
 2. Verify click/tap targets and Y/base-depth sorting.
-3. Confirm the first-delivery wheelbarrow appears/restores from persisted state without replaying the delivery event.
-4. Capture a real screenshot from the running game.
-5. Use that screenshot to identify empty/noisy regions before drawing more assets.
-6. Only after composition is stable, begin replacing SVG bridge assets with coherent raster PNG/WebP sprite atlases.
+3. Compare the construction area before and after first approval. Before approval it should read as unused village space; afterwards stakes + materials + wheelbarrow should make the change unmistakable without looking like a finished building.
+4. Confirm the first-delivery visual state restores from persisted state without replaying the delivery event.
+5. Capture a real screenshot from the running game.
+6. Use that screenshot to identify empty/noisy regions before drawing more assets.
+7. Only after composition is stable, begin replacing SVG bridge assets with coherent raster PNG/WebP sprite atlases.
 
 Until then, additional visual work should focus on reusable assets, state-driven placement rules and production-pipeline preparation rather than speculative clutter.
 
