@@ -15,7 +15,9 @@ The project must not silently overwrite one with the other until the real two-de
 
 `src/backend/reconciliation.ts` provides a pure diagnostic comparison between a local `SaveStateV1` and a backend `BackendChildGameState`. It does not write to either source.
 
-`src/backend/deviceReconciliation.ts` combines the paired child id, local Preferences save and backend game state into the same report, still without performing writes.
+`src/backend/reconciliationPolicy.ts` turns that comparison into an explicit decision. The current phase is hard-coded as `observe-only`, and every decision has `automaticWriteAllowed: false`. This is intentional: even a `no-op` report is only a clean baseline, not permission to copy state automatically.
+
+`src/backend/deviceReconciliation.ts` combines the paired child id, local Preferences save and backend game state into the same report and attaches the explicit read-only decision, still without performing writes.
 
 A read-only diagnostic panel is mounted on the child game surface and can be enabled with:
 
@@ -36,6 +38,8 @@ It returns one of four recommendations:
 - `backend-ahead` — backend values are consistently equal or ahead;
 - `local-ahead` — local values are consistently equal or ahead;
 - `inspect-before-merge` — mixed/conflicting state, so automatic reconciliation would be unsafe.
+
+The policy layer then converts that recommendation into a next diagnostic step while keeping writes disabled.
 
 ## Why no automatic reconciliation yet
 
