@@ -1,7 +1,16 @@
 import type { ParentQuestDraft } from "@/game/parentMode";
 import { normalizeParentQuestDraft } from "@/game/parentMode";
 import { getSupabaseBrowserClient } from "./supabaseClient";
-import type { BackendChild, BackendChildGameState, BackendHousehold, BackendQuest } from "./types";
+import {
+  PROGRESSION_CLASSES,
+  createEmptyBackendProgression,
+  isProgressionClass,
+  isQuestLifecycleState,
+  type BackendChild,
+  type BackendChildGameState,
+  type BackendHousehold,
+  type BackendQuest,
+} from "./types";
 
 type RpcIdRow = { id: string };
 type RpcQuestRow = {
@@ -11,10 +20,10 @@ type RpcQuestRow = {
   child_id: string;
   title: string;
   description: string;
-  progression_class: BackendQuest["progressionClass"];
+  progression_class: unknown;
   reward_diamonds: number;
   reward_syssel_bux: number;
-  state: BackendQuest["state"];
+  state: unknown;
   created_at: string;
   submitted_at: string | null;
   approved_at: string | null;
@@ -29,7 +38,33 @@ function firstRpcId(data: unknown, operation: string): string {
   throw new Error(`${operation} did not return an id.`);
 }
 
+function finiteNonNegative(value: unknown): number {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : 0;
+}
+
+function normalizeProgression(value: unknown): BackendChildGameState["progression"] {
+  const normalized = createEmptyBackendProgression();
+  if (!value || typeof value !== "object" || Array.isArray(value)) return normalized;
+  const record = value as Record<string, unknown>;
+  for (const key of PROGRESSION_CLASSES) {
+    normalized[key] = finiteNonNegative(record[key]);
+  }
+  return normalized;
+}
+
+function normalizeWorldFlags(value: unknown): Record<string, unknown> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return { ...(value as Record<string, unknown>) };
+}
+
 function mapQuest(row: RpcQuestRow): BackendQuest {
+  if (!isProgressionClass(row.progression_class)) {
+    throw new Error(`Backend returned an invalid progression class for quest ${row.instance_id}.`);
+  }
+  if (!isQuestLifecycleState(row.state)) {
+    throw new Error(`Backend returned an invalid quest state for quest ${row.instance_id}.`);
+  }
+
   return {
     instanceId: row.instance_id,
     questId: row.quest_id,
@@ -39,8 +74,8 @@ function mapQuest(row: RpcQuestRow): BackendQuest {
     description: row.description,
     progressionClass: row.progression_class,
     reward: {
-      diamonds: row.reward_diamonds,
-      sysselBux: row.reward_syssel_bux,
+      diamonds: finiteNonNegative(row.reward_diamonds),
+      sysselBux: finiteNonNegative(row.reward_syssel_bux),
     },
     state: row.state,
     createdAt: row.created_at,
@@ -160,10 +195,10 @@ export async function getChildGameState(childId: string): Promise<BackendChildGa
 
   return {
     childId: data.child_id,
-    diamonds: data.diamonds,
-    sysselBux: data.syssel_bux,
-    progression: data.progression as BackendChildGameState["progression"],
-    worldFlags: data.world_flags as Record<string, unknown>,
+    diamonds: finiteNonNegative(data.diamonds),
+    sysselBux: finiteNonNegative(data.syssel_bux),
+    progression: normalizeProgression(data.progression),
+    worldFlags: normalizeWorldFlags(data.world_flags),
     updatedAt: data.updated_at,
   };
 }
