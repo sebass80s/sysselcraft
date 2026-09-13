@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { ensureChildAnonymousSession } from "@/backend/auth";
 import { getPairedChildId, setPairedChildId } from "@/backend/childDeviceBinding";
-import { redeemChildPairingCode } from "@/backend/familyRepository";
+import { getChildGameState, redeemChildPairingCode } from "@/backend/familyRepository";
 
 function normalizePairingCode(value: string) {
   return value.replace(/[^0-9a-f]/gi, "").slice(0, 8);
@@ -24,8 +24,27 @@ export default function PairChildPage() {
         await ensureChildAnonymousSession();
         const childId = await getPairedChildId();
         if (cancelled) return;
-        setPaired(Boolean(childId));
-        setMessage(childId ? "Den här enheten är redan kopplad till Sysselcraft. ✅" : "");
+
+        if (!childId) {
+          setPaired(false);
+          setMessage("");
+          return;
+        }
+
+        const backendState = await getChildGameState(childId);
+        if (cancelled) return;
+
+        if (backendState) {
+          setPaired(true);
+          setMessage("Den här enheten är redan kopplad till Sysselcraft. ✅");
+          return;
+        }
+
+        setPaired(false);
+        setRePairing(true);
+        setMessage(
+          "Den sparade barnkopplingen kan inte längre bekräftas av barnsessionen. Skapa en ny parningskod i föräldraläget och koppla om enheten.",
+        );
       } catch (error) {
         if (!cancelled) {
           setMessage(error instanceof Error ? error.message : "Kunde inte starta barnsessionen.");
@@ -47,6 +66,11 @@ export default function PairChildPage() {
     setMessage("");
     try {
       const childId = await redeemChildPairingCode(code);
+      const backendState = await getChildGameState(childId);
+      if (!backendState) {
+        throw new Error("Kopplingen skapades, men barnets spelstatus kunde inte läsas. Försök igen.");
+      }
+
       await setPairedChildId(childId);
       setPaired(true);
       setRePairing(false);
@@ -98,7 +122,9 @@ export default function PairChildPage() {
             disabled={busy}
             onClick={() => {
               setCode("");
-              setMessage("Skriv den nya parningskoden. Den gamla kopplingen behålls tills en ny kod godkänns.");
+              setMessage(
+                "Skriv den nya parningskoden. Den gamla kopplingen behålls tills en ny kod godkänns.",
+              );
               setRePairing(true);
             }}
           >
@@ -106,7 +132,7 @@ export default function PairChildPage() {
           </button>
         )}
 
-        {rePairing && (
+        {paired && rePairing && (
           <button
             className="secondary-button compact"
             type="button"
