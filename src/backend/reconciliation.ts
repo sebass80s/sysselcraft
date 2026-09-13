@@ -1,5 +1,9 @@
 import type { SaveStateV1 } from "@/game/saveState";
-import type { BackendChildGameState, ProgressionClass } from "./types";
+import {
+  PROGRESSION_CLASSES,
+  type BackendChildGameState,
+  type ProgressionClass,
+} from "./types";
 
 export type EconomySnapshot = {
   diamonds: number;
@@ -28,14 +32,6 @@ export type ReconciliationReport = {
   recommendation: "no-op" | "inspect-before-merge" | "backend-ahead" | "local-ahead";
 };
 
-const PROGRESSION_KEYS: ProgressionClass[] = [
-  "orderEnvironment",
-  "knowledgeCreativity",
-  "wellbeingRoutine",
-  "movementActivity",
-  "community",
-];
-
 function finiteNumber(value: unknown): number {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
@@ -60,7 +56,7 @@ export function createReconciliationReport(
     sysselBux: backend.sysselBux,
   };
 
-  const progression = PROGRESSION_KEYS.map((key) => {
+  const progression = PROGRESSION_CLASSES.map((key) => {
     const localValue = finiteNumber(local.progression[key]);
     const backendValue = finiteNumber(backend.progression[key]);
     return {
