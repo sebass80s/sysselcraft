@@ -100,6 +100,7 @@ export default function ChildBackendQuestInbox() {
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
 
   async function markDone(instanceId: string) {
+    if (!childId) return;
     setBusy(true);
     setMessage("");
     try {
@@ -114,6 +115,7 @@ export default function ChildBackendQuestInbox() {
   }
 
   async function refreshNow() {
+    if (!childId) return;
     setBusy(true);
     setMessage("");
     try {
