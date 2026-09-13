@@ -1,9 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="44" viewBox="0 0 48 44" shape-rendering="crispEdges">
-<rect width="48" height="44" fill="none"/>
-<rect x="4" y="6" width="40" height="34" fill="#765039"/>
-<rect x="8" y="10" width="32" height="26" fill="#b17a4e"/>
-<rect x="11" y="13" width="26" height="20" fill="#c58c5a"/>
-<path d="M10 12l28 22M38 12L10 34" stroke="#805638" stroke-width="4"/>
-<rect x="4" y="6" width="40" height="4" fill="#5b3f30"/>
-<rect x="4" y="36" width="40" height="4" fill="#5b3f30"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="44" viewBox="0 0 48 44" shape-rendering="crispEdges"><rect width="48" height="44" fill="none"/><ellipse cx="24" cy="40" rx="18" ry="3" fill="#3d4d35" opacity=".16"/><rect x="4" y="6" width="40" height="34" fill="#68462f"/><rect x="7" y="9" width="34" height="28" fill="#a56f45"/><rect x="10" y="12" width="28" height="22" fill="#bd8351"/><rect x="13" y="15" width="22" height="16" fill="#c99360"/><path d="M10 12l28 22M38 12 10 34" stroke="#765034" stroke-width="4"/><rect x="4" y="6" width="40" height="4" fill="#50382c"/><rect x="4" y="36" width="40" height="4" fill="#50382c"/><rect x="7" y="10" width="3" height="26" fill="#d6a06b"/><rect x="38" y="10" width="3" height="26" fill="#775037"/><g fill="#e0b17c"><rect x="15" y="13" width="7" height="2"/><rect x="24" y="28" width="9" height="2"/></g><g fill="#7b5539"><rect x="14" y="24" width="3" height="2"/><rect x="30" y="17" width="4" height="2"/><rect x="20" y="33" width="5" height="2"/></g><g fill="#4d3a2d"><rect x="6" y="8" width="2" height="2"/><rect x="40" y="8" width="2" height="2"/><rect x="6" y="36" width="2" height="2"/><rect x="40" y="36" width="2" height="2"/></g></svg>
