@@ -2,10 +2,12 @@ import { loadSaveState } from "@/game/saveState";
 import { getPairedChildId } from "./childDeviceBinding";
 import { getChildGameState } from "./familyRepository";
 import { createReconciliationReport, type ReconciliationReport } from "./reconciliation";
+import { decideReconciliation, type ReconciliationDecision } from "./reconciliationPolicy";
 
 export type PairedDeviceReconciliation = {
   childId: string;
   report: ReconciliationReport;
+  decision: ReconciliationDecision;
 };
 
 export type PairedDeviceReconciliationInspection =
@@ -36,11 +38,14 @@ export async function inspectPairedDeviceReconciliationDetailed(): Promise<Paire
   if (!localSave) return { status: "local-save-missing", childId };
   if (!backendState) return { status: "backend-state-missing", childId };
 
+  const report = createReconciliationReport(localSave, backendState);
+
   return {
     status: "ready",
     value: {
       childId,
-      report: createReconciliationReport(localSave, backendState),
+      report,
+      decision: decideReconciliation(report),
     },
   };
 }
