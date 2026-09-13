@@ -1,7 +1,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; background: #dbe7c9; color: #1f2a1f; font-family: Arial, Helvetica, sans-serif; }
 body { min-height: 100dvh; overflow: hidden; }
-button, input { font: inherit; }
+button, input, textarea, select { font: inherit; }
 main { min-height: 100dvh; }
 .prototype-shell { min-height: 100dvh; position: relative; overflow: hidden; }
 .prototype-header { position: absolute; top: max(.5rem, env(safe-area-inset-top)); right: max(.5rem, env(safe-area-inset-right)); left: max(.5rem, env(safe-area-inset-left)); z-index: 30; display: flex; gap: 1rem; justify-content: space-between; align-items: flex-start; pointer-events: none; }
@@ -63,6 +63,27 @@ main { min-height: 100dvh; }
 .parent-menu-footer > span { font-size: .72rem; color: #687064; }
 .debug-reset-button { border: 1px solid rgba(31,42,31,.22); border-radius: 999px; padding: .38rem .58rem; background: rgba(255,255,255,.72); color: #394239; font-size: .68rem; font-weight: 800; cursor: pointer; white-space: nowrap; }
 .debug-reset-button:disabled { opacity: .3; cursor: default; }
+
+/* Dedicated React parent surface. Kept outside Phaser on purpose. */
+.parent-page { min-height:100dvh; overflow:auto; padding:clamp(1rem,4vw,3rem); background:linear-gradient(#e8eedb,#d8e2c8); }
+.parent-dashboard,.parent-login { width:min(860px,100%); margin:0 auto; }
+.parent-dashboard>header { display:flex; justify-content:space-between; gap:1rem; align-items:flex-start; margin-bottom:1rem; }
+.parent-dashboard h1,.parent-login h1 { margin:.2rem 0; font-size:clamp(1.8rem,5vw,2.7rem); color:#31442d; }
+.parent-dashboard header p,.parent-login p { margin:.25rem 0 .8rem; color:#5d6758; }
+.parent-tool-card,.parent-login { background:#fffdf4; border:1px solid #cfc5aa; border-radius:18px; padding:1rem; margin-bottom:1rem; box-shadow:0 10px 28px rgba(45,58,39,.08); }
+.parent-tool-card h2 { margin:0 0 .65rem; font-size:1.1rem; }
+.parent-login { margin-top:8vh; max-width:520px; }
+.parent-login form,.parent-quest-form { display:grid; gap:.65rem; }
+.parent-login input,.parent-quest-form input,.parent-quest-form textarea,.parent-quest-form select { width:100%; border:2px solid #c8b994; border-radius:10px; padding:.7rem; background:#fffef9; color:#282219; }
+.parent-quest-form textarea { min-height:90px; resize:vertical; }
+.parent-reward-row { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+.parent-reward-row label { display:flex; gap:.4rem; align-items:center; font-weight:800; }
+.parent-tool-card .parent-quest-card + .parent-quest-card { margin-top:.6rem; }
+.pairing-code { margin-top:.7rem; display:grid; gap:.2rem; padding:.8rem; background:#edf3e6; border-radius:12px; text-align:center; }
+.pairing-code strong { font-size:1.7rem; letter-spacing:.18em; }
+.parent-status-message { position:sticky; bottom:1rem; margin:1rem 0; padding:.75rem 1rem; background:#31442d; color:#fffdf4; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.16); }
+.parent-page a { color:#3e6438; font-weight:800; }
+
 @media (max-width: 700px) and (orientation: landscape) {
   .parent-menu-panel { max-width: 560px; padding: .8rem; }
   .parent-menu-note { margin-bottom: .55rem; }
@@ -71,4 +92,5 @@ main { min-height: 100dvh; }
 }
 @media (orientation: portrait) and (max-width: 700px) {
   .prototype-shell::after { content: "Vrid mobilen för att spela Sysselcraft"; position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 2rem; text-align: center; font-weight: 800; font-size: 1.2rem; background: #dbe7c9; color: #26342b; }
+  .parent-dashboard>header { align-items:center; }
 }
