@@ -1,4 +1,5 @@
 import type { GameObjects, Input, Types } from "phaser";
+import { AMBIENT_TEXTURE_KEYS, OPENING_AMBIENT_OBJECTS } from "./worldDecor";
 
 const VIEW_HEIGHT = 640;
 const WORLD_MIN_X = -480;
@@ -259,6 +260,7 @@ export async function createVillageGame(
         "tree-cluster",
         "wild-grass-bank",
         "construction-stakes",
+        ...AMBIENT_TEXTURE_KEYS,
       ]) {
         this.load.svg(key, `/assets/village/${key}.svg`);
       }
@@ -658,6 +660,7 @@ export async function createVillageGame(
         { x: 525, y: 214, texture: "bush", scale: 0.72 },
         { x: 676, y: 390, texture: "construction-stakes", scale: 0.94, baseY: 410 },
       ]);
+      this.placeWorldObjects(OPENING_AMBIENT_OBJECTS);
 
       this.linus = this.add
         .image(575, 285, "linus")
