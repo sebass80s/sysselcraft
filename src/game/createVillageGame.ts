@@ -663,7 +663,6 @@ export async function createVillageGame(
         { x: 765, y: 234, texture: "stone-wall", scale: 0.9 },
         { x: 216, y: 214, texture: "stone-wall", scale: 0.56 },
         { x: 525, y: 214, texture: "bush", scale: 0.72 },
-        { x: 676, y: 390, texture: "construction-stakes", scale: 0.94, baseY: 410 },
       ]);
       this.placeWorldObjects(OPENING_AMBIENT_OBJECTS);
 
