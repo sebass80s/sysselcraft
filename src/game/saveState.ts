@@ -13,6 +13,7 @@ export type SaveStateV1 = {
   introComplete: boolean;
   dialogueOpen: boolean;
   dialogueIndex: number;
+  childName: string;
   dogName: string;
   dogVisible: boolean;
   worldFlags: {
@@ -29,6 +30,7 @@ export function createDefaultSaveState(): SaveStateV1 {
     introComplete: false,
     dialogueOpen: false,
     dialogueIndex: 0,
+    childName: "",
     dogName: "",
     dogVisible: false,
     worldFlags: { firstDeliveryComplete: false },
@@ -72,6 +74,7 @@ function normalizeSaveState(value: unknown): SaveStateV1 | null {
       typeof candidate.dialogueIndex === "number" && Number.isInteger(candidate.dialogueIndex)
         ? Math.max(0, candidate.dialogueIndex)
         : defaults.dialogueIndex,
+    childName: typeof candidate.childName === "string" ? candidate.childName.slice(0, 18) : "",
     dogName: typeof candidate.dogName === "string" ? candidate.dogName.slice(0, 18) : "",
     dogVisible:
       typeof candidate.dogVisible === "boolean" ? candidate.dogVisible : defaults.dogVisible,

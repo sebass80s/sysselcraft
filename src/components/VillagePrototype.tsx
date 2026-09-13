@@ -8,6 +8,7 @@ import { loadSaveState, saveSaveState } from "../game/saveState";
 export default function VillagePrototype() {
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
+  const childNameInputRef = useRef<HTMLInputElement>(null);
   const dogNameInputRef = useRef<HTMLInputElement>(null);
   const [saveReady, setSaveReady] = useState(false);
   const [questState, setQuestState] = useState<QuestState>("available");
@@ -17,6 +18,8 @@ export default function VillagePrototype() {
   const [introComplete, setIntroComplete] = useState(false);
   const [dialogueOpen, setDialogueOpen] = useState(false);
   const [dialogueIndex, setDialogueIndex] = useState(0);
+  const [childNameDraft, setChildNameDraft] = useState("");
+  const [childName, setChildName] = useState("");
   const [dogNameDraft, setDogNameDraft] = useState("");
   const [dogName, setDogName] = useState("");
   const [dogVisible, setDogVisible] = useState(false);
@@ -37,7 +40,10 @@ export default function VillagePrototype() {
         setIntroComplete(saved.introComplete);
         setDialogueOpen(saved.dialogueOpen);
         setDialogueIndex(saved.dialogueIndex);
+        setChildName(saved.childName);
+        setChildNameDraft(saved.childName);
         setDogName(saved.dogName);
+        setDogNameDraft(saved.dogName);
         setDogVisible(saved.dogVisible);
       }
 
@@ -61,6 +67,7 @@ export default function VillagePrototype() {
       introComplete,
       dialogueOpen,
       dialogueIndex,
+      childName,
       dogName,
       dogVisible,
       worldFlags: {
@@ -75,6 +82,7 @@ export default function VillagePrototype() {
     introComplete,
     dialogueOpen,
     dialogueIndex,
+    childName,
     dogName,
     dogVisible,
   ]);
@@ -140,7 +148,15 @@ export default function VillagePrototype() {
     setDialogueIndex(nextIndex);
   }
 
-  function finishNaming() {
+  function finishChildNaming() {
+    const trimmed = (childNameInputRef.current?.value ?? childNameDraft).trim();
+    if (!trimmed) return;
+    setChildNameDraft(trimmed);
+    setChildName(trimmed);
+    advanceDialogue();
+  }
+
+  function finishDogNaming() {
     const trimmed = (dogNameInputRef.current?.value ?? dogNameDraft).trim();
     if (!trimmed) return;
     setDogNameDraft(trimmed);
@@ -167,6 +183,13 @@ export default function VillagePrototype() {
     setQuestOpen(true);
   }
 
+  const speakerName =
+    dialogueStep?.kind === "line" && dialogueStep.speaker === "Barnet"
+      ? childName || "Barnet"
+      : dialogueStep?.kind === "line"
+        ? dialogueStep.speaker
+        : "";
+
   return (
     <section className="prototype-shell">
       <header className="prototype-header">
@@ -189,9 +212,31 @@ export default function VillagePrototype() {
           <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite">
             {dialogueStep.kind === "line" && (
               <>
-                <span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{dialogueStep.speaker}</span>
+                <span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{speakerName}</span>
                 <p>{dialogueStep.text}</p>
                 <button className="primary-button dialogue-next" onClick={advanceDialogue}>Fortsätt</button>
+              </>
+            )}
+            {dialogueStep.kind === "name-child" && (
+              <>
+                <span className="dialogue-speaker">Linus</span>
+                <h2>Vad heter du?</h2>
+                <input
+                  ref={childNameInputRef}
+                  className="dog-name-input"
+                  value={childNameDraft}
+                  onChange={(event) => setChildNameDraft(event.target.value)}
+                  onInput={(event) => setChildNameDraft(event.currentTarget.value)}
+                  onKeyDown={(event) => event.key === "Enter" && finishChildNaming()}
+                  maxLength={18}
+                  autoFocus
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="words"
+                  spellCheck={false}
+                  placeholder="Skriv ditt namn"
+                />
+                <button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameDraft.trim()}>Det är jag!</button>
               </>
             )}
             {dialogueStep.kind === "name-dog" && (
@@ -204,7 +249,7 @@ export default function VillagePrototype() {
                   value={dogNameDraft}
                   onChange={(event) => setDogNameDraft(event.target.value)}
                   onInput={(event) => setDogNameDraft(event.currentTarget.value)}
-                  onKeyDown={(event) => event.key === "Enter" && finishNaming()}
+                  onKeyDown={(event) => event.key === "Enter" && finishDogNaming()}
                   maxLength={18}
                   autoFocus
                   autoComplete="off"
@@ -213,7 +258,7 @@ export default function VillagePrototype() {
                   spellCheck={false}
                   placeholder="Skriv ett namn"
                 />
-                <button className="primary-button dialogue-next" onClick={finishNaming} disabled={!dogNameDraft.trim()}>Det blir namnet!</button>
+                <button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameDraft.trim()}>Det blir namnet!</button>
               </>
             )}
           </div>
