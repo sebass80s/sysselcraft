@@ -1,9 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { sendParentMagicLink, signOutBackendSession } from "@/backend/auth";
+import { getBackendAuthState, sendParentMagicLink, signOutBackendSession, subscribeBackendAuth } from "@/backend/auth";
 import { createChild, createChildPairingCode, createHousehold, createParentQuest, listChildQuests, listChildren, listHouseholds, reviewQuest } from "@/backend/familyRepository";
-import { getSupabaseBrowserClient } from "@/backend/supabaseClient";
 import type { BackendChild, BackendHousehold, BackendQuest } from "@/backend/types";
 import type { ParentQuestDraft } from "@/game/parentMode";
 
@@ -36,18 +35,28 @@ export default function ParentModePage() {
   }
 
   useEffect(() => {
-    const supabase = getSupabaseBrowserClient();
-    void supabase.auth.getSession().then(({ data }) => {
-      const parent = Boolean(data.session && !data.session.user.is_anonymous);
+    let cancelled = false;
+
+    void getBackendAuthState().then((state) => {
+      if (cancelled) return;
+      const parent = state.signedIn && !state.isAnonymous;
+      setSignedIn(parent);
+      if (parent) void refreshFamily();
+    }).catch((error) => {
+      if (!cancelled) setMessage(error instanceof Error ? error.message : "Kunde inte läsa inloggningen.");
+    });
+
+    const unsubscribe = subscribeBackendAuth((state) => {
+      if (cancelled) return;
+      const parent = state.signedIn && !state.isAnonymous;
       setSignedIn(parent);
       if (parent) void refreshFamily();
     });
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      const parent = Boolean(session && !session.user.is_anonymous);
-      setSignedIn(parent);
-      if (parent) void refreshFamily();
-    });
-    return () => listener.subscription.unsubscribe();
+
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
   }, []);
 
   async function magicLink(e: FormEvent) {
