@@ -2,7 +2,7 @@
 
 Status: **SAFE HARDENING PASS COMPLETED · REAL DEVICE RECONCILIATION STILL REQUIRED**
 
-This audit was performed against draft PR #6 on `nova/vercel-free-batch`. It intentionally avoided Vercel and made no writes to real Supabase family data.
+This audit was performed against draft PR #6 on `nova/vercel-free-batch`. It intentionally avoided explicit Vercel deployment work and made no writes to real Supabase family data.
 
 ## Verified baseline
 
@@ -29,6 +29,17 @@ Hardening in this pass:
 
 This does not modify pairing state, local game save or backend data.
 
+### Parent-mode manual actions
+
+The parent surface already wrapped create/review/pairing mutations in explicit busy/error handling, but its lightweight manual refresh and logout controls did not. A rejected network/auth request there could surface as an unhandled async rejection.
+
+Hardening in this pass:
+
+- manual quest refresh now uses the same `busy` + message + `try/catch/finally` pattern as the rest of parent mode;
+- logout is disabled while another action is running, reports errors in the existing status surface, and clears stale family/child/quest selections after a successful sign-out.
+
+This changes only UI error handling and stale client presentation. It does not alter backend authorization or data semantics.
+
 ### iPhone/native viewport
 
 The gameplay shell already used dynamic viewport units and several safe-area insets, but three edge cases remained in landscape:
@@ -38,6 +49,16 @@ The gameplay shell already used dynamic viewport units and several safe-area ins
 - the backend quest dock width did not subtract both horizontal safe areas.
 
 This pass adds edge-only CSS hardening. It does not change Phaser's internal world size, camera, pathfinding, collision, quest semantics or art placement.
+
+### Native backend build precheck
+
+The Capacitor shell uses Next's static export. Public Supabase configuration is therefore embedded at build time on the Mac rather than inherited from Vercel.
+
+This pass:
+
+- clarified the existing `.env.example` so it explicitly warns against service-role credentials;
+- added `docs/NATIVE_BACKEND_TEST_PRECHECK.md` so a missing local `.env.local` is caught before a physical pairing/reconciliation run;
+- kept all real project credentials out of the public repository.
 
 ### Local save and Phaser lifecycle
 
@@ -74,9 +95,8 @@ No live Supabase rows were changed or used as test fixtures during this audit.
 
 1. **Pairing success + verification network failure.** A one-time pairing code can be consumed server-side before the client finishes its post-redeem verification/read and persists the new local child ID. Recovery is to generate a fresh code. A more seamless recovery mechanism would change pairing semantics and should be designed deliberately rather than guessed.
 2. **Local save write observability.** Preferences write errors are logged, but the child is not shown a save-health warning. This is worth hardening after deciding the desired offline/retry UX.
-3. **Parent manual action error wrappers.** Most parent actions already catch errors, but the lightweight manual refresh/logout controls should eventually use the same explicit busy/error wrapper pattern. This is a robustness cleanup, not a backend-authority blocker.
-4. **Reward upper bounds.** Rewards are normalized to non-negative integers and PostgreSQL integer constraints prevent invalid storage, but there is no product-level maximum reward. A cap is an economy/product decision and was not invented during the audit.
-5. **No automatic reconciliation tests against real device snapshots yet.** This is intentional. The next authority decision must use captured before/after evidence from the physical test plan.
+3. **Reward upper bounds.** Rewards are normalized to non-negative integers and PostgreSQL integer constraints prevent invalid storage, but there is no product-level maximum reward. A cap is an economy/product decision and was not invented during the audit.
+4. **No automatic reconciliation tests against real device snapshots yet.** This is intentional. The next authority decision must use captured before/after evidence from the physical test plan.
 
 ## MVP readiness snapshot
 

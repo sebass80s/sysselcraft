@@ -256,6 +256,39 @@ export default function ParentModePage() {
     }
   }
 
+  async function refreshSelectedChild() {
+    if (!childId) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      await loadChildQuests(childId);
+      setMessage("Uppdragen är uppdaterade.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte uppdatera uppdragen.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function logout() {
+    setBusy(true);
+    setMessage("");
+    try {
+      await signOutBackendSession();
+      setSignedIn(false);
+      setHouseholds([]);
+      setChildren([]);
+      setQuests([]);
+      setHouseholdId("");
+      setChildId("");
+      setPairingCode("");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte logga ut.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   if (!signedIn) {
     return (
       <main className="parent-page">
@@ -299,10 +332,8 @@ export default function ParentModePage() {
           </div>
           <button
             className="secondary-button compact"
-            onClick={async () => {
-              await signOutBackendSession();
-              setSignedIn(false);
-            }}
+            disabled={busy}
+            onClick={() => void logout()}
           >
             Logga ut
           </button>
@@ -350,7 +381,7 @@ export default function ParentModePage() {
               <button
                 className="secondary-button compact"
                 disabled={busy || !childId}
-                onClick={() => void loadChildQuests(childId)}
+                onClick={() => void refreshSelectedChild()}
               >
                 ↻ Uppdatera
               </button>
