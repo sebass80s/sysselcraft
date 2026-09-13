@@ -1,11 +1,34 @@
+export const QUEST_LIFECYCLE_STATES = ["available", "pending", "approved"] as const;
+export type QuestLifecycleState = (typeof QUEST_LIFECYCLE_STATES)[number];
+
+export const PROGRESSION_CLASSES = [
+  "orderEnvironment",
+  "knowledgeCreativity",
+  "wellbeingRoutine",
+  "movementActivity",
+  "community",
+] as const;
+export type ProgressionClass = (typeof PROGRESSION_CLASSES)[number];
+
 export type HouseholdRole = "owner" | "parent";
-export type QuestLifecycleState = "available" | "pending" | "approved";
-export type ProgressionClass =
-  | "orderEnvironment"
-  | "knowledgeCreativity"
-  | "wellbeingRoutine"
-  | "movementActivity"
-  | "community";
+
+export function isQuestLifecycleState(value: unknown): value is QuestLifecycleState {
+  return typeof value === "string" && QUEST_LIFECYCLE_STATES.includes(value as QuestLifecycleState);
+}
+
+export function isProgressionClass(value: unknown): value is ProgressionClass {
+  return typeof value === "string" && PROGRESSION_CLASSES.includes(value as ProgressionClass);
+}
+
+export function createEmptyBackendProgression(): Record<ProgressionClass, number> {
+  return {
+    orderEnvironment: 0,
+    knowledgeCreativity: 0,
+    wellbeingRoutine: 0,
+    movementActivity: 0,
+    community: 0,
+  };
+}
 
 export type BackendHousehold = {
   id: string;
