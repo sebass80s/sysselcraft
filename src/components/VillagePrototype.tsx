@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { QuestState, VillageGameHandle } from "../game/createVillageGame";
 import { linusIntroDialogue } from "../game/dialogues";
+import { makeBedQuest } from "../game/quests";
 import { clearSaveState, loadSaveState, saveSaveState } from "../game/saveState";
 
 export default function VillagePrototype() {
@@ -19,11 +20,11 @@ export default function VillagePrototype() {
   const [introComplete, setIntroComplete] = useState(false);
   const [dialogueOpen, setDialogueOpen] = useState(false);
   const [dialogueIndex, setDialogueIndex] = useState(0);
-  const [childNameDraft, setChildNameDraft] = useState("");
   const [childName, setChildName] = useState("");
-  const [dogNameDraft, setDogNameDraft] = useState("");
   const [dogName, setDogName] = useState("");
   const [dogVisible, setDogVisible] = useState(false);
+  const [childNameCanSubmit, setChildNameCanSubmit] = useState(false);
+  const [dogNameCanSubmit, setDogNameCanSubmit] = useState(false);
   const [resettingSave, setResettingSave] = useState(false);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
@@ -43,10 +44,10 @@ export default function VillagePrototype() {
         setDialogueOpen(saved.dialogueOpen);
         setDialogueIndex(saved.dialogueIndex);
         setChildName(saved.childName);
-        setChildNameDraft(saved.childName);
         setDogName(saved.dogName);
-        setDogNameDraft(saved.dogName);
         setDogVisible(saved.dogVisible);
+        setChildNameCanSubmit(Boolean(saved.childName.trim()));
+        setDogNameCanSubmit(Boolean(saved.dogName.trim()));
         restoredFirstDeliveryCompleteRef.current = saved.worldFlags.firstDeliveryComplete;
       }
 
@@ -154,18 +155,18 @@ export default function VillagePrototype() {
   }
 
   function finishChildNaming() {
-    const trimmed = (childNameInputRef.current?.value ?? childNameDraft).trim();
+    const trimmed = childNameInputRef.current?.value.trim() ?? "";
     if (!trimmed) return;
-    setChildNameDraft(trimmed);
     setChildName(trimmed);
+    setChildNameCanSubmit(true);
     advanceDialogue();
   }
 
   function finishDogNaming() {
-    const trimmed = (dogNameInputRef.current?.value ?? dogNameDraft).trim();
+    const trimmed = dogNameInputRef.current?.value.trim() ?? "";
     if (!trimmed) return;
-    setDogNameDraft(trimmed);
     setDogName(trimmed);
+    setDogNameCanSubmit(true);
     setDogVisible(true);
     setDialogueOpen(false);
     setIntroComplete(true);
@@ -181,8 +182,8 @@ export default function VillagePrototype() {
   function approveQuest() {
     if (questState !== "pending") return;
     setQuestState("approved");
-    setDiamonds((value) => value + 5);
-    setSysselBux((value) => value + 10);
+    setDiamonds((value) => value + makeBedQuest.reward.diamonds);
+    setSysselBux((value) => value + makeBedQuest.reward.sysselBux);
   }
 
   function needsCompletion() {
@@ -260,9 +261,8 @@ export default function VillagePrototype() {
                 <input
                   ref={childNameInputRef}
                   className="dog-name-input"
-                  value={childNameDraft}
-                  onChange={(event) => setChildNameDraft(event.target.value)}
-                  onInput={(event) => setChildNameDraft(event.currentTarget.value)}
+                  defaultValue={childName}
+                  onInput={(event) => setChildNameCanSubmit(Boolean(event.currentTarget.value.trim()))}
                   onKeyDown={(event) => event.key === "Enter" && finishChildNaming()}
                   maxLength={18}
                   autoFocus
@@ -270,9 +270,11 @@ export default function VillagePrototype() {
                   autoCorrect="off"
                   autoCapitalize="words"
                   spellCheck={false}
+                  inputMode="text"
+                  enterKeyHint="done"
                   placeholder="Skriv ditt namn"
                 />
-                <button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameDraft.trim()}>Det är jag!</button>
+                <button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>Det är jag!</button>
               </>
             )}
             {dialogueStep.kind === "name-dog" && (
@@ -282,9 +284,8 @@ export default function VillagePrototype() {
                 <input
                   ref={dogNameInputRef}
                   className="dog-name-input"
-                  value={dogNameDraft}
-                  onChange={(event) => setDogNameDraft(event.target.value)}
-                  onInput={(event) => setDogNameDraft(event.currentTarget.value)}
+                  defaultValue={dogName}
+                  onInput={(event) => setDogNameCanSubmit(Boolean(event.currentTarget.value.trim()))}
                   onKeyDown={(event) => event.key === "Enter" && finishDogNaming()}
                   maxLength={18}
                   autoFocus
@@ -292,9 +293,11 @@ export default function VillagePrototype() {
                   autoCorrect="off"
                   autoCapitalize="words"
                   spellCheck={false}
+                  inputMode="text"
+                  enterKeyHint="done"
                   placeholder="Skriv ett namn"
                 />
-                <button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameDraft.trim()}>Det blir namnet!</button>
+                <button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>Det blir namnet!</button>
               </>
             )}
           </div>
@@ -304,9 +307,9 @@ export default function VillagePrototype() {
           <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="quest-title">
             <button className="close-button" onClick={() => setQuestOpen(false)} aria-label="Stäng">×</button>
             <span className="quest-kicker">Dagens första quest</span>
-            <h2 id="quest-title">🛏️ Bädda sängen</h2>
-            <p>Gå och bädda din säng. Kom tillbaka när du är klar.</p>
-            <div className="quest-reward">Belöning: 💎 5 · 🪙 10</div>
+            <h2 id="quest-title">{makeBedQuest.icon} {makeBedQuest.title}</h2>
+            <p>{makeBedQuest.description}</p>
+            <div className="quest-reward">Belöning: 💎 {makeBedQuest.reward.diamonds} · 🪙 {makeBedQuest.reward.sysselBux}</div>
             {questState === "available" && <button className="primary-button" onClick={submitQuest}>Jag har bäddat klart</button>}
             {questState === "pending" && <div className="pending-message">⏳ Väntar på en vuxen</div>}
             {questState === "approved" && <div className="approved-message">✓ Godkänd!</div>}
@@ -316,7 +319,7 @@ export default function VillagePrototype() {
         {questState === "pending" && (
           <aside className="parent-review" aria-label="Vuxenläge prototyp">
             <span>🔐 Vuxenläge · prototyp</span>
-            <strong>Bädda sängen</strong>
+            <strong>{makeBedQuest.title}</strong>
             <div>
               <button className="primary-button compact" onClick={approveQuest}>Godkänn</button>
               <button className="secondary-button compact" onClick={needsCompletion}>Behöver kompletteras</button>
