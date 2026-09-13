@@ -10,6 +10,7 @@ export type VillageGameHandle = { destroy: () => void; setQuestState: (state: Qu
 type Callbacks = { onQuestOpen: () => void };
 type Point = { x: number; y: number };
 type Obstacle = { type: "rect"; x: number; y: number; width: number; height: number } | { type: "circle"; x: number; y: number; radius: number };
+type WorldObjectDefinition = { x: number; y: number; texture: string; scale?: number; originY?: number };
 
 const obstacles: Obstacle[] = [
   { type: "rect", x: 150, y: 165, width: 190, height: 125 },
@@ -84,7 +85,10 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
       this.load.svg("truck", "/assets/village/truck.svg");
       this.load.svg("material-stack", "/assets/village/material-stack.svg");
       this.load.svg("road-dirt", "/assets/village/road-dirt.svg");
+      this.load.svg("road-edge-grass", "/assets/village/road-edge-grass.svg");
       this.load.svg("grass-tile", "/assets/village/grass-tile.svg");
+      this.load.svg("grass-tuft", "/assets/village/grass-tuft.svg");
+      this.load.svg("dirt-patch", "/assets/village/dirt-patch.svg");
       this.load.svg("fence-segment", "/assets/village/fence-segment.svg");
       this.load.svg("quest-board", "/assets/village/quest-board.svg");
       this.load.svg("bench", "/assets/village/bench.svg");
@@ -126,6 +130,7 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
       this.playerFrameClock=0;this.playerFrameIndex=(this.playerFrameIndex+1)%2;this.player.setTexture(this.playerFrameIndex===0?"child-walk-a":"child-walk-b");
     }
     private worldImage(x:number,y:number,key:string,scale=1,originY=1){ return this.add.image(x,y,key).setOrigin(.5,originY).setScale(scale).setDepth(1000+Math.round(y)); }
+    private placeWorldObjects(objects:WorldObjectDefinition[]){objects.forEach(({x,y,texture,scale=1,originY=1})=>this.worldImage(x,y,texture,scale,originY));}
     private drawTree(x:number,y:number,key="tree-oak",scale=1){ this.worldImage(x,y+32,key,scale); }
     private drawHouse(){ this.add.image(150,250,"family-house").setOrigin(.5,1).setDepth(1250); }
     private drawFence(x:number,y:number,count:number){ this.add.image(x+count*10,y,"fence-segment").setDisplaySize(count*20,48).setDepth(1000+y); }
@@ -145,10 +150,13 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
     private drawVillage(){
       this.add.tileSprite(WORLD_WIDTH/2,WORLD_HEIGHT/2,WORLD_WIDTH,WORLD_HEIGHT,"grass-tile").setDepth(0);
       this.add.image(490,360,"road-dirt").setScale(1.8,.95).setAngle(-18).setDepth(20);
+      this.add.image(490,360,"road-edge-grass").setScale(1.8,.95).setAngle(-18).setDepth(21);
 
       this.drawHouse(); this.drawFence(50,270,7); this.drawFence(820,238,6); this.drawQuestBoard();
-      this.worldImage(282,298,"bench"); this.worldImage(34,400,"crate",.8); this.worldImage(925,205,"crate",.65);
-      this.worldImage(257,266,"mailbox",.82); this.worldImage(78,261,"woodpile",.72); this.worldImage(660,300,"signpost",.78); this.worldImage(365,337,"lamp-post",.72);
+      this.placeWorldObjects([
+        {x:282,y:298,texture:"bench"},{x:34,y:400,texture:"crate",scale:.8},{x:925,y:205,texture:"crate",scale:.65},
+        {x:257,y:266,texture:"mailbox",scale:.82},{x:78,y:261,texture:"woodpile",scale:.72},{x:660,y:300,texture:"signpost",scale:.78},{x:365,y:337,texture:"lamp-post",scale:.72}
+      ]);
 
       this.linus=this.add.image(575,285,"linus").setOrigin(.5,.9).setDepth(1285);
       this.add.text(549,236,"Linus",{color:"#f8edcf",fontSize:"13px",backgroundColor:"#26342bea",padding:{x:5,y:3}}).setDepth(2900);
@@ -156,8 +164,12 @@ export async function createVillageGame(parent: HTMLElement, callbacks: Callback
       this.add.rectangle(675,405,180,105,0x6e955b,.10).setDepth(8);
       this.drawTree(105,115,"tree-birch",.95); this.drawTree(155,485,"tree-oak",1.05); this.drawTree(410,105,"tree-pine",.9); this.drawTree(790,120,"tree-birch",1); this.drawTree(875,475,"tree-pine",1.05);
 
-      [[310,527,.8],[347,514,.65],[623,112,.75],[718,532,.8],[529,504,.7],[255,91,.65],[445,559,.8],[744,181,.7],[903,320,.75],[208,294,.65],[805,287,.72]].forEach(([x,y,s])=>this.worldImage(x,y,"flower-patch",s));
-      [[365,300,.72],[610,475,.78],[695,260,.65],[245,455,.7],[840,365,.75],[520,126,.62],[90,350,.65]].forEach(([x,y,s])=>this.worldImage(x,y,"rock-cluster",s));
+      this.placeWorldObjects([
+        {x:310,y:527,texture:"flower-patch",scale:.8},{x:347,y:514,texture:"flower-patch",scale:.65},{x:623,y:112,texture:"flower-patch",scale:.75},{x:718,y:532,texture:"flower-patch",scale:.8},{x:529,y:504,texture:"flower-patch",scale:.7},{x:255,y:91,texture:"flower-patch",scale:.65},{x:445,y:559,texture:"flower-patch",scale:.8},{x:744,y:181,texture:"flower-patch",scale:.7},{x:903,y:320,texture:"flower-patch",scale:.75},{x:208,y:294,texture:"flower-patch",scale:.65},{x:805,y:287,texture:"flower-patch",scale:.72},
+        {x:365,y:300,texture:"rock-cluster",scale:.72},{x:610,y:475,texture:"rock-cluster",scale:.78},{x:695,y:260,texture:"rock-cluster",scale:.65},{x:245,y:455,texture:"rock-cluster",scale:.7},{x:840,y:365,texture:"rock-cluster",scale:.75},{x:520,y:126,texture:"rock-cluster",scale:.62},{x:90,y:350,texture:"rock-cluster",scale:.65},
+        {x:132,y:340,texture:"grass-tuft",scale:.75},{x:192,y:385,texture:"grass-tuft",scale:.65},{x:470,y:182,texture:"grass-tuft",scale:.7},{x:575,y:565,texture:"grass-tuft",scale:.8},{x:689,y:190,texture:"grass-tuft",scale:.68},{x:854,y:257,texture:"grass-tuft",scale:.72},{x:934,y:520,texture:"grass-tuft",scale:.82},
+        {x:220,y:150,texture:"dirt-patch",scale:.62},{x:517,y:438,texture:"dirt-patch",scale:.7},{x:736,y:346,texture:"dirt-patch",scale:.58},{x:380,y:590,texture:"dirt-patch",scale:.65}
+      ]);
 
       this.add.text(18,18,"Sysselcraft · byn vaknar",{color:"#f6edcf",fontSize:"14px",backgroundColor:"#26342bea",padding:{x:8,y:6}}).setDepth(3000);
     }
