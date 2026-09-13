@@ -52,8 +52,11 @@ A future move to Godot/Unity should only be reconsidered if the game grows into 
 - Once Capacitor is introduced, native device testing can use Xcode/iOS tooling and later TestFlight; Android can use the corresponding native tooling.
 - Vercel remains useful for browser previews but **should not be required for every gameplay iteration** once a practical native development loop exists.
 - **The resource to minimize is Vercel deployments, not Git commits.** Small/frequent commits are welcome when they improve traceability, rollback safety or development flow.
-- The current Git integration deploys every push to `main`, so related work should be accumulated away from `main` where practical and pushed/merged to `main` in deliberate batches. The goal is fewer Vercel deploys, not an artificially sparse Git history.
-- Do not apologize for or avoid useful commits merely to reduce commit count. Instead, control how often deploy-triggering changes reach `main`.
+- **Important observed Vercel behavior:** the current Git integration also creates preview deployments for pushes to non-`main` branches. A remote work branch therefore does *not* by itself reduce total Vercel deployments; it merely changes them from production deployments to preview deployments.
+- To genuinely minimize Vercel usage, distinguish **committing** from **pushing**. Make as many useful local commits as needed, but batch GitHub pushes whenever practical. Push a coherent tested package rather than every intermediate commit.
+- When remote collaboration/backup requires a work-branch push, remember that it may intentionally spend a preview deployment. Do not assume branches are deployment-free.
+- Related work should still reach `main` in deliberate batches, but minimizing `main` pushes alone is insufficient. The real goal is to minimize unnecessary **remote Git pushes that Vercel watches**, while preserving sensible Git history.
+- Do not apologize for or avoid useful commits merely to reduce commit count. Instead, control how often deploy-triggering changes are pushed to GitHub.
 - Introducing Capacitor will add native project/dependency files. Do this deliberately as a dedicated migration step, not piecemeal during unrelated gameplay work.
 
 ### Current status of this decision
