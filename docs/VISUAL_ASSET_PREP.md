@@ -1,6 +1,6 @@
 # Sysselcraft Visual Asset Prep
 
-Status: **AMBIENT PROP PACK INTEGRATED · FIRST PLACEMENT PASS READY FOR REAL PLAYTEST**
+Status: **AMBIENT PROP PACK INTEGRATED · FIRST VISUAL REFINEMENT BATCH READY FOR REAL PLAYTEST**
 
 This file records the current visual bridge work and the rules for continuing it without breaking gameplay.
 
@@ -49,6 +49,22 @@ The ambient pack is now data-driven through `src/game/worldDecor.ts` rather than
 The permanent `material-stack` is created by the scene at the same moment. Before the first approved quest, the construction stakes are no longer visible. This is deliberate: the opening village should contain an empty, neglected patch rather than advertise a future building before the child has caused the first world change.
 
 No collision has been added for these props. Collision must remain separate from rendered bounds and should only be introduced if an actual playtest shows that a prop needs a physical footprint.
+
+## First visual refinement batch
+
+The current bridge assets have received a broad consistency pass toward the current concept-art target rather than isolated one-off redraws.
+
+Refined areas now include:
+
+- family house facade, roof, windows, porch and lived-in details;
+- grass tile, dirt patches, road segments, road bend and footpath;
+- oak, birch and pine tree sprites;
+- stone wall, fence, bushes, flowers, grass tufts and wild-grass banks;
+- bench, mailbox, crates, signpost, lamp post, woodpile, well, rock clusters and birdhouse;
+- first-delivery material stack, wheelbarrow and construction stakes;
+- puppy sprite details.
+
+The goal of this pass is not final production art. It is to make the playable bridge scene visually coherent enough that the next decisions can come from a real screenshot and device playtest instead of from isolated SVG inspection.
 
 ## Next visual iteration
 
