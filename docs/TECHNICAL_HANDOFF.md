@@ -51,7 +51,9 @@ A future move to Godot/Unity should only be reconsidered if the game grows into 
 - Continue normal GitHub-based development.
 - Once Capacitor is introduced, native device testing can use Xcode/iOS tooling and later TestFlight; Android can use the corresponding native tooling.
 - Vercel remains useful for browser previews but **should not be required for every gameplay iteration** once a practical native development loop exists.
-- Continue bundling changes to avoid unnecessary Vercel production builds while the Git integration still deploys every push to `main`.
+- **The resource to minimize is Vercel deployments, not Git commits.** Small/frequent commits are welcome when they improve traceability, rollback safety or development flow.
+- The current Git integration deploys every push to `main`, so related work should be accumulated away from `main` where practical and pushed/merged to `main` in deliberate batches. The goal is fewer Vercel deploys, not an artificially sparse Git history.
+- Do not apologize for or avoid useful commits merely to reduce commit count. Instead, control how often deploy-triggering changes reach `main`.
 - Introducing Capacitor will add native project/dependency files. Do this deliberately as a dedicated migration step, not piecemeal during unrelated gameplay work.
 
 ### Current status of this decision
