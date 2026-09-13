@@ -9,6 +9,9 @@ export const progressionClasses = {
 export type ProgressionKey = keyof typeof progressionClasses;
 export type ProgressionState = Record<ProgressionKey, number>;
 export type QuestId = "makeBed";
+export type QuestState = "available" | "pending" | "approved";
+export type QuestEvent = "submit" | "approve" | "needsCompletion";
+export type QuestStateMap = Record<QuestId, QuestState>;
 
 export type QuestDefinition = {
   id: QuestId;
@@ -33,6 +36,25 @@ export function createEmptyProgression(): ProgressionState {
     movementActivity: 0,
     community: 0,
   };
+}
+
+export function createDefaultQuestStates(): QuestStateMap {
+  return { makeBed: "available" };
+}
+
+export function isQuestState(value: unknown): value is QuestState {
+  return value === "available" || value === "pending" || value === "approved";
+}
+
+export function transitionQuestState(current: QuestState, event: QuestEvent): QuestState {
+  if (current === "available" && event === "submit") return "pending";
+  if (current === "pending" && event === "approve") return "approved";
+  if (current === "pending" && event === "needsCompletion") return "available";
+  return current;
+}
+
+export function getPendingQuestIds(states: QuestStateMap): QuestId[] {
+  return (Object.keys(states) as QuestId[]).filter((id) => states[id] === "pending");
 }
 
 export function applyQuestProgression(
@@ -60,3 +82,11 @@ export const makeBedQuest: QuestDefinition = {
     { classKey: "wellbeingRoutine", weight: 0.3 },
   ],
 };
+
+export const questCatalog: Record<QuestId, QuestDefinition> = {
+  makeBed: makeBedQuest,
+};
+
+export function getQuestDefinition(id: QuestId): QuestDefinition {
+  return questCatalog[id];
+}

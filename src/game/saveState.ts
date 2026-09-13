@@ -1,13 +1,15 @@
 import { Preferences } from "@capacitor/preferences";
-import type { QuestState } from "./createVillageGame";
 import { linusIntroDialogue } from "./dialogues";
 import {
   applyQuestProgression,
+  createDefaultQuestStates,
   createEmptyProgression,
+  isQuestState,
   makeBedQuest,
   type ProgressionKey,
   type ProgressionState,
   type QuestId,
+  type QuestStateMap,
 } from "./quests";
 import {
   normalizeRecyclingCenterStage,
@@ -30,9 +32,7 @@ let saveWriteQueue: Promise<void> = Promise.resolve();
 
 export type SaveStateV1 = {
   version: 1;
-  questStates: {
-    makeBed: QuestState;
-  };
+  questStates: QuestStateMap;
   completedQuestIds: QuestId[];
   progression: ProgressionState;
   diamonds: number;
@@ -52,7 +52,7 @@ export type SaveStateV1 = {
 export function createDefaultSaveState(): SaveStateV1 {
   return {
     version: 1,
-    questStates: { makeBed: "available" },
+    questStates: createDefaultQuestStates(),
     completedQuestIds: [],
     progression: createEmptyProgression(),
     diamonds: 0,
@@ -68,10 +68,6 @@ export function createDefaultSaveState(): SaveStateV1 {
       recyclingCenterStage: 0,
     },
   };
-}
-
-function isQuestState(value: unknown): value is QuestState {
-  return value === "available" || value === "pending" || value === "approved";
 }
 
 function normalizeName(value: unknown) {
@@ -99,14 +95,23 @@ function normalizeCompletedQuestIds(value: unknown): QuestId[] {
   return value.includes("makeBed") ? ["makeBed"] : [];
 }
 
+function normalizeQuestStates(value: unknown): QuestStateMap {
+  const defaults = createDefaultQuestStates();
+  if (!value || typeof value !== "object") return defaults;
+  const candidate = value as Partial<Record<QuestId, unknown>>;
+  return {
+    makeBed: isQuestState(candidate.makeBed) ? candidate.makeBed : defaults.makeBed,
+  };
+}
+
 function normalizeSaveState(value: unknown): SaveStateV1 | null {
   if (!value || typeof value !== "object") return null;
   const candidate = value as Partial<SaveStateV1>;
   if (candidate.version !== 1) return null;
 
   const defaults = createDefaultSaveState();
-  const rawMakeBed = candidate.questStates?.makeBed;
-  const makeBed = isQuestState(rawMakeBed) ? rawMakeBed : defaults.questStates.makeBed;
+  const questStates = normalizeQuestStates(candidate.questStates);
+  const makeBed = questStates.makeBed;
   const childName = normalizeName(candidate.childName);
   const dogName = normalizeName(candidate.dogName);
 
@@ -157,7 +162,7 @@ function normalizeSaveState(value: unknown): SaveStateV1 | null {
 
   return {
     version: 1,
-    questStates: { makeBed },
+    questStates,
     completedQuestIds,
     progression,
     diamonds: normalizeNonNegativeNumber(candidate.diamonds, defaults.diamonds),
