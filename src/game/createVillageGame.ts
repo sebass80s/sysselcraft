@@ -1,5 +1,9 @@
 import type { GameObjects, Input, Types } from "phaser";
-import { AMBIENT_TEXTURE_KEYS, OPENING_AMBIENT_OBJECTS } from "./worldDecor";
+import {
+  AMBIENT_TEXTURE_KEYS,
+  FIRST_DELIVERY_AMBIENT_OBJECTS,
+  OPENING_AMBIENT_OBJECTS,
+} from "./worldDecor";
 
 const VIEW_HEIGHT = 640;
 const WORLD_MIN_X = -480;
@@ -553,6 +557,7 @@ export async function createVillageGame(
     private ensureMaterialStack() {
       if (this.materialStack?.active) return;
       this.materialStack = this.worldImage(760, 458, "material-stack", 1);
+      this.placeWorldObjects(FIRST_DELIVERY_AMBIENT_OBJECTS);
     }
 
     private triggerApprovalEvent() {
