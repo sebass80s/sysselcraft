@@ -4,65 +4,32 @@ This file exists so a future AI instance can continue Sysselcraft as **Nova**, n
 
 ## 🚨 READ FIRST — CURRENT STATE (2026-09-13)
 
-**We are in the middle of Sysselcraft's first real iPhone test via Capacitor/Xcode. Do not restart the native migration.**
+**Sysselcraft has successfully run as a real native app on the user's physical iPhone via Capacitor/Xcode. Do not restart the native migration.**
 
-### Verified repository/native preparation
-
-The React + Phaser project has been prepared for Capacitor on `main`:
-
-- Next.js uses static export (`out/`).
-- Capacitor 8 dependencies/scripts are in `package.json`.
-- `capacitor.config.ts` uses app id `se.sysselcraft.app`, app name `Sysselcraft`, webDir `out`.
-- Web/Vercel remains the development preview/fallback.
-- iOS/Android native project folders were deliberately not hand-written into the repo.
+The scrolling/adaptive Phaser world, tap-to-move, Linus intro, puppy, quest flow and local save system have all reached physical-device testing. The current work is continuing the first gameplay loop and hardening iOS naming input.
 
 ### Current local Mac/Xcode state
 
-The user has now set up the real native development environment locally:
-
 - Repo cloned to `~/Documents/sysselcraft`.
 - Homebrew + Node/npm/npx installed.
-- `npm install` completed successfully (warnings included deprecated packages and 3 moderate audit findings; these did not block the build).
-- `npm run build` completed successfully and produced the static build.
-- During the first local build Next.js automatically modified the local `tsconfig.json` include list. **Review the local diff before committing anything; do not blindly commit this generated change.**
-- `npx cap add ios` completed successfully and generated the real native project at `ios/` locally.
-- `npx cap sync ios` completed successfully.
-- `npx cap open ios` opens the Capacitor Xcode workspace correctly.
-- Xcode and iOS Platform Support are installed.
-- Xcode target `App` is configured landscape-first: iPhone/iPad should retain Landscape Left + Landscape Right and not Portrait.
-- Signing uses `Kalle Rosqvist (Personal Team)` with Automatically Manage Signing enabled.
-- Bundle identifier is `se.sysselcraft.app`.
-- The user's physical iPhone has been connected and Xcode signing/provisioning began working after the device was connected.
-- **At the exact handoff moment, Xcode says `pairing is in progress`.** The next immediate action is to let pairing finish, select the physical iPhone as run destination, then press ▶ Run.
-- First-device-run may require enabling Developer Mode on the iPhone and retrying Run after restart.
+- `npm install`, `npm run build`, Capacitor iOS generation/sync and Xcode device run have succeeded.
+- The real generated `ios/` project exists locally on the user's Mac and is not assumed to be committed to GitHub.
+- Do NOT run `npx cap add ios` again.
+- Normal native test loop is `git pull` then `npm run ios:sync`, followed by Xcode App > iPhone > ▶ Run.
+- Review local Git changes before discarding or committing anything, especially Next-generated `tsconfig.json` changes.
 
-### CRITICAL local/repo distinction
+## Approved architecture direction
 
-The generated `ios/` project currently exists **only on the user's Mac**. It has NOT yet been committed to GitHub. Do not claim otherwise. Before any native-project commit, inspect the local Git diff and decide deliberately what belongs in source control. Avoid slentrian/no-op commits and group changes because each `main` push triggers a Vercel production build.
-
-### After first successful iPhone run
-
-The next renderer issue remains the fixed Phaser 960×640 + `Phaser.Scale.FIT` landscape behaviour. On wide phones this can letterbox/show side areas. Capacitor removes Safari chrome but does **not** magically fix Phaser aspect ratio. Solve this without stretching pixel art and without breaking pathfinding/collision footprints. Preferred direction: separate logical walkable world bounds from render viewport/camera so wide landscape can reveal sensible extra horizontal world/decorative space.
-
-## Approved native architecture direction
-
-**Keep React + Phaser and use Capacitor as the native iOS/Android shell. Do not rewrite Sysselcraft in Godot/Unity now.**
-
-Target architecture:
+Keep React + Phaser with Capacitor as the native iOS/Android shell. Supabase remains intentionally deferred until the UX loop is proven.
 
 - React = app shell / non-world UI
 - Phaser = village rendering and moment-to-moment gameplay
-- Capacitor = native iOS/Android container and native capability bridge
-- Supabase = future backend/persistence, still intentionally deferred until UX is proven
-- Vercel/web = development preview and fallback, not necessarily final primary mobile play surface
+- Capacitor = native container and capability bridge
+- Vercel/web = development preview/fallback
 
-Mobile/tablet is **landscape-first**. Do not spend major engineering effort perfecting iPhone Safari fullscreen.
+Mobile/tablet is landscape-first.
 
-### Critical architecture rule
-
-**Do not bury Sysselcraft domain logic inside Phaser.** Keep quest definitions/state transitions, dialogue data, progression, economy, household/child data, scheduling and persistence contracts outside the rendering scene wherever practical. Phaser should consume state and render/operate the world.
-
-Only reconsider Godot/Unity if real future requirements demand substantially heavier physics, huge/complex worlds, advanced 3D, extreme GPU work or simulation loads Phaser cannot reasonably handle.
+**Do not bury Sysselcraft domain logic inside Phaser.** Quest definitions/state transitions, dialogue, progression, economy, family data and persistence contracts belong outside the renderer wherever practical.
 
 ## 1. Identity and working relationship
 
@@ -71,9 +38,8 @@ Only reconsider Godot/Unity if real future requirements demand substantially hea
 - Continue autonomously once the goal is clear.
 - Verify repository/deployment state before editing or claiming success.
 - Never call a web change live until Vercel reports READY.
-- Give the user the current game link after deployed game changes.
 - Warn early if context length threatens continuity.
-- Work in grouped changes and avoid unnecessary Vercel builds.
+- Work in grouped changes and avoid unnecessary Vercel deployments.
 
 ## 2. Product thesis and locked gameplay laws
 
@@ -103,24 +69,11 @@ Locked principles:
 - Quest/UI markers remain directly tappable.
 - Rule: **Avataren används för att uppleva världen. Klick/tapp används för att styra/använda spelet.**
 
-## 4. Intro/story currently locked
+## 4. Story/design source of truth
 
-- Family arrives in an almost abandoned village.
-- Linus has lived there his whole life, wears blue work clothes, uses a cane, and is a warm/dry/stubborn optimist.
-- Linus is genuinely delighted the family moved into the old house.
-- He remembers when the village was lively, says he misses that time and hopes people return.
-- He does NOT explicitly explain that chores make residents move in.
-- Linus has been caring for a puppy because so few people remain.
-- Puppy needs more walking than Linus's knee appreciates, so he offers it to the child.
-- Child names puppy; puppy becomes a companion, not an XP/progression machine.
-- Puppy follows avatar and should never mechanically block movement/pathfinding.
-- Intro transitions to first quest: **Bädda sängen**.
+Read `docs/STORY_DESIGN.md` for canonical story/world design. It contains the opening, Linus, puppy, first quest, Henning-before-Sol resident order, village naming milestone and the boundary between locked canon and open design space.
 
-First-loop proof:
-
-**real task → child submits → pending adult review → approval → 5 diamonds + 10 SysselBux prototype reward → truck/material event → visible world change.**
-
-Do not rush Henning, Sol or full building roster before this first-loop magic works.
+Do not duplicate or casually override canonical story decisions here.
 
 ## 5. Quest/progression invariants
 
@@ -132,51 +85,84 @@ Intro hidden progression mapping: **Bädda sängen = Ordning & miljö 70% + Väl
 
 Five progression classes: Ordning & miljö; Kunskap & skapande; Välmående & rutiner; Rörelse & aktivitet; Gemenskap.
 
-## 6. Future resident order
+Quest definitions are being moved into domain data outside the React/Phaser UI so later quests can reuse the same architecture.
 
-- Linus is original resident.
-- **Henning** is first new resident, baker, respectful homage to user's late grandfather.
-- **Sol** arrives after Henning, young newly graduated female doctor, warm/competent/organized/enthusiastic, later helps Linus with knee/cane.
-- Village naming is earned after all five first-tier buildings.
+## 6. PRIVATE DEVELOPMENT DIARY — REQUIRED CONTINUITY RULE
 
-## 7. Repository / cost / security
+Sysselcraft has a private internal development diary in the user's ChatGPT File Library, currently named in the `Sysselcraft_Utvecklingsdagbok_v*.docx` family. It is deliberately **NOT stored in this public GitHub repository**.
+
+Every future Nova taking over the project MUST continue this diary.
+
+At the beginning of a new thread/handoff:
+
+1. Search the user's File Library for the newest `Sysselcraft_Utvecklingsdagbok_v*.docx`.
+2. Read it before substantial development so the human/project journey is not lost.
+3. Treat it as the project's scrapbook/history, not as technical source of truth.
+4. Continue from the newest version rather than starting a second diary.
+
+During development, automatically collect diary-worthy material. At meaningful milestones or natural checkpoints, create/update the next private diary version without waiting for the user to remember to ask.
+
+Diary entries should capture:
+
+- date / development session
+- what actually happened, told as the project's journey rather than a dry changelog
+- important game-design reasoning, including alternatives considered and why choices were made
+- genuine screenshots supplied/captured during development when available
+- memorable/funny/representative quotes from the user and Nova
+- meaningful technical milestones and relevant commit hashes
+- useful failures, wrong turns and lessons learned
+- moments where Sysselcraft noticeably becomes more like a real game
+
+Do NOT fill it after every tiny CSS tweak or commit. Prefer story-worthy checkpoints. The diary is a photo album, not surveillance footage.
+
+Never invent screenshots, quotes or historical events. If a screenshot is unavailable, omit it or clearly mark a planned placeholder rather than fabricating one.
+
+Keep the diary private in File Library/project context. **Do not commit the diary itself to the public GitHub repository.**
+
+Before a thread becomes too long, proactively make sure the diary is caught up and leave enough handoff context that the next Nova knows to retrieve and continue it.
+
+## 7. Repository / deployment cost / security
 
 Repository: `sebass80s/sysselcraft`, default branch `main`, public repo.
 
-Stack: Next.js 16.3.3 + React 19.2 + TypeScript + Phaser 3.90 + Capacitor 8 preparation. Supabase planned but intentionally not connected.
+Stack: Next.js 16.3.3 + React 19.2 + TypeScript + Phaser 3.90 + Capacitor 8. Supabase planned but intentionally not connected.
 
 - Never commit secrets, private family/child data, service keys or private env files.
-- Each push to `main` triggers Vercel production build, so group changes.
-- Target normal family-use operating cost ≈ 0 SEK/month.
-- No `package-lock.json` should be introduced casually; dependency freeze should be deliberate.
+- The resource to minimize is Vercel deployments, not useful Git commits.
+- Current Vercel Git integration also creates preview deployments for pushed non-main branches.
+- Therefore a remote work branch is NOT deploy-free.
+- Make useful local commits freely, but batch remote GitHub pushes whenever practical.
+- Minimize unnecessary remote pushes that Vercel watches.
+- GitHub Actions minutes must never be used without the user's explicit permission.
 - Public web game URL: `https://sysselcraft.vercel.app`.
 
 ## 8. Technical systems to preserve
 
+- Scrolling/adaptive Phaser world and camera.
 - Grid A*-style tap-to-move pathfinding.
 - Desktop WASD/arrow movement.
-- Existing collision footprints for family house, construction zone and five original trees unless deliberately migrated/tested.
-- Y/base-depth sorting.
+- Collision footprints and Y/base-depth sorting.
 - Reusable village asset pipeline.
 - Data-driven dialogue direction.
 - Linus interaction/intro and puppy companion.
 - Quest marker and approval event.
-- Truck/material delivery event.
-- Current local prototype state until persistence architecture is deliberately introduced.
+- Truck/material delivery event, including persisted completed-delivery state without replay after restart.
+- Capacitor Preferences local save/restore.
+- Parent approval semantics and idempotent rewards.
 
 Current SVG assets are a bridge. Long-term visual direction is coherent raster PNG/WebP sprite atlases with nearest-neighbour scaling, fixed native pixel grid and consistent palette/light direction.
 
 ## 9. Working rules for next Nova
 
-1. Read this file and `docs/TECHNICAL_HANDOFF.md` before meaningful repo work.
-2. Verify current `main` rather than trusting stale SHAs.
-3. First immediate task at this handoff: finish iPhone pairing and first ▶ Run, not restart Capacitor setup.
-4. Do not claim the locally generated `ios/` folder is in GitHub until verified/committed.
-5. Review local diff before any commit, especially Next's automatic `tsconfig.json` change.
+1. Read this file, `docs/TECHNICAL_HANDOFF.md`, and `docs/STORY_DESIGN.md` before meaningful repo work.
+2. Retrieve and read the newest private `Sysselcraft_Utvecklingsdagbok_v*.docx` from File Library and keep it alive throughout development.
+3. Verify current `main` rather than trusting stale SHAs.
+4. Do not restart Capacitor setup or run `npx cap add ios` again.
+5. Review local diff before asking the user to discard/commit local files.
 6. Verify Vercel before saying web changes are READY/live.
-7. Always give user game link after deployed game changes.
-8. Prefer fewer, coherent passes/builds.
-9. Preserve pathfinding, quest semantics and locked story/design decisions.
-10. Do not add Supabase prematurely.
-11. Do not turn dialogue into heavy RPG branching, make child silent, or turn puppy into progression machine.
-12. After native smoke test, address Phaser responsive landscape viewport deliberately.
+7. Prefer coherent batched remote pushes because Vercel watches remote branches.
+8. Preserve pathfinding, quest semantics and locked story/design decisions.
+9. Do not add Supabase prematurely.
+10. Do not turn dialogue into heavy RPG branching, make the child silent, or turn the puppy into a progression machine.
+11. Keep the development diary private and update it automatically at meaningful checkpoints.
+12. Warn early before context length threatens continuity, and ensure both technical handoff and diary are current before switching threads.
