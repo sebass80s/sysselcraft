@@ -1,0 +1,131 @@
+.dock {
+  position: fixed;
+  left: max(.65rem, env(safe-area-inset-left));
+  bottom: max(.65rem, env(safe-area-inset-bottom));
+  z-index: 40;
+  width: min(360px, calc(100vw - 1.3rem));
+  pointer-events: none;
+}
+
+.toggle {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  border: 1px solid rgba(31,42,31,.18);
+  border-radius: 999px;
+  padding: .55rem .75rem;
+  background: rgba(255,253,244,.95);
+  color: #26342b;
+  font-weight: 900;
+  box-shadow: 0 8px 24px rgba(31,42,31,.18);
+  cursor: pointer;
+}
+
+.toggle span {
+  display: grid;
+  place-items: center;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 .3rem;
+  border-radius: 999px;
+  background: #b84232;
+  color: white;
+  font-size: .72rem;
+}
+
+.panel {
+  pointer-events: auto;
+  margin-top: .5rem;
+  max-height: min(66dvh, 560px);
+  overflow: auto;
+  padding: .85rem;
+  border: 2px solid #735b36;
+  border-radius: 16px;
+  background: rgba(255,253,244,.98);
+  box-shadow: 0 16px 48px rgba(44,37,24,.28);
+}
+
+.panel header {
+  display: flex;
+  justify-content: space-between;
+  gap: .7rem;
+  align-items: flex-start;
+  margin-bottom: .7rem;
+}
+
+.panel header strong,
+.panel header small {
+  display: block;
+}
+
+.panel header small {
+  margin-top: .12rem;
+  color: #687064;
+}
+
+.wallet {
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: .35rem .5rem;
+  background: #edf3e6;
+  font-weight: 800;
+  font-size: .78rem;
+}
+
+.quest {
+  display: grid;
+  gap: .45rem;
+  padding: .75rem;
+  border: 1px solid #d9ccb0;
+  border-radius: 12px;
+  background: #fffaf0;
+}
+
+.quest + .quest {
+  margin-top: .55rem;
+}
+
+.quest p {
+  margin: 0;
+  line-height: 1.35;
+  font-size: .9rem;
+}
+
+.quest small {
+  color: #62695f;
+  font-weight: 700;
+}
+
+.message {
+  margin: .65rem 0 0;
+  padding: .55rem .65rem;
+  border-radius: 9px;
+  background: #edf3e6;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .6rem;
+  margin-top: .7rem;
+}
+
+.footer a {
+  color: #3e6438;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+@media (max-width: 700px) and (orientation: landscape) {
+  .dock {
+    width: min(330px, calc(100vw - 1.3rem));
+  }
+
+  .panel {
+    max-height: 70dvh;
+  }
+}
