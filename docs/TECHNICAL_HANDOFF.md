@@ -52,6 +52,8 @@ A future move to Godot/Unity should only be reconsidered if the game grows into 
 - Capacitor/iOS has already been generated locally and successfully run on a physical iPhone. Do not restart the Capacitor migration or run `npx cap add ios` again.
 - Native device testing uses Xcode/iOS tooling and can later move toward TestFlight; Android can use the corresponding native tooling.
 - Vercel remains useful for browser previews but **should not be required for every gameplay iteration**.
+- **Vercel has a limited deployment quota. Treat deploys as a scarce resource.** Do not deploy every small change independently. Accumulate related work into larger, coherent batches/commits and use Vercel when that batch is ready for browser verification. Prefer one meaningful verification deployment over several incremental deployments.
+- When Vercel quota is exhausted or a deployment is not necessary, continue all work that can be safely developed and verified without Vercel rather than blocking development.
 - **The resource to minimize is Vercel deployments, not Git commits or ordinary GitHub Actions CI.**
 - The repository is public. As of 2026-09-13, the user has explicitly approved autonomous use of normal GitHub-hosted Actions for this public repository. Standard CI/build/test runs are not to be treated as a scarce paid-minute budget and do not require per-run approval.
 - Do not select larger/billed GitHub-hosted runners, paid third-party runners/services, or other explicitly chargeable compute without approval.
