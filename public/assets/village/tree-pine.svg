@@ -1,15 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="104" height="188" viewBox="0 0 104 188">
-<defs>
-  <linearGradient id="trunk" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#815b42"/><stop offset="1" stop-color="#5a3f31"/></linearGradient>
-  <linearGradient id="needles" x1=".2" y1="0" x2=".8" y2="1"><stop stop-color="#4f8455"/><stop offset=".56" stop-color="#356b49"/><stop offset="1" stop-color="#244f39"/></linearGradient>
-  <filter id="shadow" x="-28%" y="-20%" width="156%" height="158%"><feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#223b2b" flood-opacity=".18"/></filter>
-</defs>
-<ellipse cx="52" cy="177" rx="28" ry="7" fill="#314d37" opacity=".16"/>
-<g filter="url(#shadow)">
-  <path d="M47 85h11l5 84H40z" fill="url(#trunk)" stroke="#503829" stroke-width="2.5"/>
-  <path d="M52 8L22 58h17L13 91h22L8 126h24L3 151c33 8 65 8 98-1l-29-24h23L69 91h21L65 58h18z" fill="url(#needles)" stroke="#244b36" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M51 25L33 56h13L27 86h17l-23 34h20l-24 23" fill="none" stroke="#75a56b" stroke-width="4" stroke-linecap="round" opacity=".62"/>
-  <path d="M60 42l12 18H60l15 26H62l18 32H66l18 24" fill="none" stroke="#1f4633" stroke-width="4" stroke-linecap="round" opacity=".46"/>
-  <g fill="#89af71" opacity=".34"><ellipse cx="36" cy="74" rx="10" ry="4"/><ellipse cx="64" cy="70" rx="11" ry="4"/><ellipse cx="28" cy="108" rx="12" ry="4"/><ellipse cx="73" cy="111" rx="13" ry="4"/></g>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="122" height="208" viewBox="0 0 122 208"><defs><linearGradient id="trunk" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#876044"/><stop offset="1" stop-color="#5a3e30"/></linearGradient><linearGradient id="needles" x1=".2" y1="0" x2=".8" y2="1"><stop stop-color="#5c8f5e"/><stop offset=".55" stop-color="#376f4b"/><stop offset="1" stop-color="#244f39"/></linearGradient><filter id="s"><feGaussianBlur stdDeviation="2"/></filter></defs><ellipse cx="61" cy="197" rx="34" ry="7" fill="#314c38" opacity=".14" filter="url(#s)"/><path d="M55 94h13l6 94H46z" fill="url(#trunk)"/><path d="M61 10 27 65h19L17 101h24L9 139h27L4 169q57 15 114-1l-34-29h27l-31-38h24L76 65h21z" fill="url(#needles)"/><path d="M60 31 39 63h15l-22 34h19l-26 38h23l-29 28" fill="none" stroke="#7baa70" stroke-width="4.2" stroke-linecap="round" opacity=".58"/><path d="M70 48l14 20H70l18 30H73l21 37H78l22 28" fill="none" stroke="#204833" stroke-width="4.2" stroke-linecap="round" opacity=".42"/><g fill="#91b276" opacity=".32"><ellipse cx="42" cy="81" rx="12" ry="5"/><ellipse cx="76" cy="76" rx="13" ry="5"/><ellipse cx="33" cy="120" rx="14" ry="5"/><ellipse cx="87" cy="123" rx="15" ry="5"/></g><g fill="#718b59"><ellipse cx="45" cy="190" rx="11" ry="4"/><ellipse cx="77" cy="190" rx="11" ry="4"/></g></svg>
