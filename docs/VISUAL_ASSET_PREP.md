@@ -1,77 +1,60 @@
 # Sysselcraft Visual Asset Prep
 
-Status: **STORYBOOK ART DIRECTION LOCKED · STYLE PROOF NEXT**
+Status: **FIRST FULL STORYBOOK REDESIGN BATCH IMPLEMENTED · DEVICE QA NEXT**
 
-Canonical visual direction is now documented in `docs/ART_DIRECTION.md`. Read that file before producing or converting visual assets.
+Canonical direction is `docs/ART_DIRECTION.md`. The original concept-art image in the private development diary remains visual authority.
 
-## Visual rule
+## What this batch changed
 
-Sysselcraft is an **illustrated isometric storybook world** with soft organic forms, rich vegetation/building detail, strong silhouettes, subtle shadows and a painted rather than grid-bound expression. The first established concept-art image is the visual north star.
+The previous crisp-edge/pixel bridge has been replaced across the current playable asset family with softer illustrated vectors using organic curves, warm natural materials, irregular terrain edges, tonal highlights and subtle grounding shadows.
 
-The village should become richer through nature, traces of daily life and repair materials, not by revealing future buildings too early.
+Redesigned categories:
 
-Story/design guardrails:
+- family house;
+- grass/terrain, dirt patches, road segments/bends/edges and footpath;
+- oak, birch, pine, tree clusters, stump, bushes, foreground shrubs, wild grass and tufts;
+- fence, stone wall, rocks and flowers;
+- quest board and world-signage family;
+- bench, crates, mailbox, lamp, well, woodpile, birdhouse, barrel, puddle and laundry line;
+- child idle/walk/north/south frames;
+- Linus idle frames and cane silhouette;
+- puppy;
+- truck, material stack, wheelbarrow and construction stakes.
 
-- start village remains sparse and mildly neglected;
-- family house should feel inhabited;
-- the village should contain evidence that people once lived here;
-- future resident/building reveals stay hidden until earned;
-- gameplay/collision always wins over decorative placement;
-- small-screen readability wins over decorative density.
+The world-placement model remains data-driven through `src/game/worldDecor.ts`. Existing placements and collision footprints were intentionally preserved. No visual redraw grants permission to change gameplay geometry.
 
-## Existing ambient prop pack
+## Visual production rules
 
-Prepared under `public/assets/village/`:
+- No new `shape-rendering="crispEdges"` in production-facing storybook assets.
+- Do not force nearest-neighbour scaling or disable antialiasing.
+- Use a shared warm material language: moss/forest greens, faded Swedish-red timber, warm roof/wood/buff stone, parchment and muted gold accents.
+- Keep outlines dark enough for small-screen silhouettes but avoid thick arcade/pixel contours.
+- Ground important objects with soft low-opacity shadows rather than hard rectangular shadow blocks.
+- Introduce detail through shape variation, layered tones and small material marks; avoid noisy microtexture that vanishes on iPhone.
+- Repetition should be disguised through mixed species, scale and placement rather than random clutter.
+- The start village stays sparse and a little neglected.
 
-- `tree-stump.svg`
-- `wheelbarrow.svg`
-- `old-barrel.svg`
-- `puddle.svg`
-- `birdhouse.svg`
-- `laundry-line.svg`
+## UI integration
 
-These SVGs were created during the earlier pixel-art bridge phase and may still contain `shape-rendering="crispEdges"`. Treat that as legacy implementation, **not current art direction**. The files remain useful for placement, composition and gameplay integration until their visual treatment is replaced or refined.
+`src/app/storybook.css` now carries the child-facing React shell toward the same world using parchment surfaces, timber borders, forest greens and muted gold. `ChildBackendQuestInbox.module.css` has a matching direct treatment so the real backend quest panel does not retain a generic web-app skin.
 
-## Current integration
+The Phaser quest marker and renderer settings are part of this same direction: antialiasing should be enabled and the marker should use a softer illustrated token rather than a square pixel bubble.
 
-Ambient placement remains data-driven through `src/game/worldDecor.ts`.
+## Performance policy
 
-`OPENING_AMBIENT_OBJECTS` adds lived-in/neglected-world details around the family house and village edges. `FIRST_DELIVERY_AMBIENT_OBJECTS` adds construction stakes and wheelbarrow alongside the scene-created material stack after the first earned delivery.
+SVG is currently a productive source/runtime format for the prototype, not a dogma. Physical-device profiling decides whether complex/repeated assets should later be rasterized into PNG/WebP atlases. Preserve high-quality scalable masters when doing so.
 
-Before the first approved quest, the construction area remains an empty, neglected patch rather than advertising a future building.
+## Device QA checklist
 
-No collision is implied by rendered bounds. Collision footprints remain separate and should change only when gameplay evidence requires it.
+On the next physical/native pass:
 
-## What remains valuable from the first visual refinement batch
+1. compare the running family-house/vegetation slice directly with the concept art;
+2. inspect road/path joins and visible repetition;
+3. walk behind/in front of trees, house, Linus and props to verify depth;
+4. verify clickable Linus/quest interactions after silhouette changes;
+5. test the delivery sequence and persisted post-delivery state;
+6. inspect child, puppy and Linus at actual iPhone scale;
+7. inspect HUD, dialogue, local quest card and backend quest dock against safe areas;
+8. note any asset that looks too flat, too clean, too dark or too busy for a second pass.
 
-The existing family house, terrain, trees, walls, fences, vegetation, props, first-delivery objects and puppy are valuable **bridge assets**. Their composition, dimensions, placement hooks and state integration should be reused where practical.
-
-They are no longer a target style to polish indefinitely. The previous goal of converging on 16-bit pixel art is superseded.
-
-## Next visual iteration: style proof
-
-Do not begin a full-library redraw yet. Build one representative slice against the concept-art north star:
-
-1. family house;
-2. two or three trees / vegetation forms;
-3. grass/terrain plus a road/path edge;
-4. fence, bush and one everyday prop;
-5. representative light and shadow treatment.
-
-There is **no pixel-art constraint** for this proof. Curves and diagonals may be antialiased. Organic edges are desirable. The underlying pathfinding grid should become visually unobtrusive.
-
-Validate the style proof in a running build, preferably on the physical iPhone, before committing to a bulk asset conversion.
-
-## Production format policy
-
-The old assumption that production must become raster PNG/WebP sprite atlases with a fixed native pixel grid and nearest-neighbour scaling is retired.
-
-Use a hybrid pipeline:
-
-- vector/SVG masters where scalable organic construction and fast iteration help;
-- high-resolution painted raster where texture/brushwork is stronger;
-- vector + raster texture hybrids when useful;
-- runtime PNG/WebP/atlases for repeated/animated assets when Phaser performance or animation benefits;
-- SVG may remain a runtime format for suitable static/UI assets if device testing supports it.
-
-Format is an implementation choice, not the art direction. Preserve reusable assets, consistent light/material logic and separate collision footprints regardless of format.
+Do not add future residents/buildings merely to make screenshots denser.

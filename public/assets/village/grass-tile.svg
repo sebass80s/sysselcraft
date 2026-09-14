@@ -1,13 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" shape-rendering="crispEdges">
-<rect width="96" height="96" fill="#87b66b"/>
-<!-- broad variation without a visible checkerboard -->
-<path d="M0 0h37v18h19v17H31v19H0z" fill="#8fbc72" opacity=".42"/><path d="M58 48h38v48H48V76h17V62h-7z" fill="#7faa62" opacity=".32"/>
-<g fill="#6f9c59"><rect x="9" y="14" width="3" height="8"/><rect x="12" y="11" width="3" height="8"/><rect x="62" y="21" width="3" height="7"/><rect x="66" y="18" width="3" height="8"/><rect x="35" y="65" width="3" height="7"/><rect x="39" y="62" width="3" height="8"/><rect x="81" y="77" width="3" height="7"/><rect x="84" y="74" width="3" height="8"/><rect x="5" y="51" width="2" height="6"/><rect x="8" y="49" width="2" height="7"/><rect x="54" y="43" width="2" height="6"/><rect x="57" y="41" width="2" height="6"/></g>
-<g fill="#557f49" opacity=".7"><rect x="17" y="57" width="2" height="5"/><rect x="20" y="55" width="2" height="6"/><rect x="74" y="8" width="2" height="5"/><rect x="77" y="7" width="2" height="5"/><rect x="90" y="43" width="2" height="5"/></g>
-<g fill="#9bc77d"><rect x="22" y="33" width="5" height="3"/><rect x="72" y="50" width="4" height="3"/><rect x="15" y="81" width="5" height="3"/><rect x="50" y="7" width="4" height="3"/><rect x="42" y="29" width="3" height="2"/><rect x="91" y="16" width="3" height="2"/></g>
-<!-- tiny flowers, clover and dry flecks -->
-<g fill="#d9d08a" opacity=".8"><rect x="30" y="18" width="3" height="3"/><rect x="77" y="34" width="3" height="3"/><rect x="55" y="83" width="3" height="3"/><rect x="6" y="72" width="2" height="2"/></g>
-<g fill="#e8d7a0"><rect x="45" y="53" width="2" height="2"/><rect x="88" y="61" width="2" height="2"/></g>
-<g fill="#6d9d58"><rect x="25" y="74" width="3" height="2"/><rect x="28" y="72" width="2" height="3"/><rect x="69" y="69" width="3" height="2"/><rect x="72" y="67" width="2" height="3"/></g>
-<g fill="#b7a86c" opacity=".65"><rect x="34" y="88" width="4" height="2"/><rect x="82" y="25" width="3" height="2"/><rect x="14" y="27" width="3" height="2"/></g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#86aa60"/><stop offset="1" stop-color="#6f9553"/></linearGradient></defs><rect width="128" height="128" fill="url(#g)"/><g fill="none" stroke-linecap="round"><path d="M9 21l3-7m0 7l5-6M42 37l2-8m2 8l5-5M92 20l3-7m0 7l5-6M114 51l3-7m0 7l5-5M17 78l3-8m1 8l5-6M62 95l3-8m1 8l5-5M103 109l3-8m1 8l5-6" stroke="#557d45" stroke-width="1.5" opacity=".8"/><path d="M26 55l2-5m0 5l4-4M75 61l2-6m1 6l4-4M117 88l2-5m1 5l3-4M39 116l2-5m1 5l4-4" stroke="#a0bd72" stroke-width="1.4" opacity=".75"/></g><g fill="#d6c96f" opacity=".5"><circle cx="24" cy="26" r="1.4"/><circle cx="83" cy="42" r="1.2"/><circle cx="52" cy="73" r="1.3"/><circle cx="112" cy="17" r="1.1"/></g></svg>

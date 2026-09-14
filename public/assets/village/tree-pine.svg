@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="90" height="138" viewBox="0 0 90 138" shape-rendering="crispEdges">
-<rect width="90" height="138" fill="none"/><ellipse cx="45" cy="129" rx="27" ry="7" fill="#405238" opacity=".24"/><ellipse cx="50" cy="130" rx="17" ry="4" fill="#25372b" opacity=".14"/>
-<rect x="40" y="92" width="11" height="36" fill="#684833"/><rect x="45" y="92" width="6" height="36" fill="#926648"/><rect x="41" y="103" width="4" height="4" fill="#4d382b"/><rect x="47" y="115" width="4" height="3" fill="#b17a51"/>
-<!-- deep silhouette, less perfect than prototype triangle -->
-<path d="M45 8 16 58h13L10 82h18L7 108h76L61 83h19L58 58h16z" fill="#1d4733"/>
-<path d="M45 18 23 56h12L19 78h16L17 100h56L55 79h16L53 56h14z" fill="#316b45"/>
-<g fill="#285b3d"><rect x="13" y="91" width="18" height="9"/><rect x="59" y="91" width="17" height="9"/><rect x="19" y="70" width="16" height="8"/><rect x="55" y="68" width="17" height="8"/><rect x="28" y="46" width="13" height="8"/></g>
-<!-- branch shelves and needle highlights -->
-<g fill="#4f8a54"><rect x="38" y="27" width="16" height="7"/><rect x="28" y="53" width="17" height="7"/><rect x="49" y="61" width="18" height="7"/><rect x="24" y="83" width="18" height="7"/><rect x="47" y="91" width="16" height="7"/><rect x="34" y="71" width="13" height="6"/></g>
-<g fill="#6aa263"><rect x="42" y="23" width="8" height="5"/><rect x="31" y="49" width="9" height="5"/><rect x="54" y="57" width="9" height="5"/><rect x="27" y="79" width="9" height="5"/><rect x="51" y="87" width="8" height="5"/></g>
-<g fill="#153b2d"><rect x="36" y="38" width="10" height="6"/><rect x="20" y="63" width="12" height="6"/><rect x="47" y="74" width="11" height="6"/><rect x="17" y="96" width="14" height="6"/><rect x="58" y="99" width="12" height="6"/></g>
-<!-- a few warm dead twigs stop the pine becoming a green cone -->
-<g fill="#806044"><rect x="31" y="63" width="8" height="2"/><rect x="55" y="82" width="9" height="2"/><rect x="25" y="98" width="7" height="2"/></g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="184" viewBox="0 0 96 184"><defs><filter id="s" x="-30%" y="-20%" width="160%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#223b2b" flood-opacity=".25"/></filter><linearGradient id="p" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3f7850"/><stop offset="1" stop-color="#24523a"/></linearGradient></defs><ellipse cx="48" cy="173" rx="26" ry="7" fill="#314d37" opacity=".2"/><g filter="url(#s)"><path d="M44 84h9l5 82H39z" fill="#75523d" stroke="#503829" stroke-width="3"/><path d="M48 9L14 69h20L8 103h24L4 140c31 9 59 8 88 0l-20-37h19L65 70h17z" fill="url(#p)" stroke="#244b36" stroke-width="4" stroke-linejoin="round"/><path d="M48 26L28 62h14L22 94h18L17 128" fill="none" stroke="#68a063" stroke-width="5" stroke-linecap="round" opacity=".75"/><path d="M57 48l13 22H58l17 29H61l18 32" fill="none" stroke="#1f4633" stroke-width="5" stroke-linecap="round" opacity=".55"/></g></svg>

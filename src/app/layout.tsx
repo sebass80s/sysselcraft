@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./storybook.css";
 import "./mobileSafeArea.css";
 
 export const metadata: Metadata = {

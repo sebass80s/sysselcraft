@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="92" height="104" viewBox="0 0 92 104" shape-rendering="crispEdges">
-<rect width="92" height="104" fill="none"/>
-<rect x="40" y="58" width="12" height="42" fill="#684830"/>
-<rect x="14" y="18" width="64" height="56" fill="#6f4b2f"/>
-<rect x="19" y="23" width="54" height="46" fill="#b88958"/>
-<rect x="23" y="27" width="46" height="38" fill="#d4b477"/>
-<rect x="27" y="31" width="16" height="12" fill="#f0e4b9"/>
-<rect x="48" y="36" width="17" height="15" fill="#e7d6a5"/>
-<rect x="31" y="49" width="25" height="10" fill="#ead9aa"/>
-<rect x="10" y="14" width="72" height="8" fill="#513822"/>
-<rect x="17" y="10" width="58" height="7" fill="#8c613c"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="84" height="82" viewBox="0 0 84 82"><ellipse cx="42" cy="76" rx="28" ry="5" fill="#324a35" opacity=".16"/><path d="M16 18h52v43H16z" fill="#6b4c32" stroke="#493525" stroke-width="3"/><path d="M21 23h42v32H21z" fill="#d8c69d" stroke="#8d744e" stroke-width="2"/><path d="M22 29c11-2 17 1 25-1 6-2 9-4 15-2M23 39c8 0 14 3 22 1 7-2 11-4 17-2M24 48c9-2 14 1 22 0" stroke="#8f7958" stroke-width="2" opacity=".65"/><path d="M20 61v18M64 61v18" stroke="#63482f" stroke-width="7" stroke-linecap="round"/><path d="M30 16q12-11 24 0" fill="none" stroke="#88704d" stroke-width="4" stroke-linecap="round"/></svg>
