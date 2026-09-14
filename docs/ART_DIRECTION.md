@@ -1,6 +1,6 @@
 # Sysselcraft Art Direction
 
-Status: **LOCKED · SOFT ILLUSTRATED ISOMETRIC STORYBOOK WORLD · 2026-09-14**
+Status: **LOCKED · SOFT ILLUSTRATED ISOMETRIC STORYBOOK WORLD · TRUE 2.5D · 2026-09-14**
 
 ## 🚨 Visual canon — read before making or approving any art
 
@@ -18,7 +18,7 @@ The approved visual references are the **soft illustrated isometric storybook im
 
 Historical pixel-heavy assets and commits are implementation history only. They are not visual references. A future Nova must never infer the desired art style from those checked-in intermediate assets.
 
-Do not use crisp pixels, nearest-neighbour scaling, chunky pixel outlines, blocky tile geometry, pixel-RPG UI or deliberately low-resolution sprites as an aesthetic direction. An isolated raster asset may of course contain pixels because all screen images ultimately do; that does not make pixel art the style.
+Do not use crisp pixels, nearest-neighbour scaling, chunky pixel outlines, blocky tile geometry, pixel-RPG UI or deliberately low-resolution sprites as an aesthetic direction.
 
 ## Visual north star
 
@@ -37,21 +37,48 @@ The world should feel like an illustrated children's adventure book that has bec
 
 The original concept art in the private development diary remains an important identity reference for characters, cottage language, village mood and progression. The later approved questgiver/storybook renders are the clearest reference for the desired softness and finished rendering language.
 
-## Spatial depth, not pixel 2.5D
+## TRUE 2.5D IS A HARD REQUIREMENT
 
-Sysselcraft can and should use 2.5D rendering techniques where useful: visible sides, height, overlap, foreground/background layering, contact shadows and Y/base depth sorting. **2.5D describes spatial presentation, not an art style.**
+Sysselcraft is not a flat top-down game decorated with isometric-looking sprites. **The playable village must read as genuine 2.5D space.**
 
-The pathfinding grid is an implementation detail and must remain visually hidden. The player should see a continuous painted place, not cells, diamonds or tiles.
+Required spatial rules:
+
+- Buildings and substantial props have visible fronts/sides, roofs/tops and believable height.
+- The scene uses one coherent isometric/three-quarter projection language. Assets may be stylized, but their ground planes and visible faces must agree.
+- Every tall world object has a defined ground/base point independent of the artwork's full bounds.
+- Player, dog, NPCs and movable/delivered objects participate in Y/base-depth sorting.
+- The child can visibly pass **behind** trees, buildings, signs and other tall objects when their base is farther forward, and **in front of** them when appropriate.
+- Foreground foliage may deliberately occlude characters to sell depth, while collision remains defined independently.
+- Contact shadows are anchored to ground/base points and help communicate height. Shadows must not behave like flat stickers baked around arbitrary sprite bounds.
+- Roads and paths live on the ground plane. They must not look like rectangular cards laid on top of grass.
+- Fences, walls, wells, stairs, porches, bridges and similar structures expose thickness/height where visible rather than reading as flat icons.
+- Buildings should create readable spatial zones around entrances, sides and foreground edges. The family cottage is the first hero case.
+- Collision/pathfinding remains a hidden gameplay layer. Visual perspective is not allowed to expose the grid.
+- Rendered bounds, occlusion base, collision footprint and interaction footprint are separate concepts.
+
+**2.5D describes the spatial construction of the world, not a pixel aesthetic and not merely Y-sorting.** A scene with flat front-facing stickers and Y-sorting alone does not satisfy this requirement.
+
+### Perspective validation gate
+
+A visual pass fails if any of these are true:
+
+1. the world can be mistaken for a flat top-down field with stickers;
+2. large objects do not show convincing volume or consistent visible faces;
+3. the player cannot clearly move both in front of and behind tall world objects;
+4. roads/terrain reveal rectangular asset bounds or contradictory ground planes;
+5. shadows, bases and occlusion disagree about where an object touches the ground;
+6. neighboring objects imply incompatible camera angles.
 
 ## Locked visual principles
 
 - Illustrated isometric storybook character with a soft painted, organic expression.
+- **True 2.5D spatial construction is mandatory.**
 - Soft organic shapes rather than obvious tile/grid geometry.
 - Rich but readable detail in vegetation, buildings and important props.
 - Strong, clear silhouettes that survive native landscape-iPhone scale.
 - Subtle shadows and grounding rather than harsh block shadows.
 - Genuine spatial depth through overlap, visible sides/height, foreground/background layering and believable volume.
-- Y/base-depth sorting is a core spatial system.
+- Y/base-depth sorting is a core spatial system, but is only one component of true 2.5D.
 - Grass and terrain must not expose obvious tile seams or repeated wallpaper patterns.
 - Dirt roads and paths blend naturally into grass with irregular edges, worn transitions and local material variation.
 - Vegetation uses varied silhouettes, scale and depth planes rather than repeated stamps.
@@ -105,7 +132,7 @@ Rule: **ship the representation that best preserves the approved soft illustrate
 
 ## Coordinated visual overhaul scope
 
-The current pixel-heavy intermediate build is a technical stepping stone, not the visual destination. The next coordinated visual pass should deliberately replace that visual language across terrain, roads, buildings, vegetation, props, characters, delivery assets, shadows, depth/occlusion, quest markers and child-facing UI.
+The current mixed intermediate build is a technical stepping stone, not the visual destination. The coordinated visual pass must replace its flat/sticker-like scene construction across terrain, roads, buildings, vegetation, props, characters, delivery assets, shadows, depth/occlusion, quest markers and child-facing UI.
 
 Preserve backend, quest-state, approval and reward architecture while visual work happens.
 
@@ -121,15 +148,16 @@ This is the functional regression baseline. Physical QA has also exposed visual 
 
 Do not call a visual overhaul complete merely because source assets changed. Validate the running game, especially on physical iPhone:
 
-1. at first glance, the world reads as a **soft illustrated isometric storybook**, not pixel art or a tiled retro game;
+1. at first glance, the world reads as a **soft illustrated isometric storybook in true 2.5D**, not pixel art, a tiled retro game or a flat sticker field;
 2. the running scene belongs visually with the approved questgiver/storybook reference renders;
 3. terrain does not reveal distracting tile/grid repetition;
-4. roads merge naturally into terrain;
+4. roads merge naturally into terrain and obey the common ground perspective;
 5. house, Linus, child and puppy remain legible at native landscape size;
 6. foreground vegetation and tall objects occlude correctly without misleading collision/tap behavior;
 7. child can visibly move in front of and behind appropriate objects;
-8. first-delivery before/after state remains unmistakable;
-9. quest `?`/`!` markers are clear, spatially attached and stylistically integrated;
-10. UI/safe areas do not cover critical world detail and UI does not look like generic retro-game chrome;
-11. rendering and animation remain stable without shimmer, blur or stutter;
-12. the complete previously verified quest/approval/delivery loop still works.
+8. substantial objects show believable volume, visible faces and coherent contact with the ground;
+9. first-delivery before/after state remains unmistakable;
+10. quest `?`/`!` markers are clear, spatially attached and stylistically integrated;
+11. UI/safe areas do not cover critical world detail and UI does not look like generic retro-game chrome;
+12. rendering and animation remain stable without shimmer, blur or stutter;
+13. the complete previously verified quest/approval/delivery loop still works.
