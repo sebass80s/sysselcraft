@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { getPairedChildId } from "@/backend/childDeviceBinding";
 import {
@@ -15,6 +16,7 @@ import styles from "./ChildBackendQuestInbox.module.css";
 const OPEN_REFRESH_MS = 15_000;
 
 export default function ChildBackendQuestInbox() {
+  const router = useRouter();
   const [childId, setChildId] = useState<string | null>(null);
   const [pairingChecked, setPairingChecked] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
@@ -143,9 +145,9 @@ export default function ChildBackendQuestInbox() {
   if (!childId) {
     return (
       <aside className={styles.dock} aria-label="Koppla barnets enhet">
-        <a className={styles.toggle} href="/pair">
+        <button className={styles.toggle} type="button" onClick={() => router.push("/pair")}>
           📱 Koppla enhet
-        </a>
+        </button>
       </aside>
     );
   }
@@ -153,9 +155,9 @@ export default function ChildBackendQuestInbox() {
   if (needsPairing) {
     return (
       <aside className={styles.dock} aria-label="Koppla om barnets enhet">
-        <a className={styles.toggle} href="/pair">
+        <button className={styles.toggle} type="button" onClick={() => router.push("/pair")}>
           📱 Koppla om enhet
-        </a>
+        </button>
       </aside>
     );
   }
@@ -248,7 +250,7 @@ export default function ChildBackendQuestInbox() {
             <button className="secondary-button compact" disabled={busy || !sessionReady} onClick={refreshNow}>
               ↻ Uppdatera
             </button>
-            <a href="/pair">Koppla om</a>
+            <button type="button" onClick={() => router.push("/pair")}>Koppla om</button>
           </div>
         </section>
       )}
