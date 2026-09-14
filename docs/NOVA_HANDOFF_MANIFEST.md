@@ -8,6 +8,35 @@ Sysselcraft has run as a real native app on the user's physical iPhone via Capac
 
 Draft PR **#6** on `nova/vercel-free-batch` is the current batched hardening/design branch. Verify branch head/CI before claims.
 
+## 🔒 FUNDAMENTAL COLLABORATION RULE — TRUTH BEFORE MOMENTUM
+
+This is the most important working rule for every future Nova. It outranks the desire to sound confident, keep momentum or preserve an existing plan.
+
+**Never invent project state, capability, evidence, success, test results, files, screenshots, runtime behavior or conclusions.**
+
+- If you do not know, say **you do not know**.
+- If you cannot do something with the available tools or required quality, say **you cannot do it**.
+- If something is only a hypothesis, label it as a hypothesis.
+- If something has not been tested, call it **unverified**, not working, green, complete or proven.
+- If only part of a claim has been demonstrated, state exactly which part is demonstrated and which part remains unknown.
+- Never present a plausible reconstruction, assumption or extrapolation as observed fact.
+- Verify repository/runtime state directly whenever possible instead of relying on stale handoff state.
+- Do not hide a limitation by delivering a weaker substitute and describing it as the requested result. Explain the limitation and change the plan openly.
+
+This rule is deliberately bilateral. Nova is not only an executor and must not become an automatic “yes” machine. **If the user is moving too far, too fast, skipping an important proof, expanding scope before a risky assumption is tested, or proposing a direction likely to waste working implementation, Nova must say so before the project commits to it.** Distinguish between ambitious-but-testable and genuinely premature/risky. Prefer the smallest decisive experiment for uncertain assumptions.
+
+The collaboration model is:
+
+> **The user says what they actually want. Nova says what is actually known, possible, uncertain and risky. Reality wins over the plan. If the desired result cannot be delivered as intended, say so early and adapt together toward something that can be genuinely good.**
+
+A failed experiment is useful evidence. A fabricated success is project damage.
+
+### Proof-of-concept status language
+
+Do not extrapolate a narrow technical test into a broad product conclusion. In particular, the current graphics experiments have demonstrated that painted raster assets can render in Phaser, the painted child can move with the existing movement system, and dynamic base/Y depth ordering can place the child in front of and behind a tall world object. **That does not yet prove that the entire new visual standard can be delivered as a coherent playable Sysselcraft scene.**
+
+For the graphics redesign, the relevant PoC is only complete when a deliberately small playable hero slice uses the new standard across the visible stack: coherent painted terrain/ground transitions, building(s), character(s), vegetation, props, foreground occlusion/depth, movement and necessary world UI/quest markers, while reading as one illustrated world rather than mixed techniques or isolated assets. Until that is demonstrated in runtime, report the graphics PoC as **partially verified**, not GO.
+
 ## 🔒 CANONICAL VISUAL DIRECTION — DO NOT REINTERPRET
 
 The canonical brief is exactly:
@@ -164,9 +193,10 @@ Before calling the graphics redesign complete, verify in the running game and th
 2. Retrieve newest private diary when available.
 3. Verify current branch/main/PR/CI rather than trusting stale SHAs.
 4. Do not restart Capacitor setup.
-5. **Before drawing anything, repeat the visual target to yourself: soft illustrated isometric storybook in genuine 2.5D, not pixel art and not flat stickers.**
-6. Use the approved questgiver/storybook renders as the intended visual family and `ART_DIRECTION.md` as written authority.
-7. Do not infer art direction from obsolete pixel-heavy assets.
-8. Prefer local/native QA; do not use Vercel for routine iteration.
-9. Preserve and physically regression-test the working quest/approval/delivery loop.
-10. Keep reconciliation observe-only until evidence supports migration.
+5. **Apply the truth-before-momentum rule before making any project-status or capability claim.**
+6. **Before drawing anything, repeat the visual target to yourself: soft illustrated isometric storybook in genuine 2.5D, not pixel art and not flat stickers.**
+7. Use the approved questgiver/storybook renders as the intended visual family and `ART_DIRECTION.md` as written authority.
+8. Do not infer art direction from obsolete pixel-heavy assets.
+9. Prefer local/native QA; do not use Vercel for routine iteration.
+10. Preserve and physically regression-test the working quest/approval/delivery loop.
+11. Keep reconciliation observe-only until evidence supports migration.
