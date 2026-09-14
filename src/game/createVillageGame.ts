@@ -195,12 +195,7 @@ export async function createVillageGame(
 
     preload() {
       this.load.image("family-house", "/assets/village/reboot/family-house.webp");
-      for (const key of [
-        "child", "child-walk-a", "child-walk-b", "child-north-a",
-        "child-north-b", "child-south-a", "child-south-b",
-      ]) {
-        this.load.image(key, "/assets/village/reboot/child.webp");
-      }
+      this.load.image("child-painted", "/assets/village/reboot/child.webp");
       for (const key of [
         "tree-oak", "tree-birch", "tree-pine", "linus", "linus-idle-b",
         "dog-puppy", "truck", "material-stack", "road-segment", "road-bend",
@@ -219,7 +214,7 @@ export async function createVillageGame(
       camera.setBackgroundColor("#789a68");
       camera.setBounds(WORLD_MIN_X, 0, WORLD_WIDTH, WORLD_HEIGHT);
       this.drawVillage();
-      this.player = this.add.image(430, 405, "child-south-a")
+      this.player = this.add.image(430, 405, "child-painted")
         .setOrigin(0.5, 0.94)
         .setDisplaySize(74, 118)
         .setDepth(1405);
