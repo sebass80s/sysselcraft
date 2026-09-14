@@ -1,11 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="210" height="92" viewBox="0 0 210 92">
-<defs><linearGradient id="m" x1="0" y1=".3" x2="1" y2="1"><stop stop-color="#759a59"/><stop offset="1" stop-color="#4f7d49"/></linearGradient></defs>
-<ellipse cx="104" cy="84" rx="86" ry="6" fill="#35513a" opacity=".11"/>
-<path d="M0 80c18-19 38-10 56-21 20-12 40-24 61-10 18 12 31 4 46-3 18-8 34 1 47 16v30H0z" fill="url(#m)" opacity=".92"/>
-<g fill="none" stroke-linecap="round">
-  <path d="M12 78l11-36m0 35 11-26M39 79l6-45m2 43 16-34M78 80l8-42m1 40 15-31M112 81l6-49m2 47 16-36M151 79l7-38m2 37 15-30M183 81l7-35m1 34 11-23" stroke="#396b42" stroke-width="2.7"/>
-  <path d="M24 78l4-22m25 20l4-21m39 23l5-23m36 21l5-24m36 25l5-20" stroke="#aac078" stroke-width="1.8" opacity=".8"/>
-</g>
-<g fill="#e3c763"><circle cx="29" cy="55" r="2.4"/><circle cx="92" cy="54" r="2.3"/><circle cx="143" cy="56" r="2.4"/><circle cx="188" cy="60" r="2.1"/></g>
-<g fill="#d7db8a" opacity=".78"><circle cx="60" cy="47" r="1.8"/><circle cx="125" cy="43" r="1.9"/><circle cx="170" cy="49" r="1.7"/></g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="112" viewBox="0 0 240 112"><defs><linearGradient id="m" x1="0" y1=".3" x2="1" y2="1"><stop stop-color="#86a865"/><stop offset=".55" stop-color="#668f56"/><stop offset="1" stop-color="#47764a"/></linearGradient><filter id="s"><feGaussianBlur stdDeviation="2"/></filter></defs><ellipse cx="120" cy="103" rx="98" ry="7" fill="#35513a" opacity=".1" filter="url(#s)"/><path d="M0 97c21-24 44-12 65-26 23-15 47-30 72-13 21 14 37 5 54-4 20-9 38 1 49 20v38H0z" fill="url(#m)" opacity=".94"/><g fill="none" stroke-linecap="round"><path d="M14 95l13-45m1 44 13-33M47 96l7-55m3 53 18-41M90 97l9-52m2 50 18-37M129 98l7-59m3 57 19-43M173 95l8-47m2 46 17-36M208 97l8-43m2 42 13-29" stroke="#396a43" stroke-width="3"/><path d="M30 95l5-28m29 25l5-27m43 30l6-29m41 26l6-30m40 31l6-24" stroke="#b4c881" stroke-width="2" opacity=".78"/></g><g fill="#e7cf6f"><circle cx="36" cy="66" r="2.7"/><circle cx="104" cy="64" r="2.6"/><circle cx="164" cy="66" r="2.7"/><circle cx="216" cy="72" r="2.4"/></g><g fill="#e5aaa4" opacity=".86"><circle cx="74" cy="59" r="2.2"/><circle cx="144" cy="55" r="2.2"/><circle cx="195" cy="61" r="2"/></g><g fill="#dfe49a" opacity=".76"><circle cx="68" cy="55" r="2"/><circle cx="145" cy="50" r="2.1"/><circle cx="191" cy="58" r="1.9"/></g></svg>
