@@ -8,13 +8,21 @@ Canonical visual direction is `docs/ART_DIRECTION.md`:
 
 > **En illustrerad isometrisk sagoboksvärld med mjuka organiska former, ganska mycket detalj i vegetation och byggnader, fina och tydliga silhuetter, subtila skuggor och ett målat snarare än rutnätsbundet uttryck.**
 
-There is **no mandatory pixel-art style and no mandatory bitmap/vector format**. Use the rendering representation that best achieves the approved look and performs reliably on physical devices.
+The approved questgiver-discussion renders define the intended visual family: **soft, warm, organic, detailed, painterly isometric storybook art**.
 
-The pixel-heavy build produced during the 2026-09-14 visual iteration is an intermediate implementation, not the canonical destination.
+### Critical anti-regression note
+
+There is **no pixel-art target**. Historical pixel-heavy builds are obsolete visual experiments/intermediates. Never optimize toward 8/16-bit aesthetics, crisp pixels, nearest-neighbour rendering, low-resolution sprite appearance, blocky tiles or pixel-RPG chrome merely because older assets use them.
+
+**2.5D is a spatial/rendering concept here, not a pixel-art genre.**
+
+There is also no mandatory bitmap/vector format. Use the representation that best achieves the approved look and performs reliably on physical devices.
 
 ### Spatial rendering target
 
-The playable world needs convincing spatial volume: visible building/object sides where appropriate, grounding/contact shadows, layered vegetation, Y/base depth, foreground/background occlusion and organic terrain. This spatial depth must support the illustrated storybook expression rather than turn the world into a visible tile/grid system.
+The playable world needs convincing spatial volume: visible building/object sides where appropriate, grounding/contact shadows, layered vegetation, Y/base depth, foreground/background occlusion and organic terrain. This spatial depth must support the soft illustrated storybook expression rather than turn the world into a visible tile/grid system.
+
+The desired result is a continuous illustrated place. The logical navigation grid must disappear completely from the visual read.
 
 This is not merely an asset swap. Terrain, paths, world props, characters, depth presentation and UI may require coordinated changes. Phaser and the existing gameplay/domain architecture remain in place unless a concrete blocker proves otherwise.
 
@@ -26,9 +34,11 @@ This is not merely an asset swap. Terrain, paths, world props, characters, depth
 - Do not change obstacles solely because artwork becomes wider/taller.
 - The logical pathfinding grid remains visually hidden.
 - Terrain must break obvious repetition/seams and avoid a wallpaper/grid read.
-- SVG/vector, bitmap PNG/WebP, spritesheets/atlases or hybrids are all allowed. Choose by result, performance and maintainability.
-- Do not force nearest-neighbour/pixel rendering or crisp block geometry unless an individual asset genuinely benefits from it.
+- SVG/vector, bitmap PNG/WebP, spritesheets/atlases or hybrids are all allowed. Choose by visual result, performance and maintainability.
+- Antialiasing/filtering should preserve the soft illustrated result.
+- Do not force nearest-neighbour/pixel rendering or crisp block geometry as a global style.
 - Characters/props need subtle grounding/contact shadows where appropriate.
+- UI should harmonize with the illustrated world, not imitate generic retro-RPG chrome.
 - Physical iPhone screenshot comparison and interaction testing are required before declaring production art settled.
 
 ## Quest-source architecture
@@ -38,6 +48,8 @@ Product law: **quests belong to the world, not to the house.**
 The family house is one quest source. The domain/rendering model must permit quest sources to be NPCs, buildings, places, world objects or system/world events without house-specific special cases.
 
 World quest markers use familiar language. A yellow `?` may mark an NPC with relevant dialogue/discovery; `!` may identify an available quest/actionable source. These markers are UI-like world elements and can be directly tapped/clicked under the established interaction law.
+
+The marker semantics can be familiar RPG language while their visual treatment remains soft storybook illustration.
 
 Do not encode future quest selection or presentation around an assumption that every quest originates at the family house.
 
@@ -73,7 +85,7 @@ Observed:
 - delivered materials and wheelbarrow remain;
 - player can continue walking after the current content boundary.
 
-Known visual QA issues include repetitive terrain, weak terrain/path transitions and insufficient spatial grounding. The later pixel-heavy intermediate pass is not evidence that the visual target is complete.
+Known visual QA issues include repetitive terrain, weak terrain/path transitions and insufficient spatial grounding. The pixel-heavy intermediate pass is not evidence that the visual target is complete.
 
 Treat the physical-device loop as a regression baseline during visual work. Backend/quest/approval/reward code should be kept in bubble wrap unless a concrete change is required.
 
@@ -89,11 +101,12 @@ Treat the physical-device loop as a regression baseline during visual work. Back
 
 ## Current technical priority
 
-1. Correct the playable visuals toward the illustrated isometric storybook canon in `docs/ART_DIRECTION.md`, replacing the accidental pixel-style lock-in while preserving useful spatial/depth work.
-2. Preserve the Linus-to-house first-quest onboarding transition.
-3. Preserve and regression-test the physically verified parent approval/delivery loop.
-4. Re-test scale, depth, taps, safe areas, occlusion, animation and rendering performance on physical iPhone.
-5. Continue backend reconciliation/state-authority work only with captured evidence and without destabilizing the verified loop.
+1. Correct the playable visuals toward the **soft illustrated isometric storybook canon** in `docs/ART_DIRECTION.md`, replacing obsolete pixel-heavy presentation while preserving useful spatial/depth work.
+2. Use the approved questgiver/storybook renders as the visual comparison family.
+3. Preserve the Linus-to-house first-quest onboarding transition.
+4. Preserve and regression-test the physically verified parent approval/delivery loop.
+5. Re-test scale, depth, taps, safe areas, occlusion, animation and rendering performance on physical iPhone.
+6. Continue backend reconciliation/state-authority work only with captured evidence and without destabilizing the verified loop.
 
 ## Deployment/resource policy
 
