@@ -199,6 +199,8 @@ export async function createVillageGame(
       this.load.image("master-scene", "/assets/village/reboot/sysselcraft-hero-master.webp");
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
+      this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
+      this.load.image("materials-painted", "/assets/village/reboot/materials-runtime.png");
       for (const key of [
         "tree-oak", "tree-birch", "tree-pine", "linus", "linus-idle-b",
         "dog-puppy", "truck", "material-stack", "road-segment", "road-bend",
@@ -451,14 +453,20 @@ export async function createVillageGame(
 
     private ensureMaterialStack() {
       if (this.materialStack?.active) return;
-      this.materialStack = this.worldImage(760, 458, "material-stack", 1);
+      this.materialStack = this.add.image(760, 458, "materials-painted")
+        .setOrigin(0.5, 0.92)
+        .setDisplaySize(190, 106)
+        .setDepth(1458);
       this.placeWorldObjects(FIRST_DELIVERY_AMBIENT_OBJECTS);
     }
 
     private triggerApprovalEvent() {
       if (this.approvedTriggered) return;
       this.approvedTriggered = true;
-      const truck = this.add.image(1030, 350, "truck").setOrigin(0.5, 1).setDepth(1350);
+      const truck = this.add.image(1030, 350, "truck-painted")
+        .setOrigin(0.5, 0.92)
+        .setDisplaySize(245, 160)
+        .setDepth(1350);
       this.tweens.add({
         targets: truck, x: 785, y: 365, duration: 1700, ease: "Sine.Out",
         onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
