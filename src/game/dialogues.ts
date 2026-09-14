@@ -18,4 +18,5 @@ export const linusIntroDialogue: IntroDialogueStep[] = [
   { kind: "line", speaker: "Linus", text: "Jag har haft den här lilla rackaren hos mig ett tag. Men de där benen behöver betydligt fler promenader än mitt knä uppskattar." },
   { kind: "line", speaker: "Linus", text: "Jag tänkte att valpen kanske skulle trivas hos er." },
   { kind: "name-dog" },
+  { kind: "line", speaker: "Linus", text: "Då så! Nu tycker jag att du ska gå bort till ert hus. Där väntar ditt första quest på dig." },
 ];
