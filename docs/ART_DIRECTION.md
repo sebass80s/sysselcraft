@@ -1,6 +1,6 @@
 # Sysselcraft Art Direction
 
-Status: **LOCKED · SOFT ILLUSTRATED ISOMETRIC STORYBOOK WORLD · TRUE 2.5D · 2026-09-14**
+Status: **LOCKED · SOFT ILLUSTRATED ISOMETRIC STORYBOOK WORLD · TRUE 2.5D · CONCEPT-ART-FIRST PRODUCTION · 2026-09-14**
 
 ## 🚨 Visual canon — read before making or approving any art
 
@@ -36,6 +36,53 @@ The world should feel like an illustrated children's adventure book that has bec
 - a cohesive handcrafted scene rather than a collection of game tiles.
 
 The original concept art in the private development diary remains an important identity reference for characters, cottage language, village mood and progression. The later approved questgiver/storybook renders are the clearest reference for the desired softness and finished rendering language.
+
+## 🔒 CONCEPT-ART-FIRST PRODUCTION METHOD
+
+This is the default production method for Sysselcraft graphics.
+
+**The actual playable graphics should be produced with the same image-generation / painted illustration approach that creates the approved concept art. Do not attempt to approximate that look primarily by hand-constructing artwork from simple SVG primitives.**
+
+The previous hand-built SVG approach proved useful for prototyping mechanics and spatial systems, but it tends to produce vector/clipart/sticker-like results and is **not the production visual target**.
+
+### Canonical production prompt / intent
+
+When creating actual Sysselcraft game art, use this intent:
+
+> **Create the actual playable graphics for Sysselcraft with the same visual expression as the approved concept art. Use image generation / painted illustration for the artwork rather than hand-built SVG primitives. The target is a warm, hand-painted, illustrated isometric storybook world with soft organic forms, rich but tasteful detail, natural vegetation, clear silhouettes, subtle painted light and soft contact shadows. It must feel like one coherent children's-book illustration that can be explored, not separate game assets placed on a level. Use genuine 2.5D with one consistent isometric/three-quarter perspective, believable volume, visible sides and height, coherent ground contact and natural foreground/background occlusion. Avoid pixel art, retro RPG aesthetics, clipart, flat vector art, icon styling, hard outlines, visible tiles, grids, repeated stamps, front-facing sticker sprites and the superseded hand-built SVG aesthetic. First establish the opening village as a coherent high-resolution master scene in the approved Sysselcraft style, then derive/separate the layers and game assets Phaser needs while preserving the painted look. Adapt the rendering implementation to the art rather than forcing the art to resemble obsolete assets. If the running game looks more like a conventional 2D game than the approved concept art, the result is not accepted.**
+
+Shortcut instruction for future Nova:
+
+> **“Nova, måla Sysselcraft.”**
+
+means: **approved concept-art quality → coherent master scene → production layers/assets → true 2.5D integration in Phaser → runtime visual comparison against the concept-art target.** It does *not* mean “draw more SVG icons.”
+
+### Master-scene workflow
+
+For a major environment or visual milestone:
+
+1. **Paint the scene first.** Generate a coherent high-resolution master view of the environment in the approved visual style and camera perspective.
+2. Treat that master as the visual authority for composition, palette, lighting, perspective, scale, material language, vegetation density and environmental storytelling.
+3. Identify which parts must be dynamic or independently depth-sorted: player, NPCs, dog, quest markers, foreground occluders, buildings that change, delivery/progression objects and other interactive elements.
+4. Produce or derive those elements as separate high-quality transparent assets/layers while preserving the master's rendering language.
+5. Define explicit ground/base points, depth/occlusion bases, collision footprints and interaction footprints in game data/code. Do not infer all four from image rectangles.
+6. Reconstruct the scene in Phaser with background/ground, midground, dynamic objects and foreground occlusion layers so it visually returns to the master-scene composition.
+7. Compare a screenshot of the **running game** against the approved master/concept art. Fix the game until the family resemblance is immediate.
+8. Only then optimize asset representation, atlas packing, raster size or rendering performance. Optimization must preserve the approved look.
+
+### Asset-generation rule
+
+Prefer generated/painted production masters for visually important assets and environments. SVG remains valid for UI geometry, invisible/debug geometry, simple technical overlays, masks or cases where it genuinely preserves the approved painted result. SVG is a file format, not forbidden technology. **Simple hand-built SVG primitives are forbidden as the default method for imitating concept-art illustration.**
+
+When an asset must exist independently, generate/paint it in the **same perspective, lighting, palette, edge softness and material language as the master scene**. Do not independently invent a new camera angle for each object.
+
+### “Looks like concept art” acceptance rule
+
+The production target is deliberately demanding:
+
+**A screenshot of the playable village should plausibly be mistaken for a frame of the approved concept art before the viewer notices that it is interactive.**
+
+If we need to explain that the game is “supposed to look like the concept art,” the visual pass has failed.
 
 ## TRUE 2.5D IS A HARD REQUIREMENT
 
@@ -73,6 +120,7 @@ A visual pass fails if any of these are true:
 
 - Illustrated isometric storybook character with a soft painted, organic expression.
 - **True 2.5D spatial construction is mandatory.**
+- **Concept-art-first image generation / painted illustration is the default art-production method.**
 - Soft organic shapes rather than obvious tile/grid geometry.
 - Rich but readable detail in vegetation, buildings and important props.
 - Strong, clear silhouettes that survive native landscape-iPhone scale.
@@ -121,10 +169,11 @@ The player performs that world interaction themselves. This teaches movement, na
 
 **There is no required bitmap-versus-vector format. Use what works best.**
 
-- SVG/vector, PNG/WebP bitmap art, spritesheets, atlases or a hybrid are all valid.
-- Choose per asset and system based on visual fidelity, animation needs, performance, memory use, scaling and reliability on physical devices.
-- Preserve useful high-quality source masters separately from optimized runtime derivatives where practical.
-- Do not introduce format rules that accidentally force the visual style toward pixel art or toward sterile vector art.
+- SVG/vector, PNG/WebP bitmap art, spritesheets, atlases or a hybrid are all valid runtime formats.
+- For visually important production art, prefer the concept-art-first workflow above over constructing the illustration from simple SVG geometry.
+- Choose runtime format per asset/system based on visual fidelity, animation needs, performance, memory use, scaling and reliability on physical devices.
+- Preserve useful high-quality painted/generated source masters separately from optimized runtime derivatives where practical.
+- Do not introduce format rules that accidentally force the visual style toward pixel art or sterile vector art.
 - Antialiasing, filtering and scaling policy should preserve the soft illustrated painted target on physical devices.
 - Rasterization for performance is a technical optimization, never permission to pixelate the visual language.
 
@@ -150,14 +199,15 @@ Do not call a visual overhaul complete merely because source assets changed. Val
 
 1. at first glance, the world reads as a **soft illustrated isometric storybook in true 2.5D**, not pixel art, a tiled retro game or a flat sticker field;
 2. the running scene belongs visually with the approved questgiver/storybook reference renders;
-3. terrain does not reveal distracting tile/grid repetition;
-4. roads merge naturally into terrain and obey the common ground perspective;
-5. house, Linus, child and puppy remain legible at native landscape size;
-6. foreground vegetation and tall objects occlude correctly without misleading collision/tap behavior;
-7. child can visibly move in front of and behind appropriate objects;
-8. substantial objects show believable volume, visible faces and coherent contact with the ground;
-9. first-delivery before/after state remains unmistakable;
-10. quest `?`/`!` markers are clear, spatially attached and stylistically integrated;
-11. UI/safe areas do not cover critical world detail and UI does not look like generic retro-game chrome;
-12. rendering and animation remain stable without shimmer, blur or stutter;
-13. the complete previously verified quest/approval/delivery loop still works.
+3. **a playable screenshot plausibly reads as a frame from the approved concept art rather than as a conventional 2D game assembled from assets;**
+4. terrain does not reveal distracting tile/grid repetition;
+5. roads merge naturally into terrain and obey the common ground perspective;
+6. house, Linus, child and puppy remain legible at native landscape size;
+7. foreground vegetation and tall objects occlude correctly without misleading collision/tap behavior;
+8. child can visibly move in front of and behind appropriate objects;
+9. substantial objects show believable volume, visible faces and coherent contact with the ground;
+10. first-delivery before/after state remains unmistakable;
+11. quest `?`/`!` markers are clear, spatially attached and stylistically integrated;
+12. UI/safe areas do not cover critical world detail and UI does not look like generic retro-game chrome;
+13. rendering and animation remain stable without shimmer, blur or stutter;
+14. the complete previously verified quest/approval/delivery loop still works.
