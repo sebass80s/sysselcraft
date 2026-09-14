@@ -40,17 +40,17 @@ type WorldObjectDefinition = {
 };
 
 const obstacles: Obstacle[] = [
-  { type: "rect", x: 150, y: 165, width: 190, height: 125 },
-  { type: "rect", x: 675, y: 405, width: 180, height: 105 },
-  { type: "circle", x: 105, y: 115, radius: 28 },
-  { type: "circle", x: 155, y: 485, radius: 28 },
-  { type: "circle", x: 410, y: 105, radius: 28 },
-  { type: "circle", x: 790, y: 120, radius: 28 },
-  { type: "circle", x: 875, y: 475, radius: 28 },
-  { type: "circle", x: -330, y: 165, radius: 30 },
-  { type: "circle", x: -170, y: 505, radius: 30 },
-  { type: "circle", x: 1125, y: 120, radius: 30 },
-  { type: "circle", x: 1290, y: 485, radius: 30 },
+  // Hero-slice collision map for the painted master scene. Gameplay footprints are
+  // deliberately independent from the rendered image bounds.
+  { type: "rect", x: 300, y: 242, width: 420, height: 150 }, // cottage
+  { type: "rect", x: 650, y: 342, width: 250, height: 145 }, // board / bench / mailbox
+  { type: "circle", x: 945, y: 365, radius: 82 }, // well
+  { type: "circle", x: 815, y: 430, radius: 34 }, // lamp base
+  { type: "circle", x: -205, y: 548, radius: 42 }, // village sign
+  { type: "rect", x: 15, y: 430, width: 390, height: 72 }, // left stone wall
+  { type: "rect", x: 1215, y: 320, width: 330, height: 80 }, // right stone wall
+  { type: "circle", x: -270, y: 335, radius: 78 }, // left birches
+  { type: "circle", x: 1230, y: 505, radius: 92 }, // foreground vegetation
 ];
 
 function distance(a: Point, b: Point) {
@@ -261,11 +261,11 @@ export async function createVillageGame(
       if (!this.questMarker) return;
       const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!complete) {
-        this.questMarker.setPosition(575, 184).setVisible(true).setAlpha(1);
+        this.questMarker.setPosition(720, 335).setVisible(true).setAlpha(1);
         label.setText("?");
         return;
       }
-      this.questMarker.setPosition(150, 72);
+      this.questMarker.setPosition(300, 82);
       this.applyQuestState(requestedQuestState);
     }
 
@@ -288,11 +288,11 @@ export async function createVillageGame(
       if (!this.questMarker) return;
       const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!this.introComplete) {
-        this.questMarker.setPosition(575, 184).setVisible(true).setAlpha(1);
+        this.questMarker.setPosition(720, 335).setVisible(true).setAlpha(1);
         label.setText("?");
         return;
       }
-      this.questMarker.setPosition(150, 72);
+      this.questMarker.setPosition(300, 82);
       if (state === "available") {
         this.questMarker.setVisible(true).setAlpha(1);
         label.setText("!");
@@ -428,7 +428,7 @@ export async function createVillageGame(
       const label = this.add.text(0, -1, "?", {
         color: "#5b4425", fontSize: "27px", fontStyle: "bold", fontFamily: "Trebuchet MS",
       }).setOrigin(0.5).setName("label");
-      this.questMarker = this.add.container(575, 184, [shadow, bubble, inner, label])
+      this.questMarker = this.add.container(720, 335, [shadow, bubble, inner, label])
         .setDepth(3000).setSize(52, 52).setInteractive({ useHandCursor: true });
       this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
@@ -483,110 +483,35 @@ export async function createVillageGame(
     }
 
     private drawVillage() {
-      this.add.tileSprite((WORLD_MIN_X + WORLD_MAX_X) / 2, WORLD_HEIGHT / 2, WORLD_WIDTH, WORLD_HEIGHT, "grass-tile").setDepth(0);
-      this.placeWorldObjects([
-        { x: -430, y: 170, texture: "wild-grass-bank", scale: 1.15, baseY: 205 },
-        { x: -330, y: 197, texture: "tree-cluster", scale: 0.95, baseY: 205 },
-        { x: -170, y: 537, texture: "tree-oak", scale: 1.05, baseY: 537 },
-        { x: -72, y: 425, texture: "bush", scale: 0.82 },
-        { x: -255, y: 350, texture: "flower-patch", scale: 0.78 },
-        { x: -395, y: 520, texture: "grass-tuft", scale: 0.9 },
-        { x: 1050, y: 540, texture: "wild-grass-bank", scale: 1.08, baseY: 600 },
-        { x: 1125, y: 152, texture: "tree-cluster", scale: 0.92, baseY: 175 },
-        { x: 1290, y: 517, texture: "tree-pine", scale: 1.08, baseY: 517 },
-        { x: 1370, y: 230, texture: "bush", scale: 0.9 },
-        { x: 1215, y: 335, texture: "flower-patch", scale: 0.78 },
-        { x: 1350, y: 560, texture: "grass-tuft", scale: 0.86 },
-      ]);
-      this.placeWorldObjects([
-        { x: 62, y: 164, texture: "tree-cluster", scale: 0.9, baseY: 192 },
-        { x: 906, y: 164, texture: "tree-cluster", scale: 0.92, baseY: 194 },
-        { x: 482, y: 128, texture: "tree-cluster", scale: 0.78, baseY: 154 },
-        { x: 58, y: 540, texture: "wild-grass-bank", scale: 1.08, baseY: 600 },
-        { x: 896, y: 542, texture: "wild-grass-bank", scale: 1.12, baseY: 606 },
-      ]);
-      this.add.image(155, 455, "road-segment").setAngle(-12).setDepth(20);
-      this.add.image(390, 402, "road-segment").setAngle(-12).setDepth(20);
-      this.add.image(625, 349, "road-segment").setAngle(-12).setDepth(20);
-      this.add.image(842, 300, "road-bend").setAngle(-4).setDepth(20);
-      this.add.image(244, 323, "footpath").setAngle(41).setDepth(19);
-      this.drawHouse();
-      this.drawFence(50, 270, 7);
-      this.drawFence(820, 238, 6);
-      this.drawQuestBoard();
-      this.placeWorldObjects([
-        { x: 282, y: 298, texture: "bench" },
-        { x: 34, y: 400, texture: "crate", scale: 0.8 },
-        { x: 925, y: 205, texture: "crate", scale: 0.65 },
-        { x: 257, y: 266, texture: "mailbox", scale: 0.82 },
-        { x: 78, y: 261, texture: "woodpile", scale: 0.72 },
-        { x: 660, y: 300, texture: "signpost", scale: 0.78 },
-        { x: 365, y: 337, texture: "lamp-post", scale: 0.72 },
-        { x: 325, y: 190, texture: "bush", scale: 0.74 },
-        { x: 720, y: 208, texture: "bush", scale: 0.82 },
-        { x: 895, y: 392, texture: "bush", scale: 0.9 },
-        { x: 118, y: 555, texture: "bush", scale: 0.86 },
-        { x: 448, y: 269, texture: "well", scale: 0.82 },
-        { x: 765, y: 234, texture: "stone-wall", scale: 0.9 },
-        { x: 216, y: 214, texture: "stone-wall", scale: 0.56 },
-        { x: 525, y: 214, texture: "bush", scale: 0.72 },
-      ]);
-      this.placeWorldObjects(OPENING_AMBIENT_OBJECTS);
-      this.linus = this.add.image(575, 285, "linus").setOrigin(0.5, 0.9).setDepth(1285).setInteractive({ useHandCursor: true });
+      // Painted master scene is the visual authority for static scenery in this experiment.
+      this.add.tileSprite(
+        (WORLD_MIN_X + WORLD_MAX_X) / 2,
+        WORLD_HEIGHT / 2,
+        WORLD_WIDTH,
+        WORLD_HEIGHT,
+        "grass-tile",
+      ).setDepth(0);
+
+      // Linus stays dynamic so onboarding remains testable. His current art is temporary.
+      this.linus = this.add.image(720, 450, "linus")
+        .setOrigin(0.5, 0.9)
+        .setDepth(1450)
+        .setInteractive({ useHandCursor: true });
       this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (this.introComplete || !this.player) return;
         this.linusInteractionPending = true;
-        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 525, y: 318 });
+        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 650, y: 485 });
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
         else this.maybeCompleteLinusInteraction();
       });
-      this.add.text(549, 236, "Linus", {
+      this.add.text(694, 390, "Linus", {
         color: "#4b3b2b", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
         backgroundColor: "#f7e9cce8", padding: { x: 8, y: 4 },
       }).setDepth(2900);
-      this.add.ellipse(675, 415, 190, 75, 0x5e7e50, 0.09).setDepth(8);
-      this.drawTree(105, 115, "tree-birch", 0.95);
-      this.drawTree(155, 485, "tree-oak", 1.05);
-      this.drawTree(410, 105, "tree-pine", 0.9);
-      this.drawTree(790, 120, "tree-birch", 1);
-      this.drawTree(875, 475, "tree-pine", 1.05);
-      this.placeWorldObjects([
-        { x: 310, y: 527, texture: "flower-patch", scale: 0.8 },
-        { x: 347, y: 514, texture: "flower-patch", scale: 0.65 },
-        { x: 623, y: 112, texture: "flower-patch", scale: 0.75 },
-        { x: 718, y: 532, texture: "flower-patch", scale: 0.8 },
-        { x: 529, y: 504, texture: "flower-patch", scale: 0.7 },
-        { x: 255, y: 91, texture: "flower-patch", scale: 0.65 },
-        { x: 445, y: 559, texture: "flower-patch", scale: 0.8 },
-        { x: 744, y: 181, texture: "flower-patch", scale: 0.7 },
-        { x: 903, y: 320, texture: "flower-patch", scale: 0.75 },
-        { x: 208, y: 294, texture: "flower-patch", scale: 0.65 },
-        { x: 805, y: 287, texture: "flower-patch", scale: 0.72 },
-        { x: 365, y: 300, texture: "rock-cluster", scale: 0.72 },
-        { x: 610, y: 475, texture: "rock-cluster", scale: 0.78 },
-        { x: 695, y: 260, texture: "rock-cluster", scale: 0.65 },
-        { x: 245, y: 455, texture: "rock-cluster", scale: 0.7 },
-        { x: 840, y: 365, texture: "rock-cluster", scale: 0.75 },
-        { x: 520, y: 126, texture: "rock-cluster", scale: 0.62 },
-        { x: 90, y: 350, texture: "rock-cluster", scale: 0.65 },
-        { x: 132, y: 340, texture: "grass-tuft", scale: 0.75 },
-        { x: 192, y: 385, texture: "grass-tuft", scale: 0.65 },
-        { x: 470, y: 182, texture: "grass-tuft", scale: 0.7 },
-        { x: 575, y: 565, texture: "grass-tuft", scale: 0.8 },
-        { x: 689, y: 190, texture: "grass-tuft", scale: 0.68 },
-        { x: 854, y: 257, texture: "grass-tuft", scale: 0.72 },
-        { x: 934, y: 520, texture: "grass-tuft", scale: 0.82 },
-        { x: 220, y: 150, texture: "dirt-patch", scale: 0.62 },
-        { x: 517, y: 438, texture: "dirt-patch", scale: 0.7 },
-        { x: 736, y: 346, texture: "dirt-patch", scale: 0.58 },
-        { x: 380, y: 590, texture: "dirt-patch", scale: 0.65 },
-        { x: 90, y: 636, texture: "foreground-shrub", scale: 1.05, baseY: 635 },
-        { x: 855, y: 638, texture: "foreground-shrub", scale: 1.15, baseY: 637 },
-        { x: 510, y: 646, texture: "wild-grass-bank", scale: 1.18, baseY: 646 },
-      ]);
-      this.add.text(18, 18, "Sysselcraft · byn vaknar", {
+
+      this.add.text(18, 18, "Sysselcraft · master-scene experiment", {
         color: "#4b3a29", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
         backgroundColor: "#f5e5cbd9", padding: { x: 10, y: 7 },
       }).setDepth(3000).setScrollFactor(0);
