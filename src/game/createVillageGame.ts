@@ -284,7 +284,7 @@ export async function createVillageGame(
 
     create() {
       const camera = this.cameras.main;
-      camera.setBackgroundColor("#78975e");
+      camera.setBackgroundColor("#557b49");
       camera.setBounds(WORLD_MIN_X, 0, WORLD_WIDTH, WORLD_HEIGHT);
 
       this.drawVillage();
@@ -298,8 +298,8 @@ export async function createVillageGame(
         .setDepth(1303)
         .setVisible(requestedDogVisible);
       this.targetMarker = this.add
-        .circle(430, 405, 7, 0xfff4c7, 0.32)
-        .setStrokeStyle(2, 0x53623e, 0.6)
+        .circle(430, 405, 7, 0xffdf7a, 0.42)
+        .setStrokeStyle(2, 0x3f4f32, 0.88)
         .setVisible(false)
         .setDepth(900);
 
@@ -349,10 +349,15 @@ export async function createVillageGame(
     setIntroComplete(complete: boolean) {
       requestedIntroComplete = complete;
       this.introComplete = complete;
-      if (this.questMarker) {
-        if (!complete) this.questMarker.setVisible(false);
-        else this.applyQuestState(requestedQuestState);
+      if (!this.questMarker) return;
+      const label = this.questMarker.getByName("label") as GameObjects.Text;
+      if (!complete) {
+        this.questMarker.setPosition(575, 184).setVisible(true).setAlpha(1);
+        label.setText("?");
+        return;
       }
+      this.questMarker.setPosition(150, 72);
+      this.applyQuestState(requestedQuestState);
     }
 
     setDogVisible(visible: boolean) {
@@ -372,11 +377,13 @@ export async function createVillageGame(
     applyQuestState(state: QuestState) {
       requestedQuestState = state;
       if (!this.questMarker) return;
+      const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!this.introComplete) {
-        this.questMarker.setVisible(false);
+        this.questMarker.setPosition(575, 184).setVisible(true).setAlpha(1);
+        label.setText("?");
         return;
       }
-      const label = this.questMarker.getByName("label") as GameObjects.Text;
+      this.questMarker.setPosition(150, 72);
       if (state === "available") {
         this.questMarker.setVisible(true).setAlpha(1);
         label.setText("!");
@@ -543,40 +550,41 @@ export async function createVillageGame(
     }
 
     private createQuestMarker() {
-      const shadow = this.add.ellipse(2, 4, 46, 50, 0x3f3428, 0.2);
-      const bubble = this.add
-        .ellipse(0, 0, 44, 48, 0xe5bc58)
-        .setStrokeStyle(3, 0x765537, 0.96);
-      const glow = this.add.ellipse(0, 1, 34, 38, 0xf0d57b, 0.44);
-      const shine = this.add.ellipse(-9, -11, 9, 6, 0xfff0b1, 0.82);
+      const shadow = this.add.rectangle(3, 4, 42, 42, 0x3b2d20, 0.28);
+      const frame = this.add
+        .rectangle(0, 0, 40, 40, 0xe3b447)
+        .setStrokeStyle(4, 0x65451f, 1);
+      const inner = this.add.rectangle(0, 0, 28, 28, 0xf2d46f, 1);
+      const shine = this.add.rectangle(-9, -9, 6, 6, 0xffefad, 1);
       const label = this.add
-        .text(0, -1, "!", {
-          color: "#55401f",
-          fontSize: "25px",
+        .text(0, -1, "?", {
+          color: "#4a341d",
+          fontSize: "26px",
           fontStyle: "bold",
-          fontFamily: "Trebuchet MS, sans-serif",
+          fontFamily: "monospace",
         })
         .setOrigin(0.5)
         .setName("label");
       this.questMarker = this.add
-        .container(150, 72, [shadow, bubble, glow, shine, label])
+        .container(575, 184, [shadow, frame, inner, shine, label])
         .setDepth(3000)
-        .setSize(56, 58)
+        .setSize(52, 52)
         .setInteractive({ useHandCursor: true });
       this.questMarker.on(
         "pointerdown",
         (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
           event.stopPropagation();
           if (this.introComplete) callbacks.onQuestOpen();
+          else callbacks.onLinusInteract();
         },
       );
       this.tweens.add({
         targets: this.questMarker,
-        y: 65,
-        duration: 900,
+        y: "-=6",
+        duration: 650,
         yoyo: true,
         repeat: -1,
-        ease: "Sine.InOut",
+        ease: "Stepped",
       });
     }
 
@@ -714,15 +722,15 @@ export async function createVillageGame(
       );
       this.add
         .text(549, 236, "Linus", {
-          color: "#fff1c9",
+          color: "#ffe6a1",
           fontSize: "13px",
-          fontFamily: "Trebuchet MS, sans-serif",
-          backgroundColor: "#4a382be8",
+          fontFamily: "monospace",
+          backgroundColor: "#392d22e8",
           padding: { x: 6, y: 4 },
         })
         .setDepth(2900);
 
-      this.add.ellipse(675, 415, 190, 75, 0x718e57, 0.08).setDepth(8);
+      this.add.ellipse(675, 415, 190, 75, 0x4f7346, 0.12).setDepth(8);
       this.drawTree(105, 115, "tree-birch", 0.95);
       this.drawTree(155, 485, "tree-oak", 1.05);
       this.drawTree(410, 105, "tree-pine", 0.9);
@@ -766,10 +774,10 @@ export async function createVillageGame(
 
       this.add
         .text(18, 18, "Sysselcraft · byn vaknar", {
-          color: "#fff1c9",
+          color: "#ffe7a8",
           fontSize: "14px",
-          fontFamily: "Trebuchet MS, sans-serif",
-          backgroundColor: "#4a382be8",
+          fontFamily: "monospace",
+          backgroundColor: "#392d22e8",
           padding: { x: 8, y: 6 },
         })
         .setDepth(3000)
@@ -782,10 +790,10 @@ export async function createVillageGame(
     parent,
     width: viewWidth,
     height: VIEW_HEIGHT,
-    backgroundColor: "#78975e",
-    pixelArt: false,
-    antialias: true,
-    roundPixels: false,
+    backgroundColor: "#557b49",
+    pixelArt: true,
+    antialias: false,
+    roundPixels: true,
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
