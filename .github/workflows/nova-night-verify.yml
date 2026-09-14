@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Remove known unused import
+      - name: Apply narrow source cleanup
         run: python3 scripts/nova_remove_unused_opening_import.py
       - name: Install dependencies
         run: npm install --no-audit --no-fund
@@ -29,5 +29,5 @@ jobs:
           git config user.name "Nova"
           git config user.email "actions@users.noreply.github.com"
           git add src/game/createVillageGame.ts
-          git commit -m "Remove unused visual import [skip ci]"
+          git commit -m "Fix visual scene verification blockers [skip ci]"
           git push origin HEAD:nova/vercel-free-batch
