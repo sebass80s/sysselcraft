@@ -1,8 +1,8 @@
 from pathlib import Path
 
 GAME = Path('src/game/createVillageGame.ts')
-TRUCK = Path('public/assets/village/reboot/truck-painted.png')
-MATERIALS = Path('public/assets/village/reboot/materials-painted.png')
+TRUCK = Path('public/assets/village/reboot/truck-runtime.png')
+MATERIALS = Path('public/assets/village/reboot/materials-runtime.png')
 
 if not (TRUCK.exists() and MATERIALS.exists()):
     raise SystemExit('Painted delivery assets not both present yet; no code change.')
@@ -11,8 +11,8 @@ s = GAME.read_text()
 
 anchor = '      this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");\n'
 loads = (
-    '      this.load.image("truck-painted", "/assets/village/reboot/truck-painted.png");\n'
-    '      this.load.image("materials-painted", "/assets/village/reboot/materials-painted.png");\n'
+    '      this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");\n'
+    '      this.load.image("materials-painted", "/assets/village/reboot/materials-runtime.png");\n'
 )
 if 'this.load.image("truck-painted"' not in s:
     if anchor not in s:
