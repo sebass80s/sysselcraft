@@ -8,17 +8,25 @@ Sysselcraft has run as a real native app on the user's physical iPhone via Capac
 
 Draft PR **#6** on `nova/vercel-free-batch` is the current batched hardening/design branch. Verify branch head/CI before claims.
 
-### 🔒 CANONICAL VISUAL DIRECTION — DO NOT REINTERPRET
+## 🔒 CANONICAL VISUAL DIRECTION — DO NOT REINTERPRET
 
 The canonical brief is exactly:
 
 > **En illustrerad isometrisk sagoboksvärld med mjuka organiska former, ganska mycket detalj i vegetation och byggnader, fina och tydliga silhuetter, subtila skuggor och ett målat snarare än rutnätsbundet uttryck.**
 
-The old mandatory 16-bit/pixel-art target is superseded. **Pixel art is not a requirement.** The 2026-09-14 pixel-heavy intermediate build must not be mistaken for the target direction merely because it is currently runnable.
+The visual references to aim for are the **soft illustrated isometric storybook images created during the questgiver discussion**. They are the intended visual family: warm, gentle, detailed, organic, spatial and painterly.
 
-There is also **no mandatory bitmap-versus-vector choice**. SVG/vector, PNG/WebP/bitmap, spritesheets, atlases or hybrids may be used according to what best produces the approved visual result and performs reliably.
+### Future-Nova warning
 
-Do not restore crisp pixel rendering, nearest-neighbour scaling, blocky geometry or pixel-RPG UI as defaults. Equally, do not accept a flat illustrated world: spatial depth, overlap, grounding and organic terrain remain important.
+**PIXEL ART IS NOT THE DESIGN. DO NOT REVIVE IT.**
+
+The old 16-bit/pixel-art direction and the later pixel-heavy intermediate build are superseded. They remain in repository history only because they happened, not because they are references. Do not infer visual canon from current/historical asset files, screenshots or commits when they conflict with `ART_DIRECTION.md`.
+
+No Space Invaders in the sagovärld: do not introduce crisp pixel aesthetics, nearest-neighbour scaling, deliberately low-resolution sprites, chunky pixel outlines, blocky tile geometry, pixel-RPG UI or retro-game styling as the visual default.
+
+2.5D means spatial depth and occlusion, **not pixel art**.
+
+There is **no mandatory bitmap-versus-vector choice**. SVG/vector, PNG/WebP/bitmap, spritesheets, atlases or hybrids may be used according to what best produces the approved visual result and performs reliably. Format is engineering; appearance is art direction.
 
 Read `docs/ART_DIRECTION.md`, `docs/VISUAL_ASSET_PREP.md` and `docs/TECHNICAL_HANDOFF.md` before visual work.
 
@@ -108,7 +116,9 @@ Repo `sebass80s/sysselcraft` is public. Normal standard GitHub-hosted Actions ma
 2. Retrieve newest private diary when available.
 3. Verify current branch/main/PR/CI rather than trusting stale SHAs.
 4. Do not restart Capacitor setup.
-5. Preserve the illustrated isometric storybook direction. Do not infer visual canon from whatever intermediate assets happen to be checked in.
-6. Prefer local/native QA; do not use Vercel for routine iteration.
-7. Preserve and physically regression-test the working quest/approval/delivery loop.
-8. Keep reconciliation observe-only until evidence supports migration.
+5. **Before drawing anything, repeat the visual target to yourself: soft illustrated isometric storybook, not pixel art.**
+6. Use the approved questgiver/storybook renders as the intended visual family and `ART_DIRECTION.md` as written authority.
+7. Do not infer art direction from obsolete pixel-heavy assets.
+8. Prefer local/native QA; do not use Vercel for routine iteration.
+9. Preserve and physically regression-test the working quest/approval/delivery loop.
+10. Keep reconciliation observe-only until evidence supports migration.
