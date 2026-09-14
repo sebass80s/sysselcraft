@@ -1,4 +1,4 @@
-name: Nova master-scene cleanup
+name: Nova master scene cleanup
 
 on:
   push:
@@ -14,94 +14,14 @@ jobs:
   patch:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout experiment branch
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: nova/vercel-free-batch
-
-      - name: Strip legacy overlays and align collisions
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          path = Path('src/game/createVillageGame.ts')
-          text = path.read_text()
-
-          obstacle_pattern = re.compile(r'const obstacles: Obstacle\[\] = \[.*?\n\];', re.S)
-          obstacles = '''const obstacles: Obstacle[] = [
-            // Hero-slice collision map for the painted master scene. These are gameplay
-            // footprints, deliberately independent from the rendered image bounds.
-            { type: "rect", x: 300, y: 242, width: 420, height: 150 }, // cottage
-            { type: "rect", x: 650, y: 342, width: 250, height: 145 }, // board / bench / mailbox
-            { type: "circle", x: 945, y: 365, radius: 82 }, // well
-            { type: "circle", x: 815, y: 430, radius: 34 }, // lamp base
-            { type: "circle", x: -205, y: 548, radius: 42 }, // village sign
-            { type: "rect", x: 15, y: 430, width: 390, height: 72 }, // left stone wall
-            { type: "rect", x: 1215, y: 320, width: 330, height: 80 }, // right stone wall
-            { type: "circle", x: -270, y: 335, radius: 78 }, // left birches
-            { type: "circle", x: 1230, y: 505, radius: 92 }, // foreground vegetation
-          ];'''
-          text, n = obstacle_pattern.subn(obstacles, text, count=1)
-          if n != 1:
-              raise SystemExit('Could not replace obstacle block')
-
-          text = text.replace('this.questMarker.setPosition(575, 184)', 'this.questMarker.setPosition(720, 335)')
-          text = text.replace('this.questMarker.setPosition(150, 72)', 'this.questMarker.setPosition(300, 82)')
-          text = text.replace('this.questMarker = this.add.container(575, 184, [shadow, bubble, inner, label])', 'this.questMarker = this.add.container(720, 335, [shadow, bubble, inner, label])')
-
-          draw_pattern = re.compile(r'    private drawVillage\(\) \{.*?\n    \}\n  \}\n\n  const game', re.S)
-          draw = '''    private drawVillage() {
-            // Painted master scene is the visual authority for static scenery in this experiment.
-            this.add.tileSprite(
-              (WORLD_MIN_X + WORLD_MAX_X) / 2,
-              WORLD_HEIGHT / 2,
-              WORLD_WIDTH,
-              WORLD_HEIGHT,
-              "grass-tile",
-            ).setDepth(0);
-
-            // Linus stays dynamic so onboarding remains testable. His current art is temporary.
-            this.linus = this.add.image(720, 450, "linus")
-              .setOrigin(0.5, 0.9)
-              .setDepth(1450)
-              .setInteractive({ useHandCursor: true });
-            this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
-              event.stopPropagation();
-              if (this.introComplete || !this.player) return;
-              this.linusInteractionPending = true;
-              this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 650, y: 485 });
-              const finalPoint = this.path.at(-1);
-              if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
-              else this.maybeCompleteLinusInteraction();
-            });
-            this.add.text(694, 390, "Linus", {
-              color: "#4b3b2b", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
-              backgroundColor: "#f7e9cce8", padding: { x: 8, y: 4 },
-            }).setDepth(2900);
-
-            this.add.text(18, 18, "Sysselcraft · master-scene experiment", {
-              color: "#4b3a29", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
-              backgroundColor: "#f5e5cbd9", padding: { x: 10, y: 7 },
-            }).setDepth(3000).setScrollFactor(0);
-          }
-        }
-
-          text, n = draw_pattern.subn(draw + '\n  }\n\n  const game', text, count=1)
-          if n != 1:
-              raise SystemExit('Could not replace drawVillage block')
-
-          path.write_text(text)
-          PY
-
-      - name: Commit experiment cleanup
-        run: |
+      - run: python scripts/nova_patch_master_scene.py
+      - run: |
           git config user.name "Nova Sysselcraft"
           git config user.email "actions@users.noreply.github.com"
           git add src/game/createVillageGame.ts
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
+          git diff --cached --quiet && exit 0
           git commit -m "Use painted master scene as static village layer [skip ci]"
           git push origin HEAD:nova/vercel-free-batch
