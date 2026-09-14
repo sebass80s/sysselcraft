@@ -1,12 +1,14 @@
 # Sysselcraft Visual Asset Prep
 
-Status: **AMBIENT PROP PACK INTEGRATED · FIRST VISUAL REFINEMENT BATCH READY FOR REAL PLAYTEST**
+Status: **STORYBOOK ART DIRECTION LOCKED · STYLE PROOF NEXT**
 
-This file records the current visual bridge work and the rules for continuing it without breaking gameplay.
+Canonical visual direction is now documented in `docs/ART_DIRECTION.md`. Read that file before producing or converting visual assets.
 
 ## Visual rule
 
-The current village should become richer through **nature, traces of daily life and repair materials**, not by revealing future buildings too early.
+Sysselcraft is an **illustrated isometric storybook world** with soft organic forms, rich vegetation/building detail, strong silhouettes, subtle shadows and a painted rather than grid-bound expression. The first established concept-art image is the visual north star.
+
+The village should become richer through nature, traces of daily life and repair materials, not by revealing future buildings too early.
 
 Story/design guardrails:
 
@@ -14,82 +16,62 @@ Story/design guardrails:
 - family house should feel inhabited;
 - the village should contain evidence that people once lived here;
 - future resident/building reveals stay hidden until earned;
-- gameplay/collision always wins over decorative placement.
+- gameplay/collision always wins over decorative placement;
+- small-screen readability wins over decorative density.
 
-## Ambient prop pack
+## Existing ambient prop pack
 
 Prepared under `public/assets/village/`:
 
-- `tree-stump.svg` — old maintenance/forestry trace; useful near wild edges.
-- `wheelbarrow.svg` — practical village/construction prop; especially useful around the first material site.
-- `old-barrel.svg` — neutral storage/yard prop.
-- `puddle.svg` — ground detail that can break up large grass areas without becoming an obstacle.
-- `birdhouse.svg` — small sign of care/life, best near the family house or tree line.
-- `laundry-line.svg` — makes the family house feel lived in after arrival.
+- `tree-stump.svg`
+- `wheelbarrow.svg`
+- `old-barrel.svg`
+- `puddle.svg`
+- `birdhouse.svg`
+- `laundry-line.svg`
 
-These SVGs intentionally use the current prototype palette and `shape-rendering="crispEdges"` so they can coexist with the existing bridge assets. They are not the final raster production pipeline.
+These SVGs were created during the earlier pixel-art bridge phase and may still contain `shape-rendering="crispEdges"`. Treat that as legacy implementation, **not current art direction**. The files remain useful for placement, composition and gameplay integration until their visual treatment is replaced or refined.
 
 ## Current integration
 
-The ambient pack is now data-driven through `src/game/worldDecor.ts` rather than being hard-coded ad hoc into the Phaser scene.
+Ambient placement remains data-driven through `src/game/worldDecor.ts`.
 
-`OPENING_AMBIENT_OBJECTS` currently adds:
+`OPENING_AMBIENT_OBJECTS` adds lived-in/neglected-world details around the family house and village edges. `FIRST_DELIVERY_AMBIENT_OBJECTS` adds construction stakes and wheelbarrow alongside the scene-created material stack after the first earned delivery.
 
-1. `laundry-line` beside the family-house area, outside the main approach;
-2. `birdhouse` near the house/tree line;
-3. `old-barrel` near existing practical storage clutter;
-4. two `tree-stump` placements toward the outer village edges;
-5. `puddle` as a low-depth ground detail away from the primary route.
+Before the first approved quest, the construction area remains an empty, neglected patch rather than advertising a future building.
 
-`FIRST_DELIVERY_AMBIENT_OBJECTS` now adds the complete first earned construction-site reveal:
+No collision is implied by rendered bounds. Collision footprints remain separate and should change only when gameplay evidence requires it.
 
-- `construction-stakes` at the future work area;
-- `wheelbarrow` beside the delivered materials.
+## What remains valuable from the first visual refinement batch
 
-The permanent `material-stack` is created by the scene at the same moment. Before the first approved quest, the construction stakes are no longer visible. This is deliberate: the opening village should contain an empty, neglected patch rather than advertise a future building before the child has caused the first world change.
+The existing family house, terrain, trees, walls, fences, vegetation, props, first-delivery objects and puppy are valuable **bridge assets**. Their composition, dimensions, placement hooks and state integration should be reused where practical.
 
-No collision has been added for these props. Collision must remain separate from rendered bounds and should only be introduced if an actual playtest shows that a prop needs a physical footprint.
+They are no longer a target style to polish indefinitely. The previous goal of converging on 16-bit pixel art is superseded.
 
-## First visual refinement batch
+## Next visual iteration: style proof
 
-The current bridge assets have received a broad consistency pass toward the current concept-art target rather than isolated one-off redraws.
+Do not begin a full-library redraw yet. Build one representative slice against the concept-art north star:
 
-Refined areas now include:
+1. family house;
+2. two or three trees / vegetation forms;
+3. grass/terrain plus a road/path edge;
+4. fence, bush and one everyday prop;
+5. representative light and shadow treatment.
 
-- family house facade, roof, windows, porch and lived-in details;
-- grass tile, dirt patches, road segments, road bend and footpath;
-- oak, birch and pine tree sprites;
-- stone wall, fence, bushes, flowers, grass tufts and wild-grass banks;
-- bench, mailbox, crates, signpost, lamp post, woodpile, well, rock clusters and birdhouse;
-- first-delivery material stack, wheelbarrow and construction stakes;
-- puppy sprite details.
+There is **no pixel-art constraint** for this proof. Curves and diagonals may be antialiased. Organic edges are desirable. The underlying pathfinding grid should become visually unobtrusive.
 
-The goal of this pass is not final production art. It is to make the playable bridge scene visually coherent enough that the next decisions can come from a real screenshot and device playtest instead of from isolated SVG inspection.
+Validate the style proof in a running build, preferably on the physical iPhone, before committing to a bulk asset conversion.
 
-## Next visual iteration
+## Production format policy
 
-The next visual step is not “add more stuff”. It is to validate the current composition on a real running build.
+The old assumption that production must become raster PNG/WebP sprite atlases with a fixed native pixel grid and nearest-neighbour scaling is retired.
 
-When native/browser verification capacity is available:
+Use a hybrid pipeline:
 
-1. Verify pathfinding around all current ambient placements.
-2. Verify click/tap targets and Y/base-depth sorting.
-3. Compare the construction area before and after first approval. Before approval it should read as unused village space; afterwards stakes + materials + wheelbarrow should make the change unmistakable without looking like a finished building.
-4. Confirm the first-delivery visual state restores from persisted state without replaying the delivery event.
-5. Capture a real screenshot from the running game.
-6. Use that screenshot to identify empty/noisy regions before drawing more assets.
-7. Only after composition is stable, begin replacing SVG bridge assets with coherent raster PNG/WebP sprite atlases.
+- vector/SVG masters where scalable organic construction and fast iteration help;
+- high-resolution painted raster where texture/brushwork is stronger;
+- vector + raster texture hybrids when useful;
+- runtime PNG/WebP/atlases for repeated/animated assets when Phaser performance or animation benefits;
+- SVG may remain a runtime format for suitable static/UI assets if device testing supports it.
 
-Until then, additional visual work should focus on reusable assets, state-driven placement rules and production-pipeline preparation rather than speculative clutter.
-
-## Production art migration
-
-Long-term art direction remains:
-
-- fixed native pixel grid;
-- nearest-neighbour scaling;
-- consistent palette and light direction;
-- sprite atlases rather than many independent production SVGs;
-- collision footprints defined separately from rendered bounds.
-
-The ambient pack is therefore useful both immediately and as reference material for the later raster redraw.
+Format is an implementation choice, not the art direction. Preserve reusable assets, consistent light/material logic and separate collision footprints regardless of format.
