@@ -422,20 +422,29 @@ export async function createVillageGame(
     }
 
     private createQuestMarker() {
-      const shadow = this.add.ellipse(3, 7, 43, 18, 0x3c4d34, 0.2);
-      const bubble = this.add.circle(0, 0, 21, 0xf2c95d, 1).setStrokeStyle(2, 0xffe9a0, 0.95);
-      const inner = this.add.circle(-5, -6, 12, 0xffdf79, 0.65);
-      const label = this.add.text(0, -1, "?", {
-        color: "#5b4425", fontSize: "27px", fontStyle: "bold", fontFamily: "Trebuchet MS",
+      // UI geometry is intentionally code-drawn, but styled as a soft storybook speech marker
+      // rather than a generic bright RPG orb. It remains directly tappable by design.
+      const shadow = this.add.ellipse(2, 10, 39, 15, 0x3a2a1d, 0.18);
+      const bubble = this.add.graphics();
+      bubble.fillStyle(0xfff2cf, 0.98);
+      bubble.lineStyle(2, 0x6b4b31, 0.9);
+      bubble.fillRoundedRect(-22, -22, 44, 39, 12);
+      bubble.strokeRoundedRect(-22, -22, 44, 39, 12);
+      bubble.fillTriangle(-5, 16, 5, 16, 0, 24);
+      bubble.lineBetween(-5, 16, 0, 24);
+      bubble.lineBetween(0, 24, 5, 16);
+      const highlight = this.add.ellipse(-7, -10, 13, 7, 0xffffff, 0.22);
+      const label = this.add.text(0, -3, "?", {
+        color: "#5a3f28", fontSize: "25px", fontStyle: "bold", fontFamily: "Trebuchet MS",
       }).setOrigin(0.5).setName("label");
-      this.questMarker = this.add.container(720, 335, [shadow, bubble, inner, label])
-        .setDepth(3000).setSize(52, 52).setInteractive({ useHandCursor: true });
+      this.questMarker = this.add.container(720, 335, [shadow, bubble, highlight, label])
+        .setDepth(3000).setSize(54, 56).setInteractive({ useHandCursor: true });
       this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (this.introComplete) callbacks.onQuestOpen();
         else callbacks.onLinusInteract();
       });
-      this.tweens.add({ targets: this.questMarker, y: "-=5", duration: 850, yoyo: true, repeat: -1, ease: "Sine.InOut" });
+      this.tweens.add({ targets: this.questMarker, y: "-=4", duration: 950, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
     private ensureMaterialStack() {
@@ -520,7 +529,7 @@ export async function createVillageGame(
       }
       foreground.setMask(foregroundMask.createGeometryMask());
 
-      // Linus stays dynamic so onboarding remains testable.
+      // Painted Linus stays dynamic so onboarding remains testable.
       this.linus = this.add.image(720, 450, "linus-painted")
         .setOrigin(0.5, 0.96)
         .setDisplaySize(128, 125)
@@ -536,10 +545,6 @@ export async function createVillageGame(
         else this.maybeCompleteLinusInteraction();
       });
 
-      this.add.text(18, 18, "Sysselcraft · master-scene experiment", {
-        color: "#4b3a29", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
-        backgroundColor: "#f5e5cbd9", padding: { x: 10, y: 7 },
-      }).setDepth(3000).setScrollFactor(0);
     }
   }
 

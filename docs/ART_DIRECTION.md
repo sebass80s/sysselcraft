@@ -212,31 +212,28 @@ Do not call a visual overhaul complete merely because source assets changed. Val
 13. rendering and animation remain stable without shimmer, blur or stutter;
 14. the complete previously verified quest/approval/delivery loop still works.
 
-## ✅ 2026-09-14 proof of concept — FEASIBILITY CONFIRMED
+## 🧪 2026-09-14 hero-slice proof of concept — PARTIALLY VERIFIED
 
-The core visual architecture has now been proven in the running Phaser game, not only in concept images.
+The current experiment has moved beyond the earlier two-asset feasibility check, but **the full visual POC is not yet accepted**. For this project, POC means that one playable hero slice demonstrates the complete visible visual stack in the new standard, without old SVG/game-asset styling leaking through.
 
-Verified in local runtime:
+### Verified in the running Phaser game
 
-- a painted raster **family house** derived from the approved concept-art direction loads and renders correctly as a real game asset;
-- a painted raster **child avatar** loads and renders correctly as the player character;
-- the painted child can move through the existing world using the existing tap-to-move/pathfinding and keyboard movement systems;
-- the child participates in runtime Y/base-depth sorting;
-- the child can move both **in front of and behind** a tall world object and the occlusion order updates correctly;
-- therefore painted concept-art-quality raster assets, free movement and true 2.5D foreground/background occlusion are technically compatible in the current Phaser architecture.
+- the coherent painted **master scene** renders sharply as the static visual authority for terrain, cottage, roads, permanent vegetation and fixed props;
+- the painted **child avatar** renders and remains fully controllable with tap-to-move/pathfinding and keyboard movement;
+- a separate painted **Linus NPC** renders correctly over the master scene and remains interactive;
+- the player participates in Y/base-depth sorting;
+- painted scenery from the master can be reused as a **masked foreground layer**, allowing the child to pass visibly behind and in front of master-scene objects without rebuilding those objects as flat SVG assets;
+- this masked-master occlusion has been confirmed by the user in local runtime;
+- collision/navigation remains independent of the artwork. The current collision shapes are deliberately rough POC geometry and are not accepted as final traversal tuning.
 
-This POC is deliberately minimal. Most surrounding village art is still placeholder/intermediate art and the child currently uses a static painted image while moving. That does **not** invalidate the feasibility result. Character walk animation is a separate production problem and should be solved with dedicated painted directional/animation frames after the visual asset pipeline is locked.
+### Still required before the hero-slice POC can be called complete
 
-### Production consequences from the POC
+- replace or remove every remaining visible legacy-style dynamic asset in the hero slice, especially the puppy and progression/delivery objects when they appear;
+- finish the quest-marker/UI visual integration so the visible UI belongs to the same storybook language;
+- ensure foreground/occlusion coverage is sufficient for the hero slice, not only the notice-board cluster used for the architecture proof;
+- confirm the complete visible hero slice in runtime after those elements are integrated;
+- preserve the already verified onboarding / quest / parent approval / delivery loop while doing the visual replacement.
 
-1. **Do not revert to hand-built SVG illustration for hero art.** The painted raster route is proven viable.
-2. **Load painted raster assets directly in Phaser** (`this.load.image`) rather than embedding raster files inside SVG wrappers. The SVG-wrapper experiment caused disappearing assets in runtime and is rejected.
-3. Treat each production asset as having at least four independent definitions: rendered bounds, ground/base point, collision footprint and interaction footprint.
-4. Tall assets must participate in base/Y-depth ordering so the child can pass naturally in front of and behind them.
-5. Keep placeholder art around only as scaffolding while the painted asset set is rebuilt. Placeholder appearance is not a style reference.
-6. Do not declare an asset successful until it has been seen in the running game. `generated image` → `prepared game asset` → `integrated runtime asset` are three separate states.
-7. For characters, the final production pipeline must add dedicated painted movement frames/directions. Sliding a static image is acceptable only for POC verification, never for final presentation.
+### Current decision
 
-### POC decision
-
-**The intended Sysselcraft visual direction is technically feasible with the current Phaser game architecture. Proceed with a clean visual rebuild using painted concept-art-first assets and true 2.5D layering.**
+**The static painted master-scene architecture is technically validated, including independent dynamic characters and real 2.5D foreground occlusion. The complete Sysselcraft visual POC remains IN PROGRESS until the whole visible hero slice uses the approved standard and is confirmed in runtime.**
