@@ -2,7 +2,8 @@ name: Nova master-scene cleanup
 
 on:
   push:
-    branches: [nova/vercel-free-batch]
+    branches:
+      - nova/vercel-free-batch
     paths:
       - .github/workflows/nova-master-scene-cleanup.yml
 
@@ -18,16 +19,16 @@ jobs:
         with:
           ref: nova/vercel-free-batch
 
-      - name: Strip legacy static village overlays and align hero-slice collisions
-        shell: python
+      - name: Strip legacy overlays and align collisions
         run: |
+          python - <<'PY'
           from pathlib import Path
           import re
 
-          path = Path("src/game/createVillageGame.ts")
+          path = Path('src/game/createVillageGame.ts')
           text = path.read_text()
 
-          obstacle_pattern = re.compile(r"const obstacles: Obstacle\[\] = \[.*?\n\];", re.S)
+          obstacle_pattern = re.compile(r'const obstacles: Obstacle\[\] = \[.*?\n\];', re.S)
           obstacles = '''const obstacles: Obstacle[] = [
             // Hero-slice collision map for the painted master scene. These are gameplay
             // footprints, deliberately independent from the rendered image bounds.
@@ -43,17 +44,15 @@ jobs:
           ];'''
           text, n = obstacle_pattern.subn(obstacles, text, count=1)
           if n != 1:
-              raise SystemExit("Could not replace obstacle block")
+              raise SystemExit('Could not replace obstacle block')
 
-          # Marker positions now point at the painted cottage and the temporary dynamic Linus.
           text = text.replace('this.questMarker.setPosition(575, 184)', 'this.questMarker.setPosition(720, 335)')
           text = text.replace('this.questMarker.setPosition(150, 72)', 'this.questMarker.setPosition(300, 82)')
           text = text.replace('this.questMarker = this.add.container(575, 184, [shadow, bubble, inner, label])', 'this.questMarker = this.add.container(720, 335, [shadow, bubble, inner, label])')
 
-          draw_pattern = re.compile(r"    private drawVillage\(\) \{.*?\n    \}\n  \}\n\n  const game", re.S)
+          draw_pattern = re.compile(r'    private drawVillage\(\) \{.*?\n    \}\n  \}\n\n  const game', re.S)
           draw = '''    private drawVillage() {
-            // Painted master scene is the visual authority for all static scenery in this
-            // experiment. Do not redraw cottage, roads, trees, props or vegetation on top.
+            // Painted master scene is the visual authority for static scenery in this experiment.
             this.add.tileSprite(
               (WORLD_MIN_X + WORLD_MAX_X) / 2,
               WORLD_HEIGHT / 2,
@@ -62,8 +61,7 @@ jobs:
               "grass-tile",
             ).setDepth(0);
 
-            // Linus remains dynamic during the experiment because dialogue/interactions must
-            // still work. His current SVG art is temporary and is not part of the visual POC.
+            // Linus stays dynamic so onboarding remains testable. His current art is temporary.
             this.linus = this.add.image(720, 450, "linus")
               .setOrigin(0.5, 0.9)
               .setDepth(1450)
@@ -89,11 +87,12 @@ jobs:
           }
         }
 
-          text, n = draw_pattern.subn(draw + "\n  }\n\n  const game", text, count=1)
+          text, n = draw_pattern.subn(draw + '\n  }\n\n  const game', text, count=1)
           if n != 1:
-              raise SystemExit("Could not replace drawVillage block")
+              raise SystemExit('Could not replace drawVillage block')
 
           path.write_text(text)
+          PY
 
       - name: Commit experiment cleanup
         run: |
@@ -106,5 +105,3 @@ jobs:
           fi
           git commit -m "Use painted master scene as static village layer [skip ci]"
           git push origin HEAD:nova/vercel-free-batch
-
-# trigger: 2026-09-14
