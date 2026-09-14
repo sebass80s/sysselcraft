@@ -1,0 +1,33 @@
+name: Nova night verification
+
+on:
+  push:
+    branches: [nova/vercel-free-batch]
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: nova/vercel-free-batch
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Remove known unused import
+        run: python3 scripts/nova_remove_unused_opening_import.py
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify
+        run: npm run verify
+      - name: Commit verified cleanup
+        run: |
+          git config user.name "Nova"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/game/createVillageGame.ts
+          git commit -m "Remove unused visual import [skip ci]"
+          git push origin HEAD:nova/vercel-free-batch
