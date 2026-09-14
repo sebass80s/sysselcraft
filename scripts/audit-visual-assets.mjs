@@ -5,11 +5,9 @@ const roots = ["src", "public/assets"];
 const allowedExtensions = new Set([".css", ".svg", ".ts", ".tsx"]);
 
 const forbidden = [
-  { label: "SVG crispEdges rendering", pattern: /shape-rendering\s*=\s*["']crispEdges["']/i },
-  { label: "pixelated CSS image rendering", pattern: /image-rendering\s*:\s*(?:pixelated|crisp-edges)/i },
-  { label: "Phaser pixelArt enabled", pattern: /\bpixelArt\s*:\s*true\b/ },
-  { label: "Phaser antialias disabled", pattern: /\bantialias\s*:\s*false\b/ },
-  { label: "forced rounded pixels", pattern: /\broundPixels\s*:\s*true\b/ },
+  { label: "Phaser pixelArt disabled", pattern: /\bpixelArt\s*:\s*false\b/ },
+  { label: "Phaser antialias enabled", pattern: /\bantialias\s*:\s*true\b/ },
+  { label: "Phaser rounded pixels disabled", pattern: /\broundPixels\s*:\s*false\b/ },
 ];
 
 async function walk(path) {
@@ -48,6 +46,15 @@ if (!grassSize || Number(grassSize[1]) < 256 || Number(grassSize[2]) < 256) {
   );
 }
 
+const gameSource = await readFile("src/game/createVillageGame.ts", "utf8");
+for (const [label, pattern] of [
+  ["Phaser pixelArt must be enabled", /\bpixelArt\s*:\s*true\b/],
+  ["Phaser antialias must be disabled", /\bantialias\s*:\s*false\b/],
+  ["Phaser roundPixels must be enabled", /\broundPixels\s*:\s*true\b/],
+]) {
+  if (!pattern.test(gameSource)) problems.push(`src/game/createVillageGame.ts: ${label}`);
+}
+
 if (problems.length) {
   console.error("Visual regression audit failed:");
   for (const problem of problems) console.error(` - ${problem}`);
@@ -55,5 +62,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Visual regression audit passed: ${files.length} source/asset files checked, ${svgCount} SVGs validated.`,
+  `Visual regression audit passed: ${files.length} source/asset files checked, ${svgCount} SVGs validated for the pixel-art 2.5D direction.`,
 );
