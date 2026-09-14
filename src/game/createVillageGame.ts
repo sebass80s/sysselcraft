@@ -198,6 +198,7 @@ export async function createVillageGame(
       this.load.image("child-painted", "/assets/village/reboot/child.webp");
       this.load.image("master-scene", "/assets/village/reboot/sysselcraft-hero-master.webp");
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
+      this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
       for (const key of [
         "tree-oak", "tree-birch", "tree-pine", "linus", "linus-idle-b",
         "dog-puppy", "truck", "material-stack", "road-segment", "road-bend",
@@ -220,8 +221,9 @@ export async function createVillageGame(
         .setOrigin(0.5, 0.94)
         .setDisplaySize(74, 118)
         .setDepth(1405);
-      this.dog = this.add.image(548, 303, "dog-puppy")
+      this.dog = this.add.image(548, 303, "puppy-painted")
         .setOrigin(0.5, 0.88)
+        .setDisplaySize(66, 55)
         .setDepth(1303)
         .setVisible(requestedDogVisible);
       this.targetMarker = this.add.circle(430, 405, 7, 0xf4d780, 0.32)
