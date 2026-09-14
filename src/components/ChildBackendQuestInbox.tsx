@@ -3,7 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { getPairedChildId } from "@/backend/childDeviceBinding";
-import { getChildGameState, listChildQuests, submitQuest } from "@/backend/familyRepository";
+import {
+  getChildGameState,
+  isChildDeviceBound,
+  listChildQuests,
+  submitQuest,
+} from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import styles from "./ChildBackendQuestInbox.module.css";
 
@@ -13,6 +18,7 @@ export default function ChildBackendQuestInbox() {
   const [childId, setChildId] = useState<string | null>(null);
   const [pairingChecked, setPairingChecked] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
+  const [needsPairing, setNeedsPairing] = useState(false);
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [gameState, setGameState] = useState<BackendChildGameState | null>(null);
   const [open, setOpen] = useState(false);
@@ -20,12 +26,23 @@ export default function ChildBackendQuestInbox() {
   const [message, setMessage] = useState("");
 
   const refresh = useCallback(async (id: string) => {
+    const bound = await isChildDeviceBound(id);
+    if (!bound) {
+      setNeedsPairing(true);
+      setQuests([]);
+      setGameState(null);
+      setMessage("Barnkopplingen behöver förnyas.");
+      return false;
+    }
+
+    setNeedsPairing(false);
     const [nextQuests, nextGameState] = await Promise.all([
       listChildQuests(id),
       getChildGameState(id),
     ]);
     setQuests(nextQuests);
     setGameState(nextGameState);
+    return true;
   }, []);
 
   const refreshQuietly = useCallback(
@@ -63,8 +80,8 @@ export default function ChildBackendQuestInbox() {
         }
 
         setSessionReady(true);
-        await refresh(pairedId);
-        if (!cancelled) setMessage("");
+        const refreshed = await refresh(pairedId);
+        if (!cancelled && refreshed) setMessage("");
       } catch (error) {
         if (!cancelled) {
           setPairingChecked(true);
@@ -99,7 +116,7 @@ export default function ChildBackendQuestInbox() {
   }, [childId, refreshQuietly]);
 
   useEffect(() => {
-    if (!childId || !sessionReady) return;
+    if (!childId || !sessionReady || needsPairing) return;
 
     const refreshIfVisible = () => {
       if (document.visibilityState === "visible") void refreshQuietly(childId);
@@ -113,13 +130,13 @@ export default function ChildBackendQuestInbox() {
       document.removeEventListener("visibilitychange", refreshIfVisible);
       window.removeEventListener("focus", refreshOnFocus);
     };
-  }, [childId, refreshQuietly, sessionReady]);
+  }, [childId, needsPairing, refreshQuietly, sessionReady]);
 
   useEffect(() => {
-    if (!open || !childId || !sessionReady) return;
+    if (!open || !childId || !sessionReady || needsPairing) return;
     const timer = window.setInterval(() => void refreshQuietly(childId), OPEN_REFRESH_MS);
     return () => window.clearInterval(timer);
-  }, [open, childId, refreshQuietly, sessionReady]);
+  }, [open, childId, needsPairing, refreshQuietly, sessionReady]);
 
   if (!pairingChecked) return null;
 
@@ -133,13 +150,23 @@ export default function ChildBackendQuestInbox() {
     );
   }
 
+  if (needsPairing) {
+    return (
+      <aside className={styles.dock} aria-label="Koppla om barnets enhet">
+        <a className={styles.toggle} href="/pair">
+          📱 Koppla om enhet
+        </a>
+      </aside>
+    );
+  }
+
   const visibleQuests = quests.filter((quest) => quest.state !== "approved");
   const availableCount = quests.filter((quest) => quest.state === "available").length;
   const pendingCount = quests.filter((quest) => quest.state === "pending").length;
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
 
   async function markDone(instanceId: string) {
-    if (!childId || !sessionReady) return;
+    if (!childId || !sessionReady || needsPairing) return;
     setBusy(true);
     setMessage("");
     try {
@@ -154,12 +181,12 @@ export default function ChildBackendQuestInbox() {
   }
 
   async function refreshNow() {
-    if (!childId || !sessionReady) return;
+    if (!childId || !sessionReady || needsPairing) return;
     setBusy(true);
     setMessage("");
     try {
-      await refresh(childId);
-      setMessage("Uppdragen är uppdaterade.");
+      const refreshed = await refresh(childId);
+      if (refreshed) setMessage("Uppdragen är uppdaterade.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte uppdatera.");
     } finally {

@@ -3,7 +3,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import { ensureChildAnonymousSession } from "@/backend/auth";
 import { getPairedChildId, setPairedChildId } from "@/backend/childDeviceBinding";
-import { getChildGameState, redeemChildPairingCode } from "@/backend/familyRepository";
+import {
+  getChildGameState,
+  isChildDeviceBound,
+  redeemChildPairingCode,
+} from "@/backend/familyRepository";
 
 function normalizePairingCode(value: string) {
   return value.replace(/[^0-9a-f]/gi, "").slice(0, 8);
@@ -31,6 +35,18 @@ export default function PairChildPage() {
           return;
         }
 
+        const bound = await isChildDeviceBound(childId);
+        if (cancelled) return;
+
+        if (!bound) {
+          setPaired(false);
+          setRePairing(true);
+          setMessage(
+            "Den sparade barnkopplingen finns kvar på enheten, men backend-bindningen saknas. Skapa en ny parningskod i föräldraläget och koppla om enheten.",
+          );
+          return;
+        }
+
         const backendState = await getChildGameState(childId);
         if (cancelled) return;
 
@@ -43,7 +59,7 @@ export default function PairChildPage() {
         setPaired(false);
         setRePairing(true);
         setMessage(
-          "Den sparade barnkopplingen kan inte längre bekräftas av barnsessionen. Skapa en ny parningskod i föräldraläget och koppla om enheten.",
+          "Barnkopplingen är registrerad, men barnets spelstatus kunde inte läsas. Skapa en ny parningskod i föräldraläget och koppla om enheten.",
         );
       } catch (error) {
         if (!cancelled) {
@@ -66,6 +82,11 @@ export default function PairChildPage() {
     setMessage("");
     try {
       const childId = await redeemChildPairingCode(code);
+      const bound = await isChildDeviceBound(childId);
+      if (!bound) {
+        throw new Error("Parningen skapades, men enhetsbindningen kunde inte bekräftas. Försök igen.");
+      }
+
       const backendState = await getChildGameState(childId);
       if (!backendState) {
         throw new Error("Kopplingen skapades, men barnets spelstatus kunde inte läsas. Försök igen.");
