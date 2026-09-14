@@ -106,3 +106,5 @@ jobs:
           fi
           git commit -m "Use painted master scene as static village layer [skip ci]"
           git push origin HEAD:nova/vercel-free-batch
+
+# trigger: 2026-09-14
