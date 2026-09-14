@@ -490,7 +490,37 @@ export async function createVillageGame(
         "master-scene",
       ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(0);
 
-      // Linus stays dynamic so onboarding remains testable. His current art is temporary.
+      // Reuse the painted master itself as a masked foreground layer. The duplicated
+      // pixels remain visually seamless; only these masks participate in occlusion.
+      // Depth 1400 makes actors above y=400 pass behind the board cluster, while actors
+      // lower on the path naturally render in front via the existing Y-depth rule.
+      const foreground = this.add.image(
+        (WORLD_MIN_X + WORLD_MAX_X) / 2,
+        WORLD_HEIGHT / 2,
+        "master-scene",
+      ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(1400);
+      const foregroundMask = this.make.graphics({ x: 0, y: 0, add: false });
+      foregroundMask.fillStyle(0xffffff);
+      const maskPolygons: Point[][] = [
+        // Notice board.
+        [{x:550,y:210},{x:605,y:185},{x:710,y:190},{x:755,y:220},{x:748,y:335},{x:725,y:345},{x:725,y:365},{x:698,y:365},{x:698,y:345},{x:582,y:345},{x:582,y:365},{x:558,y:365},{x:558,y:338},{x:546,y:330}],
+        // Mailbox and post.
+        [{x:505,y:292},{x:520,y:278},{x:556,y:280},{x:573,y:294},{x:571,y:352},{x:563,y:360},{x:563,y:398},{x:545,y:398},{x:545,y:361},{x:510,y:358}],
+        // Bench.
+        [{x:538,y:340},{x:718,y:340},{x:730,y:355},{x:724,y:375},{x:706,y:379},{x:712,y:419},{x:688,y:423},{x:682,y:386},{x:572,y:389},{x:565,y:423},{x:541,y:420},{x:548,y:383},{x:535,y:373}],
+        // Flower tub beside the board.
+        [{x:702,y:322},{x:745,y:318},{x:780,y:335},{x:788,y:374},{x:775,y:406},{x:743,y:411},{x:715,y:398},{x:703,y:367}],
+      ];
+      for (const polygon of maskPolygons) {
+        foregroundMask.beginPath();
+        foregroundMask.moveTo(polygon[0].x, polygon[0].y);
+        polygon.slice(1).forEach((point) => foregroundMask.lineTo(point.x, point.y));
+        foregroundMask.closePath();
+        foregroundMask.fillPath();
+      }
+      foreground.setMask(foregroundMask.createGeometryMask());
+
+      // Linus stays dynamic so onboarding remains testable.
       this.linus = this.add.image(720, 450, "linus-painted")
         .setOrigin(0.5, 0.96)
         .setDisplaySize(128, 125)
