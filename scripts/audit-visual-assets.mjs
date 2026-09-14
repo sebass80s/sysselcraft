@@ -41,13 +41,20 @@ if (!grassSize || Number(grassSize[1]) < 256 || Number(grassSize[2]) < 256) {
 }
 
 const uiCss = await readFile("src/app/storybook.css", "utf8");
-if (!/image-rendering\s*:\s*pixelated/i.test(uiCss)) {
-  problems.push("src/app/storybook.css: game canvas must opt into pixelated presentation");
+if (/image-rendering\s*:\s*(pixelated|crisp-edges)/i.test(uiCss)) {
+  problems.push("src/app/storybook.css: retired pixel rendering must not return to the game canvas");
 }
 
-const house = await readFile("public/assets/village/family-house.svg", "utf8");
-if (!/shape-rendering\s*=\s*["']crispEdges["']/i.test(house)) {
-  problems.push("public/assets/village/family-house.svg: flagship building must use crisp pixel geometry");
+for (const flagship of [
+  "public/assets/village/family-house.svg",
+  "public/assets/village/grass-tile.svg",
+  "public/assets/village/tree-oak.svg",
+  "public/assets/village/linus.svg",
+]) {
+  const content = await readFile(flagship, "utf8");
+  if (/shape-rendering\s*=\s*["']crispEdges["']/i.test(content)) {
+    problems.push(`${flagship}: flagship storybook asset must not use crisp pixel geometry`);
+  }
 }
 
 const gameSource = await readFile("src/game/createVillageGame.ts", "utf8");
@@ -58,12 +65,6 @@ if (!/baseY\s*=\s*y/.test(gameSource)) {
   problems.push("src/game/createVillageGame.ts: rendered base depth must remain independently configurable");
 }
 
-if (crispSvgCount < 6) {
-  problems.push(
-    `public/assets: only ${crispSvgCount} SVGs declare crispEdges; the 2.5D pixel-art conversion is not broad enough`,
-  );
-}
-
 if (problems.length) {
   console.error("Visual regression audit failed:");
   for (const problem of problems) console.error(` - ${problem}`);
@@ -71,5 +72,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Visual regression audit passed: ${files.length} source/asset files checked, ${svgCount} SVGs validated, ${crispSvgCount} crisp pixel-art SVGs detected.`,
+  `Visual regression audit passed: ${files.length} source/asset files checked, ${svgCount} SVGs validated. ${crispSvgCount} legacy crisp-edge SVGs remain for staged replacement; flagship storybook assets are protected.`,
 );
