@@ -2,7 +2,6 @@ import type { GameObjects, Input, Types } from "phaser";
 import {
   AMBIENT_TEXTURE_KEYS,
   FIRST_DELIVERY_AMBIENT_OBJECTS,
-  OPENING_AMBIENT_OBJECTS,
 } from "./worldDecor";
 
 const VIEW_HEIGHT = 640;
@@ -518,7 +517,7 @@ export async function createVillageGame(
         WORLD_HEIGHT / 2,
         "master-scene",
       ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(1400);
-      const foregroundMask = this.make.graphics({ x: 0, y: 0, add: false });
+      const foregroundMask = this.make.graphics({ x: 0, y: 0 }, false);
       foregroundMask.fillStyle(0xffffff);
       const maskPolygons: Point[][] = [
         // Notice board.
