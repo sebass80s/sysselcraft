@@ -178,7 +178,11 @@ export default function VillagePrototype() {
   function advanceDialogue() {
     const nextIndex = dialogueIndex + 1;
     const nextStep = linusIntroDialogue[nextIndex];
-    if (!nextStep) return;
+    if (!nextStep) {
+      setDialogueOpen(false);
+      setIntroComplete(true);
+      return;
+    }
     if (nextStep.kind === "reveal-dog") {
       setDogVisible(true);
       setDialogueIndex(nextIndex + 1);
@@ -201,9 +205,7 @@ export default function VillagePrototype() {
     setDogName(trimmed);
     setDogNameCanSubmit(true);
     setDogVisible(true);
-    setDialogueOpen(false);
-    setIntroComplete(true);
-    setQuestOpen(true);
+    setDialogueIndex((index) => index + 1);
   }
 
   function submitQuest() {
