@@ -6,17 +6,21 @@ This file exists so a future AI instance can continue Sysselcraft as **Nova**, n
 
 Sysselcraft has run as a real native app on the user's physical iPhone via Capacitor/Xcode. Do not restart native migration or run `npx cap add ios` again.
 
-Draft PR **#6** on `nova/vercel-free-batch` is the current batched hardening/design branch. Verify head/CI before claims and use Vercel deliberately.
+Draft PR **#6** on `nova/vercel-free-batch` is the current batched hardening/design branch. Verify branch head/CI before claims.
 
-### MAJOR VISUAL DIRECTION + IMPLEMENTATION
+### 🔒 CANONICAL VISUAL DIRECTION — DO NOT REINTERPRET
 
-The old 16-bit/pixel-art target is **superseded**. Sysselcraft is canonically an **illustrated isometric storybook world** with soft organic forms, detailed vegetation/buildings, strong silhouettes, subtle shadows and a painted rather than grid-bound expression. The first concept-art image in the private development diary is the visual north star.
+The canonical brief is exactly:
 
-A first coordinated full storybook redesign batch has now been implemented across the current playable asset library and the main child-facing React UI. This is not merely a documentation decision anymore.
+> **En illustrerad isometrisk sagoboksvärld med mjuka organiska former, ganska mycket detalj i vegetation och byggnader, fina och tydliga silhuetter, subtila skuggor och ett målat snarare än rutnätsbundet uttryck.**
 
-Do not restore crisp pixel rendering, fixed native pixel grid, nearest-neighbour scaling, hard rectangular shadows or generic white-app-card UI as defaults. Read `docs/ART_DIRECTION.md` and `docs/VISUAL_ASSET_PREP.md` before visual work.
+The old mandatory 16-bit/pixel-art target is superseded. **Pixel art is not a requirement.** The 2026-09-14 pixel-heavy intermediate build must not be mistaken for the target direction merely because it is currently runnable.
 
-The next visual priority is **real running evidence**: browser/native screenshot plus physical iPhone QA, followed by a second correction pass. Concept art remains the comparison target.
+There is also **no mandatory bitmap-versus-vector choice**. SVG/vector, PNG/WebP/bitmap, spritesheets, atlases or hybrids may be used according to what best produces the approved visual result and performs reliably.
+
+Do not restore crisp pixel rendering, nearest-neighbour scaling, blocky geometry or pixel-RPG UI as defaults. Equally, do not accept a flat illustrated world: spatial depth, overlap, grounding and organic terrain remain important.
+
+Read `docs/ART_DIRECTION.md`, `docs/VISUAL_ASSET_PREP.md` and `docs/TECHNICAL_HANDOFF.md` before visual work.
 
 ## Architecture direction
 
@@ -26,7 +30,7 @@ Keep React + Phaser + Capacitor, with Supabase as shared family/quest backend an
 - Phaser = village rendering/gameplay
 - Capacitor = native container/capability bridge
 - Supabase = household, child, pairing, parent quests, server-authoritative rewards
-- Vercel/web = preview/fallback
+- Vercel/web = preview/fallback when genuinely needed
 
 Landscape-first. Do not bury domain logic inside Phaser.
 
@@ -42,6 +46,7 @@ Locked laws:
 - Parent approval before reward/progression.
 - Child gets game; parent gets tool.
 - Start village sparse/mildly neglected; nature/materiality enriches it before future buildings.
+- Quests belong to the world, not only the house.
 
 ## Interaction model
 
@@ -61,9 +66,11 @@ Locked laws:
 - Persistence authority: `docs/STATE_OWNERSHIP.md` + `docs/RECONCILIATION_PLAN.md`
 - Private human/project history: newest `Sysselcraft_Utvecklingsdagbok_v*.docx` in File Library.
 
+If documents disagree about visual style, **`ART_DIRECTION.md` and the exact locked brief above win.** Historical files may describe superseded experiments.
+
 ## Private development diary
 
-Every future Nova must retrieve the newest diary at thread start and continue it at meaningful milestones. It is private and must not be committed to GitHub. Preserve genuine screenshots/concept art and never invent screenshots/quotes/events. The 2026-09-14 storybook redesign is a major diary milestone.
+Every future Nova should retrieve the newest diary at thread start and continue it at meaningful milestones. It is private and must not be committed to GitHub. Preserve genuine screenshots/concept art and never invent screenshots/quotes/events.
 
 ## State ownership boundary
 
@@ -82,6 +89,7 @@ Every future Nova must retrieve the newest diary at thread start and continue it
 - reusable asset architecture;
 - data-driven dialogue;
 - Linus intro + puppy;
+- Linus-to-house first-quest onboarding;
 - quest marker/approval event;
 - truck/material delivery and persisted completion;
 - Capacitor Preferences local save;
@@ -90,15 +98,17 @@ Every future Nova must retrieve the newest diary at thread start and continue it
 
 ## Deployment / cost law
 
-Repo `sebass80s/sysselcraft` is public. Normal standard GitHub-hosted Actions may be used autonomously. Do not opt into explicitly billed/larger runners or paid services without approval. Vercel deployments are scarce and branch pushes trigger previews, so batch coherent remote pushes.
+Repo `sebass80s/sysselcraft` is public. Normal standard GitHub-hosted Actions may be used autonomously. Do not opt into explicitly billed/larger runners or paid services without approval.
+
+**Local/native testing is the default.** Use Xcode/physical iPhone for routine visual, UI and gameplay iterations. Use Vercel only when testing genuinely requires a network deployment, remote URL or web-specific behavior.
 
 ## Next Nova checklist
 
 1. Read this, `TECHNICAL_HANDOFF`, `STORY_DESIGN`, `ART_DIRECTION`, `STATE_OWNERSHIP`, `RECONCILIATION_PLAN`.
-2. Retrieve newest private diary.
-3. Verify current main/PR/CI/deployment rather than trusting stale SHAs.
+2. Retrieve newest private diary when available.
+3. Verify current branch/main/PR/CI rather than trusting stale SHAs.
 4. Do not restart Capacitor setup.
-5. Preserve storybook direction and gameplay geometry.
-6. Physically validate the storybook batch and backend pairing/reward loop before claiming those proofs complete.
-7. Keep reconciliation observe-only until evidence supports migration.
-8. Keep diary private/current.
+5. Preserve the illustrated isometric storybook direction. Do not infer visual canon from whatever intermediate assets happen to be checked in.
+6. Prefer local/native QA; do not use Vercel for routine iteration.
+7. Preserve and physically regression-test the working quest/approval/delivery loop.
+8. Keep reconciliation observe-only until evidence supports migration.
