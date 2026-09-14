@@ -16,9 +16,9 @@ Visual target:
 - Active HUD restyled toward parchment/wood storybook presentation.
 - Meadow base expanded to a large painted 1024×1024 texture to reduce obvious repetition.
 - Roads and footpaths repainted with organic edges and painted terrain blending.
-- Family cottage repainted as the main hero building.
+- Family cottage repainted as the main hero building and reframed so the roof remains inside the opening world view.
 - Linus and his idle frame repainted.
-- Child avatar and all active movement frames repainted.
+- Child avatar and all active movement frames repainted; the side-idle frame now keeps the side-facing silhouette instead of snapping visually back to a front pose.
 - Puppy companion repainted.
 - Oak, birch, pine and tree-cluster assets repainted.
 - Bushes, foreground shrubs, meadow banks, flowers, grass tufts and dirt patches repainted.
@@ -26,6 +26,7 @@ Visual target:
 - Delivery truck, material stack, construction stakes and wheelbarrow repainted.
 - Ambient barrel, stump, puddle, birdhouse and laundry line repainted.
 - Visual regression audit now protects the entire active village asset set from crisp pixel rendering.
+- `createVillageGame.ts` has been restored to readable source formatting after the large visual pass so future gameplay changes are reviewable instead of hidden inside a minified diff.
 
 ## Preserved functional systems
 
