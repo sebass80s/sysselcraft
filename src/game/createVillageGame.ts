@@ -197,6 +197,7 @@ export async function createVillageGame(
       this.load.image("family-house", "/assets/village/reboot/family-house.webp");
       this.load.image("child-painted", "/assets/village/reboot/child.webp");
       this.load.image("master-scene", "/assets/village/reboot/sysselcraft-hero-master.webp");
+      this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       for (const key of [
         "tree-oak", "tree-birch", "tree-pine", "linus", "linus-idle-b",
         "dog-puppy", "truck", "material-stack", "road-segment", "road-bend",
@@ -239,8 +240,6 @@ export async function createVillageGame(
         loop: true,
         callback: () => {
           if (!this.linus) return;
-          this.linus.setTexture("linus-idle-b");
-          this.time.delayedCall(260, () => this.linus?.setTexture("linus"));
         },
       });
       if (this.input.keyboard) {
@@ -492,8 +491,9 @@ export async function createVillageGame(
       ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(0);
 
       // Linus stays dynamic so onboarding remains testable. His current art is temporary.
-      this.linus = this.add.image(720, 450, "linus")
-        .setOrigin(0.5, 0.9)
+      this.linus = this.add.image(720, 450, "linus-painted")
+        .setOrigin(0.5, 0.96)
+        .setDisplaySize(128, 125)
         .setDepth(1450)
         .setInteractive({ useHandCursor: true });
       this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
@@ -505,10 +505,6 @@ export async function createVillageGame(
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
         else this.maybeCompleteLinusInteraction();
       });
-      this.add.text(694, 390, "Linus", {
-        color: "#4b3b2b", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
-        backgroundColor: "#f7e9cce8", padding: { x: 8, y: 4 },
-      }).setDepth(2900);
 
       this.add.text(18, 18, "Sysselcraft · master-scene experiment", {
         color: "#4b3a29", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
