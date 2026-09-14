@@ -1,0 +1,35 @@
+name: Nova painted delivery integration
+
+on:
+  push:
+    branches: [nova/vercel-free-batch]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: nova/vercel-free-batch
+      - name: Integrate delivery assets when present
+        run: |
+          set +e
+          python3 scripts/nova_integrate_painted_delivery.py
+          code=$?
+          set -e
+          if [ $code -ne 0 ]; then exit $code; fi
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- src/game/createVillageGame.ts; then
+            echo "No delivery integration change yet."
+            exit 0
+          fi
+          git config user.name "Nova"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/game/createVillageGame.ts
+          git commit -m "Use painted truck and delivery materials [skip ci]"
+          git push origin HEAD:nova/vercel-free-batch
