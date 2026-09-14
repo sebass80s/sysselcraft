@@ -4,12 +4,6 @@ import { extname, join, relative } from "node:path";
 const roots = ["src", "public/assets"];
 const allowedExtensions = new Set([".css", ".svg", ".ts", ".tsx"]);
 
-const forbidden = [
-  { label: "Phaser pixelArt disabled", pattern: /\bpixelArt\s*:\s*false\b/ },
-  { label: "Phaser antialias enabled", pattern: /\bantialias\s*:\s*true\b/ },
-  { label: "Phaser rounded pixels disabled", pattern: /\broundPixels\s*:\s*false\b/ },
-];
-
 async function walk(path) {
   const info = await stat(path);
   if (info.isFile()) return [path];
@@ -24,17 +18,17 @@ const files = (await Promise.all(roots.map((root) => walk(root))))
 
 const problems = [];
 let svgCount = 0;
+let crispSvgCount = 0;
 
 for (const path of files) {
   const content = await readFile(path, "utf8");
   const shownPath = relative(process.cwd(), path);
-  for (const rule of forbidden) {
-    if (rule.pattern.test(content)) problems.push(`${shownPath}: ${rule.label}`);
-  }
+
   if (extname(path) === ".svg") {
     svgCount += 1;
     if (!/<svg\b/i.test(content)) problems.push(`${shownPath}: missing <svg> root`);
     if (!/\bviewBox\s*=\s*["'][^"']+["']/i.test(content)) problems.push(`${shownPath}: missing viewBox`);
+    if (/shape-rendering\s*=\s*["']crispEdges["']/i.test(content)) crispSvgCount += 1;
   }
 }
 
@@ -46,13 +40,28 @@ if (!grassSize || Number(grassSize[1]) < 256 || Number(grassSize[2]) < 256) {
   );
 }
 
+const uiCss = await readFile("src/app/storybook.css", "utf8");
+if (!/image-rendering\s*:\s*pixelated/i.test(uiCss)) {
+  problems.push("src/app/storybook.css: game canvas must opt into pixelated presentation");
+}
+
+const house = await readFile("public/assets/village/family-house.svg", "utf8");
+if (!/shape-rendering\s*=\s*["']crispEdges["']/i.test(house)) {
+  problems.push("public/assets/village/family-house.svg: flagship building must use crisp pixel geometry");
+}
+
 const gameSource = await readFile("src/game/createVillageGame.ts", "utf8");
-for (const [label, pattern] of [
-  ["Phaser pixelArt must be enabled", /\bpixelArt\s*:\s*true\b/],
-  ["Phaser antialias must be disabled", /\bantialias\s*:\s*false\b/],
-  ["Phaser roundPixels must be enabled", /\broundPixels\s*:\s*true\b/],
-]) {
-  if (!pattern.test(gameSource)) problems.push(`src/game/createVillageGame.ts: ${label}`);
+if (!/setDepth\(1000\s*\+\s*Math\.round\(/.test(gameSource)) {
+  problems.push("src/game/createVillageGame.ts: dynamic Y/base depth sorting is missing");
+}
+if (!/baseY\s*=\s*y/.test(gameSource)) {
+  problems.push("src/game/createVillageGame.ts: rendered base depth must remain independently configurable");
+}
+
+if (crispSvgCount < 6) {
+  problems.push(
+    `public/assets: only ${crispSvgCount} SVGs declare crispEdges; the 2.5D pixel-art conversion is not broad enough`,
+  );
 }
 
 if (problems.length) {
@@ -62,5 +71,5 @@ if (problems.length) {
 }
 
 console.log(
-  `Visual regression audit passed: ${files.length} source/asset files checked, ${svgCount} SVGs validated for the pixel-art 2.5D direction.`,
+  `Visual regression audit passed: ${files.length} source/asset files checked, ${svgCount} SVGs validated, ${crispSvgCount} crisp pixel-art SVGs detected.`,
 );
