@@ -1,7 +1,7 @@
 export type AmbientWorldObject = {
   x: number;
   y: number;
-  texture: AmbientTextureKey | "construction-stakes";
+  texture: AmbientTextureKey | "construction-stakes" | "tree-oak";
   scale?: number;
   originY?: number;
   baseY?: number;
@@ -38,6 +38,11 @@ export const OPENING_AMBIENT_OBJECTS: AmbientWorldObject[] = [
 
   // Existing practical clutter near storage rather than introducing a new destination.
   { x: 12, y: 365, texture: "old-barrel", scale: 0.72, baseY: 373 },
+
+  // POC occlusion marker. This intentionally sits near the playable centre so the painted
+  // child can walk both behind and in front of one tall world object. The object itself is
+  // temporary; the important proof is the shared Y/base-depth behaviour.
+  { x: 520, y: 430, texture: "tree-oak", scale: 0.95, baseY: 430 },
 
   // Quiet environmental traces at the edges.
   { x: -278, y: 468, texture: "tree-stump", scale: 0.82, baseY: 475 },
