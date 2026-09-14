@@ -81,7 +81,6 @@ function isWalkable(p: Point) {
   ) {
     return false;
   }
-
   return !obstacles.some((o) =>
     o.type === "rect"
       ? Math.abs(p.x - o.x) <= o.width / 2 + PLAYER_RADIUS &&
@@ -125,7 +124,6 @@ function findPath(startPoint: Point, endPoint: Point): Point[] {
   const closed = new Set<string>();
   const h = (x: number, y: number) => Math.hypot(goal.x - x, goal.y - y);
   open.set(key(start.x, start.y), { ...start, g: 0, f: h(start.x, start.y) });
-
   const dirs = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
   while (open.size) {
     const c = [...open.values()].reduce((best, next) => next.f < best.f ? next : best);
@@ -196,9 +194,6 @@ export async function createVillageGame(
     }
 
     preload() {
-      // Reboot art: load the raster assets directly into Phaser.
-      // Do not wrap these in SVG <image href=...>; Phaser rasterizes SVGs in an isolated image context,
-      // where external raster references can disappear.
       this.load.image("family-house", "/assets/village/reboot/family-house.webp");
       for (const key of [
         "child", "child-walk-a", "child-walk-b", "child-north-a",
@@ -206,7 +201,6 @@ export async function createVillageGame(
       ]) {
         this.load.image(key, "/assets/village/reboot/child.webp");
       }
-
       for (const key of [
         "tree-oak", "tree-birch", "tree-pine", "linus", "linus-idle-b",
         "dog-puppy", "truck", "material-stack", "road-segment", "road-bend",
@@ -225,7 +219,6 @@ export async function createVillageGame(
       camera.setBackgroundColor("#789a68");
       camera.setBounds(WORLD_MIN_X, 0, WORLD_WIDTH, WORLD_HEIGHT);
       this.drawVillage();
-
       this.player = this.add.image(430, 405, "child-south-a")
         .setOrigin(0.5, 0.94)
         .setDisplaySize(74, 118)
@@ -238,16 +231,13 @@ export async function createVillageGame(
         .setStrokeStyle(2, 0x6a754e, 0.55)
         .setVisible(false)
         .setDepth(900);
-
       camera.centerOn(this.player.x, this.player.y);
       camera.startFollow(this.player, true, 0.08, 0.08);
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
-
       this.createQuestMarker();
       this.setFirstDeliveryComplete(requestedFirstDeliveryComplete);
       this.setIntroComplete(requestedIntroComplete);
       this.applyQuestState(requestedQuestState);
-
       this.time.addEvent({
         delay: 1800,
         loop: true,
@@ -257,12 +247,10 @@ export async function createVillageGame(
           this.time.delayedCall(260, () => this.linus?.setTexture("linus"));
         },
       });
-
       if (this.input.keyboard) {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
       }
-
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!this.player) return;
         this.linusInteractionPending = false;
@@ -327,14 +315,12 @@ export async function createVillageGame(
       if (!this.player) return;
       this.player.setDepth(1000 + Math.round(this.player.y));
       this.updateDog();
-
       if (isTextControlFocused()) {
         this.linusInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
         return;
       }
-
       const v = this.getKeyboardVector();
       if (v.lengthSq() > 0) {
         this.linusInteractionPending = false;
@@ -346,7 +332,6 @@ export async function createVillageGame(
         this.tryMove(v.x, v.y);
         return;
       }
-
       const next = this.path[0];
       if (!next) {
         this.maybeCompleteLinusInteraction();
@@ -396,16 +381,28 @@ export async function createVillageGame(
       if (distance(this.player, this.linus) > 95) return;
       this.linusInteractionPending = false;
       this.playerFacing = this.player.x < this.linus.x ? "east" : "west";
-      this.player.setFlipX(this.playerFacing === "west");
+      this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
       callbacks.onLinusInteract();
     }
 
-    private worldImage(x: number, y: number, key: string, scale = 1, originY = 1, baseY = y) {
-      return this.add.image(x, y, key).setOrigin(0.5, originY).setScale(scale).setDepth(1000 + Math.round(baseY));
+    private worldImage(
+      x: number,
+      y: number,
+      key: string,
+      scale = 1,
+      originY = 1,
+      baseY = y,
+    ) {
+      return this.add.image(x, y, key)
+        .setOrigin(0.5, originY)
+        .setScale(scale)
+        .setDepth(1000 + Math.round(baseY));
     }
 
     private placeWorldObjects(objects: WorldObjectDefinition[]) {
-      objects.forEach(({ x, y, texture, scale = 1, originY = 1, baseY = y }) => this.worldImage(x, y, texture, scale, originY, baseY));
+      objects.forEach(({ x, y, texture, scale = 1, originY = 1, baseY = y }) =>
+        this.worldImage(x, y, texture, scale, originY, baseY),
+      );
     }
 
     private drawTree(x: number, y: number, key = "tree-oak", scale = 1) {
@@ -420,7 +417,9 @@ export async function createVillageGame(
     }
 
     private drawFence(x: number, y: number, count: number) {
-      this.add.image(x + count * 10, y, "fence-segment").setDisplaySize(count * 20, 48).setDepth(1000 + y);
+      this.add.image(x + count * 10, y, "fence-segment")
+        .setDisplaySize(count * 20, 48)
+        .setDepth(1000 + y);
     }
 
     private drawQuestBoard() {
@@ -490,36 +489,54 @@ export async function createVillageGame(
 
     private drawVillage() {
       this.add.tileSprite((WORLD_MIN_X + WORLD_MAX_X) / 2, WORLD_HEIGHT / 2, WORLD_WIDTH, WORLD_HEIGHT, "grass-tile").setDepth(0);
-
       this.placeWorldObjects([
         { x: -430, y: 170, texture: "wild-grass-bank", scale: 1.15, baseY: 205 },
         { x: -330, y: 197, texture: "tree-cluster", scale: 0.95, baseY: 205 },
         { x: -170, y: 537, texture: "tree-oak", scale: 1.05, baseY: 537 },
         { x: -72, y: 425, texture: "bush", scale: 0.82 },
+        { x: -255, y: 350, texture: "flower-patch", scale: 0.78 },
+        { x: -395, y: 520, texture: "grass-tuft", scale: 0.9 },
+        { x: 1050, y: 540, texture: "wild-grass-bank", scale: 1.08, baseY: 600 },
         { x: 1125, y: 152, texture: "tree-cluster", scale: 0.92, baseY: 175 },
         { x: 1290, y: 517, texture: "tree-pine", scale: 1.08, baseY: 517 },
+        { x: 1370, y: 230, texture: "bush", scale: 0.9 },
+        { x: 1215, y: 335, texture: "flower-patch", scale: 0.78 },
+        { x: 1350, y: 560, texture: "grass-tuft", scale: 0.86 },
       ]);
-
+      this.placeWorldObjects([
+        { x: 62, y: 164, texture: "tree-cluster", scale: 0.9, baseY: 192 },
+        { x: 906, y: 164, texture: "tree-cluster", scale: 0.92, baseY: 194 },
+        { x: 482, y: 128, texture: "tree-cluster", scale: 0.78, baseY: 154 },
+        { x: 58, y: 540, texture: "wild-grass-bank", scale: 1.08, baseY: 600 },
+        { x: 896, y: 542, texture: "wild-grass-bank", scale: 1.12, baseY: 606 },
+      ]);
       this.add.image(155, 455, "road-segment").setAngle(-12).setDepth(20);
       this.add.image(390, 402, "road-segment").setAngle(-12).setDepth(20);
       this.add.image(625, 349, "road-segment").setAngle(-12).setDepth(20);
       this.add.image(842, 300, "road-bend").setAngle(-4).setDepth(20);
       this.add.image(244, 323, "footpath").setAngle(41).setDepth(19);
-
       this.drawHouse();
       this.drawFence(50, 270, 7);
       this.drawFence(820, 238, 6);
       this.drawQuestBoard();
-
       this.placeWorldObjects([
         { x: 282, y: 298, texture: "bench" },
         { x: 34, y: 400, texture: "crate", scale: 0.8 },
-        { x: 365, y: 337, texture: "lamp-post", scale: 0.72 },
-        { x: 448, y: 269, texture: "well", scale: 0.82 },
+        { x: 925, y: 205, texture: "crate", scale: 0.65 },
+        { x: 257, y: 266, texture: "mailbox", scale: 0.82 },
+        { x: 78, y: 261, texture: "woodpile", scale: 0.72 },
         { x: 660, y: 300, texture: "signpost", scale: 0.78 },
+        { x: 365, y: 337, texture: "lamp-post", scale: 0.72 },
+        { x: 325, y: 190, texture: "bush", scale: 0.74 },
+        { x: 720, y: 208, texture: "bush", scale: 0.82 },
+        { x: 895, y: 392, texture: "bush", scale: 0.9 },
+        { x: 118, y: 555, texture: "bush", scale: 0.86 },
+        { x: 448, y: 269, texture: "well", scale: 0.82 },
+        { x: 765, y: 234, texture: "stone-wall", scale: 0.9 },
+        { x: 216, y: 214, texture: "stone-wall", scale: 0.56 },
+        { x: 525, y: 214, texture: "bush", scale: 0.72 },
       ]);
       this.placeWorldObjects(OPENING_AMBIENT_OBJECTS);
-
       this.linus = this.add.image(575, 285, "linus").setOrigin(0.5, 0.9).setDepth(1285).setInteractive({ useHandCursor: true });
       this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
@@ -534,22 +551,46 @@ export async function createVillageGame(
         color: "#4b3b2b", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
         backgroundColor: "#f7e9cce8", padding: { x: 8, y: 4 },
       }).setDepth(2900);
-
+      this.add.ellipse(675, 415, 190, 75, 0x5e7e50, 0.09).setDepth(8);
       this.drawTree(105, 115, "tree-birch", 0.95);
       this.drawTree(155, 485, "tree-oak", 1.05);
       this.drawTree(410, 105, "tree-pine", 0.9);
       this.drawTree(790, 120, "tree-birch", 1);
       this.drawTree(875, 475, "tree-pine", 1.05);
-
       this.placeWorldObjects([
         { x: 310, y: 527, texture: "flower-patch", scale: 0.8 },
+        { x: 347, y: 514, texture: "flower-patch", scale: 0.65 },
         { x: 623, y: 112, texture: "flower-patch", scale: 0.75 },
         { x: 718, y: 532, texture: "flower-patch", scale: 0.8 },
+        { x: 529, y: 504, texture: "flower-patch", scale: 0.7 },
+        { x: 255, y: 91, texture: "flower-patch", scale: 0.65 },
+        { x: 445, y: 559, texture: "flower-patch", scale: 0.8 },
+        { x: 744, y: 181, texture: "flower-patch", scale: 0.7 },
+        { x: 903, y: 320, texture: "flower-patch", scale: 0.75 },
+        { x: 208, y: 294, texture: "flower-patch", scale: 0.65 },
+        { x: 805, y: 287, texture: "flower-patch", scale: 0.72 },
         { x: 365, y: 300, texture: "rock-cluster", scale: 0.72 },
         { x: 610, y: 475, texture: "rock-cluster", scale: 0.78 },
+        { x: 695, y: 260, texture: "rock-cluster", scale: 0.65 },
+        { x: 245, y: 455, texture: "rock-cluster", scale: 0.7 },
+        { x: 840, y: 365, texture: "rock-cluster", scale: 0.75 },
+        { x: 520, y: 126, texture: "rock-cluster", scale: 0.62 },
+        { x: 90, y: 350, texture: "rock-cluster", scale: 0.65 },
+        { x: 132, y: 340, texture: "grass-tuft", scale: 0.75 },
+        { x: 192, y: 385, texture: "grass-tuft", scale: 0.65 },
+        { x: 470, y: 182, texture: "grass-tuft", scale: 0.7 },
+        { x: 575, y: 565, texture: "grass-tuft", scale: 0.8 },
+        { x: 689, y: 190, texture: "grass-tuft", scale: 0.68 },
+        { x: 854, y: 257, texture: "grass-tuft", scale: 0.72 },
+        { x: 934, y: 520, texture: "grass-tuft", scale: 0.82 },
+        { x: 220, y: 150, texture: "dirt-patch", scale: 0.62 },
         { x: 517, y: 438, texture: "dirt-patch", scale: 0.7 },
+        { x: 736, y: 346, texture: "dirt-patch", scale: 0.58 },
+        { x: 380, y: 590, texture: "dirt-patch", scale: 0.65 },
+        { x: 90, y: 636, texture: "foreground-shrub", scale: 1.05, baseY: 635 },
+        { x: 855, y: 638, texture: "foreground-shrub", scale: 1.15, baseY: 637 },
+        { x: 510, y: 646, texture: "wild-grass-bank", scale: 1.18, baseY: 646 },
       ]);
-
       this.add.text(18, 18, "Sysselcraft · byn vaknar", {
         color: "#4b3a29", fontSize: "14px", fontStyle: "bold", fontFamily: "Trebuchet MS",
         backgroundColor: "#f5e5cbd9", padding: { x: 10, y: 7 },
@@ -579,19 +620,27 @@ export async function createVillageGame(
     destroy: () => game.destroy(true),
     setQuestState: (state: QuestState) => {
       requestedQuestState = state;
-      if (game.scene.isActive("VillageScene")) (game.scene.getScene("VillageScene") as VillageScene).applyQuestState(state);
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).applyQuestState(state);
+      }
     },
     setIntroComplete: (complete: boolean) => {
       requestedIntroComplete = complete;
-      if (game.scene.isActive("VillageScene")) (game.scene.getScene("VillageScene") as VillageScene).setIntroComplete(complete);
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setIntroComplete(complete);
+      }
     },
     setDogVisible: (visible: boolean) => {
       requestedDogVisible = visible;
-      if (game.scene.isActive("VillageScene")) (game.scene.getScene("VillageScene") as VillageScene).setDogVisible(visible);
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setDogVisible(visible);
+      }
     },
     setFirstDeliveryComplete: (complete: boolean) => {
       requestedFirstDeliveryComplete = complete;
-      if (game.scene.isActive("VillageScene")) (game.scene.getScene("VillageScene") as VillageScene).setFirstDeliveryComplete(complete);
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setFirstDeliveryComplete(complete);
+      }
     },
   };
 }
