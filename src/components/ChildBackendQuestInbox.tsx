@@ -11,6 +11,7 @@ const OPEN_REFRESH_MS = 15_000;
 
 export default function ChildBackendQuestInbox() {
   const [childId, setChildId] = useState<string | null>(null);
+  const [pairingChecked, setPairingChecked] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [gameState, setGameState] = useState<BackendChildGameState | null>(null);
@@ -44,7 +45,10 @@ export default function ChildBackendQuestInbox() {
     async function load() {
       try {
         const pairedId = await getPairedChildId();
-        if (!pairedId || cancelled) return;
+        if (cancelled) return;
+
+        setPairingChecked(true);
+        if (!pairedId) return;
 
         setChildId(pairedId);
         const auth = await getBackendAuthState();
@@ -63,6 +67,7 @@ export default function ChildBackendQuestInbox() {
         if (!cancelled) setMessage("");
       } catch (error) {
         if (!cancelled) {
+          setPairingChecked(true);
           setSessionReady(false);
           setMessage(error instanceof Error ? error.message : "Kunde inte hämta uppdragen.");
         }
@@ -116,7 +121,17 @@ export default function ChildBackendQuestInbox() {
     return () => window.clearInterval(timer);
   }, [open, childId, refreshQuietly, sessionReady]);
 
-  if (!childId) return null;
+  if (!pairingChecked) return null;
+
+  if (!childId) {
+    return (
+      <aside className={styles.dock} aria-label="Koppla barnets enhet">
+        <a className={styles.toggle} href="/pair">
+          📱 Koppla enhet
+        </a>
+      </aside>
+    );
+  }
 
   const visibleQuests = quests.filter((quest) => quest.state !== "approved");
   const availableCount = quests.filter((quest) => quest.state === "available").length;
