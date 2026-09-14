@@ -196,6 +196,7 @@ export async function createVillageGame(
     preload() {
       this.load.image("family-house", "/assets/village/reboot/family-house.webp");
       this.load.image("child-painted", "/assets/village/reboot/child.webp");
+      this.load.image("master-scene", "/assets/village/reboot/sysselcraft-hero-master.webp");
       for (const key of [
         "tree-oak", "tree-birch", "tree-pine", "linus", "linus-idle-b",
         "dog-puppy", "truck", "material-stack", "road-segment", "road-bend",
@@ -484,13 +485,11 @@ export async function createVillageGame(
 
     private drawVillage() {
       // Painted master scene is the visual authority for static scenery in this experiment.
-      this.add.tileSprite(
+      this.add.image(
         (WORLD_MIN_X + WORLD_MAX_X) / 2,
         WORLD_HEIGHT / 2,
-        WORLD_WIDTH,
-        WORLD_HEIGHT,
-        "grass-tile",
-      ).setDepth(0);
+        "master-scene",
+      ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(0);
 
       // Linus stays dynamic so onboarding remains testable. His current art is temporary.
       this.linus = this.add.image(720, 450, "linus")
