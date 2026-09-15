@@ -152,6 +152,14 @@ export async function listChildQuests(childId: string): Promise<BackendQuest[]> 
   return ((data ?? []) as RpcQuestRow[]).map(mapQuest);
 }
 
+export async function isChildDeviceBound(childId: string): Promise<boolean> {
+  const { data, error } = await getSupabaseBrowserClient().rpc("is_bound_child", {
+    p_child_id: childId,
+  });
+  if (error) throw error;
+  return data === true;
+}
+
 export async function submitQuest(instanceId: string): Promise<void> {
   const { error } = await getSupabaseBrowserClient().rpc("submit_quest", {
     p_instance_id: instanceId,

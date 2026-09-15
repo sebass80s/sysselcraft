@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import {
   getBackendAuthState,
   sendParentMagicLink,
@@ -18,7 +18,7 @@ import {
   reviewQuest,
 } from "@/backend/familyRepository";
 import type { BackendChild, BackendHousehold, BackendQuest } from "@/backend/types";
-import type { ParentQuestDraft } from "@/game/parentMode";
+import { isParentQuestDraftReady, type ParentQuestDraft } from "@/game/parentMode";
 
 const emptyDraft: ParentQuestDraft = {
   title: "",
@@ -40,11 +40,14 @@ export default function ParentModePage() {
   const [draft, setDraft] = useState<ParentQuestDraft>(emptyDraft);
   const [pairingCode, setPairingCode] = useState("");
 
-  async function loadChildQuests(id: string) {
+  const loadChildQuests = useCallback(async (id: string) => {
     setQuests(id ? await listChildQuests(id) : []);
-  }
+  }, []);
 
-  async function refreshFamily(preferredHousehold?: string, preferredChild?: string) {
+  const refreshFamily = useCallback(async (
+    preferredHousehold?: string,
+    preferredChild?: string,
+  ) => {
     const hs = await listHouseholds();
     setHouseholds(hs);
 
@@ -77,7 +80,7 @@ export default function ParentModePage() {
 
     setChildId(nextChildId);
     await loadChildQuests(nextChildId);
-  }
+  }, [childId, householdId, loadChildQuests]);
 
   useEffect(() => {
     let cancelled = false;
@@ -111,7 +114,28 @@ export default function ParentModePage() {
       cancelled = true;
       unsubscribe();
     };
-  }, []);
+  }, [refreshFamily]);
+
+  useEffect(() => {
+    if (!signedIn || !childId) return;
+
+    const refreshQuietly = () => {
+      void loadChildQuests(childId).catch(() => {
+        // Keep the last known parent view if a background refresh fails.
+      });
+    };
+    const refreshIfVisible = () => {
+      if (document.visibilityState === "visible") refreshQuietly();
+    };
+
+    window.addEventListener("focus", refreshQuietly);
+    document.addEventListener("visibilitychange", refreshIfVisible);
+
+    return () => {
+      window.removeEventListener("focus", refreshQuietly);
+      document.removeEventListener("visibilitychange", refreshIfVisible);
+    };
+  }, [childId, loadChildQuests, signedIn]);
 
   async function magicLink(event: FormEvent) {
     event.preventDefault();
@@ -149,7 +173,10 @@ export default function ParentModePage() {
 
   async function submitDraft(event: FormEvent) {
     event.preventDefault();
-    if (!householdId || !childId) return;
+    if (!householdId || !childId || !isParentQuestDraftReady(draft)) {
+      setMessage("Fyll i både uppdrag och beskrivning innan du skickar det.");
+      return;
+    }
 
     setBusy(true);
     setMessage("");
@@ -229,6 +256,39 @@ export default function ParentModePage() {
     }
   }
 
+  async function refreshSelectedChild() {
+    if (!childId) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      await loadChildQuests(childId);
+      setMessage("Uppdragen är uppdaterade.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte uppdatera uppdragen.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function logout() {
+    setBusy(true);
+    setMessage("");
+    try {
+      await signOutBackendSession();
+      setSignedIn(false);
+      setHouseholds([]);
+      setChildren([]);
+      setQuests([]);
+      setHouseholdId("");
+      setChildId("");
+      setPairingCode("");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte logga ut.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   if (!signedIn) {
     return (
       <main className="parent-page">
@@ -259,6 +319,7 @@ export default function ParentModePage() {
   const active = quests.filter((quest) => quest.state === "available");
   const approved = quests.filter((quest) => quest.state === "approved");
   const child = children.find((candidate) => candidate.id === childId);
+  const draftReady = isParentQuestDraftReady(draft);
 
   return (
     <main className="parent-page">
@@ -271,10 +332,8 @@ export default function ParentModePage() {
           </div>
           <button
             className="secondary-button compact"
-            onClick={async () => {
-              await signOutBackendSession();
-              setSignedIn(false);
-            }}
+            disabled={busy}
+            onClick={() => void logout()}
           >
             Logga ut
           </button>
@@ -322,7 +381,7 @@ export default function ParentModePage() {
               <button
                 className="secondary-button compact"
                 disabled={busy || !childId}
-                onClick={() => void loadChildQuests(childId)}
+                onClick={() => void refreshSelectedChild()}
               >
                 ↻ Uppdatera
               </button>
@@ -433,7 +492,7 @@ export default function ParentModePage() {
                     />
                   </label>
                 </div>
-                <button className="primary-button" disabled={busy || !childId}>
+                <button className="primary-button" disabled={busy || !childId || !draftReady}>
                   Skapa uppdrag
                 </button>
               </form>

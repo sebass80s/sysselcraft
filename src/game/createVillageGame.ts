@@ -2,7 +2,6 @@ import type { GameObjects, Input, Types } from "phaser";
 import {
   AMBIENT_TEXTURE_KEYS,
   FIRST_DELIVERY_AMBIENT_OBJECTS,
-  OPENING_AMBIENT_OBJECTS,
 } from "./worldDecor";
 
 const VIEW_HEIGHT = 640;
@@ -40,17 +39,17 @@ type WorldObjectDefinition = {
 };
 
 const obstacles: Obstacle[] = [
-  { type: "rect", x: 150, y: 165, width: 190, height: 125 },
-  { type: "rect", x: 675, y: 405, width: 180, height: 105 },
-  { type: "circle", x: 105, y: 115, radius: 28 },
-  { type: "circle", x: 155, y: 485, radius: 28 },
-  { type: "circle", x: 410, y: 105, radius: 28 },
-  { type: "circle", x: 790, y: 120, radius: 28 },
-  { type: "circle", x: 875, y: 475, radius: 28 },
-  { type: "circle", x: -330, y: 165, radius: 30 },
-  { type: "circle", x: -170, y: 505, radius: 30 },
-  { type: "circle", x: 1125, y: 120, radius: 30 },
-  { type: "circle", x: 1290, y: 485, radius: 30 },
+  // Hero-slice collision map for the painted master scene. Gameplay footprints are
+  // deliberately independent from the rendered image bounds.
+  { type: "rect", x: 300, y: 242, width: 420, height: 150 }, // cottage
+  { type: "rect", x: 650, y: 342, width: 250, height: 145 }, // board / bench / mailbox
+  { type: "circle", x: 945, y: 365, radius: 82 }, // well
+  { type: "circle", x: 815, y: 430, radius: 34 }, // lamp base
+  { type: "circle", x: -205, y: 548, radius: 42 }, // village sign
+  { type: "rect", x: 15, y: 430, width: 390, height: 72 }, // left stone wall
+  { type: "rect", x: 1215, y: 320, width: 330, height: 80 }, // right stone wall
+  { type: "circle", x: -270, y: 335, radius: 78 }, // left birches
+  { type: "circle", x: 1230, y: 505, radius: 92 }, // foreground vegetation
 ];
 
 function distance(a: Point, b: Point) {
@@ -59,6 +58,17 @@ function distance(a: Point, b: Point) {
 
 function clamp(v: number, min: number, max: number) {
   return Math.min(max, Math.max(min, v));
+}
+
+function isTextControlFocused() {
+  const active = document.activeElement;
+  if (!(active instanceof HTMLElement)) return false;
+  return (
+    active instanceof HTMLInputElement ||
+    active instanceof HTMLTextAreaElement ||
+    active instanceof HTMLSelectElement ||
+    active.isContentEditable
+  );
 }
 
 function isWalkable(p: Point) {
@@ -70,7 +80,6 @@ function isWalkable(p: Point) {
   ) {
     return false;
   }
-
   return !obstacles.some((o) =>
     o.type === "rect"
       ? Math.abs(p.x - o.x) <= o.width / 2 + PLAYER_RADIUS &&
@@ -80,10 +89,7 @@ function isWalkable(p: Point) {
 }
 
 function cellToPoint(cx: number, cy: number): Point {
-  return {
-    x: WORLD_MIN_X + cx * GRID + GRID / 2,
-    y: cy * GRID + GRID / 2,
-  };
+  return { x: WORLD_MIN_X + cx * GRID + GRID / 2, y: cy * GRID + GRID / 2 };
 }
 
 function pointToCell(p: Point) {
@@ -99,14 +105,9 @@ function findNearestWalkableCell(point: Point) {
     for (let y = origin.y - r; y <= origin.y + r; y++) {
       for (let x = origin.x - r; x <= origin.x + r; x++) {
         if (
-          x >= 0 &&
-          y >= 0 &&
-          x < GRID_COLS &&
-          y < GRID_ROWS &&
+          x >= 0 && y >= 0 && x < GRID_COLS && y < GRID_ROWS &&
           isWalkable(cellToPoint(x, y))
-        ) {
-          return { x, y };
-        }
+        ) return { x, y };
       }
     }
   }
@@ -121,24 +122,12 @@ function findPath(startPoint: Point, endPoint: Point): Point[] {
   const came = new Map<string, string>();
   const closed = new Set<string>();
   const h = (x: number, y: number) => Math.hypot(goal.x - x, goal.y - y);
-
   open.set(key(start.x, start.y), { ...start, g: 0, f: h(start.x, start.y) });
-  const dirs = [
-    [1, 0],
-    [-1, 0],
-    [0, 1],
-    [0, -1],
-    [1, 1],
-    [1, -1],
-    [-1, 1],
-    [-1, -1],
-  ];
-
+  const dirs = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
   while (open.size) {
-    const c = [...open.values()].reduce((best, next) => (next.f < best.f ? next : best));
+    const c = [...open.values()].reduce((best, next) => next.f < best.f ? next : best);
     const ck = key(c.x, c.y);
     open.delete(ck);
-
     if (c.x === goal.x && c.y === goal.y) {
       const cells = [{ x: c.x, y: c.y }];
       let cursor = ck;
@@ -149,30 +138,16 @@ function findPath(startPoint: Point, endPoint: Point): Point[] {
       }
       return cells.reverse().slice(1).map((q) => cellToPoint(q.x, q.y));
     }
-
     closed.add(ck);
     for (const [dx, dy] of dirs) {
       const x = c.x + dx;
       const y = c.y + dy;
       const nk = key(x, y);
       if (
-        closed.has(nk) ||
-        x < 0 ||
-        y < 0 ||
-        x >= GRID_COLS ||
-        y >= GRID_ROWS ||
+        closed.has(nk) || x < 0 || y < 0 || x >= GRID_COLS || y >= GRID_ROWS ||
         !isWalkable(cellToPoint(x, y))
-      ) {
-        continue;
-      }
-      if (
-        dx &&
-        dy &&
-        (!isWalkable(cellToPoint(c.x + dx, c.y)) ||
-          !isWalkable(cellToPoint(c.x, c.y + dy)))
-      ) {
-        continue;
-      }
+      ) continue;
+      if (dx && dy && (!isWalkable(cellToPoint(c.x + dx, c.y)) || !isWalkable(cellToPoint(c.x, c.y + dy)))) continue;
       const g = c.g + (dx && dy ? Math.SQRT2 : 1);
       const existing = open.get(nk);
       if (existing && g >= existing.g) continue;
@@ -180,7 +155,6 @@ function findPath(startPoint: Point, endPoint: Point): Point[] {
       open.set(nk, { x, y, g, f: g + h(x, y) });
     }
   }
-
   return [];
 }
 
@@ -196,10 +170,7 @@ export async function createVillageGame(
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
-  const viewWidth = Math.min(
-    WORLD_WIDTH,
-    Math.max(960, Math.round(VIEW_HEIGHT * (parentWidth / parentHeight))),
-  );
+  const viewWidth = Math.min(WORLD_WIDTH, Math.max(960, Math.round(VIEW_HEIGHT * (parentWidth / parentHeight))));
 
   class VillageScene extends Phaser.Scene {
     private player?: GameObjects.Image;
@@ -213,8 +184,6 @@ export async function createVillageGame(
     private materialStack?: GameObjects.Image;
     private approvedTriggered = false;
     private firstDeliveryComplete = false;
-    private playerFrameClock = 0;
-    private playerFrameIndex = 0;
     private playerFacing: Facing = "south";
     private introComplete = false;
     private linusInteractionPending = false;
@@ -224,47 +193,21 @@ export async function createVillageGame(
     }
 
     preload() {
+      this.load.image("family-house", "/assets/village/reboot/family-house.webp");
+      this.load.image("child-painted", "/assets/village/reboot/child.webp");
+      this.load.image("master-scene", "/assets/village/reboot/sysselcraft-hero-master.webp");
+      this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
+      this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
+      this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
+      this.load.image("materials-painted", "/assets/village/reboot/materials-runtime.png");
       for (const key of [
-        "family-house",
-        "tree-oak",
-        "tree-birch",
-        "tree-pine",
-        "child",
-        "child-walk-a",
-        "child-walk-b",
-        "child-north-a",
-        "child-north-b",
-        "child-south-a",
-        "child-south-b",
-        "linus",
-        "linus-idle-b",
-        "dog-puppy",
-        "truck",
-        "material-stack",
-        "road-segment",
-        "road-bend",
-        "footpath",
-        "grass-tile",
-        "grass-tuft",
-        "dirt-patch",
-        "bush",
-        "fence-segment",
-        "quest-board",
-        "bench",
-        "crate",
-        "flower-patch",
-        "rock-cluster",
-        "signpost",
-        "lamp-post",
-        "woodpile",
-        "mailbox",
-        "well",
-        "stone-wall",
-        "foreground-shrub",
-        "tree-cluster",
-        "wild-grass-bank",
-        "construction-stakes",
-        ...AMBIENT_TEXTURE_KEYS,
+        "tree-oak", "tree-birch", "tree-pine", "linus", "linus-idle-b",
+        "dog-puppy", "truck", "material-stack", "road-segment", "road-bend",
+        "footpath", "grass-tile", "grass-tuft", "dirt-patch", "bush",
+        "fence-segment", "quest-board", "bench", "crate", "flower-patch",
+        "rock-cluster", "signpost", "lamp-post", "woodpile", "mailbox", "well",
+        "stone-wall", "foreground-shrub", "tree-cluster", "wild-grass-bank",
+        "construction-stakes", ...AMBIENT_TEXTURE_KEYS,
       ]) {
         this.load.svg(key, `/assets/village/${key}.svg`);
       }
@@ -272,75 +215,61 @@ export async function createVillageGame(
 
     create() {
       const camera = this.cameras.main;
-      camera.setBackgroundColor("#82ad68");
+      camera.setBackgroundColor("#789a68");
       camera.setBounds(WORLD_MIN_X, 0, WORLD_WIDTH, WORLD_HEIGHT);
-
       this.drawVillage();
-      this.player = this.add
-        .image(430, 405, "child-south-a")
-        .setOrigin(0.5, 0.86)
+      this.player = this.add.image(430, 405, "child-painted")
+        .setOrigin(0.5, 0.94)
+        .setDisplaySize(74, 118)
         .setDepth(1405);
-      this.dog = this.add
-        .image(548, 303, "dog-puppy")
+      this.dog = this.add.image(548, 303, "puppy-painted")
         .setOrigin(0.5, 0.88)
+        .setDisplaySize(66, 55)
         .setDepth(1303)
         .setVisible(requestedDogVisible);
-      this.targetMarker = this.add
-        .circle(430, 405, 7, 0xfff4c7, 0.35)
-        .setStrokeStyle(2, 0x53623e, 0.7)
+      this.targetMarker = this.add.circle(430, 405, 7, 0xf4d780, 0.32)
+        .setStrokeStyle(2, 0x6a754e, 0.55)
         .setVisible(false)
         .setDepth(900);
-
       camera.centerOn(this.player.x, this.player.y);
       camera.startFollow(this.player, true, 0.08, 0.08);
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
-
       this.createQuestMarker();
       this.setFirstDeliveryComplete(requestedFirstDeliveryComplete);
       this.setIntroComplete(requestedIntroComplete);
       this.applyQuestState(requestedQuestState);
-
       this.time.addEvent({
         delay: 1800,
         loop: true,
         callback: () => {
           if (!this.linus) return;
-          this.linus.setTexture("linus-idle-b");
-          this.time.delayedCall(260, () => this.linus?.setTexture("linus"));
         },
       });
-
       if (this.input.keyboard) {
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.wasd = this.input.keyboard.addKeys({
-          up: "W",
-          down: "S",
-          left: "A",
-          right: "D",
-        }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
+        this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
       }
-
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!this.player) return;
         this.linusInteractionPending = false;
-        this.path = findPath(
-          { x: this.player.x, y: this.player.y },
-          { x: pointer.worldX, y: pointer.worldY },
-        );
+        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: pointer.worldX, y: pointer.worldY });
         const finalPoint = this.path.at(-1);
-        if (finalPoint) {
-          this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
-        }
+        if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
       });
     }
 
     setIntroComplete(complete: boolean) {
       requestedIntroComplete = complete;
       this.introComplete = complete;
-      if (this.questMarker) {
-        if (!complete) this.questMarker.setVisible(false);
-        else this.applyQuestState(requestedQuestState);
+      if (!this.questMarker) return;
+      const label = this.questMarker.getByName("label") as GameObjects.Text;
+      if (!complete) {
+        this.questMarker.setPosition(720, 335).setVisible(true).setAlpha(1);
+        label.setText("?");
+        return;
       }
+      this.questMarker.setPosition(300, 82);
+      this.applyQuestState(requestedQuestState);
     }
 
     setDogVisible(visible: boolean) {
@@ -360,11 +289,13 @@ export async function createVillageGame(
     applyQuestState(state: QuestState) {
       requestedQuestState = state;
       if (!this.questMarker) return;
+      const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!this.introComplete) {
-        this.questMarker.setVisible(false);
+        this.questMarker.setPosition(720, 335).setVisible(true).setAlpha(1);
+        label.setText("?");
         return;
       }
-      const label = this.questMarker.getByName("label") as GameObjects.Text;
+      this.questMarker.setPosition(300, 82);
       if (state === "available") {
         this.questMarker.setVisible(true).setAlpha(1);
         label.setText("!");
@@ -382,57 +313,63 @@ export async function createVillageGame(
       if (!this.player) return;
       this.player.setDepth(1000 + Math.round(this.player.y));
       this.updateDog();
-
+      if (isTextControlFocused()) {
+        this.linusInteractionPending = false;
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+        return;
+      }
       const v = this.getKeyboardVector();
       if (v.lengthSq() > 0) {
         this.linusInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
         v.normalize();
-        this.animatePlayer(v.x, v.y, true, delta);
+        this.setFacing(v.x, v.y);
         v.scale(190 * (delta / 1000));
         this.tryMove(v.x, v.y);
         return;
       }
-
       const next = this.path[0];
       if (!next) {
-        this.animatePlayer(0, 0, false, delta);
         this.maybeCompleteLinusInteraction();
         return;
       }
-
       const current = { x: this.player.x, y: this.player.y };
       const remaining = distance(current, next);
       if (remaining < 4) {
         this.path.shift();
         if (!this.path.length) this.targetMarker?.setVisible(false);
-        this.animatePlayer(0, 0, this.path.length > 0, delta);
         this.maybeCompleteLinusInteraction();
         return;
       }
-
       const speed = Math.min(180 * (delta / 1000), remaining);
       const angle = Math.atan2(next.y - current.y, next.x - current.x);
       const dx = Math.cos(angle);
       const dy = Math.sin(angle);
-      this.animatePlayer(dx, dy, true, delta);
+      this.setFacing(dx, dy);
       this.tryMove(dx * speed, dy * speed);
+    }
+
+    private setFacing(dx: number, dy: number) {
+      if (!this.player) return;
+      if (Math.abs(dx) > 0.18 || Math.abs(dy) > 0.18) {
+        this.playerFacing = Math.abs(dx) > Math.abs(dy)
+          ? dx < 0 ? "west" : "east"
+          : dy < 0 ? "north" : "south";
+      }
+      this.player.setFlipX(this.playerFacing === "west");
     }
 
     private updateDog() {
       if (!this.player || !this.dog || !this.dog.visible) return;
       const offsets: Record<Facing, Point> = {
-        north: { x: 28, y: 36 },
-        south: { x: -28, y: -28 },
-        east: { x: -38, y: 10 },
-        west: { x: 38, y: 10 },
+        north: { x: 28, y: 36 }, south: { x: -28, y: -28 },
+        east: { x: -38, y: 10 }, west: { x: 38, y: 10 },
       };
       const offset = offsets[this.playerFacing];
-      const targetX = this.player.x + offset.x;
-      const targetY = this.player.y + offset.y;
-      this.dog.x = Phaser.Math.Linear(this.dog.x, targetX, 0.055);
-      this.dog.y = Phaser.Math.Linear(this.dog.y, targetY, 0.055);
+      this.dog.x = Phaser.Math.Linear(this.dog.x, this.player.x + offset.x, 0.055);
+      this.dog.y = Phaser.Math.Linear(this.dog.y, this.player.y + offset.y, 0.055);
       this.dog.setFlipX(this.dog.x > this.player.x);
       this.dog.setDepth(1000 + Math.round(this.dog.y));
     }
@@ -442,44 +379,8 @@ export async function createVillageGame(
       if (distance(this.player, this.linus) > 95) return;
       this.linusInteractionPending = false;
       this.playerFacing = this.player.x < this.linus.x ? "east" : "west";
-      this.animatePlayer(0, 0, false, 0);
+      this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
       callbacks.onLinusInteract();
-    }
-
-    private animatePlayer(dx: number, dy: number, moving: boolean, delta: number) {
-      if (!this.player) return;
-      if (Math.abs(dx) > 0.18 || Math.abs(dy) > 0.18) {
-        this.playerFacing =
-          Math.abs(dx) > Math.abs(dy)
-            ? dx < 0
-              ? "west"
-              : "east"
-            : dy < 0
-              ? "north"
-              : "south";
-      }
-      const side = this.playerFacing === "east" || this.playerFacing === "west";
-      this.player.setFlipX(this.playerFacing === "west");
-      const frames: Record<Facing, [string, string]> = {
-        north: ["child-north-a", "child-north-b"],
-        south: ["child-south-a", "child-south-b"],
-        east: ["child-walk-a", "child-walk-b"],
-        west: ["child-walk-a", "child-walk-b"],
-      };
-      if (!moving) {
-        this.playerFrameClock = 0;
-        this.playerFrameIndex = 0;
-        const idle = side ? "child" : frames[this.playerFacing][0];
-        if (this.player.texture.key !== idle) this.player.setTexture(idle);
-        return;
-      }
-      this.playerFrameClock += delta;
-      if (this.playerFrameClock >= 125) {
-        this.playerFrameClock = 0;
-        this.playerFrameIndex = (this.playerFrameIndex + 1) % 2;
-      }
-      const texture = frames[this.playerFacing][this.playerFrameIndex];
-      if (this.player.texture.key !== texture) this.player.setTexture(texture);
     }
 
     private worldImage(
@@ -490,8 +391,7 @@ export async function createVillageGame(
       originY = 1,
       baseY = y,
     ) {
-      return this.add
-        .image(x, y, key)
+      return this.add.image(x, y, key)
         .setOrigin(0.5, originY)
         .setScale(scale)
         .setDepth(1000 + Math.round(baseY));
@@ -508,12 +408,14 @@ export async function createVillageGame(
     }
 
     private drawHouse() {
-      this.add.image(150, 250, "family-house").setOrigin(0.5, 1).setDepth(1250);
+      this.add.image(150, 250, "family-house")
+        .setOrigin(0.5, 1)
+        .setDisplaySize(360, 300)
+        .setDepth(1250);
     }
 
     private drawFence(x: number, y: number, count: number) {
-      this.add
-        .image(x + count * 10, y, "fence-segment")
+      this.add.image(x + count * 10, y, "fence-segment")
         .setDisplaySize(count * 20, 48)
         .setDepth(1000 + y);
     }
@@ -523,70 +425,60 @@ export async function createVillageGame(
     }
 
     private createQuestMarker() {
-      const shadow = this.add.rectangle(3, 4, 42, 42, 0x4b3d21, 0.2);
-      const bubble = this.add
-        .rectangle(0, 0, 42, 42, 0xf4cf55)
-        .setStrokeStyle(4, 0x704f17);
-      const shine = this.add.rectangle(-11, -11, 8, 5, 0xffed98);
-      const label = this.add
-        .text(0, -1, "!", { color: "#493507", fontSize: "25px", fontStyle: "bold" })
-        .setOrigin(0.5)
-        .setName("label");
-      this.questMarker = this.add
-        .container(150, 72, [shadow, bubble, shine, label])
-        .setDepth(3000)
-        .setSize(54, 54)
-        .setInteractive({ useHandCursor: true });
-      this.questMarker.on(
-        "pointerdown",
-        (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
-          event.stopPropagation();
-          if (this.introComplete) callbacks.onQuestOpen();
-        },
-      );
-      this.tweens.add({
-        targets: this.questMarker,
-        y: 65,
-        duration: 850,
-        yoyo: true,
-        repeat: -1,
-        ease: "Sine.InOut",
+      // UI geometry is intentionally code-drawn, but styled as a soft storybook speech marker
+      // rather than a generic bright RPG orb. It remains directly tappable by design.
+      const shadow = this.add.ellipse(2, 10, 39, 15, 0x3a2a1d, 0.18);
+      const bubble = this.add.graphics();
+      bubble.fillStyle(0xfff2cf, 0.98);
+      bubble.lineStyle(2, 0x6b4b31, 0.9);
+      bubble.fillRoundedRect(-22, -22, 44, 39, 12);
+      bubble.strokeRoundedRect(-22, -22, 44, 39, 12);
+      bubble.fillTriangle(-5, 16, 5, 16, 0, 24);
+      bubble.lineBetween(-5, 16, 0, 24);
+      bubble.lineBetween(0, 24, 5, 16);
+      const highlight = this.add.ellipse(-7, -10, 13, 7, 0xffffff, 0.22);
+      const label = this.add.text(0, -3, "?", {
+        color: "#5a3f28", fontSize: "25px", fontStyle: "bold", fontFamily: "Trebuchet MS",
+      }).setOrigin(0.5).setName("label");
+      this.questMarker = this.add.container(720, 335, [shadow, bubble, highlight, label])
+        .setDepth(3000).setSize(54, 56).setInteractive({ useHandCursor: true });
+      this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (this.introComplete) callbacks.onQuestOpen();
+        else callbacks.onLinusInteract();
       });
+      this.tweens.add({ targets: this.questMarker, y: "-=4", duration: 950, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
     private ensureMaterialStack() {
       if (this.materialStack?.active) return;
-      this.materialStack = this.worldImage(760, 458, "material-stack", 1);
+      this.materialStack = this.add.image(760, 458, "materials-painted")
+        .setOrigin(0.5, 0.92)
+        .setDisplaySize(190, 106)
+        .setDepth(1458);
       this.placeWorldObjects(FIRST_DELIVERY_AMBIENT_OBJECTS);
     }
 
     private triggerApprovalEvent() {
       if (this.approvedTriggered) return;
       this.approvedTriggered = true;
-      const truck = this.add.image(1030, 350, "truck").setOrigin(0.5, 1).setDepth(1350);
+      const truck = this.add.image(1030, 350, "truck-painted")
+        .setOrigin(0.5, 0.92)
+        .setDisplaySize(245, 160)
+        .setDepth(1350);
       this.tweens.add({
-        targets: truck,
-        x: 785,
-        y: 365,
-        duration: 1700,
-        ease: "Sine.Out",
+        targets: truck, x: 785, y: 365, duration: 1700, ease: "Sine.Out",
         onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
         onComplete: () => {
           this.firstDeliveryComplete = true;
           requestedFirstDeliveryComplete = true;
           this.ensureMaterialStack();
           this.tweens.add({ targets: this.linus, y: "-=10", duration: 180, yoyo: true, repeat: 3 });
-          this.time.delayedCall(900, () =>
-            this.tweens.add({
-              targets: truck,
-              x: 1030,
-              y: 350,
-              duration: 1500,
-              ease: "Sine.In",
-              onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
-              onComplete: () => truck.destroy(),
-            }),
-          );
+          this.time.delayedCall(900, () => this.tweens.add({
+            targets: truck, x: 1030, y: 350, duration: 1500, ease: "Sine.In",
+            onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
+            onComplete: () => truck.destroy(),
+          }));
         },
       });
     }
@@ -609,144 +501,59 @@ export async function createVillageGame(
     }
 
     private drawVillage() {
-      this.add
-        .tileSprite((WORLD_MIN_X + WORLD_MAX_X) / 2, WORLD_HEIGHT / 2, WORLD_WIDTH, WORLD_HEIGHT, "grass-tile")
-        .setDepth(0);
+      // Painted master scene is the visual authority for static scenery in this experiment.
+      this.add.image(
+        (WORLD_MIN_X + WORLD_MAX_X) / 2,
+        WORLD_HEIGHT / 2,
+        "master-scene",
+      ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(0);
 
-      this.placeWorldObjects([
-        { x: -430, y: 170, texture: "wild-grass-bank", scale: 1.15, baseY: 205 },
-        { x: -330, y: 197, texture: "tree-cluster", scale: 0.95, baseY: 205 },
-        { x: -170, y: 537, texture: "tree-oak", scale: 1.05, baseY: 537 },
-        { x: -72, y: 425, texture: "bush", scale: 0.82 },
-        { x: -255, y: 350, texture: "flower-patch", scale: 0.78 },
-        { x: -395, y: 520, texture: "grass-tuft", scale: 0.9 },
-        { x: 1050, y: 540, texture: "wild-grass-bank", scale: 1.08, baseY: 600 },
-        { x: 1125, y: 152, texture: "tree-cluster", scale: 0.92, baseY: 175 },
-        { x: 1290, y: 517, texture: "tree-pine", scale: 1.08, baseY: 517 },
-        { x: 1370, y: 230, texture: "bush", scale: 0.9 },
-        { x: 1215, y: 335, texture: "flower-patch", scale: 0.78 },
-        { x: 1350, y: 560, texture: "grass-tuft", scale: 0.86 },
-      ]);
+      // Reuse the painted master itself as a masked foreground layer. The duplicated
+      // pixels remain visually seamless; only these masks participate in occlusion.
+      // Depth 1400 makes actors above y=400 pass behind the board cluster, while actors
+      // lower on the path naturally render in front via the existing Y-depth rule.
+      const foreground = this.add.image(
+        (WORLD_MIN_X + WORLD_MAX_X) / 2,
+        WORLD_HEIGHT / 2,
+        "master-scene",
+      ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(1400);
+      const foregroundMask = this.make.graphics({ x: 0, y: 0 }, false);
+      foregroundMask.fillStyle(0xffffff);
+      const maskPolygons: Point[][] = [
+        // Notice board.
+        [{x:550,y:210},{x:605,y:185},{x:710,y:190},{x:755,y:220},{x:748,y:335},{x:725,y:345},{x:725,y:365},{x:698,y:365},{x:698,y:345},{x:582,y:345},{x:582,y:365},{x:558,y:365},{x:558,y:338},{x:546,y:330}],
+        // Mailbox and post.
+        [{x:505,y:292},{x:520,y:278},{x:556,y:280},{x:573,y:294},{x:571,y:352},{x:563,y:360},{x:563,y:398},{x:545,y:398},{x:545,y:361},{x:510,y:358}],
+        // Bench.
+        [{x:538,y:340},{x:718,y:340},{x:730,y:355},{x:724,y:375},{x:706,y:379},{x:712,y:419},{x:688,y:423},{x:682,y:386},{x:572,y:389},{x:565,y:423},{x:541,y:420},{x:548,y:383},{x:535,y:373}],
+        // Flower tub beside the board.
+        [{x:702,y:322},{x:745,y:318},{x:780,y:335},{x:788,y:374},{x:775,y:406},{x:743,y:411},{x:715,y:398},{x:703,y:367}],
+      ];
+      for (const polygon of maskPolygons) {
+        foregroundMask.beginPath();
+        foregroundMask.moveTo(polygon[0].x, polygon[0].y);
+        polygon.slice(1).forEach((point) => foregroundMask.lineTo(point.x, point.y));
+        foregroundMask.closePath();
+        foregroundMask.fillPath();
+      }
+      foreground.setMask(foregroundMask.createGeometryMask());
 
-      this.placeWorldObjects([
-        { x: 62, y: 164, texture: "tree-cluster", scale: 0.9, baseY: 192 },
-        { x: 906, y: 164, texture: "tree-cluster", scale: 0.92, baseY: 194 },
-        { x: 482, y: 128, texture: "tree-cluster", scale: 0.78, baseY: 154 },
-        { x: 58, y: 540, texture: "wild-grass-bank", scale: 1.08, baseY: 600 },
-        { x: 896, y: 542, texture: "wild-grass-bank", scale: 1.12, baseY: 606 },
-      ]);
-
-      this.add.image(155, 455, "road-segment").setAngle(-12).setDepth(20);
-      this.add.image(390, 402, "road-segment").setAngle(-12).setDepth(20);
-      this.add.image(625, 349, "road-segment").setAngle(-12).setDepth(20);
-      this.add.image(842, 300, "road-bend").setAngle(-4).setDepth(20);
-      this.add.image(244, 323, "footpath").setAngle(41).setDepth(19);
-
-      this.drawHouse();
-      this.drawFence(50, 270, 7);
-      this.drawFence(820, 238, 6);
-      this.drawQuestBoard();
-
-      this.placeWorldObjects([
-        { x: 282, y: 298, texture: "bench" },
-        { x: 34, y: 400, texture: "crate", scale: 0.8 },
-        { x: 925, y: 205, texture: "crate", scale: 0.65 },
-        { x: 257, y: 266, texture: "mailbox", scale: 0.82 },
-        { x: 78, y: 261, texture: "woodpile", scale: 0.72 },
-        { x: 660, y: 300, texture: "signpost", scale: 0.78 },
-        { x: 365, y: 337, texture: "lamp-post", scale: 0.72 },
-        { x: 325, y: 190, texture: "bush", scale: 0.74 },
-        { x: 720, y: 208, texture: "bush", scale: 0.82 },
-        { x: 895, y: 392, texture: "bush", scale: 0.9 },
-        { x: 118, y: 555, texture: "bush", scale: 0.86 },
-        { x: 448, y: 269, texture: "well", scale: 0.82 },
-        { x: 765, y: 234, texture: "stone-wall", scale: 0.9 },
-        { x: 216, y: 214, texture: "stone-wall", scale: 0.56 },
-        { x: 525, y: 214, texture: "bush", scale: 0.72 },
-        { x: 676, y: 390, texture: "construction-stakes", scale: 0.94, baseY: 410 },
-      ]);
-      this.placeWorldObjects(OPENING_AMBIENT_OBJECTS);
-
-      this.linus = this.add
-        .image(575, 285, "linus")
-        .setOrigin(0.5, 0.9)
-        .setDepth(1285)
+      // Painted Linus stays dynamic so onboarding remains testable.
+      this.linus = this.add.image(720, 450, "linus-painted")
+        .setOrigin(0.5, 0.96)
+        .setDisplaySize(128, 125)
+        .setDepth(1450)
         .setInteractive({ useHandCursor: true });
-      this.linus.on(
-        "pointerdown",
-        (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
-          event.stopPropagation();
-          if (this.introComplete || !this.player) return;
-          this.linusInteractionPending = true;
-          this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 525, y: 318 });
-          const finalPoint = this.path.at(-1);
-          if (finalPoint) {
-            this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
-          } else {
-            this.maybeCompleteLinusInteraction();
-          }
-        },
-      );
-      this.add
-        .text(549, 236, "Linus", {
-          color: "#f8edcf",
-          fontSize: "13px",
-          backgroundColor: "#26342bea",
-          padding: { x: 5, y: 3 },
-        })
-        .setDepth(2900);
+      this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (this.introComplete || !this.player) return;
+        this.linusInteractionPending = true;
+        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 650, y: 485 });
+        const finalPoint = this.path.at(-1);
+        if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+        else this.maybeCompleteLinusInteraction();
+      });
 
-      this.add.rectangle(675, 405, 180, 105, 0x6e955b, 0.1).setDepth(8);
-      this.drawTree(105, 115, "tree-birch", 0.95);
-      this.drawTree(155, 485, "tree-oak", 1.05);
-      this.drawTree(410, 105, "tree-pine", 0.9);
-      this.drawTree(790, 120, "tree-birch", 1);
-      this.drawTree(875, 475, "tree-pine", 1.05);
-
-      this.placeWorldObjects([
-        { x: 310, y: 527, texture: "flower-patch", scale: 0.8 },
-        { x: 347, y: 514, texture: "flower-patch", scale: 0.65 },
-        { x: 623, y: 112, texture: "flower-patch", scale: 0.75 },
-        { x: 718, y: 532, texture: "flower-patch", scale: 0.8 },
-        { x: 529, y: 504, texture: "flower-patch", scale: 0.7 },
-        { x: 255, y: 91, texture: "flower-patch", scale: 0.65 },
-        { x: 445, y: 559, texture: "flower-patch", scale: 0.8 },
-        { x: 744, y: 181, texture: "flower-patch", scale: 0.7 },
-        { x: 903, y: 320, texture: "flower-patch", scale: 0.75 },
-        { x: 208, y: 294, texture: "flower-patch", scale: 0.65 },
-        { x: 805, y: 287, texture: "flower-patch", scale: 0.72 },
-        { x: 365, y: 300, texture: "rock-cluster", scale: 0.72 },
-        { x: 610, y: 475, texture: "rock-cluster", scale: 0.78 },
-        { x: 695, y: 260, texture: "rock-cluster", scale: 0.65 },
-        { x: 245, y: 455, texture: "rock-cluster", scale: 0.7 },
-        { x: 840, y: 365, texture: "rock-cluster", scale: 0.75 },
-        { x: 520, y: 126, texture: "rock-cluster", scale: 0.62 },
-        { x: 90, y: 350, texture: "rock-cluster", scale: 0.65 },
-        { x: 132, y: 340, texture: "grass-tuft", scale: 0.75 },
-        { x: 192, y: 385, texture: "grass-tuft", scale: 0.65 },
-        { x: 470, y: 182, texture: "grass-tuft", scale: 0.7 },
-        { x: 575, y: 565, texture: "grass-tuft", scale: 0.8 },
-        { x: 689, y: 190, texture: "grass-tuft", scale: 0.68 },
-        { x: 854, y: 257, texture: "grass-tuft", scale: 0.72 },
-        { x: 934, y: 520, texture: "grass-tuft", scale: 0.82 },
-        { x: 220, y: 150, texture: "dirt-patch", scale: 0.62 },
-        { x: 517, y: 438, texture: "dirt-patch", scale: 0.7 },
-        { x: 736, y: 346, texture: "dirt-patch", scale: 0.58 },
-        { x: 380, y: 590, texture: "dirt-patch", scale: 0.65 },
-        { x: 90, y: 636, texture: "foreground-shrub", scale: 1.05, baseY: 635 },
-        { x: 855, y: 638, texture: "foreground-shrub", scale: 1.15, baseY: 637 },
-        { x: 510, y: 646, texture: "wild-grass-bank", scale: 1.18, baseY: 646 },
-      ]);
-
-      this.add
-        .text(18, 18, "Sysselcraft · byn vaknar", {
-          color: "#f6edcf",
-          fontSize: "14px",
-          backgroundColor: "#26342bea",
-          padding: { x: 8, y: 6 },
-        })
-        .setDepth(3000)
-        .setScrollFactor(0);
     }
   }
 
@@ -755,10 +562,10 @@ export async function createVillageGame(
     parent,
     width: viewWidth,
     height: VIEW_HEIGHT,
-    backgroundColor: "#82ad68",
-    pixelArt: true,
-    antialias: false,
-    roundPixels: true,
+    backgroundColor: "#789a68",
+    pixelArt: false,
+    antialias: true,
+    roundPixels: false,
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,

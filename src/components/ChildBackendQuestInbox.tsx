@@ -1,30 +1,62 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getBackendAuthState } from "@/backend/auth";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { getPairedChildId } from "@/backend/childDeviceBinding";
-import { getChildGameState, listChildQuests, submitQuest } from "@/backend/familyRepository";
+import {
+  getChildGameState,
+  isChildDeviceBound,
+  listChildQuests,
+  submitQuest,
+} from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import styles from "./ChildBackendQuestInbox.module.css";
 
 const OPEN_REFRESH_MS = 15_000;
 
 export default function ChildBackendQuestInbox() {
+  const router = useRouter();
   const [childId, setChildId] = useState<string | null>(null);
+  const [pairingChecked, setPairingChecked] = useState(false);
+  const [sessionReady, setSessionReady] = useState(false);
+  const [needsPairing, setNeedsPairing] = useState(false);
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [gameState, setGameState] = useState<BackendChildGameState | null>(null);
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function refresh(id: string) {
+  const refresh = useCallback(async (id: string) => {
+    const bound = await isChildDeviceBound(id);
+    if (!bound) {
+      setNeedsPairing(true);
+      setQuests([]);
+      setGameState(null);
+      setMessage("Barnkopplingen behöver förnyas.");
+      return false;
+    }
+
+    setNeedsPairing(false);
     const [nextQuests, nextGameState] = await Promise.all([
       listChildQuests(id),
       getChildGameState(id),
     ]);
     setQuests(nextQuests);
     setGameState(nextGameState);
-  }
+    return true;
+  }, []);
+
+  const refreshQuietly = useCallback(
+    async (id: string) => {
+      try {
+        await refresh(id);
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : "Kunde inte synka uppdragen.");
+      }
+    },
+    [refresh],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -32,19 +64,30 @@ export default function ChildBackendQuestInbox() {
     async function load() {
       try {
         const pairedId = await getPairedChildId();
-        if (!pairedId || cancelled) return;
+        if (cancelled) return;
 
-        const auth = await getBackendAuthState();
+        setPairingChecked(true);
+        if (!pairedId) return;
+
         setChildId(pairedId);
+        const auth = await getBackendAuthState();
+        if (cancelled) return;
 
         if (!auth.signedIn || !auth.isAnonymous) {
-          if (!cancelled) setMessage("Barnkopplingen behöver förnyas.");
+          setSessionReady(false);
+          setQuests([]);
+          setGameState(null);
+          setMessage("Barnkopplingen behöver förnyas.");
           return;
         }
 
-        await refresh(pairedId);
+        setSessionReady(true);
+        const refreshed = await refresh(pairedId);
+        if (!cancelled && refreshed) setMessage("");
       } catch (error) {
         if (!cancelled) {
+          setPairingChecked(true);
+          setSessionReady(false);
           setMessage(error instanceof Error ? error.message : "Kunde inte hämta uppdragen.");
         }
       }
@@ -54,15 +97,33 @@ export default function ChildBackendQuestInbox() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (!childId) return;
 
+    return subscribeBackendAuth((state) => {
+      const ready = state.signedIn && state.isAnonymous;
+      setSessionReady(ready);
+
+      if (!ready) {
+        setQuests([]);
+        setGameState(null);
+        setMessage("Barnkopplingen behöver förnyas.");
+        return;
+      }
+
+      void refreshQuietly(childId);
+    });
+  }, [childId, refreshQuietly]);
+
+  useEffect(() => {
+    if (!childId || !sessionReady || needsPairing) return;
+
     const refreshIfVisible = () => {
-      if (document.visibilityState === "visible") void refresh(childId);
+      if (document.visibilityState === "visible") void refreshQuietly(childId);
     };
-    const refreshOnFocus = () => void refresh(childId);
+    const refreshOnFocus = () => void refreshQuietly(childId);
 
     document.addEventListener("visibilitychange", refreshIfVisible);
     window.addEventListener("focus", refreshOnFocus);
@@ -71,15 +132,35 @@ export default function ChildBackendQuestInbox() {
       document.removeEventListener("visibilitychange", refreshIfVisible);
       window.removeEventListener("focus", refreshOnFocus);
     };
-  }, [childId]);
+  }, [childId, needsPairing, refreshQuietly, sessionReady]);
 
   useEffect(() => {
-    if (!open || !childId) return;
-    const timer = window.setInterval(() => void refresh(childId), OPEN_REFRESH_MS);
+    if (!open || !childId || !sessionReady || needsPairing) return;
+    const timer = window.setInterval(() => void refreshQuietly(childId), OPEN_REFRESH_MS);
     return () => window.clearInterval(timer);
-  }, [open, childId]);
+  }, [open, childId, needsPairing, refreshQuietly, sessionReady]);
 
-  if (!childId) return null;
+  if (!pairingChecked) return null;
+
+  if (!childId) {
+    return (
+      <aside className={styles.dock} aria-label="Koppla barnets enhet">
+        <button className={styles.toggle} type="button" onClick={() => router.push("/pair")}>
+          📱 Koppla enhet
+        </button>
+      </aside>
+    );
+  }
+
+  if (needsPairing) {
+    return (
+      <aside className={styles.dock} aria-label="Koppla om barnets enhet">
+        <button className={styles.toggle} type="button" onClick={() => router.push("/pair")}>
+          📱 Koppla om enhet
+        </button>
+      </aside>
+    );
+  }
 
   const visibleQuests = quests.filter((quest) => quest.state !== "approved");
   const availableCount = quests.filter((quest) => quest.state === "available").length;
@@ -87,11 +168,12 @@ export default function ChildBackendQuestInbox() {
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
 
   async function markDone(instanceId: string) {
+    if (!childId || !sessionReady || needsPairing) return;
     setBusy(true);
     setMessage("");
     try {
       await submitQuest(instanceId);
-      await refresh(childId!);
+      await refresh(childId);
       setMessage("Klart! Nu väntar uppdraget på en vuxen. ✨");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte skicka uppdraget.");
@@ -101,12 +183,12 @@ export default function ChildBackendQuestInbox() {
   }
 
   async function refreshNow() {
-    if (!childId) return;
+    if (!childId || !sessionReady || needsPairing) return;
     setBusy(true);
     setMessage("");
     try {
-      await refresh(childId);
-      setMessage("Uppdragen är uppdaterade.");
+      const refreshed = await refresh(childId);
+      if (refreshed) setMessage("Uppdragen är uppdaterade.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte uppdatera.");
     } finally {
@@ -150,7 +232,7 @@ export default function ChildBackendQuestInbox() {
                 {quest.state === "available" ? (
                   <button
                     className="primary-button compact"
-                    disabled={busy}
+                    disabled={busy || !sessionReady}
                     onClick={() => markDone(quest.instanceId)}
                   >
                     Jag är klar
@@ -165,10 +247,10 @@ export default function ChildBackendQuestInbox() {
           {message && <p className={styles.message}>{message}</p>}
 
           <div className={styles.footer}>
-            <button className="secondary-button compact" disabled={busy} onClick={refreshNow}>
+            <button className="secondary-button compact" disabled={busy || !sessionReady} onClick={refreshNow}>
               ↻ Uppdatera
             </button>
-            <a href="/pair">Koppla om</a>
+            <button type="button" onClick={() => router.push("/pair")}>Koppla om</button>
           </div>
         </section>
       )}

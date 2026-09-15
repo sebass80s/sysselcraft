@@ -37,6 +37,9 @@ This baseline is useful because the first successful real loop should produce an
    - Use a separate browser profile/incognito window or the physical child iPhone.
    - Open `/pair` and redeem the fresh code.
    - Confirm the paired child ID is persisted through the device binding helper.
+   - Reload `/pair` and confirm the existing local pairing is accepted only when the current anonymous session can still read that child's backend state.
+   - If the anonymous auth session has been replaced/expired while a local child ID remains, confirm `/pair` asks for a fresh pairing code instead of falsely reporting the stale binding as valid.
+   - When testing re-pairing, confirm the old local pairing remains intact until a new code has been successfully redeemed and its backend state can be read.
    - Return to the village.
 
 3. **Quest visibility**
@@ -68,8 +71,12 @@ This baseline is useful because the first successful real loop should produce an
    - Confirm backend wallet reflects the approved reward.
 
 8. **Reconciliation inspection**
-   - Run `inspectPairedDeviceReconciliation()` on the paired device in the development/native test context.
+   - Open `/?debug=reconciliation` on the paired device.
+   - Before changing backend state, press **Kopiera snapshot** and preserve the JSON capture as the baseline.
    - Record recommendation plus all economy/progression/world-flag deltas.
+   - Confirm a missing prerequisite is reported specifically (for example not paired, local save missing or backend state missing) rather than as an undifferentiated failure.
+   - Complete the backend quest/reward loop, refresh the panel, and press **Kopiera snapshot** again.
+   - Compare `capturedAt`, report deltas and migration decision between the before/after captures. The capture format is versioned and contains no auth token or service secret.
    - Do not write either side based on the report yet.
 
 ## Pass criteria
@@ -78,6 +85,8 @@ The backend loop passes only if all of the following are true:
 
 - pairing binds the anonymous child session to the correct child profile;
 - parent session cannot redeem the pairing code as a child;
+- a stale local pairing is not trusted after the anonymous session loses backend access;
+- re-pairing does not discard the known-good local child ID before the new binding succeeds;
 - child can submit only an available quest;
 - parent can approve only a pending quest in their household;
 - reward event is created exactly once;
@@ -85,7 +94,8 @@ The backend loop passes only if all of the following are true:
 - child game state reflects exactly one reward;
 - child and parent both observe the same backend lifecycle after refresh;
 - local Preferences save remains intact;
-- reconciliation inspection performs no writes.
+- reconciliation inspection performs no writes;
+- before/after reconciliation snapshots can be captured without mutating either persistence domain.
 
 ## After a successful pass
 

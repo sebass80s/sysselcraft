@@ -19,6 +19,9 @@ import {
 export default function VillagePrototype() {
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
+  const restoredQuestStateRef = useRef<QuestState>("available");
+  const restoredIntroCompleteRef = useRef(false);
+  const restoredDogVisibleRef = useRef(false);
   const restoredFirstDeliveryCompleteRef = useRef(false);
   const childNameInputRef = useRef<HTMLInputElement>(null);
   const dogNameInputRef = useRef<HTMLInputElement>(null);
@@ -54,6 +57,12 @@ export default function VillagePrototype() {
       if (cancelled) return;
 
       if (saved) {
+        restoredQuestStateRef.current = saved.questStates.makeBed;
+        restoredIntroCompleteRef.current = saved.introComplete;
+        restoredDogVisibleRef.current = saved.dogVisible;
+        restoredFirstDeliveryCompleteRef.current = saved.worldFlags.firstDeliveryComplete;
+        approvalLockRef.current = saved.completedQuestIds.includes(makeBedQuest.id);
+
         setQuestState(saved.questStates.makeBed);
         setDiamonds(saved.diamonds);
         setSysselBux(saved.sysselBux);
@@ -67,8 +76,6 @@ export default function VillagePrototype() {
         setDogVisible(saved.dogVisible);
         setChildNameCanSubmit(Boolean(saved.childName.trim()));
         setDogNameCanSubmit(Boolean(saved.dogName.trim()));
-        restoredFirstDeliveryCompleteRef.current = saved.worldFlags.firstDeliveryComplete;
-        approvalLockRef.current = saved.completedQuestIds.includes(makeBedQuest.id);
       }
 
       setSaveReady(true);
@@ -141,10 +148,10 @@ export default function VillagePrototype() {
       }
 
       gameRef.current = handle;
-      handle.setDogVisible(dogVisible);
+      handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setFirstDeliveryComplete(restoredFirstDeliveryCompleteRef.current);
-      handle.setIntroComplete(introComplete);
-      handle.setQuestState(questState);
+      handle.setIntroComplete(restoredIntroCompleteRef.current);
+      handle.setQuestState(restoredQuestStateRef.current);
     }
 
     boot();
@@ -171,7 +178,11 @@ export default function VillagePrototype() {
   function advanceDialogue() {
     const nextIndex = dialogueIndex + 1;
     const nextStep = linusIntroDialogue[nextIndex];
-    if (!nextStep) return;
+    if (!nextStep) {
+      setDialogueOpen(false);
+      setIntroComplete(true);
+      return;
+    }
     if (nextStep.kind === "reveal-dog") {
       setDogVisible(true);
       setDialogueIndex(nextIndex + 1);
@@ -194,9 +205,7 @@ export default function VillagePrototype() {
     setDogName(trimmed);
     setDogNameCanSubmit(true);
     setDogVisible(true);
-    setDialogueOpen(false);
-    setIntroComplete(true);
-    setQuestOpen(true);
+    setDialogueIndex((index) => index + 1);
   }
 
   function submitQuest() {
@@ -376,9 +385,12 @@ export default function VillagePrototype() {
               onMouseDown={(event) => event.stopPropagation()}
             >
               <button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button>
-              <span className="parent-menu-kicker">🔐 Vuxenläge · prototyp</span>
-              <h2 id="parent-menu-title">Föräldrameny</h2>
-              <p className="parent-menu-note">Här hanteras sådant barnet inte ska godkänna själv. PIN och familjekonto kommer senare.</p>
+              <span className="parent-menu-kicker">🔐 Lokal testkontroll</span>
+              <h2 id="parent-menu-title">Första quest-loopen</h2>
+              <p className="parent-menu-note">
+                Den här panelen finns bara för den lokala prototypquesten Bädda sängen medan save-migreringen testas. Familjekonto och nya föräldrauppdrag hanteras i det riktiga föräldraläget.
+              </p>
+              <a className="secondary-button" href="/parent">Öppna föräldraläget</a>
 
               <div className="parent-profile-card">
                 <span>Barn</span>
@@ -393,7 +405,7 @@ export default function VillagePrototype() {
               </div>
 
               <div className="parent-section-heading">
-                <h3>Att godkänna</h3>
+                <h3>Lokal prototyp att godkänna</h3>
                 {pendingCount > 0 && <span>{pendingCount}</span>}
               </div>
 
@@ -412,11 +424,11 @@ export default function VillagePrototype() {
                   </div>
                 </article>
               ) : (
-                <div className="parent-empty-state">✓ Inget väntar på godkännande just nu.</div>
+                <div className="parent-empty-state">✓ Inget lokalt prototypuppdrag väntar just nu.</div>
               )}
 
               <div className="parent-menu-footer">
-                <span>Nästa steg: skapa och schemalägga quests härifrån.</span>
+                <span>Den lokala loopen behålls tills reconciliation är testad på fysisk iPhone.</span>
                 <button
                   className="debug-reset-button"
                   type="button"

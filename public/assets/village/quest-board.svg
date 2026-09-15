@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="92" height="104" viewBox="0 0 92 104" shape-rendering="crispEdges">
-<rect width="92" height="104" fill="none"/>
-<rect x="40" y="58" width="12" height="42" fill="#684830"/>
-<rect x="14" y="18" width="64" height="56" fill="#6f4b2f"/>
-<rect x="19" y="23" width="54" height="46" fill="#b88958"/>
-<rect x="23" y="27" width="46" height="38" fill="#d4b477"/>
-<rect x="27" y="31" width="16" height="12" fill="#f0e4b9"/>
-<rect x="48" y="36" width="17" height="15" fill="#e7d6a5"/>
-<rect x="31" y="49" width="25" height="10" fill="#ead9aa"/>
-<rect x="10" y="14" width="72" height="8" fill="#513822"/>
-<rect x="17" y="10" width="58" height="7" fill="#8c613c"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="116" height="112" viewBox="0 0 116 112"><defs><linearGradient id="wood" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a97a50"/><stop offset="1" stop-color="#66452f"/></linearGradient><linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0c8"/><stop offset="1" stop-color="#d9c294"/></linearGradient><filter id="s"><feGaussianBlur stdDeviation="2"/></filter></defs><ellipse cx="58" cy="105" rx="38" ry="5" fill="#2e4937" opacity=".15" filter="url(#s)"/><path d="M19 27 88 18l10 7-1 57-69 10-9-7z" fill="#543a2c"/><path d="M19 27 88 18v57L19 85z" fill="url(#wood)" stroke="#51382a" stroke-width="2"/><path d="M88 18 98 25l-1 57-9-7z" fill="#4d382d"/><path d="M27 33 80 26v41l-53 8z" fill="url(#paper)" stroke="#9b7e58" stroke-width="1.5"/><g fill="#fff8df" stroke="#a58c66"><path d="M32 38l18-3 2 14-18 3z"/><path d="M56 34l17 1-1 13-16 1z"/><path d="M39 55l31-4 1 10-31 5z"/></g><g stroke="#8b7354" stroke-width="1.5" stroke-linecap="round"><path d="M36 42h10"/><path d="M59 39h9"/><path d="M44 59h21"/></g><g fill="#a85f4b"><circle cx="35" cy="39" r="1.7"/><circle cx="59" cy="36" r="1.7"/><circle cx="44" cy="57" r="1.7"/></g><path d="M31 84v23M82 77v25" stroke="#694831" stroke-width="7" stroke-linecap="round"/><path d="M29 26q25-22 54-4" fill="none" stroke="#bd8b58" stroke-width="5" stroke-linecap="round"/><g fill="#718b59"><ellipse cx="27" cy="104" rx="11" ry="4"/><ellipse cx="87" cy="101" rx="11" ry="4"/></g></svg>

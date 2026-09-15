@@ -1,6 +1,6 @@
 # Sysselcraft Local ↔ Backend Reconciliation
 
-Status: **DIAGNOSTIC LAYER READY; NO AUTOMATIC MERGE YET**
+Status: **DIAGNOSTIC UI READY; NO AUTOMATIC MERGE YET**
 
 Sysselcraft currently has two legitimate persistence domains:
 
@@ -15,6 +15,16 @@ The project must not silently overwrite one with the other until the real two-de
 
 `src/backend/reconciliation.ts` provides a pure diagnostic comparison between a local `SaveStateV1` and a backend `BackendChildGameState`. It does not write to either source.
 
+`src/backend/reconciliationPolicy.ts` turns that comparison into an explicit decision. The current phase is hard-coded as `observe-only`, and every decision has `automaticWriteAllowed: false`. This is intentional: even a `no-op` report is only a clean baseline, not permission to copy state automatically.
+
+`src/backend/deviceReconciliation.ts` combines the paired child id, local Preferences save and backend game state into the same report and attaches the explicit read-only decision, still without performing writes.
+
+A read-only diagnostic panel is mounted on the child game surface and can be enabled with:
+
+`/?debug=reconciliation`
+
+The panel is intentionally hidden during normal play. It exists for development/native migration testing and should never become a child-facing progression dashboard.
+
 The report compares:
 
 - diamonds;
@@ -28,6 +38,8 @@ It returns one of four recommendations:
 - `backend-ahead` — backend values are consistently equal or ahead;
 - `local-ahead` — local values are consistently equal or ahead;
 - `inspect-before-merge` — mixed/conflicting state, so automatic reconciliation would be unsafe.
+
+The policy layer then converts that recommendation into a next diagnostic step while keeping writes disabled.
 
 ## Why no automatic reconciliation yet
 
@@ -44,17 +56,20 @@ Until migration semantics are deliberately locked, reconciliation must not:
 
 ## First physical reconciliation test
 
-After the backend pairing package is deployed:
+After the backend pairing package is available on the physical child device:
 
 1. Start from a known local save on the child iPhone.
 2. Record local diamonds, SysselBux, first-delivery state and progression snapshot.
 3. Pair that device to the real child profile.
-4. Read the backend child state without mutating the local save.
-5. Generate a reconciliation report.
+4. Open `/?debug=reconciliation` and capture the first read-only report.
+5. Confirm no local or backend value changes merely from opening/refreshing the diagnostics.
 6. Complete one parent-created backend quest end-to-end.
 7. Confirm the backend reward is exactly once.
-8. Generate a second report and inspect the delta.
-9. Only then decide migration policy for economy/progression/world flags.
+8. Refresh the reconciliation panel and capture the second report.
+9. Compare the before/after delta.
+10. Only then decide migration policy for economy/progression/world flags.
+
+The diagnostics must remain observational during this test. A recommendation such as `backend-ahead` is information for the migration decision, not permission for the client to overwrite the local save automatically.
 
 ## Likely migration direction
 

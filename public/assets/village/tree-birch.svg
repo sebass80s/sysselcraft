@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="86" height="128" viewBox="0 0 86 128" shape-rendering="crispEdges">
-<rect width="86" height="128" fill="none"/><ellipse cx="44" cy="117" rx="24" ry="7" fill="#405238" opacity=".24"/>
-<rect x="38" y="55" width="12" height="61" fill="#e6e1c9"/><rect x="41" y="55" width="5" height="61" fill="#f4edd7"/><g fill="#6f6455"><rect x="38" y="66" width="7" height="4"/><rect x="44" y="78" width="6" height="4"/><rect x="37" y="91" width="8" height="4"/><rect x="44" y="103" width="6" height="4"/></g>
-<g fill="#315f3b"><rect x="12" y="35" width="34" height="30"/><rect x="38" y="21" width="34" height="33"/><rect x="23" y="12" width="34" height="32"/></g>
-<g fill="#477e49"><rect x="18" y="27" width="32" height="30"/><rect x="44" y="28" width="27" height="27"/><rect x="31" y="8" width="28" height="27"/></g>
-<g fill="#69a75c"><rect x="22" y="23" width="18" height="13"/><rect x="49" y="23" width="16" height="13"/><rect x="36" y="7" width="16" height="12"/><rect x="29" y="42" width="13" height="10"/></g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="126" height="205" viewBox="0 0 126 205"/>
