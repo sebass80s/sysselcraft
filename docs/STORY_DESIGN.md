@@ -39,6 +39,8 @@ Linus knows the place, but is not an exposition machine. **He never tells the pl
 
 During the first meeting he asks **“Vad heter du?”** and the child enters their name. This is the first small act of ownership.
 
+Linus's emotional writing is restrained. He rarely names his feelings. Emotion comes through concrete observations, remembered places, pauses and understated actions. This lets him be deeply affected by the village returning without becoming soft or sentimental.
+
 ## 4. The puppy
 
 Because so few people remain, Linus has been looking after a puppy. It needs more walking than his knee appreciates, so during the introduction he offers it to the child. The child names it.
@@ -73,6 +75,8 @@ The child should begin wondering: *What is going to happen if I do another quest
 
 After the truck leaves, the experience must no longer dead-end. Linus reacts in-world to the delivery, and that conversation reveals the first construction stage of the **recycling center**. This turns the delivery from an ending into the beginning of village progression.
 
+The exact locked Linus dialogue and staging live in `docs/POST_DELIVERY_PROGRESSION.md`.
+
 ## 7. Hidden progression and village growth
 
 Five underlying progression classes:
@@ -94,19 +98,57 @@ This four-contribution pace is a deliberate **first-project calibration**, not a
 
 The full interaction/persistence design is specified in `docs/POST_DELIVERY_PROGRESSION.md`.
 
-When stage 4 completes, the recycling center becomes a real interactable place and Linus provides a story beat that foreshadows the first returning resident. The bakery is not pre-revealed.
+When stage 4 completes, the recycling center becomes a real interactable place. Linus names his old friend Henning and hints, in characteristically understated fashion, that he may “råka ringa honom.” The bakery location remains hidden.
 
 ## 8. First new resident: Henning
 
-**Henning is the first new resident to arrive after the recycling center's opening construction arc.** He is a baker.
+**Henning is the first new resident to arrive after the recycling center's opening construction arc.** He is a baker and an old friend of Linus.
 
 Henning is a respectful homage to the user's late grandfather, so he is treated with warmth and dignity rather than used as a disposable joke character.
 
-His arrival proves something larger than construction materials: **people can come back.**
+### Core personality — LOCKED
 
-The recommended story order is:
+Henning is warm, sociable and genuinely good at what he does. He likes people and brings an immediate human warmth that contrasts with Linus's dry restraint.
 
-**recycling center completed → Linus hints that somebody may have noticed the village changing → Henning arrives as a person → Henning gives the bakery a human reason to exist → bakery becomes the second major construction arc.**
+He also has a recurring appetite for **wild schemes and improbable experiments**. These are a durable part of his character and should occasionally produce surprising world events throughout the game.
+
+The governing writing rule is:
+
+> **Henning does not do crazy things because he is foolish. He does them because a perfectly reasonable thought continues about three steps farther than it should.**
+
+His schemes must therefore have an internal logic. Henning is competent, especially as a baker. Never turn him into the village idiot or a generic comic-relief NPC.
+
+Sometimes an experiment should fail spectacularly. Sometimes it should work brilliantly. The latter is essential: other residents, especially Sol, should occasionally have to admit that an apparently absurd Henning idea actually solved a real problem.
+
+Candidate tonal examples, not mandatory future scenes:
+- testing how far the smell of fresh bread carries and somehow ending up on the bakery roof;
+- attempting an absurdly large cinnamon bun simply because he needs to know whether it can be baked;
+- constructing an unnecessarily ambitious bread-delivery contraption;
+- solving an ordinary village problem through a method everyone else initially considers ridiculous.
+
+Do not make every Henning appearance an escapade. His schemes work because they interrupt a baseline of warmth, competence and ordinary village life.
+
+### Henning and Linus
+
+Their old friendship should be visible without explanatory speeches. They know each other's habits and can puncture each other's pretensions. Henning can reveal sides of Linus the child has not seen because he knew him before the player's family arrived.
+
+Candidate relationship tone:
+
+**Henning:** “Du ringde.”
+
+**Linus:** “Det händer ibland.”
+
+**Henning:** “Du sa att det började hända saker här.”
+
+**Linus:** “Jag överdrev tydligen inte.”
+
+Henning's arrival proves something larger than construction materials: **people can come back.**
+
+The story order is:
+
+**recycling center completed → Linus names old friend Henning → later arrival cue → Henning arrives as a person → Henning gives the bakery a human reason to exist → bakery becomes the second major construction arc.**
+
+Henning should have a life and motivation outside being “the bakery unlock.” A strong direction is that he has wanted a place of his own to bake for people, while Linus has previously tried to tempt him to the village. Henning chooses to come while the village is still tiny because he sees that something has begun, not because a progression meter summoned him.
 
 Do not simply pop Henning into existence beside a pre-completed bakery. His arrival is a story event. Exact arrival staging and bakery pacing remain open until the recycling arc has been physically played.
 
@@ -120,7 +162,26 @@ Do not simply pop Henning into existence beside a pre-completed bakery. His arri
 - Organized and somewhat ambitious.
 - New to professional life, but never portrayed as incompetent simply because she is young/newly graduated.
 
+Sol should contrast with both men. Henning carries warmth and impulsive invention; Linus carries memory and restraint; **Sol carries forward motion**. A promising character direction is that she actively chooses the growing village rather than merely being assigned or accidentally ending up there.
+
+She can be practical, energetic and systems-minded without becoming cold. When Henning creates chaos, Sol's instinct is to understand, organize or fix it. Crucially, Henning should occasionally be right, preventing their relationship from collapsing into “responsible woman supervises foolish man.”
+
 Sol broadens the cast and later provides a natural connection back to Linus through his knee/cane situation. That relationship develops through village life rather than exposition in her introduction.
+
+Candidate tonal exchange, not locked scene:
+
+**Sol:** “Hur länge har du haft ont i det där knät?”
+
+**Linus:** “Inte särskilt länge.”
+
+**Henning:** “Tolv år.”
+
+**Linus:** “Ingen frågade dig.”
+
+The emerging ensemble shorthand is useful but not literal dialogue direction:
+- **Linus: the village's memory.**
+- **Henning: the village's heart.**
+- **Sol: the village's future.**
 
 ## 10. World structure and resident order
 
@@ -153,6 +214,8 @@ Sysselcraft is not a dialogue-heavy branching RPG. Narrative comes mostly throug
 
 Avoid explaining every system in dialogue. Avoid turning Linus into a tutorial narrator. His guidance should diminish as the player learns to read the world.
 
+Residents must increasingly have relationships with **each other**, not only wait for the child to click them. Recurring character dynamics, including Henning's schemes, are a way to make the settlement feel alive between progression milestones.
+
 Avoid exposing future residents/buildings aggressively. Discovery is part of the reward.
 
 ## 12. Emotional progression
@@ -183,11 +246,12 @@ Canonical now:
 - opening, Linus and puppy;
 - first quest `Bädda sängen`;
 - first truck/material event;
-- post-delivery Linus bridge;
+- locked post-delivery Linus bridge;
 - recycling center as first project;
-- four approved contributions total for the first recycling onboarding arc;
+- four approved contributions total for first recycling onboarding arc;
 - recycling completion before Henning;
-- Henning as first new resident and bakery as his project;
+- Henning as first new resident, Linus's old friend and baker;
+- Henning's recurring internally-logical wild schemes as a core character trait;
 - Sol after Henning and clinic as her project;
 - multi-area world structure and four-building opening-area capacity;
 - village naming is earned, but its old five-building trigger is superseded.
