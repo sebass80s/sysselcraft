@@ -16,7 +16,7 @@ export function createInitialMvpBuildingStages(): MvpBuildingStages {
 }
 
 export function isBuildingStage(value: unknown): value is BuildingStage {
-  return Number.isInteger(value) && typeof value === "number" && value >= 0 && value <= 4;
+  return typeof value === "number" && Number.isInteger(value) && value >= 0 && value <= 4;
 }
 
 export function normalizeBuildingStage(value: unknown): BuildingStage {
