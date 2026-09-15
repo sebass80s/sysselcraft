@@ -2,6 +2,25 @@
 
 > Current-state sections and `docs/NOVA_HANDOFF_MANIFEST.md` supersede stale historical assumptions.
 
+## Autonomous execution law (LOCKED 2026-09-15)
+
+**When the user says `kör`, `kör på`, `bara kör`, `bygg på nu`, `fortsätt` or equivalent after a direction has been established, Nova must continue advancing the actual project autonomously until there is a genuine blocker that requires the user.**
+
+This is an implementation instruction, not an invitation to stop after another planning cycle.
+
+- Default sequence: verify current state -> implement -> run the safest available checks -> inspect evidence/results -> fix issues that can be fixed autonomously -> continue to the next natural implementation step.
+- Do not return merely to announce what the next step will be when Nova can perform that step safely.
+- Once a visual/product direction has been approved, **implementation has priority over additional concept exploration**. Do not generate repeated mockups, concept sketches or alternate visual directions unless a concrete implementation problem requires one or the user explicitly asks for more concepts.
+- A concept image, design sketch or source-code inspection is never evidence that something is "in the game". That claim requires integration into the actual runtime; runtime success claims require runtime evidence.
+- For visual work, move approved art toward playable Phaser assets/runtime as soon as the direction is sufficiently decided. Avoid an endless concept-art loop.
+- Use Nova's available tools autonomously where safe. When the necessary repository state exists only on the user's Mac, use the established Nova + local Codex workflow rather than pretending a GitHub-only edit represents the local game.
+- Do not overwrite, reset, clean or otherwise endanger valuable local/iOS/uncommitted work merely to maintain momentum.
+- Stop and ask the user only for a genuine external dependency, product decision, credential/permission, physical-device action, local result that Nova cannot observe, or a risky/destructive action that requires explicit approval.
+- When blocked on one subtask, continue other safe useful work when possible instead of stopping the entire project.
+- Truth remains above momentum: autonomous execution never permits invented state, fake verification, fake runtime evidence or claims that a mockup is implemented.
+
+Short user shorthand: **`Kör hela vägen` means carry the current agreed direction through implementation and verification as far as safely possible before returning.**
+
 ## 2026-09-14 visual/rendering architecture
 
 Canonical visual direction is `docs/ART_DIRECTION.md`:
