@@ -6,102 +6,156 @@
 
 **When the user says `kör`, `kör på`, `bara kör`, `bygg på nu`, `fortsätt` or equivalent after a direction has been established, Nova must continue advancing the actual project autonomously until there is a genuine blocker that requires the user.**
 
-Default sequence: verify current state -> implement -> run safest checks -> inspect evidence -> fix autonomous issues -> continue. Truth remains above momentum. Never invent runtime evidence or endanger valuable local/iOS/uncommitted work.
+This is an implementation instruction, not an invitation to stop after another planning cycle.
+
+- Default sequence: verify current state -> implement -> run the safest available checks -> inspect evidence/results -> fix issues that can be fixed autonomously -> continue to the next natural implementation step.
+- Do not return merely to announce what the next step will be when Nova can perform that step safely.
+- Once a visual/product direction has been approved, **implementation has priority over additional concept exploration**.
+- A concept image, design sketch or source-code inspection is never evidence that something is "in the game". That claim requires integration into the actual runtime; runtime success claims require runtime evidence.
+- For visual work, move approved art toward playable Phaser assets/runtime as soon as the direction is sufficiently decided.
+- Use Nova's available tools autonomously where safe. When the necessary repository state exists only on the user's Mac, use the established Nova + local Codex workflow rather than pretending a GitHub-only edit represents the local game.
+- Do not overwrite, reset, clean or otherwise endanger valuable local/iOS/uncommitted work merely to maintain momentum.
+- Stop and ask the user only for a genuine external dependency, product decision, credential/permission, physical-device action, local result that Nova cannot observe, or a risky/destructive action that requires explicit approval.
+- When blocked on one subtask, continue other safe useful work when possible instead of stopping the entire project.
+- Truth remains above momentum: autonomous execution never permits invented state, fake verification, fake runtime evidence or claims that a mockup is implemented.
 
 Short user shorthand: **`Kör hela vägen` means carry the current agreed direction through implementation and verification as far as safely possible before returning.**
 
-## Visual/rendering architecture
+## 2026-09-14 visual/rendering architecture
 
-Canonical visual direction is `docs/ART_DIRECTION.md`: soft, warm, organic, detailed, painterly isometric storybook art. There is no pixel-art target.
+Canonical visual direction is `docs/ART_DIRECTION.md`:
 
-### True 2.5D rendering contract
+> **En illustrerad isometrisk sagoboksvärld med mjuka organiska former, ganska mycket detalj i vegetation och byggnader, fina och tydliga silhuetter, subtila skuggor och ett målat snarare än rutnätsbundet uttryck.**
 
-Treat render bounds, ground/base point, occlusion/depth base, collision footprint and interaction footprint as separate concepts. Player, dog, NPCs and substantial objects use spatial Y/base depth. Tall objects must allow believable front/behind traversal. Navigation/collision stays independent from artwork size.
+The approved questgiver-discussion renders define the intended visual family: **soft, warm, organic, detailed, painterly isometric storybook art**.
 
-Terrain is visually continuous, pathfinding grid invisible, shadows soft and grounded, and the scene must read as one coherent illustrated place rather than a bag of sprites.
+### Critical anti-regression note
 
-Phaser remains the renderer/gameplay engine. React + Phaser remains inside Capacitor for iOS/Android.
+There is **no pixel-art target**. Historical pixel-heavy builds are obsolete visual experiments/intermediates. Never optimize toward 8/16-bit aesthetics, crisp pixels, nearest-neighbour rendering, low-resolution sprite appearance, blocky tiles or pixel-RPG chrome merely because older assets use them.
+
+There is also no mandatory bitmap/vector format. Use the representation that best achieves the approved look and performs reliably on physical devices.
+
+## True 2.5D rendering contract
+
+**2.5D is a hard product/art requirement, not shorthand for Y-sorting and not a pixel-art genre.** The world must read as a spatial illustrated place rather than a flat field carrying sprites.
+
+### Projection and asset geometry
+
+- Use one coherent isometric/three-quarter projection language throughout the village.
+- Buildings and substantial props expose believable height and visible faces.
+- Fences, stone walls, wells, porches, stairs, bridges, carts and similar objects need thickness/side faces when visible from the camera.
+- Neighboring assets must not imply incompatible camera elevations or projection angles.
+- Decorative stylization is welcome, but perspective contradictions are not.
+
+### Base points, depth and occlusion
+
+Treat these as separate data/concepts:
+1. **render bounds**;
+2. **ground/base point**;
+3. **occlusion/depth base**;
+4. **collision footprint**;
+5. **interaction footprint/target**.
+
+They must not be conflated merely because a sprite has a rectangular image box.
+
+- Player, dog, NPCs and relevant movable/delivered objects use Y/base depth.
+- Tall static world objects participate in the same spatial ordering through their base points.
+- The child must visibly pass behind a tree/building/prop when spatially behind it and in front when spatially in front.
+- Foreground foliage can intentionally occlude characters while interaction/collision remain reliable.
+- Y-sorting alone does **not** satisfy true 2.5D if the art still reads as flat stickers.
+
+### Ground plane and terrain
+
+- Terrain is visually continuous. The pathfinding grid is strictly invisible.
+- Grass must not expose large repeated rectangles, tile seams or wallpaper repetition.
+- Roads/paths are ground-plane material, not sprites/cards floating above grass.
+- Dirt/grass edges should be organic, irregular and locally varied.
+- Road segments that are technically separate must visually fuse into a continuous route.
+- Avoid broad baked shadows/background fills inside road/prop assets that reveal rectangular bounds.
+
+### Shadows and grounding
+
+- Contact shadows are soft and anchored around an object's base/footprint.
+- Shadow direction/softness should be coherent enough that the scene feels illuminated as one place.
+- Shadows communicate weight and height without becoming dark outlines around every sprite.
+- Character/NPC/dog grounding should remain readable during movement.
+
+### Scene composition
+
+The target is a **cohesive camera composition**, not a bag of nice assets.
+
+- Compose vegetation as masses and layers rather than evenly distributed stamps.
+- Use foreground, midground and background vegetation to establish depth.
+- Keep useful negative space for movement and readability.
+- The opening village is intentionally sparse/mildly neglected, but should still feel deliberately illustrated rather than unfinished.
+- The family cottage and yard are the first hero environment and should establish the perspective grammar for later buildings.
+- Environmental detail should support place, story, depth or progression.
+
+### Rendering implementation laws
+
+- Phaser remains renderer/gameplay engine; no engine rewrite is implied.
+- Renderer should use antialiasing appropriate to the soft illustrated art. Do not globally force pixel/nearest-neighbor rendering.
+- Logical navigation/collision stays independent from artwork size.
+- Do not change collision solely because artwork becomes taller/wider unless the ground footprint genuinely changes.
+- SVG/vector, bitmap PNG/WebP, spritesheets/atlases or hybrids are all allowed.
+- Runtime optimization may rasterize art but must not visually pixelate the result.
+- UI should harmonize with the illustrated world and avoid generic retro-RPG chrome.
 
 ## Multi-area village world architecture (LOCKED 2026-09-15)
 
-Sysselcraft grows through multiple connected world areas, not an indefinitely expanding mega-map or level-select menu. The current 1920x640 village is the opening area. Areas connect through physical world exits such as roads, paths, bridges or forest openings. Cross-area progression belongs to persistent domain state, not a Phaser scene.
+**Sysselcraft grows through multiple connected world areas, not by continuously enlarging one mega-map.** The current 1920 × 640 Phaser village remains the opening/start area.
 
-## Village life / event architecture (DESIGN DIRECTION 2026-09-15)
+- Areas have their own illustrated environment, world objects, buildings, NPC placements, collision/navigation data and quest sources as needed.
+- Areas connect through **physical exits in the world**: roads, paths, bridges, forest openings or similar transitions.
+- Reaching an exit by moving the avatar transitions to the connected area, entering from the corresponding side.
+- Do **not** default to a menu, level-select screen or abstract teleport UI between adjacent village areas.
+- A short soft visual transition/loading handoff is acceptable; the fiction is that the child walked there.
+- Connections are bidirectional unless story/world design explicitly requires otherwise.
+- Existing movement law remains: avatar movement explores the world; tap/click operates game/UI interactions.
+- Each area may evolve independently through progression.
+- Do not overcrowd the opening village merely because a future building exists.
+- Keep mobile/native performance in mind: only the active area and genuinely necessary shared resources should need active rendering/gameplay.
+- Cross-area progression/state belongs to game/domain state, not to a single Phaser scene.
+- Exact future exits/topology remain design decisions. The **multi-area architecture itself is locked**.
 
-Future resident life should be driven by a small **Village Event Director**, not a pure random-event engine and not hard-coded ad-hoc timers inside Phaser scenes.
+## Village Event Director (FUTURE DESIGN DIRECTION 2026-09-15)
 
-Core principle:
+Do not implement this before the current visual PoC and first recycling progression arc are proven.
+
+Future resident life should be driven by a small **Village Event Director**, not a blind random-event engine and not ad-hoc Phaser timers. Randomness may choose among valid authored candidates; it never decides what is narratively valid.
+
+Three layers:
+1. **Story events** — deterministic/progression-owned, e.g. Henning's arrival.
+2. **Village events** — state-aware authored scenes, including Henning's recurring schemes.
+3. **Ambient activities** — tiny everyday behaviors, often without dialogue modal: sweeping, carrying a tray, feeding birds, sitting by the well, walking with coffee, greeting the puppy, short resident-to-resident exchanges.
+
+Shorthand: Ambient = **the village is alive**. Village event = **what are they doing now?** Story event = **something important changed**.
+
+The Director should evaluate residents, unlocked buildings/areas, progression prerequisites, event history, seen counts, cooldowns, recent tags, novelty/repetition and authored weights. Persistent history should prevent back-to-back major Henning schemes, suppress repetition, respect resident arrival order, allow quiet periods after major story beats and prevent one-shot narrative replay.
+
+Ambient content should be cheap. Favor reusable **activity points + behaviors**, e.g. `Henning + bakeryDoor + idle`, `Linus + well + sit`, `Sol + clinicDoor + idle`, `Henning + Linus + well + conversation`. The key effect is that residents are not nailed permanently to questgiver coordinates.
 
 > **NPCs are residents, not buttons.**
 
-Residents should sometimes be visibly occupied even when they have no quest or required dialogue for the player.
-
-### Three event layers
-
-1. **Story events** — deterministic/progression-owned events such as Henning's arrival. These fire because narrative/world conditions are satisfied, not because of random chance.
-2. **Village events** — authored, state-aware scenes such as one of Henning's recurring schemes. Randomness may choose among currently valid candidates, but randomness never decides what is narratively valid.
-3. **Ambient activities** — deliberately small pieces of everyday life. Examples: Henning sweeps outside the bakery, carries a tray, feeds birds or chats with Linus; Sol walks with coffee, reads outside the clinic or greets the puppy; Linus sits near the well or walks a familiar route. Most require no dialogue modal and should reuse ordinary movement/idle capabilities where possible.
-
-Shorthand:
-- Ambient = **the village is alive.**
-- Village event = **what are they doing now?**
-- Story event = **something important changed.**
-
-### Director inputs and memory
-
-The Director should evaluate persistent world state rather than roll blindly. Candidate inputs include:
-- current residents and unlocked buildings/areas;
-- narrative/progression prerequisites;
-- event history and seen counts;
-- cooldowns;
-- recent event tags/categories;
-- novelty/repetition suppression;
-- optional authored weights/chance among otherwise valid candidates.
-
-Illustrative event data shape only:
-
-```ts
-{
-  id: "henning_giant_cinnamon_bun",
-  cast: ["henning"],
-  requires: { residents: ["henning"], bakeryStage: 4 },
-  cooldownDays: 14,
-  weight: 1,
-  once: false,
-  tags: ["henning_scheme", "comedy"],
-  scene: "giant_cinnamon_bun"
-}
-```
-
-Persistent history should make rules such as these possible:
-- avoid two large Henning schemes back-to-back;
-- prefer unseen or less-recent activities;
-- do not use Sol/Henning joint scenes before Sol exists and their relationship has had time to form;
-- allow quiet periods after major story events;
-- never replay a one-shot narrative event;
-- avoid making one resident dominate village life merely because they have many authored scenes.
-
-### Ambient implementation philosophy
-
-Ambient activities should be cheap content. They do not need to become quests, reward systems or elaborate bespoke animations.
-
-A useful future pattern is reusable **activity points + behaviors**: e.g. `Henning + bakeryDoor + idle`, `Linus + well + sit`, `Sol + clinicDoor + idle`, or `Henning + Linus + well + conversation`. Residents can move between valid activity points, remain there for an authored/randomized duration and use existing idle/movement presentation.
-
-The important effect is that a resident is not permanently nailed to one questgiver coordinate.
-
-### Architectural boundary
-
-The Director belongs above Phaser in domain/game state. Phaser presents the selected activity/event but should not own the narrative decision that it occurs. Event history/cooldowns should persist through the same durable state boundary used for village progression.
-
-This is a **future architecture direction, not current MVP implementation priority**. Do not build the full Director before the visual PoC and first recycling progression arc are proven. When implemented, start with a minimal state-aware selector and a handful of ambient activities rather than a generalized simulation framework.
+Architectural boundary: the Director belongs above Phaser in domain/game state. Phaser presents the selected activity/event but does not own the narrative decision. Event history/cooldowns should persist with durable village state.
 
 ## Visual acceptance gate
 
-Do not declare the visual redesign finished from source inspection alone. Validate locally and then on a physical landscape iPhone. The scene must read as soft illustrated isometric storybook + genuine 2.5D while preserving gameplay clarity.
+Do not declare the visual redesign finished from source inspection alone. Validate the running scene locally and then on a physical landscape iPhone.
+
+A pass fails if first glance reads as flat top-down/stickers, pixel/retro aesthetics dominate, major objects lack volume, front/behind traversal fails, perspectives conflict, terrain reveals asset rectangles/grid seams, shadows/collision/depth disagree, or UI overwhelms the storybook world.
+
+A pass succeeds only when the scene reads together as **soft illustrated isometric storybook + genuine 2.5D spatial depth** while preserving gameplay clarity.
 
 ## Quest-source architecture
 
-Product law: **quests belong to the world, not to the house.** The family house is one quest source. Sources may later be NPCs, buildings, places, world objects or system/world events. UI-like markers remain directly tappable/clickable.
+Product law: **quests belong to the world, not to the house.**
+
+The family house is one quest source. The domain/rendering model must permit quest sources to be NPCs, buildings, places, world objects or system/world events without house-specific special cases.
+
+World quest markers use familiar language. A yellow `?` may mark an NPC with relevant dialogue/discovery; `!` may identify an available quest/actionable source. These markers are UI-like world elements and can be directly tapped/clicked under the established interaction law.
+
+Do not encode future quest selection/presentation around an assumption that every quest originates at the family house.
 
 ## First-quest onboarding correction
 
@@ -109,21 +163,34 @@ Required sequence:
 
 `Linus dialogue -> Linus tells child to go to family house -> return to world -> house quest marker is next destination -> player interacts with house/marker -> first quest opens`.
 
-Do not alter verified backend/approval/delivery semantics while implementing it.
+This correction must not alter the verified backend/approval/delivery semantics.
 
 ## Native architecture
 
 Keep React + Phaser in Capacitor for iOS/Android. Supabase provides accounts, household/child, parent-created quests, pairing and server-authoritative rewards. Web/Vercel remains preview/fallback.
 
-Capacitor/iOS already exists locally and has run on a physical iPhone. Do not run `npx cap add ios` again.
+Capacitor/iOS already exists locally and has run on a physical iPhone. Do not run `npx cap add ios` again. Native loop: `git pull` -> `npm run ios:sync` -> Xcode App > iPhone > Run.
+
+Wireless Xcode device debugging may work after initial pairing; cable remains useful for pairing/recovery.
 
 ## Physical iPhone baseline (2026-09-14)
 
-Physically verified end-to-end:
+The first currently playable progression loop has been physically verified end-to-end on iPhone:
 
 `Linus -> first quest -> parent mode -> approval -> truck arrives -> delivery completes -> truck departs -> building materials + wheelbarrow remain -> free movement/current content boundary`.
 
-Treat this as regression baseline during visual work.
+Observed:
+- quest can be opened from the house;
+- parent mode triggers;
+- parent approval succeeds;
+- truck sequence triggers after approval;
+- truck leaves correctly;
+- delivered materials and wheelbarrow remain;
+- player can continue walking after the current content boundary.
+
+Known visual QA issues from the intermediate build included repetitive terrain, weak terrain/path transitions, sticker-like object placement and insufficient spatial grounding. Those screenshots are **before/reference evidence**, not visual targets.
+
+Treat the physical-device loop as a regression baseline. Backend/quest/approval/reward code should be kept in bubble wrap unless a concrete change is required.
 
 ## Core invariants
 
@@ -131,22 +198,39 @@ Treat this as regression baseline during visual work.
 - Quest lifecycle `available -> pending -> approved`, or pending back to available.
 - No rewards/progression before adult approval.
 - Interaction law: **Avataren används för att uppleva världen. Klick/tapp används för att styra/använda spelet.**
-- UI-like world elements may be directly tapped/clicked.
+- UI-like world elements may be directly tapped/clicked without requiring avatar traversal first.
 - Do not bury product/domain logic in Phaser.
 - Public repo: never commit secrets/private family data/service keys/private env.
 
 ## Current technical priority
 
-1. Complete playable v4 visuals toward storybook + true 2.5D canon.
-2. Preserve first-quest onboarding and physical parent approval/delivery loop.
-3. Re-test scale, depth, taps, safe areas, occlusion, animation and performance on physical iPhone.
-4. Then remove the post-delivery dead end with the locked Linus -> recycling stage 1 progression.
-5. Village Event Director remains intentionally later; do not let it steal MVP focus.
+1. Complete the playable visuals toward the **soft illustrated isometric storybook + true 2.5D canon** in `docs/ART_DIRECTION.md`.
+2. Integrate the verified v4 master/building assets and recalibrate old-background collision/pathfinding.
+3. Preserve dynamic player Y-depth for **all** movement paths, including tap/path movement.
+4. Preserve the Linus-to-house first-quest onboarding transition.
+5. Preserve and regression-test the physically verified parent approval/delivery loop.
+6. Re-test scale, depth, taps, safe areas, occlusion, animation and rendering performance on physical iPhone.
+7. Only after Gate 0 passes, remove the post-delivery dead end with the locked Linus -> recycling stage 1 progression.
+8. Village Event Director remains intentionally later and must not steal MVP focus.
 
 ## Deployment/resource policy
 
-Local/native testing is default. Use Vercel only when a test genuinely needs network/web deployment or shareable remote behavior. Standard GitHub-hosted Actions for this public repo are approved autonomously; avoid paid/larger runners without approval.
+**Local/native testing is the default.** Use local browser for fast visual iteration and `npm run ios:sync` + Xcode/physical iPhone for native visual, UI and gameplay QA.
 
-## Nova + local Codex workflow
+Use Vercel only when a test genuinely needs network/web deployment, a shareable remote URL or web-specific behavior. Do not spend Vercel deployments on routine local/native iterations.
 
-Nova owns continuity/product/design/architecture/review/task decomposition. Codex acts as local implementation hands. Protect local uncommitted work and `ios/`; do not reset, clean, stash, stage, overwrite, commit, push or deploy unrelated work. Prefer narrow tasks and local checks. Codex success statements are not runtime proof; Nova reviews evidence and browser/native behavior must still be tested where relevant.
+Standard GitHub-hosted Actions for this public repository are approved autonomously. Avoid explicitly billed/larger runners or paid third-party compute without approval.
+
+## Nova + local Codex workflow (2026-09-15)
+
+The user has Codex desktop locally and can open the local `sysselcraft` working tree. This is the approved implementation path when work requires the local tree.
+
+- **Nova owns continuity, product/design decisions, architecture, review and task decomposition.**
+- **Codex acts as local implementation hands** for focused repository edits, local inspection and local verification.
+- Prefer narrow, explicit Codex tasks with named files, invariants and a clear stop condition.
+- Before Codex work inspect `git status`. The local tree may contain valuable native/iPhone work and unrelated modifications; Codex must not reset, clean, stash, stage, overwrite or commit those unless explicitly required.
+- For risky edits, make the smallest diff and show exact diff, local checks and `git status` before commit.
+- Local TypeScript/build/runtime checks are preferred before spending remote resources.
+- Vercel deployments and GitHub Actions remain separate controlled resources.
+- Codex does not replace evidence requirements: source inspection is not runtime proof.
+- If Codex reports a result, Nova reviews the diff/evidence rather than treating the success statement as sufficient proof.
