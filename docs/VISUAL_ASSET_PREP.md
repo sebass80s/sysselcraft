@@ -1,63 +1,67 @@
 # Sysselcraft Visual Asset Prep
 
-Status: **AMBIENT PROP PACK READY TO INTEGRATE**
+Status: **V4 PAINTED WORLD MIGRATION IN PROGRESS**
 
-This file records visual work that is deliberately safe to prepare without changing gameplay/collision yet.
+This file records the current production-facing visual direction. Older SVG/pixel assets remain useful as prototype scaffolding while the real painted world is integrated, but they are no longer the visual target.
 
-## Visual rule
+## Locked visual direction
 
-The current village should become richer through **nature, traces of daily life and repair materials**, not by revealing future buildings too early.
+Sysselcraft is an **illustrated isometric storybook world** with soft organic forms, substantial detail in vegetation and buildings, clear silhouettes, subtle shadows, and a painted rather than grid-bound expression.
+
+The previous pixel-grid / nearest-neighbour direction is superseded.
 
 Story/design guardrails:
 
 - start village remains sparse and mildly neglected;
 - family house should feel inhabited;
-- the village should contain evidence that people once lived here;
-- future resident/building reveals stay hidden until earned;
-- gameplay/collision always wins over decorative placement.
+- nature and traces of previous village life may enrich the scene;
+- future resident/building locations remain genuinely hidden until earned;
+- do not use signs, foundations, glowing plots or other spoilers for future buildings;
+- gameplay readability and collision always win over decorative placement;
+- surprise is part of the reward.
 
-## Ambient prop pack
+## Prototype bridge assets
 
-Prepared under `public/assets/village/`:
+The SVG files under `public/assets/village/` are bridge assets from the earlier prototype. They may remain temporarily while individual systems move to v4 art. Do not redraw new production assets to match their pixel/crisp-edge style.
 
-- `tree-stump.svg` — old maintenance/forestry trace; useful near wild edges.
-- `wheelbarrow.svg` — practical village/construction prop; especially useful around the first material site.
-- `old-barrel.svg` — neutral storage/yard prop.
-- `puddle.svg` — ground detail that can break up large grass areas without becoming an obstacle.
-- `birdhouse.svg` — small sign of care/life, best near the family house or tree line.
-- `laundry-line.svg` — makes the family house feel lived in after arrival.
+Existing ambient props such as the wheelbarrow, birdhouse, barrel, puddle and laundry line can continue to support the prototype where useful, but should eventually be replaced or repainted to match the locked storybook direction.
 
-These SVGs intentionally use the current prototype palette and `shape-rendering="crispEdges"` so they can coexist with the existing bridge assets. They are not the final raster production pipeline.
+## Painted 2.5D building contract
 
-## Suggested first placements
+A building image is not its body. Every production building must define these independently:
 
-Do not add collision for these unless a later playtest proves it is needed.
+1. **render bounds / sprite** — the transparent WebP/PNG artwork;
+2. **ground/base point** — where the building meets the world and from which depth is derived;
+3. **collision footprint** — the physical ground area the avatar cannot cross;
+4. **approach/interact points** — valid places the avatar can walk to when interacting with the building.
 
-1. `laundry-line` behind/alongside the family house, away from the main path.
-2. `birdhouse` near the family-house tree/fence line.
-3. `wheelbarrow` at the construction/material site.
-4. `old-barrel` beside existing crates/woodpile.
-5. `tree-stump` near the wilder western/eastern edges.
-6. `puddle` as a low-depth ground decal off the primary route.
+Roofs, signs, awnings, transparent margins and painted shadows must never accidentally enlarge collision.
 
-## Next visual iteration
+The code-side contract lives in `src/game/worldBuildings.ts`.
 
-When Vercel/native testing capacity is available:
+## Current v4 building package
 
-1. Integrate the ambient pack into `drawVillage()` in one batched visual pass.
-2. Verify pathfinding, click targets and depth sorting.
-3. Capture a real screenshot from the running game.
-4. Use that screenshot to identify empty/noisy regions before drawing more assets.
-5. Only after composition is stable, begin replacing SVG bridge assets with coherent raster PNG/WebP sprite atlases.
+The prepared v4 package contains four normalized painted stages each for:
 
-## Production art migration
+- recycling center;
+- bakery;
+- clinic.
 
-Long-term art direction remains:
+The immediate PoC target is deliberately smaller than the whole construction arc: integrate **recycling stage 1** into the real Phaser runtime after the first approved quest / delivery, verify base point, depth and collision in browser, then verify the same build on the physical iPhone.
 
-- fixed native pixel grid;
-- nearest-neighbour scaling;
-- consistent palette and light direction;
-- sprite atlases rather than many independent production SVGs;
-- collision footprints defined separately from rendered bounds.
+Stages 2–4 are production assets for the subsequent MVP construction loop, not a reason to enlarge the PoC patch.
 
-The ambient pack is therefore useful both immediately and as reference material for the later raster redraw.
+## Phaser migration rules
+
+- New painted assets use normal filtered/antialiased rendering. Do not configure the game around nearest-neighbour pixel art.
+- Old SVG bridge assets may coexist during migration.
+- Depth must follow the object's ground/base point, not its image height or top-left bounds.
+- Collision and interaction geometry must be data, not guessed from texture dimensions.
+- Preserve the proven tap-to-move/pathfinding behavior while swapping visual representation.
+- Prefer WebP/PNG production sprites with transparency. Sprite atlases can be introduced when they materially improve loading/management; they are not a visual-style requirement.
+
+## PoC completion gate
+
+The v4 visual PoC is complete when a real painted building stage is running inside the existing Phaser village with correct depth/collision and the same result has been exercised on the physical iPhone through the existing Capacitor/Xcode project.
+
+Do not restart the native migration and do not run `npx cap add ios` again.
