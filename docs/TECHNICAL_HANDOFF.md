@@ -175,3 +175,20 @@ Treat the physical-device loop as a regression baseline during visual work. Back
 Use Vercel only when a test genuinely needs the network/web deployment, a shareable remote URL, or web-specific behavior. Do not spend Vercel deployments on routine local/native iterations.
 
 Standard GitHub-hosted Actions for this public repository are approved autonomously. Avoid explicitly billed/larger runners or paid third-party compute without approval.
+
+## Nova + local Codex workflow (2026-09-15)
+
+The user has the Codex desktop application installed locally and can open the local `sysselcraft` Git working tree in Codex. This is an approved implementation path when Nova's chat-side GitHub tooling cannot safely make a small surgical patch.
+
+Working model:
+
+- **Nova owns continuity, product/design decisions, architecture, review and task decomposition.**
+- **Codex acts as local implementation hands** for focused repository edits, local inspection and local verification.
+- Prefer narrow, explicit Codex tasks with named files, invariants and a clear stop condition. Do not hand Codex broad redesign authority when a surgical change is sufficient.
+- Before Codex work, synchronize the intended branch safely and inspect `git status`. The local working tree may contain valuable native/iPhone work and unrelated modifications; Codex must not reset, clean, stash, stage, overwrite or commit those unless explicitly required.
+- For risky edits, ask Codex to make the smallest diff and show the exact diff, local checks and `git status` **before commit**.
+- Local TypeScript/build/runtime checks are preferred before spending remote resources.
+- Codex usage on the user's ChatGPT Plus plan is a **limited project resource**. The user will monitor/report remaining usage/tokens. Nova should conserve it by doing reasoning, design, planning and review in chat and delegating only codebase operations that materially benefit from Codex's local repository access.
+- Vercel deployments and GitHub Actions remain separate scarce/controlled resources. Do not burn them merely because Codex is available.
+- Codex does not replace evidence requirements: source inspection is not runtime proof; browser/native behavior must still be tested where relevant.
+- If Codex reports a result, Nova should review the diff/evidence rather than treating the agent's success statement as sufficient proof.
