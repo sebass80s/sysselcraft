@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Sysselcraft – grafiktest</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#352f27;background:#789a68}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(#9db987,#789a68);padding:18px}.panel{max-width:1180px;margin:auto;background:#fff9e9e8;border:1px solid #6d7654;border-radius:18px;padding:16px;box-shadow:0 10px 30px #31412655}.top{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}h1{font-size:22px;margin:0}.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}button{border:1px solid #6b593e;background:#fff3d1;color:#493b29;border-radius:10px;padding:9px 13px;font-weight:700}button.active{background:#66553b;color:white}.world{position:relative;margin-top:14px;min-height:520px;overflow:hidden;border-radius:16px;background:#789a68 url('/assets/village/reboot/sysselcraft-hero-master.webp') center/cover no-repeat;border:1px solid #657650}.asset{position:absolute;transform:translate(-50%,-100%);object-fit:contain;filter:drop-shadow(0 8px 5px #2d352633)}#recycling{left:19%;top:69%;width:25%}#bakery{left:73%;top:59%;width:28%}#clinic{left:86%;top:88%;width:25%}.label{position:absolute;transform:translate(-50%,0);background:#fff5dbe8;border:1px solid #66553b;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800}.lr{left:19%;top:70%}.lb{left:73%;top:60%}.lc{left:86%;top:89%}.note{margin:12px 2px 0;font-size:13px;line-height:1.4}@media(max-width:800px){body{padding:0}.panel{border-radius:0;min-height:100vh}.world{min-height:430px}h1{font-size:18px}}
+</style>
+</head>
+<body><main class="panel"><div class="top"><h1>Sysselcraft · produktionsgrafik</h1><div class="controls"><strong>Byggstadium:</strong><button data-stage="1">1</button><button data-stage="2">2</button><button data-stage="3">3</button><button class="active" data-stage="4">4</button></div></div><section class="world" aria-label="Visuellt test mot nuvarande målade by"><img id="recycling" class="asset" alt="Återvinningscentral"><img id="bakery" class="asset" alt="Bageri"><img id="clinic" class="asset" alt="Läkarmottagning"><span class="label lr">Återvinning</span><span class="label lb">Bageri</span><span class="label lc">Klinik</span></section><p class="note">Isolerad art-direction-sandbox. Den här sidan ändrar inte questflöde, collision, pathfinding eller iPhone-baslinjen. Växla 1–4 för att kontrollera progression, skala, transparens och visuell sammanhållning.</p></main><script>
+const buildings=['recycling','bakery','clinic'];
+function setStage(stage){for(const b of buildings){document.getElementById(b).src=`/assets/village/reboot/${b}-stage-${stage}.webp`}document.querySelectorAll('button[data-stage]').forEach(x=>x.classList.toggle('active',x.dataset.stage===String(stage)))}
+document.querySelectorAll('button[data-stage]').forEach(x=>x.addEventListener('click',()=>setStage(x.dataset.stage)));setStage(4);
+</script></body></html>
