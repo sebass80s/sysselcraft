@@ -2,64 +2,77 @@
 
 This file exists so a future AI instance can continue Sysselcraft as **Nova**, not restart solved work.
 
-## 🚨 READ FIRST — CURRENT STATE (2026-09-15)
+## 🚨 READ FIRST — CURRENT STATE (2026-09-15 evening)
 
 Sysselcraft has run as a real native app on the user's physical iPhone via Capacitor/Xcode. Do not restart native migration or run `npx cap add ios` again.
 
 Draft PR **#6** on `nova/vercel-free-batch` is the current batched hardening/design branch. Verify branch head/CI before claims.
 
+### CURRENT BLOCKER: local OneDrive placeholders
+
+Gate 0 v4 integration was handed to local Codex, but Codex correctly stopped before editing game code because the user's local repository at `/Users/karoaa/Documents/sysselcraft` is heavily affected by OneDrive Files On-Demand placeholders.
+
+Terminal evidence from the user showed these critical files as `compressed,dataless`:
+- `docs/ART_DIRECTION.md`
+- `docs/TECHNICAL_HANDOFF.md`
+- `src/game/createVillageGame.ts`
+- the newly fetched v4 WebP assets under `public/assets/village/reboot/`
+- many existing art/runtime assets
+- at least parts of `ios/`, including `ios/debug.xcconfig`
+
+A `git fsck --full --no-dangling` attempt stalled, plausibly while trying to access unavailable Git objects. Do not treat the local Git object database as verified healthy/readable.
+
+A filesystem inventory of `ios/` excluding `dataless` files found only `.DS_Store` files and Xcode's `UserInterfaceState.xcuserstate`; therefore the valuable iOS project contents are **not currently proven locally materialized**. This does NOT mean they are deleted; the OneDrive placeholders remain and the old project folder must be preserved untouched until its contents can be materialized/recovered.
+
+The user tried work VPN without success and selected the project folder as locally available, but the files still reported `dataless`.
+
+**Do not spend more Codex tokens diagnosing OneDrive.** Roughly 30% of the available Codex allocation was already consumed during the blocked attempt. Codex should be saved for actual implementation once the repository is readable.
+
+Safety rule until recovery:
+- do not delete, move, reset, clean, stash, overwrite or otherwise mutate `/Users/karoaa/Documents/sysselcraft` merely to fix this;
+- especially preserve `ios/`;
+- do not assume directory existence means file contents are local;
+- when access to OneDrive is restored, materialize the entire project first and verify `dataless` is gone before migration;
+- once recovered, move/copy the working development repository out of OneDrive to a genuinely local location such as `~/Developer/sysselcraft`, preserving local/uncommitted/iOS work safely;
+- GitHub can reconstruct tracked repository state, but it cannot replace untracked/local-only native work, so recovery/inventory comes before any clean clone migration.
+
+### Gate 0 status
+
+The 13 v4 assets are verified on GitHub in commit `e10445dba4543a3fda5d92f5bee92227de69cbc6`. Codex attempted to fetch exactly those 13 assets locally, but the resulting local files also became `dataless` placeholders. Do not interpret their filenames/sizes as proof the bytes are available locally.
+
+`docs/CODEX_V4_INTEGRATION_HANDOFF.md` exists on the remote branch and is the focused implementation instruction once local access is restored.
+
+**No game code was changed by the blocked Codex attempt after the 13 asset fetch.** Codex reported: `ios/` untouched; no staging, commit, push, deploy, GitHub Actions or Vercel used.
+
+Next sequence after local recovery:
+1. verify critical files and Git are physically readable and no longer `dataless`;
+2. safely preserve/migrate local-only work and `ios/` outside OneDrive;
+3. give Codex `docs/CODEX_V4_INTEGRATION_HANDOFF.md` and execute Gate 0;
+4. review Codex diff/checks;
+5. localhost visual/runtime QA;
+6. physical iPhone QA and regression of Linus → quest → parent approval → truck → materials loop;
+7. only after Gate 0 proof, implement locked post-delivery Linus dialogue → recycling Stage 1 progression.
+
 ## 🔒 FUNDAMENTAL COLLABORATION RULE — TRUTH BEFORE MOMENTUM
 
-This is the most important working rule for every future Nova. It outranks the desire to sound confident, keep momentum or preserve an existing plan.
-
-**Never invent project state, capability, evidence, success, test results, files, screenshots, runtime behavior or conclusions.**
-
-- If you do not know, say **you do not know**.
-- If you cannot do something with the available tools or required quality, say **you cannot do it**.
-- If something is only a hypothesis, label it as a hypothesis.
-- If something has not been tested, call it **unverified**, not working, green, complete or proven.
-- Verify repository/runtime state directly whenever possible instead of relying on stale handoff state.
-- Do not hide a limitation by delivering a weaker substitute and describing it as the requested result.
-
-Nova is not an automatic “yes” machine. If the user is moving too far, too fast, skipping an important proof, expanding scope before a risky assumption is tested, or proposing a direction likely to waste working implementation, Nova must say so before the project commits to it.
-
-> **The user says what they actually want. Nova says what is actually known, possible, uncertain and risky. Reality wins over the plan.**
-
-A failed experiment is useful evidence. A fabricated success is project damage.
+Never invent project state, capability, evidence, success, test results, files, screenshots, runtime behavior or conclusions. If untested, call it unverified. Verify repository/runtime state directly whenever possible. Reality wins over the plan.
 
 ## 🔒 AUTONOMOUS EXECUTION LAW
 
-After the user says “kör”, “kör på”, “bara kör”, “bygg på nu”, “fortsätt”, or equivalent, continue autonomously through verify → implement → checks → evidence → fix → continue. Do not stop merely to narrate the next step. Stop only for a genuine external dependency, product decision, credential/permission, physical-device/local result, or risky destructive action that requires the user. If one subtask is blocked, continue other useful work.
+After the user says “kör”, “kör på”, “bara kör”, “bygg på nu”, “fortsätt”, or equivalent, continue autonomously through verify → implement → checks → evidence → fix → continue. Stop only for a genuine external dependency, product decision, credential/permission, physical-device/local result, or risky destructive action requiring the user.
 
 ## 🔒 CANONICAL VISUAL DIRECTION
 
 > **En illustrerad isometrisk sagoboksvärld med mjuka organiska former, ganska mycket detalj i vegetation och byggnader, fina och tydliga silhuetter, subtila skuggor och ett målat snarare än rutnätsbundet uttryck.**
 
-**PIXEL ART IS NOT THE DESIGN. DO NOT REVIVE IT.** The old pixel-heavy states are historical evidence, not visual references.
+**PIXEL ART IS NOT THE DESIGN. DO NOT REVIVE IT.** True 2.5D is required: coherent perspective, object base points, Y-depth, foreground occlusion, contact shadows, ground-plane roads and separate render/collision/interaction/occlusion geometry.
 
-## 🔒 TRUE 2.5D
+Read `docs/ART_DIRECTION.md`, `docs/START_AREA_DESIGN.md` and `docs/TECHNICAL_HANDOFF.md` before visual work.
 
-Sysselcraft must be genuine 2.5D, not a flat top-down field with isometric-looking stickers. Preserve coherent perspective, object base points, Y-depth, foreground occlusion, contact shadows, ground-plane roads and separate render/collision/interaction/occlusion geometry. Y-sorting alone is not true 2.5D.
-
-Read `docs/ART_DIRECTION.md`, `docs/VISUAL_ASSET_PREP.md` and `docs/TECHNICAL_HANDOFF.md` before visual work.
-
-## Architecture direction
-
-Keep React + Phaser + Capacitor, with Supabase as shared family/quest backend and local Capacitor Preferences preserved during reconciliation.
-
-- React = app shell / non-world UI
-- Phaser = village rendering/gameplay
-- Capacitor = native container/capability bridge
-- Supabase = household, child, pairing, parent quests, server-authoritative rewards
-- Vercel/web = preview/fallback when genuinely needed
-
-Landscape-first. Do not bury domain logic inside Phaser.
-
-## Product thesis
+## Product thesis and locked laws
 
 **Parent creates quest → quest appears in village → child performs it in real life → child marks it done → parent reviews → approval gives feedback + rewards + hidden progression → village changes.**
 
-Locked laws:
 - Gör saker i verkligheten → världen förändras.
 - Quests bygger staden. Valutan gör den till din.
 - Byn är gränssnittet.
@@ -70,13 +83,7 @@ Locked laws:
 
 ## Interaction model
 
-- Real child avatar.
-- Mobile/tablet tap-to-move with pathfinding.
-- Desktop additionally WASD/arrows.
-- No virtual joystick.
-- Contextual NPC/object approach/interact.
-- Quest/UI markers directly tappable.
-- **Avataren används för att uppleva världen. Klick/tapp används för att styra/använda spelet.**
+Real child avatar. Mobile/tablet tap-to-move with pathfinding; desktop also WASD/arrows; no virtual joystick. Contextual NPC/object interaction. Quest/UI markers directly tappable. **Avataren används för att uppleva världen. Klick/tapp används för att styra/använda spelet.**
 
 ## Canonical sources
 
@@ -84,77 +91,45 @@ Locked laws:
 - Visual canon: `docs/ART_DIRECTION.md`
 - Start-area canon: `docs/START_AREA_DESIGN.md`
 - Technical state: `docs/TECHNICAL_HANDOFF.md`
+- Gate 0 local implementation: `docs/CODEX_V4_INTEGRATION_HANDOFF.md`
 - Persistence authority: `docs/STATE_OWNERSHIP.md` + `docs/RECONCILIATION_PLAN.md`
-- **Private human/project history: private repo `sebass80s/sysselcraft-diary`, canonical living file `diary/Sysselcraft_Utvecklingsdagbok.md`.**
+- Private history: `sebass80s/sysselcraft-diary`, `diary/Sysselcraft_Utvecklingsdagbok.md`
 
-If documents disagree about visual style, `ART_DIRECTION.md` and the exact locked brief above win. Historical files may describe superseded experiments.
+## 🔒 PRIVATE DEVELOPMENT DIARY
 
-## 🔒 PRIVATE DEVELOPMENT DIARY — ACTIVE CONTINUITY DUTY
+Keep the private diary moving on genuine milestones, design decisions, visible transformations, notable failures, architectural turns, character/world insights, physical-device breakthroughs and memorable real project moments. Never fabricate screenshots, quotes, commits or runtime evidence. The diary is the journey, not technical truth.
 
-The development diary is not optional archival cleanup. It is Sysselcraft's private, human-readable project memory and should grow alongside the game.
+## Story/progression order
 
-- The diary lives in the **private GitHub repository `sebass80s/sysselcraft-diary`**, not in this public repository.
-- At thread start, read `diary/Sysselcraft_Utvecklingsdagbok.md` in that private repo as part of project continuity when access is available.
-- Update it **fairly often** when something story-worthy happens. Do not wait only for giant milestones.
-- Good triggers: meaningful design decisions, first-time proofs, visible transformations, notable bugs/failures, architectural turns, character/world insights, physical-device breakthroughs and memorable Kalle/Nova moments.
-- Prefer several short honest entries over reconstructing weeks of history later.
-- Do not turn it into a changelog. Routine dependency bumps, tiny refactors and mechanical commits do not deserve entries unless they matter to the story.
-- Explain **what changed, why it mattered, what we learned, and how the project felt at that point**.
-- Preserve genuine Kalle/Nova quotes and project folklore when they genuinely occurred.
-- Never fabricate a screenshot, runtime result, quote, commit, date or event.
-- Preserve wrong turns. When direction changes, record both the abandoned direction and why it was abandoned. Do not rewrite earlier history to make the project look clairvoyant.
-- Add genuine screenshots/concept art to the private diary repo when useful and technically available.
-- Historical Word diary versions belong under `archive/` when imported. The known historical diary reached v0.7 before the private repo was created.
-- GDD/design documents remain sources of design truth; Technical Handoff remains technical truth. **The diary is the journey.**
+Current agreed order is:
+
+**v4 Gate 0 → browser/runtime proof → physical iPhone proof → locked post-delivery Linus scene → recycling Stage 1 → complete first recycling construction arc → Henning arrives → bakery arc → Sol/clinic → connected-area expansion proof.**
+
+Henning is Linus's old friend and first new resident. Henning's recurring internally logical wild schemes are core personality, but he remains competent and dignified. Sol follows Henning and is young/newly graduated but competent, warm, energetic, organized and ambitious.
+
+Future Village Event Director architecture is documented in `TECHNICAL_HANDOFF.md`: Story events, authored state-aware Village events and small Ambient activities. **NPCs are residents, not buttons.** This is future architecture and must not steal priority from Gate 0 or the first recycling arc.
 
 ## State ownership boundary
 
-- pairing does not migrate local save;
-- local prototype and backend quests remain separate ledgers for now;
-- reconciliation observe-only;
-- no max merge/reward replay/retroactive reward fabrication/silent overwrite;
-- migrate one state family at a time after physical two-device evidence.
+Pairing does not migrate local save. Local prototype and backend quests remain separate ledgers for now. Reconciliation remains observe-only; no max merge/reward replay/retroactive reward fabrication/silent overwrite. Migrate one state family at a time after physical two-device evidence.
 
 ## Systems to preserve
 
-- adaptive Phaser world/camera;
-- A*-style tap-to-move;
-- keyboard movement;
-- separate collision footprints and Y/base-depth sorting;
-- reusable asset architecture;
-- data-driven dialogue;
-- Linus intro + puppy;
-- Linus-to-house first-quest onboarding;
-- quest marker/approval event;
-- truck/material delivery and persisted completion;
-- Capacitor Preferences local save;
-- Supabase family/pairing/quest boundary;
-- idempotent server rewards.
+Adaptive Phaser world/camera; A*-style tap-to-move; keyboard movement; separate collision footprints and Y/base-depth sorting; reusable asset architecture; data-driven dialogue; Linus intro + puppy; Linus-to-house onboarding; quest marker/approval event; truck/material delivery and persisted completion; Capacitor Preferences local save; Supabase family/pairing/quest boundary; idempotent server rewards.
 
 ## Deployment / cost law
 
-Repo `sebass80s/sysselcraft` is public. Normal standard GitHub-hosted Actions may be used autonomously. Do not opt into explicitly billed/larger runners or paid services without approval.
-
-**Local/native testing is the default.** Use local browser and Xcode/physical iPhone for routine visual, UI and gameplay iterations. Use Vercel only when testing genuinely requires a network deployment, remote URL or web-specific behavior.
-
-## Visual acceptance gate
-
-Before calling the graphics redesign complete, verify in the running game and then on physical iPhone:
-
-1. first glance reads as soft illustrated isometric storybook + true 2.5D;
-2. it cannot reasonably be mistaken for pixel art, a tiled retro game or a flat sticker field;
-3. child can visibly pass both behind and in front of appropriate tall objects;
-4. terrain/road boundaries reveal no distracting rectangular asset bounds or grid seams;
-5. contact shadows, object bases and occlusion agree;
-6. house, Linus, child, dog and quest markers remain readable at native landscape-iPhone scale;
-7. the previously verified quest/approval/truck/delivery loop still works.
+Local/native testing is default. Use Vercel only when genuinely needed. Standard GitHub-hosted Actions may be used autonomously, but do not opt into explicitly billed/larger runners or paid services without approval. During the current OneDrive blocker, neither Actions nor Vercel is useful for proving the local/native state.
 
 ## Next Nova checklist
 
-1. Read this, `TECHNICAL_HANDOFF`, `STORY_DESIGN`, `ART_DIRECTION`, `STATE_OWNERSHIP`, `RECONCILIATION_PLAN`.
-2. Read the private living diary in `sebass80s/sysselcraft-diary` and keep it moving during the project.
-3. Verify current branch/main/PR/CI rather than trusting stale SHAs.
-4. Do not restart Capacitor setup.
-5. Apply truth-before-momentum before project-status claims.
-6. Preserve and physically regression-test the working quest/approval/delivery loop.
-7. Keep reconciliation observe-only until evidence supports migration.
+1. Read this first and recognize the OneDrive blocker before asking Codex to do anything.
+2. Verify current remote branch/main/PR rather than trusting stale SHAs.
+3. Do not restart Capacitor setup.
+4. Preserve the old OneDrive working tree and especially `ios/` until local contents are genuinely recovered/materialized.
+5. Spend no further Codex quota on OneDrive diagnosis.
+6. Once local files are readable, migrate development out of OneDrive safely before resuming Gate 0.
+7. Run Gate 0 from `CODEX_V4_INTEGRATION_HANDOFF.md`, then localhost, then physical iPhone.
+8. Preserve and physically regression-test the existing quest/approval/truck/delivery loop.
+9. Keep reconciliation observe-only until evidence supports migration.
+10. Read/update the private diary when a genuine story-worthy milestone occurs.
