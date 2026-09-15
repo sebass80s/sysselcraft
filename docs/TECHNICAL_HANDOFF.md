@@ -62,6 +62,44 @@ A future move to Godot/Unity should only be reconsidered if the game grows into 
 - To genuinely minimize Vercel usage, distinguish **committing** from **pushing** where the development environment permits it, and batch coherent deploy-triggering pushes whenever practical.
 - Related work should reach `main` in deliberate batches. The real quota pressure is unnecessary Vercel builds, not CI validation.
 
+### Nova / Codex development workflow (2026-09-15)
+
+**Nova is the primary developer. Codex is a local specialist, not the default coding path.**
+
+Nova should directly handle work that can be performed through the repository and available connected tools: architecture, product/design reasoning, repository audits, TypeScript/React/Phaser/backend implementation, normal refactors, tests, documentation, code review and GitHub changes. Do not delegate ordinary coding to Codex merely because Codex can write code.
+
+Use Codex only when the task materially depends on context Nova cannot directly reach, especially:
+
+- the user's local Mac working tree when it contains uncommitted work not present on GitHub;
+- generated/local-only `ios/` state;
+- Xcode build/run/debug work;
+- physical iPhone interaction and device-only failures;
+- localhost/runtime inspection that requires the user's machine;
+- other local files, tools or state unavailable through Nova's connected environment.
+
+When Codex is necessary, **Nova should do the thinking first**. Inspect the repository and documentation, determine the intended change, identify the smallest relevant file set and define verification criteria before handing work to Codex. Give Codex a narrow, surgical work order rather than asking it to rediscover the project, perform broad product analysis or autonomously explore the repository.
+
+A good Codex task should state:
+
+1. exact goal and expected result;
+2. relevant files or local subsystem;
+3. constraints and invariants that must not change;
+4. exact tests/build/runtime checks to run;
+5. what Codex must report back, normally changed files, important diff summary, test results and any blocker;
+6. a clear stop condition.
+
+Prefer one bounded operation at a time. Avoid repeatedly feeding Codex the entire project history or asking it to continue development indefinitely. Codex usage is token-constrained and has previously exhausted its available token budget within minutes when given broad autonomous tasks.
+
+Never let Codex perform destructive local Git operations such as blind `reset`, `clean`, `stash`, overwrite or pull-over-local-work when valuable uncommitted Mac/iOS work may exist. Inspect and preserve the working tree first.
+
+Working model:
+
+- **Nova** = lead developer, architecture/design continuity, implementation and review.
+- **Codex** = local hands for machine/device-specific work beyond Nova's reachable environment.
+- **Kalle** = product owner, acceptance tester and operator of the physical/local environment.
+
+The purpose of this split is not merely token economy. It keeps product and architectural continuity with Nova while using Codex where local execution genuinely adds capability.
+
 ### Current status of this decision
 
 This architecture is implemented far enough to have run successfully on a physical iPhone. Supabase backend work is also underway/connected. Verify current repository state and handoff manifest for exact current implementation before changing it.
