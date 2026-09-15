@@ -83,6 +83,27 @@ The target is a **cohesive camera composition**, not a bag of nice assets.
 - Runtime optimization may rasterize art but must not visually pixelate the result.
 - UI should harmonize with the illustrated world and avoid generic retro-RPG chrome.
 
+## Multi-area village world architecture (LOCKED 2026-09-15)
+
+**Sysselcraft grows through multiple connected world areas, not by continuously enlarging one mega-map.** The current 1920 × 640 Phaser village remains the opening/start area rather than becoming an indefinitely expanding canvas.
+
+Product/world rules:
+
+- New parts of Sysselcraft are implemented as separate world areas/scenes with their own illustrated environment, world objects, buildings, NPC placements, collision/navigation data and quest sources as needed.
+- Areas connect through **physical exits in the world**: roads, paths, bridges, forest openings or similar spatial transitions at suitable map edges.
+- Reaching an exit by moving the avatar transitions to the connected area. The player enters the destination from the corresponding side/entry point.
+- Area travel should feel spatial and continuous. Do **not** default to a menu, level-select screen or abstract teleport UI between adjacent village areas.
+- A short soft visual transition/loading handoff is acceptable, but the fiction is that the child walked from one part of the village into another.
+- Connections are bidirectional unless story/world design explicitly requires otherwise. Returning through the same route should return the child to the corresponding entrance in the previous area.
+- Existing movement law remains: avatar movement explores the world; tap/click operates game/UI interactions.
+- Each area may evolve independently through progression. Buildings, residents, vegetation, props and quest sources can appear/change within an area without requiring the opening map to absorb all future content.
+- Do not overcrowd the opening village merely because a future building exists. Buildings should be assigned to the area where they make spatial, narrative and progression sense.
+- Keep mobile/native performance in mind: only the active area and genuinely necessary shared resources should need to participate in active rendering/gameplay.
+- Cross-area progression/state belongs to game/domain state, not to a single Phaser scene. Changing area must not reset approved quests, rewards, village progression or other persistent state.
+- The current opening area's exact future exits and the final placement of recycling/bakery/clinic remain design decisions. The **multi-area architecture itself is locked**.
+
+Illustrative topology may eventually resemble `Startbyn <-> Västra byn <-> Skogen` and/or `Startbyn <-> Byns centrum`, but those names/routes are examples, not locked geography.
+
 ## Visual acceptance gate
 
 Do not declare the visual redesign finished from source inspection alone. Validate the running scene locally and then on a physical landscape iPhone.
