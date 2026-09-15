@@ -89,7 +89,7 @@ export function getRecyclingCenterStatus(stage: RecyclingCenterStage) {
   if (stage >= 1) {
     return {
       title: "Återvinningscentralen",
-      status: "Bygget är igång.",
+      status: "Första materialleveransen är på plats.",
     } as const;
   }
 
