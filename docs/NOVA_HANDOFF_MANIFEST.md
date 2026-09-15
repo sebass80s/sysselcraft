@@ -138,9 +138,22 @@ Locked laws:
 
 If documents disagree about visual style, **`ART_DIRECTION.md` and the exact locked brief above win.** Historical files may describe superseded experiments.
 
-## Private development diary
+## Private development diary — ACTIVE CONTINUITY DUTY
 
-Every future Nova should retrieve the newest diary at thread start and continue it at meaningful milestones. It is private and must not be committed to GitHub. Preserve genuine screenshots/concept art and never invent screenshots/quotes/events.
+The development diary is not optional archival cleanup. It is Sysselcraft's private, human-readable project memory and should grow alongside the game.
+
+- At thread start, retrieve the **newest** `Sysselcraft_Utvecklingsdagbok_v*.docx` available in File Library before assuming an older version is current. As of 2026-09-15, v0.7 has been found and is newer than the previously remembered v0.2.
+- Keep the diary **private**. Do not commit it to the public GitHub repository.
+- Update it **fairly often**, not only at enormous release milestones. A good trigger is any development session that produces a meaningful design decision, first-time proof, visible transformation, notable bug/failure, architectural turn, character/world insight, or memorable project moment.
+- Prefer several short, honest diary additions over waiting until weeks of history must be reconstructed from Git.
+- Do not turn it into a changelog. Routine dependency bumps, tiny refactors and mechanical commits do not deserve entries unless they matter to the story of the project.
+- Entries should explain **what changed, why it mattered, what we learned, and how the project felt at that point**. Preserve the scrapbook voice rather than writing release notes.
+- Include dates, relevant commit hashes and real screenshots/concept art when genuinely available and useful. Never fabricate a screenshot, runtime result, quote, commit, date or event.
+- Preserve worthwhile Kalle/Nova quotes and recurring project folklore when they genuinely occurred. Humor belongs in the diary when it helps remember the moment.
+- When visual direction changes, explicitly record both the abandoned direction and why it was abandoned. Historical pixel-art material remains valid diary history even though it is no longer visual canon.
+- When a later entry supersedes an earlier prediction, do not rewrite history to make the project look clairvoyant. Let the diary show the turn.
+- After creating an updated diary version, make it available to the user and treat that newest version as the continuation source next time.
+- GDD/design documents remain sources of design truth; Technical Handoff remains technical truth. **The diary is the journey.**
 
 ## State ownership boundary
 
@@ -190,7 +203,7 @@ Before calling the graphics redesign complete, verify in the running game and th
 ## Next Nova checklist
 
 1. Read this, `TECHNICAL_HANDOFF`, `STORY_DESIGN`, `ART_DIRECTION`, `STATE_OWNERSHIP`, `RECONCILIATION_PLAN`.
-2. Retrieve newest private diary when available.
+2. Retrieve newest private diary when available and keep it moving during the project, not merely at release-sized milestones.
 3. Verify current branch/main/PR/CI rather than trusting stale SHAs.
 4. Do not restart Capacitor setup.
 5. **Apply the truth-before-momentum rule before making any project-status or capability claim.**
