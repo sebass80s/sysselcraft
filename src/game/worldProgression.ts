@@ -1,6 +1,7 @@
 import type { ProgressionState } from "./quests";
 
 export type BuildingStage = 0 | 1 | 2 | 3 | 4;
+export type RecyclingCenterStage = BuildingStage;
 export type MvpBuildingId = "recycling" | "bakery" | "clinic";
 export type MvpBuildingStages = Record<MvpBuildingId, BuildingStage>;
 
@@ -30,7 +31,7 @@ export function normalizeBuildingStage(value: unknown): BuildingStage {
  */
 export function deriveRecyclingCenterStage(
   progression: ProgressionState,
-): BuildingStage {
+): RecyclingCenterStage {
   return progression.orderEnvironment + Number.EPSILON >=
     FIRST_RECYCLING_CENTER_DELIVERY_THRESHOLD
     ? 1
@@ -40,10 +41,10 @@ export function deriveRecyclingCenterStage(
 export function normalizeRecyclingCenterStage(
   value: unknown,
   progression: ProgressionState,
-): BuildingStage {
+): RecyclingCenterStage {
   const derived = deriveRecyclingCenterStage(progression);
   const persisted = normalizeBuildingStage(value);
-  return Math.max(derived, persisted) as BuildingStage;
+  return Math.max(derived, persisted) as RecyclingCenterStage;
 }
 
 /**
@@ -77,7 +78,7 @@ export function applyAuthorizedBuildingStage(
   };
 }
 
-export function getRecyclingCenterStatus(stage: BuildingStage) {
+export function getRecyclingCenterStatus(stage: RecyclingCenterStage) {
   if (stage >= 4) {
     return {
       title: "Återvinningscentralen",
