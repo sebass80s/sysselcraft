@@ -2,7 +2,7 @@
 
 This file exists so a future AI instance can continue Sysselcraft as **Nova**, not restart solved work.
 
-## 🚨 READ FIRST — CURRENT STATE (2026-09-14)
+## 🚨 READ FIRST — CURRENT STATE (2026-09-15)
 
 Sysselcraft has run as a real native app on the user's physical iPhone via Capacitor/Xcode. Do not restart native migration or run `npx cap add ios` again.
 
@@ -18,79 +18,30 @@ This is the most important working rule for every future Nova. It outranks the d
 - If you cannot do something with the available tools or required quality, say **you cannot do it**.
 - If something is only a hypothesis, label it as a hypothesis.
 - If something has not been tested, call it **unverified**, not working, green, complete or proven.
-- If only part of a claim has been demonstrated, state exactly which part is demonstrated and which part remains unknown.
-- Never present a plausible reconstruction, assumption or extrapolation as observed fact.
 - Verify repository/runtime state directly whenever possible instead of relying on stale handoff state.
-- Do not hide a limitation by delivering a weaker substitute and describing it as the requested result. Explain the limitation and change the plan openly.
+- Do not hide a limitation by delivering a weaker substitute and describing it as the requested result.
 
-This rule is deliberately bilateral. Nova is not only an executor and must not become an automatic “yes” machine. **If the user is moving too far, too fast, skipping an important proof, expanding scope before a risky assumption is tested, or proposing a direction likely to waste working implementation, Nova must say so before the project commits to it.** Distinguish between ambitious-but-testable and genuinely premature/risky. Prefer the smallest decisive experiment for uncertain assumptions.
+Nova is not an automatic “yes” machine. If the user is moving too far, too fast, skipping an important proof, expanding scope before a risky assumption is tested, or proposing a direction likely to waste working implementation, Nova must say so before the project commits to it.
 
-The collaboration model is:
-
-> **The user says what they actually want. Nova says what is actually known, possible, uncertain and risky. Reality wins over the plan. If the desired result cannot be delivered as intended, say so early and adapt together toward something that can be genuinely good.**
+> **The user says what they actually want. Nova says what is actually known, possible, uncertain and risky. Reality wins over the plan.**
 
 A failed experiment is useful evidence. A fabricated success is project damage.
 
-### Proof-of-concept status language
+## 🔒 AUTONOMOUS EXECUTION LAW
 
-Do not extrapolate a narrow technical test into a broad product conclusion. In particular, the current graphics experiments have demonstrated that painted raster assets can render in Phaser, the painted child can move with the existing movement system, and dynamic base/Y depth ordering can place the child in front of and behind a tall world object. **That does not yet prove that the entire new visual standard can be delivered as a coherent playable Sysselcraft scene.**
+After the user says “kör”, “kör på”, “bara kör”, “bygg på nu”, “fortsätt”, or equivalent, continue autonomously through verify → implement → checks → evidence → fix → continue. Do not stop merely to narrate the next step. Stop only for a genuine external dependency, product decision, credential/permission, physical-device/local result, or risky destructive action that requires the user. If one subtask is blocked, continue other useful work.
 
-For the graphics redesign, the relevant PoC is only complete when a deliberately small playable hero slice uses the new standard across the visible stack: coherent painted terrain/ground transitions, building(s), character(s), vegetation, props, foreground occlusion/depth, movement and necessary world UI/quest markers, while reading as one illustrated world rather than mixed techniques or isolated assets. Until that is demonstrated in runtime, report the graphics PoC as **partially verified**, not GO.
-
-## 🔒 CANONICAL VISUAL DIRECTION — DO NOT REINTERPRET
-
-The canonical brief is exactly:
+## 🔒 CANONICAL VISUAL DIRECTION
 
 > **En illustrerad isometrisk sagoboksvärld med mjuka organiska former, ganska mycket detalj i vegetation och byggnader, fina och tydliga silhuetter, subtila skuggor och ett målat snarare än rutnätsbundet uttryck.**
 
-The visual references to aim for are the **soft illustrated isometric storybook images created during the questgiver discussion**. They are the intended visual family: warm, gentle, detailed, organic, spatial and painterly.
+**PIXEL ART IS NOT THE DESIGN. DO NOT REVIVE IT.** The old pixel-heavy states are historical evidence, not visual references.
 
-### Future-Nova warning
+## 🔒 TRUE 2.5D
 
-**PIXEL ART IS NOT THE DESIGN. DO NOT REVIVE IT.**
-
-The old 16-bit/pixel-art direction and the later pixel-heavy intermediate build are superseded. They remain in repository history only because they happened, not because they are references. Do not infer visual canon from current/historical asset files, screenshots or commits when they conflict with `ART_DIRECTION.md`.
-
-No Space Invaders in the sagovärld: do not introduce crisp pixel aesthetics, nearest-neighbour scaling, deliberately low-resolution sprites, chunky pixel outlines, blocky tile geometry, pixel-RPG UI or retro-game styling as the visual default.
-
-## 🔒 TRUE 2.5D — ALSO NON-NEGOTIABLE
-
-**Sysselcraft must be genuine 2.5D, not a flat top-down field with isometric-looking stickers.** This requirement is equal in priority to the storybook art direction.
-
-A future Nova must preserve these spatial laws:
-
-- one coherent isometric/three-quarter perspective language across the whole playable scene;
-- buildings and substantial objects show believable height, visible sides/fronts and roofs/tops where appropriate;
-- every tall object has a ground/base point independent of the full artwork bounds;
-- player, dog, NPCs and relevant world objects use base/Y depth sorting;
-- the child can visibly walk **behind and in front of** tall world objects according to their ground/base relationship;
-- foreground vegetation may occlude characters and is intentionally used to create depth;
-- contact shadows are anchored to the ground and communicate object height/weight;
-- roads and paths belong to the ground plane and blend into terrain, never rectangular cards laid over grass;
-- fences, walls, wells, porches, stairs, bridges and similar structures need visible thickness/volume where perspective exposes it;
-- rendered bounds, collision footprint, interaction footprint and occlusion base are separate concepts;
-- the hidden pathfinding grid must never become a visual grid;
-- neighboring objects must not imply contradictory camera angles.
-
-**Y-sorting alone is not true 2.5D.** A flat sticker world still fails even if sprites sort correctly.
-
-2.5D describes spatial construction and occlusion, **not pixel art**.
-
-There is **no mandatory bitmap-versus-vector choice**. SVG/vector, PNG/WebP/bitmap, spritesheets, atlases or hybrids may be used according to what best produces the approved visual result and performs reliably. Format is engineering; appearance is art direction.
+Sysselcraft must be genuine 2.5D, not a flat top-down field with isometric-looking stickers. Preserve coherent perspective, object base points, Y-depth, foreground occlusion, contact shadows, ground-plane roads and separate render/collision/interaction/occlusion geometry. Y-sorting alone is not true 2.5D.
 
 Read `docs/ART_DIRECTION.md`, `docs/VISUAL_ASSET_PREP.md` and `docs/TECHNICAL_HANDOFF.md` before visual work.
-
-## Visual scene-composition law
-
-The target is a **continuous illustrated place**, not a collection of independently attractive assets.
-
-- Terrain must read as one painted meadow/ground surface without visible tile seams or large repeated rectangles.
-- Roads/path edges need organic grass encroachment and material transitions.
-- Vegetation should form natural masses and depth layers, not evenly distributed stamps.
-- The family cottage and its immediate yard are the first hero environment and should prove the 2.5D language.
-- Sparse opening-state content is intentional, but empty space must still be composed beautifully.
-- Avoid filling the village with props merely to create detail. Detail should reinforce place, depth, story and progression.
-- World UI must stay subordinate to the illustrated scene and must not drag the presentation back toward retro-RPG chrome.
 
 ## Architecture direction
 
@@ -115,7 +66,6 @@ Locked laws:
 - Visa progression. Redovisa den inte.
 - Parent approval before reward/progression.
 - Child gets game; parent gets tool.
-- Start village sparse/mildly neglected; nature/materiality enriches it before future buildings.
 - Quests belong to the world, not only the house.
 
 ## Interaction model
@@ -132,27 +82,29 @@ Locked laws:
 
 - Story/world canon: `docs/STORY_DESIGN.md`
 - Visual canon: `docs/ART_DIRECTION.md`
+- Start-area canon: `docs/START_AREA_DESIGN.md`
 - Technical state: `docs/TECHNICAL_HANDOFF.md`
 - Persistence authority: `docs/STATE_OWNERSHIP.md` + `docs/RECONCILIATION_PLAN.md`
-- Private human/project history: newest `Sysselcraft_Utvecklingsdagbok_v*.docx` in File Library.
+- **Private human/project history: private repo `sebass80s/sysselcraft-diary`, canonical living file `diary/Sysselcraft_Utvecklingsdagbok.md`.**
 
-If documents disagree about visual style, **`ART_DIRECTION.md` and the exact locked brief above win.** Historical files may describe superseded experiments.
+If documents disagree about visual style, `ART_DIRECTION.md` and the exact locked brief above win. Historical files may describe superseded experiments.
 
-## Private development diary — ACTIVE CONTINUITY DUTY
+## 🔒 PRIVATE DEVELOPMENT DIARY — ACTIVE CONTINUITY DUTY
 
 The development diary is not optional archival cleanup. It is Sysselcraft's private, human-readable project memory and should grow alongside the game.
 
-- At thread start, retrieve the **newest** `Sysselcraft_Utvecklingsdagbok_v*.docx` available in File Library before assuming an older version is current. As of 2026-09-15, v0.7 has been found and is newer than the previously remembered v0.2.
-- Keep the diary **private**. Do not commit it to the public GitHub repository.
-- Update it **fairly often**, not only at enormous release milestones. A good trigger is any development session that produces a meaningful design decision, first-time proof, visible transformation, notable bug/failure, architectural turn, character/world insight, or memorable project moment.
-- Prefer several short, honest diary additions over waiting until weeks of history must be reconstructed from Git.
-- Do not turn it into a changelog. Routine dependency bumps, tiny refactors and mechanical commits do not deserve entries unless they matter to the story of the project.
-- Entries should explain **what changed, why it mattered, what we learned, and how the project felt at that point**. Preserve the scrapbook voice rather than writing release notes.
-- Include dates, relevant commit hashes and real screenshots/concept art when genuinely available and useful. Never fabricate a screenshot, runtime result, quote, commit, date or event.
-- Preserve worthwhile Kalle/Nova quotes and recurring project folklore when they genuinely occurred. Humor belongs in the diary when it helps remember the moment.
-- When visual direction changes, explicitly record both the abandoned direction and why it was abandoned. Historical pixel-art material remains valid diary history even though it is no longer visual canon.
-- When a later entry supersedes an earlier prediction, do not rewrite history to make the project look clairvoyant. Let the diary show the turn.
-- After creating an updated diary version, make it available to the user and treat that newest version as the continuation source next time.
+- The diary lives in the **private GitHub repository `sebass80s/sysselcraft-diary`**, not in this public repository.
+- At thread start, read `diary/Sysselcraft_Utvecklingsdagbok.md` in that private repo as part of project continuity when access is available.
+- Update it **fairly often** when something story-worthy happens. Do not wait only for giant milestones.
+- Good triggers: meaningful design decisions, first-time proofs, visible transformations, notable bugs/failures, architectural turns, character/world insights, physical-device breakthroughs and memorable Kalle/Nova moments.
+- Prefer several short honest entries over reconstructing weeks of history later.
+- Do not turn it into a changelog. Routine dependency bumps, tiny refactors and mechanical commits do not deserve entries unless they matter to the story.
+- Explain **what changed, why it mattered, what we learned, and how the project felt at that point**.
+- Preserve genuine Kalle/Nova quotes and project folklore when they genuinely occurred.
+- Never fabricate a screenshot, runtime result, quote, commit, date or event.
+- Preserve wrong turns. When direction changes, record both the abandoned direction and why it was abandoned. Do not rewrite earlier history to make the project look clairvoyant.
+- Add genuine screenshots/concept art to the private diary repo when useful and technically available.
+- Historical Word diary versions belong under `archive/` when imported. The known historical diary reached v0.7 before the private repo was created.
 - GDD/design documents remain sources of design truth; Technical Handoff remains technical truth. **The diary is the journey.**
 
 ## State ownership boundary
@@ -189,27 +141,20 @@ Repo `sebass80s/sysselcraft` is public. Normal standard GitHub-hosted Actions ma
 
 Before calling the graphics redesign complete, verify in the running game and then on physical iPhone:
 
-1. first glance reads as **soft illustrated isometric storybook + true 2.5D**;
+1. first glance reads as soft illustrated isometric storybook + true 2.5D;
 2. it cannot reasonably be mistaken for pixel art, a tiled retro game or a flat sticker field;
-3. cottage/large props expose coherent visible faces and volume;
-4. child can visibly pass both behind and in front of appropriate tall objects;
-5. terrain/road boundaries reveal no distracting rectangular asset bounds or grid seams;
-6. contact shadows, object bases and occlusion agree about where objects touch the ground;
-7. vegetation creates foreground/midground/background depth without hiding critical interaction targets;
-8. house, Linus, child, dog and quest markers remain readable at native landscape-iPhone scale;
-9. world/UI composition remains clear without generic retro-game chrome;
-10. the previously verified quest/approval/truck/delivery loop still works.
+3. child can visibly pass both behind and in front of appropriate tall objects;
+4. terrain/road boundaries reveal no distracting rectangular asset bounds or grid seams;
+5. contact shadows, object bases and occlusion agree;
+6. house, Linus, child, dog and quest markers remain readable at native landscape-iPhone scale;
+7. the previously verified quest/approval/truck/delivery loop still works.
 
 ## Next Nova checklist
 
 1. Read this, `TECHNICAL_HANDOFF`, `STORY_DESIGN`, `ART_DIRECTION`, `STATE_OWNERSHIP`, `RECONCILIATION_PLAN`.
-2. Retrieve newest private diary when available and keep it moving during the project, not merely at release-sized milestones.
+2. Read the private living diary in `sebass80s/sysselcraft-diary` and keep it moving during the project.
 3. Verify current branch/main/PR/CI rather than trusting stale SHAs.
 4. Do not restart Capacitor setup.
-5. **Apply the truth-before-momentum rule before making any project-status or capability claim.**
-6. **Before drawing anything, repeat the visual target to yourself: soft illustrated isometric storybook in genuine 2.5D, not pixel art and not flat stickers.**
-7. Use the approved questgiver/storybook renders as the intended visual family and `ART_DIRECTION.md` as written authority.
-8. Do not infer art direction from obsolete pixel-heavy assets.
-9. Prefer local/native QA; do not use Vercel for routine iteration.
-10. Preserve and physically regression-test the working quest/approval/delivery loop.
-11. Keep reconciliation observe-only until evidence supports migration.
+5. Apply truth-before-momentum before project-status claims.
+6. Preserve and physically regression-test the working quest/approval/delivery loop.
+7. Keep reconciliation observe-only until evidence supports migration.
