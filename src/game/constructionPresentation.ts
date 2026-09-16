@@ -14,7 +14,7 @@ export function constructionPresentation(state: ConstructionState) {
     attention: reveal && placement ? {
       id: reveal.id, resident: reveal.resident, presentation: reveal.presentation,
       approach: placement.approach,
-      position: { x: placement.approach.x + 48, y: placement.approach.y + 12 },
+      position: placement.guidePosition,
     } : null,
   };
 }
