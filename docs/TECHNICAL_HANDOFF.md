@@ -124,6 +124,30 @@ The target is a **cohesive camera composition**, not a bag of nice assets.
 - Runtime optimization may rasterize art but must not visually pixelate the result.
 - UI should harmonize with the illustrated world and avoid generic retro-RPG chrome.
 
+## Construction reveal choreography (LOCKED 2026-09-16)
+
+A progression threshold and its visible construction reveal are deliberately separate states. This prevents earned progress from being lost while ensuring the player is physically near the building when a visual construction change occurs.
+
+**Domain sequence for later building stages:**
+
+`approved real-world effort -> progression earned -> pending construction event -> resident attention -> player visits resident at building site -> conversation/interact -> construction reveal -> visible stage committed`
+
+Rules:
+- `progression earned` means the approved real-world action has permanently earned the next construction step. It must survive reload/app close and must not depend on the player seeing an animation immediately.
+- `construction revealed` means the child has reached the relevant world location and witnessed the change. Presentation must not be used as the source of truth for whether progress was earned.
+- A pending reveal moves/places the relevant guide resident at an authored activity/approach point beside the future/current building site. For Recycling stages 2-4, the guide is **Linus**.
+- While a reveal is pending, HUD may show **"Linus vill prata med dig"** and Linus receives the appropriate world attention marker. The HUD prompt is discovery guidance, not a teleport or automatic construction trigger.
+- The child travels through the world to Linus. Interacting/talking with him at the site triggers the reveal only when the camera/player is naturally at the construction location.
+- The HUD mechanism must be generic under the hood (`resident wants to talk` / resident attention), so Henning, Sol and later residents can use the same system.
+- The resident-attention/reveal mechanism belongs to domain/game state above Phaser. Phaser renders the pending event, resident placement, HUD/world marker and reveal presentation.
+- A pending construction reveal remains pending across reloads until consumed idempotently. Reopening the app must not silently skip or duplicate the reveal.
+- The visible building stage and its collision/navigation footprint activate together when the reveal is committed.
+- Do not expose hidden numeric construction progress merely to explain this sequence. **Visa progression. Redovisa den inte.**
+
+**Recycling exception:** Recycling stage 1 keeps the already verified truck/delivery reveal. The truck delivery is its construction reveal. The Linus-at-building-site choreography begins with Recycling stage 2 and is reusable for stages 3-4 and later buildings/residents.
+
+This solves a camera/composition problem intentionally: construction changes must not play unseen on the far side of the map while the child is still standing at the family house after a quest/approval flow.
+
 ## Multi-area village world architecture (LOCKED 2026-09-15)
 
 **Sysselcraft grows through multiple connected world areas, not by continuously enlarging one mega-map.** The current 1920 × 640 Phaser village remains the opening/start area.
@@ -227,13 +251,13 @@ Treat the physical-device loop as a regression baseline. Backend/quest/approval/
 
 ## Current technical priority
 
-1. Complete the playable visuals toward the **soft illustrated isometric storybook + true 2.5D canon** in `docs/ART_DIRECTION.md`.
-2. Integrate the verified v4 master/building assets and recalibrate old-background collision/pathfinding.
-3. Preserve dynamic player Y-depth for **all** movement paths, including tap/path movement.
-4. Preserve the Linus-to-house first-quest onboarding transition.
-5. Preserve and regression-test the physically verified parent approval/delivery loop.
-6. Re-test scale, depth, taps, safe areas, occlusion, animation and rendering performance on physical iPhone.
-7. Only after Gate 0 passes, remove the post-delivery dead end with the locked Linus -> recycling stage 1 progression.
+1. Preserve the now browser-runtime-verified v4 Recycling stage 1 integration at its real reserved site: `(-180, 500)`, display `330x236`, footprint `190x72`, approach `(-180,558)`.
+2. Implement the generic pending-construction / resident-attention mechanism above Phaser.
+3. Use Recycling stage 2 as the first Linus-guided reveal: earned progression -> HUD `Linus vill prata med dig` -> Linus at recycling site -> interaction -> reveal -> stage/collision commit.
+4. Extend the same mechanism through Recycling stages 3-4 without inventing new progression thresholds.
+5. Preserve dynamic player Y-depth, navigation, first-quest onboarding and the physically verified parent approval/delivery loop.
+6. Re-test scale, depth, taps, safe areas, occlusion, animation and rendering performance on physical iPhone after the local browser slice is stable.
+7. Generalize later for Bakery/Henning and Clinic/Sol while preserving resident arrival/story order.
 8. Village Event Director remains intentionally later and must not steal MVP focus.
 
 ## Deployment/resource policy
