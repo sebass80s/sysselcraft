@@ -10,19 +10,27 @@ import {
   type ProgressionState,
   type QuestId,
 } from "../game/quests";
-import { clearSaveState, loadSaveState, saveSaveState } from "../game/saveState";
+import { initialConstruction, syncConstructionProgression, earnConstruction, residentAttention, commitConstructionReveal, type ConstructionState } from "../game/construction";
+import { constructionPresentation } from "../game/constructionPresentation";
+import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import {
-  deriveRecyclingCenterStage,
   getRecyclingCenterStatus,
 } from "../game/worldProgression";
 
 export default function VillagePrototype() {
+  const [construction, setConstruction] = useState(initialConstruction);
+  const constructionRef = useRef(construction);
+  const latestSaveRef = useRef<SaveStateV1 | null>(null);
+  const constructionWriteRef = useRef(false);
+  const [constructionBusy, setConstructionBusy] = useState(false);
+  const [constructionError, setConstructionError] = useState("");
+  const [constructionDialogueId, setConstructionDialogueId] = useState<string | null>(null);
+  const attention = residentAttention(construction);
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
   const restoredQuestStateRef = useRef<QuestState>("available");
   const restoredIntroCompleteRef = useRef(false);
   const restoredDogVisibleRef = useRef(false);
-  const restoredFirstDeliveryCompleteRef = useRef(false);
   const childNameInputRef = useRef<HTMLInputElement>(null);
   const dogNameInputRef = useRef<HTMLInputElement>(null);
   const approvalLockRef = useRef(false);
@@ -46,7 +54,7 @@ export default function VillagePrototype() {
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
   const pendingCount = questState === "pending" ? 1 : 0;
-  const recyclingCenterStage = deriveRecyclingCenterStage(progression);
+  const recyclingCenterStage = construction.revealed.recycling;
   const recyclingCenterStatus = getRecyclingCenterStatus(recyclingCenterStage);
 
   useEffect(() => {
@@ -57,10 +65,11 @@ export default function VillagePrototype() {
       if (cancelled) return;
 
       if (saved) {
+        constructionRef.current = saved.construction;
+        setConstruction(saved.construction);
         restoredQuestStateRef.current = saved.questStates.makeBed;
         restoredIntroCompleteRef.current = saved.introComplete;
         restoredDogVisibleRef.current = saved.dogVisible;
-        restoredFirstDeliveryCompleteRef.current = saved.worldFlags.firstDeliveryComplete;
         approvalLockRef.current = saved.completedQuestIds.includes(makeBedQuest.id);
 
         setQuestState(saved.questStates.makeBed);
@@ -88,9 +97,9 @@ export default function VillagePrototype() {
   }, []);
 
   useEffect(() => {
-    if (!saveReady || resettingSave) return;
+    if (!saveReady || resettingSave || constructionWriteRef.current) return;
 
-    void saveSaveState({
+    const snapshot: SaveStateV1 = {
       version: 1,
       questStates: { makeBed: questState },
       completedQuestIds,
@@ -103,12 +112,17 @@ export default function VillagePrototype() {
       childName,
       dogName,
       dogVisible,
+      construction,
       worldFlags: {
         firstDeliveryComplete: recyclingCenterStage >= 1,
         recyclingCenterStage,
       },
-    });
+    };
+    latestSaveRef.current = snapshot;
+    void saveSaveState(snapshot);
   }, [
+    construction,
+    constructionBusy,
     saveReady,
     resettingSave,
     questState,
@@ -136,6 +150,13 @@ export default function VillagePrototype() {
 
       const handle = await createVillageGame(hostRef.current, {
         onQuestOpen: () => setQuestOpen(true),
+        onConstructionInteract: (id) => {
+          if (residentAttention(constructionRef.current)?.id !== id) {
+            gameRef.current?.setConstructionDialogueOpen(false);
+            return;
+          }
+          setConstructionDialogueId(id);
+        },
         onLinusInteract: () => {
           setDialogueIndex(0);
           setDialogueOpen(true);
@@ -149,9 +170,9 @@ export default function VillagePrototype() {
 
       gameRef.current = handle;
       handle.setDogVisible(restoredDogVisibleRef.current);
-      handle.setFirstDeliveryComplete(restoredFirstDeliveryCompleteRef.current);
       handle.setIntroComplete(restoredIntroCompleteRef.current);
       handle.setQuestState(restoredQuestStateRef.current);
+      handle.setConstruction(constructionPresentation(constructionRef.current));
     }
 
     boot();
@@ -174,6 +195,44 @@ export default function VillagePrototype() {
   useEffect(() => {
     gameRef.current?.setDogVisible(dogVisible);
   }, [dogVisible]);
+
+  useEffect(() => {
+    gameRef.current?.setConstruction(constructionPresentation(construction));
+  }, [construction]);
+
+  async function persistConstruction(next: ConstructionState, revealId?: string) {
+    if (constructionWriteRef.current || !latestSaveRef.current || next === constructionRef.current) return;
+    constructionWriteRef.current = true;
+    setConstructionBusy(true);
+    setConstructionError("");
+    try {
+      const commit = async () => {
+        const snapshot = withConstructionState(latestSaveRef.current!, next);
+        await saveSaveState(snapshot, true);
+        latestSaveRef.current = snapshot;
+        constructionRef.current = next;
+        setConstruction(next);
+        // Apply committed render/collision together at delivery arrival, before departure.
+        gameRef.current?.setConstruction(constructionPresentation(next));
+      };
+      if (revealId) {
+        const game = gameRef.current;
+        if (!game) throw new Error("Village is not ready");
+        setConstructionDialogueId(null);
+        await game.presentConstructionReveal(revealId, commit);
+      } else await commit();
+      setConstructionDialogueId(null);
+      gameRef.current?.setConstructionDialogueOpen(false);
+    } catch {
+      setConstructionError("Det gick inte att spara. Försök igen.");
+      if (revealId && residentAttention(constructionRef.current)?.id === revealId) {
+        setConstructionDialogueId(revealId);
+      } else gameRef.current?.setConstructionDialogueOpen(false);
+    } finally {
+      constructionWriteRef.current = false;
+      setConstructionBusy(false);
+    }
+  }
 
   function advanceDialogue() {
     const nextIndex = dialogueIndex + 1;
@@ -226,7 +285,11 @@ export default function VillagePrototype() {
     approvalLockRef.current = true;
     setQuestState("approved");
     setCompletedQuestIds((ids) => [...ids, makeBedQuest.id]);
-    setProgression((value) => applyQuestProgression(value, makeBedQuest));
+    const earnedProgression = applyQuestProgression(progression, makeBedQuest);
+    setProgression(earnedProgression);
+    const nextConstruction = syncConstructionProgression(constructionRef.current, earnedProgression);
+    constructionRef.current = nextConstruction;
+    setConstruction(nextConstruction);
     setDiamonds((value) => value + makeBedQuest.reward.diamonds);
     setSysselBux((value) => value + makeBedQuest.reward.sysselBux);
     setParentMenuOpen(false);
@@ -289,10 +352,26 @@ export default function VillagePrototype() {
       <div className="game-wrap">
         <div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" />
         <div className="game-hint">
-          {introComplete
+          {attention ? `${attention.residentName} vill prata med dig` : introComplete
             ? "Tryck i byn för att gå · tryck på questmarkören vid huset"
             : "Tryck på Linus för att gå fram och hälsa"}
         </div>
+
+        {constructionDialogueId && attention?.id === constructionDialogueId && (
+          <div className="dialogue-card" role="dialog" aria-modal="true" aria-label="Byggplatsens samtal">
+            <span className="dialogue-speaker">{attention.residentName}</span>
+            <p>{attention.dialogue}</p>
+            <button className="primary-button" disabled={constructionBusy}
+              onClick={() => void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id)}>
+              {constructionBusy ? "Sparar…" : "Fortsätt"}
+            </button>
+            <button className="secondary-button" disabled={constructionBusy} onClick={() => {
+              setConstructionDialogueId(null);
+              gameRef.current?.setConstructionDialogueOpen(false);
+            }}>Senare</button>
+            {constructionError && <p role="alert">{constructionError}</p>}
+          </div>
+        )}
 
         {dialogueOpen && dialogueStep && (
           <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite">
@@ -427,13 +506,25 @@ export default function VillagePrototype() {
                 <div className="parent-empty-state">✓ Inget lokalt prototypuppdrag väntar just nu.</div>
               )}
 
+              {process.env.NODE_ENV === "development" && (
+                <div className="parent-profile-card">
+                  <span>DEV/test · ingen produkttröskel</span>
+                  <button className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== 1 || construction.earned.recycling >= 2}
+                    onClick={() => void persistConstruction(earnConstruction(constructionRef.current, "recycling:2"))}>
+                    DEV: tjäna in Recycling stage 2
+                  </button>
+                  <small>Kräver avslutad första leverans. Skapar väntande samtal, visar inte stage 2.</small>
+                  {constructionError && <p role="alert">{constructionError}</p>}
+                </div>
+              )}
+
               <div className="parent-menu-footer">
                 <span>Den lokala loopen behålls tills reconciliation är testad på fysisk iPhone.</span>
                 <button
                   className="debug-reset-button"
                   type="button"
                   onClick={resetPrototypeSave}
-                  disabled={!saveReady || resettingSave}
+                  disabled={!saveReady || resettingSave || constructionBusy}
                 >
                   ↺ Nollställ testsparning
                 </button>

@@ -1,34 +1,26 @@
+import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
 import {
   AMBIENT_TEXTURE_KEYS,
-  FIRST_DELIVERY_AMBIENT_OBJECTS,
 } from "./worldDecor";
 
-const VIEW_HEIGHT = 640;
-const WORLD_MIN_X = -480;
-const WORLD_MAX_X = 1440;
-const WORLD_WIDTH = WORLD_MAX_X - WORLD_MIN_X;
-const WORLD_HEIGHT = 640;
-const GRID = 32;
-const GRID_COLS = Math.ceil(WORLD_WIDTH / GRID);
-const GRID_ROWS = Math.ceil(WORLD_HEIGHT / GRID);
-const PLAYER_RADIUS = 14;
+import { VIEW_HEIGHT, WORLD_MIN_X, WORLD_MAX_X, WORLD_WIDTH, WORLD_HEIGHT,
+  REQUIRED_APPROACHES, STATIC_OBSTACLES, findPath, isWalkable, nearestWalkablePoint, type Point, type Obstacle } from "./villageNavigation";
+import { preloadVisualProductionBuildings, createVisualProductionBuildings } from "./visualProductionRuntime";
+import { getVisualProductionObstacles, type VisualProductionBuilding, type VisualProductionStage } from "./visualProductionAssets";
 
 export type QuestState = "available" | "pending" | "approved";
 export type VillageGameHandle = {
   destroy: () => void;
+  setConstruction: (presentation: ConstructionPresentation) => void;
+  setConstructionDialogueOpen: (open: boolean) => void;
   setQuestState: (state: QuestState) => void;
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
-  setFirstDeliveryComplete: (complete: boolean) => void;
+  presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
-
-type Callbacks = { onQuestOpen: () => void; onLinusInteract: () => void };
-type Point = { x: number; y: number };
+type Callbacks = { onQuestOpen: () => void; onLinusInteract: () => void; onConstructionInteract: (id: string) => void };
 type Facing = "north" | "south" | "east" | "west";
-type Obstacle =
-  | { type: "rect"; x: number; y: number; width: number; height: number }
-  | { type: "circle"; x: number; y: number; radius: number };
 type WorldObjectDefinition = {
   x: number;
   y: number;
@@ -38,26 +30,8 @@ type WorldObjectDefinition = {
   baseY?: number;
 };
 
-const obstacles: Obstacle[] = [
-  // Hero-slice collision map for the painted master scene. Gameplay footprints are
-  // deliberately independent from the rendered image bounds.
-  { type: "rect", x: 300, y: 242, width: 420, height: 150 }, // cottage
-  { type: "rect", x: 650, y: 342, width: 250, height: 145 }, // board / bench / mailbox
-  { type: "circle", x: 945, y: 365, radius: 82 }, // well
-  { type: "circle", x: 815, y: 430, radius: 34 }, // lamp base
-  { type: "circle", x: -205, y: 548, radius: 42 }, // village sign
-  { type: "rect", x: 15, y: 430, width: 390, height: 72 }, // left stone wall
-  { type: "rect", x: 1215, y: 320, width: 330, height: 80 }, // right stone wall
-  { type: "circle", x: -270, y: 335, radius: 78 }, // left birches
-  { type: "circle", x: 1230, y: 505, radius: 92 }, // foreground vegetation
-];
-
 function distance(a: Point, b: Point) {
   return Math.hypot(a.x - b.x, a.y - b.y);
-}
-
-function clamp(v: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, v));
 }
 
 function isTextControlFocused() {
@@ -71,102 +45,16 @@ function isTextControlFocused() {
   );
 }
 
-function isWalkable(p: Point) {
-  if (
-    p.x < WORLD_MIN_X + PLAYER_RADIUS ||
-    p.y < PLAYER_RADIUS ||
-    p.x > WORLD_MAX_X - PLAYER_RADIUS ||
-    p.y > WORLD_HEIGHT - PLAYER_RADIUS
-  ) {
-    return false;
-  }
-  return !obstacles.some((o) =>
-    o.type === "rect"
-      ? Math.abs(p.x - o.x) <= o.width / 2 + PLAYER_RADIUS &&
-        Math.abs(p.y - o.y) <= o.height / 2 + PLAYER_RADIUS
-      : distance(p, o) <= o.radius + PLAYER_RADIUS,
-  );
-}
-
-function cellToPoint(cx: number, cy: number): Point {
-  return { x: WORLD_MIN_X + cx * GRID + GRID / 2, y: cy * GRID + GRID / 2 };
-}
-
-function pointToCell(p: Point) {
-  return {
-    x: clamp(Math.floor((p.x - WORLD_MIN_X) / GRID), 0, GRID_COLS - 1),
-    y: clamp(Math.floor(p.y / GRID), 0, GRID_ROWS - 1),
-  };
-}
-
-function findNearestWalkableCell(point: Point) {
-  const origin = pointToCell(point);
-  for (let r = 0; r <= 8; r++) {
-    for (let y = origin.y - r; y <= origin.y + r; y++) {
-      for (let x = origin.x - r; x <= origin.x + r; x++) {
-        if (
-          x >= 0 && y >= 0 && x < GRID_COLS && y < GRID_ROWS &&
-          isWalkable(cellToPoint(x, y))
-        ) return { x, y };
-      }
-    }
-  }
-  return origin;
-}
-
-function findPath(startPoint: Point, endPoint: Point): Point[] {
-  const start = findNearestWalkableCell(startPoint);
-  const goal = findNearestWalkableCell(endPoint);
-  const key = (x: number, y: number) => `${x},${y}`;
-  const open = new Map<string, { x: number; y: number; g: number; f: number }>();
-  const came = new Map<string, string>();
-  const closed = new Set<string>();
-  const h = (x: number, y: number) => Math.hypot(goal.x - x, goal.y - y);
-  open.set(key(start.x, start.y), { ...start, g: 0, f: h(start.x, start.y) });
-  const dirs = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
-  while (open.size) {
-    const c = [...open.values()].reduce((best, next) => next.f < best.f ? next : best);
-    const ck = key(c.x, c.y);
-    open.delete(ck);
-    if (c.x === goal.x && c.y === goal.y) {
-      const cells = [{ x: c.x, y: c.y }];
-      let cursor = ck;
-      while (came.has(cursor)) {
-        cursor = came.get(cursor)!;
-        const [x, y] = cursor.split(",").map(Number);
-        cells.push({ x, y });
-      }
-      return cells.reverse().slice(1).map((q) => cellToPoint(q.x, q.y));
-    }
-    closed.add(ck);
-    for (const [dx, dy] of dirs) {
-      const x = c.x + dx;
-      const y = c.y + dy;
-      const nk = key(x, y);
-      if (
-        closed.has(nk) || x < 0 || y < 0 || x >= GRID_COLS || y >= GRID_ROWS ||
-        !isWalkable(cellToPoint(x, y))
-      ) continue;
-      if (dx && dy && (!isWalkable(cellToPoint(c.x + dx, c.y)) || !isWalkable(cellToPoint(c.x, c.y + dy)))) continue;
-      const g = c.g + (dx && dy ? Math.SQRT2 : 1);
-      const existing = open.get(nk);
-      if (existing && g >= existing.g) continue;
-      came.set(nk, ck);
-      open.set(nk, { x, y, g, f: g + h(x, y) });
-    }
-  }
-  return [];
-}
-
 export async function createVillageGame(
   parent: HTMLElement,
   callbacks: Callbacks,
 ): Promise<VillageGameHandle> {
   const Phaser = await import("phaser");
+  let requestedConstruction: ConstructionPresentation = { stages: {}, attention: null };
+  let constructionDialogueOpen = false;
   let requestedQuestState: QuestState = "available";
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
-  let requestedFirstDeliveryComplete = false;
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -181,9 +69,13 @@ export async function createVillageGame(
     private targetMarker?: GameObjects.Arc;
     private questMarker?: GameObjects.Container;
     private linus?: GameObjects.Image;
-    private materialStack?: GameObjects.Image;
-    private approvedTriggered = false;
-    private firstDeliveryComplete = false;
+    private attentionMarker?: GameObjects.Text;
+    private attentionInteractionPending = false;
+    private residents: Record<string, GameObjects.Image> = {};
+    private renderedBuildingStages = "";
+    private productionBuildings: GameObjects.Image[] = [];
+    private navigationObstacles: Obstacle[] = [...STATIC_OBSTACLES];
+    private activeRevealId: string | null = null;
     private playerFacing: Facing = "south";
     private introComplete = false;
     private linusInteractionPending = false;
@@ -193,9 +85,10 @@ export async function createVillageGame(
     }
 
     preload() {
+      preloadVisualProductionBuildings(this);
       this.load.image("family-house", "/assets/village/reboot/family-house.webp");
       this.load.image("child-painted", "/assets/village/reboot/child.webp");
-      this.load.image("master-scene", "/assets/village/reboot/sysselcraft-hero-master.webp");
+      this.load.image("master-scene", "/assets/village/reboot/start-area-master-1920x640.webp");
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
@@ -218,16 +111,16 @@ export async function createVillageGame(
       camera.setBackgroundColor("#789a68");
       camera.setBounds(WORLD_MIN_X, 0, WORLD_WIDTH, WORLD_HEIGHT);
       this.drawVillage();
-      this.player = this.add.image(430, 405, "child-painted")
+      this.player = this.add.image(REQUIRED_APPROACHES.spawn.x, REQUIRED_APPROACHES.spawn.y, "child-painted")
         .setOrigin(0.5, 0.94)
         .setDisplaySize(74, 118)
-        .setDepth(1405);
-      this.dog = this.add.image(548, 303, "puppy-painted")
+        .setDepth(1000 + REQUIRED_APPROACHES.spawn.y);
+      this.dog = this.add.image(48, 427, "puppy-painted")
         .setOrigin(0.5, 0.88)
         .setDisplaySize(66, 55)
-        .setDepth(1303)
+        .setDepth(1427)
         .setVisible(requestedDogVisible);
-      this.targetMarker = this.add.circle(430, 405, 7, 0xf4d780, 0.32)
+      this.targetMarker = this.add.circle(REQUIRED_APPROACHES.spawn.x, REQUIRED_APPROACHES.spawn.y, 7, 0xf4d780, 0.32)
         .setStrokeStyle(2, 0x6a754e, 0.55)
         .setVisible(false)
         .setDepth(900);
@@ -235,9 +128,9 @@ export async function createVillageGame(
       camera.startFollow(this.player, true, 0.08, 0.08);
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
       this.createQuestMarker();
-      this.setFirstDeliveryComplete(requestedFirstDeliveryComplete);
       this.setIntroComplete(requestedIntroComplete);
       this.applyQuestState(requestedQuestState);
+      this.setConstruction(requestedConstruction);
       this.time.addEvent({
         delay: 1800,
         loop: true,
@@ -252,7 +145,8 @@ export async function createVillageGame(
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!this.player) return;
         this.linusInteractionPending = false;
-        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: pointer.worldX, y: pointer.worldY });
+        this.attentionInteractionPending = false;
+        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: pointer.worldX, y: pointer.worldY }, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
       });
@@ -264,11 +158,11 @@ export async function createVillageGame(
       if (!this.questMarker) return;
       const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!complete) {
-        this.questMarker.setPosition(720, 335).setVisible(true).setAlpha(1);
+        this.questMarker.setPosition(290, 300).setVisible(true).setAlpha(1);
         label.setText("?");
         return;
       }
-      this.questMarker.setPosition(300, 82);
+      this.questMarker.setPosition(-245, 70);
       this.applyQuestState(requestedQuestState);
     }
 
@@ -277,25 +171,16 @@ export async function createVillageGame(
       this.dog?.setVisible(visible);
     }
 
-    setFirstDeliveryComplete(complete: boolean) {
-      requestedFirstDeliveryComplete = complete;
-      this.firstDeliveryComplete = complete;
-      if (complete) {
-        this.approvedTriggered = true;
-        this.ensureMaterialStack();
-      }
-    }
-
     applyQuestState(state: QuestState) {
       requestedQuestState = state;
       if (!this.questMarker) return;
       const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!this.introComplete) {
-        this.questMarker.setPosition(720, 335).setVisible(true).setAlpha(1);
+        this.questMarker.setPosition(290, 300).setVisible(true).setAlpha(1);
         label.setText("?");
         return;
       }
-      this.questMarker.setPosition(300, 82);
+      this.questMarker.setPosition(-245, 70);
       if (state === "available") {
         this.questMarker.setVisible(true).setAlpha(1);
         label.setText("!");
@@ -304,16 +189,14 @@ export async function createVillageGame(
         label.setText("…");
       } else {
         this.questMarker.setVisible(false);
-        if (this.firstDeliveryComplete) this.ensureMaterialStack();
-        else this.triggerApprovalEvent();
       }
     }
 
     update(_: number, delta: number) {
-      if (!this.player) return;
-      this.player.setDepth(1000 + Math.round(this.player.y));
+      if (!this.player || constructionDialogueOpen) return;
       this.updateDog();
       if (isTextControlFocused()) {
+        this.attentionInteractionPending = false;
         this.linusInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
@@ -321,6 +204,7 @@ export async function createVillageGame(
       }
       const v = this.getKeyboardVector();
       if (v.lengthSq() > 0) {
+        this.attentionInteractionPending = false;
         this.linusInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
@@ -375,6 +259,17 @@ export async function createVillageGame(
     }
 
     private maybeCompleteLinusInteraction() {
+      const attention = requestedConstruction.attention;
+      if (this.attentionInteractionPending && attention && this.player) {
+        if (distance(this.player, attention.approach) > 32) return;
+        this.attentionInteractionPending = false;
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+        constructionDialogueOpen = true;
+        callbacks.onConstructionInteract(attention.id);
+        return;
+      }
+
       if (!this.linusInteractionPending || !this.player || !this.linus) return;
       if (distance(this.player, this.linus) > 95) return;
       this.linusInteractionPending = false;
@@ -440,46 +335,116 @@ export async function createVillageGame(
       const label = this.add.text(0, -3, "?", {
         color: "#5a3f28", fontSize: "25px", fontStyle: "bold", fontFamily: "Trebuchet MS",
       }).setOrigin(0.5).setName("label");
-      this.questMarker = this.add.container(720, 335, [shadow, bubble, highlight, label])
+      this.questMarker = this.add.container(290, 300, [shadow, bubble, highlight, label])
         .setDepth(3000).setSize(54, 56).setInteractive({ useHandCursor: true });
       this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (this.introComplete) callbacks.onQuestOpen();
         else callbacks.onLinusInteract();
       });
-      this.tweens.add({ targets: this.questMarker, y: "-=4", duration: 950, yoyo: true, repeat: -1, ease: "Sine.InOut" });
+      this.tweens.add({ targets: [shadow, bubble, highlight, label], y: "-=4", duration: 950, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
-    private ensureMaterialStack() {
-      if (this.materialStack?.active) return;
-      this.materialStack = this.add.image(760, 458, "materials-painted")
-        .setOrigin(0.5, 0.92)
-        .setDisplaySize(190, 106)
-        .setDepth(1458);
-      this.placeWorldObjects(FIRST_DELIVERY_AMBIENT_OBJECTS);
+    private applyBuildingPresentation(stages: Partial<Record<VisualProductionBuilding, VisualProductionStage>>) {
+      const signature = JSON.stringify(stages);
+      if (signature === this.renderedBuildingStages) return;
+      this.renderedBuildingStages = signature;
+      this.productionBuildings.forEach(image => image.destroy());
+      this.productionBuildings = createVisualProductionBuildings(this, stages);
+      this.navigationObstacles = [...STATIC_OBSTACLES, ...getVisualProductionObstacles(stages)];
+      // A route planned before the reveal may now cross the new footprint.
+      this.path = [];
+      this.targetMarker?.setVisible(false);
+      if (this.player && !isWalkable(this.player, this.navigationObstacles)) {
+        const safePoint = nearestWalkablePoint(this.player, this.navigationObstacles);
+        this.player.setPosition(safePoint.x, safePoint.y)
+          .setDepth(1000 + Math.round(safePoint.y));
+      }
     }
 
-    private triggerApprovalEvent() {
-      if (this.approvedTriggered) return;
-      this.approvedTriggered = true;
-      const truck = this.add.image(1030, 350, "truck-painted")
-        .setOrigin(0.5, 0.92)
-        .setDisplaySize(245, 160)
-        .setDepth(1350);
-      this.tweens.add({
-        targets: truck, x: 785, y: 365, duration: 1700, ease: "Sine.Out",
-        onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
-        onComplete: () => {
-          this.firstDeliveryComplete = true;
-          requestedFirstDeliveryComplete = true;
-          this.ensureMaterialStack();
-          this.tweens.add({ targets: this.linus, y: "-=10", duration: 180, yoyo: true, repeat: 3 });
-          this.time.delayedCall(900, () => this.tweens.add({
-            targets: truck, x: 1030, y: 350, duration: 1500, ease: "Sine.In",
-            onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
-            onComplete: () => truck.destroy(),
-          }));
-        },
+    setConstruction(presentation: ConstructionPresentation) {
+      requestedConstruction = presentation;
+      this.applyBuildingPresentation(presentation.stages);
+      this.attentionMarker?.destroy();
+      this.attentionMarker = undefined;
+      const attention = presentation.attention;
+      if (!attention) return;
+      const resident = this.residents[attention.resident];
+      if (!resident) return;
+      resident.setPosition(attention.position.x, attention.position.y).setDepth(1000 + attention.position.y);
+      this.attentionMarker = this.add.text(attention.position.x, attention.position.y - 140, "?", {
+        color: "#5a3f28", backgroundColor: "#fff2cf", fontSize: "25px", padding: { x: 10, y: 4 },
+      }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
+      this.attentionMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        this.approachAttentionResident();
+      });
+    }
+
+    private approachAttentionResident() {
+      const attention = requestedConstruction.attention;
+      if (!attention || !this.player || constructionDialogueOpen || this.activeRevealId) return;
+      this.linusInteractionPending = false;
+      this.attentionInteractionPending = true;
+      this.path = findPath(this.player, attention.approach, this.navigationObstacles);
+      const target = this.path.at(-1);
+      if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+      else this.maybeCompleteLinusInteraction();
+    }
+
+    async presentConstructionReveal(id: string, commit: () => Promise<void>) {
+      const attention = requestedConstruction.attention;
+      if (!attention || attention.id !== id || this.activeRevealId) {
+        throw new Error("Construction reveal is not available");
+      }
+      this.activeRevealId = id;
+      this.attentionMarker?.setVisible(false);
+      try {
+        if (attention.presentation === "delivery") await this.playDelivery(commit);
+        else await commit();
+      } finally {
+        this.activeRevealId = null;
+        this.attentionMarker?.setVisible(true);
+      }
+    }
+
+    /** Presentation only: domain authorizes the reveal and persists the arrival commit. */
+    private playDelivery(commit: () => Promise<void>): Promise<void> {
+      return new Promise((resolve, reject) => {
+        const truck = this.add.image(900, 490, "truck-painted")
+          .setOrigin(0.5, 0.92)
+          .setDisplaySize(245, 160)
+          .setDepth(1490);
+        let stopped = false;
+        const finish = (error?: Error) => {
+          if (stopped) return;
+          stopped = true;
+          this.events.off("shutdown", onShutdown);
+          this.tweens.killTweensOf(truck);
+          truck.destroy();
+          if (error) reject(error);
+          else resolve();
+        };
+        const onShutdown = () => finish(new Error("Construction presentation interrupted"));
+        this.events.once("shutdown", onShutdown);
+        this.tweens.add({
+          targets: truck, x: 340, y: 485, duration: 1700, ease: "Sine.Out",
+          onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
+          onComplete: async () => {
+            try {
+              await commit();
+              if (stopped) return;
+              this.tweens.add({ targets: this.linus, y: "-=10", duration: 180, yoyo: true, repeat: 3 });
+              this.time.delayedCall(900, () => this.tweens.add({
+                targets: truck, x: 900, y: 490, duration: 1500, ease: "Sine.In",
+                onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
+                onComplete: () => finish(),
+              }));
+            } catch (error) {
+              finish(error instanceof Error ? error : new Error("Construction commit failed"));
+            }
+          },
+        });
       });
     }
 
@@ -495,9 +460,11 @@ export async function createVillageGame(
     private tryMove(dx: number, dy: number) {
       if (!this.player) return;
       const nx = { x: this.player.x + dx, y: this.player.y };
-      if (isWalkable(nx)) this.player.x = nx.x;
+      if (isWalkable(nx, this.navigationObstacles)) this.player.x = nx.x;
       const ny = { x: this.player.x, y: this.player.y + dy };
-      if (isWalkable(ny)) this.player.y = ny.y;
+      if (isWalkable(ny, this.navigationObstacles)) this.player.y = ny.y;
+      // Both keyboard and A* steps share this post-movement depth update.
+      this.player.setDepth(1000 + Math.round(this.player.y));
     }
 
     private drawVillage() {
@@ -508,47 +475,45 @@ export async function createVillageGame(
         "master-scene",
       ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(0);
 
-      // Reuse the painted master itself as a masked foreground layer. The duplicated
-      // pixels remain visually seamless; only these masks participate in occlusion.
-      // Depth 1400 makes actors above y=400 pass behind the board cluster, while actors
-      // lower on the path naturally render in front via the existing Y-depth rule.
-      const foreground = this.add.image(
-        (WORLD_MIN_X + WORLD_MAX_X) / 2,
-        WORLD_HEIGHT / 2,
-        "master-scene",
-      ).setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(1400);
-      const foregroundMask = this.make.graphics({ x: 0, y: 0 }, false);
-      foregroundMask.fillStyle(0xffffff);
-      const maskPolygons: Point[][] = [
-        // Notice board.
-        [{x:550,y:210},{x:605,y:185},{x:710,y:190},{x:755,y:220},{x:748,y:335},{x:725,y:345},{x:725,y:365},{x:698,y:365},{x:698,y:345},{x:582,y:345},{x:582,y:365},{x:558,y:365},{x:558,y:338},{x:546,y:330}],
-        // Mailbox and post.
-        [{x:505,y:292},{x:520,y:278},{x:556,y:280},{x:573,y:294},{x:571,y:352},{x:563,y:360},{x:563,y:398},{x:545,y:398},{x:545,y:361},{x:510,y:358}],
-        // Bench.
-        [{x:538,y:340},{x:718,y:340},{x:730,y:355},{x:724,y:375},{x:706,y:379},{x:712,y:419},{x:688,y:423},{x:682,y:386},{x:572,y:389},{x:565,y:423},{x:541,y:420},{x:548,y:383},{x:535,y:373}],
-        // Flower tub beside the board.
-        [{x:702,y:322},{x:745,y:318},{x:780,y:335},{x:788,y:374},{x:775,y:406},{x:743,y:411},{x:715,y:398},{x:703,y:367}],
+      // Masks are authored in v4 image pixels, independently of ground collisions.
+      // Each landmark gets its own base depth; no old-master masks are reused.
+      const occluders = [
+        { baseY: 300, polygon: [[94,70],[168,6],[285,37],[326,24],[390,105],[377,258],[292,293],[158,300],[96,263]] },
+        { baseY: 390, polygon: [[584,265],[658,234],[730,249],[724,350],[720,381],[598,391],[590,354]] },
+        { baseY: 386, polygon: [[542,312],[563,300],[590,312],[590,353],[573,356],[571,385],[555,385],[553,355],[542,351]] },
+        { baseY: 388, polygon: [[792,218],[813,198],[833,220],[827,254],[816,263],[819,365],[830,378],[823,388],[798,388],[791,378],[803,366],[807,263],[797,253]] },
+        { baseY: 435, polygon: [[866,307],[903,275],[960,254],[1007,291],[993,310],[988,353],[1007,375],[1001,417],[960,436],[900,426],[879,407],[879,369],[893,351],[894,318]] },
+        { baseY: 625, polygon: [[1177,550],[1200,511],[1229,459],[1250,509],[1268,533],[1258,545],[1290,584],[1274,598],[1297,627],[1170,639],[1150,611],[1171,583],[1157,577]] },
       ];
-      for (const polygon of maskPolygons) {
-        foregroundMask.beginPath();
-        foregroundMask.moveTo(polygon[0].x, polygon[0].y);
-        polygon.slice(1).forEach((point) => foregroundMask.lineTo(point.x, point.y));
-        foregroundMask.closePath();
-        foregroundMask.fillPath();
+      for (const { baseY, polygon } of occluders) {
+        const foreground = this.add.image((WORLD_MIN_X + WORLD_MAX_X) / 2,
+          WORLD_HEIGHT / 2, "master-scene")
+          .setDisplaySize(WORLD_WIDTH, WORLD_HEIGHT).setDepth(1000 + baseY);
+        const mask = this.make.graphics({ x: 0, y: 0 }, false);
+        mask.fillStyle(0xffffff).beginPath();
+        mask.moveTo(polygon[0][0] + WORLD_MIN_X, polygon[0][1]);
+        polygon.slice(1).forEach(([x, y]) => mask.lineTo(x + WORLD_MIN_X, y));
+        mask.closePath().fillPath();
+        foreground.setMask(mask.createGeometryMask());
+        this.events.once("shutdown", () => mask.destroy());
       }
-      foreground.setMask(foregroundMask.createGeometryMask());
 
       // Painted Linus stays dynamic so onboarding remains testable.
-      this.linus = this.add.image(720, 450, "linus-painted")
+      this.linus = this.add.image(290, 445, "linus-painted")
         .setOrigin(0.5, 0.96)
         .setDisplaySize(128, 125)
-        .setDepth(1450)
+        .setDepth(1445)
         .setInteractive({ useHandCursor: true });
+      this.residents.linus = this.linus;
       this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (requestedConstruction.attention?.resident === "linus") {
+          this.approachAttentionResident();
+          return;
+        }
         if (this.introComplete || !this.player) return;
         this.linusInteractionPending = true;
-        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 650, y: 485 });
+        this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
         else this.maybeCompleteLinusInteraction();
@@ -577,6 +542,12 @@ export async function createVillageGame(
 
   return {
     destroy: () => game.destroy(true),
+    setConstructionDialogueOpen: (open) => { constructionDialogueOpen = open; },
+    setConstruction: (presentation) => {
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setConstruction(presentation);
+      } else requestedConstruction = presentation;
+    },
     setQuestState: (state: QuestState) => {
       requestedQuestState = state;
       if (game.scene.isActive("VillageScene")) {
@@ -595,11 +566,9 @@ export async function createVillageGame(
         (game.scene.getScene("VillageScene") as VillageScene).setDogVisible(visible);
       }
     },
-    setFirstDeliveryComplete: (complete: boolean) => {
-      requestedFirstDeliveryComplete = complete;
-      if (game.scene.isActive("VillageScene")) {
-        (game.scene.getScene("VillageScene") as VillageScene).setFirstDeliveryComplete(complete);
-      }
+    presentConstructionReveal: (id, commit) => {
+      if (!game.scene.isActive("VillageScene")) return Promise.reject(new Error("Village is not ready"));
+      return (game.scene.getScene("VillageScene") as VillageScene).presentConstructionReveal(id, commit);
     },
   };
 }

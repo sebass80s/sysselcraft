@@ -1,3 +1,4 @@
+import { initialConstruction, normalizeConstruction, syncConstructionProgression, type ConstructionState } from "./construction";
 import { Preferences } from "@capacitor/preferences";
 import { linusIntroDialogue } from "./dialogues";
 import {
@@ -43,6 +44,7 @@ export type SaveStateV1 = {
   childName: string;
   dogName: string;
   dogVisible: boolean;
+  construction: ConstructionState;
   worldFlags: {
     firstDeliveryComplete: boolean;
     recyclingCenterStage: RecyclingCenterStage;
@@ -63,6 +65,7 @@ export function createDefaultSaveState(): SaveStateV1 {
     childName: "",
     dogName: "",
     dogVisible: false,
+    construction: initialConstruction(),
     worldFlags: {
       firstDeliveryComplete: false,
       recyclingCenterStage: 0,
@@ -104,7 +107,7 @@ function normalizeQuestStates(value: unknown): QuestStateMap {
   };
 }
 
-function normalizeSaveState(value: unknown): SaveStateV1 | null {
+export function normalizeSaveState(value: unknown): SaveStateV1 | null {
   if (!value || typeof value !== "object") return null;
   const candidate = value as Partial<SaveStateV1>;
   if (candidate.version !== 1) return null;
@@ -126,10 +129,17 @@ function normalizeSaveState(value: unknown): SaveStateV1 | null {
   }
   progression ??= createEmptyProgression();
 
-  const recyclingCenterStage = normalizeRecyclingCenterStage(
+  const legacyRecyclingStage = normalizeRecyclingCenterStage(
     candidate.worldFlags?.recyclingCenterStage,
     progression,
   );
+
+  // With construction state present, revealed is authoritative. The legacy earned-stage
+  // field must never turn a new pending delivery into an already visible building.
+  const construction = syncConstructionProgression(
+    normalizeConstruction(candidate.construction, legacyRecyclingStage), progression,
+  );
+  const recyclingCenterStage = construction.revealed.recycling;
 
   let dialogueIndex =
     typeof candidate.dialogueIndex === "number" && Number.isInteger(candidate.dialogueIndex)
@@ -173,11 +183,21 @@ function normalizeSaveState(value: unknown): SaveStateV1 | null {
     childName,
     dogName,
     dogVisible,
+    construction,
     worldFlags: {
       firstDeliveryComplete: recyclingCenterStage >= 1,
       recyclingCenterStage,
     },
   };
+}
+
+/** Keep legacy presentation flags consistent with the committed visible world. */
+export function withConstructionState(state: SaveStateV1, construction: ConstructionState): SaveStateV1 {
+  return { ...state, construction, worldFlags: {
+    ...state.worldFlags,
+    recyclingCenterStage: construction.revealed.recycling,
+    firstDeliveryComplete: construction.revealed.recycling >= 1,
+  } };
 }
 
 export async function loadSaveState(): Promise<SaveStateV1 | null> {
@@ -191,7 +211,7 @@ export async function loadSaveState(): Promise<SaveStateV1 | null> {
   }
 }
 
-export function saveSaveState(state: SaveStateV1): Promise<void> {
+export function saveSaveState(state: SaveStateV1, requireSuccess = false): Promise<void> {
   const snapshot = JSON.stringify(state);
   saveWriteQueue = saveWriteQueue
     .catch(() => undefined)
@@ -200,6 +220,7 @@ export function saveSaveState(state: SaveStateV1): Promise<void> {
         await Preferences.set({ key: SAVE_KEY, value: snapshot });
       } catch (error) {
         console.warn("Sysselcraft save could not be written", error);
+        if (requireSuccess) throw error;
       }
     });
   return saveWriteQueue;

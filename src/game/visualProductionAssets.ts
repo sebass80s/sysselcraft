@@ -1,9 +1,9 @@
 export const VISUAL_PRODUCTION_ASSETS = {
   recycling: [
-    "/assets/village/reboot/recycling-stage-1.webp",
-    "/assets/village/reboot/recycling-stage-2.webp",
-    "/assets/village/reboot/recycling-stage-3.webp",
-    "/assets/village/reboot/recycling-stage-4.webp",
+    "/assets/village/buildings/recycling/recycling-stage-1.webp",
+    "/assets/village/buildings/recycling/recycling-stage-2.webp",
+    "/assets/village/buildings/recycling/recycling-stage-3.webp",
+    "/assets/village/buildings/recycling/recycling-stage-4.webp",
   ],
   bakery: [
     "/assets/village/reboot/bakery-stage-1.webp",
@@ -22,19 +22,24 @@ export const VISUAL_PRODUCTION_ASSETS = {
 export type VisualProductionBuilding = keyof typeof VISUAL_PRODUCTION_ASSETS;
 export type VisualProductionStage = 1 | 2 | 3 | 4;
 
-export const VISUAL_PRODUCTION_STAGE: VisualProductionStage = 4;
+/** Gate 0 adds no progression: absent sites render and collide with nothing. */
+export const OPENING_BUILDING_STAGES: Partial<Record<VisualProductionBuilding, VisualProductionStage>> = {};
 
 export const VISUAL_PRODUCTION_PLACEMENTS = [
-  { building: "recycling", x: -110, y: 360, width: 260, height: 210 },
-  { building: "bakery", x: 1080, y: 310, width: 285, height: 225 },
-  { building: "clinic", x: 1190, y: 535, width: 260, height: 210 },
-] as const satisfies readonly {
-  building: VisualProductionBuilding;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}[];
+  { building: "recycling", x: -180, baseY: 500, width: 330, height: 236, footprint: { width: 190, height: 72 }, approach: { x: -180, y: 558 } },
+  { building: "bakery", x: 835, baseY: 305, width: 330, height: 295, footprint: { width: 205, height: 72 }, approach: { x: 835, y: 363 } },
+  { building: "clinic", x: 1110, baseY: 500, width: 350, height: 279, footprint: { width: 205, height: 72 }, approach: { x: 970, y: 500 } },
+] as const;
+
+// Normalized v4 canvases retain the production ground anchor across all stages.
+export const VISUAL_PRODUCTION_ORIGIN = { x: 0.5, y: 0.92 } as const;
+
+export function getVisualProductionObstacles(stages = OPENING_BUILDING_STAGES) {
+  return VISUAL_PRODUCTION_PLACEMENTS.filter(p => stages[p.building]).map(p => ({
+    type: "rect" as const, x: p.x, y: p.baseY,
+    width: p.footprint.width, height: p.footprint.height,
+  }));
+}
 
 export function getVisualProductionAsset(
   building: VisualProductionBuilding,
