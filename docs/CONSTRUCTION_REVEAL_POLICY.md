@@ -34,6 +34,19 @@ The mechanism must remain generic under the hood (`resident wants to talk` / res
 
 > **NPCs are residents, not buttons.**
 
+### Reveal secrecy / spoiler rule
+
+Resident attention exists to bring the child to the reveal, **not to explain the reveal before it happens**.
+
+- Before the reveal, resident dialogue may signal that something has happened, changed, arrived or is worth seeing, but must not name or describe the new building, construction stage, delivered structure or other meaningful surprise.
+- HUD attention copy must remain similarly non-spoiling. `Linus vill prata med dig` is guidance; it does not explain the reward.
+- Do not use dialogue such as "the recycling station is being built" or otherwise announce the visual payoff before the child witnesses it.
+- Prefer curiosity-driving copy in the spirit of: `Du, kom hit ett slag. Det har hänt något här som jag tror att du vill se.` Exact authored dialogue may evolve, but the secrecy rule is locked.
+- Once the reveal has begun or the visual change is visible, residents may naturally acknowledge or discuss what the child can now see.
+- Apply the same rule to future residents and buildings unless an authored story beat intentionally requires foreknowledge.
+
+**The resident points toward the surprise; the world delivers it.**
+
 ## Recycling stages 1-4
 
 All Recycling construction stages use the same resident-attention gate.
@@ -44,7 +57,7 @@ The truck/delivery sequence remains the stage-1 reveal presentation, but **it no
 
 Required flow:
 
-`first quest approved -> stage 1 earned/pending -> HUD "Linus vill prata med dig" -> Linus beside Recycling site -> child visits Linus -> conversation/interact -> truck/delivery reveal starts while child/camera are at the site -> stage 1 visible/collision committed`
+`first quest approved -> stage 1 earned/pending -> HUD "Linus vill prata med dig" -> Linus beside Recycling site -> child visits Linus -> non-spoiling conversation/interact -> truck/delivery reveal starts while child/camera are at the site -> stage 1 visible/collision committed`
 
 The existing truck animation/timing/reveal should otherwise be preserved. The change is its trigger/choreography, not its visual identity.
 
@@ -52,7 +65,7 @@ The existing truck animation/timing/reveal should otherwise be preserved. The ch
 
 Use the same pattern:
 
-`stage earned -> pending -> Linus at Recycling -> HUD attention -> child visits -> conversation/interact -> construction reveal -> visible stage + collision committed`
+`stage earned -> pending -> Linus at Recycling -> HUD attention -> child visits -> non-spoiling conversation/interact -> construction reveal -> visible stage + collision committed`
 
 Do not invent new product progression thresholds merely to exercise stages 2-4. Development/test triggers may be used when clearly isolated from production behavior.
 
@@ -74,6 +87,8 @@ Do not invent new product progression thresholds merely to exercise stages 2-4. 
 A construction reveal fails product QA if the meaningful visual change can occur while the child/camera are elsewhere and therefore miss it.
 
 Resident attention is the default choreography for bringing the player to the correct location. Prefer this diegetic solution over forced camera teleport/pan.
+
+A reveal also fails narrative QA if the resident-attention dialogue gives away the meaningful surprise before the child witnesses it. Arrival and interaction should build anticipation rather than replace the visual reveal with exposition.
 
 ## Implementation boundary
 
