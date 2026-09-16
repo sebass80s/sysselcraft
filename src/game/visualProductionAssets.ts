@@ -6,10 +6,10 @@ export const VISUAL_PRODUCTION_ASSETS = {
     "/assets/village/buildings/recycling/recycling-stage-4.webp",
   ],
   bakery: [
-    "/assets/village/reboot/bakery-stage-1.webp",
-    "/assets/village/reboot/bakery-stage-2.webp",
-    "/assets/village/reboot/bakery-stage-3.webp",
-    "/assets/village/reboot/bakery-stage-4.webp",
+    "/assets/village/buildings/bakery/bakery-stage-1.webp",
+    "/assets/village/buildings/bakery/bakery-stage-2.webp",
+    "/assets/village/buildings/bakery/bakery-stage-3.webp",
+    "/assets/village/buildings/bakery/bakery-stage-4.webp",
   ],
   clinic: [
     "/assets/village/reboot/clinic-stage-1.webp",
@@ -22,7 +22,7 @@ export const VISUAL_PRODUCTION_ASSETS = {
 export type VisualProductionBuilding = keyof typeof VISUAL_PRODUCTION_ASSETS;
 export type VisualProductionStage = 1 | 2 | 3 | 4;
 
-/** Gate 0 adds no progression: absent sites render and collide with nothing. */
+/** Stage 0 is visually absent and contributes no collision. */
 export const OPENING_BUILDING_STAGES: Partial<Record<VisualProductionBuilding, VisualProductionStage>> = {};
 
 export const VISUAL_PRODUCTION_PLACEMENTS = [
@@ -31,7 +31,7 @@ export const VISUAL_PRODUCTION_PLACEMENTS = [
   { building: "clinic", x: 1110, baseY: 500, width: 350, height: 279, footprint: { width: 205, height: 72 }, approach: { x: 970, y: 500 } },
 ] as const;
 
-// Normalized v4 canvases retain the production ground anchor across all stages.
+// Normalized production canvases retain the production ground anchor across all stages.
 export const VISUAL_PRODUCTION_ORIGIN = { x: 0.5, y: 0.92 } as const;
 
 export function getVisualProductionObstacles(stages = OPENING_BUILDING_STAGES) {
