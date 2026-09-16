@@ -10,12 +10,20 @@ import {
   type ProgressionState,
   type QuestId,
 } from "../game/quests";
-import { initialConstruction, syncConstructionProgression, earnConstruction, residentAttention, commitConstructionReveal, type ConstructionState } from "../game/construction";
-import { constructionPresentation } from "../game/constructionPresentation";
-import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import {
-  getRecyclingCenterStatus,
-} from "../game/worldProgression";
+  initialConstruction,
+  syncConstructionProgression,
+  earnConstruction,
+  residentAttention,
+  commitConstructionReveal,
+  recyclingCompletionPending,
+  commitRecyclingCompletion,
+  type ConstructionState,
+} from "../game/construction";
+import { constructionPresentation } from "../game/constructionPresentation";
+import { recyclingCompletionDialogue } from "../game/recyclingStory";
+import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
+import { getRecyclingCenterStatus } from "../game/worldProgression";
 
 export default function VillagePrototype() {
   const [construction, setConstruction] = useState(initialConstruction);
@@ -25,6 +33,8 @@ export default function VillagePrototype() {
   const [constructionBusy, setConstructionBusy] = useState(false);
   const [constructionError, setConstructionError] = useState("");
   const [constructionDialogueId, setConstructionDialogueId] = useState<string | null>(null);
+  const [recyclingStoryOpen, setRecyclingStoryOpen] = useState(false);
+  const [recyclingStoryIndex, setRecyclingStoryIndex] = useState(0);
   const attention = residentAttention(construction);
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
@@ -53,6 +63,7 @@ export default function VillagePrototype() {
   const [resettingSave, setResettingSave] = useState(false);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
+  const recyclingStoryLine = recyclingStoryOpen ? recyclingCompletionDialogue[recyclingStoryIndex] : null;
   const pendingCount = questState === "pending" ? 1 : 0;
   const recyclingCenterStage = construction.revealed.recycling;
   const recyclingCenterStatus = getRecyclingCenterStatus(recyclingCenterStage);
@@ -85,6 +96,10 @@ export default function VillagePrototype() {
         setDogVisible(saved.dogVisible);
         setChildNameCanSubmit(Boolean(saved.childName.trim()));
         setDogNameCanSubmit(Boolean(saved.dogName.trim()));
+        if (recyclingCompletionPending(saved.construction)) {
+          setRecyclingStoryIndex(0);
+          setRecyclingStoryOpen(true);
+        }
       }
 
       setSaveReady(true);
@@ -212,7 +227,6 @@ export default function VillagePrototype() {
         latestSaveRef.current = snapshot;
         constructionRef.current = next;
         setConstruction(next);
-        // Apply committed render/collision together at delivery arrival, before departure.
         gameRef.current?.setConstruction(constructionPresentation(next));
       };
       if (revealId) {
@@ -223,11 +237,48 @@ export default function VillagePrototype() {
       } else await commit();
       setConstructionDialogueId(null);
       gameRef.current?.setConstructionDialogueOpen(false);
+      if (revealId === "recycling:4" && recyclingCompletionPending(next)) {
+        setRecyclingStoryIndex(0);
+        setRecyclingStoryOpen(true);
+      }
     } catch {
       setConstructionError("Det gick inte att spara. Försök igen.");
       if (revealId && residentAttention(constructionRef.current)?.id === revealId) {
         setConstructionDialogueId(revealId);
       } else gameRef.current?.setConstructionDialogueOpen(false);
+    } finally {
+      constructionWriteRef.current = false;
+      setConstructionBusy(false);
+    }
+  }
+
+  async function advanceRecyclingStory() {
+    if (!recyclingStoryLine || constructionBusy) return;
+    const nextIndex = recyclingStoryIndex + 1;
+    if (nextIndex < recyclingCompletionDialogue.length) {
+      setRecyclingStoryIndex(nextIndex);
+      return;
+    }
+
+    const next = commitRecyclingCompletion(constructionRef.current);
+    if (next === constructionRef.current || !latestSaveRef.current) {
+      setRecyclingStoryOpen(false);
+      return;
+    }
+
+    constructionWriteRef.current = true;
+    setConstructionBusy(true);
+    setConstructionError("");
+    try {
+      const snapshot = withConstructionState(latestSaveRef.current, next);
+      await saveSaveState(snapshot, true);
+      latestSaveRef.current = snapshot;
+      constructionRef.current = next;
+      setConstruction(next);
+      setRecyclingStoryOpen(false);
+      setRecyclingStoryIndex(0);
+    } catch {
+      setConstructionError("Det gick inte att spara. Försök igen.");
     } finally {
       constructionWriteRef.current = false;
       setConstructionBusy(false);
@@ -278,9 +329,7 @@ export default function VillagePrototype() {
       questState !== "pending" ||
       approvalLockRef.current ||
       completedQuestIds.includes(makeBedQuest.id)
-    ) {
-      return;
-    }
+    ) return;
 
     approvalLockRef.current = true;
     setQuestState("approved");
@@ -325,18 +374,14 @@ export default function VillagePrototype() {
       : dialogueStep?.kind === "line"
         ? dialogueStep.speaker
         : "";
+  const recyclingSpeakerName = recyclingStoryLine?.speaker === "Barnet" ? childName || "Barnet" : recyclingStoryLine?.speaker ?? "";
 
   return (
     <section className="prototype-shell">
       <header className="prototype-header">
         <div className="prototype-brand-row">
           <h1>Sysselcraft</h1>
-          <button
-            className="parent-menu-button"
-            type="button"
-            onClick={() => setParentMenuOpen(true)}
-            aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}
-          >
+          <button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>
             🔐 Vuxenläge
             {pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}
           </button>
@@ -361,8 +406,7 @@ export default function VillagePrototype() {
           <div className="dialogue-card" role="dialog" aria-modal="true" aria-label="Byggplatsens samtal">
             <span className="dialogue-speaker">{attention.residentName}</span>
             <p>{attention.dialogue}</p>
-            <button className="primary-button" disabled={constructionBusy}
-              onClick={() => void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id)}>
+            <button className="primary-button" disabled={constructionBusy} onClick={() => void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id)}>
               {constructionBusy ? "Sparar…" : "Fortsätt"}
             </button>
             <button className="secondary-button" disabled={constructionBusy} onClick={() => {
@@ -373,13 +417,22 @@ export default function VillagePrototype() {
           </div>
         )}
 
-        {dialogueOpen && dialogueStep && (
+        {recyclingStoryOpen && recyclingStoryLine && (
+          <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig">
+            <span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span>
+            <p>{recyclingStoryLine.text}</p>
+            <button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>
+              {constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
+            </button>
+            {constructionError && <p role="alert">{constructionError}</p>}
+          </div>
+        )}
+
+        {dialogueOpen && dialogueStep && !recyclingStoryOpen && (
           <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite">
             {dialogueStep.kind === "line" && (
               <>
-                <span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>
-                  {speakerName}
-                </span>
+                <span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{speakerName}</span>
                 <p>{dialogueStep.text}</p>
                 <button className="primary-button dialogue-next" onClick={advanceDialogue}>Fortsätt</button>
               </>
@@ -388,87 +441,41 @@ export default function VillagePrototype() {
               <>
                 <span className="dialogue-speaker">Linus</span>
                 <h2>Vad heter du?</h2>
-                <input
-                  ref={childNameInputRef}
-                  className="dog-name-input"
-                  defaultValue={childName}
-                  onInput={(event) => setChildNameCanSubmit(Boolean(event.currentTarget.value.trim()))}
-                  onKeyDown={(event) => event.key === "Enter" && finishChildNaming()}
-                  maxLength={18}
-                  autoFocus
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoCapitalize="words"
-                  spellCheck={false}
-                  inputMode="text"
-                  enterKeyHint="done"
-                  placeholder="Skriv ditt namn"
-                />
-                <button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>
-                  Det är jag!
-                </button>
+                <input ref={childNameInputRef} className="dog-name-input" defaultValue={childName} onInput={(event) => setChildNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishChildNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ditt namn" />
+                <button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>Det är jag!</button>
               </>
             )}
             {dialogueStep.kind === "name-dog" && (
               <>
                 <span className="dialogue-speaker dog">🐶 Din nya kompis</span>
                 <h2>Vad ska valpen heta?</h2>
-                <input
-                  ref={dogNameInputRef}
-                  className="dog-name-input"
-                  defaultValue={dogName}
-                  onInput={(event) => setDogNameCanSubmit(Boolean(event.currentTarget.value.trim()))}
-                  onKeyDown={(event) => event.key === "Enter" && finishDogNaming()}
-                  maxLength={18}
-                  autoFocus
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoCapitalize="words"
-                  spellCheck={false}
-                  inputMode="text"
-                  enterKeyHint="done"
-                  placeholder="Skriv ett namn"
-                />
-                <button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>
-                  Det blir namnet!
-                </button>
+                <input ref={dogNameInputRef} className="dog-name-input" defaultValue={dogName} onInput={(event) => setDogNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishDogNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ett namn" />
+                <button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>Det blir namnet!</button>
               </>
             )}
           </div>
         )}
 
-        {questOpen && introComplete && (
+        {questOpen && introComplete && !recyclingStoryOpen && (
           <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="quest-title">
             <button className="close-button" onClick={() => setQuestOpen(false)} aria-label="Stäng">×</button>
             <span className="quest-kicker">Dagens första quest</span>
             <h2 id="quest-title">{makeBedQuest.icon} {makeBedQuest.title}</h2>
             <p>{makeBedQuest.description}</p>
-            <div className="quest-reward">
-              Belöning: 💎 {makeBedQuest.reward.diamonds} · 🪙 {makeBedQuest.reward.sysselBux}
-            </div>
-            {questState === "available" && (
-              <button className="primary-button" onClick={submitQuest}>Jag har bäddat klart</button>
-            )}
+            <div className="quest-reward">Belöning: 💎 {makeBedQuest.reward.diamonds} · 🪙 {makeBedQuest.reward.sysselBux}</div>
+            {questState === "available" && <button className="primary-button" onClick={submitQuest}>Jag har bäddat klart</button>}
             {questState === "pending" && <div className="pending-message">⏳ Väntar på en vuxen</div>}
             {questState === "approved" && <div className="approved-message">✓ Godkänd!</div>}
           </div>
         )}
 
-        {parentMenuOpen && (
+        {parentMenuOpen && !recyclingStoryOpen && (
           <div className="parent-menu-backdrop" role="presentation" onMouseDown={() => setParentMenuOpen(false)}>
-            <section
-              className="parent-menu-panel"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="parent-menu-title"
-              onMouseDown={(event) => event.stopPropagation()}
-            >
+            <section className="parent-menu-panel" role="dialog" aria-modal="true" aria-labelledby="parent-menu-title" onMouseDown={(event) => event.stopPropagation()}>
               <button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button>
               <span className="parent-menu-kicker">🔐 Lokal testkontroll</span>
               <h2 id="parent-menu-title">Första quest-loopen</h2>
-              <p className="parent-menu-note">
-                Den här panelen finns bara för den lokala prototypquesten Bädda sängen medan save-migreringen testas. Familjekonto och nya föräldrauppdrag hanteras i det riktiga föräldraläget.
-              </p>
+              <p className="parent-menu-note">Den här panelen finns bara för den lokala prototypquesten Bädda sängen medan save-migreringen testas. Familjekonto och nya föräldrauppdrag hanteras i det riktiga föräldraläget.</p>
               <a className="secondary-button" href="/parent">Öppna föräldraläget</a>
 
               <div className="parent-profile-card">
@@ -490,32 +497,19 @@ export default function VillagePrototype() {
 
               {questState === "pending" ? (
                 <article className="parent-quest-card">
-                  <div>
-                    <span>{makeBedQuest.icon}</span>
-                    <div>
-                      <strong>{makeBedQuest.title}</strong>
-                      <small>Barnet har markerat uppgiften som klar.</small>
-                    </div>
-                  </div>
+                  <div><span>{makeBedQuest.icon}</span><div><strong>{makeBedQuest.title}</strong><small>Barnet har markerat uppgiften som klar.</small></div></div>
                   <div className="parent-quest-actions">
                     <button className="primary-button compact" onClick={approveQuest}>Godkänn</button>
                     <button className="secondary-button compact" onClick={needsCompletion}>Behöver kompletteras</button>
                   </div>
                 </article>
-              ) : (
-                <div className="parent-empty-state">✓ Inget lokalt prototypuppdrag väntar just nu.</div>
-              )}
+              ) : <div className="parent-empty-state">✓ Inget lokalt prototypuppdrag väntar just nu.</div>}
 
               {process.env.NODE_ENV === "development" && (
                 <div className="parent-profile-card">
                   <span>DEV/test · ingen produkttröskel</span>
                   {[2, 3, 4].map((stage) => (
-                    <button
-                      key={stage}
-                      className="secondary-button"
-                      disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage}
-                      onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}
-                    >
+                    <button key={stage} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>
                       DEV: tjäna in Recycling stage {stage}
                     </button>
                   ))}
@@ -526,14 +520,7 @@ export default function VillagePrototype() {
 
               <div className="parent-menu-footer">
                 <span>Den lokala loopen behålls tills reconciliation är testad på fysisk iPhone.</span>
-                <button
-                  className="debug-reset-button"
-                  type="button"
-                  onClick={resetPrototypeSave}
-                  disabled={!saveReady || resettingSave || constructionBusy}
-                >
-                  ↺ Nollställ testsparning
-                </button>
+                <button className="debug-reset-button" type="button" onClick={resetPrototypeSave} disabled={!saveReady || resettingSave || constructionBusy}>↺ Nollställ testsparning</button>
               </div>
             </section>
           </div>
