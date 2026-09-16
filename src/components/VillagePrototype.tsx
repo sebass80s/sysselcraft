@@ -509,11 +509,17 @@ export default function VillagePrototype() {
               {process.env.NODE_ENV === "development" && (
                 <div className="parent-profile-card">
                   <span>DEV/test · ingen produkttröskel</span>
-                  <button className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== 1 || construction.earned.recycling >= 2}
-                    onClick={() => void persistConstruction(earnConstruction(constructionRef.current, "recycling:2"))}>
-                    DEV: tjäna in Recycling stage 2
-                  </button>
-                  <small>Kräver avslutad första leverans. Skapar väntande samtal, visar inte stage 2.</small>
+                  {[2, 3, 4].map((stage) => (
+                    <button
+                      key={stage}
+                      className="secondary-button"
+                      disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage}
+                      onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}
+                    >
+                      DEV: tjäna in Recycling stage {stage}
+                    </button>
+                  ))}
+                  <small>Varje steg kräver att föregående reveal är klar. Skapar väntande samtal utan att visa nästa stage direkt.</small>
                   {constructionError && <p role="alert">{constructionError}</p>}
                 </div>
               )}
