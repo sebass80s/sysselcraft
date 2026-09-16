@@ -26,9 +26,36 @@ export type VisualProductionStage = 1 | 2 | 3 | 4;
 export const OPENING_BUILDING_STAGES: Partial<Record<VisualProductionBuilding, VisualProductionStage>> = {};
 
 export const VISUAL_PRODUCTION_PLACEMENTS = [
-  { building: "recycling", x: -180, baseY: 500, width: 330, height: 236, footprint: { width: 190, height: 72 }, approach: { x: -180, y: 558 } },
-  { building: "bakery", x: 835, baseY: 305, width: 330, height: 295, footprint: { width: 205, height: 72 }, approach: { x: 835, y: 363 } },
-  { building: "clinic", x: 1110, baseY: 500, width: 350, height: 279, footprint: { width: 205, height: 72 }, approach: { x: 970, y: 500 } },
+  {
+    building: "recycling",
+    x: -180,
+    baseY: 500,
+    width: 330,
+    height: 236,
+    footprint: { width: 190, height: 72 },
+    approach: { x: -180, y: 558 },
+    guidePosition: { x: -132, y: 570 },
+  },
+  {
+    building: "bakery",
+    x: 835,
+    baseY: 305,
+    width: 330,
+    height: 295,
+    footprint: { width: 205, height: 72 },
+    approach: { x: 835, y: 363 },
+    guidePosition: { x: 883, y: 375 },
+  },
+  {
+    building: "clinic",
+    x: 1110,
+    baseY: 500,
+    width: 350,
+    height: 279,
+    footprint: { width: 205, height: 72 },
+    approach: { x: 970, y: 500 },
+    guidePosition: { x: 1018, y: 512 },
+  },
 ] as const;
 
 // Normalized production canvases retain the production ground anchor across all stages.
