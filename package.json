@@ -8,7 +8,7 @@
     "lint": "eslint --max-warnings=0",
     "visual:audit": "node scripts/audit-visual-assets.mjs",
     "production:audit": "node scripts/audit-reboot-production-assets.mjs",
-    "construction:test": "node scripts/test-construction.mjs && node scripts/test-construction-late-stages.mjs",
+    "construction:test": "node scripts/test-construction.mjs && node scripts/test-construction-late-stages.mjs && node scripts/test-recycling-completion-save.mjs",
     "verify": "npm run visual:audit && npm run construction:test && npm run lint && npm run build",
     "cap:sync": "npx cap sync",
     "cap:copy": "npx cap copy",
