@@ -14,11 +14,19 @@ export type ConstructionReveal = {
 // Authored reveal content, not progression thresholds. More residents/buildings can use this queue.
 export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
   id: "recycling:1", building: "recycling", stage: 1, resident: "linus", residentName: "Linus",
-  dialogue: "Kom och titta! Nu kan vi ta emot den första leveransen till återvinningscentralen.",
+  dialogue: "Du, kom hit ett slag. Det har hänt något här som jag tror att du vill se.",
   presentation: "delivery",
 }, {
   id: "recycling:2", building: "recycling", stage: 2, resident: "linus", residentName: "Linus",
-  dialogue: "Kom och titta! Nu är det dags för nästa steg på återvinningscentralen.",
+  dialogue: "Du, kom hit igen. Det har hänt något här sedan sist.",
+  presentation: "construction",
+}, {
+  id: "recycling:3", building: "recycling", stage: 3, resident: "linus", residentName: "Linus",
+  dialogue: "Jag tror du vill komma och se vad som har hänt här.",
+  presentation: "construction",
+}, {
+  id: "recycling:4", building: "recycling", stage: 4, resident: "linus", residentName: "Linus",
+  dialogue: "Kom hit när du har en stund. Det finns något här som du borde få se själv.",
   presentation: "construction",
 }];
 export type ConstructionState = {
@@ -30,7 +38,7 @@ export function initialConstruction(): ConstructionState {
   return { earned: createInitialMvpBuildingStages(), revealed: createInitialMvpBuildingStages(), pending: [] };
 }
 
-/** Legacy stages were already visible. Never infer stage 2 from quest totals. */
+/** Legacy stages were already visible. Never infer later stages from quest totals. */
 export function normalizeConstruction(value: unknown, legacyVisible: BuildingStage = 0): ConstructionState {
   const result = initialConstruction();
   if (!value || typeof value !== "object") {
