@@ -2,6 +2,29 @@
 
 > Current-state sections and `docs/NOVA_HANDOFF_MANIFEST.md` supersede stale historical assumptions.
 
+## Local workspace safety law (LOCKED 2026-09-16)
+
+The canonical local working tree on Kalle's Mac is:
+
+`/Users/karoaa/Developer/sysselcraft`
+
+This path is intentionally outside OneDrive and other cloud-synced folders. OneDrive previously interfered with the working tree while synchronizing a very large number of files, so local agents must treat cloud-synced copies as unsafe/non-canonical.
+
+**Before any local Codex or other local-agent edit, build, Git operation or inspection:**
+
+1. Run `cd /Users/karoaa/Developer/sysselcraft && pwd -P`.
+2. Continue only if the resolved physical path is exactly `/Users/karoaa/Developer/sysselcraft`.
+3. Run `git status` before editing and preserve all existing uncommitted work.
+
+Hard rules:
+- Do not access, copy, move, edit, build from or use a Sysselcraft repository under OneDrive, `CloudStorage`, cloud-synced Desktop/Documents or any other synced location.
+- Do not relocate the canonical repository into a synced folder.
+- If the resolved physical path differs from the canonical path, **STOP and report the mismatch** rather than attempting to repair or migrate it autonomously.
+- Never use `git reset`, `git clean`, `git stash`, `git restore`, checkout-overwrite or similar destructive/working-tree-changing operations on existing work unless Kalle explicitly approves that exact action.
+- Existing local v4/PoC/native changes may be ahead of GitHub. GitHub state must not be assumed to supersede the local working tree.
+
+This rule applies to **Codex, current Nova and every future Nova/handoff**. Any local-work prompt should repeat the canonical path and safety check explicitly.
+
 ## Autonomous execution law (LOCKED 2026-09-15)
 
 **When the user says `kör`, `kör på`, `bara kör`, `bygg på nu`, `fortsätt` or equivalent after a direction has been established, Nova must continue advancing the actual project autonomously until there is a genuine blocker that requires the user.**
@@ -223,12 +246,13 @@ Standard GitHub-hosted Actions for this public repository are approved autonomou
 
 ## Nova + local Codex workflow (2026-09-15)
 
-The user has Codex desktop locally and can open the local `sysselcraft` working tree. This is the approved implementation path when work requires the local tree.
+The user has Codex desktop locally and can open the canonical local `sysselcraft` working tree at `/Users/karoaa/Developer/sysselcraft`. This is the approved implementation path when work requires the local tree.
 
 - **Nova owns continuity, product/design decisions, architecture, review and task decomposition.**
 - **Codex acts as local implementation hands** for focused repository edits, local inspection and local verification.
+- Every Codex prompt that touches the local repo must repeat the **Local workspace safety law** above: verify `pwd -P` equals `/Users/karoaa/Developer/sysselcraft`, never use OneDrive/CloudStorage/synced copies, and inspect `git status` before editing.
 - Prefer narrow, explicit Codex tasks with named files, invariants and a clear stop condition.
-- Before Codex work inspect `git status`. The local tree may contain valuable native/iPhone work and unrelated modifications; Codex must not reset, clean, stash, stage, overwrite or commit those unless explicitly required.
+- Before Codex work inspect `git status`. The local tree may contain valuable native/iPhone work and unrelated modifications; Codex must not reset, clean, stash, restore, stage, overwrite or commit those unless explicitly required.
 - For risky edits, make the smallest diff and show exact diff, local checks and `git status` before commit.
 - Local TypeScript/build/runtime checks are preferred before spending remote resources.
 - Vercel deployments and GitHub Actions remain separate controlled resources.
