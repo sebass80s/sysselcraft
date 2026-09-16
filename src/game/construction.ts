@@ -29,13 +29,23 @@ export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
   dialogue: "Kom hit när du har en stund. Det finns något här som du borde få se själv.",
   presentation: "construction",
 }];
+
+export const RECYCLING_COMPLETION_BEAT = "recycling:completion" as const;
+export type ConstructionStoryBeat = typeof RECYCLING_COMPLETION_BEAT;
+
 export type ConstructionState = {
   earned: MvpBuildingStages;
   revealed: MvpBuildingStages;
   pending: string[];
+  completedStoryBeats: ConstructionStoryBeat[];
 };
 export function initialConstruction(): ConstructionState {
-  return { earned: createInitialMvpBuildingStages(), revealed: createInitialMvpBuildingStages(), pending: [] };
+  return {
+    earned: createInitialMvpBuildingStages(),
+    revealed: createInitialMvpBuildingStages(),
+    pending: [],
+    completedStoryBeats: [],
+  };
 }
 
 /** Legacy stages were already visible. Never infer later stages from quest totals. */
@@ -52,6 +62,9 @@ export function normalizeConstruction(value: unknown, legacyVisible: BuildingSta
   }
   // Canonical deterministic IDs repair missing/duplicate pending entries after reload.
   result.pending = CONSTRUCTION_REVEALS.filter(r => result.earned[r.building] >= r.stage && result.revealed[r.building] < r.stage).map(r => r.id);
+  result.completedStoryBeats = Array.isArray(candidate.completedStoryBeats) && candidate.completedStoryBeats.includes(RECYCLING_COMPLETION_BEAT)
+    ? [RECYCLING_COMPLETION_BEAT]
+    : [];
   return result;
 }
 
@@ -71,4 +84,13 @@ export function commitConstructionReveal(state: ConstructionState, id: string): 
   const reveal = residentAttention(state);
   if (!reveal || reveal.id !== id || state.earned[reveal.building] < reveal.stage) return state;
   return normalizeConstruction({ ...state, revealed: { ...state.revealed, [reveal.building]: reveal.stage } });
+}
+
+export function recyclingCompletionPending(state: ConstructionState): boolean {
+  return state.revealed.recycling >= 4 && !state.completedStoryBeats.includes(RECYCLING_COMPLETION_BEAT);
+}
+
+export function commitRecyclingCompletion(state: ConstructionState): ConstructionState {
+  if (!recyclingCompletionPending(state)) return state;
+  return normalizeConstruction({ ...state, completedStoryBeats: [...state.completedStoryBeats, RECYCLING_COMPLETION_BEAT] });
 }
