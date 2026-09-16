@@ -88,6 +88,32 @@ Keep these concepts separate:
 
 This prevents the construction reducer from becoming a story director. Henning remains the first new resident, but his exact arrival choreography must be authored rather than appearing as a numeric side effect.
 
+## Bakery production assets ready locally
+
+Kalle placed the four actual Bakery production assets in the canonical local working tree under:
+
+`public/assets/village/buildings/bakery/`
+
+Expected files:
+
+- `bakery-stage-1.webp`
+- `bakery-stage-2.webp`
+- `bakery-stage-3.webp`
+- `bakery-stage-4.webp`
+
+These are the intended runtime building-stage assets, not concept sheets. Stage 0 deliberately has **no asset**: before Bakery is earned/revealed, the future site remains visually absent and must not create Bakery collision.
+
+Asset integration contract:
+
+- preserve the existing authored Bakery placement/approach contract rather than deriving gameplay geometry from bitmap bounds;
+- use one stable ground/base anchor across all four stages so construction grows in place rather than visually jumping;
+- display-size normalization may differ from source pixel dimensions, but all stages must align to the same world footprint/base point;
+- collision is independent from transparent image bounds and activates only with the committed visible stage;
+- do not bake stage labels, progress numbers, UI or explanatory copy into the world artwork;
+- no production quest/progression thresholds are implied merely because all four Bakery images now exist.
+
+The local working tree is authoritative for these binary assets. Do **not** pull/reset/clean/stash or overwrite the tree in order to make GitHub match this note.
+
 ## Why Bakery comes after Recycling 1-4
 
 Recycling stages 3-4 are the cheapest proof that the local generic reveal machinery handles repeated progression cleanly. Bakery is the stronger architectural proof: a second building must use the same construction domain/presentation contract without Recycling-specific assumptions.
@@ -131,11 +157,13 @@ After implementation, require:
 - stage-1 and stage-2 regression coverage;
 - explicit assertion that stage 0 means no building sprite/collision;
 - explicit assertion that pending state alone does not activate the new visible stage/collision;
+- Bakery asset existence/preload checks for all four stage files when Bakery integration begins;
+- Bakery stage alignment checked in runtime at the authored site, not inferred from source image dimensions;
 - lint;
 - `npm run build`;
 - `git diff --check`;
 - browser runtime on the current local port;
-- Kalle visual QA before claiming the complete Recycling arc proven.
+- Kalle visual QA before claiming the complete Recycling arc or Bakery integration proven.
 
 No Vercel deployment is required for this slice.
 
