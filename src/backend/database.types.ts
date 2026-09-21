@@ -468,6 +468,15 @@ export type Database = {
         Args: { p_approve: boolean; p_instance_id: string };
         Returns: undefined;
       };
+      set_parent_quest_recurrence: {
+        Args: {
+          p_quest_id: string;
+          p_recurrence_kind: string;
+          p_recurrence_timezone?: string | null;
+          p_recurrence_weekdays?: number[];
+        };
+        Returns: undefined;
+      };
       submit_quest: { Args: { p_instance_id: string }; Returns: undefined };
       update_parent_quest: {
         Args: {
