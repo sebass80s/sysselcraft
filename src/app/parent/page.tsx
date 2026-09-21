@@ -17,7 +17,6 @@ import {
   listChildren,
   listHouseholds,
   listParentQuestDefinitions,
-  materializeDueQuestInstances,
   reviewQuest,
   updateParentQuestV2,
   type ParentQuestDefinition,
@@ -71,7 +70,6 @@ export default function ParentModePage() {
       setQuestDefinitions([]);
       return;
     }
-    await materializeDueQuestInstances(id);
     const [nextQuests, nextDefinitions] = await Promise.all([
       listChildQuests(id),
       listParentQuestDefinitions(id),
