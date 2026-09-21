@@ -245,6 +245,7 @@ export default function ReconciliationDiagnostics() {
       {captureMessage && <p className={styles.message}>{captureMessage}</p>}
 
       <div className={styles.actions}>
+        <a href="/">Stäng diagnostik</a>
         {result && (
           <button type="button" disabled={busy} onClick={copyCapture}>
             Kopiera snapshot
