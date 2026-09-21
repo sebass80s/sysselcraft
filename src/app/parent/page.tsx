@@ -19,8 +19,7 @@ import {
   listParentQuestDefinitions,
   materializeDueQuestInstances,
   reviewQuest,
-  setParentQuestRecurrence,
-  updateParentQuest,
+  updateParentQuestV2,
   type ParentQuestDefinition,
   type QuestRecurrenceKind,
 } from "@/backend/familyRepository";
@@ -204,9 +203,9 @@ export default function ParentModePage() {
     setMessage("");
     try {
       if (editingQuestId) {
-        await updateParentQuest(editingQuestId, draft);
-        await setParentQuestRecurrence(
+        await updateParentQuestV2(
           editingQuestId,
+          draft,
           recurrenceKind,
           recurrenceWeekdays,
           Intl.DateTimeFormat().resolvedOptions().timeZone,
