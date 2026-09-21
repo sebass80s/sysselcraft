@@ -17,12 +17,12 @@ export type VillageGameHandle = {
   setQuestState: (state: QuestState) => void;
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
-  setNoticeboardAttention: (active: boolean) => void;
+  setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", active: boolean) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
 type Callbacks = {
   onQuestOpen: () => void;
-  onNoticeboardInteract?: () => void;
+  onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus") => void;
   onLinusInteract: () => void;
   onConstructionInteract: (id: string) => void;
 };
@@ -61,7 +61,7 @@ export async function createVillageGame(
   let requestedQuestState: QuestState = "available";
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
-  let requestedNoticeboardAttention = false;
+  let requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -138,7 +138,7 @@ export async function createVillageGame(
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
       this.createQuestMarker();
       this.createNoticeboardMarker();
-      this.setNoticeboardAttention(requestedNoticeboardAttention);
+      this.setQuestSourceAttention("noticeboard", requestedQuestSourceAttention.noticeboard);
       this.setIntroComplete(requestedIntroComplete);
       this.applyQuestState(requestedQuestState);
       this.setConstruction(requestedConstruction);
@@ -277,7 +277,7 @@ export async function createVillageGame(
           this.noticeboardInteractionPending = false;
           this.path = [];
           this.targetMarker?.setVisible(false);
-          callbacks.onNoticeboardInteract?.();
+          callbacks.onQuestSourceInteract?.("noticeboard");
           return;
         }
       }
@@ -342,9 +342,9 @@ export async function createVillageGame(
       this.worldImage(315, 267, "quest-board");
     }
 
-    setNoticeboardAttention(active: boolean) {
-      requestedNoticeboardAttention = active;
-      this.noticeboardMarker?.setVisible(active);
+    setQuestSourceAttention(source: "noticeboard" | "home" | "linus", active: boolean) {
+      requestedQuestSourceAttention[source] = active;
+      if (source === "noticeboard") this.noticeboardMarker?.setVisible(active);
     }
 
     private createNoticeboardMarker() {
@@ -363,7 +363,7 @@ export async function createVillageGame(
         .setVisible(false);
       this.noticeboardMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen || !requestedNoticeboardAttention) return;
+        if (!this.player || constructionDialogueOpen || !requestedQuestSourceAttention.noticeboard) return;
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = true;
@@ -620,10 +620,10 @@ export async function createVillageGame(
         (game.scene.getScene("VillageScene") as VillageScene).setIntroComplete(complete);
       }
     },
-    setNoticeboardAttention: (active: boolean) => {
-      requestedNoticeboardAttention = active;
+    setQuestSourceAttention: (source, active) => {
+      requestedQuestSourceAttention[source] = active;
       if (game.scene.isActive("VillageScene")) {
-        (game.scene.getScene("VillageScene") as VillageScene).setNoticeboardAttention(active);
+        (game.scene.getScene("VillageScene") as VillageScene).setQuestSourceAttention(source, active);
       }
     },
     setDogVisible: (visible: boolean) => {
