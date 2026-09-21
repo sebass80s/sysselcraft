@@ -234,17 +234,16 @@ export default function ParentModePage() {
     }
   }
 
-  function beginEdit(quest: BackendQuest) {
-    const definition = questDefinitions.find((item) => item.questId === quest.questId);
-    setEditingQuestId(quest.questId);
+  function beginEditDefinition(definition: ParentQuestDefinition) {
+    setEditingQuestId(definition.questId);
     setDraft({
-      title: definition?.title ?? quest.title,
-      description: definition?.description ?? quest.description,
-      progressionClass: definition?.progressionClass ?? quest.progressionClass,
-      reward: { ...(definition?.reward ?? quest.reward) },
+      title: definition.title,
+      description: definition.description,
+      progressionClass: definition.progressionClass,
+      reward: { ...definition.reward },
     });
-    setRecurrenceKind(definition?.recurrenceKind ?? "once");
-    setRecurrenceWeekdays(definition?.recurrenceWeekdays ?? []);
+    setRecurrenceKind(definition.recurrenceKind);
+    setRecurrenceWeekdays(definition.recurrenceWeekdays);
     setMessage("Redigerar uppdrag. Historiska förekomster ändras inte.");
   }
 
@@ -256,17 +255,17 @@ export default function ParentModePage() {
     setMessage("");
   }
 
-  async function archiveQuest(quest: BackendQuest) {
+  async function archiveQuestDefinition(definition: ParentQuestDefinition) {
     const confirmed = window.confirm(
-      `Ta bort "${quest.title}"? Uppdragshistorik och redan utdelade belöningar sparas.`,
+      `Ta bort "${definition.title}"? Uppdragshistorik och redan utdelade belöningar sparas.`,
     );
     if (!confirmed) return;
 
     setBusy(true);
     setMessage("");
     try {
-      await archiveParentQuest(quest.questId);
-      if (editingQuestId === quest.questId) {
+      await archiveParentQuest(definition.questId);
+      if (editingQuestId === definition.questId) {
         setEditingQuestId(null);
         setDraft(emptyDraft);
         setRecurrenceKind("once");
@@ -664,17 +663,17 @@ export default function ParentModePage() {
             <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Aktiva uppdrag</h2>
-                <span>{active.length}</span>
+                <span>{questDefinitions.length}</span>
               </div>
-              {active.length ? (
-                active.map((quest) => (
-                  <article className="parent-quest-card" key={quest.instanceId}>
+              {questDefinitions.length ? (
+                questDefinitions.map((definition) => (
+                  <article className="parent-quest-card" key={definition.questId}>
                     <div>
                       <span>📌</span>
                       <div>
-                        <strong>{quest.title}</strong>
+                        <strong>{definition.title}</strong>
                         <small>
-                          💎 {quest.reward.diamonds} · 🪙 {quest.reward.sysselBux}
+                          💎 {definition.reward.diamonds} · 🪙 {definition.reward.sysselBux}
                         </small>
                       </div>
                     </div>
@@ -682,14 +681,14 @@ export default function ParentModePage() {
                       <button
                         className="secondary-button compact"
                         disabled={busy}
-                        onClick={() => beginEdit(quest)}
+                        onClick={() => beginEditDefinition(definition)}
                       >
                         Redigera
                       </button>
                       <button
                         className="secondary-button compact"
                         disabled={busy}
-                        onClick={() => void archiveQuest(quest)}
+                        onClick={() => void archiveQuestDefinition(definition)}
                       >
                         Ta bort
                       </button>
