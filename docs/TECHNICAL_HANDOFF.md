@@ -21,6 +21,12 @@ All four Recycling stages are now playtested, so Bakery pacing may begin to be d
 
 See `docs/IOS_CHECKPOINT.md` for the native inventory and checkout/build workflow.
 
+### Pairing direction and physical reconciliation gate — 2026-09-21
+
+The backend pairing contract is **parent creates code -> child device redeems code**. The parent page calls `createChildPairingCode`; the child route `/pair` calls `redeemChildPairingCode`. A stale/other UI observed during physical testing described the reverse direction, so native navigation/copy has been made explicit. Do not redesign the RPC direction unless the product decision itself changes.
+
+The real Supabase project currently contains one child profile and no device binding. The physical iPhone still has the valuable local Recycling-complete save. Preserve it. The next physical checkpoint is to pair that existing installation, capture `?debug=reconciliation`, and verify that pairing/diagnostics do not mutate either ledger before any migration write policy is designed.
+
 ## Local workspace safety law (LOCKED 2026-09-16)
 
 The canonical local working tree on Kalle's Mac is:
