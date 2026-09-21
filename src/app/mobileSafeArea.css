@@ -1,6 +1,15 @@
 /* Native/iPhone safe-area hardening kept separate from the main prototype styles.
    This file only adjusts viewport edges; it does not change gameplay layout or Phaser state. */
 
+/* The shared storybook card style clips overflow; this modal must remain scrollable. */
+.parent-menu-panel {
+  max-height: calc(100dvh - max(.7rem, env(safe-area-inset-top)) - max(.7rem, env(safe-area-inset-bottom)));
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
 .parent-page {
   padding-top: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-top));
   padding-right: max(clamp(1rem, 4vw, 3rem), env(safe-area-inset-right));
