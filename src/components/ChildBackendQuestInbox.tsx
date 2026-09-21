@@ -231,12 +231,6 @@ export default function ChildBackendQuestInbox() {
                 <small>
                   Belöning: 💎 {quest.reward.diamonds} · 🪙 {quest.reward.sysselBux}
                 </small>
-                <small>
-                  {presentation.channel === "home" && "🏠 Hemma"}
-                  {presentation.channel === "linus" && "🌲 Linus"}
-                  {presentation.channel === "bakery" && "🥖 Henning"}
-                  {presentation.channel === "village" && "🌱 Byn"}
-                </small>
                 {quest.state === "available" ? (
                   <button
                     className="primary-button compact"
