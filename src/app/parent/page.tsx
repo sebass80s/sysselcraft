@@ -119,12 +119,18 @@ export default function ParentModePage() {
   useEffect(() => {
     let cancelled = false;
 
+    const refreshSafely = () => {
+      void refreshFamily().catch((error) => {
+        if (!cancelled) setMessage(error instanceof Error ? error.message : "Kunde inte hämta familjen.");
+      });
+    };
+
     void getBackendAuthState()
       .then((state) => {
         if (cancelled) return;
         const parent = state.signedIn && !state.isAnonymous;
         setSignedIn(parent);
-        if (parent) void refreshFamily();
+        if (parent) refreshSafely();
       })
       .catch((error) => {
         if (!cancelled) {
@@ -132,17 +138,22 @@ export default function ParentModePage() {
         }
       });
 
-    const unsubscribe = subscribeBackendAuth((state) => {
-      if (cancelled) return;
-      const parent = state.signedIn && !state.isAnonymous;
-      setSignedIn(parent);
-      if (parent) void refreshFamily();
-      else {
-        setHouseholds([]);
-        setChildren([]);
-        setQuests([]);
-      }
-    });
+    let unsubscribe = () => {};
+    try {
+      unsubscribe = subscribeBackendAuth((state) => {
+        if (cancelled) return;
+        const parent = state.signedIn && !state.isAnonymous;
+        setSignedIn(parent);
+        if (parent) refreshSafely();
+        else {
+          setHouseholds([]);
+          setChildren([]);
+          setQuests([]);
+        }
+      });
+    } catch {
+      // getBackendAuthState above reports the same configuration error asynchronously.
+    }
 
     return () => {
       cancelled = true;
@@ -326,6 +337,9 @@ export default function ParentModePage() {
   }
 
   async function changeHousehold(nextHouseholdId: string) {
+    cancelEdit();
+    setQuests([]);
+    setQuestDefinitions([]);
     setHouseholdId(nextHouseholdId);
     setPairingCode("");
     setBusy(true);
@@ -344,6 +358,9 @@ export default function ParentModePage() {
   }
 
   async function changeChild(nextChildId: string) {
+    cancelEdit();
+    setQuests([]);
+    setQuestDefinitions([]);
     setChildId(nextChildId);
     setPairingCode("");
     setBusy(true);

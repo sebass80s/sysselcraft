@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Capacitor } from "@capacitor/core";
+import ChildPairingPanel from "./ChildPairingPanel";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
-import { getPairedChildId } from "@/backend/childDeviceBinding";
+import { CHILD_BINDING_CHANGED, getPairedChildId } from "@/backend/childDeviceBinding";
 import {
   getChildGameState,
   isChildDeviceBound,
@@ -24,7 +26,25 @@ import styles from "./ChildBackendQuestInbox.module.css";
 const OPEN_REFRESH_MS = 15_000;
 
 export default function ChildBackendQuestInbox() {
+  const [bindingVersion, setBindingVersion] = useState(0);
+  const [pairingOpen, setPairingOpen] = useState(false);
   const router = useRouter();
+  useEffect(() => {
+    const reloadBinding = () => setBindingVersion((version) => version + 1);
+    window.addEventListener(CHILD_BINDING_CHANGED, reloadBinding);
+    return () => window.removeEventListener(CHILD_BINDING_CHANGED, reloadBinding);
+  }, []);
+  const openPairing = () => {
+    if (Capacitor.isNativePlatform()) setPairingOpen(true);
+    else router.push("/pair/");
+  };
+  return <>
+    <BoundChildQuestInbox key={bindingVersion} onPair={openPairing} />
+    {pairingOpen && <ChildPairingPanel onClose={() => setPairingOpen(false)} />}
+  </>;
+}
+
+function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   const [childId, setChildId] = useState<string | null>(null);
   const [pairingChecked, setPairingChecked] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
@@ -62,7 +82,7 @@ export default function ChildBackendQuestInbox() {
   const refreshQuietly = useCallback(
     async (id: string) => {
       try {
-        await refresh(id);
+        if (await refresh(id)) setMessage("");
       } catch (error) {
         setMessage(error instanceof Error ? error.message : "Kunde inte synka uppdragen.");
       }
@@ -114,19 +134,24 @@ export default function ChildBackendQuestInbox() {
   useEffect(() => {
     if (!childId) return;
 
-    return subscribeBackendAuth((state) => {
-      const ready = state.signedIn && state.isAnonymous;
-      setSessionReady(ready);
+    try {
+      return subscribeBackendAuth((state) => {
+        const ready = state.signedIn && state.isAnonymous;
+        setSessionReady(ready);
 
-      if (!ready) {
-        setQuests([]);
-        setGameState(null);
-        setMessage("Barnkopplingen behöver förnyas.");
-        return;
-      }
+        if (!ready) {
+          setQuests([]);
+          setGameState(null);
+          setMessage("Barnkopplingen behöver förnyas.");
+          return;
+        }
 
-      void refreshQuietly(childId);
-    });
+        void refreshQuietly(childId);
+      });
+    } catch {
+      // Initial load reports configuration/session errors; do not crash the village.
+      return;
+    }
   }, [childId, refreshQuietly]);
 
   useEffect(() => {
@@ -173,7 +198,7 @@ export default function ChildBackendQuestInbox() {
   if (!childId) {
     return (
       <aside className={styles.dock} aria-label="Koppla barnets enhet">
-        <button className={styles.toggle} type="button" onClick={() => router.push("/pair")}>
+        <button className={styles.toggle} type="button" onClick={onPair}>
           📱 Koppla enhet
         </button>
       </aside>
@@ -183,7 +208,7 @@ export default function ChildBackendQuestInbox() {
   if (needsPairing) {
     return (
       <aside className={styles.dock} aria-label="Koppla om barnets enhet">
-        <button className={styles.toggle} type="button" onClick={() => router.push("/pair")}>
+        <button className={styles.toggle} type="button" onClick={onPair}>
           📱 Koppla om enhet
         </button>
       </aside>
@@ -218,10 +243,14 @@ export default function ChildBackendQuestInbox() {
   }
 
   async function refreshNow() {
-    if (!childId || !sessionReady || needsPairing) return;
+    if (!childId || needsPairing || busy) return;
     setBusy(true);
     setMessage("");
     try {
+      const auth = await getBackendAuthState();
+      const ready = auth.signedIn && auth.isAnonymous;
+      setSessionReady(ready);
+      if (!ready) { setNeedsPairing(true); return; }
       const refreshed = await refresh(childId);
       if (refreshed) setMessage("Uppdragen är uppdaterade.");
     } catch (error) {
@@ -290,10 +319,10 @@ export default function ChildBackendQuestInbox() {
           {message && <p className={styles.message}>{message}</p>}
 
           <div className={styles.footer}>
-            <button className="secondary-button compact" disabled={busy || !sessionReady} onClick={refreshNow}>
+            <button className="secondary-button compact" disabled={busy} onClick={refreshNow}>
               ↻ Uppdatera
             </button>
-            <button type="button" onClick={() => router.push("/pair")}>Koppla om</button>
+            <button type="button" onClick={onPair}>Koppla om</button>
           </div>
         </section>
       )}
