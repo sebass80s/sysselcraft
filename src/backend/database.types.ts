@@ -197,18 +197,21 @@ export type Database = {
       };
       households: {
         Row: {
+          archived_at: string | null;
           created_at: string;
           created_by: string;
           id: string;
           name: string;
         };
         Insert: {
+          archived_at?: string | null;
           created_at?: string;
           created_by: string;
           id?: string;
           name: string;
         };
         Update: {
+          archived_at?: string | null;
           created_at?: string;
           created_by?: string;
           id?: string;
@@ -224,6 +227,9 @@ export type Database = {
           household_id: string;
           id: string;
           progression_class: string;
+          recurrence_kind: string;
+          recurrence_timezone: string | null;
+          recurrence_weekdays: number[];
           reward_diamonds: number;
           reward_syssel_bux: number;
           title: string;
@@ -235,6 +241,9 @@ export type Database = {
           household_id: string;
           id?: string;
           progression_class: string;
+          recurrence_kind?: string;
+          recurrence_timezone?: string | null;
+          recurrence_weekdays?: number[];
           reward_diamonds?: number;
           reward_syssel_bux?: number;
           title: string;
@@ -246,6 +255,9 @@ export type Database = {
           household_id?: string;
           id?: string;
           progression_class?: string;
+          recurrence_kind?: string;
+          recurrence_timezone?: string | null;
+          recurrence_weekdays?: number[];
           reward_diamonds?: number;
           reward_syssel_bux?: number;
           title?: string;
@@ -268,8 +280,14 @@ export type Database = {
           created_at: string;
           household_id: string;
           id: string;
+          occurrence_key: string;
+          progression_class_snapshot: string;
           quest_id: string;
+          reward_diamonds_snapshot: number;
+          reward_syssel_bux_snapshot: number;
           state: string;
+          title_snapshot: string;
+          description_snapshot: string;
           submitted_at: string | null;
         };
         Insert: {
@@ -279,8 +297,14 @@ export type Database = {
           created_at?: string;
           household_id: string;
           id?: string;
+          occurrence_key: string;
+          progression_class_snapshot: string;
           quest_id: string;
+          reward_diamonds_snapshot: number;
+          reward_syssel_bux_snapshot: number;
           state?: string;
+          title_snapshot: string;
+          description_snapshot: string;
           submitted_at?: string | null;
         };
         Update: {
@@ -290,8 +314,14 @@ export type Database = {
           created_at?: string;
           household_id?: string;
           id?: string;
+          occurrence_key?: string;
+          progression_class_snapshot?: string;
           quest_id?: string;
+          reward_diamonds_snapshot?: number;
+          reward_syssel_bux_snapshot?: number;
           state?: string;
+          title_snapshot?: string;
+          description_snapshot?: string;
           submitted_at?: string | null;
         };
         Relationships: [
@@ -368,6 +398,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      archive_parent_quest: {
+        Args: { p_quest_id: string };
+        Returns: undefined;
+      };
       create_child: {
         Args: { p_display_name: string; p_household_id: string };
         Returns: string;
@@ -418,6 +452,18 @@ export type Database = {
         Returns: undefined;
       };
       submit_quest: { Args: { p_instance_id: string }; Returns: undefined };
+      update_parent_quest: {
+        Args: {
+          p_description: string;
+          p_progression_class: string;
+          p_quest_id: string;
+          p_reward_diamonds?: number;
+          p_reward_syssel_bux?: number;
+          p_title: string;
+        };
+        Returns: undefined;
+      };
+
     };
     Enums: {
       [_ in never]: never;
