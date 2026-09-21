@@ -20,13 +20,14 @@ export function isProgressionClass(value: unknown): value is ProgressionClass {
   return typeof value === "string" && PROGRESSION_CLASSES.includes(value as ProgressionClass);
 }
 
-export function createEmptyBackendProgression(): Record<ProgressionClass, number> {
+export function createEmptyBackendProgression(): BackendProgression {
   return {
     orderEnvironment: 0,
     knowledgeCreativity: 0,
     wellbeingRoutine: 0,
     movementActivity: 0,
     community: 0,
+    worldProgression: 0,
   };
 }
 
@@ -60,11 +61,15 @@ export type BackendQuest = {
   approvedAt: string | null;
 };
 
+export type BackendProgression = Record<ProgressionClass, number> & {
+  worldProgression: number;
+};
+
 export type BackendChildGameState = {
   childId: string;
   diamonds: number;
   sysselBux: number;
-  progression: Record<ProgressionClass, number>;
+  progression: BackendProgression;
   worldFlags: Record<string, unknown>;
   updatedAt: string;
 };
