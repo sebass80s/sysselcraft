@@ -27,6 +27,8 @@ The backend pairing contract is **parent creates code -> child device redeems co
 
 The real Supabase project currently contains one child profile and no device binding. The physical iPhone still has the valuable local Recycling-complete save. Preserve it. The next physical checkpoint is to pair that existing installation, capture `?debug=reconciliation`, and verify that pairing/diagnostics do not mutate either ledger before any migration write policy is designed.
 
+Capacitor serves the static Next export from bundled files. Native internal route links must therefore target exported files such as `./pair.html`, `./parent.html`, and `./index.html?debug=reconciliation`; root-style web paths such as `/pair` resolve incorrectly in the native WebView and can bounce back to the game root. Web routes keep their normal `/pair`, `/parent`, and `/` semantics.
+
 ## Local workspace safety law (LOCKED 2026-09-16)
 
 The canonical local working tree on Kalle's Mac is:
