@@ -20,7 +20,12 @@ export type VillageGameHandle = {
   setNoticeboardAttention: (active: boolean) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
-type Callbacks = { onQuestOpen: () => void; onLinusInteract: () => void; onConstructionInteract: (id: string) => void };
+type Callbacks = {
+  onQuestOpen: () => void;
+  onNoticeboardInteract?: () => void;
+  onLinusInteract: () => void;
+  onConstructionInteract: (id: string) => void;
+};
 type Facing = "north" | "south" | "east" | "west";
 type WorldObjectDefinition = {
   x: number;
@@ -71,6 +76,7 @@ export async function createVillageGame(
     private targetMarker?: GameObjects.Arc;
     private questMarker?: GameObjects.Container;
     private noticeboardMarker?: GameObjects.Container;
+    private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
     private attentionMarker?: GameObjects.Text;
     private attentionInteractionPending = false;
@@ -151,6 +157,7 @@ export async function createVillageGame(
         if (!this.player) return;
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
+        this.noticeboardInteractionPending = false;
         this.path = findPath({ x: this.player.x, y: this.player.y }, { x: pointer.worldX, y: pointer.worldY }, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
@@ -221,7 +228,7 @@ export async function createVillageGame(
       }
       const next = this.path[0];
       if (!next) {
-        this.maybeCompleteLinusInteraction();
+        this.maybeCompleteWorldInteraction();
         return;
       }
       const current = { x: this.player.x, y: this.player.y };
@@ -229,7 +236,7 @@ export async function createVillageGame(
       if (remaining < 4) {
         this.path.shift();
         if (!this.path.length) this.targetMarker?.setVisible(false);
-        this.maybeCompleteLinusInteraction();
+        this.maybeCompleteWorldInteraction();
         return;
       }
       const speed = Math.min(180 * (delta / 1000), remaining);
@@ -263,7 +270,18 @@ export async function createVillageGame(
       this.dog.setDepth(1000 + Math.round(this.dog.y));
     }
 
-    private maybeCompleteLinusInteraction() {
+    private maybeCompleteWorldInteraction() {
+      if (this.noticeboardInteractionPending && this.player) {
+        const approach = { x: 315, y: 330 };
+        if (distance(this.player, approach) <= 36) {
+          this.noticeboardInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+          callbacks.onNoticeboardInteract?.();
+          return;
+        }
+      }
+
       const attention = requestedConstruction.attention;
       if (this.attentionInteractionPending && attention && this.player) {
         if (distance(this.player, attention.approach) > 32) return;
@@ -340,7 +358,21 @@ export async function createVillageGame(
       }).setOrigin(0.5);
       this.noticeboardMarker = this.add.container(315, 205, [bubble, label])
         .setDepth(3000)
+        .setSize(48, 48)
+        .setInteractive({ useHandCursor: true })
         .setVisible(false);
+      this.noticeboardMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen || !requestedNoticeboardAttention) return;
+        this.linusInteractionPending = false;
+        this.attentionInteractionPending = false;
+        this.noticeboardInteractionPending = true;
+        const approach = { x: 315, y: 330 };
+        this.path = findPath({ x: this.player.x, y: this.player.y }, approach, this.navigationObstacles);
+        const finalPoint = this.path.at(-1);
+        if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
       this.tweens.add({
         targets: [bubble, label], y: "-=3", duration: 1000,
         yoyo: true, repeat: -1, ease: "Sine.InOut",
@@ -417,7 +449,7 @@ export async function createVillageGame(
       this.path = findPath(this.player, attention.approach, this.navigationObstacles);
       const target = this.path.at(-1);
       if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
-      else this.maybeCompleteLinusInteraction();
+      else this.maybeCompleteWorldInteraction();
     }
 
     async presentConstructionReveal(id: string, commit: () => Promise<void>) {
@@ -544,7 +576,7 @@ export async function createVillageGame(
         this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
-        else this.maybeCompleteLinusInteraction();
+        else this.maybeCompleteWorldInteraction();
       });
 
     }
