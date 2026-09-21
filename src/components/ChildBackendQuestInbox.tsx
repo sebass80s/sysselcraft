@@ -15,6 +15,7 @@ import { presentBackendQuests, primaryPresentedQuest } from "@/game/backendQuest
 import {
   publishQuestPresentation,
   QUEST_SOURCE_OPEN_EVENT,
+  type QuestPresentationSource,
   type QuestSourceOpenEventDetail,
 } from "@/game/questPresentationBridge";
 import styles from "./ChildBackendQuestInbox.module.css";
@@ -30,7 +31,7 @@ export default function ChildBackendQuestInbox() {
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [gameState, setGameState] = useState<BackendChildGameState | null>(null);
   const [open, setOpen] = useState(false);
-  const [sourceFilter, setSourceFilter] = useState<"noticeboard" | null>(null);
+  const [sourceFilter, setSourceFilter] = useState<QuestPresentationSource | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -150,8 +151,8 @@ export default function ChildBackendQuestInbox() {
   useEffect(() => {
     const openSource = (event: Event) => {
       const detail = (event as CustomEvent<QuestSourceOpenEventDetail>).detail;
-      if (detail?.source !== "noticeboard") return;
-      setSourceFilter("noticeboard");
+      if (!detail?.source) return;
+      setSourceFilter(detail.source);
       setOpen(true);
     };
     window.addEventListener(QUEST_SOURCE_OPEN_EVENT, openSource);
@@ -160,9 +161,15 @@ export default function ChildBackendQuestInbox() {
 
   useEffect(() => {
     const snapshot = presentBackendQuests(quests, gameState);
-    const noticeboardCount = [...snapshot.available, ...snapshot.pending]
-      .filter(({ presentation }) => presentation.channel === "noticeboard").length;
-    publishQuestPresentation({ noticeboardCount });
+    const visible = [...snapshot.available, ...snapshot.pending];
+    publishQuestPresentation({
+      counts: {
+        noticeboard: visible.filter(({ presentation }) => presentation.destination === "noticeboard").length,
+        home: visible.filter(({ presentation }) => presentation.destination === "home").length,
+        linus: visible.filter(({ presentation }) => presentation.destination === "linus").length,
+        bakery: visible.filter(({ presentation }) => presentation.destination === "bakery").length,
+      },
+    });
   }, [quests, gameState]);
 
   if (!pairingChecked) return null;
@@ -189,8 +196,9 @@ export default function ChildBackendQuestInbox() {
 
   const presented = presentBackendQuests(quests, gameState);
   const allVisibleQuests = [...presented.available, ...presented.pending];
-  const noticeboardQuests = allVisibleQuests.filter(({ presentation }) => presentation.channel === "noticeboard");
-  const visibleQuests = sourceFilter === "noticeboard" ? noticeboardQuests : allVisibleQuests;
+  const visibleQuests = sourceFilter
+    ? allVisibleQuests.filter(({ presentation }) => presentation.destination === sourceFilter)
+    : allVisibleQuests;
   const availableCount = presented.available.length;
   const pendingCount = presented.pending.length;
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
@@ -245,8 +253,8 @@ export default function ChildBackendQuestInbox() {
         <section className={styles.panel}>
           <header>
             <div>
-              <strong>{sourceFilter === "noticeboard" ? "Anslagstavlan" : "Uppdrag hemifrån"}</strong>
-              <small>{sourceFilter === "noticeboard" ? "Uppdrag som hör hemma här" : "Skickade av en vuxen"}</small>
+              <strong>{sourceFilter === "noticeboard" ? "Anslagstavlan" : sourceFilter === "home" ? "Hemma" : sourceFilter === "linus" ? "Linus" : sourceFilter === "bakery" ? "Bageriet" : "Uppdrag hemifrån"}</strong>
+              <small>{sourceFilter ? "Uppdrag som hör hemma här" : "Skickade av en vuxen"}</small>
             </div>
             {gameState && (
               <div className={styles.wallet}>
