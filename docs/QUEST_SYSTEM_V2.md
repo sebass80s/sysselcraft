@@ -160,3 +160,20 @@ Current calendar semantics deliberately avoid inventing an arbitrary morning res
 - weekly becomes due once per local ISO calendar week.
 
 World-aware presentation/routing is the next separate layer. It must not change recurrence/reward history semantics.
+
+
+## 10. World presentation policy
+
+The first pure routing layer is now implemented in `src/game/questPresentation.ts`.
+
+Rules:
+- obvious home/routine chores may route to the home;
+- food/kitchen chores may route to Henning/Bakery only after both are actually available;
+- category metadata and unlocked-world state provide the fallback;
+- before later village systems are available, Linus is the safe starter presenter;
+- after Recycling completion, generic unlocked-village presentation is allowed;
+- the policy is pure and contains no parent-authored spawn location.
+
+This keeps the product rule intact: **the parent creates the real-world task; the game creates its story presentation.**
+
+The current layer chooses a presentation channel only. It intentionally does not spawn Henning, unlock the Bakery, or invent those progression thresholds.
