@@ -317,7 +317,7 @@ export default function ParentModePage() {
     setMessage("");
     try {
       setPairingCode(await createChildPairingCode(childId));
-      setMessage("Parningskoden är redo på barnets enhet.");
+      setMessage("Parningskoden är skapad. Skriv in den på barnets enhet.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte skapa parningskod.");
     } finally {
