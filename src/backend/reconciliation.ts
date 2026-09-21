@@ -98,8 +98,8 @@ export function createReconciliationReport(
   const allKnownFieldsMatch =
     economyMatches &&
     progressionMatches &&
-    firstDeliveryMatches !== false &&
-    recyclingStageMatches !== false;
+    firstDeliveryMatches === true &&
+    recyclingStageMatches === true;
 
   const backendAhead =
     backendEconomy.diamonds >= localEconomy.diamonds &&
