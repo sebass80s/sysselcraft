@@ -16,8 +16,12 @@ import {
   listChildQuests,
   listChildren,
   listHouseholds,
+  listParentQuestDefinitions,
   reviewQuest,
+  setParentQuestRecurrence,
   updateParentQuest,
+  type ParentQuestDefinition,
+  type QuestRecurrenceKind,
 } from "@/backend/familyRepository";
 import type { BackendChild, BackendHousehold, BackendQuest } from "@/backend/types";
 import { isParentQuestDraftReady, type ParentQuestDraft } from "@/game/parentMode";
@@ -37,14 +41,27 @@ export default function ParentModePage() {
   const [households, setHouseholds] = useState<BackendHousehold[]>([]);
   const [children, setChildren] = useState<BackendChild[]>([]);
   const [quests, setQuests] = useState<BackendQuest[]>([]);
+  const [questDefinitions, setQuestDefinitions] = useState<ParentQuestDefinition[]>([]);
   const [householdId, setHouseholdId] = useState("");
   const [childId, setChildId] = useState("");
   const [draft, setDraft] = useState<ParentQuestDraft>(emptyDraft);
   const [editingQuestId, setEditingQuestId] = useState<string | null>(null);
+  const [recurrenceKind, setRecurrenceKind] = useState<QuestRecurrenceKind>("once");
+  const [recurrenceWeekdays, setRecurrenceWeekdays] = useState<number[]>([]);
   const [pairingCode, setPairingCode] = useState("");
 
   const loadChildQuests = useCallback(async (id: string) => {
-    setQuests(id ? await listChildQuests(id) : []);
+    if (!id) {
+      setQuests([]);
+      setQuestDefinitions([]);
+      return;
+    }
+    const [nextQuests, nextDefinitions] = await Promise.all([
+      listChildQuests(id),
+      listParentQuestDefinitions(id),
+    ]);
+    setQuests(nextQuests);
+    setQuestDefinitions(nextDefinitions);
   }, []);
 
   const refreshFamily = useCallback(async (
@@ -186,12 +203,31 @@ export default function ParentModePage() {
     try {
       if (editingQuestId) {
         await updateParentQuest(editingQuestId, draft);
+        await setParentQuestRecurrence(
+          editingQuestId,
+          recurrenceKind,
+          recurrenceWeekdays,
+          Intl.DateTimeFormat().resolvedOptions().timeZone,
+        );
         setMessage("Uppdraget är uppdaterat. ✏️");
       } else {
-        await createParentQuest(householdId, childId, draft);
+        const instanceId = await createParentQuest(householdId, childId, draft);
+        const createdQuest = (await listChildQuests(childId)).find(
+          (quest) => quest.instanceId === instanceId,
+        );
+        if (createdQuest) {
+          await setParentQuestRecurrence(
+            createdQuest.questId,
+            recurrenceKind,
+            recurrenceWeekdays,
+            Intl.DateTimeFormat().resolvedOptions().timeZone,
+          );
+        }
         setMessage("Uppdraget är skickat till Sysselcraft! 🎉");
       }
       setDraft(emptyDraft);
+      setRecurrenceKind("once");
+      setRecurrenceWeekdays([]);
       setEditingQuestId(null);
       await loadChildQuests(childId);
     } catch (error) {
@@ -202,19 +238,24 @@ export default function ParentModePage() {
   }
 
   function beginEdit(quest: BackendQuest) {
+    const definition = questDefinitions.find((item) => item.questId === quest.questId);
     setEditingQuestId(quest.questId);
     setDraft({
-      title: quest.title,
-      description: quest.description,
-      progressionClass: quest.progressionClass,
-      reward: { ...quest.reward },
+      title: definition?.title ?? quest.title,
+      description: definition?.description ?? quest.description,
+      progressionClass: definition?.progressionClass ?? quest.progressionClass,
+      reward: { ...(definition?.reward ?? quest.reward) },
     });
-    setMessage("Redigerar uppdrag. Ändringen gäller den aktiva, ännu ej påbörjade förekomsten.");
+    setRecurrenceKind(definition?.recurrenceKind ?? "once");
+    setRecurrenceWeekdays(definition?.recurrenceWeekdays ?? []);
+    setMessage("Redigerar uppdrag. Historiska förekomster ändras inte.");
   }
 
   function cancelEdit() {
     setEditingQuestId(null);
     setDraft(emptyDraft);
+    setRecurrenceKind("once");
+    setRecurrenceWeekdays([]);
     setMessage("");
   }
 
@@ -231,6 +272,8 @@ export default function ParentModePage() {
       if (editingQuestId === quest.questId) {
         setEditingQuestId(null);
         setDraft(emptyDraft);
+        setRecurrenceKind("once");
+        setRecurrenceWeekdays([]);
       }
       await loadChildQuests(childId);
       setMessage("Uppdraget är borttaget. Historiken är sparad.");
@@ -368,7 +411,9 @@ export default function ParentModePage() {
   const active = quests.filter((quest) => quest.state === "available");
   const approved = quests.filter((quest) => quest.state === "approved");
   const child = children.find((candidate) => candidate.id === childId);
-  const draftReady = isParentQuestDraftReady(draft);
+  const draftReady =
+    isParentQuestDraftReady(draft) &&
+    (recurrenceKind !== "weekdays" || recurrenceWeekdays.length > 0);
 
   return (
     <main className="parent-page">
@@ -496,6 +541,45 @@ export default function ParentModePage() {
                   value={draft.description}
                   onChange={(event) => setDraft({ ...draft, description: event.target.value })}
                 />
+                <label>
+                  Upprepning
+                  <select
+                    value={recurrenceKind}
+                    onChange={(event) => {
+                      const next = event.target.value as QuestRecurrenceKind;
+                      setRecurrenceKind(next);
+                      if (next !== "weekdays") setRecurrenceWeekdays([]);
+                    }}
+                  >
+                    <option value="once">En gång</option>
+                    <option value="daily">Varje dag</option>
+                    <option value="weekdays">Valda veckodagar</option>
+                    <option value="weekly">Varje vecka</option>
+                  </select>
+                </label>
+                {recurrenceKind === "weekdays" && (
+                  <div className="parent-reward-row" aria-label="Veckodagar">
+                    {[
+                      [1, "Mån"], [2, "Tis"], [3, "Ons"], [4, "Tor"],
+                      [5, "Fre"], [6, "Lör"], [7, "Sön"],
+                    ].map(([day, label]) => (
+                      <label key={day}>
+                        <input
+                          type="checkbox"
+                          checked={recurrenceWeekdays.includes(day as number)}
+                          onChange={(event) =>
+                            setRecurrenceWeekdays((current) =>
+                              event.target.checked
+                                ? [...current, day as number].sort()
+                                : current.filter((value) => value !== day),
+                            )
+                          }
+                        />
+                        {label}
+                      </label>
+                    ))}
+                  </div>
+                )}
                 <select
                   value={draft.progressionClass}
                   onChange={(event) =>
