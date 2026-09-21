@@ -12,6 +12,7 @@ import {
 } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
+import { loadSaveState } from "@/game/saveState";
 import {
   publishQuestPresentation,
   QUEST_SOURCE_OPEN_EVENT,
@@ -30,6 +31,7 @@ export default function ChildBackendQuestInbox() {
   const [needsPairing, setNeedsPairing] = useState(false);
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [gameState, setGameState] = useState<BackendChildGameState | null>(null);
+  const [localRecyclingCenterStage, setLocalRecyclingCenterStage] = useState(0);
   const [open, setOpen] = useState(false);
   const [sourceFilter, setSourceFilter] = useState<QuestPresentationSource | null>(null);
   const [busy, setBusy] = useState(false);
@@ -46,12 +48,14 @@ export default function ChildBackendQuestInbox() {
     }
 
     setNeedsPairing(false);
-    const [nextQuests, nextGameState] = await Promise.all([
+    const [nextQuests, nextGameState, localSave] = await Promise.all([
       listChildQuests(id),
       getChildGameState(id),
+      loadSaveState(),
     ]);
     setQuests(nextQuests);
     setGameState(nextGameState);
+    setLocalRecyclingCenterStage(localSave?.worldFlags.recyclingCenterStage ?? 0);
     return true;
   }, []);
 
@@ -160,9 +164,9 @@ export default function ChildBackendQuestInbox() {
   }, []);
 
   useEffect(() => {
-    const snapshot = presentBackendQuests(quests, gameState);
+    const snapshot = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
     publishQuestPresentation({ counts: questSourceCounts(snapshot) });
-  }, [quests, gameState]);
+  }, [quests, gameState, localRecyclingCenterStage]);
 
   if (!pairingChecked) return null;
 
@@ -186,7 +190,7 @@ export default function ChildBackendQuestInbox() {
     );
   }
 
-  const presented = presentBackendQuests(quests, gameState);
+  const presented = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
   const allVisibleQuests = [...presented.available, ...presented.pending];
   const visibleQuests = sourceFilter
     ? allVisibleQuests.filter(({ quest, presentation }) =>
