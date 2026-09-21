@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Capacitor } from "@capacitor/core";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { getPairedChildId } from "@/backend/childDeviceBinding";
 import {
@@ -13,6 +14,7 @@ import {
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
 import { loadSaveState } from "@/game/saveState";
+import { requestChildPairingOpen } from "@/game/childPairingBridge";
 import {
   publishQuestPresentation,
   QUEST_SOURCE_OPEN_EVENT,
@@ -22,6 +24,7 @@ import {
 import styles from "./ChildBackendQuestInbox.module.css";
 
 const OPEN_REFRESH_MS = 15_000;
+const BACKGROUND_REFRESH_MS = 30_000;
 
 export default function ChildBackendQuestInbox() {
   const router = useRouter();
@@ -147,8 +150,11 @@ export default function ChildBackendQuestInbox() {
   }, [childId, needsPairing, refreshQuietly, sessionReady]);
 
   useEffect(() => {
-    if (!open || !childId || !sessionReady || needsPairing) return;
-    const timer = window.setInterval(() => void refreshQuietly(childId), OPEN_REFRESH_MS);
+    if (!childId || !sessionReady || needsPairing) return;
+    const refreshInterval = open ? OPEN_REFRESH_MS : BACKGROUND_REFRESH_MS;
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible") void refreshQuietly(childId);
+    }, refreshInterval);
     return () => window.clearInterval(timer);
   }, [open, childId, needsPairing, refreshQuietly, sessionReady]);
 
@@ -168,12 +174,20 @@ export default function ChildBackendQuestInbox() {
     publishQuestPresentation({ counts: questSourceCounts(snapshot) });
   }, [quests, gameState, localRecyclingCenterStage]);
 
+  function openPairing() {
+    if (Capacitor.isNativePlatform()) {
+      requestChildPairingOpen();
+      return;
+    }
+    router.push("/pair");
+  }
+
   if (!pairingChecked) return null;
 
   if (!childId) {
     return (
       <aside className={styles.dock} aria-label="Koppla barnets enhet">
-        <button className={styles.toggle} type="button" onClick={() => router.push("/pair")}>
+        <button className={styles.toggle} type="button" onClick={openPairing}>
           📱 Koppla enhet
         </button>
       </aside>
@@ -183,7 +197,7 @@ export default function ChildBackendQuestInbox() {
   if (needsPairing) {
     return (
       <aside className={styles.dock} aria-label="Koppla om barnets enhet">
-        <button className={styles.toggle} type="button" onClick={() => router.push("/pair")}>
+        <button className={styles.toggle} type="button" onClick={openPairing}>
           📱 Koppla om enhet
         </button>
       </aside>
@@ -293,7 +307,7 @@ export default function ChildBackendQuestInbox() {
             <button className="secondary-button compact" disabled={busy || !sessionReady} onClick={refreshNow}>
               ↻ Uppdatera
             </button>
-            <button type="button" onClick={() => router.push("/pair")}>Koppla om</button>
+            <button type="button" onClick={openPairing}>Koppla om</button>
           </div>
         </section>
       )}
