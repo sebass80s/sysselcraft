@@ -356,7 +356,14 @@ export async function createVillageGame(
 
     setQuestSourceAttention(source: "noticeboard" | "home" | "linus", active: boolean) {
       requestedQuestSourceAttention[source] = active;
-      if (source === "noticeboard") this.noticeboardMarker?.setVisible(active);
+      if (source === "noticeboard") {
+        this.noticeboardMarker?.setVisible(active);
+        if (!active) {
+          this.noticeboardInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+        }
+      }
       if (source === "home") this.backendHomeAttention = active;
       if (source === "linus") {
         this.backendLinusAttention = active;
