@@ -61,7 +61,7 @@ export async function createVillageGame(
   let requestedQuestState: QuestState = "available";
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
-  let requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
+  const requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
