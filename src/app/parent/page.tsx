@@ -23,7 +23,7 @@ import {
   type ParentQuestDefinition,
   type QuestRecurrenceKind,
 } from "@/backend/familyRepository";
-import type { BackendChild, BackendHousehold } from "@/backend/types";
+import type { BackendChild, BackendHousehold, BackendQuest } from "@/backend/types";
 import { isParentQuestDraftReady, type ParentQuestDraft } from "@/game/parentMode";
 
 const emptyDraft: ParentQuestDraft = {
