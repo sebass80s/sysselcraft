@@ -1,10 +1,11 @@
 import type { BackendQuest, ProgressionClass } from "@/backend/types";
 
-export type QuestPresentationChannel = "home" | "linus" | "bakery" | "village";
+export type QuestPresentationChannel = "home" | "noticeboard" | "npc" | "building";
 
 export type QuestPresentation = {
   channel: QuestPresentationChannel;
-  presenter: "home" | "linus" | "henning" | "village";
+  presenter: "home" | "noticeboard" | "linus" | "henning";
+  destination: "home" | "noticeboard" | "linus" | "bakery";
   reason: string;
 };
 
@@ -22,12 +23,22 @@ function categoryFallback(
   context: QuestPresentationContext,
 ): QuestPresentation {
   if (progressionClass === "community" && context.henningPresent && context.bakeryUnlocked) {
-    return { channel: "bakery", presenter: "henning", reason: "community-with-henning" };
+    return {
+      channel: "npc",
+      presenter: "henning",
+      destination: "bakery",
+      reason: "community-with-henning",
+    };
   }
   if (context.recyclingComplete) {
-    return { channel: "village", presenter: "village", reason: "unlocked-village" };
+    return {
+      channel: "noticeboard",
+      presenter: "noticeboard",
+      destination: "noticeboard",
+      reason: "general-village-quest",
+    };
   }
-  return { channel: "linus", presenter: "linus", reason: "starter-guide" };
+  return { channel: "npc", presenter: "linus", destination: "linus", reason: "starter-guide" };
 }
 
 /**
@@ -42,10 +53,15 @@ export function chooseQuestPresentation(
   context: QuestPresentationContext,
 ): QuestPresentation {
   if (HOME_TITLE_HINTS.test(quest.title)) {
-    return { channel: "home", presenter: "home", reason: "obvious-home-task" };
+    return { channel: "home", presenter: "home", destination: "home", reason: "obvious-home-task" };
   }
   if (BAKERY_TITLE_HINTS.test(quest.title) && context.bakeryUnlocked && context.henningPresent) {
-    return { channel: "bakery", presenter: "henning", reason: "food-task-with-henning" };
+    return {
+      channel: "npc",
+      presenter: "henning",
+      destination: "bakery",
+      reason: "food-task-with-henning",
+    };
   }
   return categoryFallback(quest.progressionClass, context);
 }
