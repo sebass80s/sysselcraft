@@ -137,3 +137,26 @@ At the 2026-09-21 checkpoint:
 8. Only then change state-ownership/reconciliation authority.
 
 No Bakery/Henning thresholds are implied by this document.
+
+
+## 9. Implementation checkpoint 2026-09-21
+
+Implemented on `nova/local-construction-snapshot` after the physical iPhone checkpoint:
+
+- unified `worldProgression` is awarded once per newly approved backend quest instance;
+- legacy category counters remain readable but are no longer incremented by the new approval path;
+- parent quest definitions support archive, edit and recurrence metadata;
+- quest instances snapshot title, description, category and both rewards;
+- recurrence kinds: one-time, daily, selected weekdays and calendar-week;
+- recurrence uses the browser-supplied IANA timezone stored on the quest definition;
+- due occurrences are materialized idempotently through `(quest_id, child_id, occurrence_key)`;
+- child quest listing materializes due occurrences before returning them, so recurrence does not depend on the parent opening Parent Mode;
+- Parent Mode can configure recurrence and edit/archive definitions;
+- create and update + recurrence configuration use atomic v2 RPCs;
+- switching recurrence off removes only untouched generated occurrences; pending/approved history is retained.
+
+Current calendar semantics deliberately avoid inventing an arbitrary morning reset hour:
+- daily and selected weekdays become due on the relevant local calendar date;
+- weekly becomes due once per local ISO calendar week.
+
+World-aware presentation/routing is the next separate layer. It must not change recurrence/reward history semantics.
