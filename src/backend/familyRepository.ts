@@ -152,6 +152,29 @@ export async function listChildQuests(childId: string): Promise<BackendQuest[]> 
   return ((data ?? []) as RpcQuestRow[]).map(mapQuest);
 }
 
+export async function updateParentQuest(
+  questId: string,
+  draft: ParentQuestDraft,
+): Promise<void> {
+  const quest = normalizeParentQuestDraft(draft);
+  const { error } = await getSupabaseBrowserClient().rpc("update_parent_quest", {
+    p_quest_id: questId,
+    p_title: quest.title,
+    p_description: quest.description,
+    p_progression_class: quest.progressionClass,
+    p_reward_diamonds: quest.reward.diamonds,
+    p_reward_syssel_bux: quest.reward.sysselBux,
+  });
+  if (error) throw error;
+}
+
+export async function archiveParentQuest(questId: string): Promise<void> {
+  const { error } = await getSupabaseBrowserClient().rpc("archive_parent_quest", {
+    p_quest_id: questId,
+  });
+  if (error) throw error;
+}
+
 export async function isChildDeviceBound(childId: string): Promise<boolean> {
   const { data, error } = await getSupabaseBrowserClient().rpc("is_bound_child", {
     p_child_id: childId,
