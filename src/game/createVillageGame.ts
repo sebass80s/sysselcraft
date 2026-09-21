@@ -36,7 +36,10 @@ type WorldObjectDefinition = {
   baseY?: number;
 };
 
-const NOTICEBOARD_APPROACH: Point = { x: 315, y: 330 };
+// Painted master-scene board footprint is centered at world x=175, y=366.
+// Keep the marker over the board and approach from the path below it.
+const NOTICEBOARD_MARKER: Point = { x: 175, y: 270 };
+const NOTICEBOARD_APPROACH: Point = { x: 175, y: 430 };
 
 function distance(a: Point, b: Point) {
   return Math.hypot(a.x - b.x, a.y - b.y);
@@ -387,7 +390,7 @@ export async function createVillageGame(
       const label = this.add.text(0, -2, "!", {
         color: "#5a3f28", fontSize: "22px", fontStyle: "bold", fontFamily: "Trebuchet MS",
       }).setOrigin(0.5);
-      this.noticeboardMarker = this.add.container(315, 205, [bubble, label])
+      this.noticeboardMarker = this.add.container(NOTICEBOARD_MARKER.x, NOTICEBOARD_MARKER.y, [bubble, label])
         .setDepth(3000)
         .setSize(48, 48)
         .setInteractive({ useHandCursor: true })
