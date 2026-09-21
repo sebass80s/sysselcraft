@@ -21,5 +21,21 @@ assert.equal(chooseQuestPresentation(
   { recyclingComplete: true, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: false },
 ).presenter, "linus");
 
+
+assert.equal(chooseQuestPresentation(
+  quest("Hjälp till med middagen", "community"),
+  { recyclingComplete: true, bakeryUnlocked: true, henningPresent: false, noticeboardAvailable: true },
+).destination, "noticeboard");
+
+assert.equal(chooseQuestPresentation(
+  quest("Hjälp till med middagen", "community"),
+  { recyclingComplete: true, bakeryUnlocked: false, henningPresent: true, noticeboardAvailable: true },
+).destination, "noticeboard");
+
+assert.equal(chooseQuestPresentation(
+  quest("Hjälp till med middagen", "community"),
+  { recyclingComplete: true, bakeryUnlocked: true, henningPresent: false, noticeboardAvailable: false },
+).destination, "linus");
+
 console.log("quest presentation policy: ok");
 
