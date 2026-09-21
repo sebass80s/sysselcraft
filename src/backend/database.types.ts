@@ -497,6 +497,20 @@ export type Database = {
         Returns: undefined;
       };
       submit_quest: { Args: { p_instance_id: string }; Returns: undefined };
+      update_parent_quest_v2: {
+        Args: {
+          p_description: string;
+          p_progression_class: string;
+          p_quest_id: string;
+          p_recurrence_kind?: string;
+          p_recurrence_timezone?: string | null;
+          p_recurrence_weekdays?: number[];
+          p_reward_diamonds?: number;
+          p_reward_syssel_bux?: number;
+          p_title: string;
+        };
+        Returns: undefined;
+      };
       update_parent_quest: {
         Args: {
           p_description: string;
