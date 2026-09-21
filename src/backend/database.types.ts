@@ -411,6 +411,21 @@ export type Database = {
         Returns: string;
       };
       create_household: { Args: { p_name: string }; Returns: string };
+      create_parent_quest_v2: {
+        Args: {
+          p_child_id: string;
+          p_description: string;
+          p_household_id: string;
+          p_progression_class: string;
+          p_recurrence_kind?: string;
+          p_recurrence_timezone?: string | null;
+          p_recurrence_weekdays?: number[];
+          p_reward_diamonds?: number;
+          p_reward_syssel_bux?: number;
+          p_title: string;
+        };
+        Returns: string;
+      };
       create_parent_quest: {
         Args: {
           p_child_id: string;
