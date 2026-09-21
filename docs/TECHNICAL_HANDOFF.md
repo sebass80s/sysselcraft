@@ -27,6 +27,8 @@ The backend pairing contract is **parent creates code -> child device redeems co
 
 The real Supabase project currently contains one child profile and no device binding. The physical iPhone still has the valuable local Recycling-complete save. Preserve it. The next physical checkpoint is to pair that existing installation, capture `?debug=reconciliation`, and verify that pairing/diagnostics do not mutate either ledger before any migration write policy is designed.
 
+Native routing finding (physical iPhone, 2026-09-21): Safari Web Inspector proved that tapping child pairing changed the URL to `capacitor://localhost/pair` while the document body still contained the root village UI. The static export previously emitted file-style sibling routes without directory-route compatibility. The native export now uses Next `trailingSlash: true` and links to `/pair/` and `/parent/`, so Capacitor can resolve the route to the corresponding directory `index.html`. This must be physically re-verified before being treated as closed.
+
 ## Local workspace safety law (LOCKED 2026-09-16)
 
 The canonical local working tree on Kalle's Mac is:
