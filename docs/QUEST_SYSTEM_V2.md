@@ -177,3 +177,17 @@ Rules:
 This keeps the product rule intact: **the parent creates the real-world task; the game creates its story presentation.**
 
 The current layer chooses a presentation channel only. It intentionally does not spawn Henning, unlock the Bakery, or invent those progression thresholds.
+
+
+## 11. Noticeboard as a selective quest source
+
+Locked product direction:
+
+- the noticeboard is **a quest source, not the universal quest hub**;
+- not every quest must appear on the noticeboard;
+- obvious home quests may originate at home;
+- NPC/building-linked quests may originate through the relevant unlocked resident/location;
+- general quests without a stronger diegetic home may use the noticeboard;
+- all active quests must remain discoverable even when they are not on the noticeboard.
+
+The presentation model therefore separates the broad channel (`home`, `noticeboard`, `npc`, `building`) from the concrete presenter/destination. This is intended to scale to Sol and future residents without adding a new top-level channel for every NPC.
