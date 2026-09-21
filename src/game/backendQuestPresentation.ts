@@ -1,0 +1,43 @@
+import type { BackendChildGameState, BackendQuest } from "@/backend/types";
+import { chooseQuestPresentation, type QuestPresentation } from "./questPresentation";
+
+export type PresentedBackendQuest = {
+  quest: BackendQuest;
+  presentation: QuestPresentation;
+};
+
+export type BackendQuestPresentationSnapshot = {
+  available: PresentedBackendQuest[];
+  pending: PresentedBackendQuest[];
+};
+
+function flag(value: unknown): boolean {
+  return value === true;
+}
+
+export function questPresentationContextFromGameState(gameState: BackendChildGameState | null) {
+  const flags = gameState?.worldFlags ?? {};
+  return {
+    recyclingComplete:
+      flag(flags.recyclingComplete) ||
+      flag(flags.recyclingCompletionSeen) ||
+      Number(flags.recyclingCenterStage) >= 4,
+    bakeryUnlocked: flag(flags.bakeryUnlocked) || Number(flags.bakeryStage) > 0,
+    henningPresent: flag(flags.henningPresent) || flag(flags.henningArrived),
+  };
+}
+
+export function presentBackendQuests(
+  quests: BackendQuest[],
+  gameState: BackendChildGameState | null,
+): BackendQuestPresentationSnapshot {
+  const context = questPresentationContextFromGameState(gameState);
+  const presented = quests
+    .filter((quest) => quest.state !== "approved")
+    .map((quest) => ({ quest, presentation: chooseQuestPresentation(quest, context) }));
+
+  return {
+    available: presented.filter(({ quest }) => quest.state === "available"),
+    pending: presented.filter(({ quest }) => quest.state === "pending"),
+  };
+}
