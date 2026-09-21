@@ -11,7 +11,7 @@ import {
   submitQuest,
 } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
-import { presentBackendQuests, primaryPresentedQuest } from "@/game/backendQuestPresentation";
+import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
 import {
   publishQuestPresentation,
   QUEST_SOURCE_OPEN_EVENT,
@@ -161,15 +161,7 @@ export default function ChildBackendQuestInbox() {
 
   useEffect(() => {
     const snapshot = presentBackendQuests(quests, gameState);
-    const available = snapshot.available;
-    publishQuestPresentation({
-      counts: {
-        noticeboard: available.filter(({ presentation }) => presentation.destination === "noticeboard").length,
-        home: available.filter(({ presentation }) => presentation.destination === "home").length,
-        linus: available.filter(({ presentation }) => presentation.destination === "linus").length,
-        bakery: available.filter(({ presentation }) => presentation.destination === "bakery").length,
-      },
-    });
+    publishQuestPresentation({ counts: questSourceCounts(snapshot) });
   }, [quests, gameState]);
 
   if (!pairingChecked) return null;
