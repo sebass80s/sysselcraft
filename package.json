@@ -18,7 +18,7 @@
     "cap:ios": "npx cap open ios",
     "cap:android": "npx cap open android",
     "ios:sync": "npm run build && npx cap sync ios",
-    "test:quest-presentation": "node --experimental-strip-types --experimental-specifier-resolution=node scripts/test-quest-presentation.mjs"
+    "test:quest-presentation": "node --experimental-strip-types scripts/test-quest-presentation.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
