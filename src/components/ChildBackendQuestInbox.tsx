@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Capacitor } from "@capacitor/core";
-import ChildPairingPanel from "./ChildPairingPanel";
+import { requestChildPairingOpen } from "@/game/childPairingBridge";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "@/backend/childDeviceBinding";
 import {
@@ -24,10 +24,10 @@ import {
 import styles from "./ChildBackendQuestInbox.module.css";
 
 const OPEN_REFRESH_MS = 15_000;
+const BACKGROUND_REFRESH_MS = 30_000;
 
 export default function ChildBackendQuestInbox() {
   const [bindingVersion, setBindingVersion] = useState(0);
-  const [pairingOpen, setPairingOpen] = useState(false);
   const router = useRouter();
   useEffect(() => {
     const reloadBinding = () => setBindingVersion((version) => version + 1);
@@ -35,13 +35,10 @@ export default function ChildBackendQuestInbox() {
     return () => window.removeEventListener(CHILD_BINDING_CHANGED, reloadBinding);
   }, []);
   const openPairing = () => {
-    if (Capacitor.isNativePlatform()) setPairingOpen(true);
+    if (Capacitor.isNativePlatform()) requestChildPairingOpen();
     else router.push("/pair/");
   };
-  return <>
-    <BoundChildQuestInbox key={bindingVersion} onPair={openPairing} />
-    {pairingOpen && <ChildPairingPanel onClose={() => setPairingOpen(false)} />}
-  </>;
+  return <BoundChildQuestInbox key={bindingVersion} onPair={openPairing} />;
 }
 
 function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
@@ -172,8 +169,11 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   }, [childId, needsPairing, refreshQuietly, sessionReady]);
 
   useEffect(() => {
-    if (!open || !childId || !sessionReady || needsPairing) return;
-    const timer = window.setInterval(() => void refreshQuietly(childId), OPEN_REFRESH_MS);
+    if (!childId || !sessionReady || needsPairing) return;
+    const refreshInterval = open ? OPEN_REFRESH_MS : BACKGROUND_REFRESH_MS;
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible") void refreshQuietly(childId);
+    }, refreshInterval);
     return () => window.clearInterval(timer);
   }, [open, childId, needsPairing, refreshQuietly, sessionReady]);
 
