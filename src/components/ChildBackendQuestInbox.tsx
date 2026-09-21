@@ -197,7 +197,8 @@ export default function ChildBackendQuestInbox() {
   const presented = presentBackendQuests(quests, gameState);
   const allVisibleQuests = [...presented.available, ...presented.pending];
   const visibleQuests = sourceFilter
-    ? allVisibleQuests.filter(({ presentation }) => presentation.destination === sourceFilter)
+    ? allVisibleQuests.filter(({ quest, presentation }) =>
+        quest.state === "available" && presentation.destination === sourceFilter)
     : allVisibleQuests;
   const availableCount = presented.available.length;
   const pendingCount = presented.pending.length;
