@@ -29,6 +29,37 @@ type RpcQuestRow = {
   approved_at: string | null;
 };
 
+export type QuestRecurrenceKind = "once" | "daily" | "weekdays" | "weekly";
+
+export type ParentQuestDefinition = {
+  questId: string;
+  householdId: string;
+  childId: string;
+  title: string;
+  description: string;
+  progressionClass: (typeof PROGRESSION_CLASSES)[number];
+  reward: { diamonds: number; sysselBux: number };
+  recurrenceKind: QuestRecurrenceKind;
+  recurrenceWeekdays: number[];
+  recurrenceTimezone: string | null;
+  createdAt: string;
+};
+
+type RpcParentQuestDefinitionRow = {
+  quest_id: string;
+  household_id: string;
+  child_id: string;
+  title: string;
+  description: string;
+  progression_class: unknown;
+  reward_diamonds: number;
+  reward_syssel_bux: number;
+  recurrence_kind: string;
+  recurrence_weekdays: number[];
+  recurrence_timezone: string | null;
+  created_at: string;
+};
+
 function firstRpcId(data: unknown, operation: string): string {
   if (typeof data === "string") return data;
   if (Array.isArray(data) && data.length > 0) {
@@ -151,6 +182,56 @@ export async function listChildQuests(childId: string): Promise<BackendQuest[]> 
   });
   if (error) throw error;
   return ((data ?? []) as RpcQuestRow[]).map(mapQuest);
+}
+
+export async function listParentQuestDefinitions(
+  childId: string,
+): Promise<ParentQuestDefinition[]> {
+  const { data, error } = await getSupabaseBrowserClient().rpc("list_parent_quest_definitions", {
+    p_child_id: childId,
+  });
+  if (error) throw error;
+
+  return ((data ?? []) as RpcParentQuestDefinitionRow[]).map((row) => {
+    if (!isProgressionClass(row.progression_class)) {
+      throw new Error(`Backend returned an invalid progression class for quest ${row.quest_id}.`);
+    }
+    const recurrenceKind = row.recurrence_kind as QuestRecurrenceKind;
+    if (!["once", "daily", "weekdays", "weekly"].includes(recurrenceKind)) {
+      throw new Error(`Backend returned an invalid recurrence kind for quest ${row.quest_id}.`);
+    }
+    return {
+      questId: row.quest_id,
+      householdId: row.household_id,
+      childId: row.child_id,
+      title: row.title,
+      description: row.description,
+      progressionClass: row.progression_class,
+      reward: {
+        diamonds: finiteNonNegative(row.reward_diamonds),
+        sysselBux: finiteNonNegative(row.reward_syssel_bux),
+      },
+      recurrenceKind,
+      recurrenceWeekdays: row.recurrence_weekdays ?? [],
+      recurrenceTimezone: row.recurrence_timezone,
+      createdAt: row.created_at,
+    };
+  });
+}
+
+export async function setParentQuestRecurrence(
+  questId: string,
+  recurrenceKind: QuestRecurrenceKind,
+  recurrenceWeekdays: number[] = [],
+  recurrenceTimezone: string | null = null,
+): Promise<void> {
+  const { error } = await getSupabaseBrowserClient().rpc("set_parent_quest_recurrence", {
+    p_quest_id: questId,
+    p_recurrence_kind: recurrenceKind,
+    p_recurrence_weekdays: recurrenceWeekdays,
+    p_recurrence_timezone: recurrenceTimezone,
+  });
+  if (error) throw error;
 }
 
 export async function updateParentQuest(
