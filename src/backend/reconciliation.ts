@@ -27,13 +27,24 @@ export type ReconciliationReport = {
   worldFlags: {
     localFirstDeliveryComplete: boolean;
     backendFirstDeliveryComplete: boolean | null;
-    matches: boolean | null;
+    firstDeliveryMatches: boolean | null;
+    localRecyclingCenterStage: number;
+    backendRecyclingCenterStage: number | null;
+    recyclingStageMatches: boolean | null;
   };
+  backendWorldProgression: number;
   recommendation: "no-op" | "inspect-before-merge" | "backend-ahead" | "local-ahead";
 };
 
 function finiteNumber(value: unknown): number {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
+}
+
+function readBackendRecyclingCenterStage(
+  worldFlags: BackendChildGameState["worldFlags"],
+): number | null {
+  const value = worldFlags.recyclingCenterStage;
+  return typeof value === "number" && Number.isFinite(value) ? Math.max(0, Math.min(4, Math.trunc(value))) : null;
 }
 
 function readBackendFirstDeliveryComplete(
@@ -69,28 +80,40 @@ export function createReconciliationReport(
 
   const localFirstDeliveryComplete = local.worldFlags.firstDeliveryComplete;
   const backendFirstDeliveryComplete = readBackendFirstDeliveryComplete(backend.worldFlags);
-  const worldFlagsMatch =
+  const firstDeliveryMatches =
     backendFirstDeliveryComplete === null
       ? null
       : backendFirstDeliveryComplete === localFirstDeliveryComplete;
+  const localRecyclingCenterStage = local.worldFlags.recyclingCenterStage;
+  const backendRecyclingCenterStage = readBackendRecyclingCenterStage(backend.worldFlags);
+  const recyclingStageMatches =
+    backendRecyclingCenterStage === null
+      ? null
+      : backendRecyclingCenterStage === localRecyclingCenterStage;
 
   const economyMatches =
     localEconomy.diamonds === backendEconomy.diamonds &&
     localEconomy.sysselBux === backendEconomy.sysselBux;
   const progressionMatches = progression.every((entry) => entry.delta === 0);
-  const allKnownFieldsMatch = economyMatches && progressionMatches && worldFlagsMatch !== false;
+  const allKnownFieldsMatch =
+    economyMatches &&
+    progressionMatches &&
+    firstDeliveryMatches !== false &&
+    recyclingStageMatches !== false;
 
   const backendAhead =
     backendEconomy.diamonds >= localEconomy.diamonds &&
     backendEconomy.sysselBux >= localEconomy.sysselBux &&
     progression.every((entry) => entry.delta >= 0) &&
-    (backendFirstDeliveryComplete !== false || !localFirstDeliveryComplete);
+    (backendFirstDeliveryComplete !== false || !localFirstDeliveryComplete) &&
+    (backendRecyclingCenterStage === null || backendRecyclingCenterStage >= localRecyclingCenterStage);
 
   const localAhead =
     localEconomy.diamonds >= backendEconomy.diamonds &&
     localEconomy.sysselBux >= backendEconomy.sysselBux &&
     progression.every((entry) => entry.delta <= 0) &&
-    (backendFirstDeliveryComplete !== true || localFirstDeliveryComplete);
+    (backendFirstDeliveryComplete !== true || localFirstDeliveryComplete) &&
+    (backendRecyclingCenterStage === null || localRecyclingCenterStage >= backendRecyclingCenterStage);
 
   let recommendation: ReconciliationReport["recommendation"] = "inspect-before-merge";
   if (allKnownFieldsMatch) recommendation = "no-op";
@@ -107,8 +130,12 @@ export function createReconciliationReport(
     worldFlags: {
       localFirstDeliveryComplete,
       backendFirstDeliveryComplete,
-      matches: worldFlagsMatch,
+      firstDeliveryMatches,
+      localRecyclingCenterStage,
+      backendRecyclingCenterStage,
+      recyclingStageMatches,
     },
+    backendWorldProgression: finiteNumber(backend.progression.worldProgression),
     recommendation,
   };
 }
