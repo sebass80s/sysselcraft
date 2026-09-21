@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { chooseQuestPresentation } from "../src/game/questPresentation.ts";
-import { presentBackendQuests, questPresentationContextFromGameState } from "../src/game/backendQuestPresentation.ts";
+import { presentBackendQuests, primaryPresentedQuest, questPresentationContextFromGameState } from "../src/game/backendQuestPresentation.ts";
 
 const quest = (title, progressionClass) => ({ title, progressionClass });
 
@@ -43,3 +43,7 @@ const snapshot = presentBackendQuests([
 assert.equal(snapshot.available[0].presentation.channel, "home");
 assert.equal(snapshot.pending[0].presentation.channel, "village");
 assert.equal(snapshot.available.length + snapshot.pending.length, 2);
+
+assert.equal(primaryPresentedQuest(snapshot)?.quest.instanceId, "1");
+assert.equal(primaryPresentedQuest({ available: [], pending: snapshot.pending })?.quest.instanceId, "2");
+assert.equal(primaryPresentedQuest({ available: [], pending: [] }), null);
