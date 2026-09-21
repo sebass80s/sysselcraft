@@ -157,6 +157,31 @@ export async function listChildren(householdId: string): Promise<BackendChild[]>
   }));
 }
 
+export async function createParentQuestV2(
+  householdId: string,
+  childId: string,
+  draft: ParentQuestDraft,
+  recurrenceKind: QuestRecurrenceKind,
+  recurrenceWeekdays: number[] = [],
+  recurrenceTimezone: string | null = null,
+): Promise<string> {
+  const quest = normalizeParentQuestDraft(draft);
+  const { data, error } = await getSupabaseBrowserClient().rpc("create_parent_quest_v2", {
+    p_household_id: householdId,
+    p_child_id: childId,
+    p_title: quest.title,
+    p_description: quest.description,
+    p_progression_class: quest.progressionClass,
+    p_reward_diamonds: quest.reward.diamonds,
+    p_reward_syssel_bux: quest.reward.sysselBux,
+    p_recurrence_kind: recurrenceKind,
+    p_recurrence_weekdays: recurrenceWeekdays,
+    p_recurrence_timezone: recurrenceTimezone,
+  });
+  if (error) throw error;
+  return firstRpcId(data, "create_parent_quest_v2");
+}
+
 export async function createParentQuest(
   householdId: string,
   childId: string,
