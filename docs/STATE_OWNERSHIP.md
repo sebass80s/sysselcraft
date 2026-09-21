@@ -56,3 +56,9 @@ Any code that introduces a write from reconciliation should require all of the f
 - explicit confirmation that world events restore state without replaying one-time effects.
 
 Until then the migration phase remains **observe-only**.
+
+### Current reconciliation capture
+
+The read-only `?debug=reconciliation` diagnostic now captures the local/backend economy, category progression, first-delivery flag, Recycling stage and backend `worldProgression`. Unknown backend world flags are treated as uncertainty, never as a clean match or an ahead/behind result. This is deliberate: absence of a flag is not evidence that the two ledgers agree.
+
+The next authority decision still requires the physical baseline described above. Do not turn these diagnostics into a write path merely because the values happen to match on one device.
