@@ -170,7 +170,7 @@ export default function PairChildPage() {
         )}
 
         {message && <p className="parent-status-message">{message}</p>}
-        <a href="/">← Tillbaka till byn</a>
+        <a href="./index.html">← Tillbaka till byn</a>
       </section>
     </main>
   );
