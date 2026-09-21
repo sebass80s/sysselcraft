@@ -115,10 +115,14 @@ export function createReconciliationReport(
     (backendFirstDeliveryComplete !== true || localFirstDeliveryComplete) &&
     (backendRecyclingCenterStage === null || localRecyclingCenterStage >= backendRecyclingCenterStage);
 
+  const worldFlagsKnown =
+    firstDeliveryMatches !== null &&
+    recyclingStageMatches !== null;
+
   let recommendation: ReconciliationReport["recommendation"] = "inspect-before-merge";
   if (allKnownFieldsMatch) recommendation = "no-op";
-  else if (backendAhead && !localAhead) recommendation = "backend-ahead";
-  else if (localAhead && !backendAhead) recommendation = "local-ahead";
+  else if (worldFlagsKnown && backendAhead && !localAhead) recommendation = "backend-ahead";
+  else if (worldFlagsKnown && localAhead && !backendAhead) recommendation = "local-ahead";
 
   return {
     economy: {
