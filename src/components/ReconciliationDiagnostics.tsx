@@ -245,7 +245,7 @@ export default function ReconciliationDiagnostics() {
       {captureMessage && <p className={styles.message}>{captureMessage}</p>}
 
       <div className={styles.actions}>
-        <a href="./index.html">Stäng diagnostik</a>
+        <a href={Capacitor.isNativePlatform() ? "./index.html" : "/"}>Stäng diagnostik</a>
         {result && (
           <button type="button" disabled={busy} onClick={copyCapture}>
             Kopiera snapshot
