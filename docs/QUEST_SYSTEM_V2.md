@@ -191,3 +191,16 @@ Locked product direction:
 - all active quests must remain discoverable even when they are not on the noticeboard.
 
 The presentation model therefore separates the broad channel (`home`, `noticeboard`, `npc`, `building`) from the concrete presenter/destination. This is intended to scale to Sol and future residents without adding a new top-level channel for every NPC.
+
+
+## 12. Reusing established world affordances
+
+Backend quest presentation must not create duplicate markers where the village already has a natural interaction affordance.
+
+- Home-routed backend quests reuse the existing home quest marker after onboarding.
+- Linus-routed backend quests reuse Linus himself rather than adding a second floating marker.
+- The locked first-quest onboarding remains authoritative while it is active.
+- Noticeboard quests use the noticeboard's own attention marker.
+- Future resident/building sources should follow the same rule: prefer the world's existing interaction affordance over parallel UI.
+
+The source bridge may track several active destinations at once. Opening a concrete source filters the child quest view to quests routed to that destination; the general quest control remains the all-discoverable fallback.
