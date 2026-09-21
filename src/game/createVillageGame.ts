@@ -17,6 +17,7 @@ export type VillageGameHandle = {
   setQuestState: (state: QuestState) => void;
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
+  setNoticeboardAttention: (active: boolean) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
 type Callbacks = { onQuestOpen: () => void; onLinusInteract: () => void; onConstructionInteract: (id: string) => void };
@@ -55,6 +56,7 @@ export async function createVillageGame(
   let requestedQuestState: QuestState = "available";
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
+  let requestedNoticeboardAttention = false;
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -68,6 +70,7 @@ export async function createVillageGame(
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
     private targetMarker?: GameObjects.Arc;
     private questMarker?: GameObjects.Container;
+    private noticeboardMarker?: GameObjects.Container;
     private linus?: GameObjects.Image;
     private attentionMarker?: GameObjects.Text;
     private attentionInteractionPending = false;
@@ -128,6 +131,8 @@ export async function createVillageGame(
       camera.startFollow(this.player, true, 0.08, 0.08);
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
       this.createQuestMarker();
+      this.createNoticeboardMarker();
+      this.setNoticeboardAttention(requestedNoticeboardAttention);
       this.setIntroComplete(requestedIntroComplete);
       this.applyQuestState(requestedQuestState);
       this.setConstruction(requestedConstruction);
@@ -317,6 +322,29 @@ export async function createVillageGame(
 
     private drawQuestBoard() {
       this.worldImage(315, 267, "quest-board");
+    }
+
+    setNoticeboardAttention(active: boolean) {
+      requestedNoticeboardAttention = active;
+      this.noticeboardMarker?.setVisible(active);
+    }
+
+    private createNoticeboardMarker() {
+      const bubble = this.add.graphics();
+      bubble.fillStyle(0xfff2cf, 0.98);
+      bubble.lineStyle(2, 0x6b4b31, 0.9);
+      bubble.fillRoundedRect(-18, -18, 36, 34, 10);
+      bubble.strokeRoundedRect(-18, -18, 36, 34, 10);
+      const label = this.add.text(0, -2, "!", {
+        color: "#5a3f28", fontSize: "22px", fontStyle: "bold", fontFamily: "Trebuchet MS",
+      }).setOrigin(0.5);
+      this.noticeboardMarker = this.add.container(315, 205, [bubble, label])
+        .setDepth(3000)
+        .setVisible(false);
+      this.tweens.add({
+        targets: [bubble, label], y: "-=3", duration: 1000,
+        yoyo: true, repeat: -1, ease: "Sine.InOut",
+      });
     }
 
     private createQuestMarker() {
@@ -558,6 +586,12 @@ export async function createVillageGame(
       requestedIntroComplete = complete;
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setIntroComplete(complete);
+      }
+    },
+    setNoticeboardAttention: (active: boolean) => {
+      requestedNoticeboardAttention = active;
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setNoticeboardAttention(active);
       }
     },
     setDogVisible: (visible: boolean) => {
