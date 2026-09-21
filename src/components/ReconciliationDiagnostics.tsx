@@ -198,12 +198,30 @@ export default function ReconciliationDiagnostics() {
               <span>{String(result.report.worldFlags.localFirstDeliveryComplete)}</span>
               <span>{String(result.report.worldFlags.backendFirstDeliveryComplete)}</span>
               <span>
-                {result.report.worldFlags.matches === null
+                {result.report.worldFlags.firstDeliveryMatches === null
                   ? "?"
-                  : result.report.worldFlags.matches
+                  : result.report.worldFlags.firstDeliveryMatches
                     ? "✓"
                     : "≠"}
               </span>
+            </div>
+            <div className={styles.row}>
+              <span>Recycling stage</span>
+              <span>{result.report.worldFlags.localRecyclingCenterStage}</span>
+              <span>{result.report.worldFlags.backendRecyclingCenterStage ?? "?"}</span>
+              <span>
+                {result.report.worldFlags.recyclingStageMatches === null
+                  ? "?"
+                  : result.report.worldFlags.recyclingStageMatches
+                    ? "✓"
+                    : "≠"}
+              </span>
+            </div>
+            <div className={styles.row}>
+              <span>Backend world progression</span>
+              <span>—</span>
+              <span>{result.report.backendWorldProgression}</span>
+              <span>info</span>
             </div>
           </section>
 
