@@ -1,5 +1,6 @@
 "use client";
 
+import { Capacitor } from "@capacitor/core";
 import { FormEvent, useEffect, useState } from "react";
 import { ensureChildAnonymousSession } from "@/backend/auth";
 import { getPairedChildId, setPairedChildId } from "@/backend/childDeviceBinding";
@@ -170,7 +171,7 @@ export default function PairChildPage() {
         )}
 
         {message && <p className="parent-status-message">{message}</p>}
-        <a href="./index.html">← Tillbaka till byn</a>
+        <a href={Capacitor.isNativePlatform() ? "./index.html" : "/"}>← Tillbaka till byn</a>
       </section>
     </main>
   );
