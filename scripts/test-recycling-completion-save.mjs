@@ -4,9 +4,11 @@ import ts from "typescript";
 
 let stored = null;
 let failRead = false;
+let failWrite = false;
+let holdWrite = null;
 const preferences = {
   async get() { if (failRead) throw new Error("storage unavailable"); return { value: stored }; },
-  async set({ value }) { stored = value; },
+  async set({ value }) { if (holdWrite) await holdWrite; if (failWrite) throw new Error("storage full"); stored = value; },
   async remove() { stored = null; },
 };
 
@@ -86,3 +88,40 @@ assert.deepEqual((await save.loadSaveState(true)).construction, afterStory.const
 stored = null;
 assert.equal(await save.loadSaveState(true), null, "only an absent key starts a new game");
 console.log("PASS: strict playable save loading preserves unreadable/future saves and permits retry");
+
+// A new JS process/module lifetime must retain the entire valid save, not just stage.
+const valid = save.normalizeSaveState({ ...afterStory, childName: "Alex", dogName: "Bosse",
+  questStates: { makeBed: "approved" }, diamonds: 17, sysselBux: 29,
+});
+await save.saveSaveState(valid, true);
+const validBytes = stored;
+modules.clear();
+const restartedSave = load("saveState");
+assert.deepEqual(await restartedSave.loadSaveState(true), valid);
+assert.equal(stored, validBytes, "reload reads without rewriting storage");
+await restartedSave.saveSaveState(await restartedSave.loadSaveState(true), true);
+assert.equal(stored, validBytes, "first autosave after update/reload preserves all normalized fields");
+
+// Failure leaves last durable state intact; a rejected queue must not poison retry.
+failWrite = true;
+const next = { ...valid, diamonds: 18 };
+await assert.rejects(restartedSave.saveSaveState(next, true), /storage full/);
+assert.equal(stored, validBytes);
+failWrite = false;
+await restartedSave.saveSaveState(next, true);
+assert.deepEqual(await restartedSave.loadSaveState(true), next);
+
+// Slow storage must preserve call ordering and snapshot values, not object mutations.
+let releaseWrite;
+holdWrite = new Promise(resolve => { releaseWrite = resolve; });
+const firstSnapshot = { ...next, sysselBux: 30 };
+const firstWrite = restartedSave.saveSaveState(firstSnapshot, true);
+const lastSnapshot = { ...next, sysselBux: 31 };
+const lastWrite = restartedSave.saveSaveState(lastSnapshot, true);
+lastSnapshot.sysselBux = 999; // Caller changes after enqueue cannot corrupt persisted snapshot.
+releaseWrite();
+await Promise.all([firstWrite, lastWrite]);
+holdWrite = null;
+assert.equal((await restartedSave.loadSaveState(true)).sysselBux, 31);
+assert.equal((await restartedSave.loadSaveState(true)).diamonds, 18);
+console.log("PASS: full save survives fresh module/reload, failed write preserves durable state, retry and queued snapshots remain ordered");

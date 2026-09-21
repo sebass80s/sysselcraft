@@ -14,6 +14,7 @@ import {
 } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
+import { createQuestRequestGuard } from "@/game/questRequestGuard";
 import { loadSaveState } from "@/game/saveState";
 import {
   publishQuestPresentation,
@@ -54,37 +55,53 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
-  const refresh = useCallback(async (id: string) => {
-    const bound = await isChildDeviceBound(id);
-    if (!bound) {
-      setNeedsPairing(true);
-      setQuests([]);
-      setGameState(null);
-      setMessage("Barnkopplingen behöver förnyas.");
-      return false;
-    }
+  const [requests] = useState(createQuestRequestGuard);
+  useEffect(() => {
+    requests.activate();
+    return () => requests.deactivate();
+  }, [requests]);
 
-    setNeedsPairing(false);
-    const [nextQuests, nextGameState, localSave] = await Promise.all([
-      listChildQuests(id),
-      getChildGameState(id),
-      loadSaveState(),
-    ]);
-    setQuests(nextQuests);
-    setGameState(nextGameState);
-    setLocalRecyclingCenterStage(localSave?.worldFlags.recyclingCenterStage ?? 0);
-    return true;
-  }, []);
+  const refresh = useCallback(async (id: string) => {
+    if (!requests.isActive()) return false;
+    const current = requests.begin();
+    try {
+      const bound = await isChildDeviceBound(id);
+      if (!current()) return false;
+      if (!bound) {
+        setNeedsPairing(true);
+        setQuests([]);
+        setGameState(null);
+        setMessage("Barnkopplingen behöver förnyas.");
+        return false;
+      }
+
+      const [nextQuests, nextGameState, localSave] = await Promise.all([
+        listChildQuests(id),
+        getChildGameState(id),
+        loadSaveState(),
+      ]);
+      if (!current()) return false;
+      setNeedsPairing(false);
+      setQuests(nextQuests);
+      setGameState(nextGameState);
+      setLocalRecyclingCenterStage(localSave?.worldFlags.recyclingCenterStage ?? 0);
+      return true;
+    } catch (error) {
+      if (!current()) return false;
+      throw error;
+    }
+  }, [requests]);
 
   const refreshQuietly = useCallback(
     async (id: string) => {
+      if (!requests.isActive() || requests.isBusy()) return;
       try {
         if (await refresh(id)) setMessage("");
       } catch (error) {
         setMessage(error instanceof Error ? error.message : "Kunde inte synka uppdragen.");
       }
     },
-    [refresh],
+    [refresh, requests],
   );
 
   useEffect(() => {
@@ -137,6 +154,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
         setSessionReady(ready);
 
         if (!ready) {
+          requests.invalidate();
           setQuests([]);
           setGameState(null);
           setMessage("Barnkopplingen behöver förnyas.");
@@ -149,7 +167,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       // Initial load reports configuration/session errors; do not crash the village.
       return;
     }
-  }, [childId, refreshQuietly]);
+  }, [childId, refreshQuietly, requests]);
 
   useEffect(() => {
     if (!childId || !sessionReady || needsPairing) return;
@@ -228,35 +246,39 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
 
   async function markDone(instanceId: string) {
-    if (!childId || !sessionReady || needsPairing) return;
+    if (!childId || !sessionReady || needsPairing || !requests.startAction()) return;
     setBusy(true);
     setMessage("");
     try {
       await submitQuest(instanceId);
-      await refresh(childId);
-      setMessage("Klart! Nu väntar uppdraget på en vuxen. ✨");
+      if (!requests.isActive()) return;
+      const refreshed = await refresh(childId);
+      if (refreshed) setMessage("Klart! Nu väntar uppdraget på en vuxen. ✨");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Kunde inte skicka uppdraget.");
+      if (requests.isActive()) setMessage(error instanceof Error ? error.message : "Kunde inte skicka uppdraget.");
     } finally {
-      setBusy(false);
+      requests.finishAction();
+      if (requests.isActive()) setBusy(false);
     }
   }
 
   async function refreshNow() {
-    if (!childId || needsPairing || busy) return;
+    if (!childId || needsPairing || !requests.startAction()) return;
     setBusy(true);
     setMessage("");
     try {
       const auth = await getBackendAuthState();
+      if (!requests.isActive()) return;
       const ready = auth.signedIn && auth.isAnonymous;
       setSessionReady(ready);
       if (!ready) { setNeedsPairing(true); return; }
       const refreshed = await refresh(childId);
       if (refreshed) setMessage("Uppdragen är uppdaterade.");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Kunde inte uppdatera.");
+      if (requests.isActive()) setMessage(error instanceof Error ? error.message : "Kunde inte uppdatera.");
     } finally {
-      setBusy(false);
+      requests.finishAction();
+      if (requests.isActive()) setBusy(false);
     }
   }
 

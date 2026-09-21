@@ -39,6 +39,24 @@ Evidence labels are literal: FIXED means an implementation change with stated va
 | A25 / P2 | NEEDS PRODUCT/PHYSICAL TEST | Dead/unwired prototype inventory: `TestResetControl`, `constructionProgression.applyApprovedConstructionContribution`, old stage-4 playtest helpers in `worldDecor`, production manifest and separate `recyclingStory` StoryState helpers have no current gameplay callers. They are not evidence of shipped features. Kept intact because some are deliberate future contracts; removal is not required for this patch. |
 | A26 / P2 | NEEDS PRODUCT/PHYSICAL TEST | Delivery reproducibility: package.json uses ranges and no committed npm lockfile. Native SPM pins Capacitor 8.5.2 but fresh npm resolution can drift. Before distributing repeated alpha updates, verify/pin a tested dependency set in a dedicated dependency task and run native regression; this audit did not silently upgrade packages. |
 
+## Focused hardening after integration b662023 — 2026-09-21
+
+This follow-up starts from `b662023faf2e25de2ddaa3089b024ffe1f17fe49` and preserves Nova's single `childPairingBridge` owner and 15-second open / 30-second closed refresh policy.
+
+| Status | Concrete result |
+|---|---|
+| FIXED | Overlapping child refreshes could publish an older available/pending snapshot after a newer response or submit. A request-generation guard now discards superseded responses and errors, including after auth invalidation/unmount. Background refresh pauses during explicit actions. This affects UI request lifetime only, not reconciliation or backend ownership. |
+| FIXED | React's disabled state alone did not prevent two submit handlers in the same tick. A synchronous action guard now admits one request and releases on failure/success. No automatic mutation retry was introduced. |
+| VERIFIED OK | `npm run test:quest-recovery` is part of full `npm run verify`: request ordering/action locks/unmount/remount; available → pending → approved presentation; approved history excluded from active lists; next recurring instance isolated; real repository transport errors and read-only refresh RPC selection; binding notification after durable storage, no event on failed storage. Transport/storage are isolated mocks; no Supabase calls occur. |
+| VERIFIED OK | Extended optional browser suite executes the built UI: held available response across submit, same-tick double tap (one RPC), server-approved fixture disappears, repeated background reads retain the returned wallet without additional mutation, new occurrence appears once, old-child delayed response cannot overwrite a newly paired child, repeated bridge events produce one pairing dialog, one focus listener after rebind, one poll per 15/30-second interval, and no polling after route unmount. Existing network recovery test remains passing. |
+| VERIFIED OK | Save tests now compare the complete normalized valid save across a fresh module lifetime and first autosave, check original durable bytes after a failed write, retry after a rejected write queue, and ordering/immutable snapshots under delayed storage. Existing malformed/future-format read protection tests remain. Only in-memory Preferences are used. |
+| NEEDS PRODUCT/PHYSICAL TEST | Exactly-once reward application and recurring-instance creation under concurrent server requests remain database acceptance tests. The client suite verifies no duplicate mutation and no client-side reward accumulation; it does **not** prove SQL idempotency by teaching a mock to be idempotent. No local PostgreSQL test runtime is configured here; no live Supabase writes were made. |
+| NEEDS PRODUCT/PHYSICAL TEST | Still run actual parent approval/rejection and recurrence/day-rollover with two devices; pairing/auth expiry and re-pair during real requests; WKWebView background/foreground; update-in-place and force-kill/storage-pressure persistence. Parent-page overlapping refreshes (A16) remain outside this child-inbox fix. |
+
+A06 now uses Nova's shared bridge and the existing village pairing panel; the inbox no longer owns a second panel. Inspection plus repeated-event browser testing found no duplicate pairing overlay. Native adult-menu account entry directs the adult to a separate device, but direct native parent-route/auth acceptance (A18) is still not established.
+
+Validation: full `npm run verify` and the extended isolated browser suite were run for this follow-up. Browser tests remain optional because Playwright/browser binaries are not repository dependencies. No native sync, physical save access, production deploy, Supabase write, or push. The pre-existing `ios/App/App/config.xml` diff is excluded and its SHA-256 is checked before/after.
+
 ## What to prove before daily use
 
 1. Run A16–A19 with an adult and a child device on the intended deployed backend; record build SHA, OS/device, network scenario and actual results. Preserve existing data. Use dedicated test profiles only with explicit authorization.
