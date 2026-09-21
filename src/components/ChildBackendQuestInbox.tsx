@@ -158,6 +158,13 @@ export default function ChildBackendQuestInbox() {
     return () => window.removeEventListener(QUEST_SOURCE_OPEN_EVENT, openSource);
   }, []);
 
+  useEffect(() => {
+    const snapshot = presentBackendQuests(quests, gameState);
+    const noticeboardCount = [...snapshot.available, ...snapshot.pending]
+      .filter(({ presentation }) => presentation.channel === "noticeboard").length;
+    publishQuestPresentation({ noticeboardCount });
+  }, [quests, gameState]);
+
   if (!pairingChecked) return null;
 
   if (!childId) {
@@ -189,9 +196,6 @@ export default function ChildBackendQuestInbox() {
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
   const primaryWorldQuest = primaryPresentedQuest(presented);
 
-  useEffect(() => {
-    publishQuestPresentation({ noticeboardCount: noticeboardQuests.length });
-  }, [noticeboardQuests.length]);
 
   async function markDone(instanceId: string) {
     if (!childId || !sessionReady || needsPairing) return;
