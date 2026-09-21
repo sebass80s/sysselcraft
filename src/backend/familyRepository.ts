@@ -267,6 +267,28 @@ export async function setParentQuestRecurrence(
   if (error) throw error;
 }
 
+export async function updateParentQuestV2(
+  questId: string,
+  draft: ParentQuestDraft,
+  recurrenceKind: QuestRecurrenceKind,
+  recurrenceWeekdays: number[] = [],
+  recurrenceTimezone: string | null = null,
+): Promise<void> {
+  const quest = normalizeParentQuestDraft(draft);
+  const { error } = await getSupabaseBrowserClient().rpc("update_parent_quest_v2", {
+    p_quest_id: questId,
+    p_title: quest.title,
+    p_description: quest.description,
+    p_progression_class: quest.progressionClass,
+    p_reward_diamonds: quest.reward.diamonds,
+    p_reward_syssel_bux: quest.reward.sysselBux,
+    p_recurrence_kind: recurrenceKind,
+    p_recurrence_weekdays: recurrenceWeekdays,
+    p_recurrence_timezone: recurrenceTimezone,
+  });
+  if (error) throw error;
+}
+
 export async function updateParentQuest(
   questId: string,
   draft: ParentQuestDraft,
