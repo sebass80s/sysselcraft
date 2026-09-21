@@ -1,5 +1,5 @@
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
-import { chooseQuestPresentation, type QuestPresentation } from "./questPresentation";
+import { chooseQuestPresentation, type QuestPresentation } from "./questPresentation.ts";
 
 export type PresentedBackendQuest = {
   quest: BackendQuest;
