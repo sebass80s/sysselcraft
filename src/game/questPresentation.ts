@@ -13,6 +13,7 @@ export type QuestPresentationContext = {
   recyclingComplete: boolean;
   bakeryUnlocked: boolean;
   henningPresent: boolean;
+  noticeboardAvailable: boolean;
 };
 
 const HOME_TITLE_HINTS = /\b(bädda|säng|rum|kläder|tänder|tand|pyjamas|leksak|städa)\b/i;
@@ -30,7 +31,7 @@ function categoryFallback(
       reason: "community-with-henning",
     };
   }
-  if (context.recyclingComplete) {
+  if (context.recyclingComplete && context.noticeboardAvailable) {
     return {
       channel: "noticeboard",
       presenter: "noticeboard",
