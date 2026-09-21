@@ -307,7 +307,8 @@ export async function createVillageGame(
       this.linusInteractionPending = false;
       this.playerFacing = this.player.x < this.linus.x ? "east" : "west";
       this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
-      callbacks.onLinusInteract();
+      if (this.introComplete && this.backendLinusAttention) callbacks.onQuestSourceInteract?.("linus");
+      else callbacks.onLinusInteract();
     }
 
     private worldImage(
@@ -582,7 +583,11 @@ export async function createVillageGame(
         }
         if (!this.player) return;
         if (this.introComplete && this.backendLinusAttention) {
-          callbacks.onQuestSourceInteract?.("linus");
+          this.linusInteractionPending = true;
+          this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
+          const finalPoint = this.path.at(-1);
+          if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+          else this.maybeCompleteWorldInteraction();
           return;
         }
         if (this.introComplete) return;
