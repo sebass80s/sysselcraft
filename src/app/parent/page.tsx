@@ -8,6 +8,7 @@ import {
   subscribeBackendAuth,
 } from "@/backend/auth";
 import {
+  archiveParentQuest,
   createChild,
   createChildPairingCode,
   createHousehold,
@@ -16,6 +17,7 @@ import {
   listChildren,
   listHouseholds,
   reviewQuest,
+  updateParentQuest,
 } from "@/backend/familyRepository";
 import type { BackendChild, BackendHousehold, BackendQuest } from "@/backend/types";
 import { isParentQuestDraftReady, type ParentQuestDraft } from "@/game/parentMode";
@@ -38,6 +40,7 @@ export default function ParentModePage() {
   const [householdId, setHouseholdId] = useState("");
   const [childId, setChildId] = useState("");
   const [draft, setDraft] = useState<ParentQuestDraft>(emptyDraft);
+  const [editingQuestId, setEditingQuestId] = useState<string | null>(null);
   const [pairingCode, setPairingCode] = useState("");
 
   const loadChildQuests = useCallback(async (id: string) => {
@@ -181,12 +184,58 @@ export default function ParentModePage() {
     setBusy(true);
     setMessage("");
     try {
-      await createParentQuest(householdId, childId, draft);
+      if (editingQuestId) {
+        await updateParentQuest(editingQuestId, draft);
+        setMessage("Uppdraget är uppdaterat. ✏️");
+      } else {
+        await createParentQuest(householdId, childId, draft);
+        setMessage("Uppdraget är skickat till Sysselcraft! 🎉");
+      }
       setDraft(emptyDraft);
+      setEditingQuestId(null);
       await loadChildQuests(childId);
-      setMessage("Uppdraget är skickat till Sysselcraft! 🎉");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte skapa uppdraget.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function beginEdit(quest: BackendQuest) {
+    setEditingQuestId(quest.questId);
+    setDraft({
+      title: quest.title,
+      description: quest.description,
+      progressionClass: quest.progressionClass,
+      reward: { ...quest.reward },
+    });
+    setMessage("Redigerar uppdrag. Ändringen gäller den aktiva, ännu ej påbörjade förekomsten.");
+  }
+
+  function cancelEdit() {
+    setEditingQuestId(null);
+    setDraft(emptyDraft);
+    setMessage("");
+  }
+
+  async function archiveQuest(quest: BackendQuest) {
+    const confirmed = window.confirm(
+      `Ta bort "${quest.title}"? Uppdragshistorik och redan utdelade belöningar sparas.`,
+    );
+    if (!confirmed) return;
+
+    setBusy(true);
+    setMessage("");
+    try {
+      await archiveParentQuest(quest.questId);
+      if (editingQuestId === quest.questId) {
+        setEditingQuestId(null);
+        setDraft(emptyDraft);
+      }
+      await loadChildQuests(childId);
+      setMessage("Uppdraget är borttaget. Historiken är sparad.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte ta bort uppdraget.");
     } finally {
       setBusy(false);
     }
@@ -431,7 +480,7 @@ export default function ParentModePage() {
             </section>
 
             <section className="parent-tool-card">
-              <h2>+ Nytt uppdrag</h2>
+              <h2>{editingQuestId ? "✏️ Redigera uppdrag" : "+ Nytt uppdrag"}</h2>
               <form className="parent-quest-form" onSubmit={submitDraft}>
                 <input
                   required
@@ -493,8 +542,18 @@ export default function ParentModePage() {
                   </label>
                 </div>
                 <button className="primary-button" disabled={busy || !childId || !draftReady}>
-                  Skapa uppdrag
+                  {editingQuestId ? "Spara ändringar" : "Skapa uppdrag"}
                 </button>
+                {editingQuestId && (
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    disabled={busy}
+                    onClick={cancelEdit}
+                  >
+                    Avbryt
+                  </button>
+                )}
               </form>
             </section>
 
@@ -537,6 +596,22 @@ export default function ParentModePage() {
                           💎 {quest.reward.diamonds} · 🪙 {quest.reward.sysselBux}
                         </small>
                       </div>
+                    </div>
+                    <div className="parent-quest-actions">
+                      <button
+                        className="secondary-button compact"
+                        disabled={busy}
+                        onClick={() => beginEdit(quest)}
+                      >
+                        Redigera
+                      </button>
+                      <button
+                        className="secondary-button compact"
+                        disabled={busy}
+                        onClick={() => void archiveQuest(quest)}
+                      >
+                        Ta bort
+                      </button>
                     </div>
                   </article>
                 ))
