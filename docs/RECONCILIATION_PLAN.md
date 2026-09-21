@@ -23,6 +23,8 @@ A read-only diagnostic panel is mounted on the child game surface and can be ena
 
 `/?debug=reconciliation`
 
+On the installed native app, the iPhone-only test controls also contain a **TEST: reconciliation-diagnostik** shortcut so the physical baseline does not require an address bar. The panel has a direct exit back to normal play.
+
 The panel is intentionally hidden during normal play. It exists for development/native migration testing and should never become a child-facing progression dashboard.
 
 The report compares:
@@ -30,7 +32,11 @@ The report compares:
 - diamonds;
 - SysselBux;
 - all five hidden progression classes;
-- first-delivery world flag when the backend exposes that flag.
+- backend unified `worldProgression` as informational state;
+- first-delivery world flag;
+- Recycling stage.
+
+Missing backend world flags are treated as unknown state and force `inspect-before-merge`; absence is never interpreted as agreement.
 
 It returns one of four recommendations:
 
@@ -59,7 +65,7 @@ Until migration semantics are deliberately locked, reconciliation must not:
 After the backend pairing package is available on the physical child device:
 
 1. Start from a known local save on the child iPhone.
-2. Record local diamonds, SysselBux, first-delivery state and progression snapshot.
+2. Record local diamonds, SysselBux, first-delivery state, Recycling stage and progression snapshot.
 3. Pair that device to the real child profile.
 4. Open `/?debug=reconciliation` and capture the first read-only report.
 5. Confirm no local or backend value changes merely from opening/refreshing the diagnostics.
