@@ -49,6 +49,7 @@ function normalizeProgression(value: unknown): BackendChildGameState["progressio
   for (const key of PROGRESSION_CLASSES) {
     normalized[key] = finiteNonNegative(record[key]);
   }
+  normalized.worldProgression = finiteNonNegative(record.worldProgression);
   return normalized;
 }
 
