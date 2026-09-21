@@ -270,14 +270,15 @@ Treat the physical-device loop as a regression baseline. Backend/quest/approval/
 
 ## Current technical priority
 
-1. Preserve the now browser-runtime-verified v4 Recycling stage 1 integration at its real reserved site: `(-180, 500)`, display `330x236`, footprint `190x72`, approach `(-180,558)`.
-2. Implement the generic pending-construction / resident-attention mechanism above Phaser.
-3. Use Recycling stage 2 as the first Linus-guided reveal: earned progression -> HUD `Linus vill prata med dig` -> Linus at recycling site -> interaction -> reveal -> stage/collision commit.
-4. Extend the same mechanism through Recycling stages 3-4 without inventing new progression thresholds.
-5. Preserve dynamic player Y-depth, navigation, first-quest onboarding and the physically verified parent approval/delivery loop.
-6. Re-test scale, depth, taps, safe areas, occlusion, animation and rendering performance on physical iPhone after the local browser slice is stable.
-7. Generalize later for Bakery/Henning and Clinic/Sol while preserving resident arrival/story order.
-8. Village Event Director remains intentionally later and must not steal MVP focus.
+1. Preserve the physically verified Recycling four-stage loop and completion scene as the gameplay regression baseline.
+2. Finish Quest System v2 daily-use plumbing: recurring definitions/instances, parent definition management, unified world progression, and world-aware child presentation.
+3. World presentation currently supports home, Linus and selective noticeboard sources. Source attention is shown only for actionable `available` instances; `pending` instances remain visible in the general quest view but stop calling the child back to the world source.
+4. Reuse existing world affordances instead of stacking duplicate markers: the home quest marker for home-routed backend quests, Linus himself for Linus-routed quests, and the noticeboard marker for noticeboard quests.
+5. Keep the built-in local `Bädda sängen` onboarding ledger separate from backend quest ownership until an explicit reconciliation/migration strategy is implemented.
+6. Bakery routing is dormant until both Bakery is unlocked and Henning exists in persisted world state. Production Bakery art alone must never activate that source.
+7. Next larger gameplay slice is Henning/Bakery progression and arrival, but exact Bakery thresholds and Henning arrival staging remain product decisions and must not be invented.
+8. Re-test Quest System v2 source interactions, recurrence and parent management on physical iPhone before declaring the daily-use foundation child-ready.
+9. Village Event Director remains intentionally later and must not steal MVP focus.
 
 ## Deployment/resource policy
 
