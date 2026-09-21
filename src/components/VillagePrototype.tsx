@@ -26,6 +26,7 @@ import { constructionPresentation } from "../game/constructionPresentation";
 import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { getRecyclingCenterStatus } from "../game/worldProgression";
+import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
 import {
   QUEST_PRESENTATION_EVENT,
   getLatestQuestPresentation,
@@ -117,6 +118,12 @@ export default function VillagePrototype() {
 
     restore();
     return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    const openChildPairing = () => setChildPairingOpen(true);
+    window.addEventListener(CHILD_PAIRING_OPEN_EVENT, openChildPairing);
+    return () => window.removeEventListener(CHILD_PAIRING_OPEN_EVENT, openChildPairing);
   }, []);
 
   useEffect(() => {
