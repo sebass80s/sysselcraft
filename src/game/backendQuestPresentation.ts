@@ -24,6 +24,7 @@ export function questPresentationContextFromGameState(gameState: BackendChildGam
       Number(flags.recyclingCenterStage) >= 4,
     bakeryUnlocked: flag(flags.bakeryUnlocked) || Number(flags.bakeryStage) > 0,
     henningPresent: flag(flags.henningPresent) || flag(flags.henningArrived),
+    noticeboardAvailable: flags.noticeboardAvailable !== false,
   };
 }
 
