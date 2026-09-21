@@ -176,6 +176,14 @@ export async function createParentQuest(
   return firstRpcId(data, "create_parent_quest");
 }
 
+export async function materializeDueQuestInstances(childId: string): Promise<number> {
+  const { data, error } = await getSupabaseBrowserClient().rpc("materialize_due_quest_instances", {
+    p_child_id: childId,
+  });
+  if (error) throw error;
+  return typeof data === "number" && Number.isFinite(data) ? data : 0;
+}
+
 export async function listChildQuests(childId: string): Promise<BackendQuest[]> {
   const { data, error } = await getSupabaseBrowserClient().rpc("list_child_quests", {
     p_child_id: childId,
