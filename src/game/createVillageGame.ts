@@ -345,10 +345,6 @@ export async function createVillageGame(
         .setDepth(1000 + y);
     }
 
-    private drawQuestBoard() {
-      this.worldImage(315, 267, "quest-board");
-    }
-
     setQuestSourceAttention(source: "noticeboard" | "home" | "linus", active: boolean) {
       requestedQuestSourceAttention[source] = active;
       if (source === "noticeboard") this.noticeboardMarker?.setVisible(active);
