@@ -161,13 +161,13 @@ export default function ChildBackendQuestInbox() {
 
   useEffect(() => {
     const snapshot = presentBackendQuests(quests, gameState);
-    const visible = [...snapshot.available, ...snapshot.pending];
+    const available = snapshot.available;
     publishQuestPresentation({
       counts: {
-        noticeboard: visible.filter(({ presentation }) => presentation.destination === "noticeboard").length,
-        home: visible.filter(({ presentation }) => presentation.destination === "home").length,
-        linus: visible.filter(({ presentation }) => presentation.destination === "linus").length,
-        bakery: visible.filter(({ presentation }) => presentation.destination === "bakery").length,
+        noticeboard: available.filter(({ presentation }) => presentation.destination === "noticeboard").length,
+        home: available.filter(({ presentation }) => presentation.destination === "home").length,
+        linus: available.filter(({ presentation }) => presentation.destination === "linus").length,
+        bakery: available.filter(({ presentation }) => presentation.destination === "bakery").length,
       },
     });
   }, [quests, gameState]);
