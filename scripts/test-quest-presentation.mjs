@@ -4,9 +4,9 @@ import { presentBackendQuests, primaryPresentedQuest, questPresentationContextFr
 
 const quest = (title, progressionClass) => ({ title, progressionClass });
 
-const starter = { recyclingComplete: false, bakeryUnlocked: false, henningPresent: false };
-const recyclingDone = { recyclingComplete: true, bakeryUnlocked: false, henningPresent: false };
-const bakery = { recyclingComplete: true, bakeryUnlocked: true, henningPresent: true };
+const starter = { recyclingComplete: false, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: true };
+const recyclingDone = { recyclingComplete: true, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: true };
+const bakery = { recyclingComplete: true, bakeryUnlocked: true, henningPresent: true, noticeboardAvailable: true };
 
 assert.equal(chooseQuestPresentation(quest("Bädda sängen", "wellbeingRoutine"), starter).channel, "home");
 assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), starter).channel, "npc");
@@ -35,7 +35,7 @@ const gameState = (worldFlags) => ({
 });
 
 assert.deepEqual(questPresentationContextFromGameState(gameState({ recyclingCenterStage: 4 })), {
-  recyclingComplete: true, bakeryUnlocked: false, henningPresent: false,
+  recyclingComplete: true, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: true,
 });
 const snapshot = presentBackendQuests([
   backendQuest("1", "Bädda sängen", "wellbeingRoutine"),
@@ -49,3 +49,8 @@ assert.equal(snapshot.available.length + snapshot.pending.length, 2);
 assert.equal(primaryPresentedQuest(snapshot)?.quest.instanceId, "1");
 assert.equal(primaryPresentedQuest({ available: [], pending: snapshot.pending })?.quest.instanceId, "2");
 assert.equal(primaryPresentedQuest({ available: [], pending: [] }), null);
+
+assert.equal(chooseQuestPresentation(
+  quest("Gör läxan", "knowledgeCreativity"),
+  { recyclingComplete: true, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: false },
+).presenter, "linus");
