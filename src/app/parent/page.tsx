@@ -33,6 +33,21 @@ const emptyDraft: ParentQuestDraft = {
   reward: { diamonds: 1, sysselBux: 10 },
 };
 
+const WEEKDAY_LABELS = ["Mån", "Tis", "Ons", "Tor", "Fre", "Lör", "Sön"];
+
+function recurrenceLabel(definition: ParentQuestDefinition) {
+  if (definition.recurrenceKind === "daily") return "Varje dag";
+  if (definition.recurrenceKind === "weekly") return "Varje vecka";
+  if (definition.recurrenceKind === "weekdays") {
+    const days = definition.recurrenceWeekdays
+      .map((day) => WEEKDAY_LABELS[day - 1])
+      .filter(Boolean)
+      .join(", ");
+    return days || "Valda veckodagar";
+  }
+  return "En gång";
+}
+
 export default function ParentModePage() {
   const [signedIn, setSignedIn] = useState(false);
   const [email, setEmail] = useState("");
@@ -673,7 +688,7 @@ export default function ParentModePage() {
                       <div>
                         <strong>{definition.title}</strong>
                         <small>
-                          💎 {definition.reward.diamonds} · 🪙 {definition.reward.sysselBux}
+                          {recurrenceLabel(definition)} · 💎 {definition.reward.diamonds} · 🪙 {definition.reward.sysselBux}
                         </small>
                       </div>
                     </div>
