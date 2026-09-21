@@ -16,5 +16,10 @@ assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity")
 assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), recyclingDone).channel, "noticeboard");
 assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), recyclingDone).channel, "noticeboard");
 
+assert.equal(chooseQuestPresentation(
+  quest("Gör läxan", "knowledgeCreativity"),
+  { recyclingComplete: true, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: false },
+).presenter, "linus");
+
 console.log("quest presentation policy: ok");
 
