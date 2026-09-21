@@ -217,14 +217,15 @@ export default function ParentModePage() {
         const createdQuest = (await listChildQuests(childId)).find(
           (quest) => quest.instanceId === instanceId,
         );
-        if (createdQuest) {
-          await setParentQuestRecurrence(
-            createdQuest.questId,
-            recurrenceKind,
-            recurrenceWeekdays,
-            Intl.DateTimeFormat().resolvedOptions().timeZone,
-          );
+        if (!createdQuest) {
+          throw new Error("Det nya uppdraget skapades men kunde inte konfigureras.");
         }
+        await setParentQuestRecurrence(
+          createdQuest.questId,
+          recurrenceKind,
+          recurrenceWeekdays,
+          Intl.DateTimeFormat().resolvedOptions().timeZone,
+        );
         setMessage("Uppdraget är skickat till Sysselcraft! 🎉");
       }
       setDraft(emptyDraft);
