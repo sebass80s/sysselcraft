@@ -76,6 +76,8 @@ export async function createVillageGame(
     private targetMarker?: GameObjects.Arc;
     private questMarker?: GameObjects.Container;
     private noticeboardMarker?: GameObjects.Container;
+    private backendHomeAttention = false;
+    private backendLinusAttention = false;
     private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
     private attentionMarker?: GameObjects.Text;
@@ -139,6 +141,8 @@ export async function createVillageGame(
       this.createQuestMarker();
       this.createNoticeboardMarker();
       this.setQuestSourceAttention("noticeboard", requestedQuestSourceAttention.noticeboard);
+      this.setQuestSourceAttention("home", requestedQuestSourceAttention.home);
+      this.setQuestSourceAttention("linus", requestedQuestSourceAttention.linus);
       this.setIntroComplete(requestedIntroComplete);
       this.applyQuestState(requestedQuestState);
       this.setConstruction(requestedConstruction);
@@ -193,7 +197,10 @@ export async function createVillageGame(
         return;
       }
       this.questMarker.setPosition(-245, 70);
-      if (state === "available") {
+      if (this.backendHomeAttention) {
+        this.questMarker.setVisible(true).setAlpha(1);
+        label.setText("!");
+      } else if (state === "available") {
         this.questMarker.setVisible(true).setAlpha(1);
         label.setText("!");
       } else if (state === "pending") {
@@ -345,6 +352,9 @@ export async function createVillageGame(
     setQuestSourceAttention(source: "noticeboard" | "home" | "linus", active: boolean) {
       requestedQuestSourceAttention[source] = active;
       if (source === "noticeboard") this.noticeboardMarker?.setVisible(active);
+      if (source === "home") this.backendHomeAttention = active;
+      if (source === "linus") this.backendLinusAttention = active;
+      this.applyQuestState(requestedQuestState);
     }
 
     private createNoticeboardMarker() {
@@ -399,7 +409,8 @@ export async function createVillageGame(
         .setDepth(3000).setSize(54, 56).setInteractive({ useHandCursor: true });
       this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (this.introComplete) callbacks.onQuestOpen();
+        if (this.introComplete && this.backendHomeAttention) callbacks.onQuestSourceInteract?.("home");
+        else if (this.introComplete) callbacks.onQuestOpen();
         else callbacks.onLinusInteract();
       });
       this.tweens.add({ targets: [shadow, bubble, highlight, label], y: "-=4", duration: 950, yoyo: true, repeat: -1, ease: "Sine.InOut" });
@@ -571,7 +582,12 @@ export async function createVillageGame(
           this.approachAttentionResident();
           return;
         }
-        if (this.introComplete || !this.player) return;
+        if (!this.player) return;
+        if (this.introComplete && this.backendLinusAttention) {
+          callbacks.onQuestSourceInteract?.("linus");
+          return;
+        }
+        if (this.introComplete) return;
         this.linusInteractionPending = true;
         this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
