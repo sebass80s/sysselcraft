@@ -1,0 +1,17 @@
+# Generated web export and native build/dependency output (keep native sources).
+/App/App/public/
+/App/build/
+/App/Pods/
+/App/output/
+/capacitor-cordova-ios-plugins/
+DerivedData/
+.build/
+
+# Local Finder/Xcode state; shared project and SwiftPM lockfiles remain tracked.
+.DS_Store
+xcuserdata/
+*.xcuserstate
+/App/App.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+# App/capacitor.config.json and App/config.xml are intentionally versioned
+# as the tested native baseline; review their diffs after cap sync.
