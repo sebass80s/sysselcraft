@@ -11,6 +11,7 @@ import {
   submitQuest,
 } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
+import { presentBackendQuests } from "@/game/backendQuestPresentation";
 import styles from "./ChildBackendQuestInbox.module.css";
 
 const OPEN_REFRESH_MS = 15_000;
@@ -162,9 +163,10 @@ export default function ChildBackendQuestInbox() {
     );
   }
 
-  const visibleQuests = quests.filter((quest) => quest.state !== "approved");
-  const availableCount = quests.filter((quest) => quest.state === "available").length;
-  const pendingCount = quests.filter((quest) => quest.state === "pending").length;
+  const presented = presentBackendQuests(quests, gameState);
+  const visibleQuests = [...presented.available, ...presented.pending];
+  const availableCount = presented.available.length;
+  const pendingCount = presented.pending.length;
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
 
   async function markDone(instanceId: string) {
@@ -222,12 +224,18 @@ export default function ChildBackendQuestInbox() {
               {approvedCount > 0 ? "Alla uppdrag är klara just nu. 🌱" : "Inga nya uppdrag just nu. 🌱"}
             </div>
           ) : (
-            visibleQuests.map((quest) => (
-              <article className={styles.quest} key={quest.instanceId}>
+            visibleQuests.map(({ quest, presentation }) => (
+              <article className={styles.quest} key={quest.instanceId} data-presentation={presentation.channel}>
                 <strong>{quest.title}</strong>
                 <p>{quest.description}</p>
                 <small>
                   Belöning: 💎 {quest.reward.diamonds} · 🪙 {quest.reward.sysselBux}
+                </small>
+                <small>
+                  {presentation.channel === "home" && "🏠 Hemma"}
+                  {presentation.channel === "linus" && "🌲 Linus"}
+                  {presentation.channel === "bakery" && "🥖 Henning"}
+                  {presentation.channel === "village" && "🌱 Byn"}
                 </small>
                 {quest.state === "available" ? (
                   <button
