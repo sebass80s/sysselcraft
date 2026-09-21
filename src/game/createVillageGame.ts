@@ -352,7 +352,10 @@ export async function createVillageGame(
       requestedQuestSourceAttention[source] = active;
       if (source === "noticeboard") this.noticeboardMarker?.setVisible(active);
       if (source === "home") this.backendHomeAttention = active;
-      if (source === "linus") this.backendLinusAttention = active;
+      if (source === "linus") {
+        this.backendLinusAttention = active;
+        if (!active && this.introComplete) this.linusInteractionPending = false;
+      }
       this.applyQuestState(requestedQuestState);
     }
 
