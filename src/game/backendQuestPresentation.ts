@@ -15,10 +15,20 @@ function flag(value: unknown): boolean {
   return value === true;
 }
 
-export function questPresentationContextFromGameState(gameState: BackendChildGameState | null) {
+export type LocalQuestWorldContext = {
+  recyclingCenterStage?: number;
+};
+
+export function questPresentationContextFromGameState(
+  gameState: BackendChildGameState | null,
+  localWorld?: LocalQuestWorldContext | null,
+) {
   const flags = gameState?.worldFlags ?? {};
   return {
+    // During observe-only reconciliation the visible local world remains authoritative
+    // for presentation. This is read-only and must not migrate local state into Supabase.
     recyclingComplete:
+      Number(localWorld?.recyclingCenterStage) >= 4 ||
       flag(flags.recyclingComplete) ||
       flag(flags.recyclingCompletionSeen) ||
       Number(flags.recyclingCenterStage) >= 4,
@@ -31,8 +41,9 @@ export function questPresentationContextFromGameState(gameState: BackendChildGam
 export function presentBackendQuests(
   quests: BackendQuest[],
   gameState: BackendChildGameState | null,
+  localWorld?: LocalQuestWorldContext | null,
 ): BackendQuestPresentationSnapshot {
-  const context = questPresentationContextFromGameState(gameState);
+  const context = questPresentationContextFromGameState(gameState, localWorld);
   const presented = quests
     .filter((quest) => quest.state !== "approved")
     .map((quest) => ({ quest, presentation: chooseQuestPresentation(quest, context) }));
