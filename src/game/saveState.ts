@@ -200,13 +200,16 @@ export function withConstructionState(state: SaveStateV1, construction: Construc
   } };
 }
 
-export async function loadSaveState(): Promise<SaveStateV1 | null> {
+export async function loadSaveState(requireReadable = false): Promise<SaveStateV1 | null> {
   try {
     const { value } = await Preferences.get({ key: SAVE_KEY });
-    if (!value) return null;
-    return normalizeSaveState(JSON.parse(value));
+    if (value === null) return null;
+    const saved = normalizeSaveState(JSON.parse(value));
+    if (!saved && requireReadable) throw new Error("Unsupported local save format");
+    return saved;
   } catch (error) {
     console.warn("Sysselcraft save could not be loaded", error);
+    if (requireReadable) throw new Error("Sparningen kunde inte läsas. Inga nya framsteg sparas förrän den kan läsas igen.");
     return null;
   }
 }

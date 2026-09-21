@@ -70,6 +70,10 @@ export default function VillagePrototype() {
   const [parentMenuOpen, setParentMenuOpen] = useState(false);
   const [resettingSave, setResettingSave] = useState(false);
   const [childPairingOpen, setChildPairingOpen] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const [saveError, setSaveError] = useState(false);
+  const [saveRetryBusy, setSaveRetryBusy] = useState(false);
+  const [bootError, setBootError] = useState(false);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
   const recyclingStoryLine = recyclingStoryOpen ? recyclingCompletionDialogue[recyclingStoryIndex] : null;
@@ -82,7 +86,7 @@ export default function VillagePrototype() {
     let cancelled = false;
 
     async function restore() {
-      const saved = await loadSaveState();
+      const saved = await loadSaveState(true);
       if (cancelled) return;
 
       if (saved) {
@@ -115,7 +119,9 @@ export default function VillagePrototype() {
       setSaveReady(true);
     }
 
-    restore();
+    void restore().catch((error) => {
+      if (!cancelled) setLoadError(error instanceof Error ? error.message : "Sparningen kunde inte läsas.");
+    });
     return () => { cancelled = true; };
   }, []);
 
@@ -127,7 +133,10 @@ export default function VillagePrototype() {
       worldFlags: { firstDeliveryComplete: recyclingCenterStage >= 1, recyclingCenterStage },
     };
     latestSaveRef.current = snapshot;
-    void saveSaveState(snapshot);
+    void saveSaveState(snapshot, true).then(
+      () => setSaveError(false),
+      () => setSaveError(true),
+    );
   }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage]);
 
   useEffect(() => {
@@ -167,7 +176,9 @@ export default function VillagePrototype() {
       handle.setQuestState(restoredQuestStateRef.current);
       handle.setConstruction(constructionPresentation(constructionRef.current));
     }
-    boot();
+    void boot().catch(() => {
+      if (!cancelled) setBootError(true);
+    });
     return () => { cancelled = true; gameRef.current?.destroy(); gameRef.current = null; };
   }, [saveReady]);
 
@@ -239,6 +250,24 @@ export default function VillagePrototype() {
   const speakerName = dialogueStep?.kind === "line" && dialogueStep.speaker === "Barnet" ? childName || "Barnet" : dialogueStep?.kind === "line" ? dialogueStep.speaker : "";
   const recyclingSpeakerName = recyclingStoryLine?.speaker === "Barnet" ? childName || "Barnet" : recyclingStoryLine?.speaker ?? "";
 
+  async function retrySave() {
+    if (!latestSaveRef.current || saveRetryBusy || constructionWriteRef.current) return;
+    setSaveRetryBusy(true);
+    try { await saveSaveState(latestSaveRef.current, true); setSaveError(false); }
+    catch { setSaveError(true); }
+    finally { setSaveRetryBusy(false); }
+  }
+
+  if (bootError) return <section className="parent-page"><div className="parent-tool-card" role="alert">
+    <h1>Byn kunde inte startas</h1><p>Din sparning finns kvar. Försök öppna byn igen.</p>
+    <button className="primary-button" onClick={() => window.location.reload()}>Försök igen</button>
+  </div></section>;
+
+  if (loadError) return <section className="parent-page"><div className="parent-tool-card" role="alert">
+    <h1>Sparningen kunde inte öppnas</h1><p>{loadError}</p>
+    <button className="primary-button" onClick={() => window.location.reload()}>Försök läsa igen</button>
+  </div></section>;
+
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {diamonds}</strong><strong>🪙 {sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
@@ -252,6 +281,10 @@ export default function VillagePrototype() {
     {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span>{[2,3,4].map((stage) => <button key={stage} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     <div className="parent-menu-footer"><span>Den lokala loopen behålls tills reconciliation är testad på fysisk iPhone.</span><button className="debug-reset-button" type="button" onClick={resetPrototypeSave} disabled={!saveReady || resettingSave || constructionBusy}>↺ Nollställ testsparning</button></div></section></div>}
     </div>
+    {saveError && <div className="parent-menu-backdrop"><section className="parent-menu-panel" role="alert">
+      <h2>Framstegen kunde inte sparas</h2><p>Stäng inte appen ännu. Försök spara igen.</p>
+      <button className="primary-button" disabled={saveRetryBusy || constructionBusy} onClick={() => void retrySave()}>{saveRetryBusy ? "Sparar…" : "Försök spara igen"}</button>
+    </section></div>}
     {childPairingOpen && <ChildPairingPanel onClose={() => setChildPairingOpen(false)} />}
   </section>;
 }

@@ -3,8 +3,9 @@ import { readFileSync } from "node:fs";
 import ts from "typescript";
 
 let stored = null;
+let failRead = false;
 const preferences = {
-  async get() { return { value: stored }; },
+  async get() { if (failRead) throw new Error("storage unavailable"); return { value: stored }; },
   async set({ value }) { stored = value; },
   async remove() { stored = null; },
 };
@@ -70,3 +71,18 @@ assert.deepEqual(malformed.construction.completedStoryBeats, [construction.RECYC
   "save normalization keeps only the canonical one-shot completion beat");
 
 console.log("PASS: Recycling stage 4 completion survives restart before the scene, persists after completion, and cannot replay after reload.");
+
+// A broken/future save must never be mistaken for a new game by the playable surface.
+for (const unreadable of ["{broken", "", JSON.stringify({ version: 2 })]) {
+  stored = unreadable;
+  await assert.rejects(save.loadSaveState(true), /Sparningen kunde inte läsas/);
+  assert.equal(stored, unreadable, "read failures preserve original bytes");
+}
+stored = JSON.stringify(afterStory);
+failRead = true;
+await assert.rejects(save.loadSaveState(true), /Sparningen kunde inte läsas/);
+failRead = false;
+assert.deepEqual((await save.loadSaveState(true)).construction, afterStory.construction);
+stored = null;
+assert.equal(await save.loadSaveState(true), null, "only an absent key starts a new game");
+console.log("PASS: strict playable save loading preserves unreadable/future saves and permits retry");
