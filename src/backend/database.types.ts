@@ -428,6 +428,23 @@ export type Database = {
         Args: { p_household_id: string };
         Returns: boolean;
       };
+      list_parent_quest_definitions: {
+        Args: { p_child_id: string };
+        Returns: {
+          child_id: string;
+          created_at: string;
+          description: string;
+          household_id: string;
+          progression_class: string;
+          quest_id: string;
+          recurrence_kind: string;
+          recurrence_timezone: string | null;
+          recurrence_weekdays: number[];
+          reward_diamonds: number;
+          reward_syssel_bux: number;
+          title: string;
+        }[];
+      };
       list_child_quests: {
         Args: { p_child_id: string };
         Returns: {
