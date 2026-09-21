@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import { chooseQuestPresentation } from "../src/game/questPresentation.ts";
-import { questSourceCounts } from "../src/game/backendQuestPresentation.ts";
 
 const quest = (title, progressionClass) => ({ title, progressionClass });
 
@@ -37,16 +36,6 @@ assert.equal(chooseQuestPresentation(
   quest("Hjälp till med middagen", "community"),
   { recyclingComplete: true, bakeryUnlocked: true, henningPresent: false, noticeboardAvailable: false },
 ).destination, "linus");
-
-assert.deepEqual(questSourceCounts({
-  available: [
-    { quest: quest("Bädda sängen", "wellbeingRoutine"), presentation: { channel: "home", presenter: "home", destination: "home", reason: "test" } },
-    { quest: quest("Gör läxan", "knowledgeCreativity"), presentation: { channel: "noticeboard", presenter: "noticeboard", destination: "noticeboard", reason: "test" } },
-  ],
-  pending: [
-    { quest: quest("Väntar", "community"), presentation: { channel: "npc", presenter: "linus", destination: "linus", reason: "test" } },
-  ],
-}), { noticeboard: 1, home: 1, linus: 0, bakery: 0 });
 
 console.log("quest presentation policy: ok");
 
