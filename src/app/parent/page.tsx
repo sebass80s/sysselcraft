@@ -12,7 +12,7 @@ import {
   createChild,
   createChildPairingCode,
   createHousehold,
-  createParentQuest,
+  createParentQuestV2,
   listChildQuests,
   listChildren,
   listHouseholds,
@@ -213,15 +213,10 @@ export default function ParentModePage() {
         );
         setMessage("Uppdraget är uppdaterat. ✏️");
       } else {
-        const instanceId = await createParentQuest(householdId, childId, draft);
-        const createdQuest = (await listChildQuests(childId)).find(
-          (quest) => quest.instanceId === instanceId,
-        );
-        if (!createdQuest) {
-          throw new Error("Det nya uppdraget skapades men kunde inte konfigureras.");
-        }
-        await setParentQuestRecurrence(
-          createdQuest.questId,
+        await createParentQuestV2(
+          householdId,
+          childId,
+          draft,
           recurrenceKind,
           recurrenceWeekdays,
           Intl.DateTimeFormat().resolvedOptions().timeZone,
