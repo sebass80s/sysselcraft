@@ -132,6 +132,8 @@ export default function VillagePrototype() {
     const syncQuestPresentation = (event: Event) => {
       const detail = (event as CustomEvent<QuestPresentationEventDetail>).detail;
       gameRef.current?.setQuestSourceAttention("noticeboard", (detail?.counts.noticeboard ?? 0) > 0);
+      gameRef.current?.setQuestSourceAttention("home", (detail?.counts.home ?? 0) > 0);
+      gameRef.current?.setQuestSourceAttention("linus", (detail?.counts.linus ?? 0) > 0);
     };
     window.addEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
     return () => window.removeEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
@@ -154,7 +156,10 @@ export default function VillagePrototype() {
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
-      handle.setQuestSourceAttention("noticeboard", getLatestQuestPresentation().counts.noticeboard > 0);
+      const questSources = getLatestQuestPresentation().counts;
+      handle.setQuestSourceAttention("noticeboard", questSources.noticeboard > 0);
+      handle.setQuestSourceAttention("home", questSources.home > 0);
+      handle.setQuestSourceAttention("linus", questSources.linus > 0);
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setIntroComplete(restoredIntroCompleteRef.current);
       handle.setQuestState(restoredQuestStateRef.current);
