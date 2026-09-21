@@ -41,3 +41,8 @@ export function presentBackendQuests(
     pending: presented.filter(({ quest }) => quest.state === "pending"),
   };
 }
+
+
+export function primaryPresentedQuest(snapshot: BackendQuestPresentationSnapshot): PresentedBackendQuest | null {
+  return snapshot.available[0] ?? snapshot.pending[0] ?? null;
+}
