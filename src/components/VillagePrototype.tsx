@@ -27,6 +27,7 @@ import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, ty
 import { getRecyclingCenterStatus } from "../game/worldProgression";
 import {
   QUEST_PRESENTATION_EVENT,
+  getLatestQuestPresentation,
   requestQuestSourceOpen,
   type QuestPresentationEventDetail,
 } from "../game/questPresentationBridge";
@@ -153,6 +154,7 @@ export default function VillagePrototype() {
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
+      handle.setNoticeboardAttention(getLatestQuestPresentation().noticeboardCount > 0);
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setIntroComplete(restoredIntroCompleteRef.current);
       handle.setQuestState(restoredQuestStateRef.current);
