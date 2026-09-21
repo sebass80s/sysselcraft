@@ -36,6 +36,8 @@ type WorldObjectDefinition = {
   baseY?: number;
 };
 
+const NOTICEBOARD_APPROACH: Point = { x: 315, y: 330 };
+
 function distance(a: Point, b: Point) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
@@ -287,7 +289,7 @@ export async function createVillageGame(
           this.targetMarker?.setVisible(false);
           return;
         }
-        const approach = { x: 315, y: 330 };
+        const approach = NOTICEBOARD_APPROACH;
         if (distance(this.player, approach) <= 36) {
           this.noticeboardInteractionPending = false;
           this.path = [];
@@ -367,7 +369,11 @@ export async function createVillageGame(
       if (source === "home") this.backendHomeAttention = active;
       if (source === "linus") {
         this.backendLinusAttention = active;
-        if (!active && this.introComplete) this.linusInteractionPending = false;
+        if (!active && this.introComplete && this.linusInteractionPending) {
+          this.linusInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+        }
       }
       this.applyQuestState(requestedQuestState);
     }
@@ -392,7 +398,7 @@ export async function createVillageGame(
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = true;
-        const approach = { x: 315, y: 330 };
+        const approach = NOTICEBOARD_APPROACH;
         this.path = findPath({ x: this.player.x, y: this.player.y }, approach, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
