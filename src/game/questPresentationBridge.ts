@@ -27,5 +27,7 @@ export function requestQuestSourceOpen(source: QuestSourceOpenEventDetail["sourc
 }
 
 export function getLatestQuestPresentation(): QuestPresentationEventDetail {
-  return latestQuestPresentation;
+  return {
+    counts: { ...latestQuestPresentation.counts },
+  };
 }
