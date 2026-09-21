@@ -281,6 +281,12 @@ export async function createVillageGame(
 
     private maybeCompleteWorldInteraction() {
       if (this.noticeboardInteractionPending && this.player) {
+        if (!requestedQuestSourceAttention.noticeboard) {
+          this.noticeboardInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+          return;
+        }
         const approach = { x: 315, y: 330 };
         if (distance(this.player, approach) <= 36) {
           this.noticeboardInteractionPending = false;
