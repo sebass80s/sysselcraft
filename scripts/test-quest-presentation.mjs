@@ -9,11 +9,13 @@ const recyclingDone = { recyclingComplete: true, bakeryUnlocked: false, henningP
 const bakery = { recyclingComplete: true, bakeryUnlocked: true, henningPresent: true };
 
 assert.equal(chooseQuestPresentation(quest("Bädda sängen", "wellbeingRoutine"), starter).channel, "home");
-assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), starter).channel, "linus");
-assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), bakery).channel, "bakery");
+assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), starter).channel, "npc");
+assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), bakery).channel, "npc");
 assert.equal(chooseQuestPresentation(quest("Ring mormor", "community"), bakery).presenter, "henning");
-assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), recyclingDone).channel, "village");
-assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), recyclingDone).channel, "village");
+assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), bakery).destination, "bakery");
+assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), recyclingDone).destination, "noticeboard");
+assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), recyclingDone).channel, "noticeboard");
+assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), recyclingDone).channel, "noticeboard");
 
 console.log("quest presentation policy: ok");
 
@@ -41,7 +43,7 @@ const snapshot = presentBackendQuests([
   backendQuest("3", "Gammalt", "community", "approved"),
 ], gameState({ recyclingCenterStage: 4 }));
 assert.equal(snapshot.available[0].presentation.channel, "home");
-assert.equal(snapshot.pending[0].presentation.channel, "village");
+assert.equal(snapshot.pending[0].presentation.channel, "noticeboard");
 assert.equal(snapshot.available.length + snapshot.pending.length, 2);
 
 assert.equal(primaryPresentedQuest(snapshot)?.quest.instanceId, "1");
