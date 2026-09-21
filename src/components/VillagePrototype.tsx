@@ -131,7 +131,7 @@ export default function VillagePrototype() {
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
       const detail = (event as CustomEvent<QuestPresentationEventDetail>).detail;
-      gameRef.current?.setNoticeboardAttention((detail?.counts.noticeboard ?? 0) > 0);
+      gameRef.current?.setQuestSourceAttention("noticeboard", (detail?.counts.noticeboard ?? 0) > 0);
     };
     window.addEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
     return () => window.removeEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
@@ -145,7 +145,7 @@ export default function VillagePrototype() {
       if (cancelled || !hostRef.current) return;
       const handle = await createVillageGame(hostRef.current, {
         onQuestOpen: () => setQuestOpen(true),
-        onNoticeboardInteract: () => requestQuestSourceOpen("noticeboard"),
+        onQuestSourceInteract: (source) => requestQuestSourceOpen(source),
         onConstructionInteract: (id) => {
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
           setConstructionDialogueId(id);
@@ -154,7 +154,7 @@ export default function VillagePrototype() {
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
-      handle.setNoticeboardAttention(getLatestQuestPresentation().counts.noticeboard > 0);
+      handle.setQuestSourceAttention("noticeboard", getLatestQuestPresentation().counts.noticeboard > 0);
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setIntroComplete(restoredIntroCompleteRef.current);
       handle.setQuestState(restoredQuestStateRef.current);
