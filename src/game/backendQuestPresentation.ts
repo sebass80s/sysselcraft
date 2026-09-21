@@ -1,6 +1,5 @@
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { chooseQuestPresentation, type QuestPresentation } from "./questPresentation";
-import type { QuestPresentationEventDetail } from "./questPresentationBridge";
 
 export type PresentedBackendQuest = {
   quest: BackendQuest;
@@ -45,7 +44,9 @@ export function presentBackendQuests(
 }
 
 
-export function questSourceCounts(snapshot: BackendQuestPresentationSnapshot): QuestPresentationEventDetail["counts"] {
+export type QuestSourceCounts = Record<QuestPresentation["destination"], number>;
+
+export function questSourceCounts(snapshot: BackendQuestPresentationSnapshot): QuestSourceCounts {
   const available = snapshot.available;
   return {
     noticeboard: available.filter(({ presentation }) => presentation.destination === "noticeboard").length,
