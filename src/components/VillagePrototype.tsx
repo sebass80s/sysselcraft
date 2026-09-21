@@ -25,6 +25,11 @@ import { constructionPresentation } from "../game/constructionPresentation";
 import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { getRecyclingCenterStatus } from "../game/worldProgression";
+import {
+  QUEST_PRESENTATION_EVENT,
+  requestQuestSourceOpen,
+  type QuestPresentationEventDetail,
+} from "../game/questPresentationBridge";
 
 export default function VillagePrototype() {
   const [construction, setConstruction] = useState(initialConstruction);
@@ -123,6 +128,15 @@ export default function VillagePrototype() {
   }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage]);
 
   useEffect(() => {
+    const syncQuestPresentation = (event: Event) => {
+      const detail = (event as CustomEvent<QuestPresentationEventDetail>).detail;
+      gameRef.current?.setNoticeboardAttention((detail?.noticeboardCount ?? 0) > 0);
+    };
+    window.addEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
+    return () => window.removeEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
+  }, []);
+
+  useEffect(() => {
     if (!saveReady) return;
     let cancelled = false;
     async function boot() {
@@ -130,6 +144,7 @@ export default function VillagePrototype() {
       if (cancelled || !hostRef.current) return;
       const handle = await createVillageGame(hostRef.current, {
         onQuestOpen: () => setQuestOpen(true),
+        onNoticeboardInteract: () => requestQuestSourceOpen("noticeboard"),
         onConstructionInteract: (id) => {
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
           setConstructionDialogueId(id);
