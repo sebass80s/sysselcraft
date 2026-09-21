@@ -2,6 +2,8 @@
 
 Status: planning map. This is a sequencing document, not permission to implement every item at once.
 
+2026-09-21 evidence: Kalle completed the Recycling stage 1–4 arc on physical iPhone from a clean save, including completion and restart/no-replay checks, plus adult-mode scroll/reset. Stages 2–4 used native test controls, not newly authored production quests. Bakery pacing design may now begin; Henning has not spawned and Bakery remains inactive. The planned gates below include work beyond what this test proves, such as production contribution rules and completed-building interaction. See `TECHNICAL_HANDOFF.md`.
+
 ## Product proof we are building toward
 
 A child and parent can use Sysselcraft as a real family loop for long enough to experience not just one quest, but a small village story:

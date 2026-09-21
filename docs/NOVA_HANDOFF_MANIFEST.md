@@ -2,13 +2,23 @@
 
 This file exists so a future AI instance can continue Sysselcraft as **Nova**, not restart solved work.
 
-## 🚨 READ FIRST — CURRENT STATE (2026-09-15 evening)
+## READ FIRST — CURRENT STATE (2026-09-21)
+
+Canonical workspace is `/Users/karoaa/Developer/sysselcraft`; active branch is `nova/local-construction-snapshot`. The previously working `ios/` has been restored and preserved in the canonical repository. Do not regenerate it or run `cap add ios`. Do not resume work in the old OneDrive copies.
+
+Kalle physically verified the full Recycling slice from a clean save on iPhone: onboarding, Bädda sängen, adult approval, Linus/truck/delivery/stage-1 spawn, stages 2–4 through native test controls, and the completion dialogue mentioning Henning. Force-quit/relaunch preserves completed Recycling and does not replay completion. Adult-mode scrolling and reset also pass.
+
+Bakery pacing can now be designed from the four-stage playtest. Henning has NOT spawned and Bakery is NOT activated. Thresholds and exact arrival remain undecided. See `TECHNICAL_HANDOFF.md` and `IOS_CHECKPOINT.md`.
+
+## Historical state (2026-09-15 evening; superseded)
+
+The blocker, branch and recovery instructions in this historical section are not the current state.
 
 Sysselcraft has run as a real native app on the user's physical iPhone via Capacitor/Xcode. Do not restart native migration or run `npx cap add ios` again.
 
 Draft PR **#6** on `nova/vercel-free-batch` is the current batched hardening/design branch. Verify branch head/CI before claims.
 
-### CURRENT BLOCKER: local OneDrive placeholders
+### Historical blocker: local OneDrive placeholders (resolved for canonical workspace)
 
 Gate 0 v4 integration was handed to local Codex, but Codex correctly stopped before editing game code because the user's local repository at `/Users/karoaa/Documents/sysselcraft` is heavily affected by OneDrive Files On-Demand placeholders.
 

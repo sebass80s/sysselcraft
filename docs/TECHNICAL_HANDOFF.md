@@ -2,6 +2,25 @@
 
 > Current-state sections and `docs/NOVA_HANDOFF_MANIFEST.md` supersede stale historical assumptions.
 
+## Current checkpoint — physical iPhone verified 2026-09-21
+
+Canonical workspace: `/Users/karoaa/Developer/sysselcraft`, branch `nova/local-construction-snapshot`.
+The existing `ios/` project has been restored into this workspace and is now preserved in version control. **Never regenerate it or run `cap add ios`.**
+
+Kalle verified the following on a real iPhone from a clean save on 2026-09-21:
+
+- onboarding; Bädda sängen; adult approval;
+- stage 1: Linus interaction, truck, delivery and Recycling spawn;
+- Recycling stages 2, 3 and 4, earned sequentially using the native test controls;
+- completion dialogue with Linus and the Henning hook;
+- force-quit/relaunch: completed Recycling persists and completion dialogue does not replay;
+- adult-mode vertical scrolling and reset on the physical device.
+
+This is user-reported physical-device evidence, in addition to automated checks. It does not establish production quests/thresholds for stages 2–4 or backend/two-device reconciliation.
+All four Recycling stages are now playtested, so Bakery pacing may begin to be designed from this evidence. **Henning has NOT spawned; Bakery is NOT activated.** Do not implement Bakery thresholds or exact Henning arrival until those product decisions are made. This checkpoint supersedes the older current-priority and first-loop-only status below; historical design gates are not blanket claims of completion.
+
+See `docs/IOS_CHECKPOINT.md` for the native inventory and checkout/build workflow.
+
 ## Local workspace safety law (LOCKED 2026-09-16)
 
 The canonical local working tree on Kalle's Mac is:
