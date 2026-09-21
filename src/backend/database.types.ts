@@ -463,6 +463,10 @@ export type Database = {
           title: string;
         }[];
       };
+      materialize_due_quest_instances: {
+        Args: { p_child_id: string };
+        Returns: number;
+      };
       redeem_child_pairing_code: { Args: { p_code: string }; Returns: string };
       review_quest: {
         Args: { p_approve: boolean; p_instance_id: string };
