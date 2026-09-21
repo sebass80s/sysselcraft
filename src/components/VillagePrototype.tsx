@@ -131,7 +131,7 @@ export default function VillagePrototype() {
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
       const detail = (event as CustomEvent<QuestPresentationEventDetail>).detail;
-      gameRef.current?.setNoticeboardAttention((detail?.noticeboardCount ?? 0) > 0);
+      gameRef.current?.setNoticeboardAttention((detail?.counts.noticeboard ?? 0) > 0);
     };
     window.addEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
     return () => window.removeEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
@@ -154,7 +154,7 @@ export default function VillagePrototype() {
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
-      handle.setNoticeboardAttention(getLatestQuestPresentation().noticeboardCount > 0);
+      handle.setNoticeboardAttention(getLatestQuestPresentation().counts.noticeboard > 0);
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setIntroComplete(restoredIntroCompleteRef.current);
       handle.setQuestState(restoredQuestStateRef.current);
