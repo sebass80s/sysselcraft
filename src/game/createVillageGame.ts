@@ -217,6 +217,7 @@ export async function createVillageGame(
       if (isTextControlFocused()) {
         this.attentionInteractionPending = false;
         this.linusInteractionPending = false;
+        this.noticeboardInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
         return;
@@ -225,6 +226,7 @@ export async function createVillageGame(
       if (v.lengthSq() > 0) {
         this.attentionInteractionPending = false;
         this.linusInteractionPending = false;
+        this.noticeboardInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
         v.normalize();
