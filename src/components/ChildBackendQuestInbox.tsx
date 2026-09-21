@@ -11,7 +11,7 @@ import {
   submitQuest,
 } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
-import { presentBackendQuests } from "@/game/backendQuestPresentation";
+import { presentBackendQuests, primaryPresentedQuest } from "@/game/backendQuestPresentation";
 import styles from "./ChildBackendQuestInbox.module.css";
 
 const OPEN_REFRESH_MS = 15_000;
@@ -168,6 +168,7 @@ export default function ChildBackendQuestInbox() {
   const availableCount = presented.available.length;
   const pendingCount = presented.pending.length;
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
+  const primaryWorldQuest = primaryPresentedQuest(presented);
 
   async function markDone(instanceId: string) {
     if (!childId || !sessionReady || needsPairing) return;
@@ -200,7 +201,12 @@ export default function ChildBackendQuestInbox() {
 
   return (
     <aside className={styles.dock} aria-label="Föräldrauppdrag">
-      <button className={styles.toggle} type="button" onClick={() => setOpen((value) => !value)}>
+      <button
+        className={styles.toggle}
+        type="button"
+        data-world-channel={primaryWorldQuest?.presentation.channel}
+        onClick={() => setOpen((value) => !value)}
+      >
         📜 Uppdrag
         {(availableCount + pendingCount) > 0 && <span>{availableCount + pendingCount}</span>}
       </button>
