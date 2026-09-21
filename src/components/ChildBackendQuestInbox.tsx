@@ -12,6 +12,11 @@ import {
 } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest } from "@/game/backendQuestPresentation";
+import {
+  publishQuestPresentation,
+  QUEST_SOURCE_OPEN_EVENT,
+  type QuestSourceOpenEventDetail,
+} from "@/game/questPresentationBridge";
 import styles from "./ChildBackendQuestInbox.module.css";
 
 const OPEN_REFRESH_MS = 15_000;
@@ -25,6 +30,7 @@ export default function ChildBackendQuestInbox() {
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [gameState, setGameState] = useState<BackendChildGameState | null>(null);
   const [open, setOpen] = useState(false);
+  const [sourceFilter, setSourceFilter] = useState<"noticeboard" | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -141,6 +147,17 @@ export default function ChildBackendQuestInbox() {
     return () => window.clearInterval(timer);
   }, [open, childId, needsPairing, refreshQuietly, sessionReady]);
 
+  useEffect(() => {
+    const openSource = (event: Event) => {
+      const detail = (event as CustomEvent<QuestSourceOpenEventDetail>).detail;
+      if (detail?.source !== "noticeboard") return;
+      setSourceFilter("noticeboard");
+      setOpen(true);
+    };
+    window.addEventListener(QUEST_SOURCE_OPEN_EVENT, openSource);
+    return () => window.removeEventListener(QUEST_SOURCE_OPEN_EVENT, openSource);
+  }, []);
+
   if (!pairingChecked) return null;
 
   if (!childId) {
@@ -164,11 +181,17 @@ export default function ChildBackendQuestInbox() {
   }
 
   const presented = presentBackendQuests(quests, gameState);
-  const visibleQuests = [...presented.available, ...presented.pending];
+  const allVisibleQuests = [...presented.available, ...presented.pending];
+  const noticeboardQuests = allVisibleQuests.filter(({ presentation }) => presentation.channel === "noticeboard");
+  const visibleQuests = sourceFilter === "noticeboard" ? noticeboardQuests : allVisibleQuests;
   const availableCount = presented.available.length;
   const pendingCount = presented.pending.length;
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
   const primaryWorldQuest = primaryPresentedQuest(presented);
+
+  useEffect(() => {
+    publishQuestPresentation({ noticeboardCount: noticeboardQuests.length });
+  }, [noticeboardQuests.length]);
 
   async function markDone(instanceId: string) {
     if (!childId || !sessionReady || needsPairing) return;
@@ -205,7 +228,10 @@ export default function ChildBackendQuestInbox() {
         className={styles.toggle}
         type="button"
         data-world-channel={primaryWorldQuest?.presentation.channel}
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => {
+          setSourceFilter(null);
+          setOpen((value) => !value);
+        }}
       >
         📜 Uppdrag
         {(availableCount + pendingCount) > 0 && <span>{availableCount + pendingCount}</span>}
@@ -215,8 +241,8 @@ export default function ChildBackendQuestInbox() {
         <section className={styles.panel}>
           <header>
             <div>
-              <strong>Uppdrag hemifrån</strong>
-              <small>Skickade av en vuxen</small>
+              <strong>{sourceFilter === "noticeboard" ? "Anslagstavlan" : "Uppdrag hemifrån"}</strong>
+              <small>{sourceFilter === "noticeboard" ? "Uppdrag som hör hemma här" : "Skickade av en vuxen"}</small>
             </div>
             {gameState && (
               <div className={styles.wallet}>
