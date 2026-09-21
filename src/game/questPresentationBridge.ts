@@ -5,11 +5,14 @@ export type QuestPresentationEventDetail = {
   noticeboardCount: number;
 };
 
+let latestQuestPresentation: QuestPresentationEventDetail = { noticeboardCount: 0 };
+
 export type QuestSourceOpenEventDetail = {
   source: "noticeboard";
 };
 
 export function publishQuestPresentation(detail: QuestPresentationEventDetail) {
+  latestQuestPresentation = detail;
   window.dispatchEvent(new CustomEvent<QuestPresentationEventDetail>(QUEST_PRESENTATION_EVENT, { detail }));
 }
 
@@ -17,4 +20,8 @@ export function requestQuestSourceOpen(source: QuestSourceOpenEventDetail["sourc
   window.dispatchEvent(new CustomEvent<QuestSourceOpenEventDetail>(QUEST_SOURCE_OPEN_EVENT, {
     detail: { source },
   }));
+}
+
+export function getLatestQuestPresentation(): QuestPresentationEventDetail {
+  return latestQuestPresentation;
 }
