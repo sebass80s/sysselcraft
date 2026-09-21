@@ -63,6 +63,23 @@ Next sequence after local recovery:
 6. physical iPhone QA and regression of Linus → quest → parent approval → truck → materials loop;
 7. only after Gate 0 proof, implement locked post-delivery Linus dialogue → recycling Stage 1 progression.
 
+## 🔒 QUEST SYSTEM V2 (LOCKED 2026-09-21)
+
+Read `docs/QUEST_SYSTEM_V2.md` before changing parent quests, progression or backend quest schema.
+
+Locked direction:
+- approved quests contribute to **one shared world-progression resource**;
+- the five existing quest categories remain metadata, not separate point balances;
+- **SysselBux** remains the in-game currency and **Diamonds** remain IRL rewards;
+- parent defines task/rewards; SysselCraft dynamically decides where/when/through whom a quest is presented in the unlocked world;
+- quest definition/template is separate from each concrete quest instance;
+- recurring quests must support one-time, daily, selected weekdays and weekly without resetting completed instances;
+- Parent UI needs edit and archive/delete; history/reward events must never be destructively rewritten;
+- recurrence/editing affects future instances while historical instances preserve what actually happened;
+- migration is additive and backward-compatible. Existing category metadata and current quests must survive.
+
+The 2026-09-21 audit found that `parent_quests` and `quest_instances` already provide a useful template/instance split, but `unique (quest_id, child_id)` currently blocks recurrence. `review_quest` already has idempotent reward-event protection but currently increments category-specific progression. Do not improvise a destructive migration.
+
 ## 🔒 FUNDAMENTAL COLLABORATION RULE — TRUTH BEFORE MOMENTUM
 
 Never invent project state, capability, evidence, success, test results, files, screenshots, runtime behavior or conclusions. If untested, call it unverified. Verify repository/runtime state directly whenever possible. Reality wins over the plan.
