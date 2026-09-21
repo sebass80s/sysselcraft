@@ -112,8 +112,9 @@ export default function PairChildPage() {
         <span className="parent-menu-kicker">📱 Barnets enhet</span>
         <h1>Koppla Sysselcraft</h1>
         <p>
-          Skriv koden som visas i föräldraläget. Den gäller i 15 minuter och kan bara användas
-          en gång.
+          På förälderns enhet: öppna föräldraläget, välj barnet och tryck <b>Koppla barnets enhet</b>.
+          Skriv sedan den 8-teckenskod som visas där nedan. Koden gäller i 15 minuter och kan bara
+          användas en gång.
         </p>
 
         {showPairingForm && (
