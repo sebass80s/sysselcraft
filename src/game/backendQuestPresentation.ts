@@ -44,6 +44,16 @@ export function presentBackendQuests(
 }
 
 
+export function questSourceCounts(snapshot: BackendQuestPresentationSnapshot) {
+  const available = snapshot.available;
+  return {
+    noticeboard: available.filter(({ presentation }) => presentation.destination === "noticeboard").length,
+    home: available.filter(({ presentation }) => presentation.destination === "home").length,
+    linus: available.filter(({ presentation }) => presentation.destination === "linus").length,
+    bakery: available.filter(({ presentation }) => presentation.destination === "bakery").length,
+  };
+}
+
 export function primaryPresentedQuest(snapshot: BackendQuestPresentationSnapshot): PresentedBackendQuest | null {
   return snapshot.available[0] ?? snapshot.pending[0] ?? null;
 }
