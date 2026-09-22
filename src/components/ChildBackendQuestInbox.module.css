@@ -119,3 +119,50 @@
   .dock { width: min(330px, calc(100vw - max(.65rem, env(safe-area-inset-left)) - max(.65rem, env(safe-area-inset-right)))); }
   .panel { max-height: 70dvh; }
 }
+
+
+.questCompleteMoment {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  background: #111;
+}
+
+.questCompleteMoment > img {
+  object-fit: cover;
+}
+
+.questCompleteCard {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(88vw, 34rem);
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, .38);
+  border-radius: 1.25rem;
+  background: rgba(255, 253, 244, .48);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 .8rem 2rem rgba(0, 0, 0, .18);
+  text-align: center;
+  color: #2f261e;
+}
+
+.questCompleteCard strong {
+  font-size: .9rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.questCompleteCard h2 {
+  margin: .2rem 0;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+}
+
+.questCompleteCard p {
+  margin: .25rem 0 .7rem;
+  font-weight: 800;
+}
