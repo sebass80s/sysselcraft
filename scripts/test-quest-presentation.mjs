@@ -41,7 +41,7 @@ const backendJs = ts.transpileModule(backendSource, {
 const backendModule = { exports: {} };
 new Function("require", "module", "exports", backendJs)(name => {
   if (name === "./questPresentation") return { chooseQuestPresentation };
-  throw new Error(\`Unexpected test dependency: ${name}\`);
+  throw new Error(`Unexpected test dependency: ${name}`);
 }, backendModule, backendModule.exports);
 const { presentBackendQuests, primaryPresentedQuest, questSourceCounts } = backendModule.exports;
 
