@@ -88,6 +88,6 @@ export function newlyApprovedQuests(
   nextQuests: BackendQuest[],
 ): BackendQuest[] {
   return nextQuests.filter(
-    (quest) => quest.state === "approved" && previousStates.get(quest.instanceId) === "pending",
+    (quest) => quest.state === "approved" && quest.claimedAt === null && previousStates.get(quest.instanceId) === "pending",
   );
 }
