@@ -69,7 +69,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   useEffect(() => {
     requests.activate();
     return () => requests.deactivate();
-  }, [knownQuestStates, requests]);
+  }, [requests]);
 
   const refresh = useCallback(async (id: string) => {
     if (!requests.isActive()) return false;
@@ -108,7 +108,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       if (!current()) return false;
       throw error;
     }
-  }, [requests]);
+  }, [knownQuestStates, requests]);
 
   const refreshQuietly = useCallback(
     async (id: string) => {
