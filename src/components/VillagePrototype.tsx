@@ -125,6 +125,8 @@ export default function VillagePrototype() {
         if (recyclingCompletionPending(saved.construction)) {
           setRecyclingStoryIndex(0);
           setRecyclingStoryOpen(true);
+        } else if (saved.construction.revealed.recycling >= 4 && saved.worldFlags.henningArrivalSeen !== true) {
+          setHenningStoryIndex(0);
         }
       }
 
