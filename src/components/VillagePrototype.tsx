@@ -27,6 +27,7 @@ import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { getRecyclingCenterStatus } from "../game/worldProgression";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
+import { BACKEND_WALLET_EVENT, getLatestBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
   QUEST_PRESENTATION_EVENT,
   getLatestQuestPresentation,
@@ -58,6 +59,7 @@ export default function VillagePrototype() {
   const [questOpen, setQuestOpen] = useState(false);
   const [diamonds, setDiamonds] = useState(0);
   const [sysselBux, setSysselBux] = useState(0);
+  const [backendWallet, setBackendWallet] = useState<BackendWalletSnapshot | null>(() => getLatestBackendWallet());
   const [completedQuestIds, setCompletedQuestIds] = useState<QuestId[]>([]);
   const [progression, setProgression] = useState<ProgressionState>(createEmptyProgression);
   const [introComplete, setIntroComplete] = useState(false);
@@ -124,6 +126,13 @@ export default function VillagePrototype() {
       if (!cancelled) setLoadError(error instanceof Error ? error.message : "Sparningen kunde inte läsas.");
     });
     return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    const syncBackendWallet = (event: Event) => setBackendWallet((event as CustomEvent<BackendWalletSnapshot | null>).detail ?? null);
+    window.addEventListener(BACKEND_WALLET_EVENT, syncBackendWallet);
+    setBackendWallet(getLatestBackendWallet());
+    return () => window.removeEventListener(BACKEND_WALLET_EVENT, syncBackendWallet);
   }, []);
 
   useEffect(() => {
@@ -276,7 +285,7 @@ export default function VillagePrototype() {
   </div></section>;
 
   return <section className="prototype-shell">
-    <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {diamonds}</strong><strong>🪙 {sysselBux}</strong></div></header>
+    <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {constructionDialogueId && attention?.id === constructionDialogueId && <div className="dialogue-card" role="dialog" aria-modal="true" aria-label="Byggplatsens samtal"><span className="dialogue-speaker">{attention.residentName}</span><p>{attention.dialogue}</p><button className="primary-button" disabled={constructionBusy} onClick={() => void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id)}>{constructionBusy ? "Sparar…" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); gameRef.current?.setConstructionDialogueOpen(false); }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig"><span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span><p>{recyclingStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>{constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
