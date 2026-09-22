@@ -243,17 +243,10 @@ export default function VillagePrototype() {
     try {
       const snapshot = withConstructionState(latestSaveRef.current, next); await saveSaveState(snapshot, true);
       latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next); setRecyclingStoryOpen(false); setRecyclingStoryIndex(0);
+      if (!snapshot.worldFlags.henningArrivalSeen) { setQuestOpen(false); setParentMenuOpen(false); setConstructionDialogueId(null); setHenningStoryIndex(0); }
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
-
-  useEffect(() => {
-    if (!saveReady || recyclingStoryOpen || recyclingCenterStage < 4 || henningArrivalSeen || henningStoryIndex !== null) return;
-    setQuestOpen(false);
-    setParentMenuOpen(false);
-    setConstructionDialogueId(null);
-    setHenningStoryIndex(0);
-  }, [saveReady, recyclingStoryOpen, recyclingCenterStage, henningArrivalSeen, henningStoryIndex]);
 
   async function advanceHenningStory() {
     if (henningStoryIndex === null || constructionWriteRef.current || !latestSaveRef.current) return;
