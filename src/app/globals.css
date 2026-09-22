@@ -31,6 +31,10 @@ main { min-height: 100dvh; }
 .pending-message, .approved-message { font-weight: 800; padding: .65rem; border-radius: 10px; text-align: center; }
 .pending-message { background: #eee8d7; }
 .approved-message { background: #dcebd1; color: #31572c; }
+.story-moment { position:absolute; inset:0; z-index:20; overflow:hidden; background:#1d281f; pointer-events:none; }
+.story-moment img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+.story-moment::after { content:""; position:absolute; inset:0; background:linear-gradient(to bottom,rgba(14,20,15,.04) 45%,rgba(14,20,15,.32) 100%); }
+
 .dialogue-card { position: absolute; left: 50%; bottom: max(.55rem, env(safe-area-inset-bottom)); width: min(760px, calc(100% - 1.2rem)); transform: translateX(-50%); background: rgba(255,253,244,.98); border: 2px solid #735b36; border-radius: 14px; padding: .7rem .85rem; box-shadow: 0 14px 48px rgba(44,37,24,.28); z-index: 25; }
 .dialogue-card p { margin: .4rem 0 .55rem; font-size: .94rem; line-height: 1.35; }
 .dialogue-card h2 { margin: .35rem 0 .5rem; font-size: 1.2rem; }
