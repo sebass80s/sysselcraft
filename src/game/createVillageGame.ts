@@ -169,11 +169,34 @@ export async function createVillageGame(
         this.cursors = this.input.keyboard.createCursorKeys();
         this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
       }
-      this.input.on("pointerdown", (pointer: Input.Pointer, currentlyOver: GameObjects.GameObject[]) => {
+      this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!this.player) return;
-        // Object-level NPC handlers own interaction taps. Do not let the scene-level
-        // tap-to-move handler clear their pending interaction in the same pointer event.
-        if (currentlyOver?.some((object) => object === this.linus || object === this.henning)) return;
+        // Resolve NPC taps at scene level too. This avoids depending on Phaser's
+        // object-level pointer event ordering in the native iOS WebView.
+        if (this.linus && this.linus.getBounds().contains(pointer.worldX, pointer.worldY)) {
+          if (requestedConstruction.attention?.resident === "linus") {
+            this.approachAttentionResident();
+            return;
+          }
+          if (this.introComplete && !this.backendLinusAttention) {
+            callbacks.onLinusInteract();
+            return;
+          }
+          this.linusInteractionPending = true;
+          this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
+          const target = this.path.at(-1);
+          if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+          else this.maybeCompleteWorldInteraction();
+          return;
+        }
+        if (this.henning?.visible && this.henning.getBounds().contains(pointer.worldX, pointer.worldY)) {
+          this.henningInteractionPending = true;
+          this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 370, y: 468 }, this.navigationObstacles);
+          const target = this.path.at(-1);
+          if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+          else this.maybeCompleteWorldInteraction();
+          return;
+        }
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
         this.attentionInteractionPending = false;
