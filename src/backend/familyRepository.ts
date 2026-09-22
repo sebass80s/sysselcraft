@@ -27,6 +27,7 @@ type RpcQuestRow = {
   created_at: string;
   submitted_at: string | null;
   approved_at: string | null;
+  claimed_at: string | null;
 };
 
 export type QuestRecurrenceKind = "once" | "daily" | "weekdays" | "weekly";
@@ -113,6 +114,7 @@ function mapQuest(row: RpcQuestRow): BackendQuest {
     createdAt: row.created_at,
     submittedAt: row.submitted_at,
     approvedAt: row.approved_at,
+    claimedAt: row.claimed_at,
   };
 }
 
@@ -322,6 +324,13 @@ export async function isChildDeviceBound(childId: string): Promise<boolean> {
 
 export async function submitQuest(instanceId: string): Promise<void> {
   const { error } = await getSupabaseBrowserClient().rpc("submit_quest", {
+    p_instance_id: instanceId,
+  });
+  if (error) throw error;
+}
+
+export async function claimQuestReward(instanceId: string): Promise<void> {
+  const { error } = await getSupabaseBrowserClient().rpc("claim_quest_reward", {
     p_instance_id: instanceId,
   });
   if (error) throw error;
