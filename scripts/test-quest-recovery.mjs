@@ -89,7 +89,17 @@ assert(calls.every(call => call.operation === 'list_child_quests'), 'refresh nev
 rpcResult = { data: null, error: null };
 await repository.claimQuestReward('day-2');
 assert.deepEqual(calls.pop(), { operation: 'claim_quest_reward', args: { p_instance_id: 'day-2' } });
-console.log('PASS real repository transport: errors propagate, recovery reads preserve approved/claimed state, claim uses dedicated RPC');
+
+await repository.reviewQuest('day-2', false);
+assert.deepEqual(calls.pop(), { operation: 'review_quest', args: { p_instance_id: 'day-2', p_approve: false } });
+await repository.submitQuest('day-2');
+assert.deepEqual(calls.pop(), { operation: 'submit_quest', args: { p_instance_id: 'day-2' } });
+await repository.reviewQuest('day-2', true);
+assert.deepEqual(calls.pop(), { operation: 'review_quest', args: { p_instance_id: 'day-2', p_approve: true } });
+await repository.claimQuestReward('day-2');
+assert.deepEqual(calls.pop(), { operation: 'claim_quest_reward', args: { p_instance_id: 'day-2' } });
+assert.equal(calls.length, 5, 'reject/resubmit/approve/claim uses one explicit mutation per user action');
+console.log('PASS real repository transport: errors propagate, recovery reads preserve approved/claimed state, reject/resubmit/approve/claim use dedicated RPCs');
 
 globalThis.window = new EventTarget();
 window.localStorage = { getItem: () => null };
