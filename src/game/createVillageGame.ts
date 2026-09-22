@@ -113,7 +113,7 @@ export async function createVillageGame(
       this.load.image("master-scene", "/assets/village/reboot/start-area-master-1920x640.webp");
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
-      this.load.image("henning-painted", "/assets/village/reboot/henning-runtime.png");
+      this.load.image("henning-painted", "/assets/village/reboot/henning-npc.png");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
       this.load.image("materials-painted", "/assets/village/reboot/materials-runtime.png");
       for (const key of [
