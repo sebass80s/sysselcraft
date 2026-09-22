@@ -21,9 +21,7 @@ import { loadSaveState } from "@/game/saveState";
 import {
   claimQuestTurnIn,
   loadPendingQuestTurnIns,
-  newlyApprovedQuests,
   recoverAwaitingQuestTurnIns,
-  rememberApprovedQuestTurnIn,
   rememberAwaitingApproval,
   type PendingQuestTurnIn,
 } from "@/game/questTurnInState";
@@ -66,7 +64,6 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [pendingTurnIns, setPendingTurnIns] = useState<PendingQuestTurnIn[]>([]);
-  const [knownQuestStates, setKnownQuestStates] = useState(() => new Map<string, BackendQuest["state"]>());
 
   const [requests] = useState(createQuestRequestGuard);
   useEffect(() => {
@@ -95,11 +92,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       ]);
       if (!current()) return false;
       setNeedsPairing(false);
-      const newlyApproved = newlyApprovedQuests(knownQuestStates, nextQuests);
-      let nextTurnIns = await recoverAwaitingQuestTurnIns(id, nextQuests);
-      for (const quest of newlyApproved) {
-        nextTurnIns = await rememberApprovedQuestTurnIn(id, quest);
-      }
+      const nextTurnIns = await recoverAwaitingQuestTurnIns(id, nextQuests);
       if (!current()) return false;
       setKnownQuestStates(new Map(nextQuests.map((quest) => [quest.instanceId, quest.state])));
       setPendingTurnIns(nextTurnIns);
@@ -111,7 +104,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       if (!current()) return false;
       throw error;
     }
-  }, [knownQuestStates, requests]);
+  }, [requests]);
 
   const refreshQuietly = useCallback(
     async (id: string) => {
