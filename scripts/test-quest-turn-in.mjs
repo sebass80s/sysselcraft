@@ -85,6 +85,37 @@ assert.deepEqual(
   "a later arbitrary approved read cannot resurrect a rejected submission",
 );
 
+
+storage = new Map();
+await state.rememberAwaitingApproval("child", "resubmit");
+assert.deepEqual(
+  await state.recoverAwaitingQuestTurnIns("child", [quest("resubmit", "available")]),
+  [],
+  "first rejection clears the original awaiting marker",
+);
+await state.rememberAwaitingApproval("child", "resubmit");
+assert.deepEqual(
+  await state.recoverAwaitingQuestTurnIns("child", [quest("resubmit", "pending")]),
+  [],
+  "resubmission creates a fresh awaiting approval marker",
+);
+assert.deepEqual(
+  (await state.recoverAwaitingQuestTurnIns("child", [quest("resubmit", "approved")])).map(item => item.instanceId),
+  ["resubmit"],
+  "resubmitted quest becomes one turn-in after approval",
+);
+assert.deepEqual(
+  (await state.recoverAwaitingQuestTurnIns("child", [quest("resubmit", "approved")])).map(item => item.instanceId),
+  ["resubmit"],
+  "approved resubmission does not duplicate the turn-in",
+);
+await state.claimQuestTurnIn("child", "resubmit");
+assert.deepEqual(
+  await state.recoverAwaitingQuestTurnIns("child", [quest("resubmit", "approved", "2026-09-22T04:00:00Z")]),
+  [],
+  "claimed resubmission cannot replay after restart",
+);
+
 storage = new Map();
 assert.deepEqual(
   await state.recoverAwaitingQuestTurnIns("child", [quest("historical", "approved")]),
