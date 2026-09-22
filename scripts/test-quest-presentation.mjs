@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { chooseQuestPresentation } from "../src/game/questPresentation.ts";
-import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "../src/game/backendQuestPresentation.ts";
+import { readFileSync } from "node:fs";\nimport ts from "typescript";
 
 const quest = (title, progressionClass) => ({ title, progressionClass });
 const starter = { recyclingComplete: false, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: true };
@@ -32,6 +32,17 @@ assert.equal(chooseQuestPresentation(
   quest("Hjälp till med middagen", "community"),
   { recyclingComplete: true, bakeryUnlocked: true, henningPresent: false, noticeboardAvailable: false },
 ).destination, "linus");
+
+const backendSource = readFileSync(new URL("../src/game/backendQuestPresentation.ts", import.meta.url), "utf8");
+const backendJs = ts.transpileModule(backendSource, {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+}).outputText;
+const backendModule = { exports: {} };
+new Function("require", "module", "exports", backendJs)(name => {
+  if (name === "./questPresentation") return { chooseQuestPresentation };
+  throw new Error(\`Unexpected test dependency: ${name}\`);
+}, backendModule, backendModule.exports);
+const { presentBackendQuests, primaryPresentedQuest, questSourceCounts } = backendModule.exports;
 
 const backendQuest = (overrides = {}) => ({
   instanceId: "instance", questId: "definition", householdId: "household", childId: "child",
