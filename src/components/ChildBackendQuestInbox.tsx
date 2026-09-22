@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Capacitor } from "@capacitor/core";
 import { requestChildPairingOpen } from "@/game/childPairingBridge";
@@ -64,6 +65,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [pendingTurnIns, setPendingTurnIns] = useState<PendingQuestTurnIn[]>([]);
+  const [questCompleteMoment, setQuestCompleteMoment] = useState<{ title: string; diamonds: number; sysselBux: number; image: string } | null>(null);
 
   const [requests] = useState(createQuestRequestGuard);
   useEffect(() => {
@@ -270,12 +272,26 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
     setBusy(true);
     setMessage("");
     try {
+      const claimedTurnIn = pendingTurnIns.find((item) => item.instanceId === instanceId) ?? null;
       await claimQuestReward(instanceId);
       if (!requests.isActive()) return;
       const next = await claimQuestTurnIn(childId, instanceId);
       setPendingTurnIns(next);
       await refresh(childId);
-      if (requests.isActive()) setMessage("Belöningen är din! ✨");
+      if (requests.isActive()) {
+        setOpen(false);
+        setSourceFilter(null);
+        if (claimedTurnIn) {
+          const imageNumber = claimedTurnIn.instanceId.charCodeAt(claimedTurnIn.instanceId.length - 1) % 2 === 0 ? "01" : "02";
+          setQuestCompleteMoment({
+            title: claimedTurnIn.title,
+            diamonds: claimedTurnIn.reward.diamonds,
+            sysselBux: claimedTurnIn.reward.sysselBux,
+            image: `/assets/village/story-moments/linus-turnin-${imageNumber}.png.png`,
+          });
+        }
+        setMessage("Belöningen är din! ✨");
+      }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte markera belöningen som hämtad.");
     } finally {
@@ -323,7 +339,19 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   }
 
   return (
-    <aside className={styles.dock} aria-label="Föräldrauppdrag">
+    <>
+      {questCompleteMoment && (
+        <section className={styles.questCompleteMoment} aria-label="Uppdrag klart">
+          <Image src={questCompleteMoment.image} alt="" fill priority sizes="100vw" />
+          <div className={styles.questCompleteCard}>
+            <strong>✨ Uppdrag klart!</strong>
+            <h2>{questCompleteMoment.title}</h2>
+            <p>💎 {questCompleteMoment.diamonds} · 🪙 {questCompleteMoment.sysselBux}</p>
+            <button className="primary-button" type="button" onClick={() => setQuestCompleteMoment(null)}>Fortsätt</button>
+          </div>
+        </section>
+      )}
+      <aside className={styles.dock} aria-label="Föräldrauppdrag">
       <button
         className={styles.toggle}
         type="button"
@@ -404,5 +432,6 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
         </section>
       )}
     </aside>
+    </>
   );
 }
