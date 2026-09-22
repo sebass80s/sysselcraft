@@ -18,6 +18,7 @@
     "cap:ios": "npx cap open ios",
     "cap:android": "npx cap open android",
     "ios:sync": "npm run build && npx cap sync ios",
+    "syssel": "zsh scripts/syssel",
     "test:quest-presentation": "node --experimental-strip-types scripts/test-quest-presentation.mjs",
     "test:quest-recovery": "node scripts/test-quest-recovery.mjs",
     "test:quest-turn-in": "node --experimental-strip-types scripts/test-quest-turn-in.mjs"
