@@ -170,7 +170,7 @@ export async function createVillageGame(
         this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
       }
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
-        if (!this.player || pointer.event.defaultPrevented) return;
+        if (!this.player) return;
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
         this.attentionInteractionPending = false;
@@ -681,9 +681,8 @@ export async function createVillageGame(
         .setInteractive({ useHandCursor: true, pixelPerfect: false });
       this.henning.input?.hitArea.setTo(-28, -12, 160, 170);
       this.residents.henning = this.henning;
-      this.henning.on("pointerdown", (pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+      this.henning.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        pointer.event.preventDefault();
         if (!this.player || constructionDialogueOpen || !this.henning?.visible) return;
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
