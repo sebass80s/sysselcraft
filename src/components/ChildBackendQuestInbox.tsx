@@ -7,6 +7,7 @@ import { requestChildPairingOpen } from "@/game/childPairingBridge";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "@/backend/childDeviceBinding";
 import {
+  claimQuestReward,
   getChildGameState,
   isChildDeviceBound,
   listChildQuests,
@@ -270,9 +271,12 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
     setBusy(true);
     setMessage("");
     try {
+      await claimQuestReward(instanceId);
+      if (!requests.isActive()) return;
       const next = await claimQuestTurnIn(childId, instanceId);
       setPendingTurnIns(next);
-      setMessage("Belöningen är din! ✨");
+      await refresh(childId);
+      if (requests.isActive()) setMessage("Belöningen är din! ✨");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte markera belöningen som hämtad.");
     } finally {
@@ -350,7 +354,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
             <article className={styles.quest} data-presentation="reward">
               <strong>✨ Uppdrag godkänt!</strong>
               <p>Snyggt jobbat! Jag hörde att du fixade <strong>{turnIn.title}</strong>.</p>
-              <small>Belöningen är redan säkrad: 💎 {turnIn.reward.diamonds} · 🪙 {turnIn.reward.sysselBux}</small>
+              <small>Belöning: 💎 {turnIn.reward.diamonds} · 🪙 {turnIn.reward.sysselBux}</small>
               <button
                 className="primary-button compact"
                 disabled={busy}
