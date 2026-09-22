@@ -82,7 +82,8 @@ calls.length = 0;
 rpcResult = { data: [{ instance_id: 'day-1', quest_id: 'recurring', title: 'Bädda sängen', state: 'approved', progression_class: 'wellbeingRoutine', reward_diamonds: 2, reward_syssel_bux: 3, claimed_at: '2026-09-22T02:00:00Z' }], error: null };
 for (let i = 0; i < 5; i++) {
   const result = await repository.listChildQuests('child');
-  assert.equal(result[0].state, 'approved');\n  assert.equal(result[0].claimedAt, '2026-09-22T02:00:00Z');
+  assert.equal(result[0].state, 'approved');
+  assert.equal(result[0].claimedAt, '2026-09-22T02:00:00Z');
 }
 assert(calls.every(call => call.operation === 'list_child_quests'), 'refresh never submits or reviews/rewards quests');
 rpcResult = { data: null, error: null };
