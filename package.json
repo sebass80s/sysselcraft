@@ -10,7 +10,7 @@
     "production:audit": "node scripts/audit-reboot-production-assets.mjs",
     "construction:completion:test": "node scripts/test-recycling-completion-save.mjs",
     "construction:test": "node scripts/test-construction.mjs && node scripts/test-construction-late-stages.mjs && npm run construction:completion:test",
-    "verify": "npm run visual:audit && npm run construction:test && npm run lint && npm run build && npm run test:quest-presentation && npm run test:quest-recovery",
+    "verify": "npm run visual:audit && npm run construction:test && npm run lint && npm run build && npm run test:quest-presentation && npm run test:quest-recovery && npm run test:quest-turn-in",
     "cap:sync": "npx cap sync",
     "cap:copy": "npx cap copy",
     "cap:add:ios": "npx cap add ios",
@@ -19,7 +19,8 @@
     "cap:android": "npx cap open android",
     "ios:sync": "npm run build && npx cap sync ios",
     "test:quest-presentation": "node --experimental-strip-types scripts/test-quest-presentation.mjs",
-    "test:quest-recovery": "node scripts/test-quest-recovery.mjs"
+    "test:quest-recovery": "node scripts/test-quest-recovery.mjs",
+    "test:quest-turn-in": "node --experimental-strip-types scripts/test-quest-turn-in.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
