@@ -320,4 +320,31 @@ The approved first-meeting illustration establishes Linus's close-up Story Momen
 
 For player-identification, the child should normally be shown from behind or over the shoulder in Story Moment illustrations. Avoid defining the child's face unless a later product decision explicitly requires it.
 
-The approved first-meeting composition is a warm, emotional village introduction: child foreground/back to camera, Linus seated/leaning near his workshop and welcoming the child, with the village opening behind him. The approved generated master currently exists in the project conversation as `a_warm_highly_detailed_pixar_3d_animated_storyb.png` (1370×1148). It should be copied into the repository's Story Moment asset directory before runtime wiring so future instances do not need to reinterpret Linus's design.
+The approved first-meeting composition is a warm, emotional village introduction: child foreground/back to camera, Linus seated/leaning near his workshop and welcoming the child, with the village opening behind him. The canonical first-meeting runtime asset is `public/assets/village/story-moments/linus-first-meeting.png`, composed for the game's landscape Story Moment presentation.
+
+
+## 14. Illustrated Story Moments — LOCKED 2026-09-22
+
+Major irreversible village milestones may use **Illustrated Story Moments**: rare, interactive picture-book sequences inside the game rather than conventional animated cutscenes.
+
+Locked presentation language:
+- normal world play pauses while the Story Moment is active;
+- one high-quality static landscape illustration fills the game view;
+- short stepwise dialogue is presented in a visibly translucent, lightly blurred panel so the illustration remains part of the scene;
+- a Story Moment may contain **multiple illustrations** and switch image at a meaningful narrative beat rather than remaining a single splash image;
+- when the moment closes, play returns to the ordinary village and the milestone must be physically true in the world;
+- completed milestone moments must not replay accidentally after restart;
+- use Story Moments deliberately and rarely for major emotional/world-state changes, not routine quest or NPC interactions.
+
+The first physically verified Story Moment is the child's first meeting with Linus. It establishes the reusable visual grammar:
+1. `public/assets/village/story-moments/linus-first-meeting.png` opens the meeting.
+2. At the puppy reveal, the illustration changes to `public/assets/village/story-moments/linus-puppy-handover.png`, showing Linus handing the puppy to the child.
+3. Dialogue continues over the second image through the puppy part of the introduction.
+
+This two-image sequence was physically verified on iPhone on 2026-09-22, including the image transition and translucent dialogue treatment. The result is the target feel: an **interactive illustrated storybook embedded in SysselCraft**, preserving rich narrative presentation without requiring animated cinematics.
+
+The first-meeting and later Henning-arrival moments form an intentional visual bookend:
+- opening: the child enters a quiet village and meets Linus;
+- later: after the child's real-world quest work has visibly brought life back, the child finds Linus reunited with Henning.
+
+Henning's arrival is the next major Story Moment candidate and should use the same presentation language while receiving its own illustrations and narrative beats.
