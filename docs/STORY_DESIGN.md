@@ -150,7 +150,23 @@ The story order is:
 
 Henning should have a life and motivation outside being “the bakery unlock.” A strong direction is that he has wanted a place of his own to bake for people, while Linus has previously tried to tempt him to the village. Henning chooses to come while the village is still tiny because he sees that something has begun, not because a progression meter summoned him.
 
-Do not simply pop Henning into existence beside a pre-completed bakery. His arrival is a story event. Exact arrival staging and bakery pacing remain open until the recycling arc has been physically played.
+Do not simply pop Henning into existence beside a pre-completed bakery. His arrival is a story event.
+
+### Henning arrival scene — LOCKED
+
+After the recycling center is completed and Linus has already mentioned his old friend, Henning's first appearance is deliberately simple: **the child later finds Henning together with Linus**. The arrival does not need a vehicle, cinematic entrance or spectacle. The surprise is that there is suddenly another person in the quiet village.
+
+The first beat belongs to Linus and Henning before it belongs to the player. Their opening exchange must make it unmistakable, without an exposition dump, that they are **old friends who are genuinely happy to see each other again**. Their familiarity should show through shorthand, teasing, remembered habits and the ease of people who already know one another. Linus may remain emotionally restrained, but the reunion must still feel warm.
+
+The scene then turns toward the child. Henning's decision to come must be connected to what has started happening in the village: Linus told him that things were changing, Henning saw enough to believe him, and the completed recycling center / renewed activity is evidence. The writing should **clearly imply that the child's real-world quest work is the reason this change happened and therefore part of why Henning chose to move here**, while preserving the core mystery. Neither Linus nor Henning should explain the hidden progression system, say that chores magically summon residents, mention XP, or expose game mechanics.
+
+The emotional causal chain is:
+
+**child does real quests → village visibly begins living again → Linus notices and contacts Henning → Henning believes something has truly changed → Henning chooses to come → the child discovers that their actions can bring people back.**
+
+Henning is introduced as a person and old friend first. Bakery comes after his introduction and gains its narrative reason from Henning rather than functioning as the device that summons him.
+
+Bakery quest count/thresholds and the exact later transition from Henning's introduction into the bakery construction arc remain open product decisions.
 
 ## 9. Second new resident: Sol
 
