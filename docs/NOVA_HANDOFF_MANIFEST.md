@@ -160,3 +160,12 @@ Local/native testing is default. Use Vercel only when genuinely needed. Standard
 8. Preserve and physically regression-test the existing quest/approval/truck/delivery loop.
 9. Keep reconciliation observe-only until evidence supports migration.
 10. Read/update the private diary when a genuine story-worthy milestone occurs.
+
+
+## 2026-09-22 native workflow + physical reward milestone
+
+The canonical local repo is now `/Users/karoaa/Developer/sysselcraft` on `nova/local-construction-snapshot`. The old OneDrive blocker/checklist above is historical and must not be treated as the current blocker.
+
+A safe one-command native sync helper now lives at `scripts/syssel` and is exposed as `npm run syssel`. It verifies the exact local repo and branch, aborts on unexpected local modifications, explicitly tolerates/preserves the known local `ios/App/App/config.xml` modification, runs `git pull --ff-only`, `npm run build`, and `npx cap sync ios`. It never resets, cleans, stashes, deletes the app, or regenerates `ios/`. After the helper completes, the human normally only needs to press Run in Xcode for physical-device QA. Do not make Kalle copy the old multi-command sequence for routine updates when this helper is available.
+
+The backend MMO reward loop has now been physically verified on iPhone across the offline-approval boundary: child submits quest -> child app is closed -> parent approves on separate parent device -> child app relaunches -> Linus still exposes the reward turn-in -> child claims it -> backend payout appears in the village resource HUD/inventory. The awaiting-approval marker is persisted locally so arbitrary old approved history is not replayed as a turn-in. Preserve this behavior as a regression invariant.
