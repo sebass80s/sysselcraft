@@ -48,6 +48,7 @@ export type SaveStateV1 = {
   worldFlags: {
     firstDeliveryComplete: boolean;
     recyclingCenterStage: RecyclingCenterStage;
+    henningArrivalSeen: boolean;
   };
 };
 
@@ -69,6 +70,7 @@ export function createDefaultSaveState(): SaveStateV1 {
     worldFlags: {
       firstDeliveryComplete: false,
       recyclingCenterStage: 0,
+      henningArrivalSeen: false,
     },
   };
 }
@@ -187,6 +189,7 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
     worldFlags: {
       firstDeliveryComplete: recyclingCenterStage >= 1,
       recyclingCenterStage,
+      henningArrivalSeen: candidate.worldFlags?.henningArrivalSeen === true,
     },
   };
 }
