@@ -169,8 +169,11 @@ export async function createVillageGame(
         this.cursors = this.input.keyboard.createCursorKeys();
         this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
       }
-      this.input.on("pointerdown", (pointer: Input.Pointer) => {
+      this.input.on("pointerdown", (pointer: Input.Pointer, currentlyOver: GameObjects.GameObject[]) => {
         if (!this.player) return;
+        // Object-level NPC handlers own interaction taps. Do not let the scene-level
+        // tap-to-move handler clear their pending interaction in the same pointer event.
+        if (currentlyOver?.some((object) => object === this.linus || object === this.henning)) return;
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
         this.attentionInteractionPending = false;
