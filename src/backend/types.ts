@@ -59,6 +59,7 @@ export type BackendQuest = {
   createdAt: string;
   submittedAt: string | null;
   approvedAt: string | null;
+  claimedAt: string | null;
 };
 
 export type BackendProgression = Record<ProgressionClass, number> & {
