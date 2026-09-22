@@ -20,3 +20,27 @@ export const linusIntroDialogue: IntroDialogueStep[] = [
   { kind: "name-dog" },
   { kind: "line", speaker: "Linus", text: "Då så! Nu tycker jag att du ska gå bort till ert hus. Där väntar ditt första quest på dig." },
 ];
+
+
+export type StoryMomentDialogueLine = {
+  speaker: "Linus" | "Henning" | "Barnet";
+  text: string;
+};
+
+export const henningArrivalDialogue: StoryMomentDialogueLine[] = [
+  { speaker: "Henning", text: "Du ringde." },
+  { speaker: "Linus", text: "Det händer ibland." },
+  { speaker: "Henning", text: "Du sa att det började hända saker här igen." },
+  { speaker: "Linus", text: "Jag överdrev tydligen inte." },
+  { speaker: "Henning", text: "Nej. Det gjorde du faktiskt inte." },
+  { speaker: "Linus", text: "Säg inte det för högt." },
+  { speaker: "Henning", text: "Det är fint att se dig igen, gamle vän." },
+  { speaker: "Linus", text: "Detsamma, Henning." },
+  { speaker: "Henning", text: "Och det här måste vara den som satt fart på hela byn." },
+  { speaker: "Barnet", text: "Jag?" },
+  { speaker: "Linus", text: "Det har hänt mer här sedan du kom än på väldigt länge." },
+  { speaker: "Henning", text: "Linus berättade om allt som börjat hända. Jag trodde först att han kryddade historien." },
+  { speaker: "Linus", text: "Det gör jag aldrig." },
+  { speaker: "Henning", text: "Precis därför var jag tvungen att komma och se själv." },
+  { speaker: "Henning", text: "Och vet du vad? Jag tror faktiskt att jag stannar." },
+];
