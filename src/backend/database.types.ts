@@ -275,6 +275,7 @@ export type Database = {
       quest_instances: {
         Row: {
           approved_at: string | null;
+          claimed_at: string | null;
           approved_by: string | null;
           child_id: string;
           created_at: string;
@@ -292,6 +293,7 @@ export type Database = {
         };
         Insert: {
           approved_at?: string | null;
+          claimed_at?: string | null;
           approved_by?: string | null;
           child_id: string;
           created_at?: string;
@@ -309,6 +311,7 @@ export type Database = {
         };
         Update: {
           approved_at?: string | null;
+          claimed_at?: string | null;
           approved_by?: string | null;
           child_id?: string;
           created_at?: string;
@@ -402,7 +405,7 @@ export type Database = {
         Args: { p_quest_id: string };
         Returns: undefined;
       };
-      create_child: {
+      claim_quest_reward: { Args: { p_instance_id: string }; Returns: undefined };\n      create_child: {
         Args: { p_display_name: string; p_household_id: string };
         Returns: string;
       };
@@ -463,8 +466,7 @@ export type Database = {
       list_child_quests: {
         Args: { p_child_id: string };
         Returns: {
-          approved_at: string;
-          child_id: string;
+          approved_at: string | null;\n          claimed_at: string | null;\n          child_id: string;
           created_at: string;
           description: string;
           household_id: string;
@@ -474,8 +476,7 @@ export type Database = {
           reward_diamonds: number;
           reward_syssel_bux: number;
           state: string;
-          submitted_at: string;
-          title: string;
+          submitted_at: string | null;\n          title: string;
         }[];
       };
       materialize_due_quest_instances: {
