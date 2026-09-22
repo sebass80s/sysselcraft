@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Capacitor } from "@capacitor/core";
 import { requestChildPairingOpen } from "@/game/childPairingBridge";
@@ -63,13 +63,13 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [pendingTurnIns, setPendingTurnIns] = useState<PendingQuestTurnIn[]>([]);
-  const questStatesRef = useRef(new Map<string, BackendQuest["state"]>());
+  const [knownQuestStates, setKnownQuestStates] = useState(() => new Map<string, BackendQuest["state"]>());
 
   const [requests] = useState(createQuestRequestGuard);
   useEffect(() => {
     requests.activate();
     return () => requests.deactivate();
-  }, [requests]);
+  }, [knownQuestStates, requests]);
 
   const refresh = useCallback(async (id: string) => {
     if (!requests.isActive()) return false;
@@ -92,13 +92,13 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       ]);
       if (!current()) return false;
       setNeedsPairing(false);
-      const newlyApproved = newlyApprovedQuests(questStatesRef.current, nextQuests);
+      const newlyApproved = newlyApprovedQuests(knownQuestStates, nextQuests);
       let nextTurnIns = await loadPendingQuestTurnIns(id);
       for (const quest of newlyApproved) {
         nextTurnIns = await rememberApprovedQuestTurnIn(id, quest);
       }
       if (!current()) return false;
-      questStatesRef.current = new Map(nextQuests.map((quest) => [quest.instanceId, quest.state]));
+      setKnownQuestStates(new Map(nextQuests.map((quest) => [quest.instanceId, quest.state])));
       setPendingTurnIns(nextTurnIns);
       setQuests(nextQuests);
       setGameState(nextGameState);
