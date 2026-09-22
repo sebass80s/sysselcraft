@@ -113,6 +113,7 @@ export async function createVillageGame(
       this.load.image("master-scene", "/assets/village/reboot/start-area-master-1920x640.webp");
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
+      this.load.image("henning-painted", "/assets/village/reboot/henning-runtime.png");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
       this.load.image("materials-painted", "/assets/village/reboot/materials-runtime.png");
       for (const key of [
@@ -671,6 +672,27 @@ export async function createVillageGame(
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
       });
+
+      this.henning = this.add.image(430, 452, "henning-painted")
+        .setOrigin(0.5, 0.96)
+        .setDisplaySize(104, 132)
+        .setDepth(1452)
+        .setVisible(requestedHenningVisible)
+        .setInteractive({ useHandCursor: true });
+      this.residents.henning = this.henning;
+      this.henning.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen || !this.henning?.visible) return;
+        this.linusInteractionPending = false;
+        this.attentionInteractionPending = false;
+        this.noticeboardInteractionPending = false;
+        this.henningInteractionPending = true;
+        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 370, y: 468 }, this.navigationObstacles);
+        const finalPoint = this.path.at(-1);
+        if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
+
 
     }
   }
