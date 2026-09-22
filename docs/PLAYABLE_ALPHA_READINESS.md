@@ -134,3 +134,8 @@ A deliberately long one-time quest (`A23 Lång text`) was physically checked on 
 ### A23 live-session performance observation — 2026-09-22
 
 During the continuing physical iPhone acceptance session, the game remained smooth while the other A23 interaction/content checks were performed. No noticeable frame degradation, touch-response degradation or thermal/performance blocker was observed during this session. This is a practical alpha-session observation, not a formal long-duration profiling or memory-leak test.
+
+
+## A24 physical active-asset acceptance — 2026-09-22
+
+The current physical iPhone build was visually checked against the active completed Recycling building. Its WebP renders normally on-device: no black rectangle, missing/transparent texture, broken image or visible flicker was observed. This clears the earlier WebP-decoder concern for the active Recycling asset on the tested build/device. It does not certify inactive Bakery/Clinic stages or the intentionally incomplete future `reboot/production` character-frame contract; Henning/Sol production frames remain legitimately absent until real art exists.
