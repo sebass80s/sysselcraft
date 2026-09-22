@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { chooseQuestPresentation } from "../src/game/questPresentation.ts";
-import { readFileSync } from "node:fs";\nimport ts from "typescript";
+import { readFileSync } from "node:fs";
+import ts from "typescript";
 
 const quest = (title, progressionClass) => ({ title, progressionClass });
 const starter = { recyclingComplete: false, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: true };
