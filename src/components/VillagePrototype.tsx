@@ -131,7 +131,6 @@ export default function VillagePrototype() {
   useEffect(() => {
     const syncBackendWallet = (event: Event) => setBackendWallet((event as CustomEvent<BackendWalletSnapshot | null>).detail ?? null);
     window.addEventListener(BACKEND_WALLET_EVENT, syncBackendWallet);
-    setBackendWallet(getLatestBackendWallet());
     return () => window.removeEventListener(BACKEND_WALLET_EVENT, syncBackendWallet);
   }, []);
 
