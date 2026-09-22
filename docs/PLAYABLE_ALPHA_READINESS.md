@@ -75,3 +75,14 @@ Audit validation completed successfully on 2026-09-21: full `npm run verify` (in
 - Existing Node module-type warning in quest-presentation test remains non-fatal; do not change package module semantics just to silence it.
 
 Reference checked for the auth subscription contract: https://supabase.com/docs/reference/javascript/auth-onauthstatechange . No new Supabase API or database feature was introduced.
+
+
+## Physical acceptance update — 2026-09-22
+
+A16 is no longer wholly unproven. On the physical child iPhone plus live parent UI/backend, Kalle verified a one-off quest through **submit -> reject -> same-instance return -> resubmit -> approve -> Linus claim -> force-quit/relaunch**. Live backend inspection at every mutation boundary showed no reward before claim; the final claim produced exactly one reward event and the tested quest did not replay after relaunch. The previously verified offline-approval path also covers child app closed during parent approval and recovery of the Linus turn-in after relaunch.
+
+Therefore the core A16 reward/correction lifecycle and exactly-once restart behavior are **VERIFIED OK in that physical scope**. Remaining A16 acceptance work is narrower: delayed/out-of-order real network responses, aggressive double taps, child switching/multiple-child isolation, and other concurrency/failure cases not exercised by this run. Do not reopen the proven reject/resubmit semantics merely because those stress cases remain.
+
+A19 is also partially reduced: parent UI edit and archive were physically exercised against the live backend; immutable instance snapshots preserved historical title/reward data, and archive prevented the definition from being eligible for future materialization. Real timezone/day rollover, DST, weekly/missed-day behavior and offline-next-occurrence materialization remain unproven.
+
+During the A16 run, Linus exposed only the first local pending reward turn-in. An older approved/unclaimed reward was claimed first, after which the newly approved test quest appeared. This is current sequential queue presentation, not a lost approval. Multi-reward UX is a polish item unless product requirements change.
