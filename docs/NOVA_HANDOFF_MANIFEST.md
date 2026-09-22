@@ -169,3 +169,12 @@ The canonical local repo is now `/Users/karoaa/Developer/sysselcraft` on `nova/l
 A safe one-command native sync helper now lives at `scripts/syssel` and is exposed as `npm run syssel`. It verifies the exact local repo and branch, aborts on unexpected local modifications, explicitly tolerates/preserves the known local `ios/App/App/config.xml` modification, runs `git pull --ff-only`, `npm run build`, and `npx cap sync ios`. It never resets, cleans, stashes, deletes the app, or regenerates `ios/`. After the helper completes, the human normally only needs to press Run in Xcode for physical-device QA. Do not make Kalle copy the old multi-command sequence for routine updates when this helper is available.
 
 The backend MMO reward loop has now been physically verified on iPhone across the offline-approval boundary: child submits quest -> child app is closed -> parent approves on separate parent device -> child app relaunches -> Linus still exposes the reward turn-in -> child claims it -> backend payout appears in the village resource HUD/inventory. The awaiting-approval marker is persisted locally so arbitrary old approved history is not replayed as a turn-in. Preserve this behavior as a regression invariant.
+
+
+## 2026-09-22 physical reject/resubmit/claim proof
+
+Kalle physically verified the full one-off quest correction loop on the current iPhone build against the live backend using the quest `Testa rejection`: child submit -> parent reject -> the same quest instance returned to the child -> child resubmit -> parent approve -> Linus reward turn-in -> claim -> force-quit/relaunch. Backend inspection at each boundary confirmed no payout on submit, rejection, resubmit or approval; payout happened only on child claim. The tested instance `868deeab-6552-41a1-b04e-f6ed0ed20356` ended with `claimed_at` set and exactly one reward event. After relaunch it did not replay and backend state remained unchanged.
+
+A useful UI observation from the same test: Linus currently exposes one pending reward turn-in at a time. An older approved/unclaimed quest was first in the local turn-in queue; after Kalle claimed it, `Testa rejection` became visible at Linus. This was queue ordering, not a lost reject/resubmit marker. Preserve exactly-once semantics; multi-turn-in presentation can be improved later without changing reward ownership.
+
+After both legitimate claims in this session the authoritative backend state was 💎19 / 🪙176 with `worldProgression = 6`. Treat those numbers as a dated test checkpoint, not a permanent expected wallet.
