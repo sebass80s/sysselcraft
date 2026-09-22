@@ -149,3 +149,8 @@ Product decision: use a clean child-facing build while retaining development too
 ## A22 supervised-alpha state boundary — 2026-09-22
 
 For the current supervised alpha, the split between the local prototype world and the backend quest/economy domain is an explicit temporary product boundary, not a reconciliation bug. Parent-created quest lifecycle/rewards and the displayed backend wallet remain Supabase-authoritative. Recycling completion, intro/name/puppy state, the built-in `Bädda sängen` loop and its legacy local progression remain device-local until a state-family-specific migration is designed. The alpha must not promise that backend `worldProgression` automatically builds Bakery/Recycling or that local prototype rewards are backend ledger events. No max merge, reward fabrication, snapshot replay, automatic world unlock or silent migration is allowed. The current HUD may display the backend wallet when available, but that presentation bridge does not transfer authority. This boundary is acceptable for supervised alpha testing and should be revisited before independent daily-use certification.
+
+
+### A21 physical child-build acceptance — 2026-09-22
+
+PASS on the updated physical iPhone build. In ordinary native use, Vuxenläge no longer exposes the IPHONE TEST section, manual Recycling stage 2–4 earning controls, reconciliation diagnostics or destructive local-save reset. The real `Koppla den här barnenheten` device-management action remains available, and the existing save/game state remained normal after the update. This physically verifies the selected alpha policy: child-facing default UI is clean while development tools remain opt-in behind `?debug=tools`.
