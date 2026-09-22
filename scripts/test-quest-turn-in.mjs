@@ -43,7 +43,7 @@ assert.deepEqual(
   "only the newly approved occurrence is celebrated",
 );
 
-console.log("Quest turn-in transition tests passed.");
+
 
 const claimed = { ...quest("paid", "approved"), claimedAt: "2026-09-22T03:00:00Z" };
 assert.deepEqual(
@@ -51,3 +51,12 @@ assert.deepEqual(
   [],
   "already-claimed approvals must never create a turn-in",
 );
+
+
+assert.deepEqual(
+  newlyApprovedQuests(new Map(), [quest("offline", "approved")]),
+  [],
+  "relaunch must not infer a turn-in from arbitrary approved history; persisted awaiting state owns offline recovery",
+);
+
+console.log("Quest turn-in transition and replay-protection tests passed.");
