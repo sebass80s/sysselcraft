@@ -15,6 +15,7 @@ function quest(instanceId, state) {
     createdAt: "2026-09-22T00:00:00Z",
     submittedAt: state === "available" ? null : "2026-09-22T01:00:00Z",
     approvedAt: state === "approved" ? "2026-09-22T02:00:00Z" : null,
+    claimedAt: null,
   };
 }
 
@@ -30,8 +31,7 @@ assert.deepEqual(
   "already-approved history must not create retroactive turn-ins",
 );
 
-assert.deepEqual(
-  newlyApprovedQuests(new Map([["i1", "approved"]]), [quest("i1", "approved")]),
+assert.deepEqual(\n  newlyApprovedQuests(new Map([["i1", "approved"]]), [quest("i1", "approved")]),
   [],
   "repeated refresh must not replay a turn-in",
 );
@@ -43,3 +43,10 @@ assert.deepEqual(
 );
 
 console.log("Quest turn-in transition tests passed.");
+
+const claimed = { ...quest("paid", "approved"), claimedAt: "2026-09-22T03:00:00Z" };
+assert.deepEqual(
+  newlyApprovedQuests(new Map([["paid", "pending"]]), [claimed]),
+  [],
+  "already-claimed approvals must never create a turn-in",
+);
