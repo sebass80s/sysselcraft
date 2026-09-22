@@ -326,3 +326,10 @@ Routine physical-iPhone update plumbing is now intentionally reduced to `npm run
 Afterward, physical deployment still requires the human to press Run in Xcode. Prefer this helper over asking Kalle to copy a repeated terminal recipe. Codex/Work is not required for routine sync; Nova continues normal implementation through GitHub and uses the Mac only for native/physical boundaries.
 
 Physical-device evidence now also covers the full offline approval/reward path: a child-submitted quest survived full child-app closure while the parent approved it elsewhere; on relaunch Linus retained the reward turn-in; claiming paid the reward and the authoritative backend wallet was visible in the village HUD/inventory. The implementation persists submitted instance IDs awaiting approval and recovers only those instances when they later become approved and unclaimed. Do not infer turn-ins from arbitrary historical approved quests.
+
+
+## Physical quest correction loop proof (2026-09-22)
+
+The live two-device correction path is now physically proven for a one-off quest: submit -> reject -> same instance becomes available again -> resubmit -> approve -> Linus turn-in -> claim -> force-quit/relaunch. During the `Testa rejection` run, backend checks confirmed `reward_events = 0` and no wallet/progression change through approval. Claim created exactly one reward event, set `claimed_at`, and paid the snapshotted 💎1 / 🪙1 reward. Relaunch produced no duplicate reward or replay.
+
+Linus currently renders `pendingTurnIns[0]`, so multiple approved/unclaimed rewards are intentionally surfaced sequentially rather than simultaneously. During physical QA an older pending turn-in hid the newly approved test quest until the older reward was claimed; the new quest then appeared normally. Do not misdiagnose this as approval recovery failure. A future UX pass may summarize or list multiple rewards, but must preserve server-authoritative claim/idempotency semantics.
