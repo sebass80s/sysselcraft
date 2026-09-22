@@ -94,7 +94,6 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       setNeedsPairing(false);
       const nextTurnIns = await recoverAwaitingQuestTurnIns(id, nextQuests);
       if (!current()) return false;
-      setKnownQuestStates(new Map(nextQuests.map((quest) => [quest.instanceId, quest.state])));
       setPendingTurnIns(nextTurnIns);
       setQuests(nextQuests);
       setGameState(nextGameState);
