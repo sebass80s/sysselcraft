@@ -139,3 +139,8 @@ During the continuing physical iPhone acceptance session, the game remained smoo
 ## A24 physical active-asset acceptance — 2026-09-22
 
 The current physical iPhone build was visually checked against the active completed Recycling building. Its WebP renders normally on-device: no black rectangle, missing/transparent texture, broken image or visible flicker was observed. This clears the earlier WebP-decoder concern for the active Recycling asset on the tested build/device. It does not certify inactive Bakery/Clinic stages or the intentionally incomplete future `reboot/production` character-frame contract; Henning/Sol production frames remain legitimately absent until real art exists.
+
+
+## A21 alpha child-build policy — 2026-09-22
+
+Product decision: use a clean child-facing build while retaining development tools behind an explicit debug mode. Native stage-earning controls, reconciliation diagnostics and destructive local-save reset are now hidden during ordinary child use and are exposed only when the native app is opened with `?debug=tools`. The visible panel is presented as `Vuxenläge` rather than a local test-control surface. Pairing remains available because it is a real device-management function. The temporary built-in `Bädda sängen` approval remains in Vuxenläge so a clean local onboarding save is not made impossible before that legacy loop is migrated; this is still a supervised-alpha boundary, not a claim of a real adult-auth gate. No save/state authority or progression semantics changed.
