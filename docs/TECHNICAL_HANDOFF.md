@@ -310,3 +310,19 @@ The user has Codex desktop locally and can open the canonical local `sysselcraft
 - Vercel deployments and GitHub Actions remain separate controlled resources.
 - Codex does not replace evidence requirements: source inspection is not runtime proof.
 - If Codex reports a result, Nova reviews the diff/evidence rather than treating the success statement as sufficient proof.
+
+
+## Native one-command sync + offline turn-in proof (2026-09-22)
+
+Routine physical-iPhone update plumbing is now intentionally reduced to `npm run syssel` from the canonical local repo. The command is implemented by `scripts/syssel` and:
+
+- requires `/Users/karoaa/Developer/sysselcraft`;
+- requires branch `nova/local-construction-snapshot`;
+- aborts rather than touching unexpected local modifications;
+- preserves the known local `ios/App/App/config.xml` modification;
+- performs only fast-forward pull, web build and `npx cap sync ios`;
+- never resets/cleans/stashes, deletes the installed app or regenerates `ios/`.
+
+Afterward, physical deployment still requires the human to press Run in Xcode. Prefer this helper over asking Kalle to copy a repeated terminal recipe. Codex/Work is not required for routine sync; Nova continues normal implementation through GitHub and uses the Mac only for native/physical boundaries.
+
+Physical-device evidence now also covers the full offline approval/reward path: a child-submitted quest survived full child-app closure while the parent approved it elsewhere; on relaunch Linus retained the reward turn-in; claiming paid the reward and the authoritative backend wallet was visible in the village HUD/inventory. The implementation persists submitted instance IDs awaiting approval and recovers only those instances when they later become approved and unclaimed. Do not infer turn-ins from arbitrary historical approved quests.
