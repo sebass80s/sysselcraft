@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Capacitor } from "@capacitor/core";
 import { requestChildPairingOpen } from "@/game/childPairingBridge";
@@ -16,6 +16,13 @@ import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
 import { createQuestRequestGuard } from "@/game/questRequestGuard";
 import { loadSaveState } from "@/game/saveState";
+import {
+  claimQuestTurnIn,
+  loadPendingQuestTurnIns,
+  newlyApprovedQuests,
+  rememberApprovedQuestTurnIn,
+  type PendingQuestTurnIn,
+} from "@/game/questTurnInState";
 import {
   publishQuestPresentation,
   QUEST_SOURCE_OPEN_EVENT,
@@ -54,6 +61,8 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   const [sourceFilter, setSourceFilter] = useState<QuestPresentationSource | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
+  const [pendingTurnIns, setPendingTurnIns] = useState<PendingQuestTurnIn[]>([]);
+  const questStatesRef = useRef(new Map<string, BackendQuest["state"]>());
 
   const [requests] = useState(createQuestRequestGuard);
   useEffect(() => {
@@ -82,6 +91,14 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       ]);
       if (!current()) return false;
       setNeedsPairing(false);
+      const newlyApproved = newlyApprovedQuests(questStatesRef.current, nextQuests);
+      let nextTurnIns = await loadPendingQuestTurnIns(id);
+      for (const quest of newlyApproved) {
+        nextTurnIns = await rememberApprovedQuestTurnIn(id, quest);
+      }
+      if (!current()) return false;
+      questStatesRef.current = new Map(nextQuests.map((quest) => [quest.instanceId, quest.state]));
+      setPendingTurnIns(nextTurnIns);
       setQuests(nextQuests);
       setGameState(nextGameState);
       setLocalRecyclingCenterStage(localSave?.worldFlags.recyclingCenterStage ?? 0);
@@ -116,6 +133,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
         if (!pairedId) return;
 
         setChildId(pairedId);
+        setPendingTurnIns(await loadPendingQuestTurnIns(pairedId));
         const auth = await getBackendAuthState();
         if (cancelled) return;
 
@@ -208,8 +226,10 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
   useEffect(() => {
     const snapshot = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
-    publishQuestPresentation({ counts: questSourceCounts(snapshot) });
-  }, [quests, gameState, localRecyclingCenterStage]);
+    const counts = questSourceCounts(snapshot);
+    if (pendingTurnIns.length > 0) counts.linus += 1;
+    publishQuestPresentation({ counts });
+  }, [quests, gameState, localRecyclingCenterStage, pendingTurnIns]);
 
   if (!pairingChecked) return null;
 
@@ -243,7 +263,22 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   const pendingCount = presented.pending.length;
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
   const primaryWorldQuest = primaryPresentedQuest(presented);
+  const turnIn = pendingTurnIns[0] ?? null;
 
+  async function claimReward(instanceId: string) {
+    if (!childId || busy) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      const next = await claimQuestTurnIn(childId, instanceId);
+      setPendingTurnIns(next);
+      setMessage("Belöningen är din! ✨");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte markera belöningen som hämtad.");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function markDone(instanceId: string) {
     if (!childId || !sessionReady || needsPairing || !requests.startAction()) return;
@@ -311,7 +346,22 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
             )}
           </header>
 
-          {visibleQuests.length === 0 ? (
+          {sourceFilter === "linus" && turnIn && (
+            <article className={styles.quest} data-presentation="reward">
+              <strong>✨ Uppdrag godkänt!</strong>
+              <p>Snyggt jobbat! Jag hörde att du fixade <strong>{turnIn.title}</strong>.</p>
+              <small>Belöningen är redan säkrad: 💎 {turnIn.reward.diamonds} · 🪙 {turnIn.reward.sysselBux}</small>
+              <button
+                className="primary-button compact"
+                disabled={busy}
+                onClick={() => void claimReward(turnIn.instanceId)}
+              >
+                Hämta belöningen
+              </button>
+            </article>
+          )}
+
+          {visibleQuests.length === 0 && !(sourceFilter === "linus" && turnIn) ? (
             <div className="parent-empty-state">
               {approvedCount > 0 ? "Alla uppdrag är klara just nu. 🌱" : "Inga nya uppdrag just nu. 🌱"}
             </div>
