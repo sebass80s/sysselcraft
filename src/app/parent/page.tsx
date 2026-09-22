@@ -24,6 +24,7 @@ import {
 } from "@/backend/familyRepository";
 import type { BackendChild, BackendHousehold, BackendQuest } from "@/backend/types";
 import { isParentQuestDraftReady, type ParentQuestDraft } from "@/game/parentMode";
+import { createQuestRequestGuard } from "@/game/questRequestGuard";
 
 const emptyDraft: ParentQuestDraft = {
   title: "",
@@ -63,26 +64,50 @@ export default function ParentModePage() {
   const [recurrenceKind, setRecurrenceKind] = useState<QuestRecurrenceKind>("once");
   const [recurrenceWeekdays, setRecurrenceWeekdays] = useState<number[]>([]);
   const [pairingCode, setPairingCode] = useState("");
+  const [familyRequests] = useState(createQuestRequestGuard);
+  const [childRequests] = useState(createQuestRequestGuard);
+
+  useEffect(() => {
+    familyRequests.activate();
+    childRequests.activate();
+    return () => {
+      familyRequests.deactivate();
+      childRequests.deactivate();
+    };
+  }, [childRequests, familyRequests]);
 
   const loadChildQuests = useCallback(async (id: string) => {
+    if (!childRequests.isActive()) return false;
     if (!id) {
+      childRequests.invalidate();
       setQuests([]);
       setQuestDefinitions([]);
-      return;
+      return true;
     }
-    const [nextQuests, nextDefinitions] = await Promise.all([
-      listChildQuests(id),
-      listParentQuestDefinitions(id),
-    ]);
-    setQuests(nextQuests);
-    setQuestDefinitions(nextDefinitions);
-  }, []);
+    const current = childRequests.begin();
+    try {
+      const [nextQuests, nextDefinitions] = await Promise.all([
+        listChildQuests(id),
+        listParentQuestDefinitions(id),
+      ]);
+      if (!current()) return false;
+      setQuests(nextQuests);
+      setQuestDefinitions(nextDefinitions);
+      return true;
+    } catch (error) {
+      if (!current()) return false;
+      throw error;
+    }
+  }, [childRequests]);
 
   const refreshFamily = useCallback(async (
     preferredHousehold?: string,
     preferredChild?: string,
   ) => {
+    if (!familyRequests.isActive()) return false;
+    const current = familyRequests.begin();
     const hs = await listHouseholds();
+    if (!current()) return false;
     setHouseholds(hs);
 
     const nextHouseholdId =
@@ -103,6 +128,7 @@ export default function ParentModePage() {
     }
 
     const cs = await listChildren(nextHouseholdId);
+    if (!current()) return false;
     setChildren(cs);
 
     const nextChildId =
@@ -114,7 +140,8 @@ export default function ParentModePage() {
 
     setChildId(nextChildId);
     await loadChildQuests(nextChildId);
-  }, [childId, householdId, loadChildQuests]);
+    return current();
+  }, [childId, familyRequests, householdId, loadChildQuests]);
 
   useEffect(() => {
     let cancelled = false;
@@ -144,8 +171,13 @@ export default function ParentModePage() {
         if (cancelled) return;
         const parent = state.signedIn && !state.isAnonymous;
         setSignedIn(parent);
-        if (parent) refreshSafely();
-        else {
+        if (parent) {
+          familyRequests.activate();
+          childRequests.activate();
+          refreshSafely();
+        } else {
+          familyRequests.invalidate();
+          childRequests.invalidate();
           setHouseholds([]);
           setChildren([]);
           setQuests([]);
@@ -159,7 +191,7 @@ export default function ParentModePage() {
       cancelled = true;
       unsubscribe();
     };
-  }, [refreshFamily]);
+  }, [childRequests, familyRequests, refreshFamily]);
 
   useEffect(() => {
     if (!signedIn || !childId) return;
@@ -337,6 +369,8 @@ export default function ParentModePage() {
   }
 
   async function changeHousehold(nextHouseholdId: string) {
+    familyRequests.invalidate();
+    childRequests.invalidate();
     cancelEdit();
     setQuests([]);
     setQuestDefinitions([]);
@@ -358,6 +392,8 @@ export default function ParentModePage() {
   }
 
   async function changeChild(nextChildId: string) {
+    familyRequests.invalidate();
+    childRequests.invalidate();
     cancelEdit();
     setQuests([]);
     setQuestDefinitions([]);
@@ -389,6 +425,8 @@ export default function ParentModePage() {
   }
 
   async function logout() {
+    familyRequests.invalidate();
+    childRequests.invalidate();
     setBusy(true);
     setMessage("");
     try {
