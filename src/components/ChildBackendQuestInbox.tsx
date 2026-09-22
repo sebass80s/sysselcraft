@@ -15,6 +15,7 @@ import {
 } from "@/backend/familyRepository";
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
+import { publishBackendWallet } from "@/game/backendWalletBridge";
 import { createQuestRequestGuard } from "@/game/questRequestGuard";
 import { loadSaveState } from "@/game/saveState";
 import {
@@ -224,6 +225,10 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
     window.addEventListener(QUEST_SOURCE_OPEN_EVENT, openSource);
     return () => window.removeEventListener(QUEST_SOURCE_OPEN_EVENT, openSource);
   }, []);
+
+  useEffect(() => {
+    publishBackendWallet(gameState ? { diamonds: gameState.diamonds, sysselBux: gameState.sysselBux } : null);
+  }, [gameState]);
 
   useEffect(() => {
     const snapshot = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
