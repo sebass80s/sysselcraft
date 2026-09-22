@@ -343,6 +343,17 @@ The first physically verified Story Moment is the child's first meeting with Lin
 
 This two-image sequence was physically verified on iPhone on 2026-09-22, including the image transition and translucent dialogue treatment. The result is the target feel: an **interactive illustrated storybook embedded in SysselCraft**, preserving rich narrative presentation without requiring animated cinematics.
 
+### Dialogue nameplates — LOCKED 2026-09-22
+
+The nameplate treatment used by the first Linus meeting is the canonical dialogue pattern for **all dialogue in SysselCraft**:
+- the active speaker's nameplate lives in the normal dialogue-card flow, directly above the spoken line;
+- do not position nameplates independently over the illustration or against screen coordinates;
+- speaker identity may use a consistent character color while preserving the shared layout;
+- current locked character colors are **Linus blue**, **Henning green**, and **the child orange**;
+- new characters should receive a distinct, readable character color when introduced, while using the same shared nameplate geometry and placement.
+
+This rule applies to Story Moments and ordinary in-world dialogue so speaker identification remains visually consistent throughout the game.
+
 The first-meeting and later Henning-arrival moments form an intentional visual bookend:
 - opening: the child enters a quiet village and meets Linus;
 - later: after the child's real-world quest work has visibly brought life back, the child finds Linus reunited with Henning.
