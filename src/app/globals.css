@@ -42,9 +42,9 @@ main { min-height: 100dvh; }
 .dialogue-card h2 { margin: .35rem 0 .5rem; font-size: 1.2rem; }
 .dialogue-speaker { display: inline-flex; align-items: center; gap: .35rem; font-size: .76rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; color: #fff7dd; background: #315f8c; border-radius: 999px; padding: .32rem .56rem; }
 .dialogue-speaker.child { background: #b8772d; }
-.henning-story-speaker { position: fixed; top: max(1rem, env(safe-area-inset-top)); z-index: 30; font-size: .86rem; padding: .4rem .72rem; box-shadow: 0 4px 18px rgba(20,24,18,.2); }
-.henning-story-speaker.henning { left: max(1.2rem, env(safe-area-inset-left)); background: #477a3f; }
-.henning-story-speaker.linus { right: max(1.2rem, env(safe-area-inset-right)); background: #315f8c; }
+.henning-story-speaker { position: absolute; bottom: calc(100% + .5rem); z-index: 30; font-size: .86rem; padding: .4rem .72rem; box-shadow: 0 4px 18px rgba(20,24,18,.2); }
+.henning-story-speaker.henning { left: 0; background: #477a3f; }
+.henning-story-speaker.linus { right: 0; background: #315f8c; }
 .henning-story-speaker.child { left: 50%; transform: translateX(-50%); background: #b8772d; }
 .dialogue-speaker.dog { background: #6e4a2f; }
 .dialogue-next { float: right; min-width: 110px; }
