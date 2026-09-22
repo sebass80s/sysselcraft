@@ -196,3 +196,12 @@ The supervised-alpha readiness pass has now materially closed the following:
 Remaining readiness gaps are mostly stress/time-boundary evidence rather than known core implementation holes: A17 pairing expiry/true transport loss/session-loss/reinstall; A19 real day/week rollover and offline-next-period materialization; A16 harsher real-network/concurrency cases; accessibility/other-device-size checks. Do not destructively test reinstall/session loss against the preserved alpha save without Kalle's explicit authorization.
 
 The next larger gameplay slice remains Henning/Bakery, but exact Bakery thresholds and Henning arrival staging are still product decisions and must not be invented.
+
+
+## 2026-09-22 Henning arrival locked
+
+Henning's first arrival staging is now a product decision, not open design space. After Recycling is completed and Linus has mentioned his old friend, the child later discovers **Henning together with Linus**. No vehicle or spectacle is required. Their first dialogue beat must clearly establish that they are old friends and genuinely happy to see each other again, using familiarity/teasing/history rather than exposition.
+
+The scene must then imply the causal chain without exposing mechanics: the child's real-world quest work made the village visibly start living again; Linus noticed and contacted Henning; Henning saw/believed that something had truly changed and chose to move there. The child should feel that their actions helped bring a person back to the village, but nobody says chores summon residents or explains hidden progression.
+
+Henning is introduced as a person first. Bakery follows from Henning and must not pre-exist as the thing that summoned him. Exact Bakery quest count/thresholds remain open.
