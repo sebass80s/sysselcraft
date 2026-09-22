@@ -71,6 +71,7 @@ export default function VillagePrototype() {
   const [henningStoryReplayIndex, setHenningStoryReplayIndex] = useState<number | null>(null);
   const [henningArrivalSeen, setHenningArrivalSeen] = useState(false);
   const [henningDialogueOpen, setHenningDialogueOpen] = useState(false);
+  const [henningDialogueIndex, setHenningDialogueIndex] = useState(0);
   const [dialogueIndex, setDialogueIndex] = useState(0);
   const [childName, setChildName] = useState("");
   const [dogName, setDogName] = useState("");
@@ -192,7 +193,7 @@ export default function VillagePrototype() {
           setConstructionDialogueId(id);
         },
         onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true); },
-        onHenningInteract: () => setHenningDialogueOpen(true),
+        onHenningInteract: () => { setHenningDialogueIndex(0); setHenningDialogueOpen(true); },
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
@@ -357,7 +358,19 @@ export default function VillagePrototype() {
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
-    {henningDialogueOpen && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Henning"><span className="dialogue-speaker henning-story-speaker henning">Henning</span><p>Det känns bra att vara här igen. Det är något med den här byn nu... den känns levande.</p><button className="primary-button dialogue-next" onClick={() => setHenningDialogueOpen(false)}>Klart</button></div>}
+    {henningDialogueOpen && (() => {
+      const henningDialogue = [
+        { speaker: "Henning", text: "Hej igen! Jag börjar faktiskt känna mig hemma här redan." },
+        { speaker: "Henning", text: "Linus har förstås hunnit berätta en massa historier om byn. Jag är inte säker på att jag tror på allihop." },
+        { speaker: "Linus", text: "Du trodde på dem när du kom hit!" },
+        { speaker: "Henning", text: "Jag sa inte att jag inte tyckte om dem." },
+        { speaker: "Henning", text: "Men det är något som saknas här..." },
+        { speaker: "Henning", text: "Jag behöver fundera lite. Kom tillbaka och prata med mig senare." },
+      ] as const;
+      const step = henningDialogue[henningDialogueIndex];
+      const last = henningDialogueIndex === henningDialogue.length - 1;
+      return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Henning"><span className={`dialogue-speaker henning-story-speaker ${step.speaker.toLowerCase()}`}>{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => { if (last) { setHenningDialogueOpen(false); setHenningDialogueIndex(0); } else setHenningDialogueIndex((index) => index + 1); }}>{last ? "Klart" : "Nästa"}</button></div>;
+    })()}
     {henningStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png" alt="" fill priority sizes="100vw" /></div>}
     {henningStoryReplayIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Henning kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryReplayIndex].speaker.toLowerCase()}`}>{henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryReplayIndex].speaker}</span><p>{henningArrivalDialogue[henningStoryReplayIndex].text}</p><button className="primary-button dialogue-next" onClick={advanceHenningStoryReplay}>{henningStoryReplayIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {henningStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png" alt="" fill priority sizes="100vw" /></div>}
