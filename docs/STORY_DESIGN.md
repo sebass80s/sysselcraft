@@ -168,6 +168,21 @@ Henning is introduced as a person and old friend first. Bakery comes after his i
 
 Bakery quest count/thresholds and the exact later transition from Henning's introduction into the bakery construction arc remain open product decisions.
 
+### Illustrated Story Moments — LOCKED
+
+Major irreversible village milestones may use a **static illustrated Story Moment** rather than an animated cutscene. This is now part of SysselCraft's narrative language.
+
+A Story Moment:
+- temporarily pauses normal world input;
+- presents one high-quality static illustration of the milestone;
+- advances a short dialogue over/with the illustration;
+- persists completion before returning control, so restart cannot replay a completed moment;
+- returns to the ordinary playable village with the milestone now physically true in the world.
+
+This device is deliberately rare. It is for major changes such as a new resident arriving, not routine NPC conversations or quest turn-ins. The illustration must support the existing storybook art direction rather than introducing a separate cinematic visual identity.
+
+**Henning's arrival is the first Story Moment.** The illustration depicts Linus and Henning reunited in the village. The dialogue begins with their old friendship and happiness at seeing one another again, then turns to the child and implies that the child's work made the village lively enough for Henning to believe Linus and move back. When the Story Moment closes, Henning must exist persistently as a resident in the playable world.
+
 ## 9. Second new resident: Sol
 
 **Sol arrives after Henning.** She is a young, newly graduated female doctor, conceptually mid-to-late twenties.
