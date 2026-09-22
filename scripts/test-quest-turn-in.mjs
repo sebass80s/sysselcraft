@@ -1,62 +1,95 @@
 import assert from "node:assert/strict";
-import { newlyApprovedQuests } from "../src/game/questTurnInState.ts";
+import { readFileSync } from "node:fs";
+import ts from "typescript";
 
-function quest(instanceId, state) {
+let storage = new Map();
+const modules = new Map();
+
+function load(file) {
+  if (modules.has(file)) return modules.get(file).exports;
+  const record = { exports: {} };
+  modules.set(file, record);
+  const code = ts.transpileModule(readFileSync(file, "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  new Function("require", "module", "exports")(name => {
+    if (name === "@capacitor/preferences") return {
+      Preferences: {
+        async get({ key }) { return { value: storage.get(key) ?? null }; },
+        async set({ key, value }) { storage.set(key, value); },
+      },
+    };
+    if (name === "@/backend/types") return {};
+    throw new Error(`Unexpected import: ${name}`);
+  }, record, record.exports);
+  return record.exports;
+}
+
+const state = load("src/game/questTurnInState.ts");
+
+function quest(instanceId, status, claimedAt = null) {
   return {
     instanceId,
     questId: "q",
     householdId: "h",
-    childId: "c",
-    title: "Bädda sängen",
+    childId: "child",
+    title: "Gör läxan",
     description: "Test",
-    progressionClass: "orderEnvironment",
-    reward: { diamonds: 1, sysselBux: 5 },
-    state,
+    progressionClass: "knowledgeCreativity",
+    reward: { diamonds: 1, sysselBux: 10 },
+    state: status,
     createdAt: "2026-09-22T00:00:00Z",
-    submittedAt: state === "available" ? null : "2026-09-22T01:00:00Z",
-    approvedAt: state === "approved" ? "2026-09-22T02:00:00Z" : null,
-    claimedAt: null,
+    submittedAt: status === "available" ? null : "2026-09-22T01:00:00Z",
+    approvedAt: status === "approved" ? "2026-09-22T02:00:00Z" : null,
+    claimedAt,
   };
 }
 
+await state.rememberAwaitingApproval("child", "offline");
 assert.deepEqual(
-  newlyApprovedQuests(new Map([["i1", "pending"]]), [quest("i1", "approved")]).map((q) => q.instanceId),
-  ["i1"],
-  "pending -> approved creates a turn-in",
-);
-
-assert.deepEqual(
-  newlyApprovedQuests(new Map(), [quest("old", "approved")]),
+  await state.recoverAwaitingQuestTurnIns("child", [quest("offline", "pending")]),
   [],
-  "already-approved history must not create retroactive turn-ins",
+  "pending submission remains awaiting and does not create a turn-in",
+);
+
+const recovered = await state.recoverAwaitingQuestTurnIns("child", [quest("offline", "approved")]);
+assert.deepEqual(recovered.map(item => item.instanceId), ["offline"], "offline approval is recovered after relaunch");
+
+assert.deepEqual(
+  (await state.recoverAwaitingQuestTurnIns("child", [quest("offline", "approved")])).map(item => item.instanceId),
+  ["offline"],
+  "repeated refresh does not duplicate the recovered turn-in",
 );
 
 assert.deepEqual(
-  newlyApprovedQuests(new Map([["i1", "approved"]]), [quest("i1", "approved")]),
+  (await state.claimQuestTurnIn("child", "offline")).map(item => item.instanceId),
   [],
-  "repeated refresh must not replay a turn-in",
+  "claim removes the durable pending turn-in",
 );
-
 assert.deepEqual(
-  newlyApprovedQuests(new Map([["i1", "pending"], ["i2", "available"]]), [quest("i1", "approved"), quest("i2", "pending")]).map((q) => q.instanceId),
-  ["i1"],
-  "only the newly approved occurrence is celebrated",
-);
-
-
-
-const claimed = { ...quest("paid", "approved"), claimedAt: "2026-09-22T03:00:00Z" };
-assert.deepEqual(
-  newlyApprovedQuests(new Map([["paid", "pending"]]), [claimed]),
+  await state.recoverAwaitingQuestTurnIns("child", [quest("offline", "approved", "2026-09-22T03:00:00Z")]),
   [],
-  "already-claimed approvals must never create a turn-in",
+  "claimed reward does not replay after restart",
 );
 
-
+storage = new Map();
+await state.rememberAwaitingApproval("child", "rejected");
 assert.deepEqual(
-  newlyApprovedQuests(new Map(), [quest("offline", "approved")]),
+  await state.recoverAwaitingQuestTurnIns("child", [quest("rejected", "available")]),
   [],
-  "relaunch must not infer a turn-in from arbitrary approved history; persisted awaiting state owns offline recovery",
+  "rejected submission clears awaiting state without creating a turn-in",
+);
+assert.deepEqual(
+  await state.recoverAwaitingQuestTurnIns("child", [quest("rejected", "approved")]),
+  [],
+  "a later arbitrary approved read cannot resurrect a rejected submission",
 );
 
-console.log("Quest turn-in transition and replay-protection tests passed.");
+storage = new Map();
+assert.deepEqual(
+  await state.recoverAwaitingQuestTurnIns("child", [quest("historical", "approved")]),
+  [],
+  "arbitrary approved history never creates a turn-in",
+);
+
+console.log("Quest turn-in persistence, offline recovery and replay-protection tests passed.");
