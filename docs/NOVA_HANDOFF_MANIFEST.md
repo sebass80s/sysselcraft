@@ -178,3 +178,21 @@ Kalle physically verified the full one-off quest correction loop on the current 
 A useful UI observation from the same test: Linus currently exposes one pending reward turn-in at a time. An older approved/unclaimed quest was first in the local turn-in queue; after Kalle claimed it, `Testa rejection` became visible at Linus. This was queue ordering, not a lost reject/resubmit marker. Preserve exactly-once semantics; multi-turn-in presentation can be improved later without changing reward ownership.
 
 After both legitimate claims in this session the authoritative backend state was 💎19 / 🪙176 with `worldProgression = 6`. Treat those numbers as a dated test checkpoint, not a permanent expected wallet.
+
+
+## 2026-09-22 alpha hardening checkpoint
+
+The earlier OneDrive/Gate-0 next-checklist is historical. Current canonical branch is `nova/local-construction-snapshot`; routine native updates use `npm run syssel` from `/Users/karoaa/Developer/sysselcraft`.
+
+The supervised-alpha readiness pass has now materially closed the following:
+- A20 update-in-place physically passed with local Recycling save, pairing and Quest v2 preserved.
+- A21 default child build is physically accepted: dangerous native test/reset/reconciliation controls are hidden unless explicitly opened with `?debug=tools`.
+- A22 intentionally keeps backend quest/economy authority separate from legacy local world progression. No automatic reconciliation or Bakery unlock is authorized.
+- A18 is resolved for supervised alpha by keeping real parent Supabase authentication in the deployed web `/parent` UI on the parent's own device. The child Capacitor app does not implement native parent magic-link return and must not replace its anonymous child session with a parent session.
+- A23 core landscape quest-panel interaction, long content and practical live-session smoothness passed on the physical iPhone.
+- A24 active completed Recycling WebP rendering passed on-device. Future Bakery/Clinic/Henning/Sol production art remains separate acceptance work.
+- A26 now commits npm lockfile v3 and CI installs with `npm ci`; the locked dependency path passed the full verify workflow.
+
+Remaining readiness gaps are mostly stress/time-boundary evidence rather than known core implementation holes: A17 pairing expiry/true transport loss/session-loss/reinstall; A19 real day/week rollover and offline-next-period materialization; A16 harsher real-network/concurrency cases; accessibility/other-device-size checks. Do not destructively test reinstall/session loss against the preserved alpha save without Kalle's explicit authorization.
+
+The next larger gameplay slice remains Henning/Bakery, but exact Bakery thresholds and Henning arrival staging are still product decisions and must not be invented.
