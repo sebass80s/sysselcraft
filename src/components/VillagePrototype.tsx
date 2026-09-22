@@ -66,7 +66,7 @@ export default function VillagePrototype() {
   const [introComplete, setIntroComplete] = useState(false);
   const [dialogueOpen, setDialogueOpen] = useState(false);
   const [linusStoryMomentOpen, setLinusStoryMomentOpen] = useState(false);
-  const [linusStoryReplay, setLinusStoryReplay] = useState(false);
+  const [linusStoryReplayIndex, setLinusStoryReplayIndex] = useState<number | null>(null);
   const [dialogueIndex, setDialogueIndex] = useState(0);
   const [childName, setChildName] = useState("");
   const [dogName, setDogName] = useState("");
@@ -183,7 +183,7 @@ export default function VillagePrototype() {
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
           setConstructionDialogueId(id);
         },
-        onLinusInteract: () => { setLinusStoryReplay(false); setDialogueIndex(0); setDialogueOpen(true); setLinusStoryMomentOpen(true); },
+        onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true); },
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
@@ -245,7 +245,7 @@ export default function VillagePrototype() {
 
   function advanceDialogue() {
     const nextIndex = dialogueIndex + 1; const nextStep = linusIntroDialogue[nextIndex];
-    if (!nextStep) { setDialogueOpen(false); setLinusStoryMomentOpen(false); if (!linusStoryReplay) setIntroComplete(true); setLinusStoryReplay(false); return; }
+    if (!nextStep) { setDialogueOpen(false); setLinusStoryMomentOpen(false); setIntroComplete(true); return; }
     if (nextStep.kind === "reveal-dog") { setDogVisible(true); setDialogueIndex(nextIndex + 1); return; }
     setDialogueIndex(nextIndex);
   }
@@ -253,10 +253,13 @@ export default function VillagePrototype() {
     setParentMenuOpen(false);
     setQuestOpen(false);
     setConstructionDialogueId(null);
-    setLinusStoryReplay(true);
-    setDialogueIndex(0);
-    setDialogueOpen(true);
-    setLinusStoryMomentOpen(true);
+    setLinusStoryReplayIndex(0);
+  }
+  function advanceLinusStoryReplay() {
+    setLinusStoryReplayIndex((index) => {
+      if (index === null) return null;
+      return index + 1 < linusIntroDialogue.length ? index + 1 : null;
+    });
   }
   function finishChildNaming() { const trimmed = childNameInputRef.current?.value.trim() ?? ""; if (!trimmed) return; setChildName(trimmed); setChildNameCanSubmit(true); advanceDialogue(); }
   function finishDogNaming() { const trimmed = dogNameInputRef.current?.value.trim() ?? ""; if (!trimmed) return; setDogName(trimmed); setDogNameCanSubmit(true); setDogVisible(true); setDialogueIndex((index) => index + 1); }
@@ -278,6 +281,8 @@ export default function VillagePrototype() {
 
   const speakerName = dialogueStep?.kind === "line" && dialogueStep.speaker === "Barnet" ? childName || "Barnet" : dialogueStep?.kind === "line" ? dialogueStep.speaker : "";
   const recyclingSpeakerName = recyclingStoryLine?.speaker === "Barnet" ? childName || "Barnet" : recyclingStoryLine?.speaker ?? "";
+  const linusStoryReplayStep = linusStoryReplayIndex === null ? null : linusIntroDialogue[linusStoryReplayIndex];
+  const linusStoryReplaySpeaker = linusStoryReplayStep?.kind === "line" && linusStoryReplayStep.speaker === "Barnet" ? childName || "Barnet" : linusStoryReplayStep?.kind === "line" ? linusStoryReplayStep.speaker : "Linus";
 
   async function retrySave() {
     if (!latestSaveRef.current || saveRetryBusy || constructionWriteRef.current) return;
@@ -300,9 +305,10 @@ export default function VillagePrototype() {
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
-    {linusStoryMomentOpen && dialogueOpen && !recyclingStoryOpen && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/linus-first-meeting.png" alt="" fill priority sizes="100vw" /></div>}
+    {((linusStoryMomentOpen && dialogueOpen) || linusStoryReplayIndex !== null) && !recyclingStoryOpen && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/linus-first-meeting.png" alt="" fill priority sizes="100vw" /></div>}
     {constructionDialogueId && attention?.id === constructionDialogueId && <div className="dialogue-card" role="dialog" aria-modal="true" aria-label="Byggplatsens samtal"><span className="dialogue-speaker">{attention.residentName}</span><p>{attention.dialogue}</p><button className="primary-button" disabled={constructionBusy} onClick={() => void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id)}>{constructionBusy ? "Sparar…" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); gameRef.current?.setConstructionDialogueOpen(false); }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig"><span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span><p>{recyclingStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>{constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {linusStoryReplayStep && !recyclingStoryOpen && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Replay av Linus första möte">{linusStoryReplayStep.kind === "line" && <><span className={`dialogue-speaker ${linusStoryReplayStep.speaker === "Barnet" ? "child" : ""}`}>{linusStoryReplaySpeaker}</span><p>{linusStoryReplayStep.text}</p></>}{linusStoryReplayStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><p><strong>{childName || "Barnet"}</strong></p></>}{linusStoryReplayStep.kind === "reveal-dog" && <><span className="dialogue-speaker">Linus</span><p>🐶 Valpen kommer fram.</p></>}{linusStoryReplayStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><p><strong>{dogName || "Valpen"}</strong></p></>}<button className="primary-button dialogue-next" onClick={advanceLinusStoryReplay}>{linusStoryReplayIndex === linusIntroDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {dialogueOpen && dialogueStep && !recyclingStoryOpen && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite">{dialogueStep.kind === "line" && <><span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{speakerName}</span><p>{dialogueStep.text}</p><button className="primary-button dialogue-next" onClick={advanceDialogue}>Fortsätt</button></>}{dialogueStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><input ref={childNameInputRef} className="dog-name-input" defaultValue={childName} onInput={(event) => setChildNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishChildNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ditt namn" /><button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>Det är jag!</button></>}{dialogueStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><input ref={dogNameInputRef} className="dog-name-input" defaultValue={dogName} onInput={(event) => setDogNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishDogNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ett namn" /><button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>Det blir namnet!</button></>}</div>}
     {questOpen && introComplete && !recyclingStoryOpen && <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="quest-title"><button className="close-button" onClick={() => setQuestOpen(false)} aria-label="Stäng">×</button><span className="quest-kicker">Dagens första quest</span><h2 id="quest-title">{makeBedQuest.icon} {makeBedQuest.title}</h2><p>{makeBedQuest.description}</p><div className="quest-reward">Belöning: 💎 {makeBedQuest.reward.diamonds} · 🪙 {makeBedQuest.reward.sysselBux}</div>{questState === "available" && <button className="primary-button" onClick={submitQuest}>Jag har bäddat klart</button>}{questState === "pending" && <div className="pending-message">⏳ Väntar på en vuxen</div>}{questState === "approved" && <div className="approved-message">✓ Godkänd!</div>}</div>}
     {parentMenuOpen && !recyclingStoryOpen && <div className="parent-menu-backdrop" role="presentation" onMouseDown={() => setParentMenuOpen(false)}><section className="parent-menu-panel" role="dialog" aria-modal="true" aria-labelledby="parent-menu-title" onMouseDown={(event) => event.stopPropagation()}><button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button><span className="parent-menu-kicker">🔐 Vuxenläge</span><h2 id="parent-menu-title">Vuxenläge</h2><p className="parent-menu-note">Här hanteras barnets första lokala uppdrag och kopplingen till familjen. Nya föräldrauppdrag hanteras på förälderns egen enhet.</p>{nativePlatform ? <div className="parent-profile-card"><span>FÖRÄLDRAKONTO</span><strong>Öppnas på förälderns enhet</strong><small>Backend-uppdrag godkänns i SysselCraft föräldraläge på en separat webbläsare/enhet. Barnets app behåller sin anonyma barnsession.</small></div> : <a className="secondary-button" href="/parent/">Öppna föräldraläget</a>}{nativePlatform && <button className="secondary-button" type="button" onClick={() => { setParentMenuOpen(false); setChildPairingOpen(true); }}>Koppla den här barnenheten</button>}
