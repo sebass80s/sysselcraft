@@ -442,6 +442,7 @@ export type Database = {
         };
         Returns: string;
       };
+      get_bound_child_id: { Args: Record<PropertyKey, never>; Returns: string | null };
       is_bound_child: { Args: { p_child_id: string }; Returns: boolean };
       is_household_parent: {
         Args: { p_household_id: string };
