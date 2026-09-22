@@ -314,6 +314,14 @@ export async function archiveParentQuest(questId: string): Promise<void> {
   if (error) throw error;
 }
 
+export async function getBoundChildIdForCurrentSession(): Promise<string | null> {
+  const { data, error } = await getSupabaseBrowserClient().rpc("get_bound_child_id");
+  if (error) throw error;
+  if (data === null) return null;
+  if (typeof data !== "string") throw new Error("Bound child id was invalid.");
+  return data;
+}
+
 export async function isChildDeviceBound(childId: string): Promise<boolean> {
   const { data, error } = await getSupabaseBrowserClient().rpc("is_bound_child", {
     p_child_id: childId,
