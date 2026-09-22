@@ -22,7 +22,9 @@ import {
   claimQuestTurnIn,
   loadPendingQuestTurnIns,
   newlyApprovedQuests,
+  recoverAwaitingQuestTurnIns,
   rememberApprovedQuestTurnIn,
+  rememberAwaitingApproval,
   type PendingQuestTurnIn,
 } from "@/game/questTurnInState";
 import {
@@ -94,7 +96,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       if (!current()) return false;
       setNeedsPairing(false);
       const newlyApproved = newlyApprovedQuests(knownQuestStates, nextQuests);
-      let nextTurnIns = await loadPendingQuestTurnIns(id);
+      let nextTurnIns = await recoverAwaitingQuestTurnIns(id, nextQuests);
       for (const quest of newlyApproved) {
         nextTurnIns = await rememberApprovedQuestTurnIn(id, quest);
       }
@@ -295,6 +297,8 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
     setMessage("");
     try {
       await submitQuest(instanceId);
+      if (!requests.isActive()) return;
+      await rememberAwaitingApproval(childId, instanceId);
       if (!requests.isActive()) return;
       const refreshed = await refresh(childId);
       if (refreshed) setMessage("Klart! Nu väntar uppdraget på en vuxen. ✨");
