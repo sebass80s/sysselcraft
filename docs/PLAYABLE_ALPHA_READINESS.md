@@ -119,3 +119,8 @@ A17 therefore has physical evidence for cancel-safe re-pairing, wrong-code rejec
 ## A19 physical weekly recurrence acceptance — 2026-09-22
 
 A live weekly quest (`A19 Veckotest`) was created in the current parent UI for the already paired child. It materialized automatically on the physical iPhone exactly once. Repeated child refreshes (4–5 times) and reopening the quest list did not create duplicate instances. The occurrence then completed the full live flow: child submit -> parent approve -> Linus attention -> child claim -> payout. After claim, another 4–5 refreshes did not rematerialize the weekly quest during the same ISO week. This physically verifies current-week weekly materialization, occurrence uniqueness/idempotency and normal reward lifecycle in the tested scope. Real week-boundary rollover, missed-period behavior and offline-next-period materialization remain unproven.
+
+
+## A23 physical landscape interaction acceptance — 2026-09-22
+
+The physical iPhone build is intentionally locked to landscape, so portrait-overlay acceptance is not applicable to the current product. In landscape, Kalle physically verified the child quest panel can be scrolled through, opened/closed repeatedly, and followed immediately by normal avatar/world interaction. No clipped interaction, stuck overlay or invisible touch-blocking layer was observed in this pass. Remaining A23 device QA is narrower: long quest text/large text, modal/keyboard focus where applicable, VoiceOver/accessibility, safe-area edge cases on other device sizes, and long-session thermal/FPS/memory behavior.
