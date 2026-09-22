@@ -150,12 +150,3 @@ export async function claimQuestTurnIn(
   await forgetAwaitingApproval(childId, instanceId);
   return next;
 }
-
-export function newlyApprovedQuests(
-  previousStates: ReadonlyMap<string, BackendQuest["state"]>,
-  nextQuests: BackendQuest[],
-): BackendQuest[] {
-  return nextQuests.filter(
-    (quest) => quest.state === "approved" && quest.claimedAt === null && previousStates.get(quest.instanceId) === "pending",
-  );
-}
