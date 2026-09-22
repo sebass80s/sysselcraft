@@ -66,6 +66,7 @@ export default function VillagePrototype() {
   const [introComplete, setIntroComplete] = useState(false);
   const [dialogueOpen, setDialogueOpen] = useState(false);
   const [linusStoryMomentOpen, setLinusStoryMomentOpen] = useState(false);
+  const [linusStoryReplay, setLinusStoryReplay] = useState(false);
   const [dialogueIndex, setDialogueIndex] = useState(0);
   const [childName, setChildName] = useState("");
   const [dogName, setDogName] = useState("");
@@ -182,7 +183,7 @@ export default function VillagePrototype() {
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
           setConstructionDialogueId(id);
         },
-        onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); setLinusStoryMomentOpen(true); },
+        onLinusInteract: () => { setLinusStoryReplay(false); setDialogueIndex(0); setDialogueOpen(true); setLinusStoryMomentOpen(true); },
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
@@ -244,9 +245,18 @@ export default function VillagePrototype() {
 
   function advanceDialogue() {
     const nextIndex = dialogueIndex + 1; const nextStep = linusIntroDialogue[nextIndex];
-    if (!nextStep) { setDialogueOpen(false); setLinusStoryMomentOpen(false); setIntroComplete(true); return; }
+    if (!nextStep) { setDialogueOpen(false); setLinusStoryMomentOpen(false); if (!linusStoryReplay) setIntroComplete(true); setLinusStoryReplay(false); return; }
     if (nextStep.kind === "reveal-dog") { setDogVisible(true); setDialogueIndex(nextIndex + 1); return; }
     setDialogueIndex(nextIndex);
+  }
+  function replayLinusStoryMoment() {
+    setParentMenuOpen(false);
+    setQuestOpen(false);
+    setConstructionDialogueId(null);
+    setLinusStoryReplay(true);
+    setDialogueIndex(0);
+    setDialogueOpen(true);
+    setLinusStoryMomentOpen(true);
   }
   function finishChildNaming() { const trimmed = childNameInputRef.current?.value.trim() ?? ""; if (!trimmed) return; setChildName(trimmed); setChildNameCanSubmit(true); advanceDialogue(); }
   function finishDogNaming() { const trimmed = dogNameInputRef.current?.value.trim() ?? ""; if (!trimmed) return; setDogName(trimmed); setDogNameCanSubmit(true); setDogVisible(true); setDialogueIndex((index) => index + 1); }
@@ -298,7 +308,7 @@ export default function VillagePrototype() {
     {parentMenuOpen && !recyclingStoryOpen && <div className="parent-menu-backdrop" role="presentation" onMouseDown={() => setParentMenuOpen(false)}><section className="parent-menu-panel" role="dialog" aria-modal="true" aria-labelledby="parent-menu-title" onMouseDown={(event) => event.stopPropagation()}><button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button><span className="parent-menu-kicker">🔐 Vuxenläge</span><h2 id="parent-menu-title">Vuxenläge</h2><p className="parent-menu-note">Här hanteras barnets första lokala uppdrag och kopplingen till familjen. Nya föräldrauppdrag hanteras på förälderns egen enhet.</p>{nativePlatform ? <div className="parent-profile-card"><span>FÖRÄLDRAKONTO</span><strong>Öppnas på förälderns enhet</strong><small>Backend-uppdrag godkänns i SysselCraft föräldraläge på en separat webbläsare/enhet. Barnets app behåller sin anonyma barnsession.</small></div> : <a className="secondary-button" href="/parent/">Öppna föräldraläget</a>}{nativePlatform && <button className="secondary-button" type="button" onClick={() => { setParentMenuOpen(false); setChildPairingOpen(true); }}>Koppla den här barnenheten</button>}
     <div className="parent-profile-card"><span>Barn</span><strong>{childName || "Inte namngivet ännu"}</strong>{dogName && <small>Kompis: 🐶 {dogName}</small>}</div><div className="parent-profile-card"><span>Byutveckling</span><strong>🏗️ {recyclingCenterStatus.title}</strong><small>{recyclingCenterStatus.status}</small></div><div className="parent-section-heading"><h3>Lokal prototyp att godkänna</h3>{pendingCount > 0 && <span>{pendingCount}</span>}</div>
     {questState === "pending" ? <article className="parent-quest-card"><div><span>{makeBedQuest.icon}</span><div><strong>{makeBedQuest.title}</strong><small>Barnet har markerat uppgiften som klar.</small></div></div><div className="parent-quest-actions"><button className="primary-button compact" onClick={approveQuest}>Godkänn</button><button className="secondary-button compact" onClick={needsCompletion}>Behöver kompletteras</button></div></article> : <div className="parent-empty-state">✓ Inget lokalt prototypuppdrag väntar just nu.</div>}
-    {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span>{[2,3,4].map((stage) => <button key={stage} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span><button className="secondary-button" type="button" onClick={replayLinusStoryMoment}>🎬 Spela Linus första möte</button>{[2,3,4].map((stage) => <button key={stage} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {nativeTestControls && <div className="parent-menu-footer"><span>Debugverktyg · aktiverade med ?debug=tools</span><button className="debug-reset-button" type="button" onClick={resetPrototypeSave} disabled={!saveReady || resettingSave || constructionBusy}>↺ Nollställ testsparning</button></div>}</section></div>}
     </div>
     {saveError && <div className="parent-menu-backdrop"><section className="parent-menu-panel" role="alert">
