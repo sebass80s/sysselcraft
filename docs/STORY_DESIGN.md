@@ -304,3 +304,20 @@ Build outward only when the preceding part works and feels rewarding.
 ### Document role
 
 This is the canonical story/world design document. `NOVA_HANDOFF_MANIFEST.md` summarizes continuity; implementation architecture belongs in `TECHNICAL_HANDOFF.md`; detailed first-project behavior lives in `POST_DELIVERY_PROGRESSION.md`.
+
+
+### Linus visual canon for Story Moments — LOCKED 2026-09-22
+
+The approved first-meeting illustration establishes Linus's close-up Story Moment appearance:
+- middle-aged/older adult but **not very old**;
+- slim build;
+- clean-shaven;
+- completely bald on the crown/top of the head, with sparse **red-blond** hair remaining around the sides/back;
+- worn blue worker coveralls;
+- work boots;
+- hearing protectors/headset with an integrated boom microphone resting around his neck;
+- warm, approachable expression.
+
+For player-identification, the child should normally be shown from behind or over the shoulder in Story Moment illustrations. Avoid defining the child's face unless a later product decision explicitly requires it.
+
+The approved first-meeting composition is a warm, emotional village introduction: child foreground/back to camera, Linus seated/leaning near his workshop and welcoming the child, with the village opening behind him. The approved generated master currently exists in the project conversation as `a_warm_highly_detailed_pixar_3d_animated_storyb.png` (1370×1148). It should be copied into the repository's Story Moment asset directory before runtime wiring so future instances do not need to reinterpret Linus's design.
