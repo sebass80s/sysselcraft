@@ -1,0 +1,40 @@
+#!/bin/zsh
+set -euo pipefail
+
+REPO="/Users/karoaa/Developer/sysselcraft"
+EXPECTED_BRANCH="nova/local-construction-snapshot"
+
+fail() { print -u2 "❌ $1"; exit 1; }
+
+cd "$REPO" || fail "Hittar inte SysselCraft-repot: $REPO"
+[[ "$(pwd -P)" == "$REPO" ]] || fail "Fel repo: $(pwd -P)"
+[[ "$(git branch --show-current)" == "$EXPECTED_BRANCH" ]] || fail "Fel branch: $(git branch --show-current)"
+
+print "🏡 SysselCraft: kontrollerar lokalt läge..."
+changes="$(git status --porcelain)"
+unsafe="$(print -r -- "$changes" | grep -vE '^ M ios/App/App/config\.xml$' || true)"
+[[ -z "$unsafe" ]] || {
+  print -u2 "❌ Lokala ändringar finns. Nova-sync avbryts för att skydda dem:"
+  print -u2 -r -- "$changes"
+  exit 1
+}
+
+before="$(git rev-parse --short HEAD)"
+print "📍 $EXPECTED_BRANCH @ $before"
+if [[ -n "$changes" ]]; then
+  print "🛡️  Bevarar känd lokal config.xml-ändring."
+fi
+
+print "⬇️  Hämtar senaste Nova-koden..."
+git pull --ff-only
+
+print "🔨 Bygger webbappen..."
+npm run build
+
+print "📱 Synkar befintligt iOS-projekt..."
+npx cap sync ios
+
+after="$(git rev-parse --short HEAD)"
+print ""
+print "✅ SysselCraft är synkad och byggd @ $after"
+print "▶️  Öppna ios/App/App.xcodeproj och tryck Run. Appen har inte raderats eller resetats."
