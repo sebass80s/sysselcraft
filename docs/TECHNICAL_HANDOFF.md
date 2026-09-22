@@ -333,3 +333,14 @@ Physical-device evidence now also covers the full offline approval/reward path: 
 The live two-device correction path is now physically proven for a one-off quest: submit -> reject -> same instance becomes available again -> resubmit -> approve -> Linus turn-in -> claim -> force-quit/relaunch. During the `Testa rejection` run, backend checks confirmed `reward_events = 0` and no wallet/progression change through approval. Claim created exactly one reward event, set `claimed_at`, and paid the snapshotted 💎1 / 🪙1 reward. Relaunch produced no duplicate reward or replay.
 
 Linus currently renders `pendingTurnIns[0]`, so multiple approved/unclaimed rewards are intentionally surfaced sequentially rather than simultaneously. During physical QA an older pending turn-in hid the newly approved test quest until the older reward was claimed; the new quest then appeared normally. Do not misdiagnose this as approval recovery failure. A future UX pass may summarize or list multiple rewards, but must preserve server-authoritative claim/idempotency semantics.
+
+
+## Alpha delivery hardening checkpoint — 2026-09-22
+
+Delivery/runtime policy now has three explicit boundaries:
+
+1. **Dependency reproducibility:** `package-lock.json` v3 is committed. GitHub CI uses Node 22 + `npm ci --no-audit --no-fund` and npm cache, then the canonical `npm run verify`. Do not return CI to range-resolving `npm install` unless deliberately regenerating the lockfile.
+2. **Parent authentication:** real Supabase parent auth is web-parent-only for supervised alpha. The Capacitor child app has no native auth deep-link callback and should retain its anonymous paired-child session. Native parent auth requires a future separate authenticated-context design rather than bolting magic-link handling into the child session.
+3. **Child debug surface:** ordinary native use hides stage-earning test controls, reconciliation diagnostics and destructive local reset. Those tools remain opt-in behind native `?debug=tools`. Pairing remains a legitimate device-management action. The legacy built-in `Bädda sängen` approval remains temporarily available in Vuxenläge so the local onboarding loop is not stranded.
+
+Physical evidence on the current iPhone additionally covers update-in-place persistence, weekly current-period recurrence idempotency, safe same-child re-pairing/reuse rejection, landscape quest-panel interaction/long content, active Recycling WebP rendering and practical session smoothness. See `PLAYABLE_ALPHA_READINESS.md` for exact scope and remaining stress gaps.
