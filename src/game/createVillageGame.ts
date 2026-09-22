@@ -17,6 +17,7 @@ export type VillageGameHandle = {
   setQuestState: (state: QuestState) => void;
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
+  setHenningVisible: (visible: boolean) => void;
   setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", active: boolean) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
@@ -24,6 +25,7 @@ type Callbacks = {
   onQuestOpen: () => void;
   onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus") => void;
   onLinusInteract: () => void;
+  onHenningInteract: () => void;
   onConstructionInteract: (id: string) => void;
 };
 type Facing = "north" | "south" | "east" | "west";
@@ -66,6 +68,7 @@ export async function createVillageGame(
   let requestedQuestState: QuestState = "available";
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
+  let requestedHenningVisible = false;
   const requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
 
   const parentWidth = Math.max(parent.clientWidth, 1);
@@ -86,6 +89,8 @@ export async function createVillageGame(
     private linusQuestMarker?: GameObjects.Text;
     private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
+    private henning?: GameObjects.Image;
+    private henningInteractionPending = false;
     private attentionMarker?: GameObjects.Text;
     private attentionInteractionPending = false;
     private residents: Record<string, GameObjects.Image> = {};
@@ -108,6 +113,7 @@ export async function createVillageGame(
       this.load.image("master-scene", "/assets/village/reboot/start-area-master-1920x640.webp");
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
+      this.load.image("henning-painted", "/assets/village/reboot/henning-turnaround.webp");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
       this.load.image("materials-painted", "/assets/village/reboot/materials-runtime.png");
       for (const key of [
@@ -166,6 +172,7 @@ export async function createVillageGame(
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!this.player) return;
         this.linusInteractionPending = false;
+        this.henningInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
         this.path = findPath({ x: this.player.x, y: this.player.y }, { x: pointer.worldX, y: pointer.worldY }, this.navigationObstacles);
@@ -191,6 +198,11 @@ export async function createVillageGame(
     setDogVisible(visible: boolean) {
       requestedDogVisible = visible;
       this.dog?.setVisible(visible);
+    }
+
+    setHenningVisible(visible: boolean) {
+      requestedHenningVisible = visible;
+      this.henning?.setVisible(visible);
     }
 
     applyQuestState(state: QuestState) {
@@ -311,6 +323,15 @@ export async function createVillageGame(
         this.targetMarker?.setVisible(false);
         constructionDialogueOpen = true;
         callbacks.onConstructionInteract(attention.id);
+        return;
+      }
+
+      if (this.henningInteractionPending && this.player && this.henning?.visible) {
+        if (distance(this.player, this.henning) > 95) return;
+        this.henningInteractionPending = false;
+        this.playerFacing = this.player.x < this.henning.x ? "east" : "west";
+        this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
+        callbacks.onHenningInteract();
         return;
       }
 
@@ -652,6 +673,26 @@ export async function createVillageGame(
         else this.maybeCompleteWorldInteraction();
       });
 
+      this.henning = this.add.image(430, 452, "henning-painted")
+        .setOrigin(0.5, 0.96)
+        .setDisplaySize(92, 126)
+        .setDepth(1452)
+        .setVisible(requestedHenningVisible)
+        .setInteractive({ useHandCursor: true });
+      this.residents.henning = this.henning;
+      this.henning.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen || !this.henning?.visible) return;
+        this.linusInteractionPending = false;
+        this.attentionInteractionPending = false;
+        this.noticeboardInteractionPending = false;
+        this.henningInteractionPending = true;
+        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 370, y: 468 }, this.navigationObstacles);
+        const finalPoint = this.path.at(-1);
+        if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
+
     }
   }
 
@@ -697,6 +738,12 @@ export async function createVillageGame(
       requestedQuestSourceAttention[source] = active;
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setQuestSourceAttention(source, active);
+      }
+    },
+    setHenningVisible: (visible: boolean) => {
+      requestedHenningVisible = visible;
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setHenningVisible(visible);
       }
     },
     setDogVisible: (visible: boolean) => {
