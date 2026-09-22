@@ -79,13 +79,16 @@ rpcResult = { error: failure };
 await assert.rejects(repository.submitQuest('day-2'), error => error === failure);
 assert.equal(calls.length, 1, 'failed mutation is not automatically retried');
 calls.length = 0;
-rpcResult = { data: [{ instance_id: 'day-1', quest_id: 'recurring', title: 'Bädda sängen', state: 'approved', progression_class: 'wellbeingRoutine', reward_diamonds: 2, reward_syssel_bux: 3 }], error: null };
+rpcResult = { data: [{ instance_id: 'day-1', quest_id: 'recurring', title: 'Bädda sängen', state: 'approved', progression_class: 'wellbeingRoutine', reward_diamonds: 2, reward_syssel_bux: 3, claimed_at: '2026-09-22T02:00:00Z' }], error: null };
 for (let i = 0; i < 5; i++) {
   const result = await repository.listChildQuests('child');
-  assert.equal(result[0].state, 'approved');
+  assert.equal(result[0].state, 'approved');\n  assert.equal(result[0].claimedAt, '2026-09-22T02:00:00Z');
 }
 assert(calls.every(call => call.operation === 'list_child_quests'), 'refresh never submits or reviews/rewards quests');
-console.log('PASS real repository transport: errors propagate, recovery reads preserve approved state, no mutation retries');
+rpcResult = { data: null, error: null };
+await repository.claimQuestReward('day-2');
+assert.deepEqual(calls.pop(), { operation: 'claim_quest_reward', args: { p_instance_id: 'day-2' } });
+console.log('PASS real repository transport: errors propagate, recovery reads preserve approved/claimed state, claim uses dedicated RPC');
 
 globalThis.window = new EventTarget();
 window.localStorage = { getItem: () => null };
