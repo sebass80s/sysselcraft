@@ -312,7 +312,7 @@ export default function ParentModePage() {
       await loadChildQuests(childId);
       setMessage(
         approve
-          ? "Godkänt! Belöningen är utdelad. ✅"
+          ? "Godkänt! Barnet kan nu hämta belöningen hos Linus. ✅"
           : "Uppdraget är skickat tillbaka till barnet.",
       );
     } catch (error) {
@@ -742,7 +742,7 @@ export default function ParentModePage() {
                       <span>✅</span>
                       <div>
                         <strong>{quest.title}</strong>
-                        <small>Godkänt och belönat</small>
+                        <small>{quest.claimedAt ? "Belöningen är hämtad" : "Godkänt · väntar på att barnet hämtar belöningen"}</small>
                       </div>
                     </div>
                   </article>
