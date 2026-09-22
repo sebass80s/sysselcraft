@@ -3,7 +3,12 @@
 import { FormEvent, useEffect, useState } from "react";
 import { ensureChildAnonymousSession } from "@/backend/auth";
 import { getPairedChildId, setPairedChildId } from "@/backend/childDeviceBinding";
-import { getChildGameState, isChildDeviceBound, redeemChildPairingCode } from "@/backend/familyRepository";
+import {
+  getBoundChildIdForCurrentSession,
+  getChildGameState,
+  isChildDeviceBound,
+  redeemChildPairingCode,
+} from "@/backend/familyRepository";
 
 function normalizePairingCode(value: string) {
   return value.replace(/[^0-9a-f]/gi, "").slice(0, 8);
@@ -21,9 +26,27 @@ export default function ChildPairingPanel({ onClose }: { onClose: () => void }) 
     async function prepare() {
       try {
         await ensureChildAnonymousSession();
-        const childId = await getPairedChildId();
+        let childId = await getPairedChildId();
         if (cancelled) return;
-        if (!childId) { setPaired(false); setMessage(""); return; }
+        if (!childId) {
+          const recoveredChildId = await getBoundChildIdForCurrentSession();
+          if (cancelled) return;
+          if (!recoveredChildId) { setPaired(false); setMessage(""); return; }
+          const recoveredState = await getChildGameState(recoveredChildId);
+          if (cancelled) return;
+          if (!recoveredState) {
+            setPaired(false);
+            setMessage("En tidigare barnkoppling hittades, men barnets spelstatus kunde inte läsas. Skapa en ny parningskod i föräldraläget.");
+            return;
+          }
+          await setPairedChildId(recoveredChildId);
+          if (cancelled) return;
+          childId = recoveredChildId;
+          setPaired(true);
+          setRePairing(false);
+          setMessage("Barnkopplingen återställdes på enheten. ✅");
+          return;
+        }
         const bound = await isChildDeviceBound(childId);
         if (cancelled) return;
         if (!bound) {
