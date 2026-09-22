@@ -48,7 +48,7 @@ export type SaveStateV1 = {
   worldFlags: {
     firstDeliveryComplete: boolean;
     recyclingCenterStage: RecyclingCenterStage;
-    henningArrivalSeen: boolean;
+    henningArrivalSeen?: boolean;
   };
 };
 
