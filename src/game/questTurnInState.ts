@@ -2,6 +2,7 @@ import { Preferences } from "@capacitor/preferences";
 import type { BackendQuest } from "@/backend/types";
 
 const KEY_PREFIX = "sysselcraft.quest-turn-ins.v1";
+const AWAITING_KEY_PREFIX = "sysselcraft.quest-awaiting-approval.v1";
 
 export type PendingQuestTurnIn = {
   instanceId: string;
@@ -13,6 +14,40 @@ export type PendingQuestTurnIn = {
 
 function key(childId: string) {
   return `${KEY_PREFIX}.${childId}`;
+}
+
+function awaitingKey(childId: string) {
+  return `${AWAITING_KEY_PREFIX}.${childId}`;
+}
+
+async function loadAwaitingApprovalIds(childId: string): Promise<string[]> {
+  const { value } = await Preferences.get({ key: awaitingKey(childId) });
+  if (!value) return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+async function saveAwaitingApprovalIds(childId: string, ids: string[]) {
+  await Preferences.set({ key: awaitingKey(childId), value: JSON.stringify([...new Set(ids)]) });
+}
+
+export async function rememberAwaitingApproval(childId: string, instanceId: string) {
+  const current = await loadAwaitingApprovalIds(childId);
+  if (current.includes(instanceId)) return current;
+  const next = [...current, instanceId];
+  await saveAwaitingApprovalIds(childId, next);
+  return next;
+}
+
+export async function forgetAwaitingApproval(childId: string, instanceId: string) {
+  const current = await loadAwaitingApprovalIds(childId);
+  const next = current.filter((id) => id !== instanceId);
+  await saveAwaitingApprovalIds(childId, next);
+  return next;
 }
 
 function normalize(value: unknown, childId: string): PendingQuestTurnIn[] {
@@ -73,6 +108,38 @@ export async function rememberApprovedQuestTurnIn(
   return next;
 }
 
+export async function recoverAwaitingQuestTurnIns(
+  childId: string,
+  quests: BackendQuest[],
+): Promise<PendingQuestTurnIn[]> {
+  const awaiting = await loadAwaitingApprovalIds(childId);
+  if (awaiting.length === 0) return loadPendingQuestTurnIns(childId);
+
+  let turnIns = await loadPendingQuestTurnIns(childId);
+  const questById = new Map(quests.map((quest) => [quest.instanceId, quest]));
+  const keepAwaiting: string[] = [];
+
+  for (const instanceId of awaiting) {
+    const quest = questById.get(instanceId);
+    if (!quest) {
+      keepAwaiting.push(instanceId);
+      continue;
+    }
+    if (quest.state === "pending") {
+      keepAwaiting.push(instanceId);
+      continue;
+    }
+    if (quest.state === "approved" && quest.claimedAt === null) {
+      turnIns = await rememberApprovedQuestTurnIn(childId, quest);
+    }
+    // available means rejected; approved+claimed means already collected.
+    // Both are terminal for the awaiting-approval marker.
+  }
+
+  await saveAwaitingApprovalIds(childId, keepAwaiting);
+  return turnIns;
+}
+
 export async function claimQuestTurnIn(
   childId: string,
   instanceId: string,
@@ -80,6 +147,7 @@ export async function claimQuestTurnIn(
   const current = await loadPendingQuestTurnIns(childId);
   const next = current.filter((item) => item.instanceId !== instanceId);
   await save(childId, next);
+  await forgetAwaitingApproval(childId, instanceId);
   return next;
 }
 
