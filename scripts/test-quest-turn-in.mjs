@@ -31,7 +31,8 @@ assert.deepEqual(
   "already-approved history must not create retroactive turn-ins",
 );
 
-assert.deepEqual(\n  newlyApprovedQuests(new Map([["i1", "approved"]]), [quest("i1", "approved")]),
+assert.deepEqual(
+  newlyApprovedQuests(new Map([["i1", "approved"]]), [quest("i1", "approved")]),
   [],
   "repeated refresh must not replay a turn-in",
 );
