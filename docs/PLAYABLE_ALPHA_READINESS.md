@@ -129,3 +129,8 @@ The physical iPhone build is intentionally locked to landscape, so portrait-over
 ### A23 long-content landscape check — 2026-09-22
 
 A deliberately long one-time quest (`A23 Lång text`) was physically checked on the iPhone in the landscape child quest panel. Long title/description content remained usable: the panel/card layout and scrolling held and the quest action remained reachable. No content-overflow blocker was observed in this pass.
+
+
+### A23 live-session performance observation — 2026-09-22
+
+During the continuing physical iPhone acceptance session, the game remained smooth while the other A23 interaction/content checks were performed. No noticeable frame degradation, touch-response degradation or thermal/performance blocker was observed during this session. This is a practical alpha-session observation, not a formal long-duration profiling or memory-leak test.
