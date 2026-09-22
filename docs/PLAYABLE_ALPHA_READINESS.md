@@ -124,3 +124,8 @@ A live weekly quest (`A19 Veckotest`) was created in the current parent UI for t
 ## A23 physical landscape interaction acceptance — 2026-09-22
 
 The physical iPhone build is intentionally locked to landscape, so portrait-overlay acceptance is not applicable to the current product. In landscape, Kalle physically verified the child quest panel can be scrolled through, opened/closed repeatedly, and followed immediately by normal avatar/world interaction. No clipped interaction, stuck overlay or invisible touch-blocking layer was observed in this pass. Remaining A23 device QA is narrower: long quest text/large text, modal/keyboard focus where applicable, VoiceOver/accessibility, safe-area edge cases on other device sizes, and long-session thermal/FPS/memory behavior.
+
+
+### A23 long-content landscape check — 2026-09-22
+
+A deliberately long one-time quest (`A23 Lång text`) was physically checked on the iPhone in the landscape child quest panel. Long title/description content remained usable: the panel/card layout and scrolling held and the quest action remained reachable. No content-overflow blocker was observed in this pass.
