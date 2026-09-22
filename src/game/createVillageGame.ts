@@ -83,6 +83,7 @@ export async function createVillageGame(
     private noticeboardMarker?: GameObjects.Container;
     private backendHomeAttention = false;
     private backendLinusAttention = false;
+    private linusQuestMarker?: GameObjects.Text;
     private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
     private attentionMarker?: GameObjects.Text;
@@ -372,6 +373,34 @@ export async function createVillageGame(
       if (source === "home") this.backendHomeAttention = active;
       if (source === "linus") {
         this.backendLinusAttention = active;
+        this.linusQuestMarker?.destroy();
+        this.linusQuestMarker = undefined;
+        if (active && this.linus) {
+          this.linusQuestMarker = this.add.text(this.linus.x, this.linus.y - 128, "!", {
+            color: "#5a3f28",
+            backgroundColor: "#fff2cf",
+            fontSize: "25px",
+            fontStyle: "bold",
+            padding: { x: 10, y: 4 },
+          }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
+          this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+            event.stopPropagation();
+            if (!this.player || constructionDialogueOpen) return;
+            this.linusInteractionPending = true;
+            this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
+            const target = this.path.at(-1);
+            if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+            else this.maybeCompleteWorldInteraction();
+          });
+          this.tweens.add({
+            targets: this.linusQuestMarker,
+            y: "-=4",
+            duration: 950,
+            yoyo: true,
+            repeat: -1,
+            ease: "Sine.InOut",
+          });
+        }
         if (!active && this.introComplete && this.linusInteractionPending) {
           this.linusInteractionPending = false;
           this.path = [];
