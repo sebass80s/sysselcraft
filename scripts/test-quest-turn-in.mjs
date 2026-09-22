@@ -9,10 +9,10 @@ function load(file) {
   if (modules.has(file)) return modules.get(file).exports;
   const record = { exports: {} };
   modules.set(file, record);
-  const code = ts.transpileModule(readFileSync(file, "utf8"), {
+  const compiled = ts.transpileModule(readFileSync(file, "utf8"), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
-  new Function("require", "module", "exports")(name => {
+  new Function("require", "module", "exports", compiled)(name => {
     if (name === "@capacitor/preferences") return {
       Preferences: {
         async get({ key }) { return { value: storage.get(key) ?? null }; },
