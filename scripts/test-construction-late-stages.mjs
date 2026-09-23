@@ -83,6 +83,26 @@ assert.equal(dialogue.find(line => line.text === "Nej.")?.pauseAfter, true, "loc
 
 assert.equal(constructionPresentation(domain.initialConstruction()).stages.bakery, undefined, "Bakery stage 0 is absent");
 assert(!assets.getVisualProductionObstacles({}).some(() => true), "stage 0 has no building collision");
+
+let bakery = domain.normalizeConstruction({
+  earned: { recycling: 4, bakery: 0, clinic: 0 },
+  revealed: { recycling: 4, bakery: 0, clinic: 0 },
+  pending: [],
+  completedStoryBeats: [domain.RECYCLING_COMPLETION_BEAT],
+});
+for (let stage = 1; stage <= 4; stage++) {
+  bakery = domain.earnConstruction(bakery, `bakery:${stage}`);
+  const attention = domain.residentAttention(bakery);
+  assert.equal(attention?.resident, "henning", `Bakery stage ${stage} must be guided by Henning`);
+  assert.equal(attention?.presentation, "construction");
+  assert(attention.dialogue.some(line => line.speaker === "Barnet"), `Bakery stage ${stage} must involve the child in the story`);
+  assert.equal(constructionPresentation(bakery).stages.bakery, stage - 1, "pending Bakery reveal must keep previous visible stage");
+  bakery = domain.commitConstructionReveal(bakery, `bakery:${stage}`);
+  assert.equal(bakery.revealed.bakery, stage);
+}
+assert.equal(domain.residentAttention(bakery), null);
+assert.equal(constructionPresentation(bakery).stages.bakery, 4);
+
 for (let stage = 1; stage <= 4; stage++) {
   assert.equal(assets.getVisualProductionAsset("bakery", stage), `/assets/village/buildings/bakery/bakery-stage-${stage}.webp`);
 }
