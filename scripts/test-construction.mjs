@@ -141,7 +141,7 @@ handle.setQuestState("approved");
 handle.setQuestState("approved");
 assert.equal(images.filter(i => i.key === "truck-painted").length, 0, "approval never creates truck");
 assert.equal(images.filter(i => i.key === "visual-production-recycling-1").length, 0, "pending has no foundation");
-assert.equal(scene.navigationObstacles.length, nav.STATIC_OBSTACLES.length);
+assert.equal(scene.navigationObstacles.length, nav.STATIC_OBSTACLES.length + 1, "opening shop has a permanent navigation footprint");
 assert.equal(scene.residents.linus.x, -132);
 assert.equal(scene.residents.linus.y, 570);
 let commits = 0;
