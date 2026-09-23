@@ -201,7 +201,8 @@ For the Bakery arc:
 - Henning's personal arc moves from returning mainly to see Linus toward daring to become a baker here again.
 - The finished Bakery is a major emotional payoff and should become an Illustrated Story Moment rather than merely another construction popup.
 - The final beat must frame the result as something Henning and the child achieved together, while making clear that the child's actions are what made Henning willing and able to begin again.
-- The exact number, cadence and eligibility of real-world quests between Bakery stages remain deliberately **unlocked** until the four visual stages have been physically reviewed on iPhone.
+- **Bakery construction cost is locked at 10 real completed contributions total.** A contribution counts only after the authoritative quest lifecycle has reached child turn-in/claim, so approval alone does not advance construction. The exact distribution of those 10 contributions across the four visual Bakery stages remains deliberately **unlocked** until the stages have been physically reviewed on iPhone.
+- Recycling remains the compact onboarding arc at four contributions total. Later major building projects should generally require more sustained effort than Bakery, but their exact costs remain open product decisions.
 
 This principle should carry forward to later resident projects, including Sol's clinic, while each resident retains a distinct motivation and story.
 
