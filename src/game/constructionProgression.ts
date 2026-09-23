@@ -31,8 +31,10 @@ function clampNextStage(stage: BuildingStage): BuildingStage {
  * Its input must come from the authoritative approval layer. A stable contribution id makes
  * replay/reload safe: the same approval event can be observed repeatedly without advancing twice.
  *
- * The first recycling arc is calibrated to four approved contributions. This reducer can
- * represent bakery/clinic too, but their eligibility/pacing remains deliberately unspecified.
+ * The first recycling arc is calibrated to four contributions. Bakery is product-locked to
+ * ten contributions total, but the distribution of those ten contributions across its four
+ * visual stages remains deliberately unspecified until physical art review. Clinic pacing is
+ * still an open product decision. This reducer therefore must not invent Bakery thresholds.
  */
 export function applyApprovedConstructionContribution(
   current: ConstructionProgressionState,
