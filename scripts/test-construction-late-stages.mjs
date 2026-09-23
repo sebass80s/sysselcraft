@@ -37,7 +37,7 @@ assert.equal(state.revealed.recycling, 2);
 assert.deepEqual(state.pending, ["recycling:3"]);
 assert.equal(domain.residentAttention(state).resident, "linus");
 assert.equal(domain.residentAttention(state).presentation, "construction");
-assert(!domain.residentAttention(state).dialogue.toLowerCase().includes("återvinnings"), "pre-reveal copy must not name the payoff");
+assert(!domain.residentAttention(state).dialogue.some((line) => line.text.toLowerCase().includes("återvinnings")), "pre-reveal copy must not name the payoff");
 assert.equal(constructionPresentation(state).stages.recycling, 2, "pending stage must keep old visible stage");
 const stage2Obstacle = assets.getVisualProductionObstacles(constructionPresentation(state).stages);
 
