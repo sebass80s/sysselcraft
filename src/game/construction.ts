@@ -69,6 +69,23 @@ export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
   presentation: "construction",
 }];
 
+export const BAKERY_CONTRIBUTION_THRESHOLDS = [1, 3, 7, 10] as const;
+
+/**
+ * Bakery pacing is locked to 1-2-4-3 real quest turn-ins across stages 1-4.
+ * The input is the number of authoritative child claims since the Bakery arc began,
+ * never approvals or submissions. This pure rule deliberately does not decide how
+ * the local save establishes its backend baseline; state ownership remains explicit.
+ */
+export function deriveBakeryStageFromContributions(contributionsSinceBakeryStart: number): BuildingStage {
+  const count = Math.max(0, Math.floor(Number.isFinite(contributionsSinceBakeryStart) ? contributionsSinceBakeryStart : 0));
+  if (count >= BAKERY_CONTRIBUTION_THRESHOLDS[3]) return 4;
+  if (count >= BAKERY_CONTRIBUTION_THRESHOLDS[2]) return 3;
+  if (count >= BAKERY_CONTRIBUTION_THRESHOLDS[1]) return 2;
+  if (count >= BAKERY_CONTRIBUTION_THRESHOLDS[0]) return 1;
+  return 0;
+}
+
 export const RECYCLING_COMPLETION_BEAT = "recycling:completion" as const;
 export const BAKERY_COMPLETION_BEAT = "bakery:completion" as const;
 export type ConstructionStoryBeat = typeof RECYCLING_COMPLETION_BEAT | typeof BAKERY_COMPLETION_BEAT;
