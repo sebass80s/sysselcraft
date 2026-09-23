@@ -123,4 +123,12 @@ for (let stage = 1; stage <= 4; stage++) {
 
 assert.deepEqual(domain.BAKERY_CONTRIBUTION_THRESHOLDS, [1, 3, 7, 10], "Bakery cumulative contribution thresholds must remain 1-3-7-10");
 assert.deepEqual([0,1,2,3,6,7,9,10,99].map(domain.deriveBakeryStageFromContributions), [0,1,1,2,2,3,3,4,4], "Bakery stage pacing must remain 1-2-4-3");
+let pacedBakery = domain.normalizeConstruction({ earned: { recycling: 4, bakery: 0, clinic: 0 }, revealed: { recycling: 4, bakery: 0, clinic: 0 }, pending: [] });
+pacedBakery = domain.syncBakeryContributionProgress(pacedBakery, 11, 10);
+assert.deepEqual(pacedBakery.pending, ["bakery:1"], "first post-baseline claim earns Bakery stage 1");
+assert.equal(domain.syncBakeryContributionProgress(pacedBakery, 13, 10), pacedBakery, "pending reveal blocks earning later Bakery stages");
+pacedBakery = domain.commitConstructionReveal(pacedBakery, "bakery:1");
+assert.equal(domain.syncBakeryContributionProgress(pacedBakery, 12, 10), pacedBakery, "two total claims do not reach stage 2");
+pacedBakery = domain.syncBakeryContributionProgress(pacedBakery, 13, 10);
+assert.deepEqual(pacedBakery.pending, ["bakery:2"], "third total claim earns Bakery stage 2");
 console.log("PASS: Recycling and Bakery late-stage reveals/completion beats are gated, child-driven and idempotent; canonical story beats survive reload without replay.");
