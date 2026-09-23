@@ -50,6 +50,7 @@ export type SaveStateV1 = {
     recyclingCenterStage: RecyclingCenterStage;
     henningArrivalSeen?: boolean;
     bakeryClaimBaseline?: number;
+    bakeryClaimBaselineStage?: 0 | 1 | 2 | 3 | 4;
   };
 };
 
@@ -73,6 +74,7 @@ export function createDefaultSaveState(): SaveStateV1 {
       recyclingCenterStage: 0,
       henningArrivalSeen: false,
       bakeryClaimBaseline: undefined,
+      bakeryClaimBaselineStage: undefined,
     },
   };
 }
@@ -193,6 +195,7 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       recyclingCenterStage,
       henningArrivalSeen: candidate.worldFlags?.henningArrivalSeen === true,
       bakeryClaimBaseline: typeof candidate.worldFlags?.bakeryClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.bakeryClaimBaseline) && candidate.worldFlags.bakeryClaimBaseline >= 0 ? candidate.worldFlags.bakeryClaimBaseline : undefined,
+      bakeryClaimBaselineStage: [0, 1, 2, 3, 4].includes(candidate.worldFlags?.bakeryClaimBaselineStage as number) ? candidate.worldFlags?.bakeryClaimBaselineStage : undefined,
     },
   };
 }
