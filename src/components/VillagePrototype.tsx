@@ -102,6 +102,22 @@ export default function VillagePrototype() {
   const storyMomentReplayControl = nativePlatform;
 
   useEffect(() => {
+    const reloadConstruction = async () => {
+      try {
+        const saved = await loadSaveState(true);
+        if (!saved) return;
+        latestSaveRef.current = saved;
+        constructionRef.current = saved.construction;
+        setConstruction(saved.construction);
+      } catch {
+        setConstructionError("Byggframstegen kunde inte läsas om.");
+      }
+    };
+    window.addEventListener("sysselcraft:construction-save-changed", reloadConstruction);
+    return () => window.removeEventListener("sysselcraft:construction-save-changed", reloadConstruction);
+  }, []);
+
+  useEffect(() => {
     let cancelled = false;
 
     async function restore() {
