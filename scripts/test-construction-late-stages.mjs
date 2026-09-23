@@ -131,4 +131,10 @@ pacedBakery = domain.commitConstructionReveal(pacedBakery, "bakery:1");
 assert.equal(domain.syncBakeryContributionProgress(pacedBakery, 12, 10), pacedBakery, "two total claims do not reach stage 2");
 pacedBakery = domain.syncBakeryContributionProgress(pacedBakery, 13, 10);
 assert.deepEqual(pacedBakery.pending, ["bakery:2"], "third total claim earns Bakery stage 2");
+let migratedBakery = domain.normalizeConstruction({ earned: { recycling: 4, bakery: 2, clinic: 0 }, revealed: { recycling: 4, bakery: 2, clinic: 0 }, pending: [] });
+assert.equal(domain.syncBakeryContributionProgress(migratedBakery, 20, 20, 2), migratedBakery, "existing stage 2 save does not immediately advance at migration baseline");
+assert.equal(domain.syncBakeryContributionProgress(migratedBakery, 23, 20, 2), migratedBakery, "three new claims after stage 2 are still below stage 3 threshold");
+migratedBakery = domain.syncBakeryContributionProgress(migratedBakery, 24, 20, 2);
+assert.deepEqual(migratedBakery.pending, ["bakery:3"], "four new claims after existing stage 2 earn stage 3");
+
 console.log("PASS: Recycling and Bakery late-stage reveals/completion beats are gated, child-driven and idempotent; canonical story beats survive reload without replay.");
