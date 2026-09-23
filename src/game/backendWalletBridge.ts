@@ -3,6 +3,7 @@
 export type BackendWalletSnapshot = {
   diamonds: number;
   sysselBux: number;
+  worldProgression?: number;
 };
 
 export const BACKEND_WALLET_EVENT = "sysselcraft:backend-wallet";
