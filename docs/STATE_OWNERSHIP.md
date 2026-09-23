@@ -24,6 +24,7 @@ The purpose of this document is to stop future code from silently treating every
 | Child name from intro | Capacitor Preferences | backend child display name is a separate family-profile concept | Do not overwrite either direction implicitly |
 | Puppy name/visibility | Capacitor Preferences | backend child record may later gain product semantics | Local/native save for now |
 | First material delivery / recycling-center local world state | Capacitor Preferences | backend world flags may eventually mirror authority | Restore from local persisted state; compare read-only during migration |
+| Bakery construction pacing bridge | Local construction/save owns visible stage and reveal; Supabase `worldProgression` supplies authoritative post-baseline quest-claim count | Persisted local `bakeryClaimBaseline` + baseline stage | One-way claim-count input only: never copy backend stage/world flags into local construction, never rewrite backend from local construction |
 | Phaser scene objects | none | derived from state | Renderer only; Phaser must not become persistence authority |
 
 ## Non-negotiable migration rules
@@ -35,6 +36,20 @@ The purpose of this document is to stop future code from silently treating every
 5. **Pairing identifies a child; it does not migrate the save.** Pairing a physical device must leave the existing local save intact.
 6. **Reconciliation recommendations are diagnostics only.** `backend-ahead`, `local-ahead`, `no-op` and `inspect-before-merge` do not authorize writes.
 7. **Migrate one state family at a time.** Economy, hidden progression, world flags and presentation/profile state should receive separate explicit migration rules and tests.
+
+
+### Bakery claim-count bridge (LOCKED 2026-09-23)
+
+Bakery is the first deliberately narrow bridge across the two persistence domains. It is **not** a general reconciliation write path and does not change the observe-only migration rule above.
+
+- Supabase remains authoritative for whether a parent-created quest reward was actually claimed by the child. The existing backend `worldProgression` total is read only as a monotonic count source.
+- Capacitor Preferences remains authoritative for Bakery's local construction state: earned stage, pending reveal, revealed stage and completion Story Moment.
+- When Bakery pacing begins on a device, the local save captures the current backend `worldProgression` as `bakeryClaimBaseline` plus the Bakery stage already physically reached as `bakeryClaimBaselineStage`.
+- Only the delta after that baseline can earn later Bakery stages. Existing backend history is therefore never replayed as new construction work.
+- Locked Bakery pacing is 1–2–4–3 contributions, cumulative 1/3/7/10. A contribution means authoritative child turn-in/claim, never parent approval or submission.
+- A pending local reveal blocks earning another stage until the child visits Henning and consumes the authored reveal. This prevents backend refreshes from visually skipping construction stages.
+- Existing development/test saves that already have Bakery progress baseline from their current physical stage, so installing this bridge cannot immediately jump them forward.
+- The bridge never writes Bakery construction state, local currency, local hidden progression or fabricated events back to Supabase.
 
 ## Current intended end state
 
