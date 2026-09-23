@@ -18,6 +18,7 @@ export type VillageGameHandle = {
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
   setHenningVisible: (visible: boolean) => void;
+  setShopOpen: (open: boolean) => void;
   setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", active: boolean) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
@@ -26,6 +27,7 @@ type Callbacks = {
   onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus") => void;
   onLinusInteract: () => void;
   onHenningInteract: () => void;
+  onShopInteract: () => void;
   onConstructionInteract: (id: string) => void;
 };
 type Facing = "north" | "south" | "east" | "west";
@@ -69,6 +71,7 @@ export async function createVillageGame(
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
   let requestedHenningVisible = false;
+  let requestedShopOpen = false;
   const requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
 
   const parentWidth = Math.max(parent.clientWidth, 1);
@@ -91,6 +94,8 @@ export async function createVillageGame(
     private linus?: GameObjects.Image;
     private henning?: GameObjects.Image;
     private henningInteractionPending = false;
+    private shop?: GameObjects.Image;
+    private shopInteractionPending = false;
     private attentionMarker?: GameObjects.Text;
     private attentionInteractionPending = false;
     private residents: Record<string, GameObjects.Image> = {};
@@ -115,6 +120,7 @@ export async function createVillageGame(
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
       this.load.image("henning-painted", "/assets/village/reboot/henning-npc.png");
       this.load.image("shop-abandoned", "/assets/village/buildings/shop/lanthandel-abandoned.webp");
+      this.load.image("shop-open", "/assets/village/buildings/shop/lanthandel-open.webp");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
       this.load.image("materials-painted", "/assets/village/reboot/materials-runtime.png");
       for (const key of [
@@ -190,6 +196,18 @@ export async function createVillageGame(
           else this.maybeCompleteWorldInteraction();
           return;
         }
+        if (this.shop?.visible && this.shop.getBounds().contains(pointer.worldX, pointer.worldY) && requestedShopOpen) {
+          this.shopInteractionPending = true;
+          this.linusInteractionPending = false;
+          this.henningInteractionPending = false;
+          this.attentionInteractionPending = false;
+          this.noticeboardInteractionPending = false;
+          this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 1130, y: 425 }, this.navigationObstacles);
+          const target = this.path.at(-1);
+          if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+          else this.maybeCompleteWorldInteraction();
+          return;
+        }
         if (this.henning?.visible && this.henning.getBounds().contains(pointer.worldX, pointer.worldY)) {
           if (requestedConstruction.attention?.resident === "henning") {
             this.approachAttentionResident();
@@ -204,6 +222,7 @@ export async function createVillageGame(
         }
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
+        this.shopInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
         this.path = findPath({ x: this.player.x, y: this.player.y }, { x: pointer.worldX, y: pointer.worldY }, this.navigationObstacles);
@@ -357,6 +376,16 @@ export async function createVillageGame(
         return;
       }
 
+      if (this.shopInteractionPending && this.player && requestedShopOpen) {
+        const approach = { x: 1130, y: 425 };
+        if (distance(this.player, approach) > 42) return;
+        this.shopInteractionPending = false;
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+        callbacks.onShopInteract();
+        return;
+      }
+
       if (this.henningInteractionPending && this.player && this.henning?.visible) {
         if (distance(this.player, this.henning) > 95) return;
         this.henningInteractionPending = false;
@@ -399,13 +428,34 @@ export async function createVillageGame(
       this.worldImage(x, y + 32, key, scale);
     }
 
-    private drawAbandonedShop() {
-      // The old general store is part of the village geography from day one.
-      // Mira later replaces this state with the restored shop after the Bakery arc.
-      this.add.image(1130, 355, "shop-abandoned")
+    private drawShop() {
+      // The same physical landmark exists from day one. Mira's completed arrival
+      // beat swaps only its presentation from ruined to restored/open.
+      this.shop = this.add.image(1130, 355, requestedShopOpen ? "shop-open" : "shop-abandoned")
         .setOrigin(0.5, 0.92)
         .setDisplaySize(330, 272)
-        .setDepth(1355);
+        .setDepth(1355)
+        .setInteractive({ useHandCursor: true, pixelPerfect: false });
+      this.shop.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen || !requestedShopOpen) return;
+        this.shopInteractionPending = true;
+        this.linusInteractionPending = false;
+        this.henningInteractionPending = false;
+        this.attentionInteractionPending = false;
+        this.noticeboardInteractionPending = false;
+        this.path = findPath(this.player, { x: 1130, y: 425 }, this.navigationObstacles);
+        const target = this.path.at(-1);
+        if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
+    }
+
+    setShopOpen(open: boolean) {
+      requestedShopOpen = open;
+      if (!this.shop) return;
+      this.shop.setTexture(open ? "shop-open" : "shop-abandoned");
+      if (!open) this.shopInteractionPending = false;
     }
 
     private drawHouse() {
@@ -683,7 +733,7 @@ export async function createVillageGame(
         this.events.once("shutdown", () => mask.destroy());
       }
 
-      this.drawAbandonedShop();
+      this.drawShop();
 
       // Painted Linus stays dynamic so onboarding remains testable.
       this.linus = this.add.image(290, 445, "linus-painted")
@@ -782,6 +832,12 @@ export async function createVillageGame(
       requestedQuestSourceAttention[source] = active;
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setQuestSourceAttention(source, active);
+      }
+    },
+    setShopOpen: (open: boolean) => {
+      requestedShopOpen = open;
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setShopOpen(open);
       }
     },
     setHenningVisible: (visible: boolean) => {
