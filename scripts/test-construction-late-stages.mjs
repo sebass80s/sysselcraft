@@ -20,6 +20,7 @@ const domain = load("construction");
 const { constructionPresentation } = load("constructionPresentation");
 const assets = load("visualProductionAssets");
 const story = load("recyclingStory");
+const bakeryStory = load("bakeryStory");
 
 function revealedRecycling(stage) {
   return domain.normalizeConstruction({
@@ -102,9 +103,22 @@ for (let stage = 1; stage <= 4; stage++) {
 }
 assert.equal(domain.residentAttention(bakery), null);
 assert.equal(constructionPresentation(bakery).stages.bakery, 4);
+assert.equal(domain.bakeryCompletionPending(bakery), true, "Bakery stage 4 unlocks its completion Story Moment");
+const bakeryCompleted = domain.commitBakeryCompletion(bakery);
+assert.equal(domain.bakeryCompletionPending(bakeryCompleted), false);
+assert(bakeryCompleted.completedStoryBeats.includes(domain.BAKERY_COMPLETION_BEAT));
+assert.equal(domain.commitBakeryCompletion(bakeryCompleted), bakeryCompleted, "Bakery completion is idempotent");
+const bakeryReloaded = domain.normalizeConstruction({ ...bakeryCompleted, completedStoryBeats: [...bakeryCompleted.completedStoryBeats, domain.BAKERY_COMPLETION_BEAT, "unknown"] });
+assert.deepEqual(bakeryReloaded.completedStoryBeats, [domain.RECYCLING_COMPLETION_BEAT, domain.BAKERY_COMPLETION_BEAT], "reload preserves canonical completion beats exactly once");
+assert.equal(domain.bakeryCompletionPending(bakeryReloaded), false, "Bakery completion cannot replay after reload");
+
+assert.equal(bakeryStory.bakeryCompletionDialogue[0].text, "Nå? Vad tycker du?");
+assert(bakeryStory.bakeryCompletionDialogue.some(line => line.speaker === "Barnet" && line.text === "Vi gjorde det!"));
+assert(bakeryStory.bakeryCompletionDialogue.some(line => line.text.includes("tack vare dig")), "payoff must explicitly credit the child");
+assert(bakeryStory.bakeryCompletionDialogue.some(line => line.speaker === "Linus"), "completion payoff keeps Linus/Henning chemistry");
 
 for (let stage = 1; stage <= 4; stage++) {
   assert.equal(assets.getVisualProductionAsset("bakery", stage), `/assets/village/buildings/bakery/bakery-stage-${stage}.webp`);
 }
 
-console.log("PASS: Recycling stages 3-4 and completion story are gated/idempotent; locked Henning hook is preserved without Bakery reveal; Bakery stage 0 remains absent.");
+console.log("PASS: Recycling and Bakery late-stage reveals/completion beats are gated, child-driven and idempotent; canonical story beats survive reload without replay.");
