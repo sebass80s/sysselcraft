@@ -21,10 +21,13 @@ import {
   commitConstructionReveal,
   recyclingCompletionPending,
   commitRecyclingCompletion,
+  bakeryCompletionPending,
+  commitBakeryCompletion,
   type ConstructionState,
 } from "../game/construction";
 import { constructionPresentation } from "../game/constructionPresentation";
 import { recyclingCompletionDialogue } from "../game/recyclingStory";
+import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { getRecyclingCenterStatus } from "../game/worldProgression";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
@@ -47,6 +50,8 @@ export default function VillagePrototype() {
   const [constructionDialogueIndex, setConstructionDialogueIndex] = useState(0);
   const [recyclingStoryOpen, setRecyclingStoryOpen] = useState(false);
   const [recyclingStoryIndex, setRecyclingStoryIndex] = useState(0);
+  const [bakeryStoryIndex, setBakeryStoryIndex] = useState<number | null>(null);
+  const [bakeryStoryReplayIndex, setBakeryStoryReplayIndex] = useState<number | null>(null);
   const attention = residentAttention(construction);
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
@@ -129,6 +134,8 @@ export default function VillagePrototype() {
         if (recyclingCompletionPending(saved.construction)) {
           setRecyclingStoryIndex(0);
           setRecyclingStoryOpen(true);
+        } else if (bakeryCompletionPending(saved.construction)) {
+          setBakeryStoryIndex(0);
         } else if (saved.construction.revealed.recycling >= 4 && saved.worldFlags.henningArrivalSeen !== true) {
           setHenningStoryIndex(0);
         }
@@ -236,6 +243,7 @@ export default function VillagePrototype() {
       } else await commit();
       setConstructionDialogueId(null); gameRef.current?.setConstructionDialogueOpen(false);
       if (revealId === "recycling:4" && recyclingCompletionPending(next)) { setRecyclingStoryIndex(0); setRecyclingStoryOpen(true); }
+      if (revealId === "bakery:4" && bakeryCompletionPending(next)) { setBakeryStoryIndex(0); }
     } catch {
       setConstructionError("Det gick inte att spara. Försök igen.");
       if (revealId && residentAttention(constructionRef.current)?.id === revealId) setConstructionDialogueId(revealId);
@@ -284,6 +292,29 @@ export default function VillagePrototype() {
       constructionWriteRef.current = false;
       setConstructionBusy(false);
     }
+  }
+
+
+  async function advanceBakeryStory() {
+    if (bakeryStoryIndex === null || constructionWriteRef.current || !latestSaveRef.current) return;
+    const nextIndex = bakeryStoryIndex + 1;
+    if (nextIndex < bakeryCompletionDialogue.length) { setBakeryStoryIndex(nextIndex); return; }
+    const next = commitBakeryCompletion(constructionRef.current);
+    if (next === constructionRef.current) { setBakeryStoryIndex(null); return; }
+    constructionWriteRef.current = true; setConstructionBusy(true); setConstructionError("");
+    try {
+      const snapshot = withConstructionState(latestSaveRef.current, next);
+      await saveSaveState(snapshot, true);
+      latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next); setBakeryStoryIndex(null);
+    } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
+    finally { constructionWriteRef.current = false; setConstructionBusy(false); }
+  }
+
+  function replayBakeryStoryMoment() {
+    setParentMenuOpen(false); setQuestOpen(false); setConstructionDialogueId(null); setBakeryStoryReplayIndex(0);
+  }
+  function advanceBakeryStoryReplay() {
+    setBakeryStoryReplayIndex((index) => index === null ? null : index + 1 < bakeryCompletionDialogue.length ? index + 1 : null);
   }
 
   function advanceDialogue() {
@@ -336,6 +367,10 @@ export default function VillagePrototype() {
 
   const speakerName = dialogueStep?.kind === "line" && dialogueStep.speaker === "Barnet" ? childName || "Barnet" : dialogueStep?.kind === "line" ? dialogueStep.speaker : "";
   const recyclingSpeakerName = recyclingStoryLine?.speaker === "Barnet" ? childName || "Barnet" : recyclingStoryLine?.speaker ?? "";
+  const bakeryStoryLine = bakeryStoryIndex === null ? null : bakeryCompletionDialogue[bakeryStoryIndex];
+  const bakeryStoryReplayLine = bakeryStoryReplayIndex === null ? null : bakeryCompletionDialogue[bakeryStoryReplayIndex];
+  const bakerySpeakerName = bakeryStoryLine?.speaker === "Barnet" ? childName || "Barnet" : bakeryStoryLine?.speaker ?? "";
+  const bakeryReplaySpeakerName = bakeryStoryReplayLine?.speaker === "Barnet" ? childName || "Barnet" : bakeryStoryReplayLine?.speaker ?? "";
   const constructionDialogueLine = attention?.dialogue[constructionDialogueIndex] ?? null;
   const constructionSpeakerName = constructionDialogueLine?.speaker === "Barnet" ? childName || "Barnet" : constructionDialogueLine?.speaker ?? "";
   const linusStoryReplayStep = linusStoryReplayIndex === null ? null : linusIntroDialogue[linusStoryReplayIndex];
@@ -362,6 +397,10 @@ export default function VillagePrototype() {
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
+    {bakeryStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png" alt="" fill priority sizes="100vw" /></div>}
+    {bakeryStoryIndex !== null && bakeryStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Bageriet är färdigt"><span className={`dialogue-speaker henning-story-speaker ${bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker.toLowerCase()}`}>{bakerySpeakerName}</span><p>{bakeryStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBakeryStory()}>{constructionBusy ? "Sparar…" : bakeryStoryIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {bakeryStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png" alt="" fill priority sizes="100vw" /></div>}
+    {bakeryStoryReplayIndex !== null && bakeryStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av färdigt bageri"><span className={`dialogue-speaker henning-story-speaker ${bakeryStoryReplayLine.speaker === "Barnet" ? "child" : bakeryStoryReplayLine.speaker.toLowerCase()}`}>{bakeryReplaySpeakerName}</span><p>{bakeryStoryReplayLine.text}</p><button className="primary-button dialogue-next" onClick={advanceBakeryStoryReplay}>{bakeryStoryReplayIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {henningDialogueOpen && (() => {
       const henningDialogue = [
         { speaker: "Henning", text: "Hej igen! Jag börjar faktiskt känna mig hemma här redan." },
@@ -388,7 +427,7 @@ export default function VillagePrototype() {
     {parentMenuOpen && !recyclingStoryOpen && <div className="parent-menu-backdrop" role="presentation" onMouseDown={() => setParentMenuOpen(false)}><section className="parent-menu-panel" role="dialog" aria-modal="true" aria-labelledby="parent-menu-title" onMouseDown={(event) => event.stopPropagation()}><button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button><span className="parent-menu-kicker">🔐 Vuxenläge</span><h2 id="parent-menu-title">Vuxenläge</h2><p className="parent-menu-note">Här hanteras barnets första lokala uppdrag och kopplingen till familjen. Nya föräldrauppdrag hanteras på förälderns egen enhet.</p>{nativePlatform ? <div className="parent-profile-card"><span>FÖRÄLDRAKONTO</span><strong>Öppnas på förälderns enhet</strong><small>Backend-uppdrag godkänns i SysselCraft föräldraläge på en separat webbläsare/enhet. Barnets app behåller sin anonyma barnsession.</small></div> : <a className="secondary-button" href="/parent/">Öppna föräldraläget</a>}{nativePlatform && <button className="secondary-button" type="button" onClick={() => { setParentMenuOpen(false); setChildPairingOpen(true); }}>Koppla den här barnenheten</button>}
     <div className="parent-profile-card"><span>Barn</span><strong>{childName || "Inte namngivet ännu"}</strong>{dogName && <small>Kompis: 🐶 {dogName}</small>}</div><div className="parent-profile-card"><span>Byutveckling</span><strong>🏗️ {recyclingCenterStatus.title}</strong><small>{recyclingCenterStatus.status}</small></div><div className="parent-section-heading"><h3>Lokal prototyp att godkänna</h3>{pendingCount > 0 && <span>{pendingCount}</span>}</div>
     {questState === "pending" ? <article className="parent-quest-card"><div><span>{makeBedQuest.icon}</span><div><strong>{makeBedQuest.title}</strong><small>Barnet har markerat uppgiften som klar.</small></div></div><div className="parent-quest-actions"><button className="primary-button compact" onClick={approveQuest}>Godkänn</button><button className="secondary-button compact" onClick={needsCompletion}>Behöver kompletteras</button></div></article> : <div className="parent-empty-state">✓ Inget lokalt prototypuppdrag väntar just nu.</div>}
-    {storyMomentReplayControl && <div className="parent-profile-card"><span>STORY MOMENT · testvisning</span><button className="secondary-button" type="button" onClick={replayLinusStoryMoment}>🎬 Spela Linus första möte</button><button className="secondary-button" type="button" onClick={replayHenningStoryMoment}>🥖 Spela Hennings ankomst</button><small>Spelar bara upp scenerna. Din sparning och progression ändras inte.</small></div>}\n    {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span>{[2,3,4].map((stage) => <button key={`recycling-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}{[1,2,3,4].map((stage) => <button key={`bakery-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.bakery !== stage - 1 || construction.earned.bakery >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `bakery:${stage}`))}>TEST: tjäna in Bakery stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {storyMomentReplayControl && <div className="parent-profile-card"><span>STORY MOMENT · testvisning</span><button className="secondary-button" type="button" onClick={replayLinusStoryMoment}>🎬 Spela Linus första möte</button><button className="secondary-button" type="button" onClick={replayHenningStoryMoment}>🥖 Spela Hennings ankomst</button><button className="secondary-button" type="button" onClick={replayBakeryStoryMoment}>🥐 Spela färdigt bageri</button><small>Spelar bara upp scenerna. Din sparning och progression ändras inte.</small></div>}\n    {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span>{[2,3,4].map((stage) => <button key={`recycling-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}{[1,2,3,4].map((stage) => <button key={`bakery-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.bakery !== stage - 1 || construction.earned.bakery >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `bakery:${stage}`))}>TEST: tjäna in Bakery stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {nativeTestControls && <div className="parent-menu-footer"><span>Debugverktyg · aktiverade med ?debug=tools</span><button className="debug-reset-button" type="button" onClick={resetPrototypeSave} disabled={!saveReady || resettingSave || constructionBusy}>↺ Nollställ testsparning</button></div>}</section></div>}
     </div>
     {saveError && <div className="parent-menu-backdrop"><section className="parent-menu-panel" role="alert">
