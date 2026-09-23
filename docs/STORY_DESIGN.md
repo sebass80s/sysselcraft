@@ -199,7 +199,9 @@ For the Bakery arc:
 - The child asks whether **they** can rebuild it; Henning welcomes the partnership.
 - Intermediate construction beats include the child's reactions and Henning's recognition of the child's continued contribution.
 - Henning's personal arc moves from returning mainly to see Linus toward daring to become a baker here again.
-- The finished Bakery is a major emotional payoff and should become an Illustrated Story Moment rather than merely another construction popup.
+- The finished Bakery is a major emotional payoff and becomes an Illustrated Story Moment rather than merely another construction popup.
+- The completion dialogue is locked around the child's ownership of the result: the child says **“Vi gjorde det!”**, Henning agrees, Linus lightly teases Henning, and Henning explicitly tells the child that the Bakery exists because the child made the village feel alive again. The scene closes by turning toward what they will bake first, so completion feels like the beginning of village life rather than a trophy screen.
+- Completion is a persistent construction story beat. It may trigger only after Bakery stage 4 is committed, and once completed it must not replay automatically after restart.
 - The final beat must frame the result as something Henning and the child achieved together, while making clear that the child's actions are what made Henning willing and able to begin again.
 - **Bakery construction cost is locked at 10 real completed contributions total.** A contribution counts only after the authoritative quest lifecycle has reached child turn-in/claim, so approval alone does not advance construction. The exact distribution of those 10 contributions across the four visual Bakery stages remains deliberately **unlocked** until the stages have been physically reviewed on iPhone.
 - Recycling remains the compact onboarding arc at four contributions total. Later major building projects should generally require more sustained effort than Bakery, but their exact costs remain open product decisions.
