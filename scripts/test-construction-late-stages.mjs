@@ -96,7 +96,7 @@ for (let stage = 1; stage <= 4; stage++) {
   assert.equal(attention?.resident, "henning", `Bakery stage ${stage} must be guided by Henning`);
   assert.equal(attention?.presentation, "construction");
   assert(attention.dialogue.some(line => line.speaker === "Barnet"), `Bakery stage ${stage} must involve the child in the story`);
-  assert.equal(constructionPresentation(bakery).stages.bakery, stage - 1, "pending Bakery reveal must keep previous visible stage");
+  assert.equal(constructionPresentation(bakery).stages.bakery, stage === 1 ? undefined : stage - 1, "pending Bakery reveal must keep previous visible stage");
   bakery = domain.commitConstructionReveal(bakery, `bakery:${stage}`);
   assert.equal(bakery.revealed.bakery, stage);
 }
