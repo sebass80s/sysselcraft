@@ -147,8 +147,9 @@ export default function ParentModePage() {
 
     setChildId(nextChildId);
     await loadChildQuests(nextChildId);
+    if (current()) await loadDiamondRewards(nextHouseholdId);
     return current();
-  }, [childId, familyRequests, householdId, loadChildQuests]);
+  }, [childId, familyRequests, householdId, loadChildQuests, loadDiamondRewards]);
 
   useEffect(() => {
     let cancelled = false;
@@ -226,8 +227,6 @@ export default function ParentModePage() {
     const [catalog, redemptions] = await Promise.all([listDiamondRewards(id), listDiamondRedemptions(id)]);
     setDiamondRewards(catalog); setDiamondRedemptions(redemptions);
   }, []);
-
-  useEffect(() => { if (signedIn && householdId) void loadDiamondRewards(householdId).catch(()=>{}); }, [signedIn, householdId, loadDiamondRewards]);
 
   async function submitReward(event: FormEvent) {
     event.preventDefault(); if (!householdId || !rewardTitle.trim() || rewardPrice < 1) return;
@@ -419,6 +418,7 @@ export default function ParentModePage() {
       const nextChildId = cs[0]?.id ?? "";
       setChildId(nextChildId);
       await loadChildQuests(nextChildId);
+      await loadDiamondRewards(nextHouseholdId);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte byta familj.");
     } finally {
