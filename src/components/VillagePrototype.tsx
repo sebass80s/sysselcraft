@@ -185,7 +185,12 @@ export default function VillagePrototype() {
     const snapshot: SaveStateV1 = {
       version: 1, questStates: { makeBed: questState }, completedQuestIds, progression,
       diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, construction,
-      worldFlags: { firstDeliveryComplete: recyclingCenterStage >= 1, recyclingCenterStage, henningArrivalSeen },
+      worldFlags: {
+        ...latestSaveRef.current?.worldFlags,
+        firstDeliveryComplete: recyclingCenterStage >= 1,
+        recyclingCenterStage,
+        henningArrivalSeen,
+      },
     };
     latestSaveRef.current = snapshot;
     void saveSaveState(snapshot, true).then(
