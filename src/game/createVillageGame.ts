@@ -114,6 +114,7 @@ export async function createVillageGame(
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
       this.load.image("henning-painted", "/assets/village/reboot/henning-npc.png");
+      this.load.image("shop-abandoned", "/assets/village/buildings/shop/lanthandel-abandoned.webp");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
       this.load.image("materials-painted", "/assets/village/reboot/materials-runtime.png");
       for (const key of [
@@ -398,6 +399,15 @@ export async function createVillageGame(
       this.worldImage(x, y + 32, key, scale);
     }
 
+    private drawAbandonedShop() {
+      // The old general store is part of the village geography from day one.
+      // Mira later replaces this state with the restored shop after the Bakery arc.
+      this.add.image(1090, 355, "shop-abandoned")
+        .setOrigin(0.5, 0.92)
+        .setDisplaySize(330, 272)
+        .setDepth(1355);
+    }
+
     private drawHouse() {
       this.add.image(150, 250, "family-house")
         .setOrigin(0.5, 1)
@@ -672,6 +682,8 @@ export async function createVillageGame(
         foreground.setMask(mask.createGeometryMask());
         this.events.once("shutdown", () => mask.destroy());
       }
+
+      this.drawAbandonedShop();
 
       // Painted Linus stays dynamic so onboarding remains testable.
       this.linus = this.add.image(290, 445, "linus-painted")
