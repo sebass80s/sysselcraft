@@ -55,6 +55,7 @@ export default function VillagePrototype() {
   const [bakeryStoryReplayIndex, setBakeryStoryReplayIndex] = useState<number | null>(null);
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
+  const [shopOpen, setShopOpen] = useState(false);
   const attention = residentAttention(construction);
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
@@ -149,6 +150,7 @@ export default function VillagePrototype() {
         setChildNameCanSubmit(Boolean(saved.childName.trim()));
         setDogNameCanSubmit(Boolean(saved.dogName.trim()));
         setHenningArrivalSeen(saved.worldFlags.henningArrivalSeen === true);
+        setShopOpen(saved.worldFlags.miraArrivalSeen === true);
         if (recyclingCompletionPending(saved.construction)) {
           setRecyclingStoryIndex(0);
           setRecyclingStoryOpen(true);
@@ -228,6 +230,7 @@ export default function VillagePrototype() {
         },
         onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true); },
         onHenningInteract: () => { setHenningDialogueIndex(0); setHenningDialogueOpen(true); },
+        onShopInteract: () => { gameRef.current?.setConstructionDialogueOpen(true); setShopOpen(true); },
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
@@ -237,6 +240,7 @@ export default function VillagePrototype() {
       handle.setQuestSourceAttention("linus", questSources.linus > 0);
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setHenningVisible(latestSaveRef.current?.worldFlags.henningArrivalSeen === true);
+      handle.setShopOpen(latestSaveRef.current?.worldFlags.miraArrivalSeen === true);
       handle.setIntroComplete(restoredIntroCompleteRef.current);
       handle.setQuestState(restoredQuestStateRef.current);
       handle.setConstruction(constructionPresentation(constructionRef.current));
@@ -347,9 +351,15 @@ export default function VillagePrototype() {
       };
       await saveSaveState(snapshot, true);
       latestSaveRef.current = snapshot;
+      gameRef.current?.setShopOpen(true);
       setMiraStoryIndex(null);
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
+  }
+
+  function closeShop() {
+    setShopOpen(false);
+    gameRef.current?.setConstructionDialogueOpen(false);
   }
 
   function replayMiraStoryMoment() {
@@ -452,6 +462,7 @@ export default function VillagePrototype() {
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
+    {shopOpen && latestSaveRef.current?.worldFlags.miraArrivalSeen === true && <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="shop-title"><button className="close-button" onClick={closeShop} aria-label="Stäng lanthandeln">×</button><span className="quest-kicker">Miras lanthandel</span><h2 id="shop-title">🏪 Välkommen in!</h2><p>Mira har fått liv i den gamla lanthandeln igen.</p><div className="quest-reward">Du har: 💎 {backendWallet?.diamonds ?? diamonds} · 🪙 {backendWallet?.sysselBux ?? sysselBux}</div><p className="pending-message">Varorna packas upp. Nästa steg är att bestämma butikens första riktiga sortiment och priser.</p></div>}
     {miraStoryIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
     {miraStoryIndex !== null && miraStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker.toLowerCase()}`}>{miraSpeakerName}</span><p>{miraStoryText}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceMiraStory()}>{constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {miraStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
