@@ -136,14 +136,21 @@ export function earnConstruction(state: ConstructionState, revealId: string): Co
   if (!reveal || state.revealed[reveal.building] !== reveal.stage - 1 || state.earned[reveal.building] >= reveal.stage) return state;
   return normalizeConstruction({ ...state, earned: { ...state.earned, [reveal.building]: reveal.stage } });
 }
+export function bakeryContributionOffsetForStage(stage: BuildingStage): number {
+  if (stage <= 0) return 0;
+  return BAKERY_CONTRIBUTION_THRESHOLDS[stage - 1];
+}
+
 export function syncBakeryContributionProgress(
   state: ConstructionState,
   authoritativeWorldProgression: number,
   bakeryClaimBaseline: number,
+  bakeryClaimBaselineStage: BuildingStage = 0,
 ): ConstructionState {
   if (state.revealed.bakery >= 4 || state.pending.some(id => id.startsWith("bakery:"))) return state;
-  const contributions = Math.max(0, Math.floor(authoritativeWorldProgression) - Math.floor(bakeryClaimBaseline));
-  const target = deriveBakeryStageFromContributions(contributions);
+  const claimsSinceBaseline = Math.max(0, Math.floor(authoritativeWorldProgression) - Math.floor(bakeryClaimBaseline));
+  const effectiveContributions = bakeryContributionOffsetForStage(bakeryClaimBaselineStage) + claimsSinceBaseline;
+  const target = deriveBakeryStageFromContributions(effectiveContributions);
   const nextStage = (state.revealed.bakery + 1) as BuildingStage;
   return target >= nextStage ? earnConstruction(state, `bakery:${nextStage}`) : state;
 }
