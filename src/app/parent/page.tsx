@@ -83,6 +83,12 @@ export default function ParentModePage() {
     };
   }, [childRequests, familyRequests]);
 
+  const loadDiamondRewards = useCallback(async (id: string) => {
+    if (!id) { setDiamondRewards([]); setDiamondRedemptions([]); return; }
+    const [catalog, redemptions] = await Promise.all([listDiamondRewards(id), listDiamondRedemptions(id)]);
+    setDiamondRewards(catalog); setDiamondRedemptions(redemptions);
+  }, []);
+
   const loadChildQuests = useCallback(async (id: string) => {
     if (!childRequests.isActive()) return false;
     if (!id) {
@@ -221,12 +227,6 @@ export default function ParentModePage() {
       document.removeEventListener("visibilitychange", refreshIfVisible);
     };
   }, [childId, loadChildQuests, signedIn]);
-
-  const loadDiamondRewards = useCallback(async (id: string) => {
-    if (!id) { setDiamondRewards([]); setDiamondRedemptions([]); return; }
-    const [catalog, redemptions] = await Promise.all([listDiamondRewards(id), listDiamondRedemptions(id)]);
-    setDiamondRewards(catalog); setDiamondRedemptions(redemptions);
-  }, []);
 
   async function submitReward(event: FormEvent) {
     event.preventDefault(); if (!householdId || !rewardTitle.trim() || rewardPrice < 1) return;
