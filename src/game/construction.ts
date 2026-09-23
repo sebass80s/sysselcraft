@@ -70,7 +70,8 @@ export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
 }];
 
 export const RECYCLING_COMPLETION_BEAT = "recycling:completion" as const;
-export type ConstructionStoryBeat = typeof RECYCLING_COMPLETION_BEAT;
+export const BAKERY_COMPLETION_BEAT = "bakery:completion" as const;
+export type ConstructionStoryBeat = typeof RECYCLING_COMPLETION_BEAT | typeof BAKERY_COMPLETION_BEAT;
 
 export type ConstructionState = {
   earned: MvpBuildingStages;
@@ -101,9 +102,11 @@ export function normalizeConstruction(value: unknown, legacyVisible: BuildingSta
   }
   // Canonical deterministic IDs repair missing/duplicate pending entries after reload.
   result.pending = CONSTRUCTION_REVEALS.filter(r => result.earned[r.building] >= r.stage && result.revealed[r.building] < r.stage).map(r => r.id);
-  result.completedStoryBeats = Array.isArray(candidate.completedStoryBeats) && candidate.completedStoryBeats.includes(RECYCLING_COMPLETION_BEAT)
-    ? [RECYCLING_COMPLETION_BEAT]
-    : [];
+  const storyBeats = Array.isArray(candidate.completedStoryBeats) ? candidate.completedStoryBeats : [];
+  result.completedStoryBeats = [
+    ...(storyBeats.includes(RECYCLING_COMPLETION_BEAT) ? [RECYCLING_COMPLETION_BEAT] : []),
+    ...(storyBeats.includes(BAKERY_COMPLETION_BEAT) ? [BAKERY_COMPLETION_BEAT] : []),
+  ];
   return result;
 }
 
@@ -132,4 +135,14 @@ export function recyclingCompletionPending(state: ConstructionState): boolean {
 export function commitRecyclingCompletion(state: ConstructionState): ConstructionState {
   if (!recyclingCompletionPending(state)) return state;
   return normalizeConstruction({ ...state, completedStoryBeats: [...state.completedStoryBeats, RECYCLING_COMPLETION_BEAT] });
+}
+
+
+export function bakeryCompletionPending(state: ConstructionState): boolean {
+  return state.revealed.bakery >= 4 && !state.completedStoryBeats.includes(BAKERY_COMPLETION_BEAT);
+}
+
+export function commitBakeryCompletion(state: ConstructionState): ConstructionState {
+  if (!bakeryCompletionPending(state)) return state;
+  return normalizeConstruction({ ...state, completedStoryBeats: [...state.completedStoryBeats, BAKERY_COMPLETION_BEAT] });
 }
