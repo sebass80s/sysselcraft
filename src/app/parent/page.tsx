@@ -25,6 +25,7 @@ import {
 import type { BackendChild, BackendHousehold, BackendQuest } from "@/backend/types";
 import { isParentQuestDraftReady, type ParentQuestDraft } from "@/game/parentMode";
 import { createQuestRequestGuard } from "@/game/questRequestGuard";
+import { archiveDiamondReward, createDiamondReward, listDiamondRedemptions, listDiamondRewards, markDiamondRewardDelivered, refundDiamondReward, updateDiamondReward, type DiamondRewardDefinition, type DiamondRewardRedemption } from "@/backend/diamondRewards";
 
 const emptyDraft: ParentQuestDraft = {
   title: "",
@@ -66,6 +67,12 @@ export default function ParentModePage() {
   const [pairingCode, setPairingCode] = useState("");
   const [familyRequests] = useState(createQuestRequestGuard);
   const [childRequests] = useState(createQuestRequestGuard);
+  const [diamondRewards, setDiamondRewards] = useState<DiamondRewardDefinition[]>([]);
+  const [diamondRedemptions, setDiamondRedemptions] = useState<DiamondRewardRedemption[]>([]);
+  const [rewardTitle, setRewardTitle] = useState("");
+  const [rewardDescription, setRewardDescription] = useState("");
+  const [rewardPrice, setRewardPrice] = useState(1);
+  const [editingRewardId, setEditingRewardId] = useState<string | null>(null);
 
   useEffect(() => {
     familyRequests.activate();
@@ -213,6 +220,34 @@ export default function ParentModePage() {
       document.removeEventListener("visibilitychange", refreshIfVisible);
     };
   }, [childId, loadChildQuests, signedIn]);
+
+  const loadDiamondRewards = useCallback(async (id: string) => {
+    if (!id) { setDiamondRewards([]); setDiamondRedemptions([]); return; }
+    const [catalog, redemptions] = await Promise.all([listDiamondRewards(id), listDiamondRedemptions(id)]);
+    setDiamondRewards(catalog); setDiamondRedemptions(redemptions);
+  }, []);
+
+  useEffect(() => { if (signedIn && householdId) void loadDiamondRewards(householdId).catch(()=>{}); }, [signedIn, householdId, loadDiamondRewards]);
+
+  async function submitReward(event: FormEvent) {
+    event.preventDefault(); if (!householdId || !rewardTitle.trim() || rewardPrice < 1) return;
+    setBusy(true); setMessage("");
+    try {
+      if (editingRewardId) await updateDiamondReward(editingRewardId,rewardTitle,rewardDescription,rewardPrice,true);
+      else await createDiamondReward(householdId,rewardTitle,rewardDescription,rewardPrice);
+      setRewardTitle(""); setRewardDescription(""); setRewardPrice(1); setEditingRewardId(null);
+      await loadDiamondRewards(householdId); setMessage(editingRewardId ? "Belöningen är uppdaterad. 💎" : "Belöningen finns nu hos Mira. 💎");
+    } catch(error){setMessage(error instanceof Error?error.message:"Kunde inte spara belöningen.");} finally{setBusy(false);}
+  }
+  async function toggleReward(reward: DiamondRewardDefinition) {
+    setBusy(true); try { await updateDiamondReward(reward.id,reward.title,reward.description,reward.diamondPrice,!reward.active); await loadDiamondRewards(householdId); } catch(error){setMessage(error instanceof Error?error.message:"Kunde inte ändra belöningen.");} finally{setBusy(false);}
+  }
+  async function removeReward(reward: DiamondRewardDefinition) {
+    if(!window.confirm(`Arkivera "${reward.title}"? Köphistoriken sparas.`))return;
+    setBusy(true); try{await archiveDiamondReward(reward.id);await loadDiamondRewards(householdId);}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte arkivera belöningen.");}finally{setBusy(false);}
+  }
+  async function deliverReward(id:string){setBusy(true);try{await markDiamondRewardDelivered(id);await loadDiamondRewards(householdId);setMessage("Markerad som levererad. 🎁");}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte markera levererad.");}finally{setBusy(false);}}
+  async function refundReward(id:string){if(!window.confirm("Refundera köpet och lämna tillbaka diamanterna?"))return;setBusy(true);try{await refundDiamondReward(id);await loadDiamondRewards(householdId);setMessage("Köpet är refunderat och diamanterna återbetalda.");}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte refundera.");}finally{setBusy(false);}}
 
   async function magicLink(event: FormEvent) {
     event.preventDefault();
@@ -703,6 +738,25 @@ export default function ParentModePage() {
                   </button>
                 )}
               </form>
+            </section>
+
+            <section className="parent-tool-card">
+              <div className="parent-section-heading"><h2>💎 Verkliga belöningar</h2><span>{diamondRewards.filter(r=>r.active).length}</span></div>
+              <p>De här belöningarna kan barnet köpa för diamanter hos Mira.</p>
+              <form className="parent-quest-form" onSubmit={submitReward}>
+                <input required maxLength={80} placeholder="T.ex. Glass" value={rewardTitle} onChange={e=>setRewardTitle(e.target.value)} />
+                <textarea maxLength={240} placeholder="Beskrivning (valfri)" value={rewardDescription} onChange={e=>setRewardDescription(e.target.value)} />
+                <label>Pris 💎<input type="number" min="1" max="100000" value={rewardPrice} onChange={e=>setRewardPrice(Number(e.target.value))}/></label>
+                <button className="primary-button" disabled={busy || !rewardTitle.trim() || rewardPrice<1}>{editingRewardId?"Spara belöning":"Lägg till hos Mira"}</button>
+                {editingRewardId&&<button type="button" className="secondary-button" onClick={()=>{setEditingRewardId(null);setRewardTitle("");setRewardDescription("");setRewardPrice(1)}}>Avbryt</button>}
+              </form>
+              {diamondRewards.map(reward=><article className="parent-quest-card" key={reward.id}><div><span>{reward.active?"💎":"⏸️"}</span><div><strong>{reward.title}</strong><small>{reward.diamondPrice} 💎 · {reward.active?"Tillgänglig hos Mira":"Pausad"}</small></div></div><div className="parent-quest-actions"><button className="secondary-button compact" disabled={busy} onClick={()=>{setEditingRewardId(reward.id);setRewardTitle(reward.title);setRewardDescription(reward.description);setRewardPrice(reward.diamondPrice)}}>Redigera</button><button className="secondary-button compact" disabled={busy} onClick={()=>void toggleReward(reward)}>{reward.active?"Pausa":"Aktivera"}</button><button className="secondary-button compact" disabled={busy} onClick={()=>void removeReward(reward)}>Arkivera</button></div></article>)}
+            </section>
+
+            <section className="parent-tool-card">
+              <div className="parent-section-heading"><h2>🎁 Väntar på leverans</h2><span>{diamondRedemptions.filter(r=>r.status==="pending_delivery").length}</span></div>
+              {diamondRedemptions.filter(r=>r.status==="pending_delivery").map(redemption=>{const owner=children.find(c=>c.id===redemption.childId);return <article className="parent-quest-card" key={redemption.id}><div><span>🎁</span><div><strong>{redemption.title}</strong><small>{owner?.displayName||"Barnet"} · {redemption.diamondPrice} 💎</small></div></div><div className="parent-quest-actions"><button className="primary-button compact" disabled={busy} onClick={()=>void deliverReward(redemption.id)}>Levererad</button><button className="secondary-button compact" disabled={busy} onClick={()=>void refundReward(redemption.id)}>Refundera</button></div></article>})}
+              {!diamondRedemptions.some(r=>r.status==="pending_delivery")&&<div className="parent-empty-state">Inga verkliga belöningar väntar på leverans.</div>}
             </section>
 
             <section className="parent-tool-card">
