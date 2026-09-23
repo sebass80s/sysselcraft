@@ -96,7 +96,7 @@ export async function createVillageGame(
     private residents: Record<string, GameObjects.Image> = {};
     private renderedBuildingStages = "";
     private productionBuildings: GameObjects.Image[] = [];
-    private navigationObstacles: Obstacle[] = [...STATIC_OBSTACLES];
+    private navigationObstacles: Obstacle[] = [...STATIC_OBSTACLES, { type: "rect", x: 1090, y: 355, width: 205, height: 72 }];
     private activeRevealId: string | null = null;
     private playerFacing: Facing = "south";
     private introComplete = false;
@@ -536,7 +536,7 @@ export async function createVillageGame(
       this.renderedBuildingStages = signature;
       this.productionBuildings.forEach(image => image.destroy());
       this.productionBuildings = createVisualProductionBuildings(this, stages);
-      this.navigationObstacles = [...STATIC_OBSTACLES, ...getVisualProductionObstacles(stages)];
+      this.navigationObstacles = [...STATIC_OBSTACLES, { type: "rect", x: 1090, y: 355, width: 205, height: 72 }, ...getVisualProductionObstacles(stages)];
       // A route planned before the reveal may now cross the new footprint.
       this.path = [];
       this.targetMarker?.setVisible(false);
