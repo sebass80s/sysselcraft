@@ -158,7 +158,7 @@ assert.equal(arrival.duration, 1700);
 await arrival.onComplete();
 assert.equal(commits, 1);
 assert.equal(images.filter(i => i.key === "visual-production-recycling-1" && i.active).length, 1);
-assert.equal(scene.navigationObstacles.length, nav.STATIC_OBSTACLES.length + 1);
+assert.equal(scene.navigationObstacles.length, nav.STATIC_OBSTACLES.length + 2, "shop + recycling stage 1 footprints are active");
 assert.equal(delays[0].ms, 900);
 delays[0].callback();
 const departure = tweens.at(-1);
