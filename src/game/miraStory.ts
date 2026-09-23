@@ -1,6 +1,6 @@
 export type MiraStoryLine = { speaker: "Mira" | "Henning" | "Linus" | "Barnet"; text: string };
 
-export const MIRA_ARRIVAL_SCENE_2_START = 11;
+export const MIRA_ARRIVAL_SCENE_2_START = 14;
 
 export const miraArrivalDialogue: readonly MiraStoryLine[] = [
   { speaker: "Mira", text: "Okej. Vem är ansvarig för det här?" },
