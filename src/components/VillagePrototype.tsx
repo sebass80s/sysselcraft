@@ -98,7 +98,6 @@ export default function VillagePrototype() {
   const recyclingCenterStage = construction.revealed.recycling;
   const recyclingCenterStatus = getRecyclingCenterStatus(recyclingCenterStage);
   const nativePlatform = Capacitor.isNativePlatform();
-  const debugToolsEnabled = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("debug") === "tools";
   const nativeTestControls = nativePlatform;
   const storyMomentReplayControl = nativePlatform;
 
