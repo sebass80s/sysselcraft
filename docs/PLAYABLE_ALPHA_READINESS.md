@@ -4,7 +4,7 @@
 
 Audited baseline: `823ea25e9a869fbbfdc585fcb0589d193dd89ddb`, branch `nova/local-construction-snapshot`, canonical workspace `/Users/karoaa/Developer/sysselcraft`. Repository code takes precedence over older handoffs. The pre-existing whitespace-only change in `ios/App/App/config.xml` was preserved and excluded from audit commits.
 
-**Suitable for supervised alpha testing; daily independent use is not yet certified.** The physically proven Recycling slice is a strong baseline, but it does not prove recurring backend quests, auth recovery, update-in-place persistence, or the product boundary between local prototype and backend rewards. No Henning/Bakery decision is needed to run the technical acceptance tests below.
+**SUPERVISED PLAYABLE ALPHA CORE ACCEPTED — 2026-09-23.** The current physical iPhone build has passed the core child loop with preserved save, pairing/backend session, real parent-created quests, submit/reject/resubmit/approve/claim, exactly-once reward behavior in the tested restart scope, current-week weekly recurrence, Recycling, Henning arrival, Bakery stages/completion, and the real backend-claim signal into Bakery pacing. This is not certification for unsupervised daily use. Remaining items below are stress, clock-edge, accessibility/device-coverage, destructive recovery, or future-content work unless explicitly promoted to a blocker.
 
 Evidence labels are literal: FIXED means an implementation change with stated validation; VERIFIED OK means only the stated evidence scope; NEEDS PRODUCT/PHYSICAL TEST is an unresolved acceptance gate, not a claim of a live failure. Backend requests in this audit's browser suite are mocked. No live SQL/RPC was executed, no data reset, no save migration, no iOS regeneration, no native sync or production deployment.
 
@@ -57,12 +57,19 @@ A06 now uses Nova's shared bridge and the existing village pairing panel; the in
 
 Validation: full `npm run verify` and the extended isolated browser suite were run for this follow-up. Browser tests remain optional because Playwright/browser binaries are not repository dependencies. No native sync, physical save access, production deploy, Supabase write, or push. The pre-existing `ios/App/App/config.xml` diff is excluded and its SHA-256 is checked before/after.
 
-## What to prove before daily use
+## Remaining after supervised Alpha core acceptance
 
 1. Preserve the now-proven A16/A17/A19 core paths. Remaining work there is stress/clock-edge acceptance: real delayed-network behavior, pairing expiry/response loss/session loss, and real day/week rollover/offline-next-period materialization. Do not destructively test reinstall/session loss against the preserved alpha save without explicit authorization.
 2. A20 update-in-place and the active Recycling regression are already physically proven. Repeat only after changes that touch persistence/native packaging/world restoration.
 3. A21/A22 are decided for supervised alpha: clean child-facing default UI, opt-in debug tools, and no automatic merge between backend rewards/progression and the legacy local world. Revisit before independent daily use.
 4. A23 landscape UX/long text/live-session smoothness and A24 active Recycling rendering are physically accepted. Remaining accessibility/device-size checks and future Bakery/Clinic/Henning/Sol art are later acceptance work.
+
+
+## Alpha closeout classification — 2026-09-23
+
+**No known blocker remains for the current supervised playable Alpha core.** The remaining acceptance debt is intentionally outside that core: A16 delayed/out-of-order and aggressive-concurrency stress; A17 pairing expiry, response/network loss, anonymous-session loss and reinstall; A19 real day/week-boundary and missed/offline-period materialization; A20 storage-pressure/failure stress and backup/export policy; A23 VoiceOver, large-text, other-device safe-area and formal long-duration profiling; A24 future Clinic/Sol and other not-yet-active art. Destructive reinstall/session-loss testing remains explicitly deferred so the preserved physical Alpha save is not sacrificed for stress coverage.
+
+The Bakery production probe used for physical 0/10 → 1/10 acceptance has been removed after serving its purpose. Its production claim bridge and automated threshold coverage remain. The 2026-09-23 autosave fix that preserves unrelated `worldFlags` remains part of the product code because it fixes a real persistence defect discovered during that acceptance run.
 
 ## Validation and reproduction
 
