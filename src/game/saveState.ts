@@ -49,6 +49,7 @@ export type SaveStateV1 = {
     firstDeliveryComplete: boolean;
     recyclingCenterStage: RecyclingCenterStage;
     henningArrivalSeen?: boolean;
+    bakeryClaimBaseline?: number;
   };
 };
 
@@ -71,6 +72,7 @@ export function createDefaultSaveState(): SaveStateV1 {
       firstDeliveryComplete: false,
       recyclingCenterStage: 0,
       henningArrivalSeen: false,
+      bakeryClaimBaseline: undefined,
     },
   };
 }
@@ -190,6 +192,7 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       firstDeliveryComplete: recyclingCenterStage >= 1,
       recyclingCenterStage,
       henningArrivalSeen: candidate.worldFlags?.henningArrivalSeen === true,
+      bakeryClaimBaseline: typeof candidate.worldFlags?.bakeryClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.bakeryClaimBaseline) && candidate.worldFlags.bakeryClaimBaseline >= 0 ? candidate.worldFlags.bakeryClaimBaseline : undefined,
     },
   };
 }
