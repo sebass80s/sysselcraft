@@ -96,7 +96,7 @@ export async function createVillageGame(
     private residents: Record<string, GameObjects.Image> = {};
     private renderedBuildingStages = "";
     private productionBuildings: GameObjects.Image[] = [];
-    private navigationObstacles: Obstacle[] = [...STATIC_OBSTACLES, { type: "rect", x: 1090, y: 355, width: 205, height: 72 }];
+    private navigationObstacles: Obstacle[] = [...STATIC_OBSTACLES, { type: "rect", x: 1130, y: 355, width: 205, height: 72 }];
     private activeRevealId: string | null = null;
     private playerFacing: Facing = "south";
     private introComplete = false;
@@ -402,7 +402,7 @@ export async function createVillageGame(
     private drawAbandonedShop() {
       // The old general store is part of the village geography from day one.
       // Mira later replaces this state with the restored shop after the Bakery arc.
-      this.add.image(1090, 355, "shop-abandoned")
+      this.add.image(1130, 355, "shop-abandoned")
         .setOrigin(0.5, 0.92)
         .setDisplaySize(330, 272)
         .setDepth(1355);
@@ -536,7 +536,7 @@ export async function createVillageGame(
       this.renderedBuildingStages = signature;
       this.productionBuildings.forEach(image => image.destroy());
       this.productionBuildings = createVisualProductionBuildings(this, stages);
-      this.navigationObstacles = [...STATIC_OBSTACLES, { type: "rect", x: 1090, y: 355, width: 205, height: 72 }, ...getVisualProductionObstacles(stages)];
+      this.navigationObstacles = [...STATIC_OBSTACLES, { type: "rect", x: 1130, y: 355, width: 205, height: 72 }, ...getVisualProductionObstacles(stages)];
       // A route planned before the reveal may now cross the new footprint.
       this.path = [];
       this.targetMarker?.setVisible(false);
