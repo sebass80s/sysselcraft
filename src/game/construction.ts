@@ -7,42 +7,64 @@ export type ConstructionReveal = {
   stage: Exclude<BuildingStage, 0>;
   resident: string;
   residentName: string;
-  dialogue: string;
+  dialogue: readonly { speaker: string; text: string }[];
   presentation: "delivery" | "construction";
 };
 
 // Authored reveal content, not progression thresholds. More residents/buildings can use this queue.
 export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
   id: "recycling:1", building: "recycling", stage: 1, resident: "linus", residentName: "Linus",
-  dialogue: "Du, kom hit ett slag. Det har hänt något här som jag tror att du vill se.",
+  dialogue: [{ speaker: "Linus", text: "Du, kom hit ett slag. Det har hänt något här som jag tror att du vill se." }],
   presentation: "delivery",
 }, {
   id: "recycling:2", building: "recycling", stage: 2, resident: "linus", residentName: "Linus",
-  dialogue: "Du, kom hit igen. Det har hänt något här sedan sist.",
+  dialogue: [{ speaker: "Linus", text: "Du, kom hit igen. Det har hänt något här sedan sist." }],
   presentation: "construction",
 }, {
   id: "recycling:3", building: "recycling", stage: 3, resident: "linus", residentName: "Linus",
-  dialogue: "Jag tror du vill komma och se vad som har hänt här.",
+  dialogue: [{ speaker: "Linus", text: "Jag tror du vill komma och se vad som har hänt här." }],
   presentation: "construction",
 }, {
   id: "recycling:4", building: "recycling", stage: 4, resident: "linus", residentName: "Linus",
-  dialogue: "Kom hit när du har en stund. Det finns något här som du borde få se själv.",
+  dialogue: [{ speaker: "Linus", text: "Kom hit när du har en stund. Det finns något här som du borde få se själv." }],
   presentation: "construction",
 }, {
   id: "bakery:1", building: "bakery", stage: 1, resident: "henning", residentName: "Henning",
-  dialogue: "Nu vet jag vad som saknas. Kom, jag vill visa dig en plats.",
+  dialogue: [
+    { speaker: "Henning", text: "Nu vet jag vad som saknas." },
+    { speaker: "Barnet", text: "Vadå?" },
+    { speaker: "Henning", text: "Ett bageri. Det fanns ett här en gång. Jag trodde inte att det skulle gå att få liv i det igen." },
+    { speaker: "Henning", text: "Men efter att ha sett vad du har gjort med den här byn... börjar jag tro att jag hade fel." },
+    { speaker: "Barnet", text: "Kan vi bygga upp det igen?" },
+    { speaker: "Henning", text: "Det var precis det jag hoppades att du skulle säga." },
+  ],
   presentation: "construction",
 }, {
   id: "bakery:2", building: "bakery", stage: 2, resident: "henning", residentName: "Henning",
-  dialogue: "Kom och titta! Det börjar faktiskt likna något nu.",
+  dialogue: [
+    { speaker: "Henning", text: "Kom och titta!" },
+    { speaker: "Barnet", text: "Det börjar ju se ut som ett bageri!" },
+    { speaker: "Henning", text: "Ja. Det händer saker när du är i farten." },
+    { speaker: "Henning", text: "Fortsätter vi så här kanske jag snart måste leta fram mina gamla recept." },
+  ],
   presentation: "construction",
 }, {
   id: "bakery:3", building: "bakery", stage: 3, resident: "henning", residentName: "Henning",
-  dialogue: "Vi är nära nu. Det är bara det sista som ska falla på plats.",
+  dialogue: [
+    { speaker: "Henning", text: "Kom, jag måste visa dig en sak." },
+    { speaker: "Barnet", text: "Wow! Det är nästan färdigt!" },
+    { speaker: "Henning", text: "Jag vet. När jag kom hit tänkte jag mest att det skulle vara roligt att träffa Linus igen." },
+    { speaker: "Henning", text: "Nu står jag här och planerar ett bageri." },
+    { speaker: "Barnet", text: "Är det mitt fel?" },
+    { speaker: "Henning", text: "Helt och hållet. Och jag är väldigt glad för det." },
+  ],
   presentation: "construction",
 }, {
   id: "bakery:4", building: "bakery", stage: 4, resident: "henning", residentName: "Henning",
-  dialogue: "Kom hit. Det här vill jag att du ska få se först.",
+  dialogue: [
+    { speaker: "Henning", text: "Kom hit. Det här vill jag att du ska få se först." },
+    { speaker: "Henning", text: "Vi är nästan framme nu. En sista kraftansträngning, sedan kan vi öppna dörrarna." },
+  ],
   presentation: "construction",
 }];
 
