@@ -121,4 +121,6 @@ for (let stage = 1; stage <= 4; stage++) {
   assert.equal(assets.getVisualProductionAsset("bakery", stage), `/assets/village/buildings/bakery/bakery-stage-${stage}.webp`);
 }
 
+assert.deepEqual(construction.BAKERY_CONTRIBUTION_THRESHOLDS, [1, 3, 7, 10], "Bakery cumulative contribution thresholds must remain 1-3-7-10");
+assert.deepEqual([0,1,2,3,6,7,9,10,99].map(construction.deriveBakeryStageFromContributions), [0,1,1,2,2,3,3,4,4], "Bakery stage pacing must remain 1-2-4-3");
 console.log("PASS: Recycling and Bakery late-stage reveals/completion beats are gated, child-driven and idempotent; canonical story beats survive reload without replay.");
