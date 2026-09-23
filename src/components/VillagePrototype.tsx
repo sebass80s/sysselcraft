@@ -30,6 +30,8 @@ import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
 import { listDiamondRewards, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
+import { getPairedChildId } from "../backend/childDeviceBinding";
+import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { getRecyclingCenterStatus } from "../game/worldProgression";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
@@ -237,7 +239,7 @@ export default function VillagePrototype() {
           gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopMessage("");
           void (async () => {
             try {
-              const childId = await getBoundChildId();
+              const childId = await getPairedChildId();
               if (!childId) throw new Error("Barnets enhet är inte kopplad.");
               const client = getSupabaseBrowserClient();
               const { data: child, error } = await client.from("children").select("household_id").eq("id", childId).single();
