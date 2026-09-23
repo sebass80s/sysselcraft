@@ -18,7 +18,8 @@ import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
 import { publishBackendWallet } from "@/game/backendWalletBridge";
 import { createQuestRequestGuard } from "@/game/questRequestGuard";
-import { loadSaveState } from "@/game/saveState";
+import { loadSaveState, saveSaveState, withConstructionState } from "@/game/saveState";
+import { syncBakeryContributionProgress } from "@/game/construction";
 import {
   claimQuestTurnIn,
   loadPendingQuestTurnIns,
@@ -100,6 +101,25 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       setQuests(nextQuests);
       setGameState(nextGameState);
       setLocalRecyclingCenterStage(localSave?.worldFlags.recyclingCenterStage ?? 0);
+
+      if (localSave && nextGameState) {
+        let snapshot = localSave;
+        let baseline = snapshot.worldFlags.bakeryClaimBaseline;
+        const bakeryStarted = snapshot.construction.revealed.bakery > 0 || snapshot.construction.earned.bakery > 0;
+        if (baseline === undefined && bakeryStarted) {
+          baseline = Math.max(0, Math.floor(nextGameState.progression.worldProgression));
+          snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, bakeryClaimBaseline: baseline } };
+          await saveSaveState(snapshot, true);
+        }
+        if (baseline !== undefined) {
+          const nextConstruction = syncBakeryContributionProgress(snapshot.construction, nextGameState.progression.worldProgression, baseline);
+          if (nextConstruction !== snapshot.construction) {
+            snapshot = withConstructionState(snapshot, nextConstruction);
+            await saveSaveState(snapshot, true);
+            window.dispatchEvent(new CustomEvent("sysselcraft:construction-save-changed"));
+          }
+        }
+      }
       return true;
     } catch (error) {
       if (!current()) return false;
