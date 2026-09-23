@@ -249,7 +249,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   }, []);
 
   useEffect(() => {
-    publishBackendWallet(gameState ? { diamonds: gameState.diamonds, sysselBux: gameState.sysselBux } : null);
+    publishBackendWallet(gameState ? { diamonds: gameState.diamonds, sysselBux: gameState.sysselBux, worldProgression: gameState.progression.worldProgression } : null);
   }, [gameState]);
 
   useEffect(() => {
