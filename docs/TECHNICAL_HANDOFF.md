@@ -344,3 +344,15 @@ Delivery/runtime policy now has three explicit boundaries:
 3. **Child debug surface:** ordinary native use hides stage-earning test controls, reconciliation diagnostics and destructive local reset. Those tools remain opt-in behind native `?debug=tools`. Pairing remains a legitimate device-management action. The legacy built-in `Bädda sängen` approval remains temporarily available in Vuxenläge so the local onboarding loop is not stranded.
 
 Physical evidence on the current iPhone additionally covers update-in-place persistence, weekly current-period recurrence idempotency, safe same-child re-pairing/reuse rejection, landscape quest-panel interaction/long content, active Recycling WebP rendering and practical session smoothness. See `PLAYABLE_ALPHA_READINESS.md` for exact scope and remaining stress gaps.
+
+
+## Mira general store runtime checkpoint — 2026-09-23
+
+- The lanthandel remains a permanent navigation landmark at world x=1130, y=355 with the existing 205×72 footprint.
+- Runtime preloads both `lanthandel-abandoned.webp` and `lanthandel-open.webp`.
+- `worldFlags.miraArrivalSeen` is the persisted authority for the visual state: false/absent = abandoned, true = restored/open.
+- Completing Mira's two-image arrival Story Moment persists the flag first and then swaps the live Phaser texture to the restored shop.
+- On restore, `VillagePrototype` passes the persisted flag into `VillageGameHandle.setShopOpen`.
+- The restored shop is directly tappable. The avatar pathfinds to the shop approach before `onShopInteract` opens the shop panel. The abandoned shop is not interactable as a store.
+- The first shop panel currently exposes the authoritative backend wallet when available but intentionally performs no spending yet.
+- Do not implement spending by mutating local `diamonds`/`sysselBux`. Parent-created quest rewards are backend-authoritative; real purchases require a backend-authoritative atomic purchase path plus a locked inventory/pricing decision.
