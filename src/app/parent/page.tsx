@@ -73,6 +73,7 @@ export default function ParentModePage() {
   const [rewardDescription, setRewardDescription] = useState("");
   const [rewardPrice, setRewardPrice] = useState(1);
   const [editingRewardId, setEditingRewardId] = useState<string | null>(null);
+  const [adminTab, setAdminTab] = useState<"quests" | "rewards">("quests");
 
   useEffect(() => {
     familyRequests.activate();
@@ -580,6 +581,12 @@ export default function ParentModePage() {
               </button>
             </section>
 
+            <nav className="parent-tool-card parent-reward-row" aria-label="Föräldrahantering">
+              <button type="button" className={adminTab === "quests" ? "primary-button" : "secondary-button"} onClick={() => setAdminTab("quests")}>📋 Sysslor</button>
+              <button type="button" className={adminTab === "rewards" ? "primary-button" : "secondary-button"} onClick={() => setAdminTab("rewards")}>💎 Belöningar</button>
+            </nav>
+
+            {adminTab === "quests" && <>
             <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Väntar på dig</h2>
@@ -740,6 +747,9 @@ export default function ParentModePage() {
               </form>
             </section>
 
+            </>}
+
+            {adminTab === "rewards" && <>
             <section className="parent-tool-card">
               <div className="parent-section-heading"><h2>💎 Verkliga belöningar</h2><span>{diamondRewards.filter(r=>r.active).length}</span></div>
               <p>De här belöningarna kan barnet köpa för diamanter hos Mira.</p>
@@ -758,6 +768,8 @@ export default function ParentModePage() {
               {diamondRedemptions.filter(r=>r.status==="pending_delivery").map(redemption=>{const owner=children.find(c=>c.id===redemption.childId);return <article className="parent-quest-card" key={redemption.id}><div><span>🎁</span><div><strong>{redemption.title}</strong><small>{owner?.displayName||"Barnet"} · {redemption.diamondPrice} 💎</small></div></div><div className="parent-quest-actions"><button className="primary-button compact" disabled={busy} onClick={()=>void deliverReward(redemption.id)}>Levererad</button><button className="secondary-button compact" disabled={busy} onClick={()=>void refundReward(redemption.id)}>Refundera</button></div></article>})}
               {!diamondRedemptions.some(r=>r.status==="pending_delivery")&&<div className="parent-empty-state">Inga verkliga belöningar väntar på leverans.</div>}
             </section>
+
+            </>}
 
             <section className="parent-tool-card">
               <h2>{child?.displayName || "Barn"}</h2>
@@ -782,6 +794,7 @@ export default function ParentModePage() {
               )}
             </section>
 
+            {adminTab === "quests" && <>
             <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Aktiva uppdrag</h2>
@@ -843,6 +856,7 @@ export default function ParentModePage() {
                 <div className="parent-empty-state">Historiken fylls på när uppdrag godkänns.</div>
               )}
             </section>
+            </>}
           </>
         )}
 
