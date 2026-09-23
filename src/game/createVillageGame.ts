@@ -190,6 +190,10 @@ export async function createVillageGame(
           return;
         }
         if (this.henning?.visible && this.henning.getBounds().contains(pointer.worldX, pointer.worldY)) {
+          if (requestedConstruction.attention?.resident === "henning") {
+            this.approachAttentionResident();
+            return;
+          }
           this.henningInteractionPending = true;
           this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 370, y: 468 }, this.navigationObstacles);
           const target = this.path.at(-1);
