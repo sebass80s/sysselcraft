@@ -208,9 +208,25 @@ For the Bakery arc:
 
 This principle should carry forward to later resident projects, including Sol's clinic, while each resident retains a distinct motivation and story.
 
+## 8.2 Mira and the general store — LOCKED 2026-09-23
+
+The village economy gains its first spending place **after the Bakery and before Sol/Clinic**.
+
+Locked causal order:
+
+**Recycling → Henning → Bakery → Mira + lanthandeln → Sol + Clinic**
+
+The old lanthandel is physically present in the opening village from day one as a badly ruined, closed landmark. It is not a four-stage construction project. After the Bakery is completed, the smell of Henning's fresh bread draws Mira into the village. Her arrival uses two Illustrated Story Moments: first she arrives at the Bakery while the ruined lanthandel is only subtly visible in the background; then Mira discovers the old shop with the child and dog.
+
+Mira is self-made, practically skilled, charming and unafraid of physical work. She sees the ruined building as something repairable, promises to restore it herself, and the shop transformation is deliberately a **single-step state change: abandoned → restored/open**. This contrasts with the child's long shared Bakery construction arc and shows that the village now has enough momentum for residents to create change of their own.
+
+Once Mira's arrival story is persistently completed, the world swaps the ruined lanthandel asset for the restored/open asset. The restored building is a real world interaction: the child walks to it and enters the shop interaction rather than opening a detached global shop button.
+
+The shop is the canonical sink for quest-earned SysselBux and Diamonds. Backend wallet authority remains unchanged. Exact first inventory, prices, ownership/inventory representation and purchase transaction are product decisions that must be locked before real spending is enabled; the client must never silently deduct the separate local prototype wallet.
+
 ## 9. Second new resident: Sol
 
-**Sol arrives after Henning.** She is a young, newly graduated female doctor, conceptually mid-to-late twenties.
+**Sol arrives after Henning and after Mira has reopened the lanthandel.** She is a young, newly graduated female doctor, conceptually mid-to-late twenties.
 
 - Competent.
 - Warm.
