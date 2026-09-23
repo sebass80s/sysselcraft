@@ -105,14 +105,20 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       if (localSave && nextGameState) {
         let snapshot = localSave;
         let baseline = snapshot.worldFlags.bakeryClaimBaseline;
+        let baselineStage = snapshot.worldFlags.bakeryClaimBaselineStage;
         const bakeryStarted = snapshot.construction.revealed.bakery > 0 || snapshot.construction.earned.bakery > 0;
         if (baseline === undefined && bakeryStarted) {
           baseline = Math.max(0, Math.floor(nextGameState.progression.worldProgression));
-          snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, bakeryClaimBaseline: baseline } };
+          baselineStage = snapshot.construction.revealed.bakery;
+          snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, bakeryClaimBaseline: baseline, bakeryClaimBaselineStage: baselineStage } };
+          await saveSaveState(snapshot, true);
+        } else if (baseline !== undefined && baselineStage === undefined) {
+          baselineStage = snapshot.construction.revealed.bakery;
+          snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, bakeryClaimBaselineStage: baselineStage } };
           await saveSaveState(snapshot, true);
         }
         if (baseline !== undefined) {
-          const nextConstruction = syncBakeryContributionProgress(snapshot.construction, nextGameState.progression.worldProgression, baseline);
+          const nextConstruction = syncBakeryContributionProgress(snapshot.construction, nextGameState.progression.worldProgression, baseline, baselineStage ?? 0);
           if (nextConstruction !== snapshot.construction) {
             snapshot = withConstructionState(snapshot, nextConstruction);
             await saveSaveState(snapshot, true);
