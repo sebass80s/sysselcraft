@@ -77,3 +77,19 @@ Until then the migration phase remains **observe-only**.
 The read-only `?debug=reconciliation` diagnostic now captures the local/backend economy, category progression, first-delivery flag, Recycling stage and backend `worldProgression`. Unknown backend world flags are treated as uncertainty, never as a clean match or an ahead/behind result. This is deliberate: absence of a flag is not evidence that the two ledgers agree.
 
 The next authority decision still requires the physical baseline described above. Do not turn these diagnostics into a write path merely because the values happen to match on one device.
+
+
+## Diamond IRL reward ownership — LOCKED 2026-09-23
+
+Diamond rewards sold by Mira represent **real-world rewards fulfilled by a parent**. All parents in a household share one reward catalog. Parents may create/edit/pause/archive rewards. The child does not request purchase approval: if the bound child has enough Diamonds, purchase is immediately authoritative.
+
+Supabase owns the entire transaction:
+- `diamond_reward_definitions`: household catalog.
+- `diamond_reward_redemptions`: immutable purchase snapshot plus delivery/refund lifecycle.
+- `child_game_state.diamonds`: authoritative balance.
+
+`purchase_diamond_reward` locks the reward, verifies the bound child belongs to the same household, conditionally debits the authoritative wallet, snapshots title/description/price and creates a `pending_delivery` redemption in one transaction. No client-side debit is valid.
+
+A parent later marks a pending redemption `delivered`, or refunds it. Refund is allowed only while pending and atomically restores the snapshotted Diamond price. Delivered rewards cannot be refunded by the normal flow. Historical purchases retain their snapshotted name/description/price even if the catalog definition changes or is archived.
+
+SysselBux digital purchases are a separate future ownership path and must not be conflated with Diamond IRL redemptions.
