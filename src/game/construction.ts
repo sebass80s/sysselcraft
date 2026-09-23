@@ -63,7 +63,8 @@ export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
   id: "bakery:4", building: "bakery", stage: 4, resident: "henning", residentName: "Henning",
   dialogue: [
     { speaker: "Henning", text: "Kom hit. Det här vill jag att du ska få se först." },
-    { speaker: "Henning", text: "Vi är nästan framme nu. En sista kraftansträngning, sedan kan vi öppna dörrarna." },
+    { speaker: "Barnet", text: "Är vi nästan klara nu?" },
+    { speaker: "Henning", text: "Nästan. En sista kraftansträngning, sedan kan vi öppna dörrarna. Det här har vi byggt tillsammans." },
   ],
   presentation: "construction",
 }];
