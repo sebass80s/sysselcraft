@@ -28,6 +28,22 @@ export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
   id: "recycling:4", building: "recycling", stage: 4, resident: "linus", residentName: "Linus",
   dialogue: "Kom hit när du har en stund. Det finns något här som du borde få se själv.",
   presentation: "construction",
+}, {
+  id: "bakery:1", building: "bakery", stage: 1, resident: "henning", residentName: "Henning",
+  dialogue: "Nu vet jag vad som saknas. Kom, jag vill visa dig en plats.",
+  presentation: "construction",
+}, {
+  id: "bakery:2", building: "bakery", stage: 2, resident: "henning", residentName: "Henning",
+  dialogue: "Kom och titta! Det börjar faktiskt likna något nu.",
+  presentation: "construction",
+}, {
+  id: "bakery:3", building: "bakery", stage: 3, resident: "henning", residentName: "Henning",
+  dialogue: "Vi är nära nu. Det är bara det sista som ska falla på plats.",
+  presentation: "construction",
+}, {
+  id: "bakery:4", building: "bakery", stage: 4, resident: "henning", residentName: "Henning",
+  dialogue: "Kom hit. Det här vill jag att du ska få se först.",
+  presentation: "construction",
 }];
 
 export const RECYCLING_COMPLETION_BEAT = "recycling:completion" as const;
