@@ -29,6 +29,7 @@ import { constructionPresentation } from "../game/constructionPresentation";
 import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
+import { listDiamondRewards, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { getRecyclingCenterStatus } from "../game/worldProgression";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
@@ -56,6 +57,9 @@ export default function VillagePrototype() {
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
+  const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
+  const [shopBusy, setShopBusy] = useState(false);
+  const [shopMessage, setShopMessage] = useState("");
   const attention = residentAttention(construction);
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
@@ -229,7 +233,19 @@ export default function VillagePrototype() {
         },
         onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true); },
         onHenningInteract: () => { setHenningDialogueIndex(0); setHenningDialogueOpen(true); },
-        onShopInteract: () => { gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); },
+        onShopInteract: () => {
+          gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopMessage("");
+          void (async () => {
+            try {
+              const childId = await getBoundChildId();
+              if (!childId) throw new Error("Barnets enhet är inte kopplad.");
+              const client = getSupabaseBrowserClient();
+              const { data: child, error } = await client.from("children").select("household_id").eq("id", childId).single();
+              if (error) throw error;
+              setShopRewards((await listDiamondRewards(child.household_id)).filter((reward) => reward.active));
+            } catch (error) { setShopMessage(error instanceof Error ? error.message : "Kunde inte hämta Miras varor."); }
+          })();
+        },
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
@@ -356,6 +372,20 @@ export default function VillagePrototype() {
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
 
+  async function buyDiamondReward(reward: DiamondRewardDefinition) {
+    if (shopBusy) return;
+    if (!window.confirm(`Köpa "${reward.title}" för ${reward.diamondPrice} 💎?`)) return;
+    setShopBusy(true); setShopMessage("");
+    try {
+      await purchaseDiamondReward(reward.id);
+      window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
+      setShopMessage(`Köpt! Be en vuxen om ${reward.title}. 🎁`);
+    } catch (error) {
+      const text = error instanceof Error ? error.message : "Köpet misslyckades.";
+      setShopMessage(text.includes("insufficient diamonds") ? "Du har inte tillräckligt många diamanter." : text);
+    } finally { setShopBusy(false); }
+  }
+
   function closeShop() {
     setShopPanelOpen(false);
     gameRef.current?.setConstructionDialogueOpen(false);
@@ -461,7 +491,7 @@ export default function VillagePrototype() {
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
-    {shopPanelOpen && <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="shop-title"><button className="close-button" onClick={closeShop} aria-label="Stäng lanthandeln">×</button><span className="quest-kicker">Miras lanthandel</span><h2 id="shop-title">🏪 Välkommen in!</h2><p>Mira har fått liv i den gamla lanthandeln igen.</p><div className="quest-reward">Du har: 💎 {backendWallet?.diamonds ?? diamonds} · 🪙 {backendWallet?.sysselBux ?? sysselBux}</div><p className="pending-message">Varorna packas upp. Nästa steg är att bestämma butikens första riktiga sortiment och priser.</p></div>}
+    {shopPanelOpen && <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="shop-title"><button className="close-button" onClick={closeShop} aria-label="Stäng lanthandeln">×</button><span className="quest-kicker">Miras lanthandel</span><h2 id="shop-title">🏪 Välkommen in!</h2><p>Mira har fått liv i den gamla lanthandeln igen.</p><div className="quest-reward">Du har: 💎 {backendWallet?.diamonds ?? diamonds} · 🪙 {backendWallet?.sysselBux ?? sysselBux}</div><div className="quest-list">{shopRewards.map((reward) => <article className="quest-card compact" key={reward.id}><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}<button className="primary-button" disabled={shopBusy || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>💎 {reward.diamondPrice} · Köp</button></article>)}</div>{shopRewards.length === 0 && !shopMessage && <p className="pending-message">Mira har inga diamantbelöningar på hyllan just nu.</p>}{shopMessage && <p className="pending-message" role="status">{shopMessage}</p>}</div>}
     {miraStoryIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
     {miraStoryIndex !== null && miraStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker.toLowerCase()}`}>{miraSpeakerName}</span><p>{miraStoryText}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceMiraStory()}>{constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {miraStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
