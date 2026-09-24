@@ -275,7 +275,12 @@ export default function VillagePrototype() {
         onLinusInteract: () => {
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solArrivalSeen && flags.solTourShopSeen && !flags.solTourLinusSeen) { setSolTourStoryStop("linus"); setSolTourStoryIndex(0); return; }
-          setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true);
+          // The naming/dog sequence is onboarding only. Once intro is complete, Linus must
+          // never restart it when tapped again.
+          if (restoredIntroCompleteRef.current) return;
+          setDialogueIndex(0);
+          setDialogueOpen(true);
+          setLinusStoryMomentOpen(true);
         },
         onHenningInteract: () => {
           const flags = latestSaveRef.current?.worldFlags;
