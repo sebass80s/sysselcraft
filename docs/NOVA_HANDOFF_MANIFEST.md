@@ -205,3 +205,41 @@ Henning's first arrival staging is now a product decision, not open design space
 The scene must then imply the causal chain without exposing mechanics: the child's real-world quest work made the village visibly start living again; Linus noticed and contacted Henning; Henning saw/believed that something had truly changed and chose to move there. The child should feel that their actions helped bring a person back to the village, but nobody says chores summon residents or explains hidden progression.
 
 Henning is introduced as a person first. Bakery follows from Henning and must not pre-exist as the thing that summoned him. Exact Bakery quest count/thresholds remain open.
+
+
+## 2026-09-24 handoff checkpoint — Diamond rewards + parent identity
+
+This section supersedes stale next-step language above.
+
+The supervised playable Alpha core is accepted. Current work is the Mira/Diamond reward slice and its parent-auth acceptance boundary.
+
+Diamond reward backend/UI is implemented on the active branch: parent-defined IRL reward catalog, authoritative atomic Diamond purchase, redemption snapshots, parent fulfillment/delivery, refund/idempotency protections, child Mira shop integration and immediate authoritative wallet refresh. Live rollback-based transactional and authorization tests passed. Physical iPhone acceptance is still pending and must not be claimed until the real parent -> child purchase -> parent fulfillment -> restart journey passes.
+
+Parent web authentication has been changed from Magic-Link-only UI to email + password login for existing users, with an authenticated "set password" path that updates the SAME Supabase Auth user. No account creation or household migration was added.
+
+Critical live-auth finding: there are two distinct Supabase Auth users. The household-bearing parent is the **Yahoo-address account**, user id `64743174-4901-4c7e-ab00-d8aa061b16f5`. The Gmail-address account is a separate user, id `639c5ef7-7f40-4425-a4b0-cc12f9c6579f`, with no household. This fully explains why Gmail login showed "Skapa familj". Do NOT create a family for Gmail, merge users, copy household data or change ownership as a workaround.
+
+Supabase auth logs prove the Yahoo identity successfully logged into the older working preview and accessed the existing household/child; that browser session is still valuable and Kalle should keep it logged in until the new auth path is accepted. Current acceptance is temporarily blocked by Supabase email rate limiting after repeated Magic Link attempts. When the limit clears, test the **Yahoo address** on the newer preview. If the existing household appears, set a password while authenticated as that Yahoo identity, then verify password logout/login preserves the same household.
+
+Known newer preview used for auth acceptance:
+`https://sysselcraft-ek6vjkflg-yourmovegame.vercel.app/parent`
+
+Known older working Yahoo-session preview:
+`https://sysselcraft-pgia4qp65-yourmovegame.vercel.app/parent`
+
+Do not assume either deployment contains a later commit without verifying Vercel/repo reality first.
+
+Latest verified remote branch HEAD at this handoff is `fd67b7e6c40cf43f861feba5d66971bb1fdb244e` before these documentation updates. The parent password-auth implementation itself was green in GitHub Actions at `f7e90eb4d130d2adc38b6450b4a53d56896c9790`; later branch commits only updated canonical design/handoff documentation.
+
+### Immediate next sequence
+
+1. Verify branch HEAD and CI before doing anything.
+2. Keep the old Yahoo-authenticated preview tab alive; do not log it out unnecessarily.
+3. After Supabase email rate limit clears, authenticate the newer preview with the Yahoo address, never Gmail.
+4. Confirm existing family/child/quests appear. If they do not, stop and inspect identity before any mutation.
+5. While authenticated as the correct Yahoo user, set a password using the new parent UI.
+6. Verify logout -> email/password login returns to the same household.
+7. Create test Diamond rewards (e.g. 1 💎 and 5 💎), then perform the real paired-iPhone purchase/fulfillment acceptance journey.
+8. Only after that journey passes may Diamond rewards be marked physically accepted.
+
+Image-generation work remains paused by Kalle. Do not generate new SysselCraft images unless he explicitly reopens it.
