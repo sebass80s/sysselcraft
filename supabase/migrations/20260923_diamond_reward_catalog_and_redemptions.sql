@@ -44,6 +44,13 @@ create index if not exists diamond_reward_redemptions_child_idx on public.diamon
 alter table public.diamond_reward_definitions enable row level security;
 alter table public.diamond_reward_redemptions enable row level security;
 
+-- Explicit Data API grants. Keep authoritative writes behind RPCs.
+-- Do not grant anon: child devices use authenticated anonymous Auth sessions.
+revoke all on table public.diamond_reward_definitions from anon, authenticated;
+revoke all on table public.diamond_reward_redemptions from anon, authenticated;
+grant select on table public.diamond_reward_definitions to authenticated;
+grant select on table public.diamond_reward_redemptions to authenticated;
+
 create policy "parents manage diamond rewards" on public.diamond_reward_definitions for all to authenticated
 using (public.is_household_parent(household_id)) with check (public.is_household_parent(household_id));
 create policy "bound child reads active diamond rewards" on public.diamond_reward_definitions for select to authenticated
