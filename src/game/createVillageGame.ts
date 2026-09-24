@@ -509,7 +509,27 @@ export async function createVillageGame(
       if (!target || !target.visible) return;
       this.solTourMarker = this.add.text(target.x, target.y - 145, "☀️", {
         fontSize: "28px", backgroundColor: "#fff2cf", padding: { x: 8, y: 5 },
-      }).setOrigin(0.5).setDepth(3100);
+      }).setOrigin(0.5).setDepth(3100).setInteractive({ useHandCursor: true });
+      this.solTourMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen || requestedSolTourStop !== stop) return;
+        if (stop === "shop") {
+          this.shopInteractionPending = true;
+          this.path = findPath(this.player, { x: 1130, y: 425 }, this.navigationObstacles);
+        } else if (stop === "bakery") {
+          this.henningInteractionPending = true;
+          this.path = findPath(this.player, REQUIRED_APPROACHES.henning, this.navigationObstacles);
+        } else if (stop === "linus") {
+          this.linusInteractionPending = true;
+          this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
+        } else {
+          this.solInteractionPending = true;
+          this.path = findPath(this.player, { x: 835, y: 485 }, this.navigationObstacles);
+        }
+        const targetPoint = this.path.at(-1);
+        if (targetPoint) this.targetMarker?.setPosition(targetPoint.x, targetPoint.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
       this.tweens.add({ targets: this.solTourMarker, y: "-=5", duration: 900, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
