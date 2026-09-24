@@ -377,3 +377,21 @@ Parent authentication on the active branch has moved from Magic-Link-only login 
 During preview acceptance, two distinct existing Supabase Auth identities were identified. The household-bearing parent identity is the Yahoo-address account; a Gmail-address login is a separate user with no household and therefore correctly renders the create-family state. Do **not** create a replacement family, merge users, copy household state, or overwrite ownership to work around this. The correct acceptance path is to authenticate the existing Yahoo parent identity and set/use a password on that same user. A still-valid older preview session has independently demonstrated that the Yahoo identity can read the existing household/child and execute parent quest RPCs.
 
 Physical Diamond acceptance remains blocked only by completing the parent login/password transition and then running the real parent -> iPhone -> fulfillment journey above. Do not mark Diamond rewards physically accepted until that journey passes.
+
+
+## Parent-auth identity acceptance boundary — 2026-09-24
+
+Live Supabase auth/edge logs resolved the preview-login anomaly without database mutation. Two separate Auth identities exist:
+
+- household-bearing parent: Yahoo-address identity, `64743174-4901-4c7e-ab00-d8aa061b16f5`;
+- separate Gmail identity: `639c5ef7-7f40-4425-a4b0-cc12f9c6579f`, no household.
+
+The Yahoo identity has independently proven access to the existing household/child and successful parent quest RPCs from the older working preview. The Gmail identity correctly receives an empty household result and therefore renders the create-family state. This is an identity-selection issue, not evidence of lost household data.
+
+Hard safety rule: never create a replacement family for the Gmail identity, merge/copy users, rewrite household ownership, or otherwise repair data merely to bypass this login mismatch. Preserve the existing Yahoo identity.
+
+The branch implements password auth by calling `signInWithPassword` for signed-out parents and `updateUser({ password })` for an already authenticated parent. Therefore the safe migration is: authenticate the existing Yahoo user once, set a password on that same user, then prove logout/password-login returns to the same household.
+
+At handoff, repeated email attempts have triggered Supabase's email rate limit, so this acceptance step is temporarily externally blocked. Kalle still has an older working Yahoo-authenticated preview session and should keep it alive. Once the rate limit clears, test Yahoo on the newer preview, verify the existing family before setting the password, and then continue the Diamond physical journey.
+
+Do not infer deployment contents from URL age. Verify the Vercel deployment/commit before claiming a preview contains the password-auth code.
