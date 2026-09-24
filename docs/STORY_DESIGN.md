@@ -491,3 +491,15 @@ Canonical Clinic pacing from that baseline:
 Each approved backend quest may advance unified world progression exactly once under the existing Quest System v2 idempotency rules. Clinic stage derivation must therefore be based on authoritative progression delta from the stored baseline and must never award, replay or fabricate quest progress client-side.
 
 Short Sol milestone reactions are preferred over additional large cutscenes during construction. Current intended emotional beats are: stage 1, the building needs work; stage 2, Sol can begin to picture the Clinic; stage 3, opening is close; stage 4, completion celebration. Exact dialogue copy may be polished during implementation without changing the progression thresholds.
+
+
+## TODO — resident idle dialogue pools (locked 2026-09-24)
+
+Parked for a later village-life polish pass.
+
+- Tapping an established resident when no higher-priority story interaction is active should open a lightweight idle conversation.
+- Give each resident their own expandable dialogue pool and distinct voice.
+- Randomize among eligible idle dialogue entries and avoid immediate repetition where practical.
+- Pools must have **no fixed content-size limit**; they are designed to grow freely over time.
+- Support progression/world-state-specific entries so residents can react to construction, new arrivals, completed buildings and other village changes.
+- Story beats, quest interactions and other authored progression interactions always take priority over idle dialogue.
