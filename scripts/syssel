@@ -28,13 +28,28 @@ fi
 print "⬇️  Hämtar senaste Nova-koden..."
 git pull --ff-only
 
-print "🔨 Bygger webbappen..."
+print "🔨 Bygger webbappen från ren exportkatalog..."
+rm -rf out
 npm run build
+
+after="$(git rev-parse --short HEAD)"
+marker="sysselcraft-build-$after"
+print -r -- "$marker" > out/syssel-build.txt
 
 print "📱 Synkar befintligt iOS-projekt..."
 npx cap sync ios
 
-after="$(git rev-parse --short HEAD)"
+[[ -f ios/App/App/public/syssel-build.txt ]] || fail "Capacitor kopierade inte build-markören till iOS."
+copied_marker="$(cat ios/App/App/public/syssel-build.txt)"
+[[ "$copied_marker" == "$marker" ]] || fail "iOS innehåller fel webbuild: $copied_marker (väntade $marker)"
+
+# Xcode treats Capacitor's public directory as one folder resource. Force the
+# next Run to rebuild/copy that resource instead of reusing an older app bundle.
+touch ios/App/App/public
+print "🧹 Rensar endast Xcodes build-produkter (installerad app och save lämnas orörda)..."
+xcrun xcodebuild -project ios/App/App.xcodeproj -scheme App clean >/dev/null
+
+print "🔎 Verifierad iOS-webbuild: $marker"
 print ""
 print "✅ SysselCraft är synkad och byggd @ $after"
 print "▶️  Öppna ios/App/App.xcodeproj och tryck Run. Appen har inte raderats eller resetats."
