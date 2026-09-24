@@ -3,7 +3,8 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import {
   getBackendAuthState,
-  sendParentMagicLink,
+  setParentPassword,
+  signInParentWithPassword,
   signOutBackendSession,
   subscribeBackendAuth,
 } from "@/backend/auth";
@@ -52,6 +53,9 @@ function recurrenceLabel(definition: ParentQuestDefinition) {
 export default function ParentModePage() {
   const [signedIn, setSignedIn] = useState(false);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [showPasswordSetup, setShowPasswordSetup] = useState(false);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [households, setHouseholds] = useState<BackendHousehold[]>([]);
@@ -249,15 +253,30 @@ export default function ParentModePage() {
   async function deliverReward(id:string){setBusy(true);try{await markDiamondRewardDelivered(id);await loadDiamondRewards(householdId);setMessage("Markerad som levererad. 🎁");}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte markera levererad.");}finally{setBusy(false);}}
   async function refundReward(id:string){if(!window.confirm("Refundera köpet och lämna tillbaka diamanterna?"))return;setBusy(true);try{await refundDiamondReward(id);await loadDiamondRewards(householdId);setMessage("Köpet är refunderat och diamanterna återbetalda.");}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte refundera.");}finally{setBusy(false);}}
 
-  async function magicLink(event: FormEvent) {
+  async function passwordLogin(event: FormEvent) {
     event.preventDefault();
     setBusy(true);
     setMessage("");
     try {
-      await sendParentMagicLink(email, `${window.location.origin}/parent`);
-      setMessage("Kolla mejlen. Vi har skickat en inloggningslänk.");
+      await signInParentWithPassword(email, password);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Inloggningen misslyckades.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function savePassword(event: FormEvent) {
+    event.preventDefault();
+    setBusy(true);
+    setMessage("");
+    try {
+      await setParentPassword(newPassword);
+      setNewPassword("");
+      setShowPasswordSetup(false);
+      setMessage("Lösenordet är sparat. Nästa gång kan du logga in utan mejllänk. 🔐");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte spara lösenordet.");
     } finally {
       setBusy(false);
     }
@@ -487,17 +506,26 @@ export default function ParentModePage() {
         <section className="parent-login">
           <span className="parent-menu-kicker">🔐 Föräldraläge</span>
           <h1>Välkommen vuxen</h1>
-          <p>Logga in med din mejladress. Du får en säker engångslänk.</p>
-          <form onSubmit={magicLink}>
+          <p>Logga in med mejladress och lösenord.</p>
+          <form onSubmit={passwordLogin}>
             <input
               type="email"
+              autoComplete="email"
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="din@mejl.se"
             />
+            <input
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Lösenord"
+            />
             <button className="primary-button" disabled={busy}>
-              Skicka inloggningslänk
+              Logga in
             </button>
           </form>
           {message && <p>{message}</p>}
@@ -524,14 +552,42 @@ export default function ParentModePage() {
             <h1>Föräldraläge</h1>
             <p>Skapa uppdrag och följ vad som händer i byn.</p>
           </div>
-          <button
-            className="secondary-button compact"
-            disabled={busy}
-            onClick={() => void logout()}
-          >
-            Logga ut
-          </button>
+          <div>
+            <button
+              className="secondary-button compact"
+              disabled={busy}
+              onClick={() => setShowPasswordSetup((visible) => !visible)}
+            >
+              {showPasswordSetup ? "Avbryt lösenord" : "Sätt lösenord"}
+            </button>
+            <button
+              className="secondary-button compact"
+              disabled={busy}
+              onClick={() => void logout()}
+            >
+              Logga ut
+            </button>
+          </div>
         </header>
+
+        {showPasswordSetup && (
+          <section className="parent-tool-card">
+            <h2>Sätt lösenord</h2>
+            <p>Detta sparas av Supabase Auth på ditt befintliga föräldrakonto. Minst 8 tecken.</p>
+            <form onSubmit={savePassword}>
+              <input
+                type="password"
+                autoComplete="new-password"
+                minLength={8}
+                required
+                value={newPassword}
+                onChange={(event) => setNewPassword(event.target.value)}
+                placeholder="Nytt lösenord"
+              />
+              <button className="primary-button" disabled={busy}>Spara lösenord</button>
+            </form>
+          </section>
+        )}
 
         {households.length === 0 ? (
           <section className="parent-tool-card">
