@@ -57,6 +57,7 @@ export type SaveStateV1 = {
     solTourShopSeen?: boolean;
     solTourLinusSeen?: boolean;
     solChoseToStay?: boolean;
+    clinicProgressionBaseline?: number;
     bakeryClaimBaseline?: number;
     bakeryClaimBaselineStage?: 0 | 1 | 2 | 3 | 4;
   };
@@ -89,6 +90,7 @@ export function createDefaultSaveState(): SaveStateV1 {
       solTourShopSeen: false,
       solTourLinusSeen: false,
       solChoseToStay: false,
+      clinicProgressionBaseline: undefined,
       bakeryClaimBaseline: undefined,
       bakeryClaimBaselineStage: undefined,
     },
@@ -218,6 +220,7 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       solTourShopSeen: candidate.worldFlags?.solTourShopSeen === true,
       solTourLinusSeen: candidate.worldFlags?.solTourLinusSeen === true,
       solChoseToStay: candidate.worldFlags?.solChoseToStay === true,
+      clinicProgressionBaseline: typeof candidate.worldFlags?.clinicProgressionBaseline === "number" && Number.isInteger(candidate.worldFlags.clinicProgressionBaseline) && candidate.worldFlags.clinicProgressionBaseline >= 0 ? candidate.worldFlags.clinicProgressionBaseline : undefined,
       bakeryClaimBaseline: typeof candidate.worldFlags?.bakeryClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.bakeryClaimBaseline) && candidate.worldFlags.bakeryClaimBaseline >= 0 ? candidate.worldFlags.bakeryClaimBaseline : undefined,
       bakeryClaimBaselineStage: [0, 1, 2, 3, 4].includes(candidate.worldFlags?.bakeryClaimBaselineStage as number) ? candidate.worldFlags?.bakeryClaimBaselineStage : undefined,
     },
