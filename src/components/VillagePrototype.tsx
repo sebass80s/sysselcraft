@@ -59,6 +59,7 @@ export default function VillagePrototype() {
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
+  const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
   const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
   const [shopBusy, setShopBusy] = useState(false);
   const [shopMessage, setShopMessage] = useState("");
@@ -236,7 +237,7 @@ export default function VillagePrototype() {
         onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true); },
         onHenningInteract: () => { setHenningDialogueIndex(0); setHenningDialogueOpen(true); },
         onShopInteract: () => {
-          gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopMessage("");
+          gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopCurrency("diamonds"); setShopMessage("");
           void (async () => {
             try {
               const childId = await getPairedChildId();
@@ -493,7 +494,30 @@ export default function VillagePrototype() {
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><h1>Sysselcraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button><p>Första spelbara kärnloopen</p></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
-    {shopPanelOpen && <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="shop-title"><button className="close-button" onClick={closeShop} aria-label="Stäng lanthandeln">×</button><span className="quest-kicker">Miras lanthandel</span><h2 id="shop-title">🏪 Välkommen in!</h2><p>Mira har fått liv i den gamla lanthandeln igen.</p><div className="quest-reward">Du har: 💎 {backendWallet?.diamonds ?? diamonds} · 🪙 {backendWallet?.sysselBux ?? sysselBux}</div><div className="quest-list">{shopRewards.map((reward) => <article className="quest-card compact" key={reward.id}><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}<button className="primary-button" disabled={shopBusy || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>💎 {reward.diamondPrice} · Köp</button></article>)}</div>{shopRewards.length === 0 && !shopMessage && <p className="pending-message">Mira har inga diamantbelöningar på hyllan just nu.</p>}{shopMessage && <p className="pending-message" role="status">{shopMessage}</p>}</div>}
+    {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
+      <div className="mira-shop-backdrop" aria-hidden="true"><Image src="/assets/village/story-moments/mira-discovers-lanthandel.png" alt="" fill sizes="100vw" /></div>
+      <div className="mira-shop-shell">
+        <header className="mira-shop-header">
+          <div><span className="quest-kicker">Miras lanthandel</span><h2 id="shop-title">Välkommen in!</h2><p>Här kan du använda det du tjänat ihop i SysselCraft.</p></div>
+          <div className="mira-shop-wallet" aria-label="Dina pengar"><strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div>
+          <button className="mira-shop-close" onClick={closeShop} aria-label="Gå tillbaka till byn">← Till byn</button>
+        </header>
+        <div className="mira-shop-body">
+          <aside className="mira-shop-mira"><div className="mira-shop-portrait" aria-hidden="true">👩‍🔧</div><strong>Mira</strong><p>{shopCurrency === "diamonds" ? "Något du vill unna dig på riktigt? Kika här." : "Här hamnar saker till din värld. Jag fyller hyllorna snart!"}</p></aside>
+          <section className="mira-shop-counter">
+            <nav className="mira-shop-tabs" aria-label="Välj butikshylla">
+              <button type="button" className={shopCurrency === "diamonds" ? "active" : ""} onClick={() => { setShopCurrency("diamonds"); setShopMessage(""); }}>💎 Verkliga belöningar</button>
+              <button type="button" className={shopCurrency === "sysselbux" ? "active" : ""} onClick={() => { setShopCurrency("sysselbux"); setShopMessage(""); }}>🪙 Saker till min värld</button>
+            </nav>
+            {shopCurrency === "diamonds" ? <>
+              <div className="mira-shop-grid">{shopRewards.map((reward) => <article className="mira-shop-item" key={reward.id}><div><span>🎁</span><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}</div><button className="primary-button" disabled={shopBusy || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>💎 {reward.diamondPrice} · Köp</button></article>)}</div>
+              {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Mira har inga diamantbelöningar på hyllan just nu.</p>}
+            </> : <div className="mira-shop-coming"><span>🪙</span><h3>SysselBux-hyllan görs i ordning</h3><p>Här kommer saker som hör hemma i SysselCraft. Vi bestämmer sortimentet innan Mira börjar sälja något.</p></div>}
+            {shopMessage && <p className="pending-message mira-shop-message" role="status">{shopMessage}</p>}
+          </section>
+        </div>
+      </div>
+    </div>}
     {miraStoryIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
     {miraStoryIndex !== null && miraStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker.toLowerCase()}`}>{miraSpeakerName}</span><p>{miraStoryText}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceMiraStory()}>{constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {miraStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
