@@ -854,6 +854,12 @@ export default function ParentModePage() {
               {!diamondRedemptions.some(r=>r.status==="pending_delivery")&&<div className="parent-empty-state">Inga verkliga belöningar väntar på leverans.</div>}
             </section>
 
+            <section className="parent-tool-card">
+              <div className="parent-section-heading"><h2>📜 Belöningshistorik</h2><span>{diamondRedemptions.filter(r=>r.status!=="pending_delivery").length}</span></div>
+              {diamondRedemptions.filter(r=>r.status!=="pending_delivery").slice(0,20).map(redemption=>{const owner=children.find(c=>c.id===redemption.childId);return <article className="parent-quest-card" key={redemption.id}><div><span>{redemption.status==="delivered"?"✅":"↩️"}</span><div><strong>{redemption.title}</strong><small>{owner?.displayName||"Barnet"} · {redemption.diamondPrice} 💎 · {redemption.status==="delivered"?"Levererad":"Refunderad"}</small></div></div></article>})}
+              {!diamondRedemptions.some(r=>r.status!=="pending_delivery")&&<div className="parent-empty-state">Historiken fylls på när en belöning levereras eller refunderas.</div>}
+            </section>
+
             </>}
 
             <section className="parent-tool-card">
