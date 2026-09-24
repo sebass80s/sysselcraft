@@ -412,3 +412,12 @@ Mira's restored lanthandel supports two deliberately different reward economies:
 The parent owns the Diamond catalog: create, edit, pause/archive and fulfill reward entries. The child sees currently active entries in Mira's physical shop. A Diamond purchase is an authoritative transaction: verify balance, deduct exactly once and create a redemption carrying a snapshot of the purchased reward/price. Fulfillment happens later in the parent surface and redemption history remains retained. Never implement Diamond spending as a local client-side subtraction.
 
 This split preserves the fiction cleanly: SysselBux deepen the game world; Diamonds let effort in the game become a parent-agreed real-world privilege or treat. Mira is the in-world bridge for both, without making her the authority over the household economy.
+
+
+## 16. Current Mira/Diamond implementation boundary — 2026-09-24
+
+The locked economy semantics above are now represented by the current implementation for the Diamond side: parents can define IRL rewards and the child can purchase active rewards through Mira's physical shop using backend-authoritative Diamonds. Redemption fulfillment remains a parent responsibility and history is retained.
+
+This is implementation status, not a change to the fiction or economy design. The first concrete SysselBux catalog remains deliberately open design space. Do not invent SysselBux stock merely to make the shop look fuller.
+
+The Diamond slice has passed backend transactional/authorization testing but is not yet physically accepted end-to-end on the paired iPhone. Do not narratively or technically treat the reward shop as a completed player-facing milestone until that real journey passes.
