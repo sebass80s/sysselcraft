@@ -106,45 +106,49 @@ main { min-height: 100dvh; }
 
 
 /* Mira's lanthandel is a place in the world, not a floating quest card. */
-.mira-shop { position: fixed; inset: 0; z-index: 35; overflow: hidden; background: #5b4027; color: #332719; }
-.mira-shop-scene { object-fit: cover; object-position: center; }
-.mira-shop-ui { position: relative; z-index: 1; width: 100%; height: 100dvh; padding: max(.65rem,env(safe-area-inset-top)) max(.75rem,env(safe-area-inset-right)) max(.65rem,env(safe-area-inset-bottom)) max(.75rem,env(safe-area-inset-left)); pointer-events: none; }
-.mira-shop-close,.mira-shop-wallet,.mira-shop-counter { pointer-events: auto; }
-.mira-shop-close { position: absolute; top: max(.7rem,env(safe-area-inset-top)); left: max(.8rem,env(safe-area-inset-left)); border: 3px solid #5c351b; border-radius: 14px; padding: .58rem .85rem; font-weight: 900; cursor: pointer; color: #fff7df; background: linear-gradient(#9b6335,#704323); box-shadow: 0 4px 0 #432816,0 7px 18px rgba(45,25,10,.25); text-shadow: 0 1px 1px #432816; }
-.mira-shop-wallet { position: absolute; top: max(.7rem,env(safe-area-inset-top)); right: max(.8rem,env(safe-area-inset-right)); display: flex; gap: .5rem; }
-.mira-shop-wallet strong { min-width: 76px; text-align: center; white-space: nowrap; padding: .5rem .72rem; border: 3px solid #5c351b; border-radius: 14px; background: linear-gradient(#9b6335,#704323); color: #fff7df; box-shadow: 0 4px 0 #432816,0 7px 18px rgba(45,25,10,.25); text-shadow: 0 1px 1px #432816; }
-.mira-shop-counter { position: absolute; left: 50%; bottom: max(.65rem,env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(850px,76vw); max-height: 44vh; padding: .55rem; border: 4px solid #5a351c; border-radius: 18px; background: linear-gradient(#9a6237,#704522); box-shadow: 0 6px 0 #402514,0 12px 30px rgba(45,25,10,.32); }
-.mira-shop-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
-.mira-shop-tabs button { border: 2px solid #684020; border-radius: 11px; padding: .62rem .5rem; font-weight: 900; cursor: pointer; background: #ead39f; color: #4d311c; box-shadow: inset 0 1px rgba(255,255,255,.5); }
-.mira-shop-tabs button.active { background: #5f8b48; border-color: #365c30; color: #fff; box-shadow: inset 0 1px rgba(255,255,255,.22); }
-.mira-shop-shelf { margin-top: .5rem; max-height: 27vh; overflow: auto; border-radius: 12px; }
-.mira-shop-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(155px,1fr)); gap: .5rem; }
-.mira-shop-item { min-height: 122px; padding: .65rem; border: 2px solid #b68b51; border-radius: 12px; background: rgba(255,246,219,.96); display: flex; flex-direction: column; justify-content: space-between; gap: .5rem; box-shadow: inset 0 0 0 2px rgba(255,255,255,.35); }
-.mira-shop-item span { display: block; font-size: 1.35rem; }
-.mira-shop-item strong { display: block; font-size: .95rem; }
-.mira-shop-item p { margin: .15rem 0 0; color: #65513a; font-size: .78rem; line-height: 1.25; }
-.mira-shop-item .primary-button { padding: .48rem .6rem; }
-.mira-shop-coming,.mira-shop-empty { min-height: 110px; margin: 0; display: grid; place-items: center; align-content: center; text-align: center; padding: .75rem; border: 2px dashed #b68b51; border-radius: 12px; background: rgba(255,246,219,.96); }
-.mira-shop-coming span { font-size: 1.8rem; }
-.mira-shop-coming h3 { margin: .2rem 0 .1rem; }
-.mira-shop-coming p { margin: 0; font-size: .82rem; }
-.mira-shop-message { margin: .5rem 0 0; }
-.sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+.mira-shop { position:fixed; inset:0; z-index:35; overflow:hidden; background:#5b4027; color:#332719; }
+.mira-shop-scene { object-fit:cover; object-position:center; }
+.mira-shop-ui { position:relative; z-index:1; width:100%; height:100dvh; padding:max(.65rem,env(safe-area-inset-top)) max(.75rem,env(safe-area-inset-right)) max(.65rem,env(safe-area-inset-bottom)) max(.75rem,env(safe-area-inset-left)); pointer-events:none; }
+.mira-shop-close,.mira-shop-wallet,.mira-shop-counter { pointer-events:auto; }
+.mira-shop-close { position:absolute; top:max(.7rem,env(safe-area-inset-top)); left:max(.8rem,env(safe-area-inset-left)); border:3px solid #5c351b; border-radius:14px; padding:.58rem .85rem; font-weight:900; cursor:pointer; color:#fff7df; background:rgba(126,77,40,.88); box-shadow:0 4px 0 rgba(67,40,22,.9),0 7px 18px rgba(45,25,10,.25); text-shadow:0 1px 1px #432816; backdrop-filter:blur(5px); }
+.mira-shop-wallet { position:absolute; top:max(.7rem,env(safe-area-inset-top)); right:max(.8rem,env(safe-area-inset-right)); display:flex; gap:.5rem; }
+.mira-shop-wallet strong { min-width:76px; text-align:center; white-space:nowrap; padding:.5rem .72rem; border:3px solid #5c351b; border-radius:14px; background:rgba(126,77,40,.88); color:#fff7df; box-shadow:0 4px 0 rgba(67,40,22,.9),0 7px 18px rgba(45,25,10,.25); text-shadow:0 1px 1px #432816; backdrop-filter:blur(5px); }
+
+/* The counter is now an overlay over the shop, leaving Mira's face clear while
+   giving the inventory most of the lower/right side of the screen. */
+.mira-shop-counter { position:absolute; right:max(.8rem,env(safe-area-inset-right)); bottom:max(.65rem,env(safe-area-inset-bottom)); width:min(980px,64vw); height:min(68vh,560px); padding:.55rem; border:3px solid rgba(90,53,28,.9); border-radius:18px; background:rgba(112,69,34,.74); box-shadow:0 8px 30px rgba(45,25,10,.3); backdrop-filter:blur(7px); display:grid; grid-template-rows:auto minmax(0,1fr); }
+.mira-shop-tabs { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+.mira-shop-tabs button { border:2px solid rgba(104,64,32,.92); border-radius:11px; padding:.62rem .5rem; font-weight:900; cursor:pointer; background:rgba(234,211,159,.88); color:#4d311c; box-shadow:inset 0 1px rgba(255,255,255,.5); backdrop-filter:blur(4px); }
+.mira-shop-tabs button.active { background:rgba(79,128,61,.9); border-color:#365c30; color:#fff; }
+.mira-shop-shelf { margin-top:.5rem; min-height:0; overflow:auto; border-radius:12px; }
+.mira-shop-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:.5rem; }
+.mira-shop-item { min-height:122px; padding:.65rem; border:2px solid rgba(182,139,81,.9); border-radius:12px; background:rgba(255,246,219,.86); display:flex; flex-direction:column; justify-content:space-between; gap:.5rem; box-shadow:inset 0 0 0 2px rgba(255,255,255,.25); backdrop-filter:blur(5px); }
+.mira-shop-item span { display:block; font-size:1.35rem; }
+.mira-shop-item strong { display:block; font-size:.95rem; }
+.mira-shop-item p { margin:.15rem 0 0; color:#65513a; font-size:.78rem; line-height:1.25; }
+.mira-shop-item .primary-button { padding:.48rem .6rem; }
+.mira-shop-coming,.mira-shop-empty { min-height:100%; margin:0; display:grid; place-items:center; align-content:center; text-align:center; padding:.75rem; border:2px dashed rgba(182,139,81,.9); border-radius:12px; background:rgba(255,246,219,.82); backdrop-filter:blur(5px); }
+.mira-shop-coming span { font-size:1.8rem; }
+.mira-shop-coming h3 { margin:.2rem 0 .1rem; }
+.mira-shop-coming p { margin:0; font-size:.82rem; }
+.mira-shop-message { margin:.5rem 0 0; }
+.sr-only { position:absolute !important; width:1px !important; height:1px !important; padding:0 !important; margin:-1px !important; overflow:hidden !important; clip:rect(0,0,0,0) !important; white-space:nowrap !important; border:0 !important; }
 
 @media (max-width:760px) and (orientation:landscape) {
-  .mira-shop-close { font-size: .75rem; padding: .42rem .6rem; }
-  .mira-shop-wallet strong { min-width: 58px; font-size: .75rem; padding: .4rem .5rem; }
-  .mira-shop-counter { width: min(690px,78vw); max-height: 43vh; padding: .4rem; }
-  .mira-shop-tabs button { padding: .45rem .35rem; font-size: .72rem; }
-  .mira-shop-shelf { max-height: 25vh; }
-  .mira-shop-item { min-height: 92px; padding: .45rem; }
-  .mira-shop-item span { font-size: 1rem; }
-  .mira-shop-item strong { font-size: .8rem; }
-  .mira-shop-item p { font-size: .66rem; }
-  .mira-shop-item .primary-button { padding: .35rem .45rem; font-size: .7rem; }
-  .mira-shop-coming,.mira-shop-empty { min-height: 76px; padding: .45rem; font-size: .72rem; }
-  .mira-shop-coming span { font-size: 1.2rem; }
-  .mira-shop-coming h3 { font-size: .8rem; }
-  .mira-shop-coming p { font-size: .68rem; }
+  .mira-shop-close { font-size:.75rem; padding:.42rem .6rem; }
+  .mira-shop-wallet strong { min-width:58px; font-size:.75rem; padding:.4rem .5rem; }
+  .mira-shop-counter { right:max(.5rem,env(safe-area-inset-right)); bottom:max(.45rem,env(safe-area-inset-bottom)); width:65vw; height:72vh; padding:.4rem; }
+  .mira-shop-tabs button { padding:.45rem .35rem; font-size:.72rem; }
+  .mira-shop-shelf { margin-top:.35rem; }
+  .mira-shop-grid { grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); }
+  .mira-shop-item { min-height:105px; padding:.45rem; }
+  .mira-shop-item span { font-size:1rem; }
+  .mira-shop-item strong { font-size:.8rem; }
+  .mira-shop-item p { font-size:.66rem; }
+  .mira-shop-item .primary-button { padding:.35rem .45rem; font-size:.7rem; }
+  .mira-shop-coming,.mira-shop-empty { min-height:100%; padding:.45rem; font-size:.72rem; }
+  .mira-shop-coming span { font-size:1.2rem; }
+  .mira-shop-coming h3 { font-size:.8rem; }
+  .mira-shop-coming p { font-size:.68rem; }
 }
 
