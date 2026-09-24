@@ -743,7 +743,7 @@ export async function createVillageGame(
       // Tapping her uses the same shop interaction as tapping the building.
       this.mira = this.add.image(1000, 430, "mira-painted")
         .setOrigin(0.5, 0.96)
-        .setScale(0.115)
+        .setScale(0.13)
         .setDepth(1430)
         .setVisible(requestedShopOpen)
         .setInteractive({ useHandCursor: true, pixelPerfect: false });
