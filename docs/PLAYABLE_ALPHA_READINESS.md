@@ -217,3 +217,10 @@ A UI-only acceptance gap was found during this run: delivered/refunded redemptio
 **PASS on physical iPhone.** Mira's dedicated lanthandel view was physically exercised with the preserved save and a real Diamond reward purchase (`Glass`) completed successfully from the redesigned shop presentation. Mira is also now present as a physical resident outside the lanthandel and routes into the existing shop interaction.
 
 Runtime character QA required two corrections before acceptance: the first Mira artwork used overly realistic/tall anatomy relative to the established cast, and an intermediate integration forced the corrected artwork through a non-proportional width × height display box. The accepted implementation uses the compact SysselCraft runtime artwork at `public/assets/village/reboot/mira-runtime.png`, preserves its aspect ratio with uniform Phaser scale `0.130`, and was physically confirmed beside the child in the same village scene as Linus and Henning. Future NPC runtime assets must follow the locked proportion/scaling contract in `ART_DIRECTION.md`.
+
+
+### 2026-09-24 — Sol / Flaskpost physical acceptance
+
+**PASS on physical iPhone:** the new Sol introduction flow works end-to-end. Mira's SysselBux shelf sells the Flaskpost for 25 SysselBux, the authoritative backend purchase succeeds, the waterfront interaction runs the letter and bottle illustrated story moments, the bottle-send story beat persists, and the existing Sol arrival moment/dialogue triggers successfully. Sol arrives as designed. The first failed purchase during acceptance was traced to the story RPC ordering on a nonexistent `child_device_bindings.bound_at`; live Supabase and the checked-in migration were corrected to use `created_at` before the successful full run.
+
+**Separate native issue remains OPEN:** the same acceptance build still required two Xcode Run/compile attempts before the newly synced web bundle appeared. Therefore the deterministic first-run native sync fix is **not physically accepted** and the stale-first-run problem remains unresolved.
