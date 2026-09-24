@@ -421,3 +421,8 @@ Physical iPhone QA exposed a repeatable native-development issue: after a normal
 - runs an Xcode project `clean` to remove build products before the user's next Run.
 
 The clean step does **not** uninstall/reset the app and must not touch the preserved device save. If the marker does not match, `npm run syssel` fails instead of telling the user that iOS is ready.
+
+
+### 2026-09-24 — native first-run regression still open
+
+Physical iPhone acceptance of the Flaskpost/Sol flow disproved the intended first-run guarantee from the current `npm run syssel` cleanup. Even after the deterministic export marker, Capacitor sync verification and Xcode clean, the first Xcode Run still presented the previous native web bundle and a second Run/compile was required before the new build appeared. Treat this as an open native packaging/cache defect, not an accepted workaround. The next investigation should identify the exact bundle/marker packaged by Xcode on Run 1 versus Run 2 rather than adding more blind clean steps.
