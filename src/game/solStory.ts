@@ -1,9 +1,8 @@
-export type SolStoryLine = { speaker: "Sol" | "Barnet"; text: string };
+export type SolStoryLine = { speaker: "Sol" | "Barnet" | "Hunden"; text: string };
 
 export const bottleMessageDialogue: readonly SolStoryLine[] = [
-  { speaker: "Barnet", text: "Hej! Vi bor i en liten by. Här finns Linus, Henning, Mira och jag." },
-  { speaker: "Barnet", text: "Det börjar bli fint här igen. Du får gärna komma och hälsa på!" },
-  { speaker: "Barnet", text: "Undrar vem som hittar den." },
+  { speaker: "Barnet", text: "Tror du någon kommer hitta brevet, {dogName}?" },
+  { speaker: "Hunden", text: "Voff!" },
 ];
 
 export const solArrivalDialogue: readonly SolStoryLine[] = [
