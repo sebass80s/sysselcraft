@@ -408,3 +408,16 @@ The earlier email-rate-limit blocker is closed for normal login. The one-time Ma
 After acceptance, Vercel Git previews were paused again via `vercel.json` with `git.deploymentEnabled=false` to preserve the project's limited preview/deploy budget. Re-enable only when a deployment is actually required.
 
 Next acceptance target: the real Diamond parent -> paired iPhone purchase -> parent fulfillment -> restart path. Backend transactional evidence is already green; physical Diamond acceptance remains open until that device journey passes.
+
+
+### Native first-Run stale bundle guard (2026-09-24)
+
+Physical iPhone QA exposed a repeatable native-development issue: after a normal `npm run syssel`, the first Xcode Run could launch the previous web bundle while a second Run launched the current one. The canonical helper now makes this boundary deterministic:
+
+- removes only the generated `out/` export before `npm run build`;
+- writes `out/syssel-build.txt` containing the exact Git SHA after the build;
+- runs `npx cap sync ios` and verifies the exact marker was copied to `ios/App/App/public`;
+- touches the copied public folder so Xcode sees the resource change;
+- runs an Xcode project `clean` to remove build products before the user's next Run.
+
+The clean step does **not** uninstall/reset the app and must not touch the preserved device save. If the marker does not match, `npm run syssel` fails instead of telling the user that iOS is ready.
