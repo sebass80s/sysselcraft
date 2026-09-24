@@ -18,6 +18,7 @@ export type VillageGameHandle = {
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
   setHenningVisible: (visible: boolean) => void;
+  setSolVisible: (visible: boolean) => void;
   setShopOpen: (open: boolean) => void;
   setBottleMessageReady: (ready: boolean) => void;
   setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", active: boolean) => void;
@@ -73,6 +74,7 @@ export async function createVillageGame(
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
   let requestedHenningVisible = false;
+  let requestedSolVisible = false;
   let requestedShopOpen = false;
   let requestedBottleMessageReady = false;
   const requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
@@ -96,6 +98,7 @@ export async function createVillageGame(
     private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
     private henning?: GameObjects.Image;
+    private sol?: GameObjects.Image;
     private henningInteractionPending = false;
     private shop?: GameObjects.Image;
     private mira?: GameObjects.Image;
@@ -126,6 +129,7 @@ export async function createVillageGame(
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
       this.load.image("henning-painted", "/assets/village/reboot/henning-npc.png");
       this.load.image("mira-painted", "/assets/village/reboot/mira-runtime.png");
+      this.load.image("sol-painted", "/assets/village/reboot/sol-runtime.png");
       this.load.image("shop-abandoned", "/assets/village/buildings/shop/lanthandel-abandoned.webp");
       this.load.image("shop-open", "/assets/village/buildings/shop/lanthandel-open.webp");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
@@ -260,6 +264,11 @@ export async function createVillageGame(
     setHenningVisible(visible: boolean) {
       requestedHenningVisible = visible;
       this.henning?.setVisible(visible);
+    }
+
+    setSolVisible(visible: boolean) {
+      requestedSolVisible = visible;
+      this.sol?.setVisible(visible);
     }
 
     applyQuestState(state: QuestState) {
@@ -802,6 +811,17 @@ export async function createVillageGame(
         else this.maybeCompleteWorldInteraction();
       });
 
+      // Sol appears as a physical resident only after her harbor arrival beat has
+      // completed. Keep the source artwork's proportions intact: uniform scale only.
+      // This first placement is deliberately static so physical iPhone acceptance can
+      // validate size and grounding before the village-tour/follow mechanic is added.
+      this.sol = this.add.image(875, 480, "sol-painted")
+        .setOrigin(0.5, 0.96)
+        .setScale(0.085)
+        .setDepth(1480)
+        .setVisible(requestedSolVisible);
+      this.residents.sol = this.sol;
+
       // Painted Linus stays dynamic so onboarding remains testable.
       this.linus = this.add.image(290, 445, "linus-painted")
         .setOrigin(0.5, 0.96)
@@ -911,6 +931,12 @@ export async function createVillageGame(
       requestedBottleMessageReady = ready;
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setBottleMessageReady(ready);
+      }
+    },
+    setSolVisible: (visible: boolean) => {
+      requestedSolVisible = visible;
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setSolVisible(visible);
       }
     },
     setHenningVisible: (visible: boolean) => {
