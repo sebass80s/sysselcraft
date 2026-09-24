@@ -286,3 +286,15 @@ Before accepting any generated runtime NPC, verify all of the following:
 ### Mira reference lesson
 
 The first Mira runtime attempt on 2026-09-24 was rejected in physical iPhone QA because the artwork used near-realistic adult proportions. At village scale she appeared conspicuously tall, thin and stylistically foreign beside Linus, Henning and the child. This is now a documented failure mode: **never generate a realistic-proportioned runtime resident and rely on Phaser scaling to make it fit.**
+
+
+### Runtime scaling acceptance — Mira, 2026-09-24
+
+Physical iPhone QA established the final integration rule more precisely:
+
+- preserve the source asset's aspect ratio with **uniform Phaser scaling** (`setScale` or equivalent);
+- do **not** use `setDisplaySize(width, height)` for character tuning unless the requested width/height are mathematically derived from the source aspect ratio;
+- the accepted Mira village presentation uses the corrected compact runtime artwork at uniform scale **0.130**;
+- the accepted physical screenshot shows Mira beside the child and within the same scene as Linus and Henning. This is now a concrete runtime scale/proportion reference for future adult residents.
+
+The earlier Mira attempts demonstrated two separate failure modes: realistic source anatomy cannot be repaired by runtime scaling, and forcing an otherwise-correct asset into an arbitrary width × height box can reintroduce visible compression. Generate correct anatomy first, then tune only one uniform scale factor.
