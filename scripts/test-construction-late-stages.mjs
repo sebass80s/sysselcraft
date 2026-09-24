@@ -156,7 +156,7 @@ clinic = domain.commitConstructionReveal(clinic, "clinic:4");
 assert.equal(clinic.revealed.clinic, 4);
 assert.equal(domain.syncClinicContributionProgress(clinic, 99, 40), clinic, "completed Clinic remains capped and idempotent");
 for (let stage = 1; stage <= 4; stage++) {
-  assert.equal(assets.getVisualProductionAsset("clinic", stage), `/assets/village/buildings/clinic/clinic-stage-${stage}.webp`);
+  assert.equal(assets.getVisualProductionAsset("clinic", stage), `/assets/village/reboot/clinic-stage-${stage}.webp`);
 }
 
 console.log("PASS: Recycling, Bakery and Clinic progression is gated, child-driven and idempotent; canonical story beats survive reload without replay.");
