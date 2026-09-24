@@ -237,3 +237,52 @@ The current experiment has moved beyond the earlier two-asset feasibility check,
 ### Current decision
 
 **The static painted master-scene architecture is technically validated, including independent dynamic characters and real 2.5D foreground occlusion. The complete Sysselcraft visual POC remains IN PROGRESS until the whole visible hero slice uses the approved standard and is confirmed in runtime.**
+
+
+## Runtime NPC asset standard — LOCKED 2026-09-24
+
+This section is the production contract for every new resident/runtime character. Do not generate a realistic full-body character first and try to repair proportions in Phaser. The source artwork itself must match the established village cast.
+
+### Proportion law
+
+Runtime NPCs must use the same compact SysselCraft proportions already established by Linus, Henning and the child:
+
+- **large readable head, compact torso, short limbs and broad silhouette**;
+- target overall visual proportion is approximately **3.0–3.5 heads tall**, never realistic 6–8-head anatomy;
+- head width should read at roughly **35–40% of shoulder/body width** in the final village view;
+- hands, shoes/boots, hair silhouette and signature props may be slightly oversized so identity survives at native landscape scale;
+- legs must be visibly shorter than realistic anatomy. Avoid narrow elongated hips/legs and fashion-illustration silhouettes;
+- pose should be stable and readable at small scale, normally a relaxed 3/4 stance rather than a straight photographic pose.
+
+### Rendering/style law
+
+- Match the **painted storybook / soft CGI-isometric** language of the current master scene and accepted runtime NPCs.
+- Warm painterly shading, rounded forms, clear facial features and a readable outer silhouette.
+- No pixel art, flat sticker/vector look, anime sprite-sheet look, photorealistic anatomy, or generic mobile-game chibi that conflicts with the existing cast.
+- Character identity must remain consistent with canonical story/shop art. Clothing, hair, facial traits and signature accessories are not free to drift between story moment, shop portrait and runtime NPC.
+- Runtime art must be authored as a **single isolated full-body character on true transparent background**, with no checkerboard baked into the pixels, no environment, labels, speech bubbles, UI, shadows extending far from the feet, turnaround panels or multiple poses.
+
+### Runtime framing contract
+
+- Include the complete character from hair/accessories to soles, with comfortable transparent padding on all sides.
+- Feet establish the world anchor. Phaser runtime characters normally use an origin around **(0.5, 0.96)** so depth sorting follows the feet.
+- Do not solve a bad source proportion by setting an extreme non-uniform display size. Runtime sizing is for matching world scale, not anatomical correction.
+- As an initial integration baseline, established adult residents are roughly **100–130 px wide and 125–150 px high** in the current 640-high village view. Tune by physical-device screenshot against nearby residents, not by source-image dimensions alone.
+- A new resident must be compared visually beside at least one accepted resident before the asset is considered integrated.
+
+### Character-generation checklist
+
+Before accepting any generated runtime NPC, verify all of the following:
+
+1. Same character identity as canonical story/portrait art.
+2. Approximately 3.0–3.5 heads tall and compact, not realistically proportioned.
+3. Broad readable silhouette with short legs and slightly oversized identifying features.
+4. Full body visible with feet intact and useful transparent padding.
+5. True transparency and no baked background/glow/UI/text.
+6. Painterly SysselCraft rendering compatible with Linus/Henning/master scene.
+7. Still recognizable at approximately 125–150 px runtime height.
+8. Physical iPhone screenshot confirms scale, proportions, grounding and cast consistency.
+
+### Mira reference lesson
+
+The first Mira runtime attempt on 2026-09-24 was rejected in physical iPhone QA because the artwork used near-realistic adult proportions. At village scale she appeared conspicuously tall, thin and stylistically foreign beside Linus, Henning and the child. This is now a documented failure mode: **never generate a realistic-proportioned runtime resident and rely on Phaser scaling to make it fit.**
