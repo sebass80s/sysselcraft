@@ -254,7 +254,7 @@ export async function createVillageGame(
       if (!this.questMarker) return;
       const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!complete) {
-        this.questMarker.setPosition(290, 300).setVisible(true).setAlpha(1);
+        this.questMarker.setPosition(290, 360).setVisible(true).setAlpha(1);
         label.setText("?");
         return;
       }
@@ -282,7 +282,7 @@ export async function createVillageGame(
       if (!this.questMarker) return;
       const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!this.introComplete) {
-        this.questMarker.setPosition(290, 300).setVisible(true).setAlpha(1);
+        this.questMarker.setPosition(290, 360).setVisible(true).setAlpha(1);
         label.setText("?");
         return;
       }
@@ -292,7 +292,7 @@ export async function createVillageGame(
         label.setText("!");
       } else if (state === "available") {
         this.questMarker.setVisible(true).setAlpha(1);
-        label.setText("!");
+        label.setText("?");
       } else if (state === "pending") {
         this.questMarker.setVisible(true).setAlpha(0.72);
         label.setText("…");
@@ -589,12 +589,13 @@ export async function createVillageGame(
         this.linusQuestMarker?.destroy();
         this.linusQuestMarker = undefined;
         if (active && this.linus) {
-          this.linusQuestMarker = this.add.text(this.linus.x, this.linus.y - 128, "!", {
-            color: "#5a3f28",
-            backgroundColor: "#fff2cf",
-            fontSize: "25px",
+          this.linusQuestMarker = this.add.text(this.linus.x, this.linus.y - 128, "?", {
+            color: "#ffd83d",
+            fontSize: "34px",
             fontStyle: "bold",
-            padding: { x: 10, y: 4 },
+            stroke: "#8a5a00",
+            strokeThickness: 4,
+            shadow: { color: "#ffcf33", blur: 12, fill: true, stroke: true },
           }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
           this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
             event.stopPropagation();
@@ -629,8 +630,10 @@ export async function createVillageGame(
       bubble.lineStyle(2, 0x6b4b31, 0.9);
       bubble.fillRoundedRect(-18, -18, 36, 34, 10);
       bubble.strokeRoundedRect(-18, -18, 36, 34, 10);
-      const label = this.add.text(0, -2, "!", {
-        color: "#5a3f28", fontSize: "22px", fontStyle: "bold", fontFamily: "Trebuchet MS",
+      const label = this.add.text(0, -2, "?", {
+        color: "#ffd83d", fontSize: "30px", fontStyle: "bold", fontFamily: "Trebuchet MS",
+        stroke: "#8a5a00", strokeThickness: 4,
+        shadow: { color: "#ffcf33", blur: 12, fill: true, stroke: true },
       }).setOrigin(0.5);
       this.noticeboardMarker = this.add.container(NOTICEBOARD_MARKER.x, NOTICEBOARD_MARKER.y, [bubble, label])
         .setDepth(3000)
@@ -656,30 +659,26 @@ export async function createVillageGame(
     }
 
     private createQuestMarker() {
-      // UI geometry is intentionally code-drawn, but styled as a soft storybook speech marker
-      // rather than a generic bright RPG orb. It remains directly tappable by design.
-      const shadow = this.add.ellipse(2, 10, 39, 15, 0x3a2a1d, 0.18);
-      const bubble = this.add.graphics();
-      bubble.fillStyle(0xfff2cf, 0.98);
-      bubble.lineStyle(2, 0x6b4b31, 0.9);
-      bubble.fillRoundedRect(-22, -22, 44, 39, 12);
-      bubble.strokeRoundedRect(-22, -22, 44, 39, 12);
-      bubble.fillTriangle(-5, 16, 5, 16, 0, 24);
-      bubble.lineBetween(-5, 16, 0, 24);
-      bubble.lineBetween(0, 24, 5, 16);
-      const highlight = this.add.ellipse(-7, -10, 13, 7, 0xffffff, 0.22);
-      const label = this.add.text(0, -3, "?", {
-        color: "#5a3f28", fontSize: "25px", fontStyle: "bold", fontFamily: "Trebuchet MS",
+      // Quest language: glowing yellow ? means an available quest; glowing yellow !
+      // means a completed quest / interaction prompt.
+      const glow = this.add.text(0, 0, "?", {
+        color: "#ffd83d",
+        fontSize: "38px",
+        fontStyle: "bold",
+        fontFamily: "Trebuchet MS",
+        stroke: "#8a5a00",
+        strokeThickness: 4,
+        shadow: { color: "#ffcf33", blur: 14, fill: true, stroke: true },
       }).setOrigin(0.5).setName("label");
-      this.questMarker = this.add.container(290, 300, [shadow, bubble, highlight, label])
-        .setDepth(3000).setSize(54, 56).setInteractive({ useHandCursor: true });
+      this.questMarker = this.add.container(290, 360, [glow])
+        .setDepth(3000).setSize(58, 64).setInteractive({ useHandCursor: true });
       this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (this.introComplete && this.backendHomeAttention) callbacks.onQuestSourceInteract?.("home");
         else if (this.introComplete) callbacks.onQuestOpen();
         else callbacks.onLinusInteract();
       });
-      this.tweens.add({ targets: [shadow, bubble, highlight, label], y: "-=4", duration: 950, yoyo: true, repeat: -1, ease: "Sine.InOut" });
+      this.tweens.add({ targets: glow, alpha: { from: 0.72, to: 1 }, scale: { from: 0.94, to: 1.06 }, duration: 850, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
     private applyBuildingPresentation(stages: Partial<Record<VisualProductionBuilding, VisualProductionStage>>) {
@@ -709,8 +708,10 @@ export async function createVillageGame(
       const resident = this.residents[attention.resident];
       if (!resident) return;
       resident.setPosition(attention.position.x, attention.position.y).setDepth(1000 + attention.position.y);
-      this.attentionMarker = this.add.text(attention.position.x, attention.position.y - 140, "?", {
-        color: "#5a3f28", backgroundColor: "#fff2cf", fontSize: "25px", padding: { x: 10, y: 4 },
+      this.attentionMarker = this.add.text(attention.position.x, attention.position.y - 140, "!", {
+        color: "#ffd83d", fontSize: "34px", fontStyle: "bold",
+        stroke: "#8a5a00", strokeThickness: 4,
+        shadow: { color: "#ffcf33", blur: 12, fill: true, stroke: true },
       }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
       this.attentionMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
