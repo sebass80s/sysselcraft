@@ -227,3 +227,39 @@ Runtime character QA required two corrections before acceptance: the first Mira 
 
 - **Sol runtime physical acceptance (2026-09-24): PASS.** The accepted `public/assets/village/reboot/sol-runtime.png` is shown after `solArrivalSeen` with uniform Phaser scale `0.10`; physical iPhone check confirmed the character's size and presentation are good. This closes the static runtime-art/placement checkpoint before implementing Sol's playable village tour.
 - **Native first-run freshness (2026-09-24): STILL FAILING.** The same physical test again required two Xcode Runs before the latest Sol scale appeared. Treat this as reproducible evidence that the stale first-Run problem remains open despite the deterministic sync/clean guard. Do not mark it fixed; next investigation must compare the packaged build marker/bundle on Run 1 versus Run 2.
+
+
+## Child release audit — 2026-09-24
+
+Target: first real child-device release installed directly from Xcode, with later accepted patches installed over the existing app without deleting its data.
+
+### Repository/static audit
+
+- Core quest/backend loop remains the physically accepted parent -> child -> submit/reject/resubmit/approve -> child claim path.
+- Recycling, Bakery, Mira/Flaskpost, Sol tour and Clinic are now active content; older sections above that describe them as future/inactive are historical.
+- Sol/Clinic completion was physically accepted on iPhone on 2026-09-24.
+- Audit found a release regression where native stage/replay/reset controls were enabled for every native build despite UI copy claiming `?debug=tools` was required. Fixed: these controls now require both native runtime and explicit `?debug=tools`.
+- Audit found that `clinicCompletionSeen` had been added to the save type/default but omitted from save normalization, which would make the Clinic finale eligible to replay after reload. Fixed and covered by the save regression suite.
+- Child-facing header/prototype wording was removed and canonical `SysselCraft` capitalization applied to the iOS display name.
+- Vercel Git deployment remains disabled; no web deployment is required for this native child release.
+- npm dependencies are installed from the committed lockfile in CI via `npm ci`.
+
+### Physical release gates still required
+
+Before tagging/installing the child release candidate:
+1. Run `npm run syssel` and install the final audited HEAD on the test iPhone.
+2. Verify ordinary launch does **not** expose stage/replay/reset debug controls.
+3. Verify the completed Clinic finale does not replay after force-quit/relaunch.
+4. Run one normal backend quest end-to-end (create -> child submit -> parent approve -> child claim) and confirm wallet/reward update.
+5. Force-quit/relaunch once more and confirm world/story/save/pairing persist.
+6. Because the native stale-build defect remains unresolved and has appeared in an every-other-Xcode-Run pattern, verify the actual installed build behavior rather than assuming the first Xcode Run packaged current web assets. Do not mark release from CI alone.
+
+### Known non-blocking / deferred release debt
+
+- A17 destructive reinstall/session-loss and expiry/transport stress remain deferred.
+- A19 real day/week rollover and offline-next-period recurrence remain deferred.
+- A16 harsher network/concurrency stress and A23 accessibility/other-device coverage remain deferred.
+- Native Vuxenläge is not a cryptographic/parent-auth gate. It still exposes the first local onboarding approval and pairing UI; backend parent quest management/auth remains on the parent's separate web device. A stronger local adult gate is future product work unless explicitly promoted.
+- Xcode signing is automatic for team `C5XCT75WJ2`. The repository cannot prove whether the installed development provisioning profile is free/personal or paid-team provisioning, so its on-device validity duration must be checked in Xcode/account context before relying on long unattended intervals between patches.
+
+Do not create the first child release tag until the physical release gates above pass on the final audited HEAD.
