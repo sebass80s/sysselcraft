@@ -471,3 +471,7 @@ That distinction is important. Do not collapse Sol's arrival, decision and Clini
 - Sol needs a proper runtime NPC presentation before this chapter is physically accepted. Preserve the established runtime-art rules: transparent character asset, correct proportions, uniform scaling only, and physical iPhone validation.
 - The existing Clinic stage assets are the canonical visual construction progression.
 - Exact Clinic quest-count/material pacing remains an implementation/progression decision unless separately locked elsewhere.
+
+
+### LOCKED simplification — no follower AI (2026-09-24)
+The tour uses **player travel + story hotspots/cutscenes**, not follower AI. After the harbor arrival, the child moves through the village normally. A discreet story interaction appears at the next canonical stop; tapping it triggers the short Sol scene for that location, then advances the story target to the next stop. Current order: **Bakery → Mira's lanthandel → Linus/central village → Sol's decision → Clinic reveal**. Sol may be presented at the active/last story location as needed for world continuity, but she must not pathfind behind the child. The first two location beats should primarily use the game world and normal dialogue UI; reserve a larger Illustrated Story Moment for Sol's decision to stay if produced. This replaces any earlier follower-mechanic wording.
