@@ -10,7 +10,7 @@ import { preloadVisualProductionBuildings, createVisualProductionBuildings } fro
 import { getVisualProductionObstacles, type VisualProductionBuilding, type VisualProductionStage } from "./visualProductionAssets";
 
 export type QuestState = "available" | "pending" | "approved";
-export type SolTourStop = "bakery" | "shop" | "linus" | null;
+export type SolTourStop = "bakery" | "shop" | "linus" | "decision" | null;
 export type VillageGameHandle = {
   destroy: () => void;
   setConstruction: (presentation: ConstructionPresentation) => void;
@@ -33,6 +33,7 @@ type Callbacks = {
   onHenningInteract: () => void;
   onShopInteract: () => void;
   onBottleMessageInteract: () => void;
+  onSolInteract: () => void;
   onConstructionInteract: (id: string) => void;
 };
 type Facing = "north" | "south" | "east" | "west";
@@ -103,6 +104,7 @@ export async function createVillageGame(
     private henning?: GameObjects.Image;
     private sol?: GameObjects.Image;
     private solTourMarker?: GameObjects.Text;
+    private solInteractionPending = false;
     private henningInteractionPending = false;
     private shop?: GameObjects.Image;
     private mira?: GameObjects.Image;
@@ -405,6 +407,15 @@ export async function createVillageGame(
         return;
       }
 
+      if (this.solInteractionPending && this.player && this.sol?.visible) {
+        if (distance(this.player, this.sol) > 95) return;
+        this.solInteractionPending = false;
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+        callbacks.onSolInteract();
+        return;
+      }
+
       if (this.shopInteractionPending && this.player && requestedShopOpen) {
         const shopApproach = { x: 1130, y: 425 };
         const miraApproach = { x: 1050, y: 445 };
@@ -494,7 +505,7 @@ export async function createVillageGame(
       this.solTourMarker?.destroy();
       this.solTourMarker = undefined;
       if (!stop) return;
-      const target = stop === "bakery" ? this.henning : stop === "shop" ? this.mira : this.linus;
+      const target = stop === "bakery" ? this.henning : stop === "shop" ? this.mira : stop === "decision" ? this.sol : this.linus;
       if (!target || !target.visible) return;
       this.solTourMarker = this.add.text(target.x, target.y - 145, "☀️", {
         fontSize: "28px", backgroundColor: "#fff2cf", padding: { x: 8, y: 5 },
@@ -836,7 +847,18 @@ export async function createVillageGame(
         .setOrigin(0.5, 0.96)
         .setScale(0.10)
         .setDepth(1480)
-        .setVisible(requestedSolVisible);
+        .setVisible(requestedSolVisible)
+        .setInteractive({ useHandCursor: true, pixelPerfect: false });
+      this.sol.input?.hitArea.setTo(-30, -10, 150, 180);
+      this.sol.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen || requestedSolTourStop !== "decision" || !this.sol?.visible) return;
+        this.solInteractionPending = true;
+        this.path = findPath(this.player, { x: 835, y: 485 }, this.navigationObstacles);
+        const target = this.path.at(-1);
+        if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
       this.residents.sol = this.sol;
 
       // Painted Linus stays dynamic so onboarding remains testable.
