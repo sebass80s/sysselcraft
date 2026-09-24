@@ -25,3 +25,10 @@ export async function purchaseBottleMessage(): Promise<StoryItemPurchase> {
     worldFlags: row.world_flags && typeof row.world_flags === "object" && !Array.isArray(row.world_flags) ? row.world_flags as Record<string, unknown> : {},
   };
 }
+
+
+export async function commitStoryBeat(beat: "bottle_message_sent" | "sol_arrival_seen"): Promise<Record<string, unknown>> {
+  const { data, error } = await getSupabaseBrowserClient().rpc("commit_story_beat", { p_beat_key: beat });
+  if (error) throw error;
+  return data && typeof data === "object" && !Array.isArray(data) ? data as Record<string, unknown> : {};
+}
