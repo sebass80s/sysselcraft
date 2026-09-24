@@ -29,7 +29,7 @@ import { constructionPresentation } from "../game/constructionPresentation";
 import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
-import { bottleMessageDialogue, solArrivalDialogue } from "../game/solStory";
+import { bottleMessageDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
 import { BOTTLE_MESSAGE_PRICE, commitStoryBeat, purchaseBottleMessage } from "../backend/storyShop";
 import { getPairedChildId } from "../backend/childDeviceBinding";
@@ -66,6 +66,12 @@ export default function VillagePrototype() {
   const [bottleMessagePurchased, setBottleMessagePurchased] = useState(false);
   const [bottleMessageSent, setBottleMessageSent] = useState(false);
   const [solArrivalSeen, setSolArrivalSeen] = useState(false);
+  const [solTourBakerySeen, setSolTourBakerySeen] = useState(false);
+  const [solTourShopSeen, setSolTourShopSeen] = useState(false);
+  const [solTourLinusSeen, setSolTourLinusSeen] = useState(false);
+  const [solChoseToStay, setSolChoseToStay] = useState(false);
+  const [solTourStoryStop, setSolTourStoryStop] = useState<SolTourStop | null>(null);
+  const [solTourStoryIndex, setSolTourStoryIndex] = useState(0);
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
   const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
   const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
@@ -168,6 +174,10 @@ export default function VillagePrototype() {
         setBottleMessagePurchased(saved.worldFlags.bottleMessagePurchased === true);
         setBottleMessageSent(saved.worldFlags.bottleMessageSent === true);
         setSolArrivalSeen(saved.worldFlags.solArrivalSeen === true);
+        setSolTourBakerySeen(saved.worldFlags.solTourBakerySeen === true);
+        setSolTourShopSeen(saved.worldFlags.solTourShopSeen === true);
+        setSolTourLinusSeen(saved.worldFlags.solTourLinusSeen === true);
+        setSolChoseToStay(saved.worldFlags.solChoseToStay === true);
         if (recyclingCompletionPending(saved.construction)) {
           setRecyclingStoryIndex(0);
           setRecyclingStoryOpen(true);
@@ -211,6 +221,7 @@ export default function VillagePrototype() {
         firstDeliveryComplete: recyclingCenterStage >= 1,
         recyclingCenterStage,
         henningArrivalSeen,
+        solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay,
       },
     };
     latestSaveRef.current = snapshot;
@@ -218,7 +229,7 @@ export default function VillagePrototype() {
       () => setSaveError(false),
       () => setSaveError(true),
     );
-  }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen]);
+  }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay]);
 
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
@@ -245,10 +256,24 @@ export default function VillagePrototype() {
           setConstructionDialogueId(id);
           setConstructionDialogueIndex(0);
         },
-        onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true); },
-        onHenningInteract: () => { setHenningDialogueIndex(0); setHenningDialogueOpen(true); },
+        onLinusInteract: () => {
+          const flags = latestSaveRef.current?.worldFlags;
+          if (flags?.solArrivalSeen && flags.solTourShopSeen && !flags.solTourLinusSeen) { setSolTourStoryStop("linus"); setSolTourStoryIndex(0); return; }
+          setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true);
+        },
+        onHenningInteract: () => {
+          const flags = latestSaveRef.current?.worldFlags;
+          if (flags?.solArrivalSeen && !flags.solTourBakerySeen) { setSolTourStoryStop("bakery"); setSolTourStoryIndex(0); return; }
+          setHenningDialogueIndex(0); setHenningDialogueOpen(true);
+        },
         onBottleMessageInteract: () => { setBottleLetterOpen(true); gameRef.current?.setConstructionDialogueOpen(true); },
+        onSolInteract: () => {
+          const flags = latestSaveRef.current?.worldFlags;
+          if (flags?.solTourLinusSeen && !flags.solChoseToStay) { setSolTourStoryStop("decision"); setSolTourStoryIndex(0); }
+        },
         onShopInteract: () => {
+          const flags = latestSaveRef.current?.worldFlags;
+          if (flags?.solTourBakerySeen && !flags.solTourShopSeen) { setSolTourStoryStop("shop"); setSolTourStoryIndex(0); return; }
           gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopCurrency("diamonds"); setShopMessage("");
           void (async () => {
             try {
@@ -289,6 +314,10 @@ export default function VillagePrototype() {
   useEffect(() => { gameRef.current?.setHenningVisible(henningArrivalSeen); }, [henningArrivalSeen]);
   useEffect(() => { gameRef.current?.setSolVisible(solArrivalSeen); }, [solArrivalSeen]);
   useEffect(() => { gameRef.current?.setBottleMessageReady(bottleMessagePurchased && !bottleMessageSent); }, [bottleMessagePurchased, bottleMessageSent]);
+  useEffect(() => {
+    const stop = !solArrivalSeen || solChoseToStay ? null : !solTourBakerySeen ? "bakery" : !solTourShopSeen ? "shop" : !solTourLinusSeen ? "linus" : "decision";
+    gameRef.current?.setSolTourStop(stop);
+  }, [solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay]);
   useEffect(() => {
     if (!saveReady || !bottleMessageSent || solArrivalSeen || bottleLetterOpen || bottleStoryIndex !== null || solStoryIndex !== null) return;
     const timer = window.setTimeout(() => setSolStoryIndex(0), 1200);
@@ -459,6 +488,29 @@ export default function VillagePrototype() {
     finally { setConstructionBusy(false); }
   }
 
+  async function advanceSolTourStory() {
+    if (!solTourStoryStop || constructionBusy || !latestSaveRef.current) return;
+    const lines = solTourDialogue[solTourStoryStop];
+    if (solTourStoryIndex + 1 < lines.length) { setSolTourStoryIndex(solTourStoryIndex + 1); return; }
+    const beat = solTourStoryStop === "bakery" ? "sol_tour_bakery_seen" : solTourStoryStop === "shop" ? "sol_tour_shop_seen" : solTourStoryStop === "linus" ? "sol_tour_linus_seen" : "sol_chose_to_stay";
+    setConstructionBusy(true); setConstructionError("");
+    try {
+      const flags = await commitStoryBeat(beat);
+      const nextFlags = { ...latestSaveRef.current.worldFlags };
+      if (solTourStoryStop === "bakery") { nextFlags.solTourBakerySeen = true; setSolTourBakerySeen(true); }
+      else if (solTourStoryStop === "shop") { nextFlags.solTourShopSeen = true; setSolTourShopSeen(true); }
+      else if (solTourStoryStop === "linus") { nextFlags.solTourLinusSeen = true; setSolTourLinusSeen(true); }
+      else {
+        nextFlags.solChoseToStay = true; setSolChoseToStay(true);
+        if (typeof flags.clinicProgressionBaseline === "number") nextFlags.clinicProgressionBaseline = flags.clinicProgressionBaseline;
+      }
+      const snapshot = { ...latestSaveRef.current, worldFlags: nextFlags };
+      latestSaveRef.current = snapshot; await saveSaveState(snapshot, true);
+      setSolTourStoryStop(null); setSolTourStoryIndex(0);
+    } catch { setConstructionError("Sols berättelse kunde inte sparas. Försök igen."); }
+    finally { setConstructionBusy(false); }
+  }
+
   async function buyDiamondReward(reward: DiamondRewardDefinition) {
     if (shopBusy) return;
     if (!window.confirm(`Köpa "${reward.title}" för ${reward.diamondPrice} 💎?`)) return;
@@ -552,6 +604,9 @@ export default function VillagePrototype() {
   const miraReplaySpeakerName = miraStoryReplayLine?.speaker === "Barnet" ? childName || "Barnet" : miraStoryReplayLine?.speaker ?? "";
   const miraStoryText = miraStoryLine?.text.replace("[barnets namn]", childName || "Barnet") ?? "";
   const miraReplayText = miraStoryReplayLine?.text.replace("[barnets namn]", childName || "Barnet") ?? "";
+  const solTourStoryLine = solTourStoryStop ? solTourDialogue[solTourStoryStop][solTourStoryIndex] : null;
+  const solTourSpeakerName = solTourStoryLine?.speaker === "Barnet" ? childName || "Barnet" : solTourStoryLine?.speaker === "Hunden" ? dogName || "Hunden" : solTourStoryLine?.speaker ?? "";
+  const solTourImage = solTourStoryStop === "bakery" ? "/assets/village/story-moments/sol-tour-bakery.png" : solTourStoryStop === "shop" ? "/assets/village/story-moments/sol-tour-shop.png" : solTourStoryStop === "linus" ? (solTourStoryIndex >= 1 ? "/assets/village/story-moments/sol-tour-linus-knee.png" : "/assets/village/story-moments/sol-tour-linus.png") : solTourStoryStop === "decision" ? "/assets/village/story-moments/sol-stays.png" : "";
   const constructionDialogueLine = attention?.dialogue[constructionDialogueIndex] ?? null;
   const constructionSpeakerName = constructionDialogueLine?.speaker === "Barnet" ? childName || "Barnet" : constructionDialogueLine?.speaker ?? "";
   const linusStoryReplayStep = linusStoryReplayIndex === null ? null : linusIntroDialogue[linusStoryReplayIndex];
@@ -605,6 +660,7 @@ export default function VillagePrototype() {
     {bottleStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Skicka flaskpost"><span className={`dialogue-speaker ${bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}`}>{bottleMessageDialogue[bottleStoryIndex].speaker === "Hunden" ? dogName || "Hunden" : childName || "Barnet"}</span><p>{bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBottleStory()}>{constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}</button></div>}
     {solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png" alt="" fill priority sizes="100vw" /></div>}
     {solStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}`}>{solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"}</span><p>{solArrivalDialogue[solStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolStory()}>{constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}</button></div>}
+    {solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation"><Image src={solTourImage} alt="" fill priority sizes="100vw" /></div><div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol ser sig omkring i byn"><span className={`dialogue-speaker henning-story-speaker ${solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker.toLowerCase()}`}>{solTourSpeakerName}</span><p>{solTourStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolTourStory()}>{constructionBusy ? "Sparar…" : solTourStoryIndex === solTourDialogue[solTourStoryStop].length - 1 ? (solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen") : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></>}
     {miraStoryIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
     {miraStoryIndex !== null && miraStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker.toLowerCase()}`}>{miraSpeakerName}</span><p>{miraStoryText}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceMiraStory()}>{constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {miraStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
