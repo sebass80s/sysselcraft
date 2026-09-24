@@ -272,3 +272,9 @@ Do not create the first child release tag until the physical release gates above
 - PASS: Clinic completion one-shot persistence fix verified physically. After completing the Sol/Linus Clinic finale, force-quit and relaunch preserved the completed state and did not replay the finale.
 - The separate stale native bundle/Xcode issue remains open. Its exact cadence is not established; do not describe it as a confirmed every-other-build defect.
 - Remaining physical release gates: one normal backend quest end-to-end on this audited build, followed by force-quit/relaunch confirmation of wallet/world/pairing persistence.
+
+
+### Backend quest physical release pass — 2026-09-24
+
+- PASS: one normal backend quest completed end-to-end on the audited iPhone build: child received the quest, submitted it, parent approved it, child claimed it, and the reward flow completed successfully.
+- Final release persistence gate remains: force-quit/relaunch and confirm the resulting wallet/reward state, world state and pairing are still intact.
