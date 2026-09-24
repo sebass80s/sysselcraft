@@ -628,6 +628,10 @@ export type Database = {
         Args: { p_reward_definition_id: string }
         Returns: string
       }
+      commit_story_beat: {
+        Args: { p_beat_key: string }
+        Returns: Json
+      }
       purchase_story_item: {
         Args: { p_item_key: string }
         Returns: Json
