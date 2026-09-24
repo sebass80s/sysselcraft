@@ -28,6 +28,21 @@ export function subscribeBackendAuth(listener: (state: BackendAuthState) => void
   return () => data.subscription.unsubscribe();
 }
 
+export async function sendParentPasswordBootstrapLink(email: string, redirectTo: string): Promise<void> {
+  const normalizedEmail = email.trim().toLowerCase();
+  if (!normalizedEmail) throw new Error("Email is required.");
+
+  const { error } = await getSupabaseBrowserClient().auth.signInWithOtp({
+    email: normalizedEmail,
+    options: {
+      emailRedirectTo: redirectTo,
+      shouldCreateUser: false,
+    },
+  });
+
+  if (error) throw error;
+}
+
 export async function signInParentWithPassword(email: string, password: string): Promise<void> {
   const normalizedEmail = email.trim().toLowerCase();
   if (!normalizedEmail) throw new Error("Email is required.");
