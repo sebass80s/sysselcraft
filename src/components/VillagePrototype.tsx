@@ -38,7 +38,7 @@ import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { getRecyclingCenterStatus } from "../game/worldProgression";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
-import { BACKEND_WALLET_EVENT, getLatestBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
+import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
   QUEST_PRESENTATION_EVENT,
   getLatestQuestPresentation,
@@ -472,7 +472,13 @@ export default function VillagePrototype() {
     setShopBusy(true); setShopMessage("");
     try {
       const purchase = await purchaseBottleMessage();
-      setBackendWallet((wallet) => wallet ? { ...wallet, sysselBux: purchase.sysselBux } : wallet);
+      const currentWallet = getLatestBackendWallet() ?? backendWallet;
+      const purchasedWallet: BackendWalletSnapshot = {
+        diamonds: currentWallet?.diamonds ?? diamonds,
+        sysselBux: purchase.sysselBux,
+      };
+      setBackendWallet(purchasedWallet);
+      publishBackendWallet(purchasedWallet);
       setBottleMessagePurchased(true);
       if (latestSaveRef.current) {
         const snapshot = { ...latestSaveRef.current, worldFlags: { ...latestSaveRef.current.worldFlags, bottleMessagePurchased: true } };
