@@ -95,6 +95,7 @@ export async function createVillageGame(
     private henning?: GameObjects.Image;
     private henningInteractionPending = false;
     private shop?: GameObjects.Image;
+    private mira?: GameObjects.Image;
     private shopInteractionPending = false;
     private attentionMarker?: GameObjects.Text;
     private attentionInteractionPending = false;
@@ -119,6 +120,7 @@ export async function createVillageGame(
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
       this.load.image("henning-painted", "/assets/village/reboot/henning-npc.png");
+      this.load.image("mira-painted", "/assets/village/mira-runtime.png");
       this.load.image("shop-abandoned", "/assets/village/buildings/shop/lanthandel-abandoned.webp");
       this.load.image("shop-open", "/assets/village/buildings/shop/lanthandel-open.webp");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
@@ -377,8 +379,9 @@ export async function createVillageGame(
       }
 
       if (this.shopInteractionPending && this.player && requestedShopOpen) {
-        const approach = { x: 1130, y: 425 };
-        if (distance(this.player, approach) > 42) return;
+        const shopApproach = { x: 1130, y: 425 };
+        const miraApproach = { x: 1050, y: 445 };
+        if (Math.min(distance(this.player, shopApproach), distance(this.player, miraApproach)) > 42) return;
         this.shopInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
@@ -455,6 +458,7 @@ export async function createVillageGame(
       requestedShopOpen = open;
       if (!this.shop) return;
       this.shop.setTexture(open ? "shop-open" : "shop-abandoned");
+      this.mira?.setVisible(open);
       if (!open) this.shopInteractionPending = false;
     }
 
@@ -734,6 +738,29 @@ export async function createVillageGame(
       }
 
       this.drawShop();
+
+      // Mira becomes a physical resident when her arrival beat opens the lanthandel.
+      // Tapping her uses the same shop interaction as tapping the building.
+      this.mira = this.add.image(1000, 430, "mira-painted")
+        .setOrigin(0.5, 0.96)
+        .setDisplaySize(92, 146)
+        .setDepth(1430)
+        .setVisible(requestedShopOpen)
+        .setInteractive({ useHandCursor: true, pixelPerfect: false });
+      this.mira.input?.hitArea.setTo(-30, -10, 150, 175);
+      this.mira.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen || !requestedShopOpen || !this.mira?.visible) return;
+        this.shopInteractionPending = true;
+        this.linusInteractionPending = false;
+        this.henningInteractionPending = false;
+        this.attentionInteractionPending = false;
+        this.noticeboardInteractionPending = false;
+        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 1050, y: 445 }, this.navigationObstacles);
+        const target = this.path.at(-1);
+        if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
 
       // Painted Linus stays dynamic so onboarding remains testable.
       this.linus = this.add.image(290, 445, "linus-painted")
