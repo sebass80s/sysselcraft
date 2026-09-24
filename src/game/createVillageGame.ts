@@ -10,6 +10,7 @@ import { preloadVisualProductionBuildings, createVisualProductionBuildings } fro
 import { getVisualProductionObstacles, type VisualProductionBuilding, type VisualProductionStage } from "./visualProductionAssets";
 
 export type QuestState = "available" | "pending" | "approved";
+export type SolTourStop = "bakery" | "shop" | "linus" | null;
 export type VillageGameHandle = {
   destroy: () => void;
   setConstruction: (presentation: ConstructionPresentation) => void;
@@ -19,6 +20,7 @@ export type VillageGameHandle = {
   setDogVisible: (visible: boolean) => void;
   setHenningVisible: (visible: boolean) => void;
   setSolVisible: (visible: boolean) => void;
+  setSolTourStop: (stop: SolTourStop) => void;
   setShopOpen: (open: boolean) => void;
   setBottleMessageReady: (ready: boolean) => void;
   setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", active: boolean) => void;
@@ -75,6 +77,7 @@ export async function createVillageGame(
   let requestedDogVisible = false;
   let requestedHenningVisible = false;
   let requestedSolVisible = false;
+  let requestedSolTourStop: SolTourStop = null;
   let requestedShopOpen = false;
   let requestedBottleMessageReady = false;
   const requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
@@ -99,6 +102,7 @@ export async function createVillageGame(
     private linus?: GameObjects.Image;
     private henning?: GameObjects.Image;
     private sol?: GameObjects.Image;
+    private solTourMarker?: GameObjects.Text;
     private henningInteractionPending = false;
     private shop?: GameObjects.Image;
     private mira?: GameObjects.Image;
@@ -483,6 +487,19 @@ export async function createVillageGame(
       this.shop.setTexture(open ? "shop-open" : "shop-abandoned");
       this.mira?.setVisible(open);
       if (!open) this.shopInteractionPending = false;
+    }
+
+    setSolTourStop(stop: SolTourStop) {
+      requestedSolTourStop = stop;
+      this.solTourMarker?.destroy();
+      this.solTourMarker = undefined;
+      if (!stop) return;
+      const target = stop === "bakery" ? this.henning : stop === "shop" ? this.mira : this.linus;
+      if (!target || !target.visible) return;
+      this.solTourMarker = this.add.text(target.x, target.y - 145, "☀️", {
+        fontSize: "28px", backgroundColor: "#fff2cf", padding: { x: 8, y: 5 },
+      }).setOrigin(0.5).setDepth(3100);
+      this.tweens.add({ targets: this.solTourMarker, y: "-=5", duration: 900, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
     setBottleMessageReady(ready: boolean) {
@@ -926,6 +943,10 @@ export async function createVillageGame(
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setShopOpen(open);
       }
+    },
+    setSolTourStop: (stop: SolTourStop) => {
+      requestedSolTourStop = stop;
+      if (game.scene.isActive("VillageScene")) (game.scene.getScene("VillageScene") as VillageScene).setSolTourStop(stop);
     },
     setBottleMessageReady: (ready: boolean) => {
       requestedBottleMessageReady = ready;
