@@ -61,6 +61,7 @@ export default function VillagePrototype() {
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
   const [bottleStoryIndex, setBottleStoryIndex] = useState<number | null>(null);
+  const [bottleLetterOpen, setBottleLetterOpen] = useState(false);
   const [solStoryIndex, setSolStoryIndex] = useState<number | null>(null);
   const [bottleMessagePurchased, setBottleMessagePurchased] = useState(false);
   const [bottleMessageSent, setBottleMessageSent] = useState(false);
@@ -246,7 +247,7 @@ export default function VillagePrototype() {
         },
         onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true); },
         onHenningInteract: () => { setHenningDialogueIndex(0); setHenningDialogueOpen(true); },
-        onBottleMessageInteract: () => { setBottleStoryIndex(0); gameRef.current?.setConstructionDialogueOpen(true); },
+        onBottleMessageInteract: () => { setBottleLetterOpen(true); gameRef.current?.setConstructionDialogueOpen(true); },
         onShopInteract: () => {
           gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopCurrency("diamonds"); setShopMessage("");
           void (async () => {
@@ -413,6 +414,11 @@ export default function VillagePrototype() {
       const text = error instanceof Error ? error.message : "Köpet misslyckades.";
       setShopMessage(text.includes("insufficient sysselbux") ? "Du har inte tillräckligt många SysselBux." : text);
     } finally { setShopBusy(false); }
+  }
+
+  function advanceBottleLetter() {
+    setBottleLetterOpen(false);
+    setBottleStoryIndex(0);
   }
 
   async function advanceBottleStory() {
@@ -591,8 +597,10 @@ export default function VillagePrototype() {
         </section>
       </div>
     </div>}
+    {bottleLetterOpen && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-letter.png" alt="Barnet läser brevet som ska skickas som flaskpost" fill priority sizes="100vw" /></div>}
+    {bottleLetterOpen && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Brevet i flaskposten"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Brevet är klart.</p><button className="primary-button dialogue-next" onClick={advanceBottleLetter}>Gå till vattnet</button></div>}
     {bottleStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-message.png" alt="" fill priority sizes="100vw" /></div>}
-    {bottleStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Skicka flaskpost"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>{bottleMessageDialogue[bottleStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBottleStory()}>{constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}</button></div>}
+    {bottleStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Skicka flaskpost"><span className={`dialogue-speaker ${bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}`}>{bottleMessageDialogue[bottleStoryIndex].speaker === "Hunden" ? dogName || "Hunden" : childName || "Barnet"}</span><p>{bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBottleStory()}>{constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}</button></div>}
     {solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png" alt="" fill priority sizes="100vw" /></div>}
     {solStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}`}>{solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"}</span><p>{solArrivalDialogue[solStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolStory()}>{constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}</button></div>}
     {miraStoryIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
