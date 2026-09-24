@@ -36,4 +36,4 @@ export async function listDiamondRedemptions(householdId:string) {
 }
 export async function markDiamondRewardDelivered(id:string){const {error}=await getSupabaseBrowserClient().rpc("mark_diamond_reward_delivered",{p_redemption_id:id});if(error)throw error;}
 export async function refundDiamondReward(id:string){const {error}=await getSupabaseBrowserClient().rpc("refund_diamond_reward",{p_redemption_id:id});if(error)throw error;}
-export async function purchaseDiamondReward(id:string){const {error}=await getSupabaseBrowserClient().rpc("purchase_diamond_reward",{p_reward_definition_id:id});if(error)throw error;}
+export async function purchaseDiamondReward(id:string){const {data,error}=await getSupabaseBrowserClient().rpc("purchase_diamond_reward",{p_reward_definition_id:id});if(error)throw error;return data;}
