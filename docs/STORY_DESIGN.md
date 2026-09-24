@@ -475,3 +475,19 @@ That distinction is important. Do not collapse Sol's arrival, decision and Clini
 
 ### LOCKED simplification — no follower AI (2026-09-24)
 The tour uses **player travel + story hotspots/cutscenes**, not follower AI. After the harbor arrival, the child moves through the village normally. A discreet story interaction appears at the next canonical stop; tapping it triggers the short Sol scene for that location, then advances the story target to the next stop. Current order: **Bakery → Mira's lanthandel → Linus/central village → Sol's decision → Clinic reveal**. Sol may be presented at the active/last story location as needed for world continuity, but she must not pathfind behind the child. The first two location beats should primarily use the game world and normal dialogue UI; reserve a larger Illustrated Story Moment for Sol's decision to stay if produced. This replaces any earlier follower-mechanic wording.
+
+
+### LOCKED Clinic construction pacing — 2026-09-24
+Clinic construction reuses the existing authoritative unified `worldProgression`; it does **not** introduce clinic materials, a second construction currency, or a parallel quest type.
+
+When Sol chooses to stay and the Clinic project is revealed, persist that child's current authoritative `worldProgression` as the **Clinic baseline**. Only approvals earned after that moment count toward Clinic construction, so earlier household work is preserved as history but cannot instantly complete a newly unlocked building.
+
+Canonical Clinic pacing from that baseline:
+- **+0 approvals:** Clinic stage 1 is revealed (old/run-down building).
+- **+2 approvals:** stage 2.
+- **+4 approvals:** stage 3.
+- **+8 approvals:** stage 4, Clinic complete and Sol established as the village doctor/resident.
+
+Each approved backend quest may advance unified world progression exactly once under the existing Quest System v2 idempotency rules. Clinic stage derivation must therefore be based on authoritative progression delta from the stored baseline and must never award, replay or fabricate quest progress client-side.
+
+Short Sol milestone reactions are preferred over additional large cutscenes during construction. Current intended emotional beats are: stage 1, the building needs work; stage 2, Sol can begin to picture the Clinic; stage 3, opening is close; stage 4, completion celebration. Exact dialogue copy may be polished during implementation without changing the progression thresholds.
