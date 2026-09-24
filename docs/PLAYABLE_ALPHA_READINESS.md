@@ -263,3 +263,12 @@ Before tagging/installing the child release candidate:
 - Xcode signing is automatic for team `C5XCT75WJ2`. The repository cannot prove whether the installed development provisioning profile is free/personal or paid-team provisioning, so its on-device validity duration must be checked in Xcode/account context before relying on long unattended intervals between patches.
 
 Do not create the first child release tag until the physical release gates above pass on the final audited HEAD.
+
+
+### Physical release audit update — 2026-09-24
+
+- PASS: audited native build installed over the existing iPhone app without losing the built village or resident state.
+- PASS: normal native launch no longer exposes construction TEST controls, Story Moment replay controls, or reset-save control.
+- PASS: Clinic completion one-shot persistence fix verified physically. After completing the Sol/Linus Clinic finale, force-quit and relaunch preserved the completed state and did not replay the finale.
+- The separate stale native bundle/Xcode issue remains open. Its exact cadence is not established; do not describe it as a confirmed every-other-build defect.
+- Remaining physical release gates: one normal backend quest end-to-end on this audited build, followed by force-quit/relaunch confirmation of wallet/world/pairing persistence.
