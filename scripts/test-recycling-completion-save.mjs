@@ -84,6 +84,15 @@ assert.equal(restoredClinicFinale.worldFlags.clinicCompletionSeen, true,
   "Clinic finale completion must survive normalization/reload and never become eligible to replay");
 console.log("PASS: Clinic finale completion flag survives reload.");
 
+const autosavedClinicFinale = {
+  ...restoredClinicFinale,
+  worldFlags: { ...restoredClinicFinale.worldFlags, clinicCompletionSeen: restoredClinicFinale.worldFlags.clinicCompletionSeen },
+};
+await save.saveSaveState(autosavedClinicFinale, true);
+assert.equal((await save.loadSaveState(true)).worldFlags.clinicCompletionSeen, true,
+  "a normal autosave after Clinic completion must preserve the one-shot flag");
+console.log("PASS: subsequent autosave preserves Clinic finale completion.");
+
 // A broken/future save must never be mistaken for a new game by the playable surface.
 for (const unreadable of ["{broken", "", JSON.stringify({ version: 2 })]) {
   stored = unreadable;
