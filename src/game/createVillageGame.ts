@@ -50,6 +50,9 @@ type WorldObjectDefinition = {
 // Keep the marker over the board and approach from the path below it.
 const NOTICEBOARD_MARKER: Point = { x: 175, y: 270 };
 const NOTICEBOARD_APPROACH: Point = { x: 175, y: 430 };
+// Family house is rendered at x=150 with a 360x300 footprint. The front door sits
+// on the lower-right face of the painted house, so the quest marker belongs here.
+const HOME_QUEST_MARKER: Point = { x: 245, y: 338 };
 
 function distance(a: Point, b: Point) {
   return Math.hypot(a.x - b.x, a.y - b.y);
@@ -254,11 +257,11 @@ export async function createVillageGame(
       if (!this.questMarker) return;
       const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!complete) {
-        this.questMarker.setPosition(290, 360).setVisible(true).setAlpha(1);
+        this.questMarker.setPosition(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y).setVisible(true).setAlpha(1);
         label.setText("?");
         return;
       }
-      this.questMarker.setPosition(-245, 70);
+      this.questMarker.setPosition(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y);
       this.applyQuestState(requestedQuestState);
     }
 
@@ -282,7 +285,7 @@ export async function createVillageGame(
       if (!this.questMarker) return;
       const label = this.questMarker.getByName("label") as GameObjects.Text;
       if (!this.introComplete) {
-        this.questMarker.setPosition(290, 360).setVisible(true).setAlpha(1);
+        this.questMarker.setPosition(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y).setVisible(true).setAlpha(1);
         label.setText("?");
         return;
       }
@@ -589,7 +592,7 @@ export async function createVillageGame(
         this.linusQuestMarker?.destroy();
         this.linusQuestMarker = undefined;
         if (active && this.linus) {
-          this.linusQuestMarker = this.add.text(this.linus.x, this.linus.y - 128, "?", {
+          this.linusQuestMarker = this.add.text(this.linus.x, this.linus.y - 178, "?", {
             color: "#ffd83d",
             fontSize: "34px",
             fontStyle: "bold",
@@ -670,8 +673,8 @@ export async function createVillageGame(
         strokeThickness: 4,
         shadow: { color: "#ffcf33", blur: 14, fill: true, stroke: true },
       }).setOrigin(0.5).setName("label");
-      this.questMarker = this.add.container(290, 360, [glow])
-        .setDepth(3000).setSize(58, 64).setInteractive({ useHandCursor: true });
+      this.questMarker = this.add.container(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y, [glow])
+        .setDepth(3000).setSize(96, 96).setInteractive(new Phaser.Geom.Rectangle(-48, -48, 96, 96), Phaser.Geom.Rectangle.Contains);
       this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (this.introComplete && this.backendHomeAttention) callbacks.onQuestSourceInteract?.("home");
