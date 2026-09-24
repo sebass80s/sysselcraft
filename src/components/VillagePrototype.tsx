@@ -102,6 +102,7 @@ export default function VillagePrototype() {
   const [henningStoryIndex, setHenningStoryIndex] = useState<number | null>(null);
   const [henningStoryReplayIndex, setHenningStoryReplayIndex] = useState<number | null>(null);
   const [henningArrivalSeen, setHenningArrivalSeen] = useState(false);
+  const [miraArrivalSeen, setMiraArrivalSeen] = useState(false);
   const [henningDialogueOpen, setHenningDialogueOpen] = useState(false);
   const [henningDialogueIndex, setHenningDialogueIndex] = useState(0);
   const [dialogueIndex, setDialogueIndex] = useState(0);
