@@ -165,6 +165,13 @@ export function bakeryContributionOffsetForStage(stage: BuildingStage): number {
   return BAKERY_CONTRIBUTION_THRESHOLDS[stage - 1];
 }
 
+export function syncRecyclingContributionProgress(state: ConstructionState, authoritativeWorldProgression: number): ConstructionState {
+  if (state.revealed.recycling >= 4 || state.pending.some(id => id.startsWith("recycling:"))) return state;
+  const target = Math.min(4, Math.max(0, Math.floor(authoritativeWorldProgression))) as BuildingStage;
+  const nextStage = (state.revealed.recycling + 1) as BuildingStage;
+  return target >= nextStage ? earnConstruction(state, `recycling:${nextStage}`) : state;
+}
+
 export function syncBakeryContributionProgress(
   state: ConstructionState,
   authoritativeWorldProgression: number,
