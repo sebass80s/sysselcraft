@@ -255,6 +255,26 @@ The emerging ensemble shorthand is useful but not literal dialogue direction:
 - **Henning: the village's heart.**
 - **Sol: the village's future.**
 
+### Sol arrival arc — LOCKED 2026-09-24
+
+Sol's arrival is triggered through the first narrative SysselBux purchase in Mira's shop, not through another anonymous quest threshold. After Mira's lanthandel is open, the child can buy a **flaskpost** item for SysselBux. The exact price may be tuned against the live economy, but it must remain accessible because this purchase gates main-story progression.
+
+The purchase does not directly unlock Sol as if she were a shop reward. It creates a physical world interaction at the waterfront. The child goes to the pier/water with the dog and sends the bottle out into the world. This is an **Illustrated Story Moment** and should use a dedicated image showing the child from the established non-specific/back-facing perspective throwing the bottle into the water. The emotional beat is curiosity rather than explanation: the child does not know who will find it.
+
+The message is simple and childlike: it tells an unknown reader that the small village is coming alive again, mentions the people who now live there, and invites whoever finds it to visit. Exact dialogue may be polished in implementation, but it must not explicitly ask for a doctor or reveal Sol in advance.
+
+Sol is newly graduated and was originally travelling elsewhere. She has taken a wrong route, but this is an ordinary navigation mistake and must not portray her as helpless or incompetent. While finding her way again she discovers the child's bottle and becomes curious enough to follow the invitation back toward the village.
+
+The existing **`public/assets/village/story-moments/sol-arrival.png`** is the second Illustrated Story Moment. It depicts Sol with travelling bag, doctor's clothes and stethoscope meeting the child and dog at the harbour. The scene is therefore canonically their **first meeting**, not merely a generic portrait of her arrival.
+
+The dramatic sequence is locked as:
+
+**Bakery complete → Mira arrives → lanthandeln opens → child earns/spends SysselBux on flaskpost → child sends bottle from the waterfront → Sol finds it while travelling → Sol follows it to the village → first meeting at the harbour → Sol explores the village → Sol chooses to stay → Clinic project begins.**
+
+At the harbour, Sol can reveal that she is newly qualified as a doctor. The child naturally observes that the village has no doctor. Sol does **not** immediately announce that she is moving in. She was headed elsewhere and initially decides to look around. Seeing the revived Bakery, Mira's reopened shop and the growing community gives her a reason to choose the village herself. This preserves the core character rule that **Sol carries forward motion**: chance brings her the letter, but staying is her own decision.
+
+The clinic is discovered/introduced only after this first meeting and brief exploration beat. Sol's decision to build a life and clinic here should feel like the consequence of what the child has helped create, not a pre-scripted assignment. Her later relationship with Linus's knee/cane and her contrast with Henning remain post-introduction village-life material rather than exposition during arrival.
+
 ## 10. World structure and resident order
 
 Sysselcraft uses **multiple connected world areas**, not one endlessly expanding mega-map and not a level-select teleport menu. New areas are reached through physical world exits/transitions.
