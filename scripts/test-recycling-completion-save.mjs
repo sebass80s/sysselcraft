@@ -74,6 +74,16 @@ assert.deepEqual(malformed.construction.completedStoryBeats, [construction.RECYC
 
 console.log("PASS: Recycling stage 4 completion survives restart before the scene, persists after completion, and cannot replay after reload.");
 
+const clinicFinaleSave = {
+  ...restoredAfterStory,
+  worldFlags: { ...restoredAfterStory.worldFlags, clinicCompletionSeen: true },
+};
+await save.saveSaveState(clinicFinaleSave, true);
+const restoredClinicFinale = await save.loadSaveState(true);
+assert.equal(restoredClinicFinale.worldFlags.clinicCompletionSeen, true,
+  "Clinic finale completion must survive normalization/reload and never become eligible to replay");
+console.log("PASS: Clinic finale completion flag survives reload.");
+
 // A broken/future save must never be mistaken for a new game by the playable surface.
 for (const unreadable of ["{broken", "", JSON.stringify({ version: 2 })]) {
   stored = unreadable;
