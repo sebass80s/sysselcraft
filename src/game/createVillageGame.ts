@@ -518,7 +518,8 @@ export async function createVillageGame(
           this.path = findPath(this.player, { x: 1130, y: 425 }, this.navigationObstacles);
         } else if (stop === "bakery") {
           this.henningInteractionPending = true;
-          this.path = findPath(this.player, REQUIRED_APPROACHES.henning, this.navigationObstacles);
+          if (!this.henning) return;
+          this.path = findPath(this.player, { x: this.henning.x, y: this.henning.y + 55 }, this.navigationObstacles);
         } else if (stop === "linus") {
           this.linusInteractionPending = true;
           this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
