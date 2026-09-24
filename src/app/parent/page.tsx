@@ -4,6 +4,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import {
   getBackendAuthState,
   setParentPassword,
+  sendParentPasswordBootstrapLink,
   signInParentWithPassword,
   signOutBackendSession,
   subscribeBackendAuth,
@@ -261,6 +262,20 @@ export default function ParentModePage() {
       await signInParentWithPassword(email, password);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Inloggningen misslyckades.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function bootstrapPassword(event: FormEvent) {
+    event.preventDefault();
+    setBusy(true);
+    setMessage("");
+    try {
+      await sendParentPasswordBootstrapLink(email, `${window.location.origin}/parent`);
+      setMessage("Kolla mejlen. Öppna engångslänken här för att sätta ditt första lösenord. 🔐");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte skicka engångslänken.");
     } finally {
       setBusy(false);
     }
@@ -528,6 +543,20 @@ export default function ParentModePage() {
               Logga in
             </button>
           </form>
+          <form onSubmit={bootstrapPassword}>
+            <input
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="din@mejl.se"
+            />
+            <button className="secondary-button" disabled={busy}>
+              Jag har inget lösenord ännu
+            </button>
+          </form>
+          <small>Har du bara använt mejllänk tidigare? Skicka en sista engångslänk och sätt sedan ett permanent lösenord.</small>
           {message && <p>{message}</p>}
           <a href="/">← Tillbaka till byn</a>
         </section>
