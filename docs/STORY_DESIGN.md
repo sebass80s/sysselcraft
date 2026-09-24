@@ -441,3 +441,33 @@ The locked economy semantics above are now represented by the current implementa
 This is implementation status, not a change to the fiction or economy design. The first concrete SysselBux catalog remains deliberately open design space. Do not invent SysselBux stock merely to make the shop look fuller.
 
 The Diamond slice has passed backend transactional/authorization testing but is not yet physically accepted end-to-end on the paired iPhone. Do not narratively or technically treat the reward shop as a completed player-facing milestone until that real journey passes.
+
+
+## LOCKED — Sol chooses the village: playable tour → Clinic
+
+**Status: LOCKED 2026-09-24.** This is the canonical continuation immediately after Sol's harbor arrival and her line that she wants to look around first.
+
+### Design intent
+Sol must not move in merely because the story needs a doctor. Her defining introduction is that she discovers the recovering village, sees that she can matter there, and **chooses it herself**. This chapter should be a short playable breather after the Flaskpost sequence, not another household-quest gate and not a checklist-heavy quest chain.
+
+### Canonical flow
+1. **Harbor handoff.** After the existing arrival scene, control returns to the child. Sol becomes a real runtime NPC at/near the harbor. Talking to her starts the invitation to show her around the village.
+2. **Playable village tour.** The child and dog show Sol around. Target length is roughly 3–5 minutes of story/gameplay. Use three natural village stops rather than three separate formal quests. The current intended anchors are the Bakery/Henning, Mira's lanthandel, and a central/community/Linus beat. Each stop should use only a small amount of dialogue and let the restored world itself do the storytelling.
+3. **Plant the need, do not manufacture an emergency.** During the later tour beat, Linus may casually reveal his knee/cane issue and brush it off. Sol reacts competently and professionally. This gives the child a natural opportunity to reiterate that the village has no doctor. Linus is not to be portrayed as helpless or used for melodramatic medical jeopardy.
+4. **Sol decides.** After the tour, Sol reaches the conclusion herself. Canonical emotional shape: she meant only to visit; she can see that the villagers are building something worthwhile; the village genuinely lacks a doctor; she decides she wants to stay. The exact final copy may be polished in implementation, but the decision must remain Sol's.
+5. **Only then reveal the Clinic project.** Linus can know of an old building/place suitable for a surgery/clinic. The story reveals the run-down Clinic stage 1 and starts the next main progression goal: build the Clinic for Sol.
+6. **Clinic returns to the core SysselCraft loop.** Unlike the short tour, Clinic construction is real progression: household quests contribute to materials/progress, the four existing Clinic construction stages advance visibly, and completion establishes Sol as the village doctor/resident.
+
+### Character/dramaturgy distinction
+- **Henning needs the village.**
+- **Mira arrives when the village has become viable again.**
+- **Sol finds the village by chance, discovers its people and purpose, and chooses it.**
+
+That distinction is important. Do not collapse Sol's arrival, decision and Clinic unlock into one dialogue sequence.
+
+### Implementation boundaries
+- The tour itself must **not** require new household quests.
+- It should feel like walking through and experiencing the world, not completing three UI checklist items.
+- Sol needs a proper runtime NPC presentation before this chapter is physically accepted. Preserve the established runtime-art rules: transparent character asset, correct proportions, uniform scaling only, and physical iPhone validation.
+- The existing Clinic stage assets are the canonical visual construction progression.
+- Exact Clinic quest-count/material pacing remains an implementation/progression decision unless separately locked elsewhere.
