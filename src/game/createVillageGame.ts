@@ -524,7 +524,8 @@ export async function createVillageGame(
           this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
         } else {
           this.solInteractionPending = true;
-          this.path = findPath(this.player, { x: 835, y: 485 }, this.navigationObstacles);
+          if (!this.sol) return;
+          this.path = findPath(this.player, { x: this.sol.x, y: this.sol.y + 55 }, this.navigationObstacles);
         }
         const targetPoint = this.path.at(-1);
         if (targetPoint) this.targetMarker?.setPosition(targetPoint.x, targetPoint.y).setVisible(true);
