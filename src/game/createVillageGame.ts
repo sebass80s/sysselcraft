@@ -19,6 +19,7 @@ export type VillageGameHandle = {
   setDogVisible: (visible: boolean) => void;
   setHenningVisible: (visible: boolean) => void;
   setShopOpen: (open: boolean) => void;
+  setBottleMessageReady: (ready: boolean) => void;
   setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", active: boolean) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
@@ -28,6 +29,7 @@ type Callbacks = {
   onLinusInteract: () => void;
   onHenningInteract: () => void;
   onShopInteract: () => void;
+  onBottleMessageInteract: () => void;
   onConstructionInteract: (id: string) => void;
 };
 type Facing = "north" | "south" | "east" | "west";
@@ -72,6 +74,7 @@ export async function createVillageGame(
   let requestedDogVisible = false;
   let requestedHenningVisible = false;
   let requestedShopOpen = false;
+  let requestedBottleMessageReady = false;
   const requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
 
   const parentWidth = Math.max(parent.clientWidth, 1);
@@ -97,6 +100,8 @@ export async function createVillageGame(
     private shop?: GameObjects.Image;
     private mira?: GameObjects.Image;
     private shopInteractionPending = false;
+    private bottleMessageMarker?: GameObjects.Text;
+    private bottleMessageInteractionPending = false;
     private attentionMarker?: GameObjects.Text;
     private attentionInteractionPending = false;
     private residents: Record<string, GameObjects.Image> = {};
@@ -378,6 +383,15 @@ export async function createVillageGame(
         return;
       }
 
+      if (this.bottleMessageInteractionPending && this.player && requestedBottleMessageReady) {
+        if (distance(this.player, { x: 835, y: 500 }) > 38) return;
+        this.bottleMessageInteractionPending = false;
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+        callbacks.onBottleMessageInteract();
+        return;
+      }
+
       if (this.shopInteractionPending && this.player && requestedShopOpen) {
         const shopApproach = { x: 1130, y: 425 };
         const miraApproach = { x: 1050, y: 445 };
@@ -460,6 +474,31 @@ export async function createVillageGame(
       this.shop.setTexture(open ? "shop-open" : "shop-abandoned");
       this.mira?.setVisible(open);
       if (!open) this.shopInteractionPending = false;
+    }
+
+    setBottleMessageReady(ready: boolean) {
+      requestedBottleMessageReady = ready;
+      this.bottleMessageMarker?.setVisible(ready);
+      if (!ready) this.bottleMessageInteractionPending = false;
+    }
+
+    private drawBottleMessageMarker() {
+      this.bottleMessageMarker = this.add.text(835, 500, "🍾", {
+        fontSize: "34px",
+        backgroundColor: "#fff2cf",
+        padding: { x: 9, y: 5 },
+      }).setOrigin(0.5).setDepth(3000).setVisible(requestedBottleMessageReady).setInteractive({ useHandCursor: true });
+      this.bottleMessageMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen || !requestedBottleMessageReady) return;
+        this.bottleMessageInteractionPending = true;
+        this.shopInteractionPending = false;
+        this.path = findPath(this.player, { x: 835, y: 500 }, this.navigationObstacles);
+        const target = this.path.at(-1);
+        if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
+      this.tweens.add({ targets: this.bottleMessageMarker, y: "-=5", duration: 900, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
     private drawHouse() {
@@ -738,6 +777,7 @@ export async function createVillageGame(
       }
 
       this.drawShop();
+      this.drawBottleMessageMarker();
 
       // Mira becomes a physical resident when her arrival beat opens the lanthandel.
       // Tapping her uses the same shop interaction as tapping the building.
@@ -865,6 +905,12 @@ export async function createVillageGame(
       requestedShopOpen = open;
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setShopOpen(open);
+      }
+    },
+    setBottleMessageReady: (ready: boolean) => {
+      requestedBottleMessageReady = ready;
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setBottleMessageReady(ready);
       }
     },
     setHenningVisible: (visible: boolean) => {
