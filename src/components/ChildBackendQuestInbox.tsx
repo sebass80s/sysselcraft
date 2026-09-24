@@ -408,7 +408,8 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       </button>
 
       {open && (
-        <section className={styles.panel}>
+        <section className={styles.panel} role="dialog" aria-modal="true" aria-label="Aktiva uppdrag">
+          <button className={styles.closeButton} type="button" onClick={() => { setOpen(false); setSourceFilter(null); }} aria-label="Stäng uppdrag">×</button>
           <header>
             <div>
               <strong>{sourceFilter === "noticeboard" ? "Anslagstavlan" : sourceFilter === "home" ? "Hemma" : sourceFilter === "linus" ? "Linus" : sourceFilter === "bakery" ? "Bageriet" : "Uppdrag hemifrån"}</strong>
