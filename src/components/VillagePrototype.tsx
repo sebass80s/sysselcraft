@@ -132,7 +132,10 @@ export default function VillagePrototype() {
   const storyMomentReplayControl = nativePlatform && debugToolsEnabled;
 
   useEffect(() => {
-    setDebugToolsEnabled(new URLSearchParams(window.location.search).get("debug") === "tools");
+    const timer = window.setTimeout(() => {
+      setDebugToolsEnabled(new URLSearchParams(window.location.search).get("debug") === "tools");
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
