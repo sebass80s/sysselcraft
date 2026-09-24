@@ -356,3 +356,9 @@ Physical evidence on the current iPhone additionally covers update-in-place pers
 - The restored shop is directly tappable. The avatar pathfinds to the shop approach before `onShopInteract` opens the shop panel. The abandoned shop is not interactable as a store.
 - The first shop panel currently exposes the authoritative backend wallet when available but intentionally performs no spending yet.
 - Do not implement spending by mutating local `diamonds`/`sysselBux`. Parent-created quest rewards are backend-authoritative; real purchases require a backend-authoritative atomic purchase path plus a locked inventory/pricing decision.
+
+## Supabase Data API grants (2026-09-24)
+
+Migration rule for every new table in an exposed schema such as `public`: declare Data API grants explicitly in the same migration that creates the table. Do not rely on Supabase's historical automatic table grants. SysselCraft uses least privilege: do not grant `anon` unless a feature genuinely requires that database role; child-device anonymous Auth sessions use the `authenticated` Postgres role. Grant only the direct table operations the client needs, keep authoritative writes behind RPCs, enable RLS on exposed tables, and verify grants plus Supabase security advisors after schema changes.
+
+Current audit: all existing core tables already use authenticated SELECT-only direct access where required, with authoritative writes behind RPCs. The Diamond reward tables were corrected to the same model both live and in their creating migration: no `anon` table access, `authenticated` SELECT only. Future migrations must follow this rule so fresh projects, preview branches and database resets remain Data-API compatible after Supabase's 2026-10-30 default change.
