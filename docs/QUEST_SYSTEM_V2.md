@@ -204,3 +204,15 @@ Backend quest presentation must not create duplicate markers where the village a
 - Future resident/building sources should follow the same rule: prefer the world's existing interaction affordance over parallel UI.
 
 The source bridge may track several active destinations at once. Opening a concrete source filters the child quest view to quests routed to that destination; the general quest control remains the all-discoverable fallback.
+
+
+## TODO — parent quest reuse/history UX (locked 2026-09-24)
+
+Parked while physical game testing continues.
+
+- Separate **Edit** from **Activate quest**.
+- Editing changes the quest definition only and must not silently create a new occurrence/reward opportunity.
+- **Activate quest** explicitly creates a new available occurrence, including intentional reuse of a previously completed once-quest.
+- Disable/block activation while the same quest already has an active available or pending occurrence, preventing accidental duplicates.
+- Parent history needs a **remove/hide from history** action so the visible list does not grow indefinitely.
+- Hiding/removing from the parent UI must not physically delete authoritative `quest_instances` or `reward_events`; completed reward/audit history remains preserved in backend.
