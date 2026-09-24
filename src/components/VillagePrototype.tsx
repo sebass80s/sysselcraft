@@ -377,7 +377,7 @@ export default function VillagePrototype() {
     try {
       const snapshot = withConstructionState(latestSaveRef.current, next); await saveSaveState(snapshot, true);
       latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next); setRecyclingStoryOpen(false); setRecyclingStoryIndex(0);
-      if (!snapshot.worldFlags.henningArrivalSeen) { setQuestOpen(false); setParentMenuOpen(false); setConstructionDialogueId(null); setHenningStoryIndex(0); }
+      if (!snapshot.worldFlags.henningArrivalSeen) { setParentMenuOpen(false); setConstructionDialogueId(null); setHenningStoryIndex(0); }
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
@@ -438,7 +438,7 @@ export default function VillagePrototype() {
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
 
-  function replayClinicStoryMoment() { setParentMenuOpen(false); setQuestOpen(false); setConstructionDialogueId(null); setClinicStoryReplayIndex(0); }
+  function replayClinicStoryMoment() { setParentMenuOpen(false); setConstructionDialogueId(null); setClinicStoryReplayIndex(0); }
   function advanceClinicStoryReplay() { setClinicStoryReplayIndex((index) => index === null ? null : index + 1 < clinicCompletionDialogue.length ? index + 1 : null); }
 
   async function advanceMiraStory() {
@@ -579,14 +579,14 @@ export default function VillagePrototype() {
   }
 
   function replayMiraStoryMoment() {
-    setParentMenuOpen(false); setQuestOpen(false); setConstructionDialogueId(null); setMiraStoryReplayIndex(0);
+    setParentMenuOpen(false); setConstructionDialogueId(null); setMiraStoryReplayIndex(0);
   }
   function advanceMiraStoryReplay() {
     setMiraStoryReplayIndex((index) => index === null ? null : index + 1 < miraArrivalDialogue.length ? index + 1 : null);
   }
 
   function replayBakeryStoryMoment() {
-    setParentMenuOpen(false); setQuestOpen(false); setConstructionDialogueId(null); setBakeryStoryReplayIndex(0);
+    setParentMenuOpen(false); setConstructionDialogueId(null); setBakeryStoryReplayIndex(0);
   }
   function advanceBakeryStoryReplay() {
     setBakeryStoryReplayIndex((index) => index === null ? null : index + 1 < bakeryCompletionDialogue.length ? index + 1 : null);
@@ -600,13 +600,13 @@ export default function VillagePrototype() {
   }
   function replayLinusStoryMoment() {
     setParentMenuOpen(false);
-    setQuestOpen(false);
+   
     setConstructionDialogueId(null);
     setLinusStoryReplayIndex(0);
   }
   function replayHenningStoryMoment() {
     setParentMenuOpen(false);
-    setQuestOpen(false);
+   
     setConstructionDialogueId(null);
     setHenningStoryReplayIndex(0);
   }
