@@ -28,16 +28,28 @@ export function subscribeBackendAuth(listener: (state: BackendAuthState) => void
   return () => data.subscription.unsubscribe();
 }
 
-export async function sendParentMagicLink(email: string, redirectTo?: string): Promise<void> {
+export async function signInParentWithPassword(email: string, password: string): Promise<void> {
   const normalizedEmail = email.trim().toLowerCase();
   if (!normalizedEmail) throw new Error("Email is required.");
+  if (!password) throw new Error("Password is required.");
 
-  const { error } = await getSupabaseBrowserClient().auth.signInWithOtp({
+  const { data, error } = await getSupabaseBrowserClient().auth.signInWithPassword({
     email: normalizedEmail,
-    options: redirectTo ? { emailRedirectTo: redirectTo } : undefined,
+    password,
   });
 
   if (error) throw error;
+  if (!data.user || data.user.is_anonymous) {
+    await getSupabaseBrowserClient().auth.signOut();
+    throw new Error("Parent authentication did not return a parent user.");
+  }
+}
+
+export async function setParentPassword(password: string): Promise<void> {
+  if (password.length < 8) throw new Error("Lösenordet måste vara minst 8 tecken.");
+  const { data, error } = await getSupabaseBrowserClient().auth.updateUser({ password });
+  if (error) throw error;
+  if (!data.user || data.user.is_anonymous) throw new Error("Kunde inte uppdatera föräldrakontot.");
 }
 
 export async function ensureChildAnonymousSession(): Promise<string> {
