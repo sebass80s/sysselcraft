@@ -3,7 +3,7 @@
   left: max(.65rem, env(safe-area-inset-left));
   bottom: max(.65rem, env(safe-area-inset-bottom));
   z-index: 18;
-  width: min(360px, calc(100vw - max(.65rem, env(safe-area-inset-left)) - max(.65rem, env(safe-area-inset-right))));
+  width: auto;
   pointer-events: none;
   color: #49392c;
 }
@@ -38,11 +38,11 @@
 
 .panel {
   pointer-events: auto;
-  position: relative;
-  margin-top: .55rem;
-  max-height: min(66dvh, 560px);
+  position: fixed;
+  inset: max(.7rem, env(safe-area-inset-top)) max(.7rem, env(safe-area-inset-right)) max(.7rem, env(safe-area-inset-bottom)) max(.7rem, env(safe-area-inset-left));
   overflow: auto;
-  padding: .9rem;
+  padding: clamp(1rem, 3vw, 1.6rem);
+  padding-top: clamp(3.1rem, 7vw, 4rem);
   border: 3px solid #765537;
   border-radius: 16px;
   background: linear-gradient(180deg, #fff8e8, #f0dfb8);
@@ -56,6 +56,25 @@
   border: 1px solid rgba(124,89,55,.22);
   border-radius: 11px;
   pointer-events: none;
+}
+
+ .closeButton {
+  position: absolute;
+  z-index: 3;
+  top: .7rem;
+  right: .7rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border: 2px solid #8f6b46;
+  border-radius: 999px;
+  background: #fff8e8;
+  color: #49392c;
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .panel header {
@@ -92,7 +111,8 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.65);
 }
 .quest + .quest { margin-top: .55rem; }
-.quest p { margin: 0; line-height: 1.35; font-size: .9rem; }
+.quest > strong { font-size: clamp(1.15rem, 3vw, 1.55rem); }
+.quest p { margin: 0; line-height: 1.45; font-size: clamp(1rem, 2.5vw, 1.25rem); }
 .quest small { color: #706858; font-weight: 700; }
 
 .message {
@@ -116,8 +136,11 @@
 .footer a { color: #416b3f; font-size: .78rem; font-weight: 900; }
 
 @media (max-width: 700px) and (orientation: landscape) {
-  .dock { width: min(330px, calc(100vw - max(.65rem, env(safe-area-inset-left)) - max(.65rem, env(safe-area-inset-right)))); }
-  .panel { max-height: 70dvh; }
+  .panel {
+    inset: max(.45rem, env(safe-area-inset-top)) max(.55rem, env(safe-area-inset-right)) max(.45rem, env(safe-area-inset-bottom)) max(.55rem, env(safe-area-inset-left));
+    padding: .9rem 1.1rem;
+    padding-top: 3rem;
+  }
 }
 
 
