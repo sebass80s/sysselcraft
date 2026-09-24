@@ -120,7 +120,7 @@ export async function createVillageGame(
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
       this.load.image("puppy-painted", "/assets/village/reboot/puppy-painted.png");
       this.load.image("henning-painted", "/assets/village/reboot/henning-npc.png");
-      this.load.image("mira-painted", "/assets/village/mira-runtime.png");
+      this.load.image("mira-painted", "/assets/village/reboot/mira-runtime.png");
       this.load.image("shop-abandoned", "/assets/village/buildings/shop/lanthandel-abandoned.webp");
       this.load.image("shop-open", "/assets/village/buildings/shop/lanthandel-open.webp");
       this.load.image("truck-painted", "/assets/village/reboot/truck-runtime.png");
