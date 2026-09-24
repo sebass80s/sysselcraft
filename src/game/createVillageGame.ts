@@ -101,7 +101,7 @@ export async function createVillageGame(
     private noticeboardMarker?: GameObjects.Container;
     private backendHomeAttention = false;
     private backendLinusAttention = false;
-    private linusQuestMarker?: GameObjects.Text;
+    private linusQuestMarker?: GameObjects.Container;
     private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
     private henning?: GameObjects.Image;
@@ -607,7 +607,7 @@ export async function createVillageGame(
           }).setOrigin(0.5);
           this.linusQuestMarker = this.add.container(this.linus.x, this.linus.y - 178, [linusBadge, linusLabel])
             .setDepth(3000).setSize(76, 76).setInteractive({ useHandCursor: true });
-          this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+          this.linusQuestMarker?.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
             event.stopPropagation();
             if (!this.player || constructionDialogueOpen) return;
             this.linusInteractionPending = true;
