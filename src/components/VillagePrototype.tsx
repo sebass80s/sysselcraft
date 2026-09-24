@@ -60,6 +60,7 @@ export default function VillagePrototype() {
   const [bakeryStoryIndex, setBakeryStoryIndex] = useState<number | null>(null);
   const [bakeryStoryReplayIndex, setBakeryStoryReplayIndex] = useState<number | null>(null);
   const [clinicStoryIndex, setClinicStoryIndex] = useState<number | null>(null);
+  const [clinicStoryReplayIndex, setClinicStoryReplayIndex] = useState<number | null>(null);
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
   const [bottleStoryIndex, setBottleStoryIndex] = useState<number | null>(null);
@@ -189,6 +190,8 @@ export default function VillagePrototype() {
           setBakeryStoryIndex(0);
         } else if (saved.construction.completedStoryBeats.includes("bakery:completion") && saved.worldFlags.miraArrivalSeen !== true) {
           setMiraStoryIndex(0);
+        } else if (saved.construction.revealed.clinic >= 4 && saved.worldFlags.clinicCompletionSeen !== true) {
+          setClinicStoryIndex(0);
         } else if (saved.construction.revealed.recycling >= 4 && saved.worldFlags.henningArrivalSeen !== true) {
           setHenningStoryIndex(0);
         }
@@ -418,11 +421,20 @@ export default function VillagePrototype() {
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
 
-  function advanceClinicStory() {
-    if (clinicStoryIndex === null) return;
+  async function advanceClinicStory() {
+    if (clinicStoryIndex === null || !latestSaveRef.current || constructionWriteRef.current) return;
     const nextIndex = clinicStoryIndex + 1;
-    setClinicStoryIndex(nextIndex < clinicCompletionDialogue.length ? nextIndex : null);
+    if (nextIndex < clinicCompletionDialogue.length) { setClinicStoryIndex(nextIndex); return; }
+    constructionWriteRef.current = true; setConstructionBusy(true); setConstructionError("");
+    try {
+      const snapshot: SaveStateV1 = { ...latestSaveRef.current, worldFlags: { ...latestSaveRef.current.worldFlags, clinicCompletionSeen: true } };
+      await saveSaveState(snapshot, true); latestSaveRef.current = snapshot; setClinicStoryIndex(null);
+    } catch { setConstructionError("Det gick inte att spara klinikens avslutning. Försök igen."); }
+    finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
+
+  function replayClinicStoryMoment() { setParentMenuOpen(false); setQuestOpen(false); setConstructionDialogueId(null); setClinicStoryReplayIndex(0); }
+  function advanceClinicStoryReplay() { setClinicStoryReplayIndex((index) => index === null ? null : index + 1 < clinicCompletionDialogue.length ? index + 1 : null); }
 
   async function advanceMiraStory() {
     if (miraStoryIndex === null || constructionWriteRef.current || !latestSaveRef.current) return;
@@ -620,7 +632,9 @@ export default function VillagePrototype() {
   const recyclingSpeakerName = recyclingStoryLine?.speaker === "Barnet" ? childName || "Barnet" : recyclingStoryLine?.speaker ?? "";
   const bakeryStoryLine = bakeryStoryIndex === null ? null : bakeryCompletionDialogue[bakeryStoryIndex];
   const clinicStoryLine = clinicStoryIndex === null ? null : clinicCompletionDialogue[clinicStoryIndex];
+  const clinicStoryReplayLine = clinicStoryReplayIndex === null ? null : clinicCompletionDialogue[clinicStoryReplayIndex];
   const clinicSpeakerName = clinicStoryLine?.speaker === "Barnet" ? childName || "Barnet" : clinicStoryLine?.speaker ?? "";
+  const clinicReplaySpeakerName = clinicStoryReplayLine?.speaker === "Barnet" ? childName || "Barnet" : clinicStoryReplayLine?.speaker ?? "";
   const bakeryStoryReplayLine = bakeryStoryReplayIndex === null ? null : bakeryCompletionDialogue[bakeryStoryReplayIndex];
   const bakerySpeakerName = bakeryStoryLine?.speaker === "Barnet" ? childName || "Barnet" : bakeryStoryLine?.speaker ?? "";
   const bakeryReplaySpeakerName = bakeryStoryReplayLine?.speaker === "Barnet" ? childName || "Barnet" : bakeryStoryReplayLine?.speaker ?? "";
@@ -693,6 +707,8 @@ export default function VillagePrototype() {
     {miraStoryReplayIndex !== null && miraStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryReplayLine.speaker === "Barnet" ? "child" : miraStoryReplayLine.speaker.toLowerCase()}`}>{miraReplaySpeakerName}</span><p>{miraReplayText}</p><button className="primary-button dialogue-next" onClick={advanceMiraStoryReplay}>{miraStoryReplayIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {clinicStoryIndex !== null && clinicStoryLine && <div className="story-moment" role="presentation"><Image src={clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"} alt="" fill priority sizes="100vw" /></div>}
     {clinicStoryIndex !== null && clinicStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Sols klinik är färdig"><span className={`dialogue-speaker henning-story-speaker ${clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker.toLowerCase()}`}>{clinicSpeakerName}</span><p>{clinicStoryLine.text}</p><button className="primary-button dialogue-next" onClick={advanceClinicStory}>{clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
+    {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="story-moment" role="presentation"><Image src={clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"} alt="" fill priority sizes="100vw" /></div>}
+    {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Sols färdiga klinik"><span className={`dialogue-speaker henning-story-speaker ${clinicStoryReplayLine.speaker === "Barnet" ? "child" : clinicStoryReplayLine.speaker.toLowerCase()}`}>{clinicReplaySpeakerName}</span><p>{clinicStoryReplayLine.text}</p><button className="primary-button dialogue-next" onClick={advanceClinicStoryReplay}>{clinicStoryReplayIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {bakeryStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png" alt="" fill priority sizes="100vw" /></div>}
     {bakeryStoryIndex !== null && bakeryStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Bageriet är färdigt"><span className={`dialogue-speaker henning-story-speaker ${bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker.toLowerCase()}`}>{bakerySpeakerName}</span><p>{bakeryStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBakeryStory()}>{constructionBusy ? "Sparar…" : bakeryStoryIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {bakeryStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png" alt="" fill priority sizes="100vw" /></div>}
@@ -725,6 +741,7 @@ export default function VillagePrototype() {
     {questState === "pending" ? <article className="parent-quest-card"><div><span>{makeBedQuest.icon}</span><div><strong>{makeBedQuest.title}</strong><small>Barnet har markerat uppgiften som klar.</small></div></div><div className="parent-quest-actions"><button className="primary-button compact" onClick={approveQuest}>Godkänn</button><button className="secondary-button compact" onClick={needsCompletion}>Behöver kompletteras</button></div></article> : <div className="parent-empty-state">✓ Inget lokalt prototypuppdrag väntar just nu.</div>}
     {storyMomentReplayControl && <div className="parent-profile-card"><span>STORY MOMENT · testvisning</span><button className="secondary-button" type="button" onClick={replayLinusStoryMoment}>🎬 Spela Linus första möte</button><button className="secondary-button" type="button" onClick={replayHenningStoryMoment}>🥖 Spela Hennings ankomst</button><button className="secondary-button" type="button" onClick={replayBakeryStoryMoment}>🥐 Spela färdigt bageri</button><button className="secondary-button" type="button" onClick={replayMiraStoryMoment}>🔧 Spela Miras ankomst</button><small>Spelar bara upp scenerna. Din sparning och progression ändras inte.</small></div>}
     {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span>{[2,3,4].map((stage) => <button key={`recycling-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}{[1,2,3,4].map((stage) => <button key={`bakery-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.bakery !== stage - 1 || construction.earned.bakery >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `bakery:${stage}`))}>TEST: tjäna in Bakery stage {stage}</button>)}{[2,3,4].map((stage) => <button key={`clinic-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.clinic !== stage - 1 || construction.earned.clinic >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `clinic:${stage}`))}>TEST: tjäna in Clinic stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {storyMomentReplayControl && construction.revealed.clinic >= 4 && <div className="parent-profile-card"><span>STORY MOMENT TEST</span><button className="secondary-button" onClick={replayClinicStoryMoment}>▶ Sol + färdiga kliniken</button></div>}
     {nativeTestControls && <div className="parent-menu-footer"><span>Debugverktyg · aktiverade med ?debug=tools</span><button className="debug-reset-button" type="button" onClick={resetPrototypeSave} disabled={!saveReady || resettingSave || constructionBusy}>↺ Nollställ testsparning</button></div>}</section></div>}
     </div>
     {saveError && <div className="parent-menu-backdrop"><section className="parent-menu-panel" role="alert">
