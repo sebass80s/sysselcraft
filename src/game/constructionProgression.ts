@@ -32,9 +32,10 @@ function clampNextStage(stage: BuildingStage): BuildingStage {
  * replay/reload safe: the same approval event can be observed repeatedly without advancing twice.
  *
  * The first recycling arc is calibrated to four contributions. Bakery is product-locked to
- * ten contributions total, but the distribution of those ten contributions across its four
- * visual stages remains deliberately unspecified until physical art review. Clinic pacing is
- * still an open product decision. This reducer therefore must not invent Bakery thresholds.
+ * ten authoritative claims with stage pacing 1-2-4-3 (cumulative thresholds 1/3/7/10).
+ * Clinic is product-locked to stage 1 at start, then stages 2-4 after 2/4/8 authoritative
+ * claims from its persisted baseline. Those authored thresholds live in construction.ts;
+ * this generic reducer must not invent or replace them.
  */
 export function applyApprovedConstructionContribution(
   current: ConstructionProgressionState,
