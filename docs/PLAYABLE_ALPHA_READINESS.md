@@ -278,3 +278,16 @@ Do not create the first child release tag until the physical release gates above
 
 - PASS: one normal backend quest completed end-to-end on the audited iPhone build: child received the quest, submitted it, parent approved it, child claimed it, and the reward flow completed successfully.
 - Final release persistence gate remains: force-quit/relaunch and confirm the resulting wallet/reward state, world state and pairing are still intact.
+
+
+### First child release physical acceptance — 2026-09-24
+
+PASS. The audited iPhone candidate has completed the full pre-release physical gate set.
+
+- Existing village, construction and resident state survived update-in-place.
+- Normal native launch exposes no release-blocking TEST/replay/reset controls.
+- Clinic completion finale remains completed across force-quit/relaunch.
+- A real backend quest completed child submit → parent approve → child claim → reward.
+- After the final force-quit/relaunch, the built world, residents, resulting wallet/reward state and child pairing remained intact.
+- This is the accepted first-child-release checkpoint pending green CI for this documentation-only checkpoint.
+- The separate intermittent stale native/Xcode bundle issue remains known debt; its cadence/root cause is not established and it did not invalidate the physically verified installed candidate.
