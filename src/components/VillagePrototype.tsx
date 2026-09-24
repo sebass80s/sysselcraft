@@ -270,6 +270,7 @@ export default function VillagePrototype() {
       handle.setQuestSourceAttention("linus", questSources.linus > 0);
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setHenningVisible(latestSaveRef.current?.worldFlags.henningArrivalSeen === true);
+      handle.setSolVisible(latestSaveRef.current?.worldFlags.solArrivalSeen === true);
       handle.setShopOpen(latestSaveRef.current?.worldFlags.miraArrivalSeen === true);
       handle.setBottleMessageReady(latestSaveRef.current?.worldFlags.bottleMessagePurchased === true && latestSaveRef.current?.worldFlags.bottleMessageSent !== true);
       handle.setIntroComplete(restoredIntroCompleteRef.current);
@@ -286,6 +287,7 @@ export default function VillagePrototype() {
   useEffect(() => { gameRef.current?.setIntroComplete(introComplete); }, [introComplete]);
   useEffect(() => { gameRef.current?.setDogVisible(dogVisible); }, [dogVisible]);
   useEffect(() => { gameRef.current?.setHenningVisible(henningArrivalSeen); }, [henningArrivalSeen]);
+  useEffect(() => { gameRef.current?.setSolVisible(solArrivalSeen); }, [solArrivalSeen]);
   useEffect(() => { gameRef.current?.setBottleMessageReady(bottleMessagePurchased && !bottleMessageSent); }, [bottleMessagePurchased, bottleMessageSent]);
   useEffect(() => {
     if (!saveReady || !bottleMessageSent || solArrivalSeen || bottleLetterOpen || bottleStoryIndex !== null || solStoryIndex !== null) return;
