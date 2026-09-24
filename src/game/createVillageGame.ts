@@ -817,7 +817,7 @@ export async function createVillageGame(
       // validate size and grounding before the village-tour/follow mechanic is added.
       this.sol = this.add.image(875, 480, "sol-painted")
         .setOrigin(0.5, 0.96)
-        .setScale(0.085)
+        .setScale(0.10)
         .setDepth(1480)
         .setVisible(requestedSolVisible);
       this.residents.sol = this.sol;
