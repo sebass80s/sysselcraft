@@ -172,6 +172,7 @@ export default function VillagePrototype() {
         setChildNameCanSubmit(Boolean(saved.childName.trim()));
         setDogNameCanSubmit(Boolean(saved.dogName.trim()));
         setHenningArrivalSeen(saved.worldFlags.henningArrivalSeen === true);
+        setMiraArrivalSeen(saved.worldFlags.miraArrivalSeen === true);
         setBottleMessagePurchased(saved.worldFlags.bottleMessagePurchased === true);
         setBottleMessageSent(saved.worldFlags.bottleMessageSent === true);
         setSolArrivalSeen(saved.worldFlags.solArrivalSeen === true);
@@ -222,6 +223,10 @@ export default function VillagePrototype() {
         firstDeliveryComplete: recyclingCenterStage >= 1,
         recyclingCenterStage,
         henningArrivalSeen,
+        miraArrivalSeen,
+        bottleMessagePurchased,
+        bottleMessageSent,
+        solArrivalSeen,
         solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay,
       },
     };
@@ -230,7 +235,7 @@ export default function VillagePrototype() {
       () => setSaveError(false),
       () => setSaveError(true),
     );
-  }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay]);
+  }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay]);
 
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
@@ -422,6 +427,7 @@ export default function VillagePrototype() {
       };
       await saveSaveState(snapshot, true);
       latestSaveRef.current = snapshot;
+      setMiraArrivalSeen(true);
       gameRef.current?.setShopOpen(true);
       setMiraStoryIndex(null);
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
