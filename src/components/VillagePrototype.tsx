@@ -7,7 +7,6 @@ import ChildPairingPanel from "./ChildPairingPanel";
 import type { QuestState, VillageGameHandle } from "../game/createVillageGame";
 import { henningArrivalDialogue, linusIntroDialogue } from "../game/dialogues";
 import {
-  applyQuestProgression,
   createEmptyProgression,
   makeBedQuest,
   type ProgressionState,
@@ -15,7 +14,6 @@ import {
 } from "../game/quests";
 import {
   initialConstruction,
-  syncConstructionProgression,
   earnConstruction,
   residentAttention,
   commitConstructionReveal,
@@ -89,9 +87,9 @@ export default function VillagePrototype() {
   const restoredDogVisibleRef = useRef(false);
   const childNameInputRef = useRef<HTMLInputElement>(null);
   const dogNameInputRef = useRef<HTMLInputElement>(null);
-  const approvalLockRef = useRef(false);
   const [saveReady, setSaveReady] = useState(false);
-  const [questState, setQuestState] = useState<QuestState>("available");
+  // Kept in the v1 save shape for backward compatibility. Real quests are backend-owned.
+  const [questState, setQuestState] = useState<QuestState>("approved");
   const [questOpen, setQuestOpen] = useState(false);
   const [diamonds, setDiamonds] = useState(0);
   const [sysselBux, setSysselBux] = useState(0);
@@ -125,7 +123,6 @@ export default function VillagePrototype() {
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
   const recyclingStoryLine = recyclingStoryOpen ? recyclingCompletionDialogue[recyclingStoryIndex] : null;
-  const pendingCount = questState === "pending" ? 1 : 0;
   const recyclingCenterStage = construction.revealed.recycling;
   const recyclingCenterStatus = getRecyclingCenterStatus(recyclingCenterStage);
   const nativePlatform = Capacitor.isNativePlatform();
@@ -165,12 +162,11 @@ export default function VillagePrototype() {
       if (saved) {
         constructionRef.current = saved.construction;
         setConstruction(saved.construction);
-        restoredQuestStateRef.current = saved.questStates.makeBed;
+        restoredQuestStateRef.current = "approved";
         restoredIntroCompleteRef.current = saved.introComplete;
         restoredDogVisibleRef.current = saved.dogVisible;
-        approvalLockRef.current = saved.completedQuestIds.includes(makeBedQuest.id);
 
-        setQuestState(saved.questStates.makeBed);
+        setQuestState("approved");
         setDiamonds(saved.diamonds);
         setSysselBux(saved.sysselBux);
         setCompletedQuestIds(saved.completedQuestIds);
@@ -630,15 +626,6 @@ export default function VillagePrototype() {
   }
   function finishChildNaming() { const trimmed = childNameInputRef.current?.value.trim() ?? ""; if (!trimmed) return; setChildName(trimmed); setChildNameCanSubmit(true); advanceDialogue(); }
   function finishDogNaming() { const trimmed = dogNameInputRef.current?.value.trim() ?? ""; if (!trimmed) return; setDogName(trimmed); setDogNameCanSubmit(true); setDogVisible(true); setDialogueIndex((index) => index + 1); }
-  function submitQuest() { if (questState !== "available") return; setQuestState("pending"); setQuestOpen(false); }
-  function approveQuest() {
-    if (questState !== "pending" || approvalLockRef.current || completedQuestIds.includes(makeBedQuest.id)) return;
-    approvalLockRef.current = true; setQuestState("approved"); setCompletedQuestIds((ids) => [...ids, makeBedQuest.id]);
-    const earnedProgression = applyQuestProgression(progression, makeBedQuest); setProgression(earnedProgression);
-    const nextConstruction = syncConstructionProgression(constructionRef.current, earnedProgression); constructionRef.current = nextConstruction; setConstruction(nextConstruction);
-    setDiamonds((value) => value + makeBedQuest.reward.diamonds); setSysselBux((value) => value + makeBedQuest.reward.sysselBux); setParentMenuOpen(false);
-  }
-  function needsCompletion() { if (questState !== "pending") return; setQuestState("available"); setParentMenuOpen(false); setQuestOpen(true); }
   async function resetPrototypeSave() {
     if (resettingSave) return;
     if (!window.confirm("Nollställ Sysselcraft-testet? Barnnamn, hundnamn, quest, resurser och världsläge raderas på den här enheten.")) return;
@@ -689,7 +676,7 @@ export default function VillagePrototype() {
   </div></section>;
 
   return <section className="prototype-shell">
-    <header className="prototype-header"><div className="prototype-brand-row"><h1>SysselCraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label={pendingCount ? `Öppna vuxenläge, ${pendingCount} quest väntar` : "Öppna vuxenläge"}>🔐 Vuxenläge{pendingCount > 0 && <span className="parent-menu-badge">{pendingCount}</span>}</button></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
+    <header className="prototype-header"><div className="prototype-brand-row"><h1>SysselCraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label="Öppna vuxenläge">🔐 Vuxenläge</button></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
@@ -753,10 +740,8 @@ export default function VillagePrototype() {
     {recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig"><span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span><p>{recyclingStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>{constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {linusStoryReplayStep && !recyclingStoryOpen && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Replay av Linus första möte">{linusStoryReplayStep.kind === "line" && <><span className={`dialogue-speaker ${linusStoryReplayStep.speaker === "Barnet" ? "child" : ""}`}>{linusStoryReplaySpeaker}</span><p>{linusStoryReplayStep.text}</p></>}{linusStoryReplayStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><p><strong>{childName || "Barnet"}</strong></p></>}{linusStoryReplayStep.kind === "reveal-dog" && <><span className="dialogue-speaker">Linus</span><p>🐶 Valpen kommer fram.</p></>}{linusStoryReplayStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><p><strong>{dogName || "Valpen"}</strong></p></>}<button className="primary-button dialogue-next" onClick={advanceLinusStoryReplay}>{linusStoryReplayIndex === linusIntroDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {dialogueOpen && dialogueStep && !recyclingStoryOpen && <div className={`dialogue-card ${linusStoryMomentOpen ? "story-moment-dialogue" : ""}`} role="dialog" aria-modal="true" aria-live="polite">{dialogueStep.kind === "line" && <><span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{speakerName}</span><p>{dialogueStep.text}</p><button className="primary-button dialogue-next" onClick={advanceDialogue}>Fortsätt</button></>}{dialogueStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><input ref={childNameInputRef} className="dog-name-input" defaultValue={childName} onInput={(event) => setChildNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishChildNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ditt namn" /><button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>Det är jag!</button></>}{dialogueStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><input ref={dogNameInputRef} className="dog-name-input" defaultValue={dogName} onInput={(event) => setDogNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishDogNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ett namn" /><button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>Det blir namnet!</button></>}</div>}
-    {questOpen && introComplete && !recyclingStoryOpen && <div className="quest-card" role="dialog" aria-modal="true" aria-labelledby="quest-title"><button className="close-button" onClick={() => setQuestOpen(false)} aria-label="Stäng">×</button><span className="quest-kicker">Dagens första quest</span><h2 id="quest-title">{makeBedQuest.icon} {makeBedQuest.title}</h2><p>{makeBedQuest.description}</p><div className="quest-reward">Belöning: 💎 {makeBedQuest.reward.diamonds} · 🪙 {makeBedQuest.reward.sysselBux}</div>{questState === "available" && <button className="primary-button" onClick={submitQuest}>Jag har bäddat klart</button>}{questState === "pending" && <div className="pending-message">⏳ Väntar på en vuxen</div>}{questState === "approved" && <div className="approved-message">✓ Godkänd!</div>}</div>}
-    {parentMenuOpen && !recyclingStoryOpen && <div className="parent-menu-backdrop" role="presentation" onMouseDown={() => setParentMenuOpen(false)}><section className="parent-menu-panel" role="dialog" aria-modal="true" aria-labelledby="parent-menu-title" onMouseDown={(event) => event.stopPropagation()}><button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button><span className="parent-menu-kicker">🔐 Vuxenläge</span><h2 id="parent-menu-title">Vuxenläge</h2><p className="parent-menu-note">Här hanteras barnets första lokala uppdrag och kopplingen till familjen. Nya föräldrauppdrag hanteras på förälderns egen enhet.</p>{nativePlatform ? <div className="parent-profile-card"><span>FÖRÄLDRAKONTO</span><strong>Öppnas på förälderns enhet</strong><small>Backend-uppdrag godkänns i SysselCraft föräldraläge på en separat webbläsare/enhet. Barnets app behåller sin anonyma barnsession.</small></div> : <a className="secondary-button" href="/parent/">Öppna föräldraläget</a>}{nativePlatform && <button className="secondary-button" type="button" onClick={() => { setParentMenuOpen(false); setChildPairingOpen(true); }}>Koppla den här barnenheten</button>}
-    <div className="parent-profile-card"><span>Barn</span><strong>{childName || "Inte namngivet ännu"}</strong>{dogName && <small>Kompis: 🐶 {dogName}</small>}</div><div className="parent-profile-card"><span>Byutveckling</span><strong>🏗️ {recyclingCenterStatus.title}</strong><small>{recyclingCenterStatus.status}</small></div><div className="parent-section-heading"><h3>Första uppdraget att godkänna</h3>{pendingCount > 0 && <span>{pendingCount}</span>}</div>
-    {questState === "pending" ? <article className="parent-quest-card"><div><span>{makeBedQuest.icon}</span><div><strong>{makeBedQuest.title}</strong><small>Barnet har markerat uppgiften som klar.</small></div></div><div className="parent-quest-actions"><button className="primary-button compact" onClick={approveQuest}>Godkänn</button><button className="secondary-button compact" onClick={needsCompletion}>Behöver kompletteras</button></div></article> : <div className="parent-empty-state">✓ Inget lokalt prototypuppdrag väntar just nu.</div>}
+    {parentMenuOpen && !recyclingStoryOpen && <div className="parent-menu-backdrop" role="presentation" onMouseDown={() => setParentMenuOpen(false)}><section className="parent-menu-panel" role="dialog" aria-modal="true" aria-labelledby="parent-menu-title" onMouseDown={(event) => event.stopPropagation()}><button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button><span className="parent-menu-kicker">🔐 Vuxenläge</span><h2 id="parent-menu-title">Vuxenläge</h2><p className="parent-menu-note">Här ser du barnets koppling till familjen. Uppdrag skapas och godkänns av en vuxen på förälderns egen enhet.</p>{nativePlatform ? <div className="parent-profile-card"><span>FÖRÄLDRAKONTO</span><strong>Öppnas på förälderns enhet</strong><small>Backend-uppdrag godkänns i SysselCraft föräldraläge på en separat webbläsare/enhet. Barnets app behåller sin anonyma barnsession.</small></div> : <a className="secondary-button" href="/parent/">Öppna föräldraläget</a>}{nativePlatform && <button className="secondary-button" type="button" onClick={() => { setParentMenuOpen(false); setChildPairingOpen(true); }}>Koppla den här barnenheten</button>}
+    <div className="parent-profile-card"><span>Barn</span><strong>{childName || "Inte namngivet ännu"}</strong>{dogName && <small>Kompis: 🐶 {dogName}</small>}</div><div className="parent-profile-card"><span>Byutveckling</span><strong>🏗️ {recyclingCenterStatus.title}</strong><small>{recyclingCenterStatus.status}</small></div>
     {storyMomentReplayControl && <div className="parent-profile-card"><span>STORY MOMENT · testvisning</span><button className="secondary-button" type="button" onClick={replayLinusStoryMoment}>🎬 Spela Linus första möte</button><button className="secondary-button" type="button" onClick={replayHenningStoryMoment}>🥖 Spela Hennings ankomst</button><button className="secondary-button" type="button" onClick={replayBakeryStoryMoment}>🥐 Spela färdigt bageri</button><button className="secondary-button" type="button" onClick={replayMiraStoryMoment}>🔧 Spela Miras ankomst</button><small>Spelar bara upp scenerna. Din sparning och progression ändras inte.</small></div>}
     {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span>{[2,3,4].map((stage) => <button key={`recycling-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}{[1,2,3,4].map((stage) => <button key={`bakery-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.bakery !== stage - 1 || construction.earned.bakery >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `bakery:${stage}`))}>TEST: tjäna in Bakery stage {stage}</button>)}{[2,3,4].map((stage) => <button key={`clinic-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.clinic !== stage - 1 || construction.earned.clinic >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `clinic:${stage}`))}>TEST: tjäna in Clinic stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {storyMomentReplayControl && construction.revealed.clinic >= 4 && <div className="parent-profile-card"><span>STORY MOMENT TEST</span><button className="secondary-button" onClick={replayClinicStoryMoment}>▶ Sol + färdiga kliniken</button></div>}
