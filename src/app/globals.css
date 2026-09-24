@@ -103,3 +103,44 @@ main { min-height: 100dvh; }
   .prototype-shell::after { content: "Vrid mobilen för att spela Sysselcraft"; position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 2rem; text-align: center; font-weight: 800; font-size: 1.2rem; background: #dbe7c9; color: #26342b; }
   .parent-dashboard>header { align-items:center; }
 }
+
+
+/* Mira's lanthandel is a place in the world, not a floating quest card. */
+.mira-shop { position: fixed; inset: 0; z-index: 35; overflow: auto; background: #6b5438; color: #332719; }
+.mira-shop-backdrop { position: fixed; inset: 0; opacity: .22; filter: saturate(.8) brightness(.72); }
+.mira-shop-backdrop img { object-fit: cover; }
+.mira-shop-shell { position: relative; min-height: 100dvh; padding: clamp(.7rem, 2vw, 1.4rem); display: grid; grid-template-rows: auto 1fr; gap: .8rem; background: linear-gradient(180deg, rgba(255,248,226,.88), rgba(238,220,178,.94)); }
+.mira-shop-header { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; padding: .8rem 1rem; border: 2px solid rgba(103,73,38,.35); border-radius: 18px; background: rgba(255,252,239,.92); box-shadow: 0 8px 30px rgba(50,34,16,.16); }
+.mira-shop-header h2 { margin: .12rem 0; font-size: clamp(1.35rem, 3vw, 2rem); }
+.mira-shop-header p { margin: 0; }
+.mira-shop-wallet { display: flex; gap: .45rem; }
+.mira-shop-wallet strong { white-space: nowrap; padding: .5rem .7rem; border-radius: 999px; background: #fff8dc; border: 1px solid #d8c391; }
+.mira-shop-close { border: 0; border-radius: 12px; padding: .65rem .8rem; font-weight: 800; cursor: pointer; background: #735b36; color: #fff; }
+.mira-shop-body { min-height: 0; display: grid; grid-template-columns: minmax(160px, .38fr) minmax(0, 1fr); gap: .8rem; }
+.mira-shop-mira, .mira-shop-counter { border: 2px solid rgba(103,73,38,.35); border-radius: 18px; background: rgba(255,252,239,.94); box-shadow: 0 8px 30px rgba(50,34,16,.14); }
+.mira-shop-mira { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 1rem; }
+.mira-shop-mira strong { font-size: 1.4rem; }
+.mira-shop-mira p { max-width: 24ch; line-height: 1.45; }
+.mira-shop-portrait { width: clamp(86px, 14vw, 150px); aspect-ratio: 1; display: grid; place-items: center; font-size: clamp(3rem, 8vw, 6rem); border-radius: 50%; background: #e8d6a6; border: 4px solid #fff4d4; box-shadow: 0 5px 18px rgba(63,43,20,.2); margin-bottom: .65rem; }
+.mira-shop-counter { min-width: 0; padding: .8rem; overflow: auto; }
+.mira-shop-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; margin-bottom: .8rem; }
+.mira-shop-tabs button { border: 2px solid #c8b384; border-radius: 14px; padding: .75rem .6rem; font-weight: 900; cursor: pointer; background: #f7edd1; color: #4d3b24; }
+.mira-shop-tabs button.active { background: #477a3f; border-color: #365f31; color: #fff; }
+.mira-shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .65rem; }
+.mira-shop-item { min-height: 150px; padding: .8rem; border: 2px solid #dbc89b; border-radius: 15px; background: #fffaf0; display: flex; flex-direction: column; justify-content: space-between; gap: .7rem; }
+.mira-shop-item span { display: block; font-size: 1.7rem; margin-bottom: .25rem; }
+.mira-shop-item strong { display: block; font-size: 1.05rem; }
+.mira-shop-item p { margin: .25rem 0 0; line-height: 1.35; color: #655942; }
+.mira-shop-coming, .mira-shop-empty { min-height: 190px; display: grid; place-items: center; align-content: center; text-align: center; padding: 1rem; border: 2px dashed #c8b384; border-radius: 15px; background: #fffaf0; }
+.mira-shop-coming span { font-size: 2.4rem; }
+.mira-shop-coming h3 { margin: .35rem 0 .2rem; }
+.mira-shop-coming p { max-width: 45ch; margin: 0; line-height: 1.45; }
+.mira-shop-message { margin-top: .7rem; }
+
+@media (max-width: 760px) {
+  .mira-shop-header { grid-template-columns: 1fr auto; }
+  .mira-shop-header > div:first-child { grid-column: 1 / -1; }
+  .mira-shop-body { grid-template-columns: 150px minmax(0,1fr); }
+  .mira-shop-mira p { font-size: .85rem; }
+  .mira-shop-tabs button { font-size: .78rem; }
+}
