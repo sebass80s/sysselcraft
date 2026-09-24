@@ -628,6 +628,10 @@ export type Database = {
         Args: { p_reward_definition_id: string }
         Returns: string
       }
+      purchase_story_item: {
+        Args: { p_item_key: string }
+        Returns: Json
+      }
       redeem_child_pairing_code: { Args: { p_code: string }; Returns: string }
       refund_diamond_reward: {
         Args: { p_redemption_id: string }
