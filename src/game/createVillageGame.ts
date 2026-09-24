@@ -32,6 +32,7 @@ type Callbacks = {
   onLinusInteract: () => void;
   onHenningInteract: () => void;
   onShopInteract: () => void;
+  onAbandonedShopInteract: () => void;
   onBottleMessageInteract: () => void;
   onSolInteract: () => void;
   onConstructionInteract: (id: string) => void;
@@ -216,7 +217,7 @@ export async function createVillageGame(
           else this.maybeCompleteWorldInteraction();
           return;
         }
-        if (this.shop?.visible && this.shop.getBounds().contains(pointer.worldX, pointer.worldY) && requestedShopOpen) {
+        if (this.shop?.visible && this.shop.getBounds().contains(pointer.worldX, pointer.worldY)) {
           this.shopInteractionPending = true;
           this.linusInteractionPending = false;
           this.henningInteractionPending = false;
@@ -426,7 +427,8 @@ export async function createVillageGame(
         this.shopInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
-        callbacks.onShopInteract();
+        if (requestedShopOpen) callbacks.onShopInteract();
+        else callbacks.onAbandonedShopInteract();
         return;
       }
 
@@ -482,7 +484,7 @@ export async function createVillageGame(
         .setInteractive({ useHandCursor: true, pixelPerfect: false });
       this.shop.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen || !requestedShopOpen) return;
+        if (!this.player || constructionDialogueOpen) return;
         this.shopInteractionPending = true;
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
