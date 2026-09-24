@@ -74,6 +74,7 @@ export default function VillagePrototype() {
   const [solTourStoryStop, setSolTourStoryStop] = useState<SolTourStop | null>(null);
   const [solTourStoryIndex, setSolTourStoryIndex] = useState(0);
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
+  const [abandonedShopDialogueIndex, setAbandonedShopDialogueIndex] = useState<number | null>(null);
   const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
   const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
   const [shopBusy, setShopBusy] = useState(false);
@@ -291,6 +292,10 @@ export default function VillagePrototype() {
         onSolInteract: () => {
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solTourLinusSeen && !flags.solChoseToStay) { setSolTourStoryStop("decision"); setSolTourStoryIndex(0); }
+        },
+        onAbandonedShopInteract: () => {
+          setAbandonedShopDialogueIndex(0);
+          gameRef.current?.setConstructionDialogueOpen(true);
         },
         onShopInteract: () => {
           const flags = latestSaveRef.current?.worldFlags;
@@ -655,7 +660,18 @@ export default function VillagePrototype() {
   const solTourStoryLine = solTourStoryStop ? solTourDialogue[solTourStoryStop][solTourStoryIndex] : null;
   const solTourSpeakerName = solTourStoryLine?.speaker === "Barnet" ? childName || "Barnet" : solTourStoryLine?.speaker === "Hunden" ? dogName || "Hunden" : solTourStoryLine?.speaker ?? "";
   const solTourImage = solTourStoryStop === "bakery" ? "/assets/village/story-moments/sol-tour-bakery.png" : solTourStoryStop === "shop" ? "/assets/village/story-moments/sol-tour-shop.png" : solTourStoryStop === "linus" ? (solTourStoryIndex >= 1 ? "/assets/village/story-moments/sol-tour-linus-knee.png" : "/assets/village/story-moments/sol-tour-linus.png") : solTourStoryStop === "decision" ? "/assets/village/story-moments/sol-stays.png" : "";
-  const constructionDialogueLine = attention?.dialogue[constructionDialogueIndex] ?? null;
+  const abandonedShopDialogue = [
+    { speaker: "Barnet", text: "Linus, vad är det där för hus?" },
+    { speaker: "Linus", text: "Det där? Det är den gamla lanthandeln." },
+    { speaker: "Barnet", text: "En affär? Varför är den stängd?" },
+    { speaker: "Linus", text: "Den har varit övergiven länge. Förr kunde man köpa nästan allt där. Mat, verktyg, godis... ja, det viktiga." },
+    { speaker: "Barnet", text: "Kan vi inte öppna den igen?" },
+    { speaker: "Linus", text: "Vi behöver någon som vill driva den först." },
+    { speaker: "Barnet", text: "Vem då?" },
+    { speaker: "Linus", text: "Ingen aning. Kanske dyker rätt person upp någon dag." },
+  ] as const;
+  const abandonedShopDialogueLine = abandonedShopDialogueIndex === null ? null : abandonedShopDialogue[abandonedShopDialogueIndex];
+    const constructionDialogueLine = attention?.dialogue[constructionDialogueIndex] ?? null;
   const constructionSpeakerName = constructionDialogueLine?.speaker === "Barnet" ? childName || "Barnet" : constructionDialogueLine?.speaker ?? "";
   const linusStoryReplayStep = linusStoryReplayIndex === null ? null : linusIntroDialogue[linusStoryReplayIndex];
   const linusStoryReplaySpeaker = linusStoryReplayStep?.kind === "line" && linusStoryReplayStep.speaker === "Barnet" ? childName || "Barnet" : linusStoryReplayStep?.kind === "line" ? linusStoryReplayStep.speaker : "Linus";
@@ -739,6 +755,7 @@ export default function VillagePrototype() {
     {henningStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png" alt="" fill priority sizes="100vw" /></div>}
     {henningStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Henning kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker.toLowerCase()}`}>{henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker}</span><p>{henningArrivalDialogue[henningStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceHenningStory()}>{constructionBusy ? "Sparar…" : henningStoryIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {((linusStoryMomentOpen && dialogueOpen) || linusStoryReplayIndex !== null) && !recyclingStoryOpen && <div className="story-moment" role="presentation"><Image src={(linusStoryReplayIndex !== null ? linusStoryReplayIndex : dialogueIndex) >= linusIntroDialogue.findIndex((step) => step.kind === "reveal-dog") ? "/assets/village/story-moments/linus-puppy-handover.png" : "/assets/village/story-moments/linus-first-meeting.png"} alt="" fill priority sizes="100vw" /></div>}
+    {abandonedShopDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Den övergivna lanthandeln"><span className={`dialogue-speaker ${abandonedShopDialogueLine.speaker === "Barnet" ? "child" : ""}`}>{abandonedShopDialogueLine.speaker === "Barnet" ? childName || "Barnet" : "Linus"}</span><p>{abandonedShopDialogueLine.text}</p><button className="primary-button dialogue-next" onClick={() => { if (abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length) setAbandonedShopDialogueIndex(abandonedShopDialogueIndex + 1); else { setAbandonedShopDialogueIndex(null); gameRef.current?.setConstructionDialogueOpen(false); } }}>{abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"}</button></div>}
     {constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal"><span className={`dialogue-speaker ${constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}`}>{constructionSpeakerName}</span><p>{constructionDialogueLine.text}</p><button className="primary-button" disabled={constructionBusy} onClick={() => { if (constructionDialogueIndex + 1 < attention.dialogue.length) setConstructionDialogueIndex((index) => index + 1); else void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id); }}>{constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); setConstructionDialogueIndex(0); gameRef.current?.setConstructionDialogueOpen(false); }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig"><span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span><p>{recyclingStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>{constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {linusStoryReplayStep && !recyclingStoryOpen && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Replay av Linus första möte">{linusStoryReplayStep.kind === "line" && <><span className={`dialogue-speaker ${linusStoryReplayStep.speaker === "Barnet" ? "child" : ""}`}>{linusStoryReplaySpeaker}</span><p>{linusStoryReplayStep.text}</p></>}{linusStoryReplayStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><p><strong>{childName || "Barnet"}</strong></p></>}{linusStoryReplayStep.kind === "reveal-dog" && <><span className="dialogue-speaker">Linus</span><p>🐶 Valpen kommer fram.</p></>}{linusStoryReplayStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><p><strong>{dogName || "Valpen"}</strong></p></>}<button className="primary-button dialogue-next" onClick={advanceLinusStoryReplay}>{linusStoryReplayIndex === linusIntroDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
