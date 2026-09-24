@@ -58,6 +58,7 @@ export type SaveStateV1 = {
     solTourLinusSeen?: boolean;
     solChoseToStay?: boolean;
     clinicProgressionBaseline?: number;
+    clinicCompletionSeen?: boolean;
     bakeryClaimBaseline?: number;
     bakeryClaimBaselineStage?: 0 | 1 | 2 | 3 | 4;
   };
@@ -91,6 +92,7 @@ export function createDefaultSaveState(): SaveStateV1 {
       solTourLinusSeen: false,
       solChoseToStay: false,
       clinicProgressionBaseline: undefined,
+      clinicCompletionSeen: false,
       bakeryClaimBaseline: undefined,
       bakeryClaimBaselineStage: undefined,
     },
