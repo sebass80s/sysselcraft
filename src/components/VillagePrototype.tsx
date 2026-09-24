@@ -61,6 +61,7 @@ export default function VillagePrototype() {
   const [bakeryStoryReplayIndex, setBakeryStoryReplayIndex] = useState<number | null>(null);
   const [clinicStoryIndex, setClinicStoryIndex] = useState<number | null>(null);
   const [clinicStoryReplayIndex, setClinicStoryReplayIndex] = useState<number | null>(null);
+  const [clinicCompletionSeen, setClinicCompletionSeen] = useState(false);
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
   const [bottleStoryIndex, setBottleStoryIndex] = useState<number | null>(null);
@@ -191,6 +192,7 @@ export default function VillagePrototype() {
         setSolTourShopSeen(saved.worldFlags.solTourShopSeen === true);
         setSolTourLinusSeen(saved.worldFlags.solTourLinusSeen === true);
         setSolChoseToStay(saved.worldFlags.solChoseToStay === true);
+        setClinicCompletionSeen(saved.worldFlags.clinicCompletionSeen === true);
         if (recyclingCompletionPending(saved.construction)) {
           setRecyclingStoryIndex(0);
           setRecyclingStoryOpen(true);
@@ -241,6 +243,7 @@ export default function VillagePrototype() {
         bottleMessageSent,
         solArrivalSeen,
         solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay,
+        clinicCompletionSeen,
       },
     };
     latestSaveRef.current = snapshot;
@@ -248,7 +251,7 @@ export default function VillagePrototype() {
       () => setSaveError(false),
       () => setSaveError(true),
     );
-  }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay]);
+  }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay, clinicCompletionSeen]);
 
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
@@ -436,7 +439,7 @@ export default function VillagePrototype() {
     constructionWriteRef.current = true; setConstructionBusy(true); setConstructionError("");
     try {
       const snapshot: SaveStateV1 = { ...latestSaveRef.current, worldFlags: { ...latestSaveRef.current.worldFlags, clinicCompletionSeen: true } };
-      await saveSaveState(snapshot, true); latestSaveRef.current = snapshot; setClinicStoryIndex(null);
+      await saveSaveState(snapshot, true); latestSaveRef.current = snapshot; setClinicCompletionSeen(true); setClinicStoryIndex(null);
     } catch { setConstructionError("Det gick inte att spara klinikens avslutning. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
