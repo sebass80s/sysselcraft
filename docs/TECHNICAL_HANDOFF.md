@@ -395,3 +395,16 @@ The branch implements password auth by calling `signInWithPassword` for signed-o
 At handoff, repeated email attempts have triggered Supabase's email rate limit, so this acceptance step is temporarily externally blocked. Kalle still has an older working Yahoo-authenticated preview session and should keep it alive. Once the rate limit clears, test Yahoo on the newer preview, verify the existing family before setting the password, and then continue the Diamond physical journey.
 
 Do not infer deployment contents from URL age. Verify the Vercel deployment/commit before claiming a preview contains the password-auth code.
+
+
+## Parent password-auth physical acceptance — 2026-09-24
+
+The password transition is complete and physically accepted for the existing household-bearing Yahoo identity. The preserved authenticated browser session was verified as Supabase user `64743174-4901-4c7e-ab00-d8aa061b16f5` and used with Supabase Auth's supported authenticated-user password update endpoint. The update returned HTTP 200 for the same user; no direct `auth.users` password-field mutation, new Auth user, household migration, ownership rewrite or Gmail workaround was used.
+
+Kalle then successfully logged into the password-capable preview with that identity, verified the existing family/child, replaced the temporary password with a private permanent password through the shipped `setParentPassword -> auth.updateUser({ password })` UI, logged out, and logged back in successfully with the new password. The same household remained visible after reauthentication. Normal parent auth can therefore use email + password without Magic Link.
+
+The earlier email-rate-limit blocker is closed for normal login. The one-time Magic-Link bootstrap remains recovery/bootstrap code, not the normal authentication path. The separate Gmail identity remains intentionally untouched.
+
+After acceptance, Vercel Git previews were paused again via `vercel.json` with `git.deploymentEnabled=false` to preserve the project's limited preview/deploy budget. Re-enable only when a deployment is actually required.
+
+Next acceptance target: the real Diamond parent -> paired iPhone purchase -> parent fulfillment -> restart path. Backend transactional evidence is already green; physical Diamond acceptance remains open until that device journey passes.
