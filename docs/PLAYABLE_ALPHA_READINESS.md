@@ -252,7 +252,7 @@ Before tagging/installing the child release candidate:
 3. Verify the completed Clinic finale does not replay after force-quit/relaunch.
 4. Run one normal backend quest end-to-end (create -> child submit -> parent approve -> child claim) and confirm wallet/reward update.
 5. Force-quit/relaunch once more and confirm world/story/save/pairing persist.
-6. Because the native stale-build defect remains unresolved and has appeared in an every-other-Xcode-Run pattern, verify the actual installed build behavior rather than assuming the first Xcode Run packaged current web assets. Do not mark release from CI alone.
+6. Because the native stale-build defect remains unresolved and has previously produced an older bundle after Xcode Run, verify the actual installed build behavior rather than assuming the first Xcode Run packaged current web assets. Its cadence is not established. Do not mark release from CI alone.
 
 ### Known non-blocking / deferred release debt
 
