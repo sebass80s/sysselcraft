@@ -29,7 +29,9 @@ import { constructionPresentation } from "../game/constructionPresentation";
 import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
+import { bottleMessageDialogue, solArrivalDialogue } from "../game/solStory";
 import { listDiamondRewards, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
+import { BOTTLE_MESSAGE_PRICE, commitStoryBeat, purchaseBottleMessage } from "../backend/storyShop";
 import { getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
@@ -58,6 +60,11 @@ export default function VillagePrototype() {
   const [bakeryStoryReplayIndex, setBakeryStoryReplayIndex] = useState<number | null>(null);
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
+  const [bottleStoryIndex, setBottleStoryIndex] = useState<number | null>(null);
+  const [solStoryIndex, setSolStoryIndex] = useState<number | null>(null);
+  const [bottleMessagePurchased, setBottleMessagePurchased] = useState(false);
+  const [bottleMessageSent, setBottleMessageSent] = useState(false);
+  const [solArrivalSeen, setSolArrivalSeen] = useState(false);
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
   const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
   const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
@@ -157,6 +164,9 @@ export default function VillagePrototype() {
         setChildNameCanSubmit(Boolean(saved.childName.trim()));
         setDogNameCanSubmit(Boolean(saved.dogName.trim()));
         setHenningArrivalSeen(saved.worldFlags.henningArrivalSeen === true);
+        setBottleMessagePurchased(saved.worldFlags.bottleMessagePurchased === true);
+        setBottleMessageSent(saved.worldFlags.bottleMessageSent === true);
+        setSolArrivalSeen(saved.worldFlags.solArrivalSeen === true);
         if (recyclingCompletionPending(saved.construction)) {
           setRecyclingStoryIndex(0);
           setRecyclingStoryOpen(true);
@@ -236,6 +246,7 @@ export default function VillagePrototype() {
         },
         onLinusInteract: () => { setDialogueIndex(0); setDialogueOpen(true); if (!restoredIntroCompleteRef.current) setLinusStoryMomentOpen(true); },
         onHenningInteract: () => { setHenningDialogueIndex(0); setHenningDialogueOpen(true); },
+        onBottleMessageInteract: () => { setBottleStoryIndex(0); gameRef.current?.setConstructionDialogueOpen(true); },
         onShopInteract: () => {
           gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopCurrency("diamonds"); setShopMessage("");
           void (async () => {
@@ -259,6 +270,7 @@ export default function VillagePrototype() {
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setHenningVisible(latestSaveRef.current?.worldFlags.henningArrivalSeen === true);
       handle.setShopOpen(latestSaveRef.current?.worldFlags.miraArrivalSeen === true);
+      handle.setBottleMessageReady(latestSaveRef.current?.worldFlags.bottleMessagePurchased === true && latestSaveRef.current?.worldFlags.bottleMessageSent !== true);
       handle.setIntroComplete(restoredIntroCompleteRef.current);
       handle.setQuestState(restoredQuestStateRef.current);
       handle.setConstruction(constructionPresentation(constructionRef.current));
@@ -273,6 +285,7 @@ export default function VillagePrototype() {
   useEffect(() => { gameRef.current?.setIntroComplete(introComplete); }, [introComplete]);
   useEffect(() => { gameRef.current?.setDogVisible(dogVisible); }, [dogVisible]);
   useEffect(() => { gameRef.current?.setHenningVisible(henningArrivalSeen); }, [henningArrivalSeen]);
+  useEffect(() => { gameRef.current?.setBottleMessageReady(bottleMessagePurchased && !bottleMessageSent); }, [bottleMessagePurchased, bottleMessageSent]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
 
   async function persistConstruction(next: ConstructionState, revealId?: string) {
@@ -373,6 +386,65 @@ export default function VillagePrototype() {
       setMiraStoryIndex(null);
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
+  }
+
+  async function buyBottleMessage() {
+    if (shopBusy || bottleMessagePurchased) return;
+    if (!window.confirm(`Köpa Flaskpost för ${BOTTLE_MESSAGE_PRICE} 🪙?`)) return;
+    setShopBusy(true); setShopMessage("");
+    try {
+      const purchase = await purchaseBottleMessage();
+      setBackendWallet((wallet) => wallet ? { ...wallet, sysselBux: purchase.sysselBux } : wallet);
+      setBottleMessagePurchased(true);
+      if (latestSaveRef.current) {
+        const snapshot = { ...latestSaveRef.current, worldFlags: { ...latestSaveRef.current.worldFlags, bottleMessagePurchased: true } };
+        latestSaveRef.current = snapshot;
+        await saveSaveState(snapshot, true);
+      }
+      gameRef.current?.setBottleMessageReady(true);
+      setShopMessage("Flaskposten är din! Ta den ner till vattnet. 🍾");
+      window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
+    } catch (error) {
+      const text = error instanceof Error ? error.message : "Köpet misslyckades.";
+      setShopMessage(text.includes("insufficient sysselbux") ? "Du har inte tillräckligt många SysselBux." : text);
+    } finally { setShopBusy(false); }
+  }
+
+  async function advanceBottleStory() {
+    if (bottleStoryIndex === null || constructionBusy) return;
+    if (bottleStoryIndex + 1 < bottleMessageDialogue.length) { setBottleStoryIndex(bottleStoryIndex + 1); return; }
+    setConstructionBusy(true);
+    try {
+      await commitStoryBeat("bottle_message_sent");
+      setBottleMessageSent(true);
+      if (latestSaveRef.current) {
+        const snapshot = { ...latestSaveRef.current, worldFlags: { ...latestSaveRef.current.worldFlags, bottleMessageSent: true } };
+        latestSaveRef.current = snapshot;
+        await saveSaveState(snapshot, true);
+      }
+      gameRef.current?.setBottleMessageReady(false);
+      gameRef.current?.setConstructionDialogueOpen(false);
+      setBottleStoryIndex(null);
+      window.setTimeout(() => setSolStoryIndex(0), 1200);
+    } catch { setConstructionError("Flaskposten kunde inte sparas. Försök igen."); }
+    finally { setConstructionBusy(false); }
+  }
+
+  async function advanceSolStory() {
+    if (solStoryIndex === null || constructionBusy) return;
+    if (solStoryIndex + 1 < solArrivalDialogue.length) { setSolStoryIndex(solStoryIndex + 1); return; }
+    setConstructionBusy(true);
+    try {
+      await commitStoryBeat("sol_arrival_seen");
+      setSolArrivalSeen(true);
+      if (latestSaveRef.current) {
+        const snapshot = { ...latestSaveRef.current, worldFlags: { ...latestSaveRef.current.worldFlags, solArrivalSeen: true } };
+        latestSaveRef.current = snapshot;
+        await saveSaveState(snapshot, true);
+      }
+      setSolStoryIndex(null);
+    } catch { setConstructionError("Sols ankomst kunde inte sparas. Försök igen."); }
+    finally { setConstructionBusy(false); }
   }
 
   async function buyDiamondReward(reward: DiamondRewardDefinition) {
@@ -509,12 +581,16 @@ export default function VillagePrototype() {
             {shopCurrency === "diamonds" ? <>
               <div className="mira-shop-grid">{shopRewards.map((reward) => <article className="mira-shop-item" key={reward.id}><div><span>🎁</span><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}</div><button className="primary-button" disabled={shopBusy || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>💎 {reward.diamondPrice} · Köp</button></article>)}</div>
               {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Inga diamantbelöningar på hyllan just nu.</p>}
-            </> : <div className="mira-shop-coming"><span>🪙</span><h3>Den här hyllan fylls snart</h3><p>Här kommer saker som hör hemma i SysselCraft.</p></div>}
+            </> : <div className="mira-shop-grid"><article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p></div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article></div>}
             {shopMessage && <p className="pending-message mira-shop-message" role="status">{shopMessage}</p>}
           </div>
         </section>
       </div>
     </div>}
+    {bottleStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-message.png" alt="" fill priority sizes="100vw" /></div>}
+    {bottleStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Skicka flaskpost"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>{bottleMessageDialogue[bottleStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBottleStory()}>{constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}</button></div>}
+    {solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png" alt="" fill priority sizes="100vw" /></div>}
+    {solStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}`}>{solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"}</span><p>{solArrivalDialogue[solStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolStory()}>{constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}</button></div>}
     {miraStoryIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
     {miraStoryIndex !== null && miraStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker.toLowerCase()}`}>{miraSpeakerName}</span><p>{miraStoryText}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceMiraStory()}>{constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {miraStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
