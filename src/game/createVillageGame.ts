@@ -592,14 +592,21 @@ export async function createVillageGame(
         this.linusQuestMarker?.destroy();
         this.linusQuestMarker = undefined;
         if (active && this.linus) {
-          this.linusQuestMarker = this.add.text(this.linus.x, this.linus.y - 178, "?", {
-            color: "#ffd83d",
-            fontSize: "34px",
+          const linusBadge = this.add.graphics();
+          linusBadge.fillStyle(0x5b3a1f, 0.94);
+          linusBadge.lineStyle(3, 0xffd83d, 1);
+          linusBadge.fillCircle(0, 0, 27);
+          linusBadge.strokeCircle(0, 0, 27);
+          const linusLabel = this.add.text(0, -1, "?", {
+            color: "#fff1a8",
+            fontSize: "36px",
             fontStyle: "bold",
             stroke: "#8a5a00",
-            strokeThickness: 4,
-            shadow: { color: "#ffcf33", blur: 12, fill: true, stroke: true },
-          }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
+            strokeThickness: 3,
+            shadow: { color: "#ffcf33", blur: 8, fill: true, stroke: true },
+          }).setOrigin(0.5);
+          this.linusQuestMarker = this.add.container(this.linus.x, this.linus.y - 178, [linusBadge, linusLabel])
+            .setDepth(3000).setSize(76, 76).setInteractive({ useHandCursor: true });
           this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
             event.stopPropagation();
             if (!this.player || constructionDialogueOpen) return;
@@ -629,10 +636,10 @@ export async function createVillageGame(
 
     private createNoticeboardMarker() {
       const bubble = this.add.graphics();
-      bubble.fillStyle(0xfff2cf, 0.98);
-      bubble.lineStyle(2, 0x6b4b31, 0.9);
-      bubble.fillRoundedRect(-18, -18, 36, 34, 10);
-      bubble.strokeRoundedRect(-18, -18, 36, 34, 10);
+      bubble.fillStyle(0x5b3a1f, 0.94);
+      bubble.lineStyle(3, 0xffd83d, 1);
+      bubble.fillCircle(0, 0, 27);
+      bubble.strokeCircle(0, 0, 27);
       const label = this.add.text(0, -2, "?", {
         color: "#ffd83d", fontSize: "30px", fontStyle: "bold", fontFamily: "Trebuchet MS",
         stroke: "#8a5a00", strokeThickness: 4,
@@ -664,7 +671,12 @@ export async function createVillageGame(
     private createQuestMarker() {
       // Quest language: glowing yellow ? means an available quest; glowing yellow !
       // means a completed quest / interaction prompt.
-      const glow = this.add.text(0, 0, "?", {
+      const badge = this.add.graphics();
+      badge.fillStyle(0x5b3a1f, 0.94);
+      badge.lineStyle(3, 0xffd83d, 1);
+      badge.fillCircle(0, 0, 30);
+      badge.strokeCircle(0, 0, 30);
+      const glow = this.add.text(0, -1, "?", {
         color: "#ffd83d",
         fontSize: "38px",
         fontStyle: "bold",
@@ -673,7 +685,7 @@ export async function createVillageGame(
         strokeThickness: 4,
         shadow: { color: "#ffcf33", blur: 14, fill: true, stroke: true },
       }).setOrigin(0.5).setName("label");
-      this.questMarker = this.add.container(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y, [glow])
+      this.questMarker = this.add.container(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y, [badge, glow])
         .setDepth(3000).setSize(96, 96).setInteractive(new Phaser.Geom.Rectangle(-48, -48, 96, 96), Phaser.Geom.Rectangle.Contains);
       this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
@@ -681,7 +693,7 @@ export async function createVillageGame(
         else if (this.introComplete) callbacks.onQuestOpen();
         else callbacks.onLinusInteract();
       });
-      this.tweens.add({ targets: glow, alpha: { from: 0.72, to: 1 }, scale: { from: 0.94, to: 1.06 }, duration: 850, yoyo: true, repeat: -1, ease: "Sine.InOut" });
+      this.tweens.add({ targets: [badge, glow], alpha: { from: 0.82, to: 1 }, scale: { from: 0.96, to: 1.05 }, duration: 850, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
     private applyBuildingPresentation(stages: Partial<Record<VisualProductionBuilding, VisualProductionStage>>) {
