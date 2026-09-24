@@ -288,10 +288,10 @@ export default function VillagePrototype() {
   useEffect(() => { gameRef.current?.setHenningVisible(henningArrivalSeen); }, [henningArrivalSeen]);
   useEffect(() => { gameRef.current?.setBottleMessageReady(bottleMessagePurchased && !bottleMessageSent); }, [bottleMessagePurchased, bottleMessageSent]);
   useEffect(() => {
-    if (!saveReady || !bottleMessageSent || solArrivalSeen || bottleStoryIndex !== null || solStoryIndex !== null) return;
+    if (!saveReady || !bottleMessageSent || solArrivalSeen || bottleLetterOpen || bottleStoryIndex !== null || solStoryIndex !== null) return;
     const timer = window.setTimeout(() => setSolStoryIndex(0), 1200);
     return () => window.clearTimeout(timer);
-  }, [saveReady, bottleMessageSent, solArrivalSeen, bottleStoryIndex, solStoryIndex]);
+  }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
 
   async function persistConstruction(next: ConstructionState, revealId?: string) {
