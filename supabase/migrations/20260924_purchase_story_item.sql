@@ -12,7 +12,7 @@ begin
   if p_item_key <> 'bottle_message' then raise exception 'unknown story item'; end if;
   v_price := 25;
   select b.child_id into v_child_id from public.child_device_bindings b
-  where b.auth_user_id=(select auth.uid()) order by b.bound_at desc limit 1;
+  where b.auth_user_id=(select auth.uid()) order by b.created_at desc limit 1;
   if v_child_id is null or not public.is_bound_child(v_child_id) then raise exception 'not authorized'; end if;
   select * into v_state from public.child_game_state where child_id=v_child_id for update;
   if not found then raise exception 'child game state missing'; end if;
@@ -40,7 +40,7 @@ declare v_child_id uuid; v_flags jsonb;
 begin
   if p_beat_key not in ('bottle_message_sent','sol_arrival_seen') then raise exception 'unknown story beat'; end if;
   select b.child_id into v_child_id from public.child_device_bindings b
-  where b.auth_user_id=(select auth.uid()) order by b.bound_at desc limit 1;
+  where b.auth_user_id=(select auth.uid()) order by b.created_at desc limit 1;
   if v_child_id is null or not public.is_bound_child(v_child_id) then raise exception 'not authorized'; end if;
   update public.child_game_state
   set world_flags=coalesce(world_flags,'{}'::jsonb) ||
