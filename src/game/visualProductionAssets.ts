@@ -48,13 +48,13 @@ export const VISUAL_PRODUCTION_PLACEMENTS = [
   },
   {
     building: "clinic",
-    x: 1110,
-    baseY: 500,
+    x: 1190,
+    baseY: 515,
     width: 350,
     height: 279,
     footprint: { width: 205, height: 72 },
-    approach: { x: 970, y: 500 },
-    guidePosition: { x: 1018, y: 512 },
+    approach: { x: 1050, y: 515 },
+    guidePosition: { x: 1098, y: 527 },
   },
 ] as const;
 
