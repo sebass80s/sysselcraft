@@ -286,6 +286,11 @@ export default function VillagePrototype() {
   useEffect(() => { gameRef.current?.setDogVisible(dogVisible); }, [dogVisible]);
   useEffect(() => { gameRef.current?.setHenningVisible(henningArrivalSeen); }, [henningArrivalSeen]);
   useEffect(() => { gameRef.current?.setBottleMessageReady(bottleMessagePurchased && !bottleMessageSent); }, [bottleMessagePurchased, bottleMessageSent]);
+  useEffect(() => {
+    if (!saveReady || !bottleMessageSent || solArrivalSeen || bottleStoryIndex !== null || solStoryIndex !== null) return;
+    const timer = window.setTimeout(() => setSolStoryIndex(0), 1200);
+    return () => window.clearTimeout(timer);
+  }, [saveReady, bottleMessageSent, solArrivalSeen, bottleStoryIndex, solStoryIndex]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
 
   async function persistConstruction(next: ConstructionState, revealId?: string) {
@@ -425,7 +430,6 @@ export default function VillagePrototype() {
       gameRef.current?.setBottleMessageReady(false);
       gameRef.current?.setConstructionDialogueOpen(false);
       setBottleStoryIndex(null);
-      window.setTimeout(() => setSolStoryIndex(0), 1200);
     } catch { setConstructionError("Flaskposten kunde inte sparas. Försök igen."); }
     finally { setConstructionBusy(false); }
   }
