@@ -426,3 +426,25 @@ The clean step does **not** uninstall/reset the app and must not touch the prese
 ### 2026-09-24 — native first-run regression still open
 
 Physical iPhone acceptance of the Flaskpost/Sol flow disproved the intended first-run guarantee from the current `npm run syssel` cleanup. Even after the deterministic export marker, Capacitor sync verification and Xcode clean, the first Xcode Run still presented the previous native web bundle and a second Run/compile was required before the new build appeared. Treat this as an open native packaging/cache defect, not an accepted workaround. The next investigation should identify the exact bundle/marker packaged by Xcode on Run 1 versus Run 2 rather than adding more blind clean steps.
+
+
+## Child-device patch model — locked 2026-09-24
+
+For the first real child release, SysselCraft does **not** need TestFlight, App Store delivery, OTA updates or a separate full production infrastructure. The accepted near-term release model is deliberately simple:
+
+- Keep the stable SysselCraft app installed on the child's iPhone.
+- Continue development and physical QA separately before promoting new content.
+- When a patch/content update is accepted, connect the child's iPhone to Kalle's Mac and install the newer Xcode build **over the existing app**.
+- Preserve bundle id `se.sysselcraft.app`.
+- Do not uninstall the app, reset app data, regenerate `ios/`, or otherwise destroy the existing application container as part of a normal patch.
+- Local save evolution must remain backward-compatible. New save fields need safe defaults/migrations; an older valid save must never be treated as a new game merely because content was added.
+- Backend family/pairing/quest/economy state remains authoritative according to the existing ownership rules and must not be recreated from local guesses.
+- The update-in-place path has already passed physical iPhone acceptance with preserved local progression and backend pairing/session. Continue to regression-test persistence for changes that touch save/native packaging/restoration.
+- Mark child-facing stable builds with an explicit Git release tag/checkpoint so the exact version installed on the child's phone is always known.
+- Future vision may add TestFlight/App Store/other distribution, but that is explicitly **not required for the current release model**.
+
+Practical release flow:
+
+`development -> CI -> physical iPhone QA -> accepted release checkpoint/tag -> Xcode install over existing child app`
+
+The child's real save must never be used as a disposable development/reset environment after release.
