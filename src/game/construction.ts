@@ -67,7 +67,31 @@ export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
     { speaker: "Henning", text: "Nästan. En sista kraftansträngning, sedan kan vi öppna dörrarna. Det här har vi byggt tillsammans." },
   ],
   presentation: "construction",
+}, {
+  id: "clinic:2", building: "clinic", stage: 2, resident: "sol", residentName: "Sol",
+  dialogue: [{ speaker: "Sol", text: "Nu börjar jag faktiskt kunna se det framför mig." }], presentation: "construction",
+}, {
+  id: "clinic:3", building: "clinic", stage: 3, resident: "sol", residentName: "Sol",
+  dialogue: [{ speaker: "Sol", text: "Titta! Snart kan vi öppna." }], presentation: "construction",
+}, {
+  id: "clinic:4", building: "clinic", stage: 4, resident: "sol", residentName: "Sol",
+  dialogue: [{ speaker: "Sol", text: "Vi gjorde det! Nu har byn en klinik." }], presentation: "construction",
 }];
+
+export const CLINIC_CONTRIBUTION_THRESHOLDS = [0, 2, 4, 8] as const;
+
+export function startClinicConstruction(state: ConstructionState): ConstructionState {
+  if (state.revealed.clinic > 0 || state.earned.clinic > 0) return state;
+  return normalizeConstruction({ ...state, earned: { ...state.earned, clinic: 1 }, revealed: { ...state.revealed, clinic: 1 } });
+}
+
+export function syncClinicContributionProgress(state: ConstructionState, authoritativeWorldProgression: number, clinicBaseline: number): ConstructionState {
+  if (state.revealed.clinic < 1 || state.revealed.clinic >= 4 || state.pending.some(id => id.startsWith("clinic:"))) return state;
+  const contributions = Math.max(0, Math.floor(authoritativeWorldProgression) - Math.floor(clinicBaseline));
+  const target: BuildingStage = contributions >= 8 ? 4 : contributions >= 4 ? 3 : contributions >= 2 ? 2 : 1;
+  const nextStage = (state.revealed.clinic + 1) as BuildingStage;
+  return target >= nextStage ? earnConstruction(state, `clinic:${nextStage}`) : state;
+}
 
 export const BAKERY_CONTRIBUTION_THRESHOLDS = [1, 3, 7, 10] as const;
 
