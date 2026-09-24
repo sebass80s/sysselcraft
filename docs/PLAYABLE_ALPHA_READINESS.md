@@ -203,3 +203,10 @@ Do not mark this gate PASS until both identity-preserving password login and the
 The previous Supabase email-rate-limit blocker no longer blocks normal parent use because normal authentication is now email + password. The separate Gmail Auth identity remains an unrelated empty account and must not be used as a substitute parent identity.
 
 This closes the parent-auth prerequisite for the Diamond gate. **Diamond physical acceptance itself remains OPEN** until the real paired-device reward purchase, exactly-once deduction, parent pending-delivery/fulfillment and restart-persistence journey passes.
+
+
+### Diamond physical end-to-end acceptance — 2026-09-24
+
+**PASS for the physical reward/economy lifecycle.** On the updated physical iPhone, the preserved save advanced into Mira's arrival Story Moment and unlocked her shop. A parent-created real-life reward, `Glass` priced at 1 Diamond, appeared in Mira's shop. The child purchased it on-device and the authoritative HUD balance decreased by exactly 1 Diamond. The parent web UI then showed the same redemption as pending delivery. After the parent marked it delivered, live backend inspection confirmed the redemption remained persisted with status `delivered`, its purchase snapshot, purchase timestamp and delivery timestamp intact. After force-quitting and relaunching SysselCraft on the iPhone, the reduced Diamond balance remained reduced, confirming restart persistence and no purchase replay.
+
+A UI-only acceptance gap was found during this run: delivered/refunded redemptions were persisted correctly but the parent page rendered only `pending_delivery` rows, so completed reward history disappeared from view. This was patched in commit `9f63ce564c54184aadabf8c513ab349973ff7a7d` by adding a parent `Belöningshistorik` section for delivered/refunded redemptions. Vercel Git previews remain disabled, so that history presentation patch still needs deployment/UI verification before the broader Diamond feature is called fully closed. The backend/economy lifecycle itself is physically accepted.
