@@ -120,6 +120,7 @@ export default function VillagePrototype() {
   const [saveError, setSaveError] = useState(false);
   const [saveRetryBusy, setSaveRetryBusy] = useState(false);
   const [bootError, setBootError] = useState(false);
+  const [debugToolsEnabled, setDebugToolsEnabled] = useState(false);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
   const recyclingStoryLine = recyclingStoryOpen ? recyclingCompletionDialogue[recyclingStoryIndex] : null;
@@ -127,8 +128,12 @@ export default function VillagePrototype() {
   const recyclingCenterStage = construction.revealed.recycling;
   const recyclingCenterStatus = getRecyclingCenterStatus(recyclingCenterStage);
   const nativePlatform = Capacitor.isNativePlatform();
-  const nativeTestControls = nativePlatform;
-  const storyMomentReplayControl = nativePlatform;
+  const nativeTestControls = nativePlatform && debugToolsEnabled;
+  const storyMomentReplayControl = nativePlatform && debugToolsEnabled;
+
+  useEffect(() => {
+    setDebugToolsEnabled(new URLSearchParams(window.location.search).get("debug") === "tools");
+  }, []);
 
   useEffect(() => {
     const reloadConstruction = async () => {
