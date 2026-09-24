@@ -570,6 +570,7 @@ export default function VillagePrototype() {
     setShopBusy(true); setShopMessage("");
     try {
       await purchaseDiamondReward(reward.id);
+      setBackendWallet((wallet) => wallet ? { ...wallet, diamonds: Math.max(0, wallet.diamonds - reward.diamondPrice) } : wallet);
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
       setShopMessage(`Köpt! Be en vuxen om ${reward.title}. 🎁`);
     } catch (error) {
