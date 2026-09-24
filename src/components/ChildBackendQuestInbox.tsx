@@ -19,7 +19,7 @@ import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "
 import { publishBackendWallet } from "@/game/backendWalletBridge";
 import { createQuestRequestGuard } from "@/game/questRequestGuard";
 import { loadSaveState, saveSaveState, withConstructionState } from "@/game/saveState";
-import { syncBakeryContributionProgress } from "@/game/construction";
+import { syncBakeryContributionProgress, syncClinicContributionProgress } from "@/game/construction";
 import {
   claimQuestTurnIn,
   loadPendingQuestTurnIns,
@@ -119,6 +119,15 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
         }
         if (baseline !== undefined) {
           const nextConstruction = syncBakeryContributionProgress(snapshot.construction, nextGameState.progression.worldProgression, baseline, baselineStage ?? 0);
+          if (nextConstruction !== snapshot.construction) {
+            snapshot = withConstructionState(snapshot, nextConstruction);
+            await saveSaveState(snapshot, true);
+            window.dispatchEvent(new CustomEvent("sysselcraft:construction-save-changed"));
+          }
+        }
+        const clinicBaseline = snapshot.worldFlags.clinicProgressionBaseline;
+        if (snapshot.worldFlags.solChoseToStay && clinicBaseline !== undefined) {
+          const nextConstruction = syncClinicContributionProgress(snapshot.construction, nextGameState.progression.worldProgression, clinicBaseline);
           if (nextConstruction !== snapshot.construction) {
             snapshot = withConstructionState(snapshot, nextConstruction);
             await saveSaveState(snapshot, true);
