@@ -243,3 +243,14 @@ Latest verified remote branch HEAD at this handoff is `fd67b7e6c40cf43f861feba5d
 8. Only after that journey passes may Diamond rewards be marked physically accepted.
 
 Image-generation work remains paused by Kalle. Do not generate new SysselCraft images unless he explicitly reopens it.
+
+
+## 2026-09-24 parent password auth physically accepted
+
+Parent password authentication is now **PHYSICALLY ACCEPTED** for the existing household-bearing Yahoo Supabase identity. The email-rate-limit blocker was bypassed without creating or migrating any account: the preserved authenticated Yahoo browser session was verified as user `64743174-4901-4c7e-ab00-d8aa061b16f5`, then used through Supabase Auth's supported authenticated-user password update endpoint. The password update returned HTTP 200 for that same user. Kalle then logged into the current password-capable preview with the new password, saw the existing family/child, changed to a private permanent password through the parent UI, logged out, and successfully logged back in with that password with the same family intact.
+
+Normal parent authentication is therefore email + password. Magic Link is no longer required for normal use. The separate Gmail identity remains unrelated and must not receive a replacement family or copied ownership. No direct mutation of `auth.users.encrypted_password` was performed.
+
+Vercel Git previews were paused again immediately after acceptance by setting `vercel.json -> git.deploymentEnabled=false`. Do not re-enable previews for ordinary commits; collect changes and enable only for an explicitly needed acceptance deployment.
+
+The next physical acceptance target is the Diamond reward journey: parent creates reward -> paired child sees it at Mira -> authoritative purchase deducts exactly once -> parent sees pending delivery -> parent fulfills -> restart preserves the result. Diamond physical acceptance remains OPEN until that passes.
