@@ -183,3 +183,14 @@ PASS on physical iPhone using the preserved existing save. The Bakery constructi
 ## Bakery production-claim pacing checkpoint — 2026-09-23
 
 The physically accepted Bakery arc is now wired to authoritative backend child claims with locked pacing **1–2–4–3** (cumulative thresholds 1/3/7/10 after the local Bakery baseline). The local save captures both the backend `worldProgression` baseline and the Bakery stage already reached, so pre-existing backend quest history and development saves cannot retroactively jump construction forward. Pending reveals block later stage earning until consumed. Automated regression coverage verifies threshold behavior, pending-reveal blocking and migration from an existing Bakery stage. Physical iPhone acceptance now confirms the production signal through a non-destructive native probe: after taking a baseline at `0/10`, one real parent-created quest was submitted by the child, approved by the parent, claimed by the child through Linus, and the authoritative backend `worldProgression` delta advanced the probe to `1/10`, correctly deriving Bakery stage 1. The already-completed local Bakery was deliberately left untouched, so this proves the real submit → approve → claim → Bakery pacing input at the first production threshold without destructively resetting the accepted save. The remaining 3/7/10 thresholds are covered by automated regression tests rather than ten repeated physical household quests.
+
+
+## Diamond reward + parent password-auth acceptance gate — 2026-09-24
+
+The supervised playable Alpha core remains accepted; this gate concerns the newer Mira/Diamond reward slice.
+
+Backend Diamond edge cases and authorization have passed live transactional tests under rollback, and repository/UI integration exists. Physical acceptance remains OPEN until a real paired-device journey proves: parent creates rewards -> child sees them in Mira's shop -> purchase deducts exactly once -> HUD refreshes authoritative balance -> parent sees pending redemption with snapshot data -> delivery clears pending while retaining history -> restart preserves state.
+
+Parent login acceptance is the current prerequisite. Live logs prove the existing household belongs to the Yahoo-address Supabase user `64743174-4901-4c7e-ab00-d8aa061b16f5`. A Gmail-address user `639c5ef7-7f40-4425-a4b0-cc12f9c6579f` is a separate empty account and must not be used to create a replacement family. Password setup must occur on the existing Yahoo identity. Current testing is temporarily blocked by Supabase email rate limiting; an older working Yahoo-authenticated preview session is being preserved meanwhile.
+
+Do not mark this gate PASS until both identity-preserving password login and the real Diamond purchase/fulfillment path are physically verified.
