@@ -194,3 +194,12 @@ Backend Diamond edge cases and authorization have passed live transactional test
 Parent login acceptance is the current prerequisite. Live logs prove the existing household belongs to the Yahoo-address Supabase user `64743174-4901-4c7e-ab00-d8aa061b16f5`. A Gmail-address user `639c5ef7-7f40-4425-a4b0-cc12f9c6579f` is a separate empty account and must not be used to create a replacement family. Password setup must occur on the existing Yahoo identity. Current testing is temporarily blocked by Supabase email rate limiting; an older working Yahoo-authenticated preview session is being preserved meanwhile.
 
 Do not mark this gate PASS until both identity-preserving password login and the real Diamond purchase/fulfillment path are physically verified.
+
+
+### Parent password-auth acceptance result — 2026-09-24
+
+**PASS.** The existing household-bearing Yahoo identity was preserved and given password credentials through Supabase Auth's supported authenticated-user password update path. Kalle then verified the complete user-visible sequence on the current password-capable preview: password login -> existing family/child visible -> set private permanent password -> logout -> password login again -> same family/child visible. No replacement family, account merge, ownership rewrite or direct auth-table password mutation occurred.
+
+The previous Supabase email-rate-limit blocker no longer blocks normal parent use because normal authentication is now email + password. The separate Gmail Auth identity remains an unrelated empty account and must not be used as a substitute parent identity.
+
+This closes the parent-auth prerequisite for the Diamond gate. **Diamond physical acceptance itself remains OPEN** until the real paired-device reward purchase, exactly-once deduction, parent pending-delivery/fulfillment and restart-persistence journey passes.
