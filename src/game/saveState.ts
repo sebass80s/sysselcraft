@@ -53,6 +53,10 @@ export type SaveStateV1 = {
     bottleMessagePurchased?: boolean;
     bottleMessageSent?: boolean;
     solArrivalSeen?: boolean;
+    solTourBakerySeen?: boolean;
+    solTourShopSeen?: boolean;
+    solTourLinusSeen?: boolean;
+    solChoseToStay?: boolean;
     bakeryClaimBaseline?: number;
     bakeryClaimBaselineStage?: 0 | 1 | 2 | 3 | 4;
   };
@@ -81,6 +85,10 @@ export function createDefaultSaveState(): SaveStateV1 {
       bottleMessagePurchased: false,
       bottleMessageSent: false,
       solArrivalSeen: false,
+      solTourBakerySeen: false,
+      solTourShopSeen: false,
+      solTourLinusSeen: false,
+      solChoseToStay: false,
       bakeryClaimBaseline: undefined,
       bakeryClaimBaselineStage: undefined,
     },
@@ -206,6 +214,10 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       bottleMessagePurchased: candidate.worldFlags?.bottleMessagePurchased === true,
       bottleMessageSent: candidate.worldFlags?.bottleMessageSent === true,
       solArrivalSeen: candidate.worldFlags?.solArrivalSeen === true,
+      solTourBakerySeen: candidate.worldFlags?.solTourBakerySeen === true,
+      solTourShopSeen: candidate.worldFlags?.solTourShopSeen === true,
+      solTourLinusSeen: candidate.worldFlags?.solTourLinusSeen === true,
+      solChoseToStay: candidate.worldFlags?.solChoseToStay === true,
       bakeryClaimBaseline: typeof candidate.worldFlags?.bakeryClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.bakeryClaimBaseline) && candidate.worldFlags.bakeryClaimBaseline >= 0 ? candidate.worldFlags.bakeryClaimBaseline : undefined,
       bakeryClaimBaselineStage: [0, 1, 2, 3, 4].includes(candidate.worldFlags?.bakeryClaimBaselineStage as number) ? candidate.worldFlags?.bakeryClaimBaselineStage : undefined,
     },
