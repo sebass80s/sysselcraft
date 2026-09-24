@@ -111,8 +111,9 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.65);
 }
 .quest + .quest { margin-top: .55rem; }
-.quest > strong { font-size: clamp(1.15rem, 3vw, 1.55rem); }
-.quest p { margin: 0; line-height: 1.45; font-size: clamp(1rem, 2.5vw, 1.25rem); }
+.quest > strong { font-size: clamp(1rem, 2.2vw, 1.25rem); }
+.quest p { margin: 0; line-height: 1.35; font-size: clamp(.88rem, 1.9vw, 1.05rem); }
+.quest small { font-size: clamp(.76rem, 1.6vw, .9rem); }
 .quest small { color: #706858; font-weight: 700; }
 
 .message {
