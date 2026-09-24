@@ -178,7 +178,7 @@ export async function createParentQuestV2(
     p_reward_syssel_bux: quest.reward.sysselBux,
     p_recurrence_kind: recurrenceKind,
     p_recurrence_weekdays: recurrenceWeekdays,
-    p_recurrence_timezone: recurrenceTimezone,
+    p_recurrence_timezone: recurrenceTimezone ?? undefined,
   });
   if (error) throw error;
   return firstRpcId(data, "create_parent_quest_v2");
@@ -264,7 +264,7 @@ export async function setParentQuestRecurrence(
     p_quest_id: questId,
     p_recurrence_kind: recurrenceKind,
     p_recurrence_weekdays: recurrenceWeekdays,
-    p_recurrence_timezone: recurrenceTimezone,
+    p_recurrence_timezone: recurrenceTimezone ?? undefined,
   });
   if (error) throw error;
 }
@@ -286,7 +286,7 @@ export async function updateParentQuestV2(
     p_reward_syssel_bux: quest.reward.sysselBux,
     p_recurrence_kind: recurrenceKind,
     p_recurrence_weekdays: recurrenceWeekdays,
-    p_recurrence_timezone: recurrenceTimezone,
+    p_recurrence_timezone: recurrenceTimezone ?? undefined,
   });
   if (error) throw error;
 }
