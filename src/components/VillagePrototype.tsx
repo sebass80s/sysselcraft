@@ -23,6 +23,7 @@ import {
   commitRecyclingCompletion,
   bakeryCompletionPending,
   commitBakeryCompletion,
+  startClinicConstruction,
   type ConstructionState,
 } from "../game/construction";
 import { constructionPresentation } from "../game/constructionPresentation";
@@ -298,6 +299,8 @@ export default function VillagePrototype() {
       handle.setSolVisible(latestSaveRef.current?.worldFlags.solArrivalSeen === true);
       handle.setShopOpen(latestSaveRef.current?.worldFlags.miraArrivalSeen === true);
       handle.setBottleMessageReady(latestSaveRef.current?.worldFlags.bottleMessagePurchased === true && latestSaveRef.current?.worldFlags.bottleMessageSent !== true);
+      const solFlags = latestSaveRef.current?.worldFlags;
+      handle.setSolTourStop(!solFlags?.solArrivalSeen || solFlags.solChoseToStay ? null : !solFlags.solTourBakerySeen ? "bakery" : !solFlags.solTourShopSeen ? "shop" : !solFlags.solTourLinusSeen ? "linus" : "decision");
       handle.setIntroComplete(restoredIntroCompleteRef.current);
       handle.setQuestState(restoredQuestStateRef.current);
       handle.setConstruction(constructionPresentation(constructionRef.current));
@@ -504,7 +507,13 @@ export default function VillagePrototype() {
         nextFlags.solChoseToStay = true; setSolChoseToStay(true);
         if (typeof flags.clinicProgressionBaseline === "number") nextFlags.clinicProgressionBaseline = flags.clinicProgressionBaseline;
       }
-      const snapshot = { ...latestSaveRef.current, worldFlags: nextFlags };
+      let snapshot = { ...latestSaveRef.current, worldFlags: nextFlags };
+      if (solTourStoryStop === "decision") {
+        const nextConstruction = startClinicConstruction(snapshot.construction);
+        snapshot = withConstructionState(snapshot, nextConstruction);
+        constructionRef.current = nextConstruction; setConstruction(nextConstruction);
+        gameRef.current?.setConstruction(constructionPresentation(nextConstruction));
+      }
       latestSaveRef.current = snapshot; await saveSaveState(snapshot, true);
       setSolTourStoryStop(null); setSolTourStoryIndex(0);
     } catch { setConstructionError("Sols berättelse kunde inte sparas. Försök igen."); }
