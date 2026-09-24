@@ -8,7 +8,6 @@ import type { QuestState, VillageGameHandle } from "../game/createVillageGame";
 import { henningArrivalDialogue, linusIntroDialogue } from "../game/dialogues";
 import {
   createEmptyProgression,
-  makeBedQuest,
   type ProgressionState,
   type QuestId,
 } from "../game/quests";
@@ -90,7 +89,6 @@ export default function VillagePrototype() {
   const [saveReady, setSaveReady] = useState(false);
   // Kept in the v1 save shape for backward compatibility. Real quests are backend-owned.
   const [questState, setQuestState] = useState<QuestState>("approved");
-  const [questOpen, setQuestOpen] = useState(false);
   const [diamonds, setDiamonds] = useState(0);
   const [sysselBux, setSysselBux] = useState(0);
   const [backendWallet, setBackendWallet] = useState<BackendWalletSnapshot | null>(() => getLatestBackendWallet());
@@ -267,7 +265,7 @@ export default function VillagePrototype() {
       const { createVillageGame } = await import("../game/createVillageGame");
       if (cancelled || !hostRef.current) return;
       const handle = await createVillageGame(hostRef.current, {
-        onQuestOpen: () => setQuestOpen(true),
+        onQuestOpen: () => {},
         onQuestSourceInteract: (source) => requestQuestSourceOpen(source),
         onConstructionInteract: (id) => {
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
