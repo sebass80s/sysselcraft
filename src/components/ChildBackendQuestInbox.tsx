@@ -230,6 +230,13 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
   useEffect(() => {
     if (!childId || !sessionReady || needsPairing) return;
+    const refreshWallet = () => void refreshQuietly(childId);
+    window.addEventListener("sysselcraft:backend-wallet-refresh", refreshWallet);
+    return () => window.removeEventListener("sysselcraft:backend-wallet-refresh", refreshWallet);
+  }, [childId, needsPairing, refreshQuietly, sessionReady]);
+
+  useEffect(() => {
+    if (!childId || !sessionReady || needsPairing) return;
     const refreshInterval = open ? OPEN_REFRESH_MS : BACKGROUND_REFRESH_MS;
     const timer = window.setInterval(() => {
       if (document.visibilityState === "visible") void refreshQuietly(childId);
