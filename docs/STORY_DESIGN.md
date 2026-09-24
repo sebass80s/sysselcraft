@@ -400,3 +400,15 @@ The first-meeting and later Henning-arrival moments form an intentional visual b
 - later: after the child's real-world quest work has visibly brought life back, the child finds Linus reunited with Henning.
 
 Henning's arrival is the next major Story Moment candidate and should use the same presentation language while receiving its own illustrations and narrative beats.
+
+
+## 15. Mira shop economy semantics — LOCKED 2026-09-24
+
+Mira's restored lanthandel supports two deliberately different reward economies:
+
+- **SysselBux** buy cosmetic/digital things that exist inside SysselCraft: clothing, dog items, gifts to residents and other game-visible effects. The first concrete SysselBux inventory is still open design space and must not be invented merely to populate the shop.
+- **Diamonds** buy real-life rewards defined and fulfilled by the parent. Examples include an ice cream for 1 💎 or one hour of Nintendo Switch for 5 💎. These examples establish the product model, not a mandatory global catalog.
+
+The parent owns the Diamond catalog: create, edit, pause/archive and fulfill reward entries. The child sees currently active entries in Mira's physical shop. A Diamond purchase is an authoritative transaction: verify balance, deduct exactly once and create a redemption carrying a snapshot of the purchased reward/price. Fulfillment happens later in the parent surface and redemption history remains retained. Never implement Diamond spending as a local client-side subtraction.
+
+This split preserves the fiction cleanly: SysselBux deepen the game world; Diamonds let effort in the game become a parent-agreed real-world privilege or treat. Mira is the in-world bridge for both, without making her the authority over the household economy.
