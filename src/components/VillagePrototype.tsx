@@ -131,8 +131,6 @@ export default function VillagePrototype() {
   const [solRuntimeTestIndex, setSolRuntimeTestIndex] = useState(0);
   const solRuntimeTestActiveRef = useRef(false);
   const solRuntimeTestActive = solRuntimeTestPhase !== "idle";
-  const [solRuntimeDebugVisible, setSolRuntimeDebugVisible] = useState(false);
-  const [solRuntimeBuildId, setSolRuntimeBuildId] = useState("loading");
   const [solRuntimeDebugEvents, setSolRuntimeDebugEvents] = useState<SolRuntimeDebugEvent[]>([]);
   const [lastLiveStoryTrigger, setLastLiveStoryTrigger] = useState("NONE");
   const [solRuntimeDebugSnapshot, setSolRuntimeDebugSnapshot] = useState({ activeRef: false, henningArrivalSeen: null as boolean | null });
@@ -168,16 +166,6 @@ export default function VillagePrototype() {
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    if (!solRuntimeDebugVisible) return;
-    let cancelled = false;
-    void fetch("/syssel-build.txt", { cache: "no-store" })
-      .then((response) => response.ok ? response.text() : Promise.reject(new Error(String(response.status))))
-      .then((marker) => { if (!cancelled) setSolRuntimeBuildId(marker.trim() || "missing"); })
-      .catch(() => { if (!cancelled) setSolRuntimeBuildId("web/dev"); });
-    return () => { cancelled = true; };
-  }, [solRuntimeDebugVisible]);
 
   useEffect(() => {
     const reloadConstruction = async () => {
@@ -678,7 +666,6 @@ export default function VillagePrototype() {
   }
 
   function openSolRuntimeTest() {
-    setSolRuntimeDebugVisible(true);
     setSolRuntimeDebugEvents([]);
     setLastLiveStoryTrigger("NONE");
     solRuntimeTestActiveRef.current = true;
@@ -968,23 +955,6 @@ export default function VillagePrototype() {
       <button className="primary-button" disabled={saveRetryBusy || constructionBusy} onClick={() => void retrySave()}>{saveRetryBusy ? "Sparar…" : "Försök spara igen"}</button>
     </section></div>}
     {childPairingOpen && <ChildPairingPanel onClose={() => setChildPairingOpen(false)} />}
-    {solRuntimeDebugVisible && <aside className="sol-runtime-debug-panel" aria-label="Sol runtime debug evidence">
-      <strong>SOL RUNTIME DEBUG</strong>
-      <dl>
-        <div><dt>BUILD</dt><dd>{solRuntimeBuildId}</dd></div>
-        <div><dt>PHASE</dt><dd>{solRuntimeTestPhase}</dd></div>
-        <div><dt>ACTIVE REF</dt><dd>{String(solRuntimeDebugSnapshot.activeRef)}</dd></div>
-        <div><dt>HENNING</dt><dd>{String(henningStoryIndex)}</dd></div>
-        <div><dt>HENNING REPLAY</dt><dd>{String(henningStoryReplayIndex)}</dd></div>
-        <div><dt>BAKERY</dt><dd>{String(bakeryStoryIndex)}</dd></div>
-        <div><dt>SOL</dt><dd>{String(solStoryIndex)}</dd></div>
-        <div><dt>SOL TOUR</dt><dd>{String(solTourStoryStop)}</dd></div>
-        <div><dt>SAVE READY</dt><dd>{String(saveReady)}</dd></div>
-        <div><dt>HENNING SEEN</dt><dd>{String(solRuntimeDebugSnapshot.henningArrivalSeen)}</dd></div>
-        <div><dt>RECYCLING</dt><dd>{construction.revealed.recycling}</dd></div>
-      </dl>
-      <p><b>LAST LIVE</b> {lastLiveStoryTrigger}</p>
-      <ol>{solRuntimeDebugEvents.map((event) => <li key={event.id}><b>{event.source}</b>{event.detail ? ` · ${event.detail}` : ""}</li>)}</ol>
-    </aside>}
+
   </section>;
 }
