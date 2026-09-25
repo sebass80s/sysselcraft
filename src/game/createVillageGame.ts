@@ -98,7 +98,7 @@ export async function createVillageGame(
     private noticeboardMarker?: GameObjects.Container;
     private backendHomeAttention = false;
     private backendLinusAttention = false;
-    private linusQuestMarker?: GameObjects.Container;
+    private linusQuestMarker?: GameObjects.Container;\n    private linusStoryMarker?: GameObjects.Container;
     private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
     private henning?: GameObjects.Image;
@@ -250,6 +250,39 @@ export async function createVillageGame(
     setIntroComplete(complete: boolean) {
       requestedIntroComplete = complete;
       this.introComplete = complete;
+      this.syncLinusStoryMarker();
+    }
+
+    private syncLinusStoryMarker() {
+      this.linusStoryMarker?.destroy();
+      this.linusStoryMarker = undefined;
+      if (this.introComplete || !this.linus) return;
+
+      const bubble = this.add.graphics();
+      bubble.fillStyle(0xfffbef, 0.98);
+      bubble.lineStyle(3, 0x5b3a1f, 1);
+      bubble.fillRoundedRect(-29, -21, 58, 42, 14);
+      bubble.strokeRoundedRect(-29, -21, 58, 42, 14);
+      bubble.fillTriangle(-10, 18, -2, 18, -10, 29);
+      const dots = this.add.text(0, -5, "•••", {
+        color: "#5b3a1f", fontSize: "22px", fontStyle: "bold",
+      }).setOrigin(0.5);
+
+      this.linusStoryMarker = this.add.container(this.linus.x, this.linus.y - 155, [bubble, dots])
+        .setDepth(3000).setSize(76, 72).setInteractive({ useHandCursor: true });
+      this.linusStoryMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen) return;
+        this.linusInteractionPending = true;
+        this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
+        const target = this.path.at(-1);
+        if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
+      this.tweens.add({
+        targets: this.linusStoryMarker, y: "-=3", duration: 1000,
+        yoyo: true, repeat: -1, ease: "Sine.InOut",
+      });
     }
 
     setDogVisible(visible: boolean) {
