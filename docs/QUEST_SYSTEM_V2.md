@@ -233,9 +233,9 @@ The previous three-state child flow is superseded by an explicit acceptance life
 
 Locked visual language: `?` = new quest to accept; `!` = completed/approved quest ready to turn in; speech bubble = authored story/dialogue attention; no marker = ordinary optional interaction.
 
-Parent/backend UX TODO: show occurrence lifecycle clearly, especially which quests are currently `active`, separately from available, pending review and history.
+Parent/backend lifecycle grouping is implemented: the parent surface now shows available (`Nya uppdrag hos barnet`), active (`Pågår`), pending review (`Väntar på dig`) and approved/claimed history (`Senast klara`) separately. The remaining parked parent UX work is explicit definition reuse/activation and optional hide-from-visible-history without deleting authoritative audit/reward rows.
 
 
 ## 2026-09-25 handoff
 
-Quest lifecycle refactor is mid-flight. See section 13 as the locked state-machine contract. Finish marker wiring, source filtering, build/CI, browser acceptance and physical update-in-place acceptance before release.
+Historical handoff note: this refactor is no longer mid-flight. Section 13 remains the locked state-machine contract. Marker wiring/source filtering are implemented and the core lifecycle has passed physical iPhone acceptance through reject/resubmit/approve/explicit turn-in/restart. See the later 2026-09-25 acceptance records in the canonical readiness/handoff documents.
