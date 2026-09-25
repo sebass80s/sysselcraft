@@ -698,7 +698,12 @@ export async function createVillageGame(
       const speechDots = this.add.text(0, -5, "•••", {
         color: "#5b3a1f", fontSize: "22px", fontStyle: "bold",
       }).setOrigin(0.5);
-      this.attentionMarker = this.add.container(attention.position.x, attention.position.y - 145, [speechBubble, speechDots])
+      // The construction guide position is already authored beside the resident.
+      // Anchor the marker above the resident's actual sprite instead, otherwise Recycling
+      // can place the bubble outside the visible camera near the negative-x build site.
+      const markerX = resident.x;
+      const markerY = resident.y - 155;
+      this.attentionMarker = this.add.container(markerX, markerY, [speechBubble, speechDots])
         .setDepth(3000).setSize(76, 72).setInteractive({ useHandCursor: true });
       this.attentionMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
