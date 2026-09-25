@@ -259,3 +259,12 @@ The next physical acceptance target is the Diamond reward journey: parent create
 ## 2026-09-25 current checkpoint
 
 Act 1 browser QA is active and the quest lifecycle is being rebuilt. The dedicated Linus onboarding speech bubble is verified working. The locked quest flow is documented in QUEST_SYSTEM_V2 section 13. The implementation is mid-flight: backend acceptance state and frontend acceptance UI exist, while distinct question-mark versus exclamation-mark world presentation still needs end-to-end completion and verification. Recycling historical-progress baseline protection was also added after a QA run incorrectly cascaded construction from old progression history. Do not treat current HEAD as release-ready. Finish the refactor, build/CI, fresh browser Act 1 acceptance, safe-device update-in-place acceptance, then create the release checkpoint before updating the preserved release phone. Parent UI also has a parked TODO to show active occurrences distinctly from other lifecycle states.
+
+
+## 2026-09-25 Quest v2 + Recycling verified checkpoint
+
+The previously mid-flight Act 1 quest refactor is now core-accepted. Kalle physically verified on iPhone against the live backend: available quest -> `Ta uppdraget` -> active -> `Jag är klar` -> pending -> parent reject -> same quest active again -> resubmit -> parent approve -> `!` turn-in -> exactly-once reward -> full app restart with no replay. Other available noticeboard quests retained the `?` marker. This is real device evidence, not browser-only evidence.
+
+The Recycling historical-progression cascade has deterministic regression coverage in commit `8c44aa5cf939e43ff843b85c5cd80b931cf4ebe8`. Baseline 12 historical claims cannot advance construction; progression 13 earns only stage 1 pending; explicit reveal is idempotent; sync/save/load/restart cannot cascade to stage 2. Full local `npm run verify` passed and no production code change was required.
+
+Immediate gameplay work may now move on from the core quest-state-machine repair. Preserve marker semantics (`?` available, `!` approved turn-in, `💬` story/dialogue) and the Recycling baseline invariant. The next authored story slice remains Sol's arrival via the locked message-in-a-bottle concept after the shop/Mira progression. Parent lifecycle grouping remains a UI follow-up, not a blocker for this accepted core.
