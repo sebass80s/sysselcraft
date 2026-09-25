@@ -2,15 +2,9 @@ import { initialConstruction, normalizeConstruction, syncConstructionProgression
 import { Preferences } from "@capacitor/preferences";
 import { linusIntroDialogue } from "./dialogues";
 import {
-  applyQuestProgression,
-  createDefaultQuestStates,
   createEmptyProgression,
-  isQuestState,
-  makeBedQuest,
   type ProgressionKey,
   type ProgressionState,
-  type QuestId,
-  type QuestStateMap,
 } from "./quests";
 import {
   normalizeRecyclingCenterStage,
@@ -33,8 +27,6 @@ let saveWriteQueue: Promise<void> = Promise.resolve();
 
 export type SaveStateV1 = {
   version: 1;
-  questStates: QuestStateMap;
-  completedQuestIds: QuestId[];
   progression: ProgressionState;
   diamonds: number;
   sysselBux: number;
@@ -67,8 +59,6 @@ export type SaveStateV1 = {
 export function createDefaultSaveState(): SaveStateV1 {
   return {
     version: 1,
-    questStates: createDefaultQuestStates(),
-    completedQuestIds: [],
     progression: createEmptyProgression(),
     diamonds: 0,
     sysselBux: 0,
@@ -119,41 +109,16 @@ function normalizeProgression(value: unknown): ProgressionState | null {
   return normalized;
 }
 
-function normalizeCompletedQuestIds(value: unknown): QuestId[] {
-  if (!Array.isArray(value)) return [];
-  return value.includes("makeBed") ? ["makeBed"] : [];
-}
-
-function normalizeQuestStates(value: unknown): QuestStateMap {
-  const defaults = createDefaultQuestStates();
-  if (!value || typeof value !== "object") return defaults;
-  const candidate = value as Partial<Record<QuestId, unknown>>;
-  return {
-    makeBed: isQuestState(candidate.makeBed) ? candidate.makeBed : defaults.makeBed,
-  };
-}
-
 export function normalizeSaveState(value: unknown): SaveStateV1 | null {
   if (!value || typeof value !== "object") return null;
   const candidate = value as Partial<SaveStateV1>;
   if (candidate.version !== 1) return null;
 
   const defaults = createDefaultSaveState();
-  const questStates = normalizeQuestStates(candidate.questStates);
-  const makeBed = questStates.makeBed;
   const childName = normalizeName(candidate.childName);
   const dogName = normalizeName(candidate.dogName);
 
-  let completedQuestIds = normalizeCompletedQuestIds(candidate.completedQuestIds);
-  let progression = normalizeProgression(candidate.progression);
-
-  // Older v1 saves predate hidden progression. Approval is authoritative and progression
-  // cannot be spent, so it is safe to reconstruct the first quest exactly once.
-  if (makeBed === "approved" && !completedQuestIds.includes(makeBedQuest.id)) {
-    completedQuestIds = [makeBedQuest.id];
-    if (!progression) progression = applyQuestProgression(createEmptyProgression(), makeBedQuest);
-  }
-  progression ??= createEmptyProgression();
+  const progression = normalizeProgression(candidate.progression) ?? createEmptyProgression();
 
   const legacyRecyclingStage = normalizeRecyclingCenterStage(
     candidate.worldFlags?.recyclingCenterStage,
@@ -176,12 +141,7 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
     dialogueIndex = CHILD_NAME_STEP;
   }
 
-  const questHasStarted = makeBed === "pending" || makeBed === "approved";
-  const introComplete = questHasStarted
-    ? true
-    : typeof candidate.introComplete === "boolean"
-      ? candidate.introComplete
-      : defaults.introComplete;
+  const introComplete = typeof candidate.introComplete === "boolean"\n    ? candidate.introComplete\n    : defaults.introComplete;
 
   const dialogueOpen = introComplete
     ? false
@@ -198,8 +158,6 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
 
   return {
     version: 1,
-    questStates,
-    completedQuestIds,
     progression,
     diamonds: normalizeNonNegativeNumber(candidate.diamonds, defaults.diamonds),
     sysselBux: normalizeNonNegativeNumber(candidate.sysselBux, defaults.sysselBux),
