@@ -8,7 +8,7 @@ export type PresentedBackendQuest = {
 
 export type BackendQuestPresentationSnapshot = {
   available: PresentedBackendQuest[];
-  pending: PresentedBackendQuest[];
+  active: PresentedBackendQuest[];\n  pending: PresentedBackendQuest[];
 };
 
 function flag(value: unknown): boolean {
@@ -68,5 +68,5 @@ export function questSourceCounts(snapshot: BackendQuestPresentationSnapshot): Q
 }
 
 export function primaryPresentedQuest(snapshot: BackendQuestPresentationSnapshot): PresentedBackendQuest | null {
-  return snapshot.available[0] ?? snapshot.pending[0] ?? null;
+  return snapshot.active[0] ?? snapshot.available[0] ?? snapshot.pending[0] ?? null;
 }
