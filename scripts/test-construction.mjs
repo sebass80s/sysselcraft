@@ -56,7 +56,9 @@ const nav = load("villageNavigation");
 const initial = domain.initialConstruction();
 assert.equal(domain.earnConstruction(initial, "recycling:2"), initial, "no stage 2 before delivery");
 const quests = load("quests");
-const approvedProgression = quests.applyQuestProgression(quests.createEmptyProgression(), quests.makeBedQuest);
+// The legacy make-bed quest model was intentionally removed. Keep this construction
+// regression focused on the authoritative progression shape that stage 1 consumes.
+const approvedProgression = { ...quests.createEmptyProgression(), orderEnvironment: 0.7 };
 assert.equal(domain.syncConstructionProgression(initial, quests.createEmptyProgression()), initial);
 const firstPending = domain.syncConstructionProgression(initial, approvedProgression);
 assert.equal(firstPending.earned.recycling, 1);
