@@ -565,7 +565,8 @@ export default function ParentModePage() {
   }
 
   const pending = quests.filter((quest) => quest.state === "pending");
-  const active = quests.filter((quest) => quest.state === "available");
+  const available = quests.filter((quest) => quest.state === "available");
+  const active = quests.filter((quest) => quest.state === "active");
   const approved = quests.filter((quest) => quest.state === "approved");
   const child = children.find((candidate) => candidate.id === childId);
   const draftReady =
