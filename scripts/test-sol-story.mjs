@@ -48,6 +48,9 @@ for (const transition of [
 assert.match(component, /phase === "purchase"[\s\S]*setSolSafeTestPhase\("water"\)/, "Purchase must be an explicit, local-only phase");
 assert.match(component, /tour === "shop" \? "\/assets\/village\/story-moments\/sol-tour-shop\.png"/, "Shop\/Mira must have its own scene after purchase");
 assert.match(component, /tour === "linus" \? \(solSafeTestIndex >= 1 \? "\/assets\/village\/story-moments\/sol-tour-linus-knee\.png"/, "Linus scene must follow the production image change");
+assert.match(component, /function openSolRuntimeTest\(\) \{[^}]*setSolStoryIndex\(null\);[^}]*setSolTourStoryStop\(null\);/, "Runtime acceptance harness must clear live Sol overlays when opened");
+assert.match(component, /solRuntimeTestPhase === "idle" && solStoryIndex !== null/, "Live Sol arrival overlay must be suppressed during runtime acceptance");
+assert.match(component, /solRuntimeTestPhase === "idle" && solTourStoryStop && solTourStoryLine/, "Live Sol tour overlay must be suppressed during runtime acceptance");
 assert.match(component, /data-sol-safe-phase=\{phase\}/);
 assert.match(component, /data-sol-safe-index=\{solSafeTestIndex\}/);
 assert.match(styles, /\.sol-safe-test-overlay \{ position:fixed; inset:0; width:100vw; height:100dvh;/, "Sol acceptance overlay must use the viewport as its containing block");
