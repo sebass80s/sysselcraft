@@ -254,3 +254,8 @@ Normal parent authentication is therefore email + password. Magic Link is no lon
 Vercel Git previews were paused again immediately after acceptance by setting `vercel.json -> git.deploymentEnabled=false`. Do not re-enable previews for ordinary commits; collect changes and enable only for an explicitly needed acceptance deployment.
 
 The next physical acceptance target is the Diamond reward journey: parent creates reward -> paired child sees it at Mira -> authoritative purchase deducts exactly once -> parent sees pending delivery -> parent fulfills -> restart preserves the result. Diamond physical acceptance remains OPEN until that passes.
+
+
+## 2026-09-25 current checkpoint
+
+Act 1 browser QA is active and the quest lifecycle is being rebuilt. The dedicated Linus onboarding speech bubble is verified working. The locked quest flow is documented in QUEST_SYSTEM_V2 section 13. The implementation is mid-flight: backend acceptance state and frontend acceptance UI exist, while distinct question-mark versus exclamation-mark world presentation still needs end-to-end completion and verification. Recycling historical-progress baseline protection was also added after a QA run incorrectly cascaded construction from old progression history. Do not treat current HEAD as release-ready. Finish the refactor, build/CI, fresh browser Act 1 acceptance, safe-device update-in-place acceptance, then create the release checkpoint before updating the preserved release phone. Parent UI also has a parked TODO to show active occurrences distinctly from other lifecycle states.
