@@ -21,7 +21,7 @@ export type VillageGameHandle = {
   setSolTourStop: (stop: SolTourStop) => void;
   setShopOpen: (open: boolean) => void;
   setBottleMessageReady: (ready: boolean) => void;
-  setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", active: boolean) => void;
+  setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", marker: "?" | "!" | null) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
 type Callbacks = {
@@ -81,7 +81,7 @@ export async function createVillageGame(
   let requestedSolTourStop: SolTourStop = null;
   let requestedShopOpen = false;
   let requestedBottleMessageReady = false;
-  const requestedQuestSourceAttention = { noticeboard: false, home: false, linus: false };
+  const requestedQuestSourceAttention: Record<"noticeboard" | "home" | "linus", "?" | "!" | null> = { noticeboard: null, home: null, linus: null };
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -602,7 +602,7 @@ export async function createVillageGame(
           linusBadge.lineStyle(3, 0xffd83d, 1);
           linusBadge.fillCircle(0, 0, 27);
           linusBadge.strokeCircle(0, 0, 27);
-          const linusLabel = this.add.text(0, -1, "?", {
+          const linusLabel = this.add.text(0, -1, marker ?? "?", {
             color: "#fff1a8",
             fontSize: "36px",
             fontStyle: "bold",
@@ -995,10 +995,10 @@ export async function createVillageGame(
         (game.scene.getScene("VillageScene") as VillageScene).setIntroComplete(complete);
       }
     },
-    setQuestSourceAttention: (source, active) => {
+    setQuestSourceAttention: (source, marker) => {
       requestedQuestSourceAttention[source] = active;
       if (game.scene.isActive("VillageScene")) {
-        (game.scene.getScene("VillageScene") as VillageScene).setQuestSourceAttention(source, active);
+        (game.scene.getScene("VillageScene") as VillageScene).setQuestSourceAttention(source, marker);
       }
     },
     setShopOpen: (open: boolean) => {
