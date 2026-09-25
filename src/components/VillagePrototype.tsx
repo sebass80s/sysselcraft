@@ -114,7 +114,10 @@ export default function VillagePrototype() {
   const [saveError, setSaveError] = useState(false);
   const [saveRetryBusy, setSaveRetryBusy] = useState(false);
   const [bootError, setBootError] = useState(false);
-  const [debugToolsEnabled, setDebugToolsEnabled] = useState(false);\n  const [solSafeTestOpen, setSolSafeTestOpen] = useState(false);\n  const [solSafeTestPhase, setSolSafeTestPhase] = useState<"shop" | "water" | "letter" | "bottle" | "arrival" | SolTourStop | "done">("shop");\n  const [solSafeTestIndex, setSolSafeTestIndex] = useState(0);
+  const [debugToolsEnabled, setDebugToolsEnabled] = useState(false);
+  const [solSafeTestOpen, setSolSafeTestOpen] = useState(false);
+  const [solSafeTestPhase, setSolSafeTestPhase] = useState<"shop" | "water" | "letter" | "bottle" | "arrival" | SolTourStop | "done">("shop");
+  const [solSafeTestIndex, setSolSafeTestIndex] = useState(0);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
   const recyclingStoryLine = recyclingStoryOpen ? recyclingCompletionDialogue[recyclingStoryIndex] : null;
