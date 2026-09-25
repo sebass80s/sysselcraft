@@ -25,7 +25,7 @@ type RpcQuestRow = {
   reward_syssel_bux: number;
   state: unknown;
   created_at: string;
-  submitted_at: string | null;
+  accepted_at: string | null;\n  submitted_at: string | null;
   approved_at: string | null;
   claimed_at: string | null;
 };
@@ -112,7 +112,7 @@ function mapQuest(row: RpcQuestRow): BackendQuest {
     },
     state: row.state,
     createdAt: row.created_at,
-    submittedAt: row.submitted_at,
+    acceptedAt: row.accepted_at,\n    submittedAt: row.submitted_at,
     approvedAt: row.approved_at,
     claimedAt: row.claimed_at,
   };
@@ -330,7 +330,7 @@ export async function isChildDeviceBound(childId: string): Promise<boolean> {
   return data === true;
 }
 
-export async function submitQuest(instanceId: string): Promise<void> {
+export async function acceptQuest(instanceId: string): Promise<void> {\n  const { error } = await getSupabaseBrowserClient().rpc("accept_quest", { p_instance_id: instanceId });\n  if (error) throw error;\n}\n\nexport async function submitQuest(instanceId: string): Promise<void> {
   const { error } = await getSupabaseBrowserClient().rpc("submit_quest", {
     p_instance_id: instanceId,
   });
