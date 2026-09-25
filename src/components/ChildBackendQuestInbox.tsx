@@ -104,7 +104,24 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
       if (localSave && nextGameState) {
         let snapshot = localSave;
-        const nextRecycling = syncRecyclingContributionProgress(snapshot.construction, nextGameState.progression.worldProgression);
+        let recyclingBaseline = snapshot.worldFlags.recyclingClaimBaseline;
+        let recyclingBaselineStage = snapshot.worldFlags.recyclingClaimBaselineStage;
+        if (recyclingBaseline === undefined) {
+          recyclingBaseline = Math.max(0, Math.floor(nextGameState.progression.worldProgression));
+          recyclingBaselineStage = snapshot.construction.revealed.recycling;
+          snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, recyclingClaimBaseline: recyclingBaseline, recyclingClaimBaselineStage: recyclingBaselineStage } };
+          await saveSaveState(snapshot, true);
+        } else if (recyclingBaselineStage === undefined) {
+          recyclingBaselineStage = snapshot.construction.revealed.recycling;
+          snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, recyclingClaimBaselineStage: recyclingBaselineStage } };
+          await saveSaveState(snapshot, true);
+        }
+        const nextRecycling = syncRecyclingContributionProgress(
+          snapshot.construction,
+          nextGameState.progression.worldProgression,
+          recyclingBaseline,
+          recyclingBaselineStage ?? 0,
+        );
         if (nextRecycling !== snapshot.construction) {
           snapshot = withConstructionState(snapshot, nextRecycling);
           await saveSaveState(snapshot, true);
