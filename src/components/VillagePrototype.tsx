@@ -4,12 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Capacitor } from "@capacitor/core";
 import ChildPairingPanel from "./ChildPairingPanel";
-import type { QuestState, VillageGameHandle } from "../game/createVillageGame";
+import type { VillageGameHandle } from "../game/createVillageGame";
 import { henningArrivalDialogue, linusIntroDialogue } from "../game/dialogues";
 import {
   createEmptyProgression,
   type ProgressionState,
-  type QuestId,
 } from "../game/quests";
 import {
   initialConstruction,
@@ -82,18 +81,14 @@ export default function VillagePrototype() {
   const attention = residentAttention(construction);
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
-  const restoredQuestStateRef = useRef<QuestState>("available");
   const restoredIntroCompleteRef = useRef(false);
   const restoredDogVisibleRef = useRef(false);
   const childNameInputRef = useRef<HTMLInputElement>(null);
   const dogNameInputRef = useRef<HTMLInputElement>(null);
   const [saveReady, setSaveReady] = useState(false);
-  // Kept in the v1 save shape for backward compatibility. Real quests are backend-owned.
-  const [questState, setQuestState] = useState<QuestState>("approved");
   const [diamonds, setDiamonds] = useState(0);
   const [sysselBux, setSysselBux] = useState(0);
   const [backendWallet, setBackendWallet] = useState<BackendWalletSnapshot | null>(() => getLatestBackendWallet());
-  const [completedQuestIds, setCompletedQuestIds] = useState<QuestId[]>([]);
   const [progression, setProgression] = useState<ProgressionState>(createEmptyProgression);
   const [introComplete, setIntroComplete] = useState(false);
   const [dialogueOpen, setDialogueOpen] = useState(false);
@@ -161,14 +156,11 @@ export default function VillagePrototype() {
       if (saved) {
         constructionRef.current = saved.construction;
         setConstruction(saved.construction);
-        restoredQuestStateRef.current = "approved";
         restoredIntroCompleteRef.current = saved.introComplete;
         restoredDogVisibleRef.current = saved.dogVisible;
 
-        setQuestState("approved");
         setDiamonds(saved.diamonds);
         setSysselBux(saved.sysselBux);
-        setCompletedQuestIds(saved.completedQuestIds);
         setProgression(saved.progression);
         setIntroComplete(saved.introComplete);
         setDialogueOpen(saved.dialogueOpen);
@@ -226,7 +218,7 @@ export default function VillagePrototype() {
   useEffect(() => {
     if (!saveReady || resettingSave || constructionWriteRef.current) return;
     const snapshot: SaveStateV1 = {
-      version: 1, questStates: { makeBed: questState }, completedQuestIds, progression,
+      version: 1, progression,
       diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, construction,
       worldFlags: {
         ...latestSaveRef.current?.worldFlags,
@@ -246,7 +238,7 @@ export default function VillagePrototype() {
       () => setSaveError(false),
       () => setSaveError(true),
     );
-  }, [construction, constructionBusy, saveReady, resettingSave, questState, completedQuestIds, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay, clinicCompletionSeen]);
+  }, [construction, constructionBusy, saveReady, resettingSave, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay, clinicCompletionSeen]);
 
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
@@ -266,7 +258,6 @@ export default function VillagePrototype() {
       const { createVillageGame } = await import("../game/createVillageGame");
       if (cancelled || !hostRef.current) return;
       const handle = await createVillageGame(hostRef.current, {
-        onQuestOpen: () => {},
         onQuestSourceInteract: (source) => requestQuestSourceOpen(source),
         onConstructionInteract: (id) => {
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
@@ -327,7 +318,6 @@ export default function VillagePrototype() {
       const solFlags = latestSaveRef.current?.worldFlags;
       handle.setSolTourStop(!solFlags?.solArrivalSeen || solFlags.solChoseToStay ? null : !solFlags.solTourBakerySeen ? "bakery" : !solFlags.solTourShopSeen ? "shop" : !solFlags.solTourLinusSeen ? "linus" : "decision");
       handle.setIntroComplete(restoredIntroCompleteRef.current);
-      handle.setQuestState(restoredQuestStateRef.current);
       handle.setConstruction(constructionPresentation(constructionRef.current));
     }
     void boot().catch(() => {
@@ -336,7 +326,6 @@ export default function VillagePrototype() {
     return () => { cancelled = true; gameRef.current?.destroy(); gameRef.current = null; };
   }, [saveReady]);
 
-  useEffect(() => { gameRef.current?.setQuestState(questState); }, [questState]);
   useEffect(() => { gameRef.current?.setIntroComplete(introComplete); }, [introComplete]);
   useEffect(() => { gameRef.current?.setDogVisible(dogVisible); }, [dogVisible]);
   useEffect(() => { gameRef.current?.setHenningVisible(henningArrivalSeen); }, [henningArrivalSeen]);
