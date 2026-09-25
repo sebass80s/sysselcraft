@@ -503,3 +503,8 @@ Parked for a later village-life polish pass.
 - Pools must have **no fixed content-size limit**; they are designed to grow freely over time.
 - Support progression/world-state-specific entries so residents can react to construction, new arrivals, completed buildings and other village changes.
 - Story beats, quest interactions and other authored progression interactions always take priority over idle dialogue.
+
+
+## 2026-09-25 world attention language
+
+Locked presentation grammar: question mark means a new quest is available to accept; exclamation mark means an approved/completed quest is ready to turn in; speech bubble means authored story/dialogue attention; no marker means ordinary optional interaction. Linus uses a speech bubble at the very start of a fresh game to invite onboarding, and that behavior is browser-verified.
