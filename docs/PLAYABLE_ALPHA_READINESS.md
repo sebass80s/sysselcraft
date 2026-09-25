@@ -320,3 +320,12 @@ The physical phone used for Quest v2 already had completed Recycling, so the his
 - The earlier safe-story acceptance at `0a3d9b21ba1b1a08ca1ba58a27f9944c4c2b1455` remains presentation coverage only; this acceptance separately covers runtime trigger/pacing behavior.
 - Physical instrumentation confirmed the Bakery scene is entered only after `ARRIVAL_COMPLETE: await-bakery` followed by `SIMULATE_HENNING_INTERACTION: bakery`. During that scene the live Henning story indices remained null, proving it was the intended Sol Bakery-tour scene rather than the real Henning-arrival overlay.
 - The runtime acceptance harness is non-destructive: live story state is guarded while active and the real save/backend is not written by the harness. A pending real story may resume after the harness closes.
+
+
+## Diamond deterministic regression checkpoint — 2026-09-25
+
+- Static/contract regression coverage is now part of canonical `npm run verify` via `scripts/test-diamond-rewards.mjs`.
+- Coverage locks the authoritative purchase RPC, atomic sufficient-balance debit + pending redemption creation, reward title/price snapshots, idempotent delivery, idempotent refund with exact snapshotted repayment, authenticated-only RPC execution, Mira shop purchase/wallet-refresh wiring, and parent pending-delivery/delivery/refund wiring.
+- GitHub Actions CI #830 passed on commit `d15a0945d2074071d80591ce1e4d49ff5d57b9fa`.
+- No production Diamond code or live data was changed by this regression closeout.
+- Physical Diamond acceptance remains OPEN because the test iPhone was not available. Do not mark the feature physically accepted until the real journey passes: parent creates reward -> paired child sees it at Mira -> purchase deducts exactly once -> parent sees pending delivery -> parent marks delivered -> restart preserves wallet/redemption state.
