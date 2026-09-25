@@ -268,3 +268,9 @@ The previously mid-flight Act 1 quest refactor is now core-accepted. Kalle physi
 The Recycling historical-progression cascade has deterministic regression coverage in commit `8c44aa5cf939e43ff843b85c5cd80b931cf4ebe8`. Baseline 12 historical claims cannot advance construction; progression 13 earns only stage 1 pending; explicit reveal is idempotent; sync/save/load/restart cannot cascade to stage 2. Full local `npm run verify` passed and no production code change was required.
 
 Immediate gameplay work may now move on from the core quest-state-machine repair. Preserve marker semantics (`?` available, `!` approved turn-in, `💬` story/dialogue) and the Recycling baseline invariant. The next authored story slice remains Sol's arrival via the locked message-in-a-bottle concept after the shop/Mira progression. Parent lifecycle grouping remains a UI follow-up, not a blocker for this accepted core.
+
+
+## Physical acceptance update 2026-09-25
+- Sol safe-story acceptance harness physically verified PASS on a real iPhone in landscape at commit `0a3d9b21ba1b1a08ca1ba58a27f9944c4c2b1455`.
+- Full isolated chain passed: purchase → water → letter → bottle → arrival → bakery → shop/Mira → Linus → decision → done.
+- Story Moment presentation is fullscreen and usable with native safe-area controls. Harness remains non-destructive and does not write player save or backend state.
