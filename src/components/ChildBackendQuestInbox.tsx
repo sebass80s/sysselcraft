@@ -8,7 +8,8 @@ import { requestChildPairingOpen } from "@/game/childPairingBridge";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "@/backend/childDeviceBinding";
 import {
-  acceptQuest,\n  claimQuestReward,
+  acceptQuest,
+  claimQuestReward,
   getChildGameState,
   isChildDeviceBound,
   listChildQuests,
