@@ -1,4 +1,4 @@
-export const QUEST_LIFECYCLE_STATES = ["available", "pending", "approved"] as const;
+export const QUEST_LIFECYCLE_STATES = ["available", "active", "pending", "approved"] as const;
 export type QuestLifecycleState = (typeof QUEST_LIFECYCLE_STATES)[number];
 
 export const PROGRESSION_CLASSES = [
@@ -57,7 +57,7 @@ export type BackendQuest = {
   };
   state: QuestLifecycleState;
   createdAt: string;
-  submittedAt: string | null;
+  acceptedAt: string | null;\n  submittedAt: string | null;
   approvedAt: string | null;
   claimedAt: string | null;
 };
