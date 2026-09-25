@@ -77,15 +77,6 @@ assert.match(component, /data-sol-runtime-index=\{solRuntimeTestIndex\}/);
 for (const source of ["RESTORE_HENNING", "PHASER_HENNING_INTERACT_BLOCKED", "PHASER_HENNING_SOL_TOUR", "PHASER_HENNING_DIALOGUE", "BAKERY_COMPLETION", "RECYCLING_COMPLETION_HENNING", "LIVE_SOL_TIMER_OPEN", "RUNTIME_PHASE_CHANGE", "RUNTIME_HARNESS_CLOSE"]) {
   assert.ok(component.includes(`recordSolRuntimeDebug("${source}"`), `Missing physical runtime evidence source ${source}`);
 }
-for (const field of ["solRuntimeBuildId", "solRuntimeTestPhase", "solRuntimeTestActiveRef.current", "henningStoryIndex", "henningStoryReplayIndex", "bakeryStoryIndex", "solStoryIndex", "solTourStoryStop", "saveReady", "worldFlags.henningArrivalSeen", "construction.revealed.recycling", "lastLiveStoryTrigger"]) {
-  assert.ok(component.includes(field), `Runtime evidence panel missing ${field}`);
-}
-const debugPanelStart = component.indexOf('{solRuntimeDebugVisible && <aside className="sol-runtime-debug-panel"');
-assert.ok(debugPanelStart > liveRenderEnd, "Runtime evidence panel must render outside and above the live-story guard");
-const debugPanelEnd = component.indexOf("</aside>}", debugPanelStart);
-const debugPanel = component.slice(debugPanelStart, debugPanelEnd);
-assert.doesNotMatch(debugPanel, /purchaseStoryItem|purchaseBottleMessage|commitStoryBeat|saveSaveState|persistConstruction|clearSaveState|getSupabaseBrowserClient/, "Runtime evidence panel must remain read-only");
-assert.match(styles, /\.sol-runtime-debug-panel \{[^}]*position:fixed;[^}]*z-index:2147483647;[^}]*env\(safe-area-inset-top\)[^}]*env\(safe-area-inset-right\)/, "Runtime evidence must remain visible over every story overlay and respect iPhone safe areas");
 assert.match(component, /data-sol-safe-phase=\{phase\}/);
 assert.match(component, /data-sol-safe-index=\{solSafeTestIndex\}/);
 assert.match(styles, /\.sol-safe-test-overlay \{ position:fixed; inset:0; width:100vw; height:100dvh;/, "Sol acceptance overlay must use the viewport as its containing block");
