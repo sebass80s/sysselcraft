@@ -1,6 +1,6 @@
 {
 	"appId": "se.sysselcraft.app",
-	"appName": "Sysselcraft",
+	"appName": "SysselCraft",
 	"webDir": "out",
 	"packageClassList": [
 		"PreferencesPlugin"
