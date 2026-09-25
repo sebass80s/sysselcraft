@@ -448,3 +448,10 @@ Practical release flow:
 `development -> CI -> physical iPhone QA -> accepted release checkpoint/tag -> Xcode install over existing child app`
 
 The child's real save must never be used as a disposable development/reset environment after release.
+
+
+## 2026-09-25 quest rewrite checkpoint
+
+Quest lifecycle now targets available -> active -> pending -> approved -> claimed. The live schema includes accepted_at and the acceptance RPC; submit requires active and rejection returns the same occurrence to active. Frontend types/repository/UI were updated for explicit acceptance. World presentation is being converted from boolean attention to marker-aware question-mark/exclamation-mark/null state. This is not yet end-to-end verified. Complete VillagePrototype/Phaser wiring and source filtering, then build/CI and acceptance-test the whole flow before release.
+
+Recycling also gained a local progression baseline so historical backend progression cannot replay as fresh construction on a fresh local save. This was prompted by a real QA cascade and needs regression coverage after the quest rewrite.
