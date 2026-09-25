@@ -342,8 +342,13 @@ export default function VillagePrototype() {
     gameRef.current?.setSolTourStop(stop);
   }, [solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay]);
   useEffect(() => {
+    // Sol must not teleport in immediately after the bottle is sent. Her arrival
+    // becomes eligible on the next gameplay session, giving the bottle journey
+    // real story time before the harbour scene.
     if (!saveReady || !bottleMessageSent || solArrivalSeen || bottleLetterOpen || bottleStoryIndex !== null || solStoryIndex !== null) return;
-    const timer = window.setTimeout(() => setSolStoryIndex(0), 1200);
+    const sentAtBoot = initialWorldFlagsRef.current?.bottleMessageSent === true;
+    if (!sentAtBoot) return;
+    const timer = window.setTimeout(() => setSolStoryIndex(0), 900);
     return () => window.clearTimeout(timer);
   }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
