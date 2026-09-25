@@ -283,25 +283,9 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
   if (!pairingChecked) return null;
 
-  if (!childId) {
-    return (
-      <aside className={styles.dock} aria-label="Koppla barnets enhet">
-        <button className={styles.toggle} type="button" onClick={onPair}>
-          📱 Koppla enhet
-        </button>
-      </aside>
-    );
-  }
-
-  if (needsPairing) {
-    return (
-      <aside className={styles.dock} aria-label="Koppla om barnets enhet">
-        <button className={styles.toggle} type="button" onClick={onPair}>
-          📱 Koppla om enhet
-        </button>
-      </aside>
-    );
-  }
+  // Pairing and re-pairing live in SysselCraft → Vuxenläge.
+  // Keep the quest dock out of the village HUD until a valid child binding exists.
+  if (!childId || needsPairing) return null;
 
   const presented = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
   const allVisibleQuests = [...presented.available, ...presented.pending];
