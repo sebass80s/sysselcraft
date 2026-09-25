@@ -48,9 +48,32 @@ for (const transition of [
 assert.match(component, /phase === "purchase"[\s\S]*setSolSafeTestPhase\("water"\)/, "Purchase must be an explicit, local-only phase");
 assert.match(component, /tour === "shop" \? "\/assets\/village\/story-moments\/sol-tour-shop\.png"/, "Shop\/Mira must have its own scene after purchase");
 assert.match(component, /tour === "linus" \? \(solSafeTestIndex >= 1 \? "\/assets\/village\/story-moments\/sol-tour-linus-knee\.png"/, "Linus scene must follow the production image change");
-assert.match(component, /function openSolRuntimeTest\(\) \{[^}]*setSolStoryIndex\(null\);[^}]*setSolTourStoryStop\(null\);/, "Runtime acceptance harness must clear live Sol overlays when opened");
-assert.match(component, /solRuntimeTestPhase === "idle" && solStoryIndex !== null/, "Live Sol arrival overlay must be suppressed during runtime acceptance");
-assert.match(component, /solRuntimeTestPhase === "idle" && solTourStoryStop && solTourStoryLine/, "Live Sol tour overlay must be suppressed during runtime acceptance");
+const runtimeOpenStart = component.indexOf("function openSolRuntimeTest");
+const runtimeCloseStart = component.indexOf("function closeSolRuntimeTest", runtimeOpenStart);
+const runtimeOpen = component.slice(runtimeOpenStart, runtimeCloseStart);
+assert.match(runtimeOpen, /solRuntimeTestActiveRef\.current = true/, "Runtime acceptance must synchronously activate its callback guard");
+for (const liveSetter of ["setDialogueOpen", "setLinusStoryMomentOpen", "setLinusStoryReplayIndex", "setHenningStoryIndex", "setHenningStoryReplayIndex", "setHenningDialogueOpen", "setBakeryStoryIndex", "setBakeryStoryReplayIndex", "setMiraStoryIndex", "setMiraStoryReplayIndex", "setClinicStoryIndex", "setClinicStoryReplayIndex", "setConstructionDialogueId", "setAbandonedShopDialogueIndex", "setShopPanelOpen", "setSolStoryIndex", "setSolTourStoryStop", "setBottleStoryIndex", "setBottleLetterOpen"]) {
+  assert.ok(!runtimeOpen.includes(liveSetter), `Runtime acceptance must preserve live ${liveSetter} state instead of clearing it`);
+}
+assert.match(component, /function closeSolRuntimeTest\(\) \{[\s\S]*solRuntimeTestActiveRef\.current = false;[\s\S]*setSolRuntimeTestPhase\("idle"\)/, "Every runtime-test exit must release the synchronous guard");
+assert.match(component, /if \(!solRuntimeTestActiveRef\.current\) \{[\s\S]*setHenningStoryIndex\(0\);[\s\S]*\}\s*\}\s*setSaveReady/, "Save restore must not open pending live stories during runtime acceptance");
+assert.match(component, /if \(!saveReady \|\| resettingSave \|\| constructionWriteRef\.current \|\| solRuntimeTestActiveRef\.current\) return;/, "Autosave must not write while runtime acceptance is active");
+assert.match(component, /if \(solRuntimeTestActive \|\| !saveReady[^)]*\) return;[\s\S]*setSolStoryIndex\(0\)/, "Delayed live Sol arrival must be suspended during runtime acceptance");
+for (const callback of ["onConstructionInteract", "onLinusInteract", "onHenningInteract", "onBottleMessageInteract", "onSolInteract", "onAbandonedShopInteract", "onShopInteract"]) {
+  const callbackStart = component.indexOf(`${callback}:`, component.indexOf("createVillageGame(hostRef.current"));
+  const callbackEnd = component.indexOf(`\n        },`, callbackStart) + 12;
+  assert.ok(callbackStart >= 0 && callbackEnd > callbackStart, `Missing live callback ${callback}`);
+  assert.match(component.slice(callbackStart, callbackEnd), /solRuntimeTestActiveRef\.current/, `${callback} must be blocked during runtime acceptance`);
+}
+const liveRenderStart = component.indexOf("{!solRuntimeTestActive && <>");
+const liveRenderEnd = component.indexOf("\n    </>}", liveRenderStart);
+assert.ok(liveRenderStart >= 0 && liveRenderEnd > liveRenderStart, "Missing shared live-story render guard");
+const liveRender = component.slice(liveRenderStart, liveRenderEnd);
+for (const liveState of ["henningStoryIndex", "henningStoryReplayIndex", "bakeryStoryIndex", "miraStoryIndex", "solStoryIndex", "solTourStoryStop", "constructionDialogueId", "recyclingStoryOpen"]) {
+  assert.ok(liveRender.includes(liveState), `Live ${liveState} overlay must be inside the runtime-test render guard`);
+}
+assert.match(component, /data-sol-runtime-phase=\{phase\}/);
+assert.match(component, /data-sol-runtime-index=\{solRuntimeTestIndex\}/);
 assert.match(component, /data-sol-safe-phase=\{phase\}/);
 assert.match(component, /data-sol-safe-index=\{solSafeTestIndex\}/);
 assert.match(styles, /\.sol-safe-test-overlay \{ position:fixed; inset:0; width:100vw; height:100dvh;/, "Sol acceptance overlay must use the viewport as its containing block");

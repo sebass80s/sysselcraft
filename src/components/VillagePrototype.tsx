@@ -121,6 +121,8 @@ export default function VillagePrototype() {
   const [solSafeTestIndex, setSolSafeTestIndex] = useState(0);
   const [solRuntimeTestPhase, setSolRuntimeTestPhase] = useState<"idle" | "bottle-sent" | "arrival" | "await-bakery" | "bakery" | "await-shop" | "shop" | "await-linus" | "linus" | "await-decision" | "decision" | "done">("idle");
   const [solRuntimeTestIndex, setSolRuntimeTestIndex] = useState(0);
+  const solRuntimeTestActiveRef = useRef(false);
+  const solRuntimeTestActive = solRuntimeTestPhase !== "idle";
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
   const recyclingStoryLine = recyclingStoryOpen ? recyclingCompletionDialogue[recyclingStoryIndex] : null;
@@ -188,17 +190,19 @@ export default function VillagePrototype() {
         setSolTourLinusSeen(saved.worldFlags.solTourLinusSeen === true);
         setSolChoseToStay(saved.worldFlags.solChoseToStay === true);
         setClinicCompletionSeen(saved.worldFlags.clinicCompletionSeen === true);
-        if (recyclingCompletionPending(saved.construction)) {
-          setRecyclingStoryIndex(0);
-          setRecyclingStoryOpen(true);
-        } else if (bakeryCompletionPending(saved.construction)) {
-          setBakeryStoryIndex(0);
-        } else if (saved.construction.completedStoryBeats.includes("bakery:completion") && saved.worldFlags.miraArrivalSeen !== true) {
-          setMiraStoryIndex(0);
-        } else if (saved.construction.revealed.clinic >= 4 && saved.worldFlags.clinicCompletionSeen !== true) {
-          setClinicStoryIndex(0);
-        } else if (saved.construction.revealed.recycling >= 4 && saved.worldFlags.henningArrivalSeen !== true) {
-          setHenningStoryIndex(0);
+        if (!solRuntimeTestActiveRef.current) {
+          if (recyclingCompletionPending(saved.construction)) {
+            setRecyclingStoryIndex(0);
+            setRecyclingStoryOpen(true);
+          } else if (bakeryCompletionPending(saved.construction)) {
+            setBakeryStoryIndex(0);
+          } else if (saved.construction.completedStoryBeats.includes("bakery:completion") && saved.worldFlags.miraArrivalSeen !== true) {
+            setMiraStoryIndex(0);
+          } else if (saved.construction.revealed.clinic >= 4 && saved.worldFlags.clinicCompletionSeen !== true) {
+            setClinicStoryIndex(0);
+          } else if (saved.construction.revealed.recycling >= 4 && saved.worldFlags.henningArrivalSeen !== true) {
+            setHenningStoryIndex(0);
+          }
         }
       }
 
@@ -224,7 +228,7 @@ export default function VillagePrototype() {
   }, []);
 
   useEffect(() => {
-    if (!saveReady || resettingSave || constructionWriteRef.current) return;
+    if (!saveReady || resettingSave || constructionWriteRef.current || solRuntimeTestActiveRef.current) return;
     const snapshot: SaveStateV1 = {
       version: 1, progression,
       diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, construction,
@@ -267,13 +271,15 @@ export default function VillagePrototype() {
       const { createVillageGame } = await import("../game/createVillageGame");
       if (cancelled || !hostRef.current) return;
       const handle = await createVillageGame(hostRef.current, {
-        onQuestSourceInteract: (source) => requestQuestSourceOpen(source),
+        onQuestSourceInteract: (source) => { if (!solRuntimeTestActiveRef.current) requestQuestSourceOpen(source); },
         onConstructionInteract: (id) => {
+          if (solRuntimeTestActiveRef.current) return;
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
           setConstructionDialogueId(id);
           setConstructionDialogueIndex(0);
         },
         onLinusInteract: () => {
+          if (solRuntimeTestActiveRef.current) return;
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solArrivalSeen && flags.solTourShopSeen && !flags.solTourLinusSeen) { setSolTourStoryStop("linus"); setSolTourStoryIndex(0); return; }
           // The naming/dog sequence is onboarding only. Once intro is complete, Linus must
@@ -284,20 +290,24 @@ export default function VillagePrototype() {
           setLinusStoryMomentOpen(true);
         },
         onHenningInteract: () => {
+          if (solRuntimeTestActiveRef.current) return;
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solArrivalSeen && !flags.solTourBakerySeen) { setSolTourStoryStop("bakery"); setSolTourStoryIndex(0); return; }
           setHenningDialogueIndex(0); setHenningDialogueOpen(true);
         },
-        onBottleMessageInteract: () => { setBottleLetterOpen(true); gameRef.current?.setConstructionDialogueOpen(true); },
+        onBottleMessageInteract: () => { if (!solRuntimeTestActiveRef.current) { setBottleLetterOpen(true); gameRef.current?.setConstructionDialogueOpen(true); } },
         onSolInteract: () => {
+          if (solRuntimeTestActiveRef.current) return;
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solTourLinusSeen && !flags.solChoseToStay) { setSolTourStoryStop("decision"); setSolTourStoryIndex(0); }
         },
         onAbandonedShopInteract: () => {
+          if (solRuntimeTestActiveRef.current) return;
           setAbandonedShopDialogueIndex(0);
           gameRef.current?.setConstructionDialogueOpen(true);
         },
         onShopInteract: () => {
+          if (solRuntimeTestActiveRef.current) return;
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solTourBakerySeen && !flags.solTourShopSeen) { setSolTourStoryStop("shop"); setSolTourStoryIndex(0); return; }
           gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopCurrency("diamonds"); setShopMessage("");
@@ -349,11 +359,11 @@ export default function VillagePrototype() {
     // Sol must not teleport in immediately after the bottle is sent. Her arrival
     // becomes eligible on the next gameplay session, giving the bottle journey
     // real story time before the harbour scene.
-    if (!saveReady || !bottleMessageSent || solArrivalSeen || bottleLetterOpen || bottleStoryIndex !== null || solStoryIndex !== null) return;
+    if (solRuntimeTestActive || !saveReady || !bottleMessageSent || solArrivalSeen || bottleLetterOpen || bottleStoryIndex !== null || solStoryIndex !== null) return;
     if (!bottleMessageSentAtBootRef.current) return;
-    const timer = window.setTimeout(() => setSolStoryIndex(0), 900);
+    const timer = window.setTimeout(() => { if (!solRuntimeTestActiveRef.current) setSolStoryIndex(0); }, 900);
     return () => window.clearTimeout(timer);
-  }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex]);
+  }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex, solRuntimeTestActive]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
 
   async function persistConstruction(next: ConstructionState, revealId?: string) {
@@ -370,9 +380,11 @@ export default function VillagePrototype() {
         setConstructionDialogueId(null); await game.presentConstructionReveal(revealId, commit);
       } else await commit();
       setConstructionDialogueId(null); gameRef.current?.setConstructionDialogueOpen(false);
-      if (revealId === "recycling:4" && recyclingCompletionPending(next)) { setRecyclingStoryIndex(0); setRecyclingStoryOpen(true); }
-      if (revealId === "bakery:4" && bakeryCompletionPending(next)) { setBakeryStoryIndex(0); }
-      if (revealId === "clinic:4") { setClinicStoryIndex(0); }
+      if (!solRuntimeTestActiveRef.current) {
+        if (revealId === "recycling:4" && recyclingCompletionPending(next)) { setRecyclingStoryIndex(0); setRecyclingStoryOpen(true); }
+        if (revealId === "bakery:4" && bakeryCompletionPending(next)) { setBakeryStoryIndex(0); }
+        if (revealId === "clinic:4") { setClinicStoryIndex(0); }
+      }
     } catch {
       setConstructionError("Det gick inte att spara. Försök igen.");
       if (revealId && residentAttention(constructionRef.current)?.id === revealId) setConstructionDialogueId(revealId);
@@ -390,7 +402,7 @@ export default function VillagePrototype() {
     try {
       const snapshot = withConstructionState(latestSaveRef.current, next); await saveSaveState(snapshot, true);
       latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next); setRecyclingStoryOpen(false); setRecyclingStoryIndex(0);
-      if (!snapshot.worldFlags.henningArrivalSeen) { setParentMenuOpen(false); setConstructionDialogueId(null); setHenningStoryIndex(0); }
+      if (!solRuntimeTestActiveRef.current && !snapshot.worldFlags.henningArrivalSeen) { setParentMenuOpen(false); setConstructionDialogueId(null); setHenningStoryIndex(0); }
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
@@ -434,7 +446,8 @@ export default function VillagePrototype() {
     try {
       const snapshot = withConstructionState(latestSaveRef.current, next);
       await saveSaveState(snapshot, true);
-      latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next); setBakeryStoryIndex(null); setMiraStoryIndex(0);
+      latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next); setBakeryStoryIndex(null);
+      if (!solRuntimeTestActiveRef.current) setMiraStoryIndex(0);
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
@@ -591,7 +604,19 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  function openSolRuntimeTest() { setParentMenuOpen(false); setSolSafeTestOpen(false); setDialogueOpen(false); setLinusStoryMomentOpen(false); setLinusStoryReplayIndex(null); setHenningStoryIndex(null); setHenningStoryReplayIndex(null); setHenningDialogueOpen(false); setBakeryStoryIndex(null); setBakeryStoryReplayIndex(null); setMiraStoryIndex(null); setMiraStoryReplayIndex(null); setClinicStoryIndex(null); setClinicStoryReplayIndex(null); setConstructionDialogueId(null); setAbandonedShopDialogueIndex(null); setShopPanelOpen(false); setSolStoryIndex(null); setSolTourStoryStop(null); setSolTourStoryIndex(0); setBottleStoryIndex(null); setBottleLetterOpen(false); setSolRuntimeTestIndex(0); setSolRuntimeTestPhase("bottle-sent"); }
+  function openSolRuntimeTest() { solRuntimeTestActiveRef.current = true; setParentMenuOpen(false); setSolSafeTestOpen(false); setSolRuntimeTestIndex(0); setSolRuntimeTestPhase("bottle-sent"); }
+  function closeSolRuntimeTest() {
+    solRuntimeTestActiveRef.current = false;
+    setSolRuntimeTestIndex(0);
+    setSolRuntimeTestPhase("idle");
+    const saved = latestSaveRef.current;
+    if (!saved) return;
+    if (recyclingCompletionPending(saved.construction)) { setRecyclingStoryIndex(0); setRecyclingStoryOpen(true); }
+    else if (bakeryCompletionPending(saved.construction)) setBakeryStoryIndex(0);
+    else if (saved.construction.completedStoryBeats.includes("bakery:completion") && !saved.worldFlags.miraArrivalSeen) setMiraStoryIndex(0);
+    else if (saved.construction.revealed.clinic >= 4 && !saved.worldFlags.clinicCompletionSeen) setClinicStoryIndex(0);
+    else if (saved.construction.revealed.recycling >= 4 && !saved.worldFlags.henningArrivalSeen) setHenningStoryIndex(0);
+  }
   function advanceSolRuntimeTest() {
     const phase = solRuntimeTestPhase;
     if (phase === "bottle-sent") { setSolRuntimeTestPhase("arrival"); setSolRuntimeTestIndex(0); return; }
@@ -727,6 +752,7 @@ export default function VillagePrototype() {
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>
+    {!solRuntimeTestActive && <>
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
       <div className="mira-shop-ui">
@@ -752,9 +778,9 @@ export default function VillagePrototype() {
     {bottleLetterOpen && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Brevet i flaskposten"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Brevet är klart.</p><button className="primary-button dialogue-next" onClick={advanceBottleLetter}>Gå till vattnet</button></div>}
     {bottleStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-message.png" alt="" fill priority sizes="100vw" /></div>}
     {bottleStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Skicka flaskpost"><span className={`dialogue-speaker ${bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}`}>{bottleMessageDialogue[bottleStoryIndex].speaker === "Hunden" ? dogName || "Hunden" : childName || "Barnet"}</span><p>{bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBottleStory()}>{constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}</button></div>}
-    {solRuntimeTestPhase === "idle" && solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png" alt="" fill priority sizes="100vw" /></div>}
+    {solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png" alt="" fill priority sizes="100vw" /></div>}
     {solStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}`}>{solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"}</span><p>{solArrivalDialogue[solStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolStory()}>{constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}</button></div>}
-    {solRuntimeTestPhase === "idle" && solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation"><Image src={solTourImage} alt="" fill priority sizes="100vw" /></div><div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol ser sig omkring i byn"><span className={`dialogue-speaker henning-story-speaker ${solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker.toLowerCase()}`}>{solTourSpeakerName}</span><p>{solTourStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolTourStory()}>{constructionBusy ? "Sparar…" : solTourStoryIndex === solTourDialogue[solTourStoryStop].length - 1 ? (solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen") : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></>}
+    {solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation"><Image src={solTourImage} alt="" fill priority sizes="100vw" /></div><div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol ser sig omkring i byn"><span className={`dialogue-speaker henning-story-speaker ${solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker.toLowerCase()}`}>{solTourSpeakerName}</span><p>{solTourStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolTourStory()}>{constructionBusy ? "Sparar…" : solTourStoryIndex === solTourDialogue[solTourStoryStop].length - 1 ? (solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen") : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></>}
     {miraStoryIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
     {miraStoryIndex !== null && miraStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker.toLowerCase()}`}>{miraSpeakerName}</span><p>{miraStoryText}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceMiraStory()}>{constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {miraStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
@@ -790,6 +816,7 @@ export default function VillagePrototype() {
     {recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig"><span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span><p>{recyclingStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>{constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {linusStoryReplayStep && !recyclingStoryOpen && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Replay av Linus första möte">{linusStoryReplayStep.kind === "line" && <><span className={`dialogue-speaker ${linusStoryReplayStep.speaker === "Barnet" ? "child" : ""}`}>{linusStoryReplaySpeaker}</span><p>{linusStoryReplayStep.text}</p></>}{linusStoryReplayStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><p><strong>{childName || "Barnet"}</strong></p></>}{linusStoryReplayStep.kind === "reveal-dog" && <><span className="dialogue-speaker">Linus</span><p>🐶 Valpen kommer fram.</p></>}{linusStoryReplayStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><p><strong>{dogName || "Valpen"}</strong></p></>}<button className="primary-button dialogue-next" onClick={advanceLinusStoryReplay}>{linusStoryReplayIndex === linusIntroDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {dialogueOpen && dialogueStep && !recyclingStoryOpen && <div className={`dialogue-card ${linusStoryMomentOpen ? "story-moment-dialogue" : ""}`} role="dialog" aria-modal="true" aria-live="polite">{dialogueStep.kind === "line" && <><span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{speakerName}</span><p>{dialogueStep.text}</p><button className="primary-button dialogue-next" onClick={advanceDialogue}>Fortsätt</button></>}{dialogueStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><input ref={childNameInputRef} className="dog-name-input" defaultValue={childName} onInput={(event) => setChildNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishChildNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ditt namn" /><button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>Det är jag!</button></>}{dialogueStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><input ref={dogNameInputRef} className="dog-name-input" defaultValue={dogName} onInput={(event) => setDogNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishDogNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ett namn" /><button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>Det blir namnet!</button></>}</div>}
+    </>}
     {parentMenuOpen && !recyclingStoryOpen && <div className="parent-menu-backdrop" role="presentation" onMouseDown={() => setParentMenuOpen(false)}><section className="parent-menu-panel" role="dialog" aria-modal="true" aria-labelledby="parent-menu-title" onMouseDown={(event) => event.stopPropagation()}><button className="close-button" onClick={() => setParentMenuOpen(false)} aria-label="Stäng vuxenläge">×</button><span className="parent-menu-kicker">🔐 Vuxenläge</span><h2 id="parent-menu-title">Vuxenläge</h2><p className="parent-menu-note">Här ser du barnets koppling till familjen. Uppdrag skapas och godkänns av en vuxen på förälderns egen enhet.</p>{nativePlatform ? <><div className="parent-profile-card"><span>FÖRÄLDRAKONTO</span><strong>Öppnas på förälderns enhet</strong><small>Backend-uppdrag godkänns i SysselCraft föräldraläge på en separat webbläsare/enhet. Barnets app behåller sin anonyma barnsession.</small></div><button className="secondary-button" type="button" onClick={openSolSafeTest}>☀️ TEST: Sol-cutscenes</button><button className="secondary-button" type="button" onClick={openSolRuntimeTest}>🧭 TEST: Sol runtime-triggers</button></> : <a className="secondary-button" href="/parent/">Öppna föräldraläget</a>}<button className="secondary-button" type="button" onClick={() => { setParentMenuOpen(false); setChildPairingOpen(true); }}>Koppla den här barnenheten</button>
     <div className="parent-profile-card"><span>Barn</span><strong>{childName || "Inte namngivet ännu"}</strong>{dogName && <small>Kompis: 🐶 {dogName}</small>}</div><div className="parent-profile-card"><span>Byutveckling</span><strong>🏗️ {recyclingCenterStatus.title}</strong><small>{recyclingCenterStatus.status}</small></div>
     {storyMomentReplayControl && <div className="parent-profile-card"><span>STORY MOMENT · testvisning</span><button className="secondary-button" type="button" onClick={replayLinusStoryMoment}>🎬 Spela Linus första möte</button><button className="secondary-button" type="button" onClick={replayHenningStoryMoment}>🥖 Spela Hennings ankomst</button><button className="secondary-button" type="button" onClick={replayBakeryStoryMoment}>🥐 Spela färdigt bageri</button><button className="secondary-button" type="button" onClick={replayMiraStoryMoment}>🔧 Spela Miras ankomst</button><small>Spelar bara upp scenerna. Din sparning och progression ändras inte.</small></div>}
@@ -803,15 +830,15 @@ export default function VillagePrototype() {
       const lines = phase === "arrival" ? solArrivalDialogue : tour ? solTourDialogue[tour] : [];
       const line = lines[solRuntimeTestIndex];
       const image = phase === "arrival" ? "/assets/village/story-moments/sol-arrival.png" : tour === "bakery" ? "/assets/village/story-moments/sol-tour-bakery.png" : tour === "shop" ? "/assets/village/story-moments/sol-tour-shop.png" : tour === "linus" ? (solRuntimeTestIndex >= 1 ? "/assets/village/story-moments/sol-tour-linus-knee.png" : "/assets/village/story-moments/sol-tour-linus.png") : tour === "decision" ? "/assets/village/story-moments/sol-stays.png" : null;
-      if (phase === "bottle-sent") return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel"><button className="close-button" onClick={() => setSolRuntimeTestPhase("idle")}>×</button><div className="sol-safe-test-stage"><h2>🍾 Flaskposten är skickad</h2><p>Runtime-regeln stoppar här. Sol ska inte dyka upp i samma session.</p><button className="primary-button" onClick={advanceSolRuntimeTest}>Simulera nästa spelsession</button></div></section></div>;
+      if (phase === "bottle-sent") return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel" data-sol-runtime-phase={phase} data-sol-runtime-index={solRuntimeTestIndex}><button className="close-button" onClick={closeSolRuntimeTest}>×</button><div className="sol-safe-test-stage"><h2>🍾 Flaskposten är skickad</h2><p>Runtime-regeln stoppar här. Sol ska inte dyka upp i samma session.</p><button className="primary-button" onClick={advanceSolRuntimeTest}>Simulera nästa spelsession</button></div></section></div>;
       if (phase === "await-bakery" || phase === "await-shop" || phase === "await-linus" || phase === "await-decision") {
         const next = phase === "await-bakery" ? "bakery" : phase === "await-shop" ? "shop" : phase === "await-linus" ? "linus" : "decision";
         const who = next === "bakery" ? "Henning" : next === "shop" ? "Mira" : next === "linus" ? "Linus" : "Sol";
-        return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel"><button className="close-button" onClick={() => setSolRuntimeTestPhase("idle")}>×</button><div className="sol-safe-test-stage"><h2>🏡 Tillbaka i byn</h2><p>Ingen ny cutscene ska starta automatiskt. Nästa story-beat kräver att barnet själv går fram till {who}.</p><button className="primary-button" onClick={() => { setSolRuntimeTestIndex(0); setSolRuntimeTestPhase(next); }}>Simulera interaktion med {who}</button></div></section></div>;
+        return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel" data-sol-runtime-phase={phase} data-sol-runtime-index={solRuntimeTestIndex}><button className="close-button" onClick={closeSolRuntimeTest}>×</button><div className="sol-safe-test-stage"><h2>🏡 Tillbaka i byn</h2><p>Ingen ny cutscene ska starta automatiskt. Nästa story-beat kräver att barnet själv går fram till {who}.</p><button className="primary-button" onClick={() => { setSolRuntimeTestIndex(0); setSolRuntimeTestPhase(next); }}>Simulera interaktion med {who}</button></div></section></div>;
       }
-      if (phase === "done") return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel"><button className="close-button" onClick={() => setSolRuntimeTestPhase("idle")}>×</button><div className="sol-safe-test-stage"><h2>☀️ Runtime-kedjan klar</h2><p>Varje senare scen krävde en separat simulerad världsinteraktion. Save och backend är orörda.</p><button className="primary-button" onClick={() => setSolRuntimeTestPhase("idle")}>Klart</button></div></section></div>;
+      if (phase === "done") return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel" data-sol-runtime-phase={phase} data-sol-runtime-index={solRuntimeTestIndex}><button className="close-button" onClick={closeSolRuntimeTest}>×</button><div className="sol-safe-test-stage"><h2>☀️ Runtime-kedjan klar</h2><p>Varje senare scen krävde en separat simulerad världsinteraktion. Save och backend är orörda.</p><button className="primary-button" onClick={closeSolRuntimeTest}>Klart</button></div></section></div>;
       const label = phase === "arrival" ? "Nästa session: Sol anländer" : phase === "bakery" ? "Interaktion: Henning" : phase === "shop" ? "Interaktion: Mira" : phase === "linus" ? "Interaktion: Linus" : "Interaktion: Sol";
-      return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel"><button className="close-button" onClick={() => setSolRuntimeTestPhase("idle")}>×</button><span className="sol-safe-test-kicker">🧭 {label}</span>{image && <div className="sol-safe-test-image"><Image src={image} alt="" fill priority sizes="100vw" /></div>}{line && <div className="sol-safe-test-dialogue"><div><span className="dialogue-speaker">{line.speaker === "Barnet" ? childName || "Barnet" : line.speaker}</span><p>{line.text}</p></div><button className="primary-button" onClick={advanceSolRuntimeTest}>{solRuntimeTestIndex === lines.length - 1 ? (phase === "arrival" ? "Tillbaka till byn" : "Avsluta interaktion") : "Nästa"}</button></div>}</section></div>;
+      return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel" data-sol-runtime-phase={phase} data-sol-runtime-index={solRuntimeTestIndex}><button className="close-button" onClick={closeSolRuntimeTest}>×</button><span className="sol-safe-test-kicker">🧭 {label}</span>{image && <div className="sol-safe-test-image"><Image src={image} alt="" fill priority sizes="100vw" /></div>}{line && <div className="sol-safe-test-dialogue"><div><span className="dialogue-speaker">{line.speaker === "Barnet" ? childName || "Barnet" : line.speaker}</span><p>{line.text}</p></div><button className="primary-button" onClick={advanceSolRuntimeTest}>{solRuntimeTestIndex === lines.length - 1 ? (phase === "arrival" ? "Tillbaka till byn" : "Avsluta interaktion") : "Nästa"}</button></div>}</section></div>;
     })()}
     {solSafeTestOpen && (() => {
       const phase = solSafeTestPhase;
