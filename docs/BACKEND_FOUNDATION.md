@@ -26,7 +26,7 @@ Supabase provides Postgres, Auth and Row Level Security. The browser/native app 
 - `children`: child profiles owned by a household.
 - `child_device_bindings`: binds an authenticated anonymous child-device session to one child profile.
 - `parent_quests`: quest definition data created by adults.
-- `quest_instances`: per-child lifecycle state (`available -> pending -> approved`, with `pending -> available`).
+- `quest_instances`: per-child lifecycle state (`available -> active -> pending -> approved`, with rejection returning `pending -> active`).
 - `child_game_state`: server-authoritative currencies, progression and world flags.
 - `reward_events`: one immutable reward record per approved quest instance.
 - `child_pairing_codes`: short-lived, one-time hashes used to pair a child device without child email/password.
@@ -72,7 +72,7 @@ Tests were executed against the real live schema inside explicit transactions fo
 
 1. Bind a temporary simulated child identity.
 2. Submit the existing available quest.
-3. Assert `available -> pending`.
+3. Assert `available -> active -> pending`.
 4. Switch to parent identity and approve.
 5. Approve the same instance again.
 6. Assert state is `approved` in-transaction.
@@ -102,7 +102,7 @@ The live project was provisioned in several small migrations, including one harm
 4. Parent generates a pairing code. Backend logic verified; real-device UX remains to test.
 5. Child device opens `/pair`, creates an anonymous session and redeems the code. Backend logic verified; real-device UX remains to test.
 6. Parent-created quest appears in the child quest inbox.
-7. Child submits the quest (`available -> pending`). Backend transition verified.
+7. Child explicitly accepts the quest (`available -> active`) and later submits it (`active -> pending`). Backend transitions verified.
 8. Parent approves or returns it. Approval transition verified.
 9. Approval creates exactly one reward event and updates server wallet/progression exactly once. ✅ transaction-tested.
 10. Local save/backend reconciliation is verified before backend becomes authoritative for the rest of the village.
