@@ -46,6 +46,7 @@ export default function VillagePrototype() {
   const [construction, setConstruction] = useState(initialConstruction);
   const constructionRef = useRef(construction);
   const latestSaveRef = useRef<SaveStateV1 | null>(null);
+  const bottleMessageSentAtBootRef = useRef(false);
   const constructionWriteRef = useRef(false);
   const [constructionBusy, setConstructionBusy] = useState(false);
   const [constructionError, setConstructionError] = useState("");
@@ -177,6 +178,7 @@ export default function VillagePrototype() {
         setHenningArrivalSeen(saved.worldFlags.henningArrivalSeen === true);
         setMiraArrivalSeen(saved.worldFlags.miraArrivalSeen === true);
         setBottleMessagePurchased(saved.worldFlags.bottleMessagePurchased === true);
+        bottleMessageSentAtBootRef.current = saved.worldFlags.bottleMessageSent === true;
         setBottleMessageSent(saved.worldFlags.bottleMessageSent === true);
         setSolArrivalSeen(saved.worldFlags.solArrivalSeen === true);
         setSolTourBakerySeen(saved.worldFlags.solTourBakerySeen === true);
@@ -346,8 +348,7 @@ export default function VillagePrototype() {
     // becomes eligible on the next gameplay session, giving the bottle journey
     // real story time before the harbour scene.
     if (!saveReady || !bottleMessageSent || solArrivalSeen || bottleLetterOpen || bottleStoryIndex !== null || solStoryIndex !== null) return;
-    const sentAtBoot = initialWorldFlagsRef.current?.bottleMessageSent === true;
-    if (!sentAtBoot) return;
+    if (!bottleMessageSentAtBootRef.current) return;
     const timer = window.setTimeout(() => setSolStoryIndex(0), 900);
     return () => window.clearTimeout(timer);
   }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex]);
