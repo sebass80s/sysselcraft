@@ -59,13 +59,13 @@ assert.equal(localRecyclingComplete.available[0].presentation.destination, "noti
 const mixedStates = presentBackendQuests([
   backendQuest({ instanceId: "home", title: "Städa rummet", progressionClass: "orderEnvironment" }),
   backendQuest({ instanceId: "board", title: "Gör läxan" }),
-  backendQuest({ instanceId: "pending", title: "Spring en runda", progressionClass: "movementActivity", state: "pending" }),
+  backendQuest({ instanceId: "active", title: "Spring en runda", progressionClass: "movementActivity", state: "active", acceptedAt: "2026-09-22T10:05:00Z" }),\n  backendQuest({ instanceId: "pending", title: "Läs en bok", progressionClass: "knowledgeCreativity", state: "pending" }),
   backendQuest({ instanceId: "approved", title: "Ring mormor", progressionClass: "community", state: "approved" }),
 ], null, { recyclingCenterStage: 4 });
 
 assert.deepEqual(questSourceCounts(mixedStates), { noticeboard: 1, home: 1, linus: 0, bakery: 0 },
   "only actionable available quests may light world-source attention");
-assert.equal(mixedStates.pending.length, 1, "pending quests stay discoverable in the general quest view");
+assert.equal(mixedStates.active.length, 1, "accepted quests live in active without re-lighting a world source");\nassert.equal(mixedStates.pending.length, 1, "pending quests stay discoverable in the general quest view");
 assert.equal(mixedStates.pending[0].presentation.destination, "noticeboard",
   "pending quests keep presentation metadata without re-lighting the source");
 assert.equal(primaryPresentedQuest(mixedStates)?.quest.instanceId, "home",
