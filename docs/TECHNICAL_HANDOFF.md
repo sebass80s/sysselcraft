@@ -470,3 +470,12 @@ A temporary Vercel preview was created only to complete parent-side acceptance. 
 - Sol safe-story acceptance harness physically verified PASS on a real iPhone in landscape at commit `0a3d9b21ba1b1a08ca1ba58a27f9944c4c2b1455`.
 - Full isolated chain passed: purchase → water → letter → bottle → arrival → bakery → shop/Mira → Linus → decision → done.
 - Story Moment presentation is fullscreen and usable with native safe-area controls. Harness remains non-destructive and does not write player save or backend state.
+
+
+## Sol runtime pacing physical acceptance — 2026-09-25
+
+- PASS on a real iPhone in landscape at instrumented commit `6f6660ed80bec8fa0eed5ac0cfefbfdfa0944101`.
+- Runtime pacing was physically verified as: Sol arrival -> explicit return-to-village wait -> simulated Henning interaction / Bakery tour -> explicit wait -> Mira/shop interaction -> explicit wait -> Linus interaction -> explicit wait -> Sol decision -> done. No later tour scene auto-chained across an interaction gate.
+- The earlier safe-story acceptance at `0a3d9b21ba1b1a08ca1ba58a27f9944c4c2b1455` remains presentation coverage only; this acceptance separately covers runtime trigger/pacing behavior.
+- Physical instrumentation confirmed the Bakery scene is entered only after `ARRIVAL_COMPLETE: await-bakery` followed by `SIMULATE_HENNING_INTERACTION: bakery`. During that scene the live Henning story indices remained null, proving it was the intended Sol Bakery-tour scene rather than the real Henning-arrival overlay.
+- The runtime acceptance harness is non-destructive: live story state is guarded while active and the real save/backend is not written by the harness. A pending real story may resume after the harness closes.
