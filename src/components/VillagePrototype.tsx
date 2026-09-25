@@ -106,7 +106,7 @@ export default function VillagePrototype() {
   const [dogVisible, setDogVisible] = useState(false);
   const [childNameCanSubmit, setChildNameCanSubmit] = useState(false);
   const [dogNameCanSubmit, setDogNameCanSubmit] = useState(false);
-  const [parentMenuOpen, setParentMenuOpen] = useState(false);
+  const [mainMenuOpen, setMainMenuOpen] = useState(false);\n  const [parentMenuOpen, setParentMenuOpen] = useState(false);
   const [resettingSave, setResettingSave] = useState(false);
   const [childPairingOpen, setChildPairingOpen] = useState(false);
   const [loadError, setLoadError] = useState("");
@@ -684,7 +684,7 @@ export default function VillagePrototype() {
   </div></section>;
 
   return <section className="prototype-shell">
-    <header className="prototype-header"><div className="prototype-brand-row"><h1>SysselCraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label="Öppna vuxenläge">🔐 Vuxenläge</button></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
+    <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu">SysselCraft</button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
