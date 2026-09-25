@@ -8,7 +8,8 @@ export type PresentedBackendQuest = {
 
 export type BackendQuestPresentationSnapshot = {
   available: PresentedBackendQuest[];
-  active: PresentedBackendQuest[];\n  pending: PresentedBackendQuest[];
+  active: PresentedBackendQuest[];
+  pending: PresentedBackendQuest[];
 };
 
 function flag(value: unknown): boolean {
