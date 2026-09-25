@@ -234,3 +234,8 @@ The previous three-state child flow is superseded by an explicit acceptance life
 Locked visual language: `?` = new quest to accept; `!` = completed/approved quest ready to turn in; speech bubble = authored story/dialogue attention; no marker = ordinary optional interaction.
 
 Parent/backend UX TODO: show occurrence lifecycle clearly, especially which quests are currently `active`, separately from available, pending review and history.
+
+
+## 2026-09-25 handoff
+
+Quest lifecycle refactor is mid-flight. See section 13 as the locked state-machine contract. Finish marker wiring, source filtering, build/CI, browser acceptance and physical update-in-place acceptance before release.
