@@ -244,9 +244,10 @@ export default function VillagePrototype() {
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
       const detail = (event as CustomEvent<QuestPresentationEventDetail>).detail;
-      gameRef.current?.setQuestSourceAttention("noticeboard", (detail?.counts.noticeboard ?? 0) > 0);
-      gameRef.current?.setQuestSourceAttention("home", (detail?.counts.home ?? 0) > 0);
-      gameRef.current?.setQuestSourceAttention("linus", (detail?.counts.linus ?? 0) > 0);
+      gameRef.current?.setQuestSourceAttention("noticeboard", (detail?.counts.noticeboard ?? 0) > 0 ? "?" : null);
+      gameRef.current?.setQuestSourceAttention("home", (detail?.counts.home ?? 0) > 0 ? "?" : null);
+      const linusTurnIns = detail?.turnIns?.linus ?? 0;
+      gameRef.current?.setQuestSourceAttention("linus", linusTurnIns > 0 ? "!" : (detail?.counts.linus ?? 0) > 0 ? "?" : null);
     };
     window.addEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
     return () => window.removeEventListener(QUEST_PRESENTATION_EVENT, syncQuestPresentation);
@@ -307,10 +308,11 @@ export default function VillagePrototype() {
       });
       if (cancelled) { handle.destroy(); return; }
       gameRef.current = handle;
-      const questSources = getLatestQuestPresentation().counts;
-      handle.setQuestSourceAttention("noticeboard", questSources.noticeboard > 0);
-      handle.setQuestSourceAttention("home", questSources.home > 0);
-      handle.setQuestSourceAttention("linus", questSources.linus > 0);
+      const questPresentation = getLatestQuestPresentation();
+      const questSources = questPresentation.counts;
+      handle.setQuestSourceAttention("noticeboard", questSources.noticeboard > 0 ? "?" : null);
+      handle.setQuestSourceAttention("home", questSources.home > 0 ? "?" : null);
+      handle.setQuestSourceAttention("linus", (questPresentation.turnIns?.linus ?? 0) > 0 ? "!" : questSources.linus > 0 ? "?" : null);
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setHenningVisible(latestSaveRef.current?.worldFlags.henningArrivalSeen === true);
       handle.setSolVisible(latestSaveRef.current?.worldFlags.solArrivalSeen === true);
