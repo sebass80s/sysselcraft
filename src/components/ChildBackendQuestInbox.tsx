@@ -295,8 +295,10 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   useEffect(() => {
     const snapshot = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
     const counts = questSourceCounts(snapshot);
-    if (pendingTurnIns.length > 0) counts.linus += 1;
-    publishQuestPresentation({ counts });
+    publishQuestPresentation({
+      counts,
+      turnIns: { linus: pendingTurnIns.length },
+    });
   }, [quests, gameState, localRecyclingCenterStage, pendingTurnIns]);
 
   if (!pairingChecked) return null;
@@ -306,12 +308,13 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   if (!childId || needsPairing) return null;
 
   const presented = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
-  const allVisibleQuests = [...presented.available, ...presented.active, ...presented.pending];
+  // World quest sources present only NEW quests. Once accepted, a quest belongs in
+  // the ordinary Uppdrag panel until it is submitted. Approved turn-ins are rendered
+  // separately below and never masquerade as new quest-source attention.
   const visibleQuests = sourceFilter
-    ? allVisibleQuests.filter(({ quest, presentation }) =>
-        presentation.destination === sourceFilter)
-    : allVisibleQuests;
-  const availableCount = presented.available.length;
+    ? presented.available.filter(({ presentation }) => presentation.destination === sourceFilter)
+    : [...presented.active, ...presented.pending];
+  const activeCount = presented.active.length;
   const pendingCount = presented.pending.length;
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
   const primaryWorldQuest = primaryPresentedQuest(presented);
