@@ -438,7 +438,11 @@ export async function createVillageGame(
       }
 
       if (!this.linusInteractionPending || !this.player || !this.linus) return;
-      if (distance(this.player, this.linus) > 95) return;
+      // Quest-source navigation can stop at the authored approach point, which is
+      // intentionally a little farther from Linus than the generic NPC radius.
+      // Treat reaching that point as arrival instead of leaving the interaction stuck.
+      const linusApproachReached = distance(this.player, REQUIRED_APPROACHES.linus) <= 18;
+      if (distance(this.player, this.linus) > 95 && !linusApproachReached) return;
       this.linusInteractionPending = false;
       this.playerFacing = this.player.x < this.linus.x ? "east" : "west";
       this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
