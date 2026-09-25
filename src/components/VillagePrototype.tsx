@@ -106,7 +106,8 @@ export default function VillagePrototype() {
   const [dogVisible, setDogVisible] = useState(false);
   const [childNameCanSubmit, setChildNameCanSubmit] = useState(false);
   const [dogNameCanSubmit, setDogNameCanSubmit] = useState(false);
-  const [mainMenuOpen, setMainMenuOpen] = useState(false);\n  const [parentMenuOpen, setParentMenuOpen] = useState(false);
+  const [mainMenuOpen, setMainMenuOpen] = useState(false);
+  const [parentMenuOpen, setParentMenuOpen] = useState(false);
   const [resettingSave, setResettingSave] = useState(false);
   const [childPairingOpen, setChildPairingOpen] = useState(false);
   const [loadError, setLoadError] = useState("");
