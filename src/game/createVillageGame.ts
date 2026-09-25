@@ -111,7 +111,7 @@ export async function createVillageGame(
     private shopInteractionPending = false;
     private bottleMessageMarker?: GameObjects.Text;
     private bottleMessageInteractionPending = false;
-    private attentionMarker?: GameObjects.Text;
+    private attentionMarker?: GameObjects.Container;
     private attentionInteractionPending = false;
     private residents: Record<string, GameObjects.Image> = {};
     private renderedBuildingStages = "";
@@ -689,10 +689,17 @@ export async function createVillageGame(
       resident.setPosition(attention.position.x, attention.position.y).setDepth(1000 + attention.position.y);
       // Construction/story attention is dialogue, not a quest state.
       // Keep MMO semantics reserved: ? = available quest, ! = completed quest turn-in.
-      this.attentionMarker = this.add.text(attention.position.x, attention.position.y - 140, "💬", {
-        fontSize: "32px",
-        shadow: { color: "#26342b", blur: 8, fill: true, stroke: true },
-      }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
+      const speechBubble = this.add.graphics();
+      speechBubble.fillStyle(0xfffbef, 0.98);
+      speechBubble.lineStyle(3, 0x5b3a1f, 1);
+      speechBubble.fillRoundedRect(-29, -21, 58, 42, 14);
+      speechBubble.strokeRoundedRect(-29, -21, 58, 42, 14);
+      speechBubble.fillTriangle(-10, 18, -2, 18, -10, 29);
+      const speechDots = this.add.text(0, -5, "•••", {
+        color: "#5b3a1f", fontSize: "22px", fontStyle: "bold",
+      }).setOrigin(0.5);
+      this.attentionMarker = this.add.container(attention.position.x, attention.position.y - 145, [speechBubble, speechDots])
+        .setDepth(3000).setSize(76, 72).setInteractive({ useHandCursor: true });
       this.attentionMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         this.approachAttentionResident();
