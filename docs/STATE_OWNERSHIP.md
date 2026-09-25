@@ -15,7 +15,7 @@ The purpose of this document is to stop future code from silently treating every
 | Child backend identity | Supabase | paired child id cached locally | Pairing RPC establishes binding; local cache must not invent identity |
 | Parent-created quest definitions | Supabase | none | Parent backend flow only |
 | Parent-created quest lifecycle | Supabase | rendered by child/parent clients | Server-authoritative RPC transitions |
-| Parent-created quest rewards | Supabase | displayed by clients | Award only through idempotent backend approval |
+| Parent-created quest rewards | Supabase | displayed by clients | Approval only authorizes child turn-in; award only through idempotent backend claim/turn-in |
 | Backend wallet | Supabase | child UI may display it | Never mutate from local prototype save |
 | Built-in `Bädda sängen` quest | Capacitor Preferences/local prototype | no backend migration yet | Keep local until migration semantics are explicitly designed |
 | Built-in local currency | Capacitor Preferences | comparable backend wallet exists | Do not merge or overwrite automatically |
@@ -42,7 +42,7 @@ The purpose of this document is to stop future code from silently treating every
 
 Bakery is the first deliberately narrow bridge across the two persistence domains. It is **not** a general reconciliation write path and does not change the observe-only migration rule above.
 
-- Supabase remains authoritative for whether a parent-created quest reward was actually claimed by the child. The existing backend `worldProgression` total is read only as a monotonic count source.
+- Supabase remains authoritative for whether a parent-created quest reward was actually claimed by the child. Parent approval does not pay the reward; explicit child turn-in/claim does. The existing backend `worldProgression` total is read only as a monotonic count source.
 - Capacitor Preferences remains authoritative for Bakery's local construction state: earned stage, pending reveal, revealed stage and completion Story Moment.
 - When Bakery pacing begins on a device, the local save captures the current backend `worldProgression` as `bakeryClaimBaseline` plus the Bakery stage already physically reached as `bakeryClaimBaselineStage`.
 - Only the delta after that baseline can earn later Bakery stages. Existing backend history is therefore never replayed as new construction work.
