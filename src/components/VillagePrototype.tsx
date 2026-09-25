@@ -591,7 +591,7 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  function openSolRuntimeTest() { setParentMenuOpen(false); setSolSafeTestOpen(false); setSolStoryIndex(null); setSolTourStoryStop(null); setSolTourStoryIndex(0); setBottleStoryIndex(null); setBottleLetterOpen(false); setSolRuntimeTestIndex(0); setSolRuntimeTestPhase("bottle-sent"); }
+  function openSolRuntimeTest() { setParentMenuOpen(false); setSolSafeTestOpen(false); setDialogueOpen(false); setLinusStoryMomentOpen(false); setLinusStoryReplayIndex(null); setHenningStoryIndex(null); setHenningStoryReplayIndex(null); setHenningDialogueOpen(false); setBakeryStoryIndex(null); setBakeryStoryReplayIndex(null); setMiraStoryIndex(null); setMiraStoryReplayIndex(null); setClinicStoryIndex(null); setClinicStoryReplayIndex(null); setConstructionDialogueId(null); setAbandonedShopDialogueIndex(null); setShopPanelOpen(false); setSolStoryIndex(null); setSolTourStoryStop(null); setSolTourStoryIndex(0); setBottleStoryIndex(null); setBottleLetterOpen(false); setSolRuntimeTestIndex(0); setSolRuntimeTestPhase("bottle-sent"); }
   function advanceSolRuntimeTest() {
     const phase = solRuntimeTestPhase;
     if (phase === "bottle-sent") { setSolRuntimeTestPhase("arrival"); setSolRuntimeTestIndex(0); return; }
