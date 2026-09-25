@@ -8,7 +8,7 @@ import { requestChildPairingOpen } from "@/game/childPairingBridge";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "@/backend/childDeviceBinding";
 import {
-  claimQuestReward,
+  acceptQuest,\n  claimQuestReward,
   getChildGameState,
   isChildDeviceBound,
   listChildQuests,
@@ -305,10 +305,10 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   if (!childId || needsPairing) return null;
 
   const presented = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
-  const allVisibleQuests = [...presented.available, ...presented.pending];
+  const allVisibleQuests = [...presented.available, ...presented.active, ...presented.pending];
   const visibleQuests = sourceFilter
     ? allVisibleQuests.filter(({ quest, presentation }) =>
-        quest.state === "available" && presentation.destination === sourceFilter)
+        presentation.destination === sourceFilter)
     : allVisibleQuests;
   const availableCount = presented.available.length;
   const pendingCount = presented.pending.length;
@@ -345,6 +345,27 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       setMessage(error instanceof Error ? error.message : "Kunde inte markera belöningen som hämtad.");
     } finally {
       setBusy(false);
+    }
+  }
+
+  async function takeQuest(instanceId: string) {
+    if (!childId || !sessionReady || needsPairing || !requests.startAction()) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      await acceptQuest(instanceId);
+      if (!requests.isActive()) return;
+      const refreshed = await refresh(childId);
+      if (refreshed) {
+        setMessage("Uppdraget ligger nu under Uppdrag. 📜");
+        setOpen(false);
+        setSourceFilter(null);
+      }
+    } catch (error) {
+      if (requests.isActive()) setMessage(error instanceof Error ? error.message : "Kunde inte ta uppdraget.");
+    } finally {
+      requests.finishAction();
+      if (requests.isActive()) setBusy(false);
     }
   }
 
@@ -411,7 +432,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
         }}
       >
         📜 Uppdrag
-        {(availableCount + pendingCount) > 0 && <span>{availableCount + pendingCount}</span>}
+        {(activeCount + pendingCount) > 0 && <span>{activeCount + pendingCount}</span>}
       </button>
 
       {open && (
@@ -457,11 +478,11 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
                   Belöning: 💎 {quest.reward.diamonds} · 🪙 {quest.reward.sysselBux}
                 </small>
                 {quest.state === "available" ? (
-                  <button
-                    className="primary-button compact"
-                    disabled={busy || !sessionReady}
-                    onClick={() => markDone(quest.instanceId)}
-                  >
+                  <button className="primary-button compact" disabled={busy || !sessionReady} onClick={() => void takeQuest(quest.instanceId)}>
+                    Ta uppdraget
+                  </button>
+                ) : quest.state === "active" ? (
+                  <button className="primary-button compact" disabled={busy || !sessionReady} onClick={() => void markDone(quest.instanceId)}>
                     Jag är klar
                   </button>
                 ) : (
