@@ -1,20 +1,11 @@
-import { getPendingQuestIds, getQuestDefinition, type QuestId } from "./quests";
 import type { SaveStateV1 } from "./saveState";
 import { getRecyclingCenterStatus } from "./worldProgression";
-
-export type ParentQuestSummary = {
-  id: QuestId;
-  title: string;
-  icon: string;
-  description: string;
-};
 
 export type ParentModeSnapshot = {
   child: {
     name: string;
     dogName: string;
   };
-  pendingQuests: ParentQuestSummary[];
   resources: {
     diamonds: number;
     sysselBux: number;
@@ -28,17 +19,11 @@ export type ParentModeSnapshot = {
   };
 };
 
+/**
+ * Local save snapshot only. Quest lifecycle is backend-owned and deliberately
+ * excluded from this legacy-free local projection.
+ */
 export function createParentModeSnapshot(save: SaveStateV1): ParentModeSnapshot {
-  const pendingQuests = getPendingQuestIds(save.questStates).map((id) => {
-    const quest = getQuestDefinition(id);
-    return {
-      id,
-      title: quest.title,
-      icon: quest.icon,
-      description: quest.description,
-    };
-  });
-
   const recyclingCenter = getRecyclingCenterStatus(save.worldFlags.recyclingCenterStage);
 
   return {
@@ -46,7 +31,6 @@ export function createParentModeSnapshot(save: SaveStateV1): ParentModeSnapshot 
       name: save.childName,
       dogName: save.dogName,
     },
-    pendingQuests,
     resources: {
       diamonds: save.diamonds,
       sysselBux: save.sysselBux,
