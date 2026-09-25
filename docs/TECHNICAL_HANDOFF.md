@@ -455,3 +455,12 @@ The child's real save must never be used as a disposable development/reset envir
 Quest lifecycle now targets available -> active -> pending -> approved -> claimed. The live schema includes accepted_at and the acceptance RPC; submit requires active and rejection returns the same occurrence to active. Frontend types/repository/UI were updated for explicit acceptance. World presentation is being converted from boolean attention to marker-aware question-mark/exclamation-mark/null state. This is not yet end-to-end verified. Complete VillagePrototype/Phaser wiring and source filtering, then build/CI and acceptance-test the whole flow before release.
 
 Recycling also gained a local progression baseline so historical backend progression cannot replay as fresh construction on a fresh local save. This was prompted by a real QA cascade and needs regression coverage after the quest rewrite.
+
+
+## 2026-09-25 verified Quest v2 / Recycling checkpoint
+
+Quest v2 core is now physically accepted on iPhone with the live parent/backend path: available -> accept -> active -> submit -> pending -> reject -> same active instance -> resubmit -> approve -> explicit turn-in -> exactly-once reward -> restart with no replay. Marker semantics remain locked: `?` available, `!` approved turn-in, `💬` authored story/dialogue.
+
+Recycling historical-progression protection has a deterministic regression at `8c44aa5cf939e43ff843b85c5cd80b931cf4ebe8`: baseline 12 historical claims, unchanged sync/reload yields zero stages, claim 13 yields only stage 1 pending, explicit reveal commits stage 1, and repeated sync/reload cannot cascade. The test uses the real construction/save/progression modules; production code did not need modification.
+
+A temporary Vercel preview was created only to complete parent-side acceptance. Native remains the release target. Preserve the existing iPhone app/save and do not uninstall/reset it for future testing.
