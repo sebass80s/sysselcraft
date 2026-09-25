@@ -685,7 +685,7 @@ export default function VillagePrototype() {
 
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><h1>SysselCraft</h1><button className="parent-menu-button" type="button" onClick={() => setParentMenuOpen(true)} aria-label="Öppna vuxenläge">🔐 Vuxenläge</button></div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
-    <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på questmarkören vid huset" : "Tryck på Linus för att gå fram och hälsa"}</div>
+    <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
       <div className="mira-shop-ui">
