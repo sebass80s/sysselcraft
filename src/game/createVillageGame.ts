@@ -9,13 +9,11 @@ import { VIEW_HEIGHT, WORLD_MIN_X, WORLD_MAX_X, WORLD_WIDTH, WORLD_HEIGHT,
 import { preloadVisualProductionBuildings, createVisualProductionBuildings } from "./visualProductionRuntime";
 import { getVisualProductionObstacles, type VisualProductionBuilding, type VisualProductionStage } from "./visualProductionAssets";
 
-export type QuestState = "available" | "pending" | "approved";
 export type SolTourStop = "bakery" | "shop" | "linus" | "decision" | null;
 export type VillageGameHandle = {
   destroy: () => void;
   setConstruction: (presentation: ConstructionPresentation) => void;
   setConstructionDialogueOpen: (open: boolean) => void;
-  setQuestState: (state: QuestState) => void;
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
   setHenningVisible: (visible: boolean) => void;
@@ -27,7 +25,6 @@ export type VillageGameHandle = {
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
 type Callbacks = {
-  onQuestOpen: () => void;
   onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus") => void;
   onLinusInteract: () => void;
   onHenningInteract: () => void;
@@ -77,7 +74,6 @@ export async function createVillageGame(
   const Phaser = await import("phaser");
   let requestedConstruction: ConstructionPresentation = { stages: {}, attention: null };
   let constructionDialogueOpen = false;
-  let requestedQuestState: QuestState = "available";
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
   let requestedHenningVisible = false;
@@ -98,7 +94,7 @@ export async function createVillageGame(
     private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
     private targetMarker?: GameObjects.Arc;
-    private questMarker?: GameObjects.Container;
+    private homeQuestMarker?: GameObjects.Container;
     private noticeboardMarker?: GameObjects.Container;
     private backendHomeAttention = false;
     private backendLinusAttention = false;
@@ -184,7 +180,6 @@ export async function createVillageGame(
       this.setQuestSourceAttention("home", requestedQuestSourceAttention.home);
       this.setQuestSourceAttention("linus", requestedQuestSourceAttention.linus);
       this.setIntroComplete(requestedIntroComplete);
-      this.applyQuestState(requestedQuestState);
       this.setConstruction(requestedConstruction);
       this.time.addEvent({
         delay: 1800,
@@ -255,15 +250,6 @@ export async function createVillageGame(
     setIntroComplete(complete: boolean) {
       requestedIntroComplete = complete;
       this.introComplete = complete;
-      if (!this.questMarker) return;
-      const label = this.questMarker.getByName("label") as GameObjects.Text;
-      if (!complete) {
-        this.questMarker.setPosition(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y).setVisible(true).setAlpha(1);
-        label.setText("?");
-        return;
-      }
-      this.questMarker.setPosition(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y);
-      this.applyQuestState(requestedQuestState);
     }
 
     setDogVisible(visible: boolean) {
@@ -279,30 +265,6 @@ export async function createVillageGame(
     setSolVisible(visible: boolean) {
       requestedSolVisible = visible;
       this.sol?.setVisible(visible);
-    }
-
-    applyQuestState(state: QuestState) {
-      requestedQuestState = state;
-      if (!this.questMarker) return;
-      const label = this.questMarker.getByName("label") as GameObjects.Text;
-      if (!this.introComplete) {
-        this.questMarker.setPosition(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y).setVisible(true).setAlpha(1);
-        label.setText("?");
-        return;
-      }
-      this.questMarker.setPosition(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y);
-      if (this.backendHomeAttention) {
-        this.questMarker.setVisible(true).setAlpha(1);
-        label.setText("!");
-      } else if (state === "available") {
-        this.questMarker.setVisible(true).setAlpha(1);
-        label.setText("?");
-      } else if (state === "pending") {
-        this.questMarker.setVisible(true).setAlpha(0.72);
-        label.setText("…");
-      } else {
-        this.questMarker.setVisible(false);
-      }
     }
 
     update(_: number, delta: number) {
@@ -588,7 +550,10 @@ export async function createVillageGame(
           this.targetMarker?.setVisible(false);
         }
       }
-      if (source === "home") this.backendHomeAttention = active;
+      if (source === "home") {
+        this.backendHomeAttention = active;
+        this.homeQuestMarker?.setVisible(active);
+      }
       if (source === "linus") {
         this.backendLinusAttention = active;
         this.linusQuestMarker?.destroy();
@@ -633,7 +598,6 @@ export async function createVillageGame(
           this.targetMarker?.setVisible(false);
         }
       }
-      this.applyQuestState(requestedQuestState);
     }
 
     private createNoticeboardMarker() {
@@ -687,13 +651,11 @@ export async function createVillageGame(
         strokeThickness: 4,
         shadow: { color: "#ffcf33", blur: 14, fill: true, stroke: true },
       }).setOrigin(0.5).setName("label");
-      this.questMarker = this.add.container(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y, [badge, glow])
-        .setDepth(3000).setSize(96, 96).setInteractive(new Phaser.Geom.Rectangle(-48, -48, 96, 96), Phaser.Geom.Rectangle.Contains);
-      this.questMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+      this.homeQuestMarker = this.add.container(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y, [badge, glow])
+        .setDepth(3000).setSize(96, 96).setInteractive(new Phaser.Geom.Rectangle(-48, -48, 96, 96), Phaser.Geom.Rectangle.Contains).setVisible(false);
+      this.homeQuestMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (this.introComplete && this.backendHomeAttention) callbacks.onQuestSourceInteract?.("home");
-        else if (this.introComplete) callbacks.onQuestOpen();
-        else callbacks.onLinusInteract();
       });
       this.tweens.add({ targets: [badge, glow], alpha: { from: 0.82, to: 1 }, scale: { from: 0.96, to: 1.05 }, duration: 850, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
@@ -975,12 +937,6 @@ export async function createVillageGame(
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setConstruction(presentation);
       } else requestedConstruction = presentation;
-    },
-    setQuestState: (state: QuestState) => {
-      requestedQuestState = state;
-      if (game.scene.isActive("VillageScene")) {
-        (game.scene.getScene("VillageScene") as VillageScene).applyQuestState(state);
-      }
     },
     setIntroComplete: (complete: boolean) => {
       requestedIntroComplete = complete;
