@@ -51,7 +51,7 @@ export type SaveStateV1 = {
     solChoseToStay?: boolean;
     clinicProgressionBaseline?: number;
     clinicCompletionSeen?: boolean;
-    bakeryClaimBaseline?: number;
+    recyclingClaimBaseline?: number;\n    recyclingClaimBaselineStage?: 0 | 1 | 2 | 3 | 4;\n    bakeryClaimBaseline?: number;
     bakeryClaimBaselineStage?: 0 | 1 | 2 | 3 | 4;
   };
 };
@@ -83,7 +83,7 @@ export function createDefaultSaveState(): SaveStateV1 {
       solChoseToStay: false,
       clinicProgressionBaseline: undefined,
       clinicCompletionSeen: false,
-      bakeryClaimBaseline: undefined,
+      recyclingClaimBaseline: undefined,\n      recyclingClaimBaselineStage: undefined,\n      bakeryClaimBaseline: undefined,
       bakeryClaimBaselineStage: undefined,
     },
   };
@@ -184,7 +184,7 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       solChoseToStay: candidate.worldFlags?.solChoseToStay === true,
       clinicProgressionBaseline: typeof candidate.worldFlags?.clinicProgressionBaseline === "number" && Number.isInteger(candidate.worldFlags.clinicProgressionBaseline) && candidate.worldFlags.clinicProgressionBaseline >= 0 ? candidate.worldFlags.clinicProgressionBaseline : undefined,
       clinicCompletionSeen: candidate.worldFlags?.clinicCompletionSeen === true,
-      bakeryClaimBaseline: typeof candidate.worldFlags?.bakeryClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.bakeryClaimBaseline) && candidate.worldFlags.bakeryClaimBaseline >= 0 ? candidate.worldFlags.bakeryClaimBaseline : undefined,
+      recyclingClaimBaseline: typeof candidate.worldFlags?.recyclingClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.recyclingClaimBaseline) && candidate.worldFlags.recyclingClaimBaseline >= 0 ? candidate.worldFlags.recyclingClaimBaseline : undefined,\n      recyclingClaimBaselineStage: [0, 1, 2, 3, 4].includes(candidate.worldFlags?.recyclingClaimBaselineStage as number) ? candidate.worldFlags?.recyclingClaimBaselineStage : undefined,\n      bakeryClaimBaseline: typeof candidate.worldFlags?.bakeryClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.bakeryClaimBaseline) && candidate.worldFlags.bakeryClaimBaseline >= 0 ? candidate.worldFlags.bakeryClaimBaseline : undefined,
       bakeryClaimBaselineStage: [0, 1, 2, 3, 4].includes(candidate.worldFlags?.bakeryClaimBaselineStage as number) ? candidate.worldFlags?.bakeryClaimBaselineStage : undefined,
     },
   };
