@@ -94,7 +94,7 @@ The village is the progression screen.
 
 The **recycling center is the first major building project**. For onboarding, its four produced visual stages map to four approved real-world contributions total, including `Bädda sängen` as the contribution that causes delivery/stage 1.
 
-This four-contribution pace is a deliberate **first-project calibration**, not a universal law for later buildings. Do not expose 1/4, percentages or XP costs. Each approved contribution makes the building itself visibly advance.
+This four-contribution pace is a deliberate **first-project calibration**, not a universal law for later buildings. Do not expose 1/4, percentages or XP costs. Each claimed/turned-in contribution makes the building itself visibly advance; parent approval alone does not advance construction.
 
 The full interaction/persistence design is specified in `docs/POST_DELIVERY_PROGRESSION.md`.
 
@@ -222,7 +222,7 @@ Mira is self-made, practically skilled, charming and unafraid of physical work. 
 
 Once Mira's arrival story is persistently completed, the world swaps the ruined lanthandel asset for the restored/open asset. The restored building is a real world interaction: the child walks to it and enters the shop interaction rather than opening a detached global shop button.
 
-The shop is the canonical sink for quest-earned SysselBux and Diamonds. Backend wallet authority remains unchanged. Exact first inventory, prices, ownership/inventory representation and purchase transaction are product decisions that must be locked before real spending is enabled; the client must never silently deduct the separate local prototype wallet.
+The shop is the canonical sink for quest-earned SysselBux and Diamonds. Backend wallet authority remains unchanged. The first implemented inventory is split by currency: parent-defined IRL Diamond rewards use the authoritative Diamond redemption flow, while the narrative flaskpost is the first locked SysselBux purchase at 25 SysselBux. Further SysselBux inventory remains open design space. The client must never silently deduct the separate local prototype wallet.
 
 ## 9. Second new resident: Sol
 
@@ -257,7 +257,7 @@ The emerging ensemble shorthand is useful but not literal dialogue direction:
 
 ### Sol arrival arc — LOCKED 2026-09-24
 
-Sol's arrival is triggered through the first narrative SysselBux purchase in Mira's shop, not through another anonymous quest threshold. After Mira's lanthandel is open, the child can buy a **flaskpost** item for SysselBux. The exact price may be tuned against the live economy, but it must remain accessible because this purchase gates main-story progression.
+Sol's arrival is triggered through the first narrative SysselBux purchase in Mira's shop, not through another anonymous quest threshold. After Mira's lanthandel is open, the child can buy a **flaskpost** item for SysselBux. Its locked implementation price is **25 SysselBux**. Because this purchase gates main-story progression, future economy tuning must preserve accessibility or deliberately revise the gate.
 
 The purchase does not directly unlock Sol as if she were a shop reward. It creates a physical world interaction at the waterfront. The child goes to the pier/water with the dog and sends the bottle out into the world. This is an **Illustrated Story Moment** and should use a dedicated image showing the child from the established non-specific/back-facing perspective throwing the bottle into the water. The emotional beat is curiosity rather than explanation: the child does not know who will find it.
 
