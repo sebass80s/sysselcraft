@@ -687,10 +687,11 @@ export async function createVillageGame(
       const resident = this.residents[attention.resident];
       if (!resident) return;
       resident.setPosition(attention.position.x, attention.position.y).setDepth(1000 + attention.position.y);
-      this.attentionMarker = this.add.text(attention.position.x, attention.position.y - 140, "!", {
-        color: "#ffd83d", fontSize: "34px", fontStyle: "bold",
-        stroke: "#8a5a00", strokeThickness: 4,
-        shadow: { color: "#ffcf33", blur: 12, fill: true, stroke: true },
+      // Construction/story attention is dialogue, not a quest state.
+      // Keep MMO semantics reserved: ? = available quest, ! = completed quest turn-in.
+      this.attentionMarker = this.add.text(attention.position.x, attention.position.y - 140, "💬", {
+        fontSize: "32px",
+        shadow: { color: "#26342b", blur: 8, fill: true, stroke: true },
       }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
       this.attentionMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
