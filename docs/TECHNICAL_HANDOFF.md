@@ -269,7 +269,7 @@ Treat the physical-device loop as a regression baseline. Backend/quest/approval/
 ## Core invariants
 
 - Tap-to-move/pathfinding + desktop WASD/arrows.
-- Quest lifecycle `available -> pending -> approved`, or pending back to available.
+- Quest lifecycle `available -> active -> pending -> approved`; rejection returns pending to active. `available` means offered but not yet accepted by the child.
 - No rewards/progression before adult approval.
 - Interaction law: **Avataren används för att uppleva världen. Klick/tapp används för att styra/använda spelet.**
 - UI-like world elements may be directly tapped/clicked without requiring avatar traversal first.
@@ -280,7 +280,7 @@ Treat the physical-device loop as a regression baseline. Backend/quest/approval/
 
 1. Preserve the physically verified Recycling four-stage loop and completion scene as the gameplay regression baseline.
 2. Finish Quest System v2 daily-use plumbing: recurring definitions/instances, parent definition management, unified world progression, and world-aware child presentation.
-3. World presentation currently supports home, Linus and selective noticeboard sources. Source attention is shown only for actionable `available` instances; `pending` instances remain visible in the general quest view but stop calling the child back to the world source.
+3. World presentation currently supports home, Linus and selective noticeboard sources. Source attention uses the locked visual language: `?` for `available` quests to accept, `!` for approved quests ready to turn in at Linus, and speech bubbles for authored story/dialogue attention. `active` and `pending` instances remain in the quest UI without masquerading as new world quests.
 4. Reuse existing world affordances instead of stacking duplicate markers: the home quest marker for home-routed backend quests, Linus himself for Linus-routed quests, and the noticeboard marker for noticeboard quests.
 5. Keep the built-in local `Bädda sängen` onboarding ledger separate from backend quest ownership until an explicit reconciliation/migration strategy is implemented.
 6. Bakery routing is dormant until both Bakery is unlocked and Henning exists in persisted world state. Production Bakery art alone must never activate that source.
