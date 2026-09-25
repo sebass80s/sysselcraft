@@ -131,9 +131,9 @@ export default function VillagePrototype() {
   const [solRuntimeTestIndex, setSolRuntimeTestIndex] = useState(0);
   const solRuntimeTestActiveRef = useRef(false);
   const solRuntimeTestActive = solRuntimeTestPhase !== "idle";
-  const [solRuntimeDebugEvents, setSolRuntimeDebugEvents] = useState<SolRuntimeDebugEvent[]>([]);
-  const [lastLiveStoryTrigger, setLastLiveStoryTrigger] = useState("NONE");
-  const [solRuntimeDebugSnapshot, setSolRuntimeDebugSnapshot] = useState({ activeRef: false, henningArrivalSeen: null as boolean | null });
+  const [, setSolRuntimeDebugEvents] = useState<SolRuntimeDebugEvent[]>([]);
+  const [, setLastLiveStoryTrigger] = useState("NONE");
+  const [, setSolRuntimeDebugSnapshot] = useState({ activeRef: false, henningArrivalSeen: null as boolean | null });
   const solRuntimeDebugSequenceRef = useRef(0);
 
   const recordSolRuntimeDebug = useCallback((source: string, detail = "", liveStoryAttempt = false) => {
