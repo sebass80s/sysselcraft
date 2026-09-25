@@ -4,7 +4,8 @@ export const QUEST_SOURCE_OPEN_EVENT = "sysselcraft:quest-source-open";
 export type QuestPresentationSource = "noticeboard" | "home" | "linus" | "bakery";
 
 export type QuestPresentationEventDetail = {
-  counts: Record<QuestPresentationSource, number>;\n  turnIns?: Partial<Record<QuestPresentationSource, number>>;
+  counts: Record<QuestPresentationSource, number>;
+  turnIns?: Partial<Record<QuestPresentationSource, number>>;
 };
 
 let latestQuestPresentation: QuestPresentationEventDetail = {
@@ -28,6 +29,7 @@ export function requestQuestSourceOpen(source: QuestSourceOpenEventDetail["sourc
 
 export function getLatestQuestPresentation(): QuestPresentationEventDetail {
   return {
-    counts: { ...latestQuestPresentation.counts },\n    turnIns: { ...latestQuestPresentation.turnIns },
+    counts: { ...latestQuestPresentation.counts },
+    turnIns: { ...latestQuestPresentation.turnIns },
   };
 }
