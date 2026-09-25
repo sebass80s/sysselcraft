@@ -144,8 +144,6 @@ scene.introComplete = true;
 scene.questMarker = { getByName: () => ({ setText() {} }), setPosition() { return this; }, setVisible() { return this; } };
 scene.residents.linus = imageObject(290, 445, "linus-painted");
 handle.setConstruction(constructionPresentation(firstPending));
-handle.setQuestState("approved");
-handle.setQuestState("approved");
 assert.equal(images.filter(i => i.key === "truck-painted").length, 0, "approval never creates truck");
 assert.equal(images.filter(i => i.key === "visual-production-recycling-1").length, 0, "pending has no foundation");
 assert.equal(scene.navigationObstacles.length, nav.STATIC_OBSTACLES.length + 1, "opening shop has a permanent navigation footprint");
