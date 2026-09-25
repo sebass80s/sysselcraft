@@ -464,3 +464,9 @@ Quest v2 core is now physically accepted on iPhone with the live parent/backend 
 Recycling historical-progression protection has a deterministic regression at `8c44aa5cf939e43ff843b85c5cd80b931cf4ebe8`: baseline 12 historical claims, unchanged sync/reload yields zero stages, claim 13 yields only stage 1 pending, explicit reveal commits stage 1, and repeated sync/reload cannot cascade. The test uses the real construction/save/progression modules; production code did not need modification.
 
 A temporary Vercel preview was created only to complete parent-side acceptance. Native remains the release target. Preserve the existing iPhone app/save and do not uninstall/reset it for future testing.
+
+
+## Physical acceptance update 2026-09-25
+- Sol safe-story acceptance harness physically verified PASS on a real iPhone in landscape at commit `0a3d9b21ba1b1a08ca1ba58a27f9944c4c2b1455`.
+- Full isolated chain passed: purchase → water → letter → bottle → arrival → bakery → shop/Mira → Linus → decision → done.
+- Story Moment presentation is fullscreen and usable with native safe-area controls. Harness remains non-destructive and does not write player save or backend state.
