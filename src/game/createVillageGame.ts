@@ -578,8 +578,9 @@ export async function createVillageGame(
         .setDepth(1000 + y);
     }
 
-    setQuestSourceAttention(source: "noticeboard" | "home" | "linus", active: boolean) {
+    setQuestSourceAttention(source: "noticeboard" | "home" | "linus", marker: "?" | "!" | null) {
       requestedQuestSourceAttention[source] = marker;
+      const active = marker !== null;
       if (source === "noticeboard") {
         this.noticeboardMarker?.setVisible(active);
         if (!active) {
@@ -996,7 +997,7 @@ export async function createVillageGame(
       }
     },
     setQuestSourceAttention: (source, marker) => {
-      requestedQuestSourceAttention[source] = active;
+      requestedQuestSourceAttention[source] = marker;
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setQuestSourceAttention(source, marker);
       }

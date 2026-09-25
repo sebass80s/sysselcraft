@@ -30,7 +30,7 @@ const phaser = {
         text: imageObject,
         sprite(x, y, key) { const image = imageObject(x, y, key); images.push(image); return image; },
         graphics() { return { fillStyle() { return this; }, lineStyle() { return this; }, fillRoundedRect() { return this; }, strokeRoundedRect() { return this; }, fillTriangle() { return this; } }; },
-        container(x, y) { return { x, y, active: true, visible: true, setDepth() { return this; }, setSize() { return this; }, setInteractive() { return this; }, on() { return this; }, destroy() { this.active = false; } }; },
+        container(x, y) { return { x, y, active: true, visible: true, setDepth() { return this; }, setSize() { return this; }, setInteractive() { return this; }, setVisible(visible) { this.visible = visible; return this; }, on() { return this; }, destroy() { this.active = false; } }; },
       };
       this.events = { once() {}, off() {} };
       this.tweens = { add(tween) { tweens.push(tween); }, killTweensOf() {} };
@@ -173,7 +173,6 @@ departure.onComplete();
 await delivery;
 assert.equal(images.filter(i => i.key === "truck-painted" && i.active).length, 0);
 await assert.rejects(handle.presentConstructionReveal("recycling:1", async () => {}));
-handle.setQuestState("approved");
 assert.equal(images.filter(i => i.key === "truck-painted").length, 1, "no replay after commit");
 handle.setConstruction(constructionPresentation(pending));
 await handle.presentConstructionReveal("recycling:2", async () => handle.setConstruction(constructionPresentation(committed)));
