@@ -6,8 +6,8 @@ main { min-height: 100dvh; }
 .prototype-shell { min-height: 100dvh; position: relative; overflow: hidden; }
 .prototype-header { position: absolute; top: max(.5rem, env(safe-area-inset-top)); right: max(.5rem, env(safe-area-inset-right)); left: max(.5rem, env(safe-area-inset-left)); z-index: 30; display: flex; gap: 1rem; justify-content: space-between; align-items: flex-start; pointer-events: none; }
 .prototype-header > div { pointer-events: auto; }
-.prototype-brand-row { display: flex; align-items: center; gap: .38rem; flex-wrap: wrap; }
-.prototype-header h1 { margin: 0; font-size: .92rem; background: rgba(38,52,43,.9); color: #f6edcf; padding: .42rem .6rem; border-radius: 8px; }
+.prototype-brand-row { position: relative; display: flex; align-items: flex-start; flex-direction: column; gap: .3rem; }
+.prototype-header h1 { margin: 0; font-size: .92rem; background: rgba(38,52,43,.9); color: #f6edcf; padding: .42rem .6rem; border-radius: 8px; }\n.prototype-brand-button { border: 0; margin: 0; font: inherit; font-size: .92rem; font-weight: 800; background: rgba(38,52,43,.9); color: #f6edcf; padding: .42rem .6rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.1); }\n.prototype-brand-button:focus-visible { outline: 2px solid #ffd83d; outline-offset: 2px; }\n.main-menu-popover { display: flex; flex-direction: column; min-width: 8.5rem; padding: .32rem; border-radius: 10px; background: rgba(38,52,43,.94); box-shadow: 0 7px 20px rgba(0,0,0,.2); }\n.main-menu-popover .parent-menu-button { width: 100%; text-align: left; }
 .prototype-header p { display: none; }
 .parent-menu-button { position: relative; border: 1px solid rgba(31,42,31,.16); border-radius: 999px; padding: .4rem .66rem; background: rgba(255,255,255,.88); color: #26342b; font-size: .74rem; font-weight: 800; box-shadow: 0 4px 14px rgba(0,0,0,.1); cursor: pointer; }
 .parent-menu-badge { position: absolute; top: -.28rem; right: -.22rem; display: grid; place-items: center; min-width: 19px; height: 19px; padding: 0 .3rem; border-radius: 999px; background: #b84232; color: white; font-size: .66rem; box-shadow: 0 2px 7px rgba(0,0,0,.22); }
