@@ -216,3 +216,21 @@ Parked while physical game testing continues.
 - Disable/block activation while the same quest already has an active available or pending occurrence, preventing accidental duplicates.
 - Parent history needs a **remove/hide from history** action so the visible list does not grow indefinitely.
 - Hiding/removing from the parent UI must not physically delete authoritative `quest_instances` or `reward_events`; completed reward/audit history remains preserved in backend.
+
+
+## 13. Child quest lifecycle — LOCKED 2026-09-25
+
+The previous three-state child flow is superseded by an explicit acceptance lifecycle:
+
+1. Parent creates/materializes an occurrence → `available`.
+2. The world presenter shows `?`: a new quest is available.
+3. Child interacts with the presenter and explicitly chooses **Ta uppdraget** → `active`.
+4. Only `active` quests appear as actionable quests in the normal **Uppdrag** list and can be marked **Jag är klar**.
+5. Submission → `pending`, waiting for parent review.
+6. Rejection returns the same occurrence to `active`, not `available`.
+7. Approval → `approved`; the child gets `!` at Linus for turn-in/reward claim.
+8. Claim is idempotent and may trigger world progression. Any resulting authored story/construction attention uses the speech-bubble language, not quest punctuation.
+
+Locked visual language: `?` = new quest to accept; `!` = completed/approved quest ready to turn in; speech bubble = authored story/dialogue attention; no marker = ordinary optional interaction.
+
+Parent/backend UX TODO: show occurrence lifecycle clearly, especially which quests are currently `active`, separately from available, pending review and history.
