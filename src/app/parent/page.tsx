@@ -865,7 +865,7 @@ export default function ParentModePage() {
             <section className="parent-tool-card">
               <h2>{child?.displayName || "Barn"}</h2>
               <p>
-                {active.length} aktiva · {pending.length} väntar · {approved.length} klara
+                {available.length} nya · {active.length} pågår · {pending.length} väntar · {approved.length} godkända
               </p>
               <button
                 className="secondary-button"
@@ -888,7 +888,31 @@ export default function ParentModePage() {
             {adminTab === "quests" && <>
             <section className="parent-tool-card">
               <div className="parent-section-heading">
-                <h2>Aktiva uppdrag</h2>
+                <h2>Nya uppdrag hos barnet</h2>
+                <span>{available.length}</span>
+              </div>
+              {available.length ? available.map((quest) => (
+                <article className="parent-quest-card" key={quest.instanceId}>
+                  <div><span>❔</span><div><strong>{quest.title}</strong><small>Väntar på att {child?.displayName || "barnet"} tar uppdraget</small></div></div>
+                </article>
+              )) : <div className="parent-empty-state">Inga nya uppdrag väntar på att tas.</div>}
+            </section>
+
+            <section className="parent-tool-card">
+              <div className="parent-section-heading">
+                <h2>Pågår</h2>
+                <span>{active.length}</span>
+              </div>
+              {active.length ? active.map((quest) => (
+                <article className="parent-quest-card" key={quest.instanceId}>
+                  <div><span>📜</span><div><strong>{quest.title}</strong><small>{child?.displayName || "Barnet"} har tagit uppdraget</small></div></div>
+                </article>
+              )) : <div className="parent-empty-state">Inga uppdrag pågår just nu.</div>}
+            </section>
+
+            <section className="parent-tool-card">
+              <div className="parent-section-heading">
+                <h2>Uppdragsmallar</h2>
                 <span>{questDefinitions.length}</span>
               </div>
               {questDefinitions.length ? (
@@ -922,7 +946,7 @@ export default function ParentModePage() {
                   </article>
                 ))
               ) : (
-                <div className="parent-empty-state">Inga aktiva uppdrag.</div>
+                <div className="parent-empty-state">Inga uppdragsmallar ännu.</div>
               )}
             </section>
 
