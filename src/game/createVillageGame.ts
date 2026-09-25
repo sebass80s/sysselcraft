@@ -53,7 +53,7 @@ const NOTICEBOARD_MARKER: Point = { x: 175, y: 270 };
 const NOTICEBOARD_APPROACH: Point = { x: 175, y: 430 };
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
-const HOME_QUEST_MARKER: Point = { x: 245, y: 378 };
+const HOME_QUEST_MARKER: Point = { x: 245, y: 338 };
 
 function distance(a: Point, b: Point) {
   return Math.hypot(a.x - b.x, a.y - b.y);
