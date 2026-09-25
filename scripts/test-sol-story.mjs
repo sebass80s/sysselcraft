@@ -55,7 +55,7 @@ assert.match(runtimeOpen, /solRuntimeTestActiveRef\.current = true/, "Runtime ac
 for (const liveSetter of ["setDialogueOpen", "setLinusStoryMomentOpen", "setLinusStoryReplayIndex", "setHenningStoryIndex", "setHenningStoryReplayIndex", "setHenningDialogueOpen", "setBakeryStoryIndex", "setBakeryStoryReplayIndex", "setMiraStoryIndex", "setMiraStoryReplayIndex", "setClinicStoryIndex", "setClinicStoryReplayIndex", "setConstructionDialogueId", "setAbandonedShopDialogueIndex", "setShopPanelOpen", "setSolStoryIndex", "setSolTourStoryStop", "setBottleStoryIndex", "setBottleLetterOpen"]) {
   assert.ok(!runtimeOpen.includes(liveSetter), `Runtime acceptance must preserve live ${liveSetter} state instead of clearing it`);
 }
-assert.match(component, /function closeSolRuntimeTest\(\) \{[\s\S]*solRuntimeTestActiveRef\.current = false;[\s\S]*setSolRuntimeTestPhase\("idle"\)/, "Every runtime-test exit must release the synchronous guard");
+assert.match(component, /function closeSolRuntimeTest\(\) \{[\s\S]*solRuntimeTestActiveRef\.current = false;[\s\S]*transitionSolRuntimeTest\("idle", "CLOSE"\)/, "Every runtime-test exit must release the synchronous guard");
 assert.match(component, /if \(!solRuntimeTestActiveRef\.current\) \{[\s\S]*setHenningStoryIndex\(0\);[\s\S]*\}\s*\}\s*setSaveReady/, "Save restore must not open pending live stories during runtime acceptance");
 assert.match(component, /if \(!saveReady \|\| resettingSave \|\| constructionWriteRef\.current \|\| solRuntimeTestActiveRef\.current\) return;/, "Autosave must not write while runtime acceptance is active");
 assert.match(component, /if \(solRuntimeTestActive \|\| !saveReady[^)]*\) return;[\s\S]*setSolStoryIndex\(0\)/, "Delayed live Sol arrival must be suspended during runtime acceptance");
@@ -74,6 +74,18 @@ for (const liveState of ["henningStoryIndex", "henningStoryReplayIndex", "bakery
 }
 assert.match(component, /data-sol-runtime-phase=\{phase\}/);
 assert.match(component, /data-sol-runtime-index=\{solRuntimeTestIndex\}/);
+for (const source of ["RESTORE_HENNING", "PHASER_HENNING_INTERACT_BLOCKED", "PHASER_HENNING_SOL_TOUR", "PHASER_HENNING_DIALOGUE", "BAKERY_COMPLETION", "RECYCLING_COMPLETION_HENNING", "LIVE_SOL_TIMER_OPEN", "RUNTIME_PHASE_CHANGE", "RUNTIME_HARNESS_CLOSE"]) {
+  assert.ok(component.includes(`recordSolRuntimeDebug("${source}"`), `Missing physical runtime evidence source ${source}`);
+}
+for (const field of ["solRuntimeBuildId", "solRuntimeTestPhase", "solRuntimeTestActiveRef.current", "henningStoryIndex", "henningStoryReplayIndex", "bakeryStoryIndex", "solStoryIndex", "solTourStoryStop", "saveReady", "worldFlags.henningArrivalSeen", "construction.revealed.recycling", "lastLiveStoryTrigger"]) {
+  assert.ok(component.includes(field), `Runtime evidence panel missing ${field}`);
+}
+const debugPanelStart = component.indexOf('{solRuntimeDebugVisible && <aside className="sol-runtime-debug-panel"');
+assert.ok(debugPanelStart > liveRenderEnd, "Runtime evidence panel must render outside and above the live-story guard");
+const debugPanelEnd = component.indexOf("</aside>}", debugPanelStart);
+const debugPanel = component.slice(debugPanelStart, debugPanelEnd);
+assert.doesNotMatch(debugPanel, /purchaseStoryItem|purchaseBottleMessage|commitStoryBeat|saveSaveState|persistConstruction|clearSaveState|getSupabaseBrowserClient/, "Runtime evidence panel must remain read-only");
+assert.match(styles, /\.sol-runtime-debug-panel \{[^}]*position:fixed;[^}]*z-index:2147483647;[^}]*env\(safe-area-inset-top\)[^}]*env\(safe-area-inset-right\)/, "Runtime evidence must remain visible over every story overlay and respect iPhone safe areas");
 assert.match(component, /data-sol-safe-phase=\{phase\}/);
 assert.match(component, /data-sol-safe-index=\{solSafeTestIndex\}/);
 assert.match(styles, /\.sol-safe-test-overlay \{ position:fixed; inset:0; width:100vw; height:100dvh;/, "Sol acceptance overlay must use the viewport as its containing block");

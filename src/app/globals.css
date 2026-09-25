@@ -54,6 +54,15 @@ main { min-height: 100dvh; }
 .sol-safe-test-dialogue > div { min-width:0; }
 .sol-safe-test-dialogue p { margin:.35rem 0 0; line-height:1.32; }
 .sol-safe-test-dialogue .primary-button { align-self:end; min-height:44px; white-space:nowrap; }
+.sol-runtime-debug-panel { position:fixed; z-index:2147483647; top:max(.35rem,env(safe-area-inset-top)); right:max(3.8rem,calc(env(safe-area-inset-right) + 3.8rem)); width:min(46vw,25rem); max-height:calc(100dvh - max(.7rem,env(safe-area-inset-top)) - max(.7rem,env(safe-area-inset-bottom))); overflow:auto; pointer-events:none; padding:.45rem .55rem; border:1px solid rgba(255,255,255,.72); border-radius:9px; background:rgba(7,12,9,.9); color:#fff; box-shadow:0 4px 20px rgba(0,0,0,.42); font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; text-align:left; }
+.sol-runtime-debug-panel > strong { display:block; margin-bottom:.28rem; color:#ffe171; letter-spacing:.08em; }
+.sol-runtime-debug-panel dl { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.14rem .6rem; margin:0; }
+.sol-runtime-debug-panel dl > div { display:grid; grid-template-columns:auto minmax(0,1fr); gap:.3rem; min-width:0; }
+.sol-runtime-debug-panel dt { color:#a8dcb2; }
+.sol-runtime-debug-panel dd { min-width:0; margin:0; overflow-wrap:anywhere; }
+.sol-runtime-debug-panel p { margin:.32rem 0 .2rem; color:#ffd4d4; overflow-wrap:anywhere; }
+.sol-runtime-debug-panel ol { margin:.2rem 0 0; padding-left:1.45rem; }
+.sol-runtime-debug-panel li { margin:.12rem 0; overflow-wrap:anywhere; }
 
 
 .dialogue-card { position: absolute; left: 50%; bottom: max(.55rem, env(safe-area-inset-bottom)); width: min(760px, calc(100% - 1.2rem)); transform: translateX(-50%); background: rgba(255,253,244,.98); border: 2px solid #735b36; border-radius: 14px; padding: .7rem .85rem; box-shadow: 0 14px 48px rgba(44,37,24,.28); z-index: 25; }

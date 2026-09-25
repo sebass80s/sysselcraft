@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Capacitor } from "@capacitor/core";
 import ChildPairingPanel from "./ChildPairingPanel";
@@ -41,6 +41,14 @@ import {
   requestQuestSourceOpen,
   type QuestPresentationEventDetail,
 } from "../game/questPresentationBridge";
+
+type SolRuntimeTestPhase = "idle" | "bottle-sent" | "arrival" | "await-bakery" | "bakery" | "await-shop" | "shop" | "await-linus" | "linus" | "await-decision" | "decision" | "done";
+
+type SolRuntimeDebugEvent = {
+  id: number;
+  source: string;
+  detail: string;
+};
 
 export default function VillagePrototype() {
   const [construction, setConstruction] = useState(initialConstruction);
@@ -119,10 +127,32 @@ export default function VillagePrototype() {
   const [solSafeTestOpen, setSolSafeTestOpen] = useState(false);
   const [solSafeTestPhase, setSolSafeTestPhase] = useState<"purchase" | "water" | "letter" | "bottle" | "arrival" | SolTourStop | "done">("purchase");
   const [solSafeTestIndex, setSolSafeTestIndex] = useState(0);
-  const [solRuntimeTestPhase, setSolRuntimeTestPhase] = useState<"idle" | "bottle-sent" | "arrival" | "await-bakery" | "bakery" | "await-shop" | "shop" | "await-linus" | "linus" | "await-decision" | "decision" | "done">("idle");
+  const [solRuntimeTestPhase, setSolRuntimeTestPhase] = useState<SolRuntimeTestPhase>("idle");
   const [solRuntimeTestIndex, setSolRuntimeTestIndex] = useState(0);
   const solRuntimeTestActiveRef = useRef(false);
   const solRuntimeTestActive = solRuntimeTestPhase !== "idle";
+  const [solRuntimeDebugVisible, setSolRuntimeDebugVisible] = useState(false);
+  const [solRuntimeBuildId, setSolRuntimeBuildId] = useState("loading");
+  const [solRuntimeDebugEvents, setSolRuntimeDebugEvents] = useState<SolRuntimeDebugEvent[]>([]);
+  const [lastLiveStoryTrigger, setLastLiveStoryTrigger] = useState("NONE");
+  const [solRuntimeDebugSnapshot, setSolRuntimeDebugSnapshot] = useState({ activeRef: false, henningArrivalSeen: null as boolean | null });
+  const solRuntimeDebugSequenceRef = useRef(0);
+
+  const recordSolRuntimeDebug = useCallback((source: string, detail = "", liveStoryAttempt = false) => {
+    const event = { id: ++solRuntimeDebugSequenceRef.current, source, detail };
+    setSolRuntimeDebugEvents((events) => [...events.slice(-5), event]);
+    setSolRuntimeDebugSnapshot({
+      activeRef: solRuntimeTestActiveRef.current,
+      henningArrivalSeen: latestSaveRef.current?.worldFlags.henningArrivalSeen ?? null,
+    });
+    if (liveStoryAttempt) setLastLiveStoryTrigger(`${source}${detail ? ` · ${detail}` : ""}`);
+    console.info("[SOL_RUNTIME_DEBUG]", event);
+  }, []);
+
+  const transitionSolRuntimeTest = useCallback((next: SolRuntimeTestPhase, source: string) => {
+    recordSolRuntimeDebug("RUNTIME_PHASE_CHANGE", `${source}: ${next}`);
+    setSolRuntimeTestPhase(next);
+  }, [recordSolRuntimeDebug]);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
   const recyclingStoryLine = recyclingStoryOpen ? recyclingCompletionDialogue[recyclingStoryIndex] : null;
@@ -138,6 +168,16 @@ export default function VillagePrototype() {
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!solRuntimeDebugVisible) return;
+    let cancelled = false;
+    void fetch("/syssel-build.txt", { cache: "no-store" })
+      .then((response) => response.ok ? response.text() : Promise.reject(new Error(String(response.status))))
+      .then((marker) => { if (!cancelled) setSolRuntimeBuildId(marker.trim() || "missing"); })
+      .catch(() => { if (!cancelled) setSolRuntimeBuildId("web/dev"); });
+    return () => { cancelled = true; };
+  }, [solRuntimeDebugVisible]);
 
   useEffect(() => {
     const reloadConstruction = async () => {
@@ -195,12 +235,14 @@ export default function VillagePrototype() {
             setRecyclingStoryIndex(0);
             setRecyclingStoryOpen(true);
           } else if (bakeryCompletionPending(saved.construction)) {
+            recordSolRuntimeDebug("RESTORE_BAKERY", "setBakeryStoryIndex(0)", true);
             setBakeryStoryIndex(0);
           } else if (saved.construction.completedStoryBeats.includes("bakery:completion") && saved.worldFlags.miraArrivalSeen !== true) {
             setMiraStoryIndex(0);
           } else if (saved.construction.revealed.clinic >= 4 && saved.worldFlags.clinicCompletionSeen !== true) {
             setClinicStoryIndex(0);
           } else if (saved.construction.revealed.recycling >= 4 && saved.worldFlags.henningArrivalSeen !== true) {
+            recordSolRuntimeDebug("RESTORE_HENNING", "setHenningStoryIndex(0)", true);
             setHenningStoryIndex(0);
           }
         }
@@ -213,7 +255,7 @@ export default function VillagePrototype() {
       if (!cancelled) setLoadError(error instanceof Error ? error.message : "Sparningen kunde inte läsas.");
     });
     return () => { cancelled = true; };
-  }, []);
+  }, [recordSolRuntimeDebug]);
 
   useEffect(() => {
     const syncBackendWallet = (event: Event) => setBackendWallet((event as CustomEvent<BackendWalletSnapshot | null>).detail ?? null);
@@ -273,13 +315,13 @@ export default function VillagePrototype() {
       const handle = await createVillageGame(hostRef.current, {
         onQuestSourceInteract: (source) => { if (!solRuntimeTestActiveRef.current) requestQuestSourceOpen(source); },
         onConstructionInteract: (id) => {
-          if (solRuntimeTestActiveRef.current) return;
+          if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_CONSTRUCTION_INTERACT_BLOCKED", id, true); return; }
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
           setConstructionDialogueId(id);
           setConstructionDialogueIndex(0);
         },
         onLinusInteract: () => {
-          if (solRuntimeTestActiveRef.current) return;
+          if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_LINUS_INTERACT_BLOCKED", "runtime active", true); return; }
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solArrivalSeen && flags.solTourShopSeen && !flags.solTourLinusSeen) { setSolTourStoryStop("linus"); setSolTourStoryIndex(0); return; }
           // The naming/dog sequence is onboarding only. Once intro is complete, Linus must
@@ -290,14 +332,18 @@ export default function VillagePrototype() {
           setLinusStoryMomentOpen(true);
         },
         onHenningInteract: () => {
-          if (solRuntimeTestActiveRef.current) return;
+          if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_HENNING_INTERACT_BLOCKED", "runtime active", true); return; }
           const flags = latestSaveRef.current?.worldFlags;
-          if (flags?.solArrivalSeen && !flags.solTourBakerySeen) { setSolTourStoryStop("bakery"); setSolTourStoryIndex(0); return; }
+          if (flags?.solArrivalSeen && !flags.solTourBakerySeen) {
+            recordSolRuntimeDebug("PHASER_HENNING_SOL_TOUR", "setSolTourStoryStop(bakery)", true);
+            setSolTourStoryStop("bakery"); setSolTourStoryIndex(0); return;
+          }
+          recordSolRuntimeDebug("PHASER_HENNING_DIALOGUE", "setHenningDialogueOpen(true)", true);
           setHenningDialogueIndex(0); setHenningDialogueOpen(true);
         },
         onBottleMessageInteract: () => { if (!solRuntimeTestActiveRef.current) { setBottleLetterOpen(true); gameRef.current?.setConstructionDialogueOpen(true); } },
         onSolInteract: () => {
-          if (solRuntimeTestActiveRef.current) return;
+          if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_SOL_INTERACT_BLOCKED", "runtime active", true); return; }
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solTourLinusSeen && !flags.solChoseToStay) { setSolTourStoryStop("decision"); setSolTourStoryIndex(0); }
         },
@@ -307,7 +353,7 @@ export default function VillagePrototype() {
           gameRef.current?.setConstructionDialogueOpen(true);
         },
         onShopInteract: () => {
-          if (solRuntimeTestActiveRef.current) return;
+          if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_SHOP_INTERACT_BLOCKED", "runtime active", true); return; }
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solTourBakerySeen && !flags.solTourShopSeen) { setSolTourStoryStop("shop"); setSolTourStoryIndex(0); return; }
           gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopCurrency("diamonds"); setShopMessage("");
@@ -344,7 +390,7 @@ export default function VillagePrototype() {
       if (!cancelled) setBootError(true);
     });
     return () => { cancelled = true; gameRef.current?.destroy(); gameRef.current = null; };
-  }, [saveReady]);
+  }, [saveReady, recordSolRuntimeDebug]);
 
   useEffect(() => { gameRef.current?.setIntroComplete(introComplete); }, [introComplete]);
   useEffect(() => { gameRef.current?.setDogVisible(dogVisible); }, [dogVisible]);
@@ -361,9 +407,17 @@ export default function VillagePrototype() {
     // real story time before the harbour scene.
     if (solRuntimeTestActive || !saveReady || !bottleMessageSent || solArrivalSeen || bottleLetterOpen || bottleStoryIndex !== null || solStoryIndex !== null) return;
     if (!bottleMessageSentAtBootRef.current) return;
-    const timer = window.setTimeout(() => { if (!solRuntimeTestActiveRef.current) setSolStoryIndex(0); }, 900);
+    recordSolRuntimeDebug("LIVE_SOL_TIMER_SCHEDULED", "900ms");
+    const timer = window.setTimeout(() => {
+      if (solRuntimeTestActiveRef.current) {
+        recordSolRuntimeDebug("LIVE_SOL_TIMER_BLOCKED", "runtime active", true);
+        return;
+      }
+      recordSolRuntimeDebug("LIVE_SOL_TIMER_OPEN", "setSolStoryIndex(0)", true);
+      setSolStoryIndex(0);
+    }, 900);
     return () => window.clearTimeout(timer);
-  }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex, solRuntimeTestActive]);
+  }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex, solRuntimeTestActive, recordSolRuntimeDebug]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
 
   async function persistConstruction(next: ConstructionState, revealId?: string) {
@@ -382,7 +436,10 @@ export default function VillagePrototype() {
       setConstructionDialogueId(null); gameRef.current?.setConstructionDialogueOpen(false);
       if (!solRuntimeTestActiveRef.current) {
         if (revealId === "recycling:4" && recyclingCompletionPending(next)) { setRecyclingStoryIndex(0); setRecyclingStoryOpen(true); }
-        if (revealId === "bakery:4" && bakeryCompletionPending(next)) { setBakeryStoryIndex(0); }
+        if (revealId === "bakery:4" && bakeryCompletionPending(next)) {
+          recordSolRuntimeDebug("BAKERY_COMPLETION", "setBakeryStoryIndex(0)", true);
+          setBakeryStoryIndex(0);
+        }
         if (revealId === "clinic:4") { setClinicStoryIndex(0); }
       }
     } catch {
@@ -402,7 +459,13 @@ export default function VillagePrototype() {
     try {
       const snapshot = withConstructionState(latestSaveRef.current, next); await saveSaveState(snapshot, true);
       latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next); setRecyclingStoryOpen(false); setRecyclingStoryIndex(0);
-      if (!solRuntimeTestActiveRef.current && !snapshot.worldFlags.henningArrivalSeen) { setParentMenuOpen(false); setConstructionDialogueId(null); setHenningStoryIndex(0); }
+      if (!snapshot.worldFlags.henningArrivalSeen) {
+        if (solRuntimeTestActiveRef.current) recordSolRuntimeDebug("RECYCLING_COMPLETION_HENNING_BLOCKED", "runtime active", true);
+        else {
+          recordSolRuntimeDebug("RECYCLING_COMPLETION_HENNING", "setHenningStoryIndex(0)", true);
+          setParentMenuOpen(false); setConstructionDialogueId(null); setHenningStoryIndex(0);
+        }
+      }
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
@@ -411,6 +474,7 @@ export default function VillagePrototype() {
     if (henningStoryIndex === null || constructionWriteRef.current || !latestSaveRef.current) return;
     const nextIndex = henningStoryIndex + 1;
     if (nextIndex < henningArrivalDialogue.length) {
+      recordSolRuntimeDebug("HENNING_STORY_ADVANCE", String(nextIndex), true);
       setHenningStoryIndex(nextIndex);
       return;
     }
@@ -426,6 +490,7 @@ export default function VillagePrototype() {
       latestSaveRef.current = snapshot;
       setHenningArrivalSeen(true);
       gameRef.current?.setHenningVisible(true);
+      recordSolRuntimeDebug("HENNING_STORY_COMPLETE", "setHenningStoryIndex(null)", true);
       setHenningStoryIndex(null);
     } catch {
       setConstructionError("Det gick inte att spara. Försök igen.");
@@ -439,14 +504,22 @@ export default function VillagePrototype() {
   async function advanceBakeryStory() {
     if (bakeryStoryIndex === null || constructionWriteRef.current || !latestSaveRef.current) return;
     const nextIndex = bakeryStoryIndex + 1;
-    if (nextIndex < bakeryCompletionDialogue.length) { setBakeryStoryIndex(nextIndex); return; }
+    if (nextIndex < bakeryCompletionDialogue.length) {
+      recordSolRuntimeDebug("BAKERY_STORY_ADVANCE", String(nextIndex), true);
+      setBakeryStoryIndex(nextIndex); return;
+    }
     const next = commitBakeryCompletion(constructionRef.current);
-    if (next === constructionRef.current) { setBakeryStoryIndex(null); return; }
+    if (next === constructionRef.current) {
+      recordSolRuntimeDebug("BAKERY_STORY_CLOSE_NOOP", "setBakeryStoryIndex(null)", true);
+      setBakeryStoryIndex(null); return;
+    }
     constructionWriteRef.current = true; setConstructionBusy(true); setConstructionError("");
     try {
       const snapshot = withConstructionState(latestSaveRef.current, next);
       await saveSaveState(snapshot, true);
-      latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next); setBakeryStoryIndex(null);
+      latestSaveRef.current = snapshot; constructionRef.current = next; setConstruction(next);
+      recordSolRuntimeDebug("BAKERY_STORY_COMPLETE", "setBakeryStoryIndex(null)", true);
+      setBakeryStoryIndex(null);
       if (!solRuntimeTestActiveRef.current) setMiraStoryIndex(0);
     } catch { setConstructionError("Det gick inte att spara. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
@@ -604,30 +677,48 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  function openSolRuntimeTest() { solRuntimeTestActiveRef.current = true; setParentMenuOpen(false); setSolSafeTestOpen(false); setSolRuntimeTestIndex(0); setSolRuntimeTestPhase("bottle-sent"); }
+  function openSolRuntimeTest() {
+    setSolRuntimeDebugVisible(true);
+    setSolRuntimeDebugEvents([]);
+    setLastLiveStoryTrigger("NONE");
+    solRuntimeTestActiveRef.current = true;
+    recordSolRuntimeDebug("RUNTIME_OPEN", "activeRef=true");
+    setParentMenuOpen(false); setSolSafeTestOpen(false); setSolRuntimeTestIndex(0);
+    transitionSolRuntimeTest("bottle-sent", "OPEN");
+  }
   function closeSolRuntimeTest() {
+    recordSolRuntimeDebug("RUNTIME_HARNESS_CLOSE", "activeRef=false");
     solRuntimeTestActiveRef.current = false;
     setSolRuntimeTestIndex(0);
-    setSolRuntimeTestPhase("idle");
+    transitionSolRuntimeTest("idle", "CLOSE");
     const saved = latestSaveRef.current;
     if (!saved) return;
     if (recyclingCompletionPending(saved.construction)) { setRecyclingStoryIndex(0); setRecyclingStoryOpen(true); }
-    else if (bakeryCompletionPending(saved.construction)) setBakeryStoryIndex(0);
+    else if (bakeryCompletionPending(saved.construction)) {
+      recordSolRuntimeDebug("RUNTIME_CLOSE_RESUME_BAKERY", "setBakeryStoryIndex(0)", true);
+      setBakeryStoryIndex(0);
+    }
     else if (saved.construction.completedStoryBeats.includes("bakery:completion") && !saved.worldFlags.miraArrivalSeen) setMiraStoryIndex(0);
     else if (saved.construction.revealed.clinic >= 4 && !saved.worldFlags.clinicCompletionSeen) setClinicStoryIndex(0);
-    else if (saved.construction.revealed.recycling >= 4 && !saved.worldFlags.henningArrivalSeen) setHenningStoryIndex(0);
+    else if (saved.construction.revealed.recycling >= 4 && !saved.worldFlags.henningArrivalSeen) {
+      recordSolRuntimeDebug("RUNTIME_CLOSE_RESUME_HENNING", "setHenningStoryIndex(0)", true);
+      setHenningStoryIndex(0);
+    }
   }
   function advanceSolRuntimeTest() {
     const phase = solRuntimeTestPhase;
-    if (phase === "bottle-sent") { setSolRuntimeTestPhase("arrival"); setSolRuntimeTestIndex(0); return; }
+    if (phase === "bottle-sent") { transitionSolRuntimeTest("arrival", "SIMULATE_NEXT_SESSION"); setSolRuntimeTestIndex(0); return; }
     const lines = phase === "arrival" ? solArrivalDialogue : (["bakery","shop","linus","decision"] as string[]).includes(phase) ? solTourDialogue[phase as SolTourStop] : [];
-    if (solRuntimeTestIndex + 1 < lines.length) { setSolRuntimeTestIndex((i) => i + 1); return; }
+    if (solRuntimeTestIndex + 1 < lines.length) {
+      recordSolRuntimeDebug("RUNTIME_DIALOGUE_ADVANCE", `${phase}: ${solRuntimeTestIndex + 1}`);
+      setSolRuntimeTestIndex((i) => i + 1); return;
+    }
     setSolRuntimeTestIndex(0);
-    if (phase === "arrival") setSolRuntimeTestPhase("await-bakery");
-    else if (phase === "bakery") setSolRuntimeTestPhase("await-shop");
-    else if (phase === "shop") setSolRuntimeTestPhase("await-linus");
-    else if (phase === "linus") setSolRuntimeTestPhase("await-decision");
-    else if (phase === "decision") setSolRuntimeTestPhase("done");
+    if (phase === "arrival") transitionSolRuntimeTest("await-bakery", "ARRIVAL_COMPLETE");
+    else if (phase === "bakery") transitionSolRuntimeTest("await-shop", "HENNING_COMPLETE");
+    else if (phase === "shop") transitionSolRuntimeTest("await-linus", "MIRA_COMPLETE");
+    else if (phase === "linus") transitionSolRuntimeTest("await-decision", "LINUS_COMPLETE");
+    else if (phase === "decision") transitionSolRuntimeTest("done", "DECISION_COMPLETE");
   }
   function openSolSafeTest() { setParentMenuOpen(false); setSolSafeTestPhase("purchase"); setSolSafeTestIndex(0); setSolSafeTestOpen(true); }
   function advanceSolSafeTest() {
@@ -651,9 +742,11 @@ export default function VillagePrototype() {
   }
 
   function replayBakeryStoryMoment() {
+    recordSolRuntimeDebug("BAKERY_REPLAY_OPEN", "setBakeryStoryReplayIndex(0)", true);
     setParentMenuOpen(false); setConstructionDialogueId(null); setBakeryStoryReplayIndex(0);
   }
   function advanceBakeryStoryReplay() {
+    recordSolRuntimeDebug("BAKERY_REPLAY_ADVANCE", String(bakeryStoryReplayIndex), true);
     setBakeryStoryReplayIndex((index) => index === null ? null : index + 1 < bakeryCompletionDialogue.length ? index + 1 : null);
   }
 
@@ -670,16 +763,28 @@ export default function VillagePrototype() {
     setLinusStoryReplayIndex(0);
   }
   function replayHenningStoryMoment() {
+    recordSolRuntimeDebug("HENNING_REPLAY_OPEN", "setHenningStoryReplayIndex(0)", true);
     setParentMenuOpen(false);
    
     setConstructionDialogueId(null);
     setHenningStoryReplayIndex(0);
   }
   function advanceHenningStoryReplay() {
+    recordSolRuntimeDebug("HENNING_REPLAY_ADVANCE", String(henningStoryReplayIndex), true);
     setHenningStoryReplayIndex((index) => {
       if (index === null) return null;
       return index + 1 < henningArrivalDialogue.length ? index + 1 : null;
     });
+  }
+
+  function advanceHenningDialogue(last: boolean) {
+    if (last) {
+      recordSolRuntimeDebug("HENNING_DIALOGUE_CLOSE", "setHenningDialogueOpen(false)", true);
+      setHenningDialogueOpen(false); setHenningDialogueIndex(0);
+    } else {
+      recordSolRuntimeDebug("HENNING_DIALOGUE_ADVANCE", String(henningDialogueIndex + 1), true);
+      setHenningDialogueIndex((index) => index + 1);
+    }
   }
   function advanceLinusStoryReplay() {
     setLinusStoryReplayIndex((index) => {
@@ -804,7 +909,7 @@ export default function VillagePrototype() {
       ] as const;
       const step = henningDialogue[henningDialogueIndex];
       const last = henningDialogueIndex === henningDialogue.length - 1;
-      return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Henning"><span className={`dialogue-speaker henning-story-speaker ${step.speaker.toLowerCase()}`}>{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => { if (last) { setHenningDialogueOpen(false); setHenningDialogueIndex(0); } else setHenningDialogueIndex((index) => index + 1); }}>{last ? "Klart" : "Nästa"}</button></div>;
+      return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Henning"><span className={`dialogue-speaker henning-story-speaker ${step.speaker.toLowerCase()}`}>{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => advanceHenningDialogue(last)}>{last ? "Klart" : "Nästa"}</button></div>;
     })()}
     {henningStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png" alt="" fill priority sizes="100vw" /></div>}
     {henningStoryReplayIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Henning kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryReplayIndex].speaker.toLowerCase()}`}>{henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryReplayIndex].speaker}</span><p>{henningArrivalDialogue[henningStoryReplayIndex].text}</p><button className="primary-button dialogue-next" onClick={advanceHenningStoryReplay}>{henningStoryReplayIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
@@ -834,7 +939,7 @@ export default function VillagePrototype() {
       if (phase === "await-bakery" || phase === "await-shop" || phase === "await-linus" || phase === "await-decision") {
         const next = phase === "await-bakery" ? "bakery" : phase === "await-shop" ? "shop" : phase === "await-linus" ? "linus" : "decision";
         const who = next === "bakery" ? "Henning" : next === "shop" ? "Mira" : next === "linus" ? "Linus" : "Sol";
-        return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel" data-sol-runtime-phase={phase} data-sol-runtime-index={solRuntimeTestIndex}><button className="close-button" onClick={closeSolRuntimeTest}>×</button><div className="sol-safe-test-stage"><h2>🏡 Tillbaka i byn</h2><p>Ingen ny cutscene ska starta automatiskt. Nästa story-beat kräver att barnet själv går fram till {who}.</p><button className="primary-button" onClick={() => { setSolRuntimeTestIndex(0); setSolRuntimeTestPhase(next); }}>Simulera interaktion med {who}</button></div></section></div>;
+        return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel" data-sol-runtime-phase={phase} data-sol-runtime-index={solRuntimeTestIndex}><button className="close-button" onClick={closeSolRuntimeTest}>×</button><div className="sol-safe-test-stage"><h2>🏡 Tillbaka i byn</h2><p>Ingen ny cutscene ska starta automatiskt. Nästa story-beat kräver att barnet själv går fram till {who}.</p><button className="primary-button" onClick={() => { setSolRuntimeTestIndex(0); transitionSolRuntimeTest(next, `SIMULATE_${who.toUpperCase()}_INTERACTION`); }}>Simulera interaktion med {who}</button></div></section></div>;
       }
       if (phase === "done") return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel" data-sol-runtime-phase={phase} data-sol-runtime-index={solRuntimeTestIndex}><button className="close-button" onClick={closeSolRuntimeTest}>×</button><div className="sol-safe-test-stage"><h2>☀️ Runtime-kedjan klar</h2><p>Varje senare scen krävde en separat simulerad världsinteraktion. Save och backend är orörda.</p><button className="primary-button" onClick={closeSolRuntimeTest}>Klart</button></div></section></div>;
       const label = phase === "arrival" ? "Nästa session: Sol anländer" : phase === "bakery" ? "Interaktion: Henning" : phase === "shop" ? "Interaktion: Mira" : phase === "linus" ? "Interaktion: Linus" : "Interaktion: Sol";
@@ -863,5 +968,23 @@ export default function VillagePrototype() {
       <button className="primary-button" disabled={saveRetryBusy || constructionBusy} onClick={() => void retrySave()}>{saveRetryBusy ? "Sparar…" : "Försök spara igen"}</button>
     </section></div>}
     {childPairingOpen && <ChildPairingPanel onClose={() => setChildPairingOpen(false)} />}
+    {solRuntimeDebugVisible && <aside className="sol-runtime-debug-panel" aria-label="Sol runtime debug evidence">
+      <strong>SOL RUNTIME DEBUG</strong>
+      <dl>
+        <div><dt>BUILD</dt><dd>{solRuntimeBuildId}</dd></div>
+        <div><dt>PHASE</dt><dd>{solRuntimeTestPhase}</dd></div>
+        <div><dt>ACTIVE REF</dt><dd>{String(solRuntimeDebugSnapshot.activeRef)}</dd></div>
+        <div><dt>HENNING</dt><dd>{String(henningStoryIndex)}</dd></div>
+        <div><dt>HENNING REPLAY</dt><dd>{String(henningStoryReplayIndex)}</dd></div>
+        <div><dt>BAKERY</dt><dd>{String(bakeryStoryIndex)}</dd></div>
+        <div><dt>SOL</dt><dd>{String(solStoryIndex)}</dd></div>
+        <div><dt>SOL TOUR</dt><dd>{String(solTourStoryStop)}</dd></div>
+        <div><dt>SAVE READY</dt><dd>{String(saveReady)}</dd></div>
+        <div><dt>HENNING SEEN</dt><dd>{String(solRuntimeDebugSnapshot.henningArrivalSeen)}</dd></div>
+        <div><dt>RECYCLING</dt><dd>{construction.revealed.recycling}</dd></div>
+      </dl>
+      <p><b>LAST LIVE</b> {lastLiveStoryTrigger}</p>
+      <ol>{solRuntimeDebugEvents.map((event) => <li key={event.id}><b>{event.source}</b>{event.detail ? ` · ${event.detail}` : ""}</li>)}</ol>
+    </aside>}
   </section>;
 }
