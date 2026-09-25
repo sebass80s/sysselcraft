@@ -296,3 +296,12 @@ PASS. The audited iPhone candidate has completed the full pre-release physical g
 ## 2026-09-25 release gate reopened
 
 Older physical acceptance does not cover current HEAD. Browser QA verifies the dedicated Linus onboarding speech bubble, but the new explicit quest-acceptance lifecycle and distinct quest/turn-in markers are still under implementation. Before release, prove build/CI, fresh Act 1 acceptance, exactly-once reward/turn-in behavior, Recycling non-cascade behavior, and safe physical update-in-place. Only then create the release checkpoint and update the preserved release device.
+
+
+## 2026-09-25 Quest v2 + Recycling acceptance closeout
+
+Physical iPhone acceptance passed on the current Quest v2 lifecycle against the live backend: an existing available quest was accepted, submitted, rejected by the parent, returned as the same active quest, resubmitted, approved, exposed as a turn-in, claimed exactly once, and remained completed after a full app restart. The noticeboard question-mark presentation continued to represent other available quests. Approval did not itself pay the reward; payout remained at explicit child turn-in. This closes the core physical lifecycle `available -> active -> pending -> reject -> active -> pending -> approved -> claim` for the tested one-off quest.
+
+The historical Recycling cascade is also regression-covered at commit `8c44aa5cf939e43ff843b85c5cd80b931cf4ebe8`. The real construction/save/progression modules establish a local baseline at backend progression 12, prove those historical claims earn/reveal nothing, prove unchanged sync and save/load are idempotent, then prove progression 13 earns only Recycling stage 1 pending. Explicit reveal is required and idempotent; repeated sync/reload cannot cascade into stage 2. No production code change was required. Full local `npm run verify` passed for that commit.
+
+The physical phone used for Quest v2 already had completed Recycling, so the historical-baseline case was intentionally proven deterministically rather than by destroying that preserved save. No reinstall/reset was performed.
