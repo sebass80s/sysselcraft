@@ -579,7 +579,7 @@ export async function createVillageGame(
     }
 
     setQuestSourceAttention(source: "noticeboard" | "home" | "linus", active: boolean) {
-      requestedQuestSourceAttention[source] = active;
+      requestedQuestSourceAttention[source] = marker;
       if (source === "noticeboard") {
         this.noticeboardMarker?.setVisible(active);
         if (!active) {
