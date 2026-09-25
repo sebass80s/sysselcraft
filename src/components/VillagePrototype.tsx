@@ -116,7 +116,7 @@ export default function VillagePrototype() {
   const [bootError, setBootError] = useState(false);
   const [debugToolsEnabled, setDebugToolsEnabled] = useState(false);
   const [solSafeTestOpen, setSolSafeTestOpen] = useState(false);
-  const [solSafeTestPhase, setSolSafeTestPhase] = useState<"shop" | "water" | "letter" | "bottle" | "arrival" | SolTourStop | "done">("shop");
+  const [solSafeTestPhase, setSolSafeTestPhase] = useState<"purchase" | "water" | "letter" | "bottle" | "arrival" | SolTourStop | "done">("purchase");
   const [solSafeTestIndex, setSolSafeTestIndex] = useState(0);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
@@ -583,7 +583,7 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  function openSolSafeTest() { setParentMenuOpen(false); setSolSafeTestPhase("shop"); setSolSafeTestIndex(0); setSolSafeTestOpen(true); }
+  function openSolSafeTest() { setParentMenuOpen(false); setSolSafeTestPhase("purchase"); setSolSafeTestIndex(0); setSolSafeTestOpen(true); }
   function advanceSolSafeTest() {
     const phase = solSafeTestPhase;
     const lines = phase === "bottle" ? bottleMessageDialogue : phase === "arrival" ? solArrivalDialogue : (["bakery","shop","linus","decision"] as string[]).includes(phase) ? solTourDialogue[phase as SolTourStop] : [];
@@ -783,7 +783,7 @@ export default function VillagePrototype() {
       const line = lines[solSafeTestIndex];
       const image = phase === "bottle" ? "/assets/village/story-moments/bottle-message.png" : phase === "arrival" ? "/assets/village/story-moments/sol-arrival.png" : tour === "bakery" ? "/assets/village/story-moments/sol-tour-bakery.png" : tour === "shop" ? "/assets/village/story-moments/sol-tour-shop.png" : tour === "linus" ? "/assets/village/story-moments/sol-tour-linus.png" : tour === "decision" ? "/assets/village/story-moments/sol-stays.png" : null;
       return <div className="parent-menu-backdrop" role="presentation"><section className="parent-menu-panel" role="dialog" aria-modal="true" aria-label="Säkert test av Sol-story"><button className="close-button" onClick={() => setSolSafeTestOpen(false)} aria-label="Stäng test">×</button><span className="parent-menu-kicker">☀️ SOL STORY · SÄKERT TEST</span>
-        {phase === "shop" && <><h2>Miras lanthandel</h2><p>🍾 Flaskpost · 25 SysselBux</p><button className="primary-button" onClick={() => setSolSafeTestPhase("water")}>TESTKÖP</button></>}
+        {phase === "purchase" && <><h2>Miras lanthandel</h2><p>🍾 Flaskpost · 25 SysselBux</p><button className="primary-button" onClick={() => setSolSafeTestPhase("water")}>TESTKÖP</button></>}
         {phase === "water" && <><h2>Gå ner till vattnet</h2><button className="primary-button" onClick={() => setSolSafeTestPhase("letter")}>🍾 Flaskpost</button></>}
         {phase === "letter" && <><div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-letter.png" alt="" fill priority sizes="100vw" /></div><p>Brevet är klart.</p><button className="primary-button" onClick={() => setSolSafeTestPhase("bottle")}>Gå till vattnet</button></>}
         {image && <div className="story-moment" role="presentation"><Image src={image} alt="" fill priority sizes="100vw" /></div>}
