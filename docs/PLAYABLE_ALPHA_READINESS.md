@@ -291,3 +291,8 @@ PASS. The audited iPhone candidate has completed the full pre-release physical g
 - After the final force-quit/relaunch, the built world, residents, resulting wallet/reward state and child pairing remained intact.
 - This is the accepted first-child-release checkpoint pending green CI for this documentation-only checkpoint.
 - The separate intermittent stale native/Xcode bundle issue remains known debt; its cadence/root cause is not established and it did not invalidate the physically verified installed candidate.
+
+
+## 2026-09-25 release gate reopened
+
+Older physical acceptance does not cover current HEAD. Browser QA verifies the dedicated Linus onboarding speech bubble, but the new explicit quest-acceptance lifecycle and distinct quest/turn-in markers are still under implementation. Before release, prove build/CI, fresh Act 1 acceptance, exactly-once reward/turn-in behavior, Recycling non-cascade behavior, and safe physical update-in-place. Only then create the release checkpoint and update the preserved release device.
