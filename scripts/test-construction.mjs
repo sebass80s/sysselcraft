@@ -25,7 +25,12 @@ const phaser = {
   AUTO: 0, Scale: { FIT: 0, CENTER_BOTH: 0 },
   Scene: class {
     constructor() {
-      this.add = { image(x, y, key) { const image = imageObject(x, y, key); images.push(image); return image; }, text: imageObject };
+      this.add = {
+        image(x, y, key) { const image = imageObject(x, y, key); images.push(image); return image; },
+        text: imageObject,
+        graphics() { return { fillStyle() { return this; }, lineStyle() { return this; }, fillRoundedRect() { return this; }, strokeRoundedRect() { return this; }, fillTriangle() { return this; } }; },
+        container(x, y) { return { x, y, active: true, visible: true, setDepth() { return this; }, setSize() { return this; }, setInteractive() { return this; }, on() { return this; }, destroy() { this.active = false; } }; },
+      };
       this.events = { once() {}, off() {} };
       this.tweens = { add(tween) { tweens.push(tween); }, killTweensOf() {} };
       this.time = { delayedCall(ms, callback) { delays.push({ ms, callback }); } };
