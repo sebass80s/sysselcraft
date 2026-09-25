@@ -57,7 +57,8 @@ export type BackendQuest = {
   };
   state: QuestLifecycleState;
   createdAt: string;
-  acceptedAt: string | null;\n  submittedAt: string | null;
+  acceptedAt: string | null;
+  submittedAt: string | null;
   approvedAt: string | null;
   claimedAt: string | null;
 };
