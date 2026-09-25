@@ -51,6 +51,7 @@ export function presentBackendQuests(
 
   return {
     available: presented.filter(({ quest }) => quest.state === "available"),
+    active: presented.filter(({ quest }) => quest.state === "active"),
     pending: presented.filter(({ quest }) => quest.state === "pending"),
   };
 }
