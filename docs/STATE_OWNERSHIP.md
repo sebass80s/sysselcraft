@@ -93,3 +93,8 @@ Supabase owns the entire transaction:
 A parent later marks a pending redemption `delivered`, or refunds it. Refund is allowed only while pending and atomically restores the snapshotted Diamond price. Delivered rewards cannot be refunded by the normal flow. Historical purchases retain their snapshotted name/description/price even if the catalog definition changes or is archived.
 
 SysselBux digital purchases are a separate future ownership path and must not be conflated with Diamond IRL redemptions.
+
+
+## 2026-09-25 quest lifecycle authority update
+
+Backend storage remains authoritative for quest occurrence state. The new lifecycle adds an explicit active state and accepted_at boundary: available -> active -> pending -> approved -> claimed. UI/world markers are derived presentation only and must not become a local quest ledger. Recycling now stores a local backend-progress baseline so historical progression is not replayed as new local construction work.
