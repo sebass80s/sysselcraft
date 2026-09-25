@@ -488,3 +488,14 @@ A temporary Vercel preview was created only to complete parent-side acceptance. 
 - GitHub Actions CI #830 passed on commit `d15a0945d2074071d80591ce1e4d49ff5d57b9fa`.
 - No production Diamond code or live data was changed by this regression closeout.
 - Physical Diamond acceptance remains OPEN because the test iPhone was not available. Do not mark the feature physically accepted until the real journey passes: parent creates reward -> paired child sees it at Mira -> purchase deducts exactly once -> parent sees pending delivery -> parent marks delivered -> restart preserves wallet/redemption state.
+
+
+## Supabase advisor audit — 2026-09-25
+
+A fresh live Supabase advisor pass was run after the Diamond/Quest work.
+
+- `child_pairing_codes` is reported as RLS-enabled with no policies. This is intentional for the current RPC-only design: live ACL inspection confirms the table grants access only to `postgres` and `service_role`, not `authenticated` or `anon`. Do not add a broad table policy merely to silence the advisor.
+- SECURITY DEFINER warnings cover the public RPC surface. These functions are intentionally callable by authenticated parent/bound-child sessions and must keep their internal identity/household/binding checks plus explicit role grants. Treat each warning as an audit prompt, not evidence that execute should automatically be revoked.
+- Anonymous-access warnings are expected where the paired child device uses Supabase anonymous authentication; authorization must continue to be constrained by child-device binding checks.
+- Leaked-password protection is currently disabled in Supabase Auth. This is legitimate security hardening debt and may be enabled in a later auth-settings pass after checking plan/support and password UX impact.
+- Performance advisor reports four unindexed Diamond foreign keys and two multiple-permissive SELECT-policy warnings. Current data volume is tiny; these are non-blocking optimization debt, not a release blocker. Do not remove currently-unused indexes merely because the advisor has not observed traffic yet.
