@@ -416,10 +416,13 @@ export async function createVillageGame(
         return;
       }
 
-      if (this.shopInteractionPending && this.player && requestedShopOpen) {
+      if (this.shopInteractionPending && this.player && this.shop?.visible) {
         const shopApproach = { x: 1130, y: 425 };
         const miraApproach = { x: 1050, y: 445 };
-        if (Math.min(distance(this.player, shopApproach), distance(this.player, miraApproach)) > 42) return;
+        const interactionDistance = requestedShopOpen
+          ? Math.min(distance(this.player, shopApproach), distance(this.player, miraApproach))
+          : distance(this.player, shopApproach);
+        if (interactionDistance > 42) return;
         this.shopInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
