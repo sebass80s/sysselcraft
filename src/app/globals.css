@@ -8,7 +8,7 @@ main { min-height: 100dvh; }
 .prototype-header > div { pointer-events: auto; }
 .prototype-brand-row { position: relative; display: flex; align-items: flex-start; flex-direction: column; gap: .3rem; }
 .prototype-header h1 { margin: 0; font-size: .92rem; background: rgba(38,52,43,.9); color: #f6edcf; padding: .42rem .6rem; border-radius: 8px; }
-.prototype-brand-button { border: 0; margin: 0; font: inherit; font-size: .92rem; font-weight: 800; background: rgba(38,52,43,.9); color: #f6edcf; padding: .42rem .6rem; border-radius: 8px; cursor: pointer; }
+.prototype-brand-button { border: 0; margin: 0; padding: 0; background: transparent; border-radius: 8px; cursor: pointer; line-height: 0; }\n.prototype-brand-logo { display: block; width: clamp(150px, 18vw, 220px); height: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,.2)); }
 .prototype-brand-button:focus-visible { outline: 2px solid #ffd83d; outline-offset: 2px; }
 .main-menu-popover { display: flex; flex-direction: column; min-width: 8.5rem; padding: .32rem; border-radius: 8px; background: rgba(38,52,43,.9); box-shadow: 0 4px 14px rgba(0,0,0,.1); }
 .main-menu-popover .parent-menu-button { width: 100%; text-align: left; }
