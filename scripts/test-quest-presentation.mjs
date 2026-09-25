@@ -49,7 +49,7 @@ const backendQuest = (overrides = {}) => ({
   instanceId: "instance", questId: "definition", householdId: "household", childId: "child",
   title: "Gör läxan", description: "Läs klart kapitlet.", progressionClass: "knowledgeCreativity",
   reward: { diamonds: 1, sysselBux: 2 }, state: "available", createdAt: "2026-09-22T10:00:00Z",
-  submittedAt: null, approvedAt: null, claimedAt: null, ...overrides,
+  acceptedAt: null, submittedAt: null, approvedAt: null, claimedAt: null, ...overrides,
 });
 
 const localRecyclingComplete = presentBackendQuests([backendQuest()], null, { recyclingCenterStage: 4 });
@@ -70,8 +70,8 @@ assert.equal(mixedStates.active.length, 1, "accepted quests live in active witho
 assert.equal(mixedStates.pending.length, 1, "pending quests stay discoverable in the general quest view");
 assert.equal(mixedStates.pending[0].presentation.destination, "noticeboard",
   "pending quests keep presentation metadata without re-lighting the source");
-assert.equal(primaryPresentedQuest(mixedStates)?.quest.instanceId, "home",
-  "available work remains primary ahead of pending work");
+assert.equal(primaryPresentedQuest(mixedStates)?.quest.instanceId, "active",
+  "accepted work remains primary in the general quest panel without relighting a world source");
 assert.equal(presentBackendQuests([backendQuest({ state: "approved" })], null).available.length, 0,
   "approved history is not presented as actionable world content");
 

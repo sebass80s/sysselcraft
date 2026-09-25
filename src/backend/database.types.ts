@@ -393,6 +393,7 @@ export type Database = {
       }
       quest_instances: {
         Row: {
+          accepted_at: string | null
           approved_at: string | null
           approved_by: string | null
           child_id: string
@@ -411,6 +412,7 @@ export type Database = {
           title_snapshot: string
         }
         Insert: {
+          accepted_at?: string | null
           approved_at?: string | null
           approved_by?: string | null
           child_id: string
@@ -429,6 +431,7 @@ export type Database = {
           title_snapshot: string
         }
         Update: {
+          accepted_at?: string | null
           approved_at?: string | null
           approved_by?: string | null
           child_id?: string
@@ -520,6 +523,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_quest: {
+        Args: { p_instance_id: string }
+        Returns: undefined
+      }
       archive_diamond_reward: {
         Args: { p_reward_id: string }
         Returns: undefined
@@ -583,6 +590,7 @@ export type Database = {
       list_child_quests: {
         Args: { p_child_id: string }
         Returns: {
+          accepted_at: string
           approved_at: string
           child_id: string
           claimed_at: string
