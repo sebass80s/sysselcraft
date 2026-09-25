@@ -36,7 +36,7 @@ assert.match(village, /await purchaseDiamondReward\(reward\.id\)/);
 assert.match(village, /diamonds: Math\.max\(0, wallet\.diamonds - reward\.diamondPrice\)/);
 assert.match(village, /sysselcraft:backend-wallet-refresh/);
 assert.match(village, /listDiamondRewards\(child\.household_id\)/);
-assert.match(parent, /listDiamondRedemptions\\(id\\)/);
+assert.ok(parent.includes("listDiamondRedemptions(id)"));
 assert.match(parent, /markDiamondRewardDelivered\(redemptionId\)/);
 assert.match(parent, /refundDiamondReward\(redemptionId\)/);
 assert.match(parent, /status==="pending_delivery"/);
