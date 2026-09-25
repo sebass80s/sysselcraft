@@ -98,7 +98,8 @@ export async function createVillageGame(
     private noticeboardMarker?: GameObjects.Container;
     private backendHomeAttention = false;
     private backendLinusAttention = false;
-    private linusQuestMarker?: GameObjects.Container;\n    private linusStoryMarker?: GameObjects.Container;
+    private linusQuestMarker?: GameObjects.Container;
+    private linusStoryMarker?: GameObjects.Container;
     private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
     private henning?: GameObjects.Image;
