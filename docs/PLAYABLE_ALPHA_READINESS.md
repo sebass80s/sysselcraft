@@ -305,3 +305,9 @@ Physical iPhone acceptance passed on the current Quest v2 lifecycle against the 
 The historical Recycling cascade is also regression-covered at commit `8c44aa5cf939e43ff843b85c5cd80b931cf4ebe8`. The real construction/save/progression modules establish a local baseline at backend progression 12, prove those historical claims earn/reveal nothing, prove unchanged sync and save/load are idempotent, then prove progression 13 earns only Recycling stage 1 pending. Explicit reveal is required and idempotent; repeated sync/reload cannot cascade into stage 2. No production code change was required. Full local `npm run verify` passed for that commit.
 
 The physical phone used for Quest v2 already had completed Recycling, so the historical-baseline case was intentionally proven deterministically rather than by destroying that preserved save. No reinstall/reset was performed.
+
+
+## Physical acceptance update 2026-09-25
+- Sol safe-story acceptance harness physically verified PASS on a real iPhone in landscape at commit `0a3d9b21ba1b1a08ca1ba58a27f9944c4c2b1455`.
+- Full isolated chain passed: purchase → water → letter → bottle → arrival → bakery → shop/Mira → Linus → decision → done.
+- Story Moment presentation is fullscreen and usable with native safe-area controls. Harness remains non-destructive and does not write player save or backend state.
