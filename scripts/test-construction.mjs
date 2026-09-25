@@ -138,6 +138,70 @@ assert.deepEqual(domain.normalizeConstruction(null, 2).pending, [], "legacy visi
 assert.equal(save.normalizeSaveState({ ...snapshot, construction: pending }).construction.revealed.recycling, 1);
 console.log("PASS: stage 1 approval pending/reload/reward invariance/commit; delivery prerequisite; earned/revealed separation; pending reload; duplicate/wrong events; commit reload; failed save + retry; legacy saves; resident placement/navigation; stage 2 footprint.");
 
+// Regression: backend progression can contain old claims before this local save establishes
+// its baseline. Only claims after that baseline may earn construction, one explicit reveal at
+// a time; sync/reload must never replay the historical total as multiple Recycling stages.
+const historicalClaims = 12;
+const baselineSnapshot = {
+  ...save.createDefaultSaveState(),
+  worldFlags: {
+    ...save.createDefaultSaveState().worldFlags,
+    recyclingClaimBaseline: historicalClaims,
+    recyclingClaimBaselineStage: 0,
+  },
+};
+await save.saveSaveState(baselineSnapshot, true);
+const baselineReload = await save.loadSaveState(true);
+assert.equal(baselineReload.worldFlags.recyclingClaimBaseline, historicalClaims);
+assert.equal(baselineReload.worldFlags.recyclingClaimBaselineStage, 0);
+
+const syncRecycling = (state, worldProgression, saved = baselineReload) =>
+  domain.syncRecyclingContributionProgress(
+    state,
+    worldProgression,
+    saved.worldFlags.recyclingClaimBaseline,
+    saved.worldFlags.recyclingClaimBaselineStage,
+  );
+
+const historicalSync = syncRecycling(baselineReload.construction, historicalClaims);
+assert.equal(historicalSync, baselineReload.construction, "historical claims are absorbed by the fresh local baseline");
+assert.deepEqual(historicalSync.earned, { recycling: 0, bakery: 0, clinic: 0 });
+assert.deepEqual(historicalSync.revealed, { recycling: 0, bakery: 0, clinic: 0 });
+assert.deepEqual(historicalSync.pending, []);
+assert.equal(syncRecycling(historicalSync, historicalClaims), historicalSync, "unchanged historical progression is idempotent");
+
+await save.saveSaveState(save.withConstructionState(baselineReload, historicalSync), true);
+const historicalRestart = await save.loadSaveState(true);
+assert.equal(syncRecycling(historicalRestart.construction, historicalClaims, historicalRestart), historicalRestart.construction,
+  "save/load with unchanged historical progression cannot advance Recycling");
+
+const oneNewClaim = syncRecycling(historicalRestart.construction, historicalClaims + 1, historicalRestart);
+assert.equal(oneNewClaim.earned.recycling, 1, "one post-baseline claim earns at most the next intended stage");
+assert.equal(oneNewClaim.revealed.recycling, 0, "earning never implicitly reveals the stage");
+assert.deepEqual(oneNewClaim.pending, ["recycling:1"]);
+assert.equal(syncRecycling(oneNewClaim, historicalClaims + 1, historicalRestart), oneNewClaim,
+  "the same authoritative progression cannot earn another stage");
+
+await save.saveSaveState(save.withConstructionState(historicalRestart, oneNewClaim), true);
+const pendingRestart = await save.loadSaveState(true);
+assert.deepEqual(pendingRestart.construction.pending, ["recycling:1"]);
+assert.equal(syncRecycling(pendingRestart.construction, historicalClaims + 1, pendingRestart), pendingRestart.construction,
+  "reload of the same progression cannot cascade while the explicit reveal is pending");
+
+const revealedOnce = domain.commitConstructionReveal(pendingRestart.construction, "recycling:1");
+assert.equal(revealedOnce.revealed.recycling, 1);
+assert.deepEqual(revealedOnce.pending, []);
+assert.equal(domain.commitConstructionReveal(revealedOnce, "recycling:1"), revealedOnce, "the explicit reveal is idempotent");
+assert.equal(syncRecycling(revealedOnce, historicalClaims + 1, pendingRestart), revealedOnce,
+  "historical counts plus the already-consumed increment cannot cascade into stage 2");
+
+await save.saveSaveState(save.withConstructionState(pendingRestart, revealedOnce), true);
+const revealedRestart = await save.loadSaveState(true);
+assert.equal(revealedRestart.construction.revealed.recycling, 1);
+assert.equal(syncRecycling(revealedRestart.construction, historicalClaims + 1, revealedRestart), revealedRestart.construction,
+  "restart after the reveal cannot replay the claim or advance another stage");
+console.log("PASS: historical Recycling claims establish a safe baseline; one new claim earns one explicit, idempotent reveal without cascade across sync/reload.");
+
 const handle = await load("createVillageGame").createVillageGame({ clientWidth: 1280, clientHeight: 800 }, {
   onQuestOpen() {}, onLinusInteract() {}, onConstructionInteract() {},
 });
