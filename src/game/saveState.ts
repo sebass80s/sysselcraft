@@ -141,7 +141,9 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
     dialogueIndex = CHILD_NAME_STEP;
   }
 
-  const introComplete = typeof candidate.introComplete === "boolean"\n    ? candidate.introComplete\n    : defaults.introComplete;
+  const introComplete = typeof candidate.introComplete === "boolean"
+    ? candidate.introComplete
+    : defaults.introComplete;
 
   const dialogueOpen = introComplete
     ? false
