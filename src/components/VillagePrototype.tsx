@@ -119,7 +119,7 @@ export default function VillagePrototype() {
   const [solSafeTestOpen, setSolSafeTestOpen] = useState(false);
   const [solSafeTestPhase, setSolSafeTestPhase] = useState<"purchase" | "water" | "letter" | "bottle" | "arrival" | SolTourStop | "done">("purchase");
   const [solSafeTestIndex, setSolSafeTestIndex] = useState(0);
-  const [solRuntimeTestPhase, setSolRuntimeTestPhase] = useState<"idle" | "bottle-sent" | "arrival" | "bakery" | "shop" | "linus" | "decision" | "done">("idle");
+  const [solRuntimeTestPhase, setSolRuntimeTestPhase] = useState<"idle" | "bottle-sent" | "arrival" | "await-bakery" | "bakery" | "await-shop" | "shop" | "await-linus" | "linus" | "await-decision" | "decision" | "done">("idle");
   const [solRuntimeTestIndex, setSolRuntimeTestIndex] = useState(0);
 
   const dialogueStep = dialogueOpen ? linusIntroDialogue[dialogueIndex] : null;
@@ -598,10 +598,10 @@ export default function VillagePrototype() {
     const lines = phase === "arrival" ? solArrivalDialogue : (["bakery","shop","linus","decision"] as string[]).includes(phase) ? solTourDialogue[phase as SolTourStop] : [];
     if (solRuntimeTestIndex + 1 < lines.length) { setSolRuntimeTestIndex((i) => i + 1); return; }
     setSolRuntimeTestIndex(0);
-    if (phase === "arrival") setSolRuntimeTestPhase("bakery");
-    else if (phase === "bakery") setSolRuntimeTestPhase("shop");
-    else if (phase === "shop") setSolRuntimeTestPhase("linus");
-    else if (phase === "linus") setSolRuntimeTestPhase("decision");
+    if (phase === "arrival") setSolRuntimeTestPhase("await-bakery");
+    else if (phase === "bakery") setSolRuntimeTestPhase("await-shop");
+    else if (phase === "shop") setSolRuntimeTestPhase("await-linus");
+    else if (phase === "linus") setSolRuntimeTestPhase("await-decision");
     else if (phase === "decision") setSolRuntimeTestPhase("done");
   }
   function openSolSafeTest() { setParentMenuOpen(false); setSolSafeTestPhase("purchase"); setSolSafeTestIndex(0); setSolSafeTestOpen(true); }
@@ -804,6 +804,11 @@ export default function VillagePrototype() {
       const line = lines[solRuntimeTestIndex];
       const image = phase === "arrival" ? "/assets/village/story-moments/sol-arrival.png" : tour === "bakery" ? "/assets/village/story-moments/sol-tour-bakery.png" : tour === "shop" ? "/assets/village/story-moments/sol-tour-shop.png" : tour === "linus" ? (solRuntimeTestIndex >= 1 ? "/assets/village/story-moments/sol-tour-linus-knee.png" : "/assets/village/story-moments/sol-tour-linus.png") : tour === "decision" ? "/assets/village/story-moments/sol-stays.png" : null;
       if (phase === "bottle-sent") return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel"><button className="close-button" onClick={() => setSolRuntimeTestPhase("idle")}>×</button><div className="sol-safe-test-stage"><h2>🍾 Flaskposten är skickad</h2><p>Runtime-regeln stoppar här. Sol ska inte dyka upp i samma session.</p><button className="primary-button" onClick={advanceSolRuntimeTest}>Simulera nästa spelsession</button></div></section></div>;
+      if (phase === "await-bakery" || phase === "await-shop" || phase === "await-linus" || phase === "await-decision") {
+        const next = phase === "await-bakery" ? "bakery" : phase === "await-shop" ? "shop" : phase === "await-linus" ? "linus" : "decision";
+        const who = next === "bakery" ? "Henning" : next === "shop" ? "Mira" : next === "linus" ? "Linus" : "Sol";
+        return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel"><button className="close-button" onClick={() => setSolRuntimeTestPhase("idle")}>×</button><div className="sol-safe-test-stage"><h2>🏡 Tillbaka i byn</h2><p>Ingen ny cutscene ska starta automatiskt. Nästa story-beat kräver att barnet själv går fram till {who}.</p><button className="primary-button" onClick={() => { setSolRuntimeTestIndex(0); setSolRuntimeTestPhase(next); }}>Simulera interaktion med {who}</button></div></section></div>;
+      }
       if (phase === "done") return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel"><button className="close-button" onClick={() => setSolRuntimeTestPhase("idle")}>×</button><div className="sol-safe-test-stage"><h2>☀️ Runtime-kedjan klar</h2><p>Varje senare scen krävde en separat simulerad världsinteraktion. Save och backend är orörda.</p><button className="primary-button" onClick={() => setSolRuntimeTestPhase("idle")}>Klart</button></div></section></div>;
       const label = phase === "arrival" ? "Nästa session: Sol anländer" : phase === "bakery" ? "Interaktion: Henning" : phase === "shop" ? "Interaktion: Mira" : phase === "linus" ? "Interaktion: Linus" : "Interaktion: Sol";
       return <div className="sol-safe-test-overlay"><section className="sol-safe-test-panel"><button className="close-button" onClick={() => setSolRuntimeTestPhase("idle")}>×</button><span className="sol-safe-test-kicker">🧭 {label}</span>{image && <div className="sol-safe-test-image"><Image src={image} alt="" fill priority sizes="100vw" /></div>}{line && <div className="sol-safe-test-dialogue"><div><span className="dialogue-speaker">{line.speaker === "Barnet" ? childName || "Barnet" : line.speaker}</span><p>{line.text}</p></div><button className="primary-button" onClick={advanceSolRuntimeTest}>{solRuntimeTestIndex === lines.length - 1 ? (phase === "arrival" ? "Tillbaka till byn" : "Avsluta interaktion") : "Nästa"}</button></div>}</section></div>;
