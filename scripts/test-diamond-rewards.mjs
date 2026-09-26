@@ -38,7 +38,7 @@ assert.match(village, /diamonds: Math\.max\(0, wallet\.diamonds - reward\.diamon
 assert.match(village, /sysselcraft:backend-wallet-refresh/);
 assert.match(village, /listDiamondRewards\(child\.household_id\)/);
 assert.match(backend, /export async function listPendingDiamondRewardIds/);
-assert.match(backend, /\.eq\("status", "pending_delivery"\)/);
+assert.match(backend, /\.eq\("status",\s*"pending_delivery"\)/);
 assert.match(village, /listPendingDiamondRewardIds\(child\.id\)/);
 assert.match(village, /pendingDiamondRewardIds\.has\(reward\.id\)/);
 assert.match(village, /setPendingDiamondRewardIds\(\(ids\) => new Set\(ids\)\.add\(reward\.id\)\)/);
