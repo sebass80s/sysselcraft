@@ -508,3 +508,8 @@ Parked for a later village-life polish pass.
 ## 2026-09-25 world attention language
 
 Locked presentation grammar: question mark means a new quest is available to accept; exclamation mark means an approved/completed quest is ready to turn in; speech bubble means authored story/dialogue attention; no marker means ordinary optional interaction. Linus uses a speech bubble at the very start of a fresh game to invite onboarding, and that behavior is browser-verified.
+
+
+## Post-Clinic bridge toward Act 2 — 2026-09-26
+
+The Clinic completion now ends with a deliberate continuing-play handoff rather than a generic placeholder. Linus explicitly frames the restored village as unfinished, points to empty places and future residents who do not yet know the village exists, and tells the child to keep helping with household quests while the village becomes ready for its next build. Sol supports the forward-looking beat. This preserves the recurring quest loop as meaningful play after the current authored story ends without inventing the identity of the next resident/building. The exact Act 2 trigger and next resident remain future design work.
