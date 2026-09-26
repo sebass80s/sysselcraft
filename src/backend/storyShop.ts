@@ -2,7 +2,7 @@
 
 import { getSupabaseBrowserClient } from "./supabaseClient";
 
-export const BOTTLE_MESSAGE_PRICE = 25;
+export const BOTTLE_MESSAGE_PRICE = 100;
 
 export type StoryItemPurchase = {
   childId: string;
