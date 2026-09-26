@@ -455,7 +455,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
             )}
           </header>
 
-          {sourceFilter === "linus" && turnIn && (
+          {(sourceFilter === "linus" || sourceFilter === null) && turnIn && (
             <article className={styles.quest} data-presentation="reward">
               <strong>✨ Uppdrag godkänt!</strong>
               <p>Snyggt jobbat! Jag hörde att du fixade <strong>{turnIn.title}</strong>.</p>
@@ -470,7 +470,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
             </article>
           )}
 
-          {visibleQuests.length === 0 && !(sourceFilter === "linus" && turnIn) ? (
+          {visibleQuests.length === 0 && !((sourceFilter === "linus" || sourceFilter === null) && turnIn) ? (
             <div className="parent-empty-state">
               {approvedCount > 0 ? "Alla uppdrag är klara just nu. 🌱" : "Inga nya uppdrag just nu. 🌱"}
             </div>
