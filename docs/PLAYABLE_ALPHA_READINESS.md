@@ -329,3 +329,14 @@ The physical phone used for Quest v2 already had completed Recycling, so the his
 - GitHub Actions CI #830 passed on commit `d15a0945d2074071d80591ce1e4d49ff5d57b9fa`.
 - No production Diamond code or live data was changed by this regression closeout.
 - Physical Diamond acceptance remains OPEN because the test iPhone was not available. Do not mark the feature physically accepted until the real journey passes: parent creates reward -> paired child sees it at Mira -> purchase deducts exactly once -> parent sees pending delivery -> parent marks delivered -> restart preserves wallet/redemption state.
+
+
+## Diamond / Mira physical acceptance closeout — 2026-09-26
+
+**PASS on physical iPhone against the live backend.** A parent created the 1-Diamond reward `Diamond-test`; the paired child saw it at Mira with 55 Diamonds and purchased it once. The device wallet changed 55 -> 54 and live backend inspection independently showed 55 -> 54. Exactly one new redemption was observed in `pending_delivery`. The parent UI showed the pending delivery, the parent marked it `Levererad`, the pending list cleared, and live backend inspection confirmed the same redemption as `delivered` with a delivery timestamp. After a full child-app force-quit/relaunch, the device wallet remained 54 and the backend wallet remained 54. This closes the previously open physical Diamond economy/lifecycle gate.
+
+A follow-up physical test found and closed a child UX/concurrency gap: once a reward has a `pending_delivery` redemption, its Mira purchase button is disabled and shows `⏳ Väntar på förälder`. A newly purchased reward now enters that state immediately without leaving/reopening Mira. The authoritative `purchase_diamond_reward` RPC also rejects another purchase of the same reward by the same child while a pending delivery exists, so the rule is not UI-only. Physical iPhone acceptance passed on final implementation commit `be690488461a8dc5a937c3dcb523a5511f4172ef`; GitHub Actions CI #847 completed successfully on that exact commit.
+
+### Current playable-state classification
+
+No new core gameplay blocker was found in this closeout. Quest v2, update-in-place persistence, Recycling/Bakery/Mira/Sol/Clinic story progression, pairing core, wallet/reward persistence and the Diamond parent-delivery loop all have physical iPhone acceptance in their documented scopes. Remaining known debt is stress/edge coverage and the intermittent stale native/Xcode bundle issue, not a known failure in the accepted supervised playable loop. Preserve the existing app/save; do not use reinstall/session-loss testing as a routine release check.
