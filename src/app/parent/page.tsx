@@ -124,12 +124,12 @@ export default function ParentModePage() {
     }
     const current = childRequests.begin();
     try {
-      const [nextQuests, nextDefinitions] = await Promise.all([
-        listChildQuests(id),
-        listParentQuestDefinitions(id),
-      ]);
+      const nextQuests = await listChildQuests(id);
       if (!current()) return false;
       setQuests(nextQuests);
+
+      const nextDefinitions = await listParentQuestDefinitions(id);
+      if (!current()) return false;
       setQuestDefinitions(nextDefinitions);
       return true;
     } catch (error) {
