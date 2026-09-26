@@ -36,4 +36,10 @@ export async function listDiamondRedemptions(householdId:string) {
 }
 export async function markDiamondRewardDelivered(id:string){const {error}=await getSupabaseBrowserClient().rpc("mark_diamond_reward_delivered",{p_redemption_id:id});if(error)throw error;}
 export async function refundDiamondReward(id:string){const {error}=await getSupabaseBrowserClient().rpc("refund_diamond_reward",{p_redemption_id:id});if(error)throw error;}
-export async function listPendingDiamondRewardIds(childId:string){\n const {data,error}=await getSupabaseBrowserClient().from("diamond_reward_redemptions")\n  .select("reward_definition_id").eq("child_id",childId).eq("status","pending_delivery");\n if(error) throw error;\n return new Set((data??[]).map(r=>r.reward_definition_id).filter((id): id is string => Boolean(id)));\n}\nexport async function purchaseDiamondReward(id:string){const {data,error}=await getSupabaseBrowserClient().rpc("purchase_diamond_reward",{p_reward_definition_id:id});if(error)throw error;return data;}
+export async function listPendingDiamondRewardIds(childId:string){
+ const {data,error}=await getSupabaseBrowserClient().from("diamond_reward_redemptions")
+  .select("reward_definition_id").eq("child_id",childId).eq("status","pending_delivery");
+ if(error) throw error;
+ return new Set((data??[]).map(r=>r.reward_definition_id).filter((id): id is string => Boolean(id)));
+}
+export async function purchaseDiamondReward(id:string){const {data,error}=await getSupabaseBrowserClient().rpc("purchase_diamond_reward",{p_reward_definition_id:id});if(error)throw error;return data;}
