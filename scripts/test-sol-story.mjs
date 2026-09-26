@@ -10,7 +10,7 @@ const migration = fs.readFileSync(new URL("../supabase/migrations/20260924_purch
 for (const asset of ["bottle-letter.png","bottle-message.png","sol-arrival.png","sol-tour-bakery.png","sol-tour-shop.png","sol-tour-linus.png","sol-tour-linus-knee.png","sol-stays.png"]) {
   assert.ok(fs.existsSync(new URL("../public/assets/village/story-moments/" + asset, import.meta.url)), `Missing story asset: ${asset}`);
 }
-assert.match(backend, /BOTTLE_MESSAGE_PRICE = 25/);
+assert.match(backend, /BOTTLE_MESSAGE_PRICE = 100/);
 assert.match(backend, /purchase_story_item/);
 for (const beat of ["bottle_message_sent","sol_arrival_seen","sol_tour_bakery_seen","sol_tour_shop_seen","sol_tour_linus_seen","sol_chose_to_stay"]) {
   assert.ok(backend.includes(beat), `Backend client missing beat ${beat}`);
