@@ -751,7 +751,7 @@ export default function VillagePrototype() {
 
   function advanceDialogue() {
     const nextIndex = dialogueIndex + 1; const nextStep = linusIntroDialogue[nextIndex];
-    if (!nextStep) { setDialogueOpen(false); setLinusStoryMomentOpen(false); setIntroComplete(true); return; }
+    if (!nextStep) { restoredIntroCompleteRef.current = true; setDialogueOpen(false); setLinusStoryMomentOpen(false); setIntroComplete(true); return; }
     if (nextStep.kind === "reveal-dog") { setDogVisible(true); setDialogueIndex(nextIndex + 1); return; }
     setDialogueIndex(nextIndex);
   }
