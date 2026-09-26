@@ -361,3 +361,8 @@ PASS on the live parent web UI. Completed quests can be reactivated into a fresh
 ## Native release smoke — 2026-09-26
 
 PASS so far on physical iPhone using update-in-place build `sysselcraft-build-daec320` with the existing installed app and preserved child save. The game opened normally with the existing world intact. The scheduled recurring quest `testar tid` was visible diegetically on the noticeboard, could be accepted into the child's active quest list, and submission from the child appeared on the parent side for approval. This re-verifies the critical available -> active -> pending Quest v2 path on the current native build without reinstall/reset. Final approval/claim remains the next smoke step before closing this release gate.
+
+
+### Native quest approval recovery — physical acceptance 2026-09-26
+
+PASS on physical iPhone after syncing commit `d2aef987`. An already-approved, unclaimed recurring quest (`testar tid`) was recovered from authoritative backend state after update-in-place and Linus correctly showed the `!` turn-in attention marker. No reinstall, save reset, or new quest was required. This closes the release-smoke regression where an approved reward could be invisible when the local awaiting-approval marker was missing. CI #900 passed for the regression coverage.
