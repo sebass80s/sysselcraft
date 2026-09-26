@@ -525,3 +525,31 @@ Interiors are a separate presentation grammar. The child's house, Mira's shop an
 
 ### Child house and SysselBux loop
 The child's house is intended to become the first persistent personal interior and a meaningful SysselBux sink. Entering the house opens a fullscreen illustrated room. A first implementation should favor a small set of fixed decoration hotspots/slots over freeform furniture placement. Items bought with SysselBux can unlock owned visual variants for those slots, allowing the child to personalize the room without making ordinary village/story progression depend on spending currency. Quest work changes the shared world; spending SysselBux can express the child's choices inside their personal space.
+
+
+## LOCKED Act 2 foundation — the lake summer place (2026-09-26)
+
+Act 2 moves the authored adventure from the restored village down to the **lake**, a location already foreshadowed by the bottle-message/Sol story. The lake is a persistent second outdoor area reached through the canonical area-transition system, not an enlargement of the village map.
+
+### Cast principle
+Act 2 should deepen the stories and relationships of the established cast rather than replace them with a large new ensemble. The intended major addition is **one new child character**, giving the player their first important peer relationship instead of another adult service-provider/resident. A second new major resident is not currently planned and should require a later explicit story decision.
+
+### The child's connection to the lake
+The new boy's family used to have a **summer cottage by the lake**, with its own jetty, boathouse and old motorboat. The family stopped spending summers there as the surrounding area emptied and the property fell into disrepair. The family is not defined by tragedy or loss: they moved on, and the summer place simply became impractical and neglected.
+
+The boy wants to restore the place so his family will **want and be able to spend summers there again**. He returns to the old summer place and meets the player there. His motivation is personal and age-appropriate; he is not a child mechanic. The player, existing residents and household-quest progression provide the practical restoration momentum while friendship with the boy develops through the act.
+
+### Act 2 restoration spine
+The lake area is restored through several visible projects rather than one long boat repair. Canonical high-level order is:
+
+1. **Summer cottage** — make the family place usable and begin revealing the boy/family history.
+2. **Jetty** — restore safe/useful access to the water.
+3. **Boathouse** — restore the family's lakeside workspace/storage and reveal more of the site's past.
+4. **Motorboat** — the final major restoration project; making it seaworthy is Act 2's mechanical and narrative climax.
+
+Exact quest counts, construction-stage thresholds and individual subquests remain deliberately unlocked until Act 2 production design. Each project should have visible progression so repeated household quests create several meaningful transformation milestones rather than feeling like repeated work on one object.
+
+### Emotional payoff and Act 3 bridge
+By the end of Act 2 the cottage, jetty, boathouse and motorboat have been restored. The boy's family returns to the summer place, validating his reason for undertaking the restoration; they may be presented in an illustrated Story Moment rather than requiring full runtime NPC implementations. The boy remains an important recurring peer character who can naturally move between the lake and village stories.
+
+The repaired motorboat is also the deliberate bridge to **Act 3**. The boy remembers that his family used to travel across the lake and knows or partially remembers that there is something on the other side. Act 2 ends with the lake home restored and the boat capable of taking the children onward. The exact destination/content of Act 3 remains intentionally undefined.
