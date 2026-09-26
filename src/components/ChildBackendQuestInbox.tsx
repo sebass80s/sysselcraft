@@ -62,6 +62,8 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [gameState, setGameState] = useState<BackendChildGameState | null>(null);
   const [localRecyclingCenterStage, setLocalRecyclingCenterStage] = useState(0);
+  const [localBakeryStage, setLocalBakeryStage] = useState(0);
+  const [localHenningPresent, setLocalHenningPresent] = useState(false);
   const [open, setOpen] = useState(false);
   const [sourceFilter, setSourceFilter] = useState<QuestPresentationSource | null>(null);
   const [busy, setBusy] = useState(false);
@@ -102,6 +104,8 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       setQuests(nextQuests);
       setGameState(nextGameState);
       setLocalRecyclingCenterStage(localSave?.worldFlags.recyclingCenterStage ?? 0);
+      setLocalBakeryStage(localSave?.construction.revealed.bakery ?? 0);
+      setLocalHenningPresent(localSave?.worldFlags.henningArrivalSeen === true);
 
       if (localSave && nextGameState) {
         let snapshot = localSave;
@@ -293,13 +297,13 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   }, [gameState]);
 
   useEffect(() => {
-    const snapshot = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
+    const snapshot = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage, bakeryStage: localBakeryStage, henningPresent: localHenningPresent });
     const counts = questSourceCounts(snapshot);
     publishQuestPresentation({
       counts,
       turnIns: { linus: pendingTurnIns.length },
     });
-  }, [quests, gameState, localRecyclingCenterStage, pendingTurnIns]);
+  }, [quests, gameState, localRecyclingCenterStage, localBakeryStage, localHenningPresent, pendingTurnIns]);
 
   if (!pairingChecked) return null;
 
@@ -307,7 +311,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   // Keep the quest dock out of the village HUD until a valid child binding exists.
   if (!childId || needsPairing) return null;
 
-  const presented = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage });
+  const presented = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage, bakeryStage: localBakeryStage, henningPresent: localHenningPresent });
   // World quest sources present only NEW quests. Once accepted, a quest belongs in
   // the ordinary Uppdrag panel until it is submitted. Approved turn-ins are rendered
   // separately below and never masquerade as new quest-source attention.
