@@ -39,7 +39,7 @@ assert.match(village, /sysselcraft:backend-wallet-refresh/);
 assert.match(village, /listDiamondRewards\(child\.household_id\)/);
 assert.match(backend, /export async function listPendingDiamondRewardIds/);
 assert.match(backend, /\.eq\("status",\s*"pending_delivery"\)/);
-assert.match(village, /listPendingDiamondRewardIds\(child\.id\)/);
+assert.match(village, /listPendingDiamondRewardIds\(childId\)/);
 assert.match(village, /pendingDiamondRewardIds\.has\(reward\.id\)/);
 assert.match(village, /setPendingDiamondRewardIds\(\(ids\) => new Set\(ids\)\.add\(reward\.id\)\)/);
 assert.match(village, /pending \? "⏳ Väntar på förälder"/);
