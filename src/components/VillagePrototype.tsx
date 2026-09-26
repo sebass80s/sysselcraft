@@ -751,7 +751,21 @@ export default function VillagePrototype() {
 
   function advanceDialogue() {
     const nextIndex = dialogueIndex + 1; const nextStep = linusIntroDialogue[nextIndex];
-    if (!nextStep) { restoredIntroCompleteRef.current = true; setDialogueOpen(false); setLinusStoryMomentOpen(false); setIntroComplete(true); return; }
+    if (!nextStep) {
+      restoredIntroCompleteRef.current = true;
+      setDialogueOpen(false);
+      setLinusStoryMomentOpen(false);
+      setIntroComplete(true);
+      // Pairing is deliberately deferred until the story introduction is complete so
+      // the child's first meeting with Linus is never interrupted by account setup.
+      void getPairedChildId().then((pairedChildId) => {
+        if (!pairedChildId) setChildPairingOpen(true);
+      }).catch(() => {
+        // The pairing panel can still be opened from Vuxenläge if the native
+        // preference lookup itself fails.
+      });
+      return;
+    }
     if (nextStep.kind === "reveal-dog") { setDogVisible(true); setDialogueIndex(nextIndex + 1); return; }
     setDialogueIndex(nextIndex);
   }
