@@ -187,3 +187,10 @@ assert.match(villageRuntime, /requestedConstruction\.stages\.recycling === 4/, "
 assert.match(villageRuntime, /callbacks\.onRecyclingInteract\(\)/, "completed Recycling Center interaction must return to React story UI");
 assert.match(villageComponent, /onRecyclingInteract:[\s\S]*setRecyclingDialogueIndex\(0\)/, "Recycling Center must open its Linus dialogue");
 assert.match(villageComponent, /Jag håller ett öga på den tills vidare/, "Linus must be established as the Recycling Center's current caretaker");
+
+// Clinic source art is cropped at runtime so source-sheet captions never leak into the village.
+{
+  const runtimeSource = readFileSync("src/game/visualProductionRuntime.ts", "utf8");
+  assert.match(runtimeSource, /placement\.building === "clinic"\) image\.setCrop\(0, 95, 520, 305\)/,
+    "Clinic runtime must crop source-sheet captions while preserving its calibrated placement");
+}
