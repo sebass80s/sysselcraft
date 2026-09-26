@@ -299,3 +299,13 @@ Immediate gameplay work may now move on from the core quest-state-machine repair
 Physical iPhone + live backend acceptance is complete for the Diamond/Mira reward loop. Parent-created `Diamond-test` (1 💎) appeared at Mira; purchase changed both device and backend wallet 55 -> 54 exactly once; parent saw the pending redemption, marked it delivered, and the live row transitioned to `delivered`; after full app restart the wallet remained 54. The previous handoff statement that Diamond physical acceptance is open is obsolete.
 
 The same session added and physically accepted the duplicate-purchase guard. While a reward has a `pending_delivery` redemption, Mira disables that reward and shows `⏳ Väntar på förälder`; a new purchase changes to this state immediately. The live `purchase_diamond_reward` RPC independently rejects another pending purchase of the same reward for the same child. Final implementation commit: `be690488461a8dc5a937c3dcb523a5511f4172ef`; CI #847 passed on that exact SHA.
+
+
+## 2026-09-26 release onboarding / handover checkpoint
+
+- The polished first Linus meeting is live. During the first conversation the unknown NPC nameplate starts as `Gubbe`, Linus introduces himself, the child names themself and the puppy, and the longer opening preserves the core mystery instead of explaining the real-world-task -> village-growth mechanic.
+- Intro completion regression fixed: finishing the conversation now updates the current-session intro ref as well as React/save state, so tapping Linus again cannot restart the opening in the same session.
+- Fresh-device onboarding now checks child pairing only **after** the Linus introduction finishes. If no paired child ID exists, the existing `ChildPairingPanel` opens automatically. This is intentional: story first, adult/device setup second, then backend quests can appear.
+- Release Vuxenläge no longer exposes the Sol cutscene/runtime test launchers. The Sol runtime harness remains compiled for regression coverage and safety tests but is not reachable from normal release UI.
+- Final code checkpoint: `7c001107cff16e8cae65650eb175af1134187bc7`, GitHub Actions CI #949 SUCCESS.
+- Physical acceptance of the new automatic post-Linus pairing prompt is still OPEN. Next Nova should have Kalle sync with `npm run syssel`, Run from Xcode, finish the Linus intro on the fresh/unpaired device, verify the pairing panel appears, pair Adam, then verify the existing real quests appear at their routed world sources (e.g. Bädda sängen / Läxa at Home). Do not reset/uninstall an existing valuable save merely to retest onboarding.
