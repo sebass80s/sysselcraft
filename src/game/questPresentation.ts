@@ -17,7 +17,7 @@ export type QuestPresentationContext = {
 };
 
 const HOME_TITLE_HINTS = /\b(bädda|säng|rum|kläder|tänder|tand|pyjamas|leksak|städa|läxa|läxan|läxor|läxor|plugga|läs|läsa|bok|skolarbete)\b/i;
-const BAKERY_TITLE_HINTS = /\b(mat|baka|bröd|frukost|lunch|middag|disk|köket|kök)\b/i;\nconst RECYCLING_TITLE_HINTS = /\b(återvinn|återvinning|sortera|sopor|skräp|pant|flaskor|burkar|kartong|papper|plast|glas)\b/i;
+const BAKERY_TITLE_HINTS = /\b(mat|baka|bröd|frukost|lunch|middag|disk|köket|kök)\b/i;
 
 function categoryFallback(
   progressionClass: ProgressionClass,
