@@ -6,6 +6,7 @@ const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx"
 const parent = fs.readFileSync(new URL("../src/app/parent/page.tsx", import.meta.url), "utf8");
 const catalog = fs.readFileSync(new URL("../supabase/migrations/20260923_diamond_reward_catalog_and_redemptions.sql", import.meta.url), "utf8");
 const parentRpcs = fs.readFileSync(new URL("../supabase/migrations/20260923_diamond_reward_parent_rpcs.sql", import.meta.url), "utf8");
+const duplicateGuard = fs.readFileSync(new URL("../supabase/migrations/20260926_prevent_duplicate_pending_diamond_reward.sql", import.meta.url), "utf8");
 
 for (const rpc of ["purchase_diamond_reward","mark_diamond_reward_delivered","refund_diamond_reward"]) {
   assert.ok(backend.includes(rpc), `Diamond client missing ${rpc}`);
@@ -36,6 +37,16 @@ assert.match(village, /await purchaseDiamondReward\(reward\.id\)/);
 assert.match(village, /diamonds: Math\.max\(0, wallet\.diamonds - reward\.diamondPrice\)/);
 assert.match(village, /sysselcraft:backend-wallet-refresh/);
 assert.match(village, /listDiamondRewards\(child\.household_id\)/);
+assert.match(backend, /export async function listPendingDiamondRewardIds/);
+assert.match(backend, /\.eq\("status", "pending_delivery"\)/);
+assert.match(village, /listPendingDiamondRewardIds\(child\.id\)/);
+assert.match(village, /pendingDiamondRewardIds\.has\(reward\.id\)/);
+assert.match(village, /setPendingDiamondRewardIds\(\(ids\) => new Set\(ids\)\.add\(reward\.id\)\)/);
+assert.match(village, /pending \? "⏳ Väntar på förälder"/);
+assert.match(duplicateGuard, /status='pending_delivery'[\s\S]*raise exception 'reward already pending delivery'[\s\S]*update public\.child_game_state set diamonds=/,
+  "Duplicate-pending guard must reject before any Diamond debit");
+assert.match(duplicateGuard, /revoke execute on function public\.purchase_diamond_reward\(uuid\) from anon/);
+assert.match(duplicateGuard, /grant execute on function public\.purchase_diamond_reward\(uuid\) to authenticated/);
 assert.ok(parent.includes("listDiamondRedemptions(id)"));
 assert.match(parent, /markDiamondRewardDelivered\((?:redemptionId|id)\)/);
 assert.match(parent, /refundDiamondReward\((?:redemptionId|id)\)/);
