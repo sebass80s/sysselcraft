@@ -246,10 +246,12 @@ export default function ParentModePage() {
 
     window.addEventListener("focus", refreshQuietly);
     document.addEventListener("visibilitychange", refreshIfVisible);
+    const timer = window.setInterval(refreshIfVisible, 15_000);
 
     return () => {
       window.removeEventListener("focus", refreshQuietly);
       document.removeEventListener("visibilitychange", refreshIfVisible);
+      window.clearInterval(timer);
     };
   }, [childId, loadChildQuests, signedIn]);
 
