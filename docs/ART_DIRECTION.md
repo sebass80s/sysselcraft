@@ -298,3 +298,10 @@ Physical iPhone QA established the final integration rule more precisely:
 - the accepted physical screenshot shows Mira beside the child and within the same scene as Linus and Henning. This is now a concrete runtime scale/proportion reference for future adult residents.
 
 The earlier Mira attempts demonstrated two separate failure modes: realistic source anatomy cannot be repaired by runtime scaling, and forcing an otherwise-correct asset into an arbitrary width × height box can reintroduce visible compression. Generate correct anatomy first, then tune only one uniform scale factor.
+
+
+## Area backgrounds and interiors — LOCKED 2026-09-26
+
+Geographic expansion should preserve the production advantage of SysselCraft's painted-world approach. Each new outdoor area/act is primarily authored as a new production-ready landscape background in the established soft painted isometric storybook language. Scenery that does not need to react to the player should be baked into that background; only navigation, hotspots, NPCs, quest/story markers and genuinely state-changing objects need separate runtime assets. New area art must preserve compatible camera/perspective/framing assumptions so the existing avatar scale and interaction language remain coherent across map swaps.
+
+Interiors follow a different visual contract: fullscreen illustrated scenes in the Story Moment / Mira-shop family. The child's room should be painted as a reusable base interior with intentional composition space for tappable decoration hotspots. Customizable furniture/decor should preferably be supplied as aligned transparent overlays/variants so combinations do not require a unique flattened room image for every loadout. The first room can remain deliberately compact, with roughly 5–8 authored slots and a small set of variants per slot; visual richness matters more than freeform placement in the initial version.
