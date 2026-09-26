@@ -18,6 +18,8 @@ function flag(value: unknown): boolean {
 
 export type LocalQuestWorldContext = {
   recyclingCenterStage?: number;
+  bakeryStage?: number;
+  henningPresent?: boolean;
 };
 
 export function questPresentationContextFromGameState(
@@ -33,8 +35,8 @@ export function questPresentationContextFromGameState(
       flag(flags.recyclingComplete) ||
       flag(flags.recyclingCompletionSeen) ||
       Number(flags.recyclingCenterStage) >= 4,
-    bakeryUnlocked: flag(flags.bakeryUnlocked) || Number(flags.bakeryStage) > 0,
-    henningPresent: flag(flags.henningPresent) || flag(flags.henningArrived),
+    bakeryUnlocked: Number(localWorld?.bakeryStage) > 0 || flag(flags.bakeryUnlocked) || Number(flags.bakeryStage) > 0,
+    henningPresent: localWorld?.henningPresent === true || flag(flags.henningPresent) || flag(flags.henningArrived),
     noticeboardAvailable: flags.noticeboardAvailable !== false,
   };
 }
