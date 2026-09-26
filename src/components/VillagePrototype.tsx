@@ -27,7 +27,7 @@ import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
 import { bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
-import { listDiamondRewards, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
+import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
 import { BOTTLE_MESSAGE_PRICE, commitStoryBeat, purchaseBottleMessage } from "../backend/storyShop";
 import { getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
@@ -84,7 +84,7 @@ export default function VillagePrototype() {
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
   const [abandonedShopDialogueIndex, setAbandonedShopDialogueIndex] = useState<number | null>(null);
   const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
-  const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
+  const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);\n  const [pendingDiamondRewardIds, setPendingDiamondRewardIds] = useState<Set<string>>(new Set());
   const [shopBusy, setShopBusy] = useState(false);
   const [shopMessage, setShopMessage] = useState("");
   const attention = residentAttention(construction);
@@ -352,7 +352,7 @@ export default function VillagePrototype() {
               const client = getSupabaseBrowserClient();
               const { data: child, error } = await client.from("children").select("household_id").eq("id", childId).single();
               if (error) throw error;
-              setShopRewards((await listDiamondRewards(child.household_id)).filter((reward) => reward.active));
+              const [rewards, pendingIds] = await Promise.all([listDiamondRewards(child.household_id), listPendingDiamondRewardIds(childId)]);\n              setShopRewards(rewards.filter((reward) => reward.active));\n              setPendingDiamondRewardIds(pendingIds);
             } catch (error) { setShopMessage(error instanceof Error ? error.message : "Kunde inte hämta Miras varor."); }
           })();
         },
@@ -858,7 +858,7 @@ export default function VillagePrototype() {
           </nav>
           <div className="mira-shop-shelf">
             {shopCurrency === "diamonds" ? <>
-              <div className="mira-shop-grid">{shopRewards.map((reward) => <article className="mira-shop-item" key={reward.id}><div><span>🎁</span><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}</div><button className="primary-button" disabled={shopBusy || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>💎 {reward.diamondPrice} · Köp</button></article>)}</div>
+              <div className="mira-shop-grid">{shopRewards.map((reward) => { const pending = pendingDiamondRewardIds.has(reward.id); return <article className="mira-shop-item" key={reward.id}><div><span>🎁</span><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}</div><button className="primary-button" disabled={shopBusy || pending || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>{pending ? "⏳ Väntar på förälder" : `💎 ${reward.diamondPrice} · Köp`}</button></article>; })}</div>
               {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Inga diamantbelöningar på hyllan just nu.</p>}
             </> : <div className="mira-shop-grid"><article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p></div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article></div>}
             {shopMessage && <p className="pending-message mira-shop-message" role="status">{shopMessage}</p>}
