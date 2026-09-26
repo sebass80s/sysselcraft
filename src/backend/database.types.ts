@@ -624,6 +624,32 @@ export type Database = {
           title: string
         }[]
       }
+      list_parent_quest_definitions_v2: {
+        Args: { p_child_id: string }
+        Returns: {
+          child_id: string
+          created_at: string
+          description: string
+          household_id: string
+          progression_class: string
+          quest_id: string
+          recurrence_kind: string
+          recurrence_time: string
+          recurrence_timezone: string
+          recurrence_weekdays: number[]
+          reward_diamonds: number
+          reward_syssel_bux: number
+          title: string
+        }[]
+      }
+      reactivate_parent_quest: {
+        Args: { p_quest_id: string }
+        Returns: string
+      }
+      set_parent_quest_recurrence_time: {
+        Args: { p_quest_id: string; p_recurrence_time: string }
+        Returns: undefined
+      }
       mark_diamond_reward_delivered: {
         Args: { p_redemption_id: string }
         Returns: undefined
