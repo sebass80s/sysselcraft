@@ -84,7 +84,8 @@ export default function VillagePrototype() {
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
   const [abandonedShopDialogueIndex, setAbandonedShopDialogueIndex] = useState<number | null>(null);
   const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
-  const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);\n  const [pendingDiamondRewardIds, setPendingDiamondRewardIds] = useState<Set<string>>(new Set());
+  const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
+  const [pendingDiamondRewardIds, setPendingDiamondRewardIds] = useState<Set<string>>(new Set());
   const [shopBusy, setShopBusy] = useState(false);
   const [shopMessage, setShopMessage] = useState("");
   const attention = residentAttention(construction);
@@ -352,7 +353,9 @@ export default function VillagePrototype() {
               const client = getSupabaseBrowserClient();
               const { data: child, error } = await client.from("children").select("household_id").eq("id", childId).single();
               if (error) throw error;
-              const [rewards, pendingIds] = await Promise.all([listDiamondRewards(child.household_id), listPendingDiamondRewardIds(childId)]);\n              setShopRewards(rewards.filter((reward) => reward.active));\n              setPendingDiamondRewardIds(pendingIds);
+              const [rewards, pendingIds] = await Promise.all([listDiamondRewards(child.household_id), listPendingDiamondRewardIds(childId)]);
+              setShopRewards(rewards.filter((reward) => reward.active));
+              setPendingDiamondRewardIds(pendingIds);
             } catch (error) { setShopMessage(error instanceof Error ? error.message : "Kunde inte hämta Miras varor."); }
           })();
         },
