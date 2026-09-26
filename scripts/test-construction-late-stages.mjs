@@ -180,3 +180,10 @@ for (let stage = 1; stage <= 4; stage++) {
 }
 
 console.log("PASS: Recycling, Bakery and Clinic progression is gated, child-driven and idempotent; canonical story beats survive reload without replay.");
+
+const villageComponent = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+const villageRuntime = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
+assert.match(villageRuntime, /requestedConstruction\.stages\.recycling === 4/, "only the completed Recycling Center becomes a post-build interaction target");
+assert.match(villageRuntime, /callbacks\.onRecyclingInteract\(\)/, "completed Recycling Center interaction must return to React story UI");
+assert.match(villageComponent, /onRecyclingInteract:[\s\S]*setRecyclingDialogueIndex\(0\)/, "Recycling Center must open its Linus dialogue");
+assert.match(villageComponent, /Jag håller ett öga på den tills vidare/, "Linus must be established as the Recycling Center's current caretaker");
