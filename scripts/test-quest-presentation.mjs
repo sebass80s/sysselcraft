@@ -82,6 +82,14 @@ const bakeryAvailable = presentBackendQuests([
 assert.deepEqual(questSourceCounts(bakeryAvailable), { noticeboard: 0, home: 0, linus: 0, bakery: 1 },
   "an available Bakery quest must light Henning/Bakery world attention");
 
+const bakeryFromVisibleLocalWorld = presentBackendQuests([
+  backendQuest({ instanceId: "local-bakery", title: "Baka bröd" }),
+], {
+  diamonds: 0, sysselBux: 0, progression: { worldProgression: 0 }, worldFlags: {},
+}, { recyclingCenterStage: 4, bakeryStage: 4, henningPresent: true });
+assert.equal(bakeryFromVisibleLocalWorld.available[0]?.presentation.destination, "bakery",
+  "the visible local Bakery/Henning state must route a matching quest to Henning even before backend world flags catch up");
+
 const villageSource = readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 const runtimeSource = readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
 assert.match(villageSource, /setQuestSourceAttention\("bakery", questSources\.bakery > 0 \? "\?" : null\)/,
