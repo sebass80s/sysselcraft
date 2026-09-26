@@ -7,7 +7,7 @@ import {
 import { VIEW_HEIGHT, WORLD_MIN_X, WORLD_MAX_X, WORLD_WIDTH, WORLD_HEIGHT,
   REQUIRED_APPROACHES, STATIC_OBSTACLES, findPath, isWalkable, nearestWalkablePoint, type Point, type Obstacle } from "./villageNavigation";
 import { preloadVisualProductionBuildings, createVisualProductionBuildings } from "./visualProductionRuntime";
-import { getVisualProductionObstacles, type VisualProductionBuilding, type VisualProductionStage } from "./visualProductionAssets";
+import { VISUAL_PRODUCTION_PLACEMENTS, getVisualProductionObstacles, type VisualProductionBuilding, type VisualProductionStage } from "./visualProductionAssets";
 
 export type SolTourStop = "bakery" | "shop" | "linus" | "decision" | null;
 export type VillageGameHandle = {
