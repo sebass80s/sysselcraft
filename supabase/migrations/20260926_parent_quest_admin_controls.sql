@@ -30,7 +30,14 @@ begin
  if not public.is_household_parent(v_q.household_id) then raise exception 'not authorized'; end if;
  select child_id into v_child from public.quest_instances where quest_id=p_quest_id order by created_at limit 1;
  if v_child is null then raise exception 'quest child not found'; end if;
- if exists(select 1 from public.quest_instances where quest_id=p_quest_id and child_id=v_child and state in('available','active','pending','approved')) then raise exception 'quest already open'; end if;
+ if exists(
+   select 1 from public.quest_instances
+   where quest_id=p_quest_id and child_id=v_child
+     and (
+       state in ('available','active','pending')
+       or (state='approved' and claimed_at is null)
+     )
+ ) then raise exception 'quest already open'; end if;
  insert into public.quest_instances(household_id,child_id,quest_id,title_snapshot,description_snapshot,progression_class_snapshot,reward_diamonds_snapshot,reward_syssel_bux_snapshot,occurrence_key)
  values(v_q.household_id,v_child,v_q.id,v_q.title,v_q.description,v_q.progression_class,v_q.reward_diamonds,v_q.reward_syssel_bux,'manual:'||gen_random_uuid()::text) returning id into v_instance;
  return v_instance;
