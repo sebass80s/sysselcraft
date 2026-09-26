@@ -103,6 +103,7 @@ export default function VillagePrototype() {
   const [introComplete, setIntroComplete] = useState(false);
   const [dialogueOpen, setDialogueOpen] = useState(false);
   const [linusStoryMomentOpen, setLinusStoryMomentOpen] = useState(false);
+  const [recyclingDialogueIndex, setRecyclingDialogueIndex] = useState<number | null>(null);
   const [linusStoryReplayIndex, setLinusStoryReplayIndex] = useState<number | null>(null);
   const [henningStoryIndex, setHenningStoryIndex] = useState<number | null>(null);
   const [henningStoryReplayIndex, setHenningStoryReplayIndex] = useState<number | null>(null);
@@ -309,6 +310,11 @@ export default function VillagePrototype() {
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
           setConstructionDialogueId(id);
           setConstructionDialogueIndex(0);
+        },
+        onRecyclingInteract: () => {
+          if (solRuntimeTestActiveRef.current) return;
+          setRecyclingDialogueIndex(0);
+          gameRef.current?.setConstructionDialogueOpen(true);
         },
         onLinusInteract: () => {
           if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_LINUS_INTERACT_BLOCKED", "runtime active", true); return; }
@@ -891,6 +897,17 @@ export default function VillagePrototype() {
     {bakeryStoryIndex !== null && bakeryStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Bageriet är färdigt"><span className={`dialogue-speaker henning-story-speaker ${bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker.toLowerCase()}`}>{bakerySpeakerName}</span><p>{bakeryStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBakeryStory()}>{constructionBusy ? "Sparar…" : bakeryStoryIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {bakeryStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png" alt="" fill priority sizes="100vw" /></div>}
     {bakeryStoryReplayIndex !== null && bakeryStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av färdigt bageri"><span className={`dialogue-speaker henning-story-speaker ${bakeryStoryReplayLine.speaker === "Barnet" ? "child" : bakeryStoryReplayLine.speaker.toLowerCase()}`}>{bakeryReplaySpeakerName}</span><p>{bakeryStoryReplayLine.text}</p><button className="primary-button dialogue-next" onClick={advanceBakeryStoryReplay}>{bakeryStoryReplayIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
+    {recyclingDialogueIndex !== null && (() => {
+      const recyclingDialogue = [
+        { speaker: "Linus", text: "Här är återvinningen. Jag håller ett öga på den tills vidare." },
+        { speaker: "Linus", text: "Det som kan användas igen ska inte hamna bland skräpet. Det är nästan hela poängen." },
+        { speaker: "Linus", text: "Ser du något hemma som behöver sorteras eller städas undan? Då vet du var vi börjar." },
+        { speaker: "Linus", text: "Byn blir faktiskt lite bättre varje gång vi tar hand om det vi redan har." },
+      ] as const;
+      const step = recyclingDialogue[recyclingDialogueIndex];
+      const last = recyclingDialogueIndex === recyclingDialogue.length - 1;
+      return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Linus om återvinningen"><span className="dialogue-speaker">{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => { if (last) { setRecyclingDialogueIndex(null); gameRef.current?.setConstructionDialogueOpen(false); } else setRecyclingDialogueIndex((index) => index === null ? null : index + 1); }}>{last ? "Klart" : "Nästa"}</button></div>;
+    })()}
     {henningDialogueOpen && (() => {
       const henningDialogue = [
         { speaker: "Henning", text: "Hej igen! Jag börjar faktiskt känna mig hemma här redan." },
