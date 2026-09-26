@@ -100,6 +100,17 @@ export default function ParentModePage() {
   }
 
   useEffect(() => {
+    try {
+      const questIds = JSON.parse(localStorage.getItem("sysselcraft:hidden-quest-history") ?? "[]");
+      const rewardIds = JSON.parse(localStorage.getItem("sysselcraft:hidden-reward-history") ?? "[]");
+      if (Array.isArray(questIds)) setHiddenQuestHistoryIds(new Set(questIds.filter((id): id is string => typeof id === "string")));
+      if (Array.isArray(rewardIds)) setHiddenRewardHistoryIds(new Set(rewardIds.filter((id): id is string => typeof id === "string")));
+    } catch {
+      // Corrupt local history preferences should never block parent mode.
+    }
+  }, []);
+
+  useEffect(() => {
     familyRequests.activate();
     childRequests.activate();
     return () => {
