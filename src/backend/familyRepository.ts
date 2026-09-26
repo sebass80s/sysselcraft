@@ -44,6 +44,7 @@ export type ParentQuestDefinition = {
   recurrenceKind: QuestRecurrenceKind;
   recurrenceWeekdays: number[];
   recurrenceTimezone: string | null;
+  recurrenceTime: string;
   createdAt: string;
 };
 
@@ -59,6 +60,7 @@ type RpcParentQuestDefinitionRow = {
   recurrence_kind: string;
   recurrence_weekdays: number[];
   recurrence_timezone: string | null;
+  recurrence_time: string;
   created_at: string;
 };
 
@@ -224,7 +226,7 @@ export async function listChildQuests(childId: string): Promise<BackendQuest[]> 
 export async function listParentQuestDefinitions(
   childId: string,
 ): Promise<ParentQuestDefinition[]> {
-  const { data, error } = await getSupabaseBrowserClient().rpc("list_parent_quest_definitions", {
+  const { data, error } = await getSupabaseBrowserClient().rpc("list_parent_quest_definitions_v2", {
     p_child_id: childId,
   });
   if (error) throw error;
@@ -251,6 +253,7 @@ export async function listParentQuestDefinitions(
       recurrenceKind,
       recurrenceWeekdays: row.recurrence_weekdays ?? [],
       recurrenceTimezone: row.recurrence_timezone,
+      recurrenceTime: row.recurrence_time?.slice(0, 5) || "08:00",
       createdAt: row.created_at,
     };
   });
@@ -307,6 +310,24 @@ export async function updateParentQuest(
     p_reward_syssel_bux: quest.reward.sysselBux,
   });
   if (error) throw error;
+}
+
+
+export async function setParentQuestRecurrenceTime(questId: string, recurrenceTime: string): Promise<void> {
+  const { error } = await getSupabaseBrowserClient().rpc("set_parent_quest_recurrence_time", {
+    p_quest_id: questId,
+    p_recurrence_time: recurrenceTime,
+  });
+  if (error) throw error;
+}
+
+export async function reactivateParentQuest(questId: string): Promise<string> {
+  const { data, error } = await getSupabaseBrowserClient().rpc("reactivate_parent_quest", {
+    p_quest_id: questId,
+  });
+  if (error) throw error;
+  if (typeof data !== "string") throw new Error("reactivate_parent_quest did not return an id.");
+  return data;
 }
 
 export async function archiveParentQuest(questId: string): Promise<void> {
