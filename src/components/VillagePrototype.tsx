@@ -723,6 +723,7 @@ export default function VillagePrototype() {
   }
   function openSolSafeTest() { setParentMenuOpen(false); setSolSafeTestPhase("purchase"); setSolSafeTestIndex(0); setSolSafeTestOpen(true); }
   void openSolRuntimeTest;
+  void openSolSafeTest;
   function advanceSolSafeTest() {
     const phase = solSafeTestPhase;
     const lines = phase === "bottle" ? bottleMessageDialogue : phase === "arrival" ? solArrivalDialogue : (["bakery","shop","linus","decision"] as string[]).includes(phase) ? solTourDialogue[phase as SolTourStop] : [];
