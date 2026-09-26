@@ -309,3 +309,10 @@ The same session added and physically accepted the duplicate-purchase guard. Whi
 - Release Vuxenläge no longer exposes the Sol cutscene/runtime test launchers. The Sol runtime harness remains compiled for regression coverage and safety tests but is not reachable from normal release UI.
 - Final code checkpoint: `7c001107cff16e8cae65650eb175af1134187bc7`, GitHub Actions CI #949 SUCCESS.
 - Physical acceptance of the new automatic post-Linus pairing prompt is still OPEN. Next Nova should have Kalle sync with `npm run syssel`, Run from Xcode, finish the Linus intro on the fresh/unpaired device, verify the pairing panel appears, pair Adam, then verify the existing real quests appear at their routed world sources (e.g. Bädda sängen / Läxa at Home). Do not reset/uninstall an existing valuable save merely to retest onboarding.
+
+
+## 2026-09-26 locked expansion architecture
+
+Two expansion primitives are now canonical and must not be conflated. **Outdoor world growth uses discrete map/area swaps:** each new act may load a new painted background plus area-specific navigation, exits, spawn points, hotspots, NPCs and markers while global player/backend state persists. Do not grow the current village into one giant map by default. **Interiors use fullscreen illustrated scene UI:** the child's house and comparable interiors should follow the Story Moment / Mira-shop model rather than become navigable Phaser maps.
+
+The child's house is planned as the first persistent personal interior and a SysselBux spending surface. Initial scope should favor a reusable illustrated base room with fixed decoration hotspots and owned overlay variants, not freeform Sims-style placement. SysselBux purchases may personalize the room; ordinary story/build progression must not require spending that currency.
