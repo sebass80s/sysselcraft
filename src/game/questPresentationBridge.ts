@@ -1,7 +1,7 @@
 export const QUEST_PRESENTATION_EVENT = "sysselcraft:quest-presentation";
 export const QUEST_SOURCE_OPEN_EVENT = "sysselcraft:quest-source-open";
 
-export type QuestPresentationSource = "noticeboard" | "home" | "linus" | "bakery";
+export type QuestPresentationSource = "noticeboard" | "home" | "linus" | "recycling" | "bakery";
 
 export type QuestPresentationEventDetail = {
   counts: Record<QuestPresentationSource, number>;
@@ -9,7 +9,7 @@ export type QuestPresentationEventDetail = {
 };
 
 let latestQuestPresentation: QuestPresentationEventDetail = {
-  counts: { noticeboard: 0, home: 0, linus: 0, bakery: 0 },
+  counts: { noticeboard: 0, home: 0, linus: 0, recycling: 0, bakery: 0 },
 };
 
 export type QuestSourceOpenEventDetail = {
