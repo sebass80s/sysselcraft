@@ -155,6 +155,23 @@ assert.deepEqual(clinic.pending, ["clinic:4"], "eight post-baseline claims earn 
 clinic = domain.commitConstructionReveal(clinic, "clinic:4");
 assert.equal(clinic.revealed.clinic, 4);
 assert.equal(domain.syncClinicContributionProgress(clinic, 99, 40), clinic, "completed Clinic remains capped and idempotent");
+const clinicPendingReload = domain.normalizeConstruction({
+  ...domain.syncClinicContributionProgress(
+    domain.commitConstructionReveal(
+      domain.syncClinicContributionProgress(domain.startClinicConstruction(domain.normalizeConstruction({
+        earned: { recycling: 4, bakery: 4, clinic: 0 },
+        revealed: { recycling: 4, bakery: 4, clinic: 0 },
+        pending: [],
+      })), 42, 40),
+      "clinic:2",
+    ),
+    44,
+    40,
+  ),
+  pending: [],
+});
+assert.deepEqual(clinicPendingReload.pending, ["clinic:3"], "reload reconstructs a missing earned Clinic reveal so progress cannot dead-end");
+assert.equal(domain.residentAttention(clinicPendingReload)?.resident, "sol", "recovered Clinic reveal remains routed to Sol");
 for (let stage = 1; stage <= 4; stage++) {
   assert.equal(assets.getVisualProductionAsset("clinic", stage), `/assets/village/reboot/clinic-stage-${stage}.webp`);
 }
