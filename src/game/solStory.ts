@@ -96,7 +96,11 @@ export const clinicCompletionDialogue: readonly ClinicCompletionLine[] = [
   { scene: "treatment", speaker: "Linus", text: "Bra." },
   { scene: "treatment", speaker: "Sol", text: "Jag skriver \"mystisk förbipasserande som går lite snett\" i journalen." },
   { scene: "treatment", speaker: "Linus", text: "…jag går hem nu." },
-  { scene: "complete", speaker: "Sol", text: "Kliniken är öppen nu. Men byn är inte färdig för det." },
-  { scene: "complete", speaker: "Sol", text: "Fortsätt hjälpa till med uppdragen. Jag tror att fler saker kommer börja hända här." },
+  { scene: "complete", speaker: "Linus", text: "Nå. Nu har vi återvinning, bageri, lanthandel och till och med en doktor." },
+  { scene: "complete", speaker: "Barnet", text: "Är byn färdig nu?" },
+  { scene: "complete", speaker: "Linus", text: "Färdig? Inte på långa vägar." },
+  { scene: "complete", speaker: "Linus", text: "Det finns fortfarande gott om tomma platser här. Och folk som inte ens vet att byn finns än." },
+  { scene: "complete", speaker: "Sol", text: "Då får vi väl se till att de får reda på det." },
+  { scene: "complete", speaker: "Linus", text: "Fortsätt hjälpa till med uppdragen så länge. Nästa bygge börjar när byn är redo." },
   { scene: "complete", speaker: "Barnet", text: "Då fortsätter vi." },
 ];
