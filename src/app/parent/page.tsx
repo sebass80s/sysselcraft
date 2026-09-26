@@ -366,7 +366,7 @@ export default function ParentModePage() {
           draft,
           recurrenceKind,
           recurrenceWeekdays,
-          Intl.DateTimeFormat().resolvedOptions().timeZone,
+          "Europe/Stockholm",
         );
         const createdDefinitions = await listParentQuestDefinitions(childId);
         const newest = createdDefinitions.sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0];
