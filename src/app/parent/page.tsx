@@ -87,6 +87,25 @@ export default function ParentModePage() {
   const [adminTab, setAdminTab] = useState<"quests" | "rewards">("quests");
 
   useEffect(() => {
+    try {
+      setHiddenQuestHistoryIds(new Set(JSON.parse(localStorage.getItem("sysselcraft:hidden-quest-history") || "[]")));
+      setHiddenRewardHistoryIds(new Set(JSON.parse(localStorage.getItem("sysselcraft:hidden-reward-history") || "[]")));
+    } catch { /* Ignore corrupt local UI preferences. */ }
+  }, []);
+
+  function clearQuestHistory() {
+    const ids = approved.map((quest) => quest.instanceId);
+    setHiddenQuestHistoryIds(new Set(ids));
+    localStorage.setItem("sysselcraft:hidden-quest-history", JSON.stringify(ids));
+  }
+
+  function clearRewardHistory() {
+    const ids = diamondRedemptions.filter((item) => item.status !== "pending_delivery").map((item) => item.id);
+    setHiddenRewardHistoryIds(new Set(ids));
+    localStorage.setItem("sysselcraft:hidden-reward-history", JSON.stringify(ids));
+  }
+
+  useEffect(() => {
     familyRequests.activate();
     childRequests.activate();
     return () => {
@@ -339,7 +358,7 @@ export default function ParentModePage() {
           draft,
           recurrenceKind,
           recurrenceWeekdays,
-          Intl.DateTimeFormat().resolvedOptions().timeZone,
+          "Europe/Stockholm",
         );
         await setParentQuestRecurrenceTime(editingQuestId, recurrenceTime);
         if (reactivatingQuestId === editingQuestId) {
@@ -844,7 +863,7 @@ export default function ParentModePage() {
                   </label>
                 </div>
                 <button className="primary-button" disabled={busy || !childId || !draftReady}>
-                  {editingQuestId ? "Spara ändringar" : "Skapa uppdrag"}
+                  {reactivatingQuestId ? "Återaktivera quest" : editingQuestId ? "Spara ändringar" : "Skapa uppdrag"}
                 </button>
                 {editingQuestId && (
                   <button
@@ -882,7 +901,7 @@ export default function ParentModePage() {
             </section>
 
             <section className="parent-tool-card">
-              <div className="parent-section-heading"><h2>📜 Belöningshistorik</h2><span>{diamondRedemptions.filter(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id)).length}</span></div>{diamondRedemptions.some(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id))&&<button className="secondary-button compact" disabled={busy} onClick={()=>setHiddenRewardHistoryIds(new Set(diamondRedemptions.filter(r=>r.status!=="pending_delivery").map(r=>r.id)))}>Rensa historik</button>}
+              <div className="parent-section-heading"><h2>📜 Belöningshistorik</h2><span>{diamondRedemptions.filter(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id)).length}</span></div>{diamondRedemptions.some(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id))&&<button className="secondary-button compact" disabled={busy} onClick={clearRewardHistory}>Rensa historik</button>}
               {diamondRedemptions.filter(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id)).slice(0,20).map(redemption=>{const owner=children.find(c=>c.id===redemption.childId);return <article className="parent-quest-card" key={redemption.id}><div><span>{redemption.status==="delivered"?"✅":"↩️"}</span><div><strong>{redemption.title}</strong><small>{owner?.displayName||"Barnet"} · {redemption.diamondPrice} 💎 · {redemption.status==="delivered"?"Levererad":"Refunderad"}</small></div></div></article>})}
               {!diamondRedemptions.some(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id))&&<div className="parent-empty-state">Historiken fylls på när en belöning levereras eller refunderas.</div>}
             </section>
@@ -977,7 +996,7 @@ export default function ParentModePage() {
                 <h2>Senast klara</h2>
                 <span>{approved.filter((quest) => !hiddenQuestHistoryIds.has(quest.instanceId)).length}</span>
               </div>
-              {approved.length > 0 && <button className="secondary-button compact" disabled={busy} onClick={() => setHiddenQuestHistoryIds(new Set(approved.map((quest) => quest.instanceId)))}>Rensa historik</button>}
+              {approved.length > 0 && <button className="secondary-button compact" disabled={busy} onClick={clearQuestHistory}>Rensa historik</button>}
               {approved.filter((quest) => !hiddenQuestHistoryIds.has(quest.instanceId)).length ? (
                 approved.filter((quest) => !hiddenQuestHistoryIds.has(quest.instanceId)).slice(0, 5).map((quest) => (
                   <article className="parent-quest-card" key={quest.instanceId}>
