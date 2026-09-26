@@ -437,6 +437,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
       >
         📜 Uppdrag
         {(activeCount + pendingCount) > 0 && <span>{activeCount + pendingCount}</span>}
+        {(activeCount + pendingCount) === 0 && approvedCount > 0 && <span>!</span>}
       </button>
 
       {open && (
