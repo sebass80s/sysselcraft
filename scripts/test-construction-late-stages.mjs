@@ -191,6 +191,6 @@ assert.match(villageComponent, /Jag håller ett öga på den tills vidare/, "Lin
 // Clinic source art is cropped at runtime so source-sheet captions never leak into the village.
 {
   const runtimeSource = readFileSync("src/game/visualProductionRuntime.ts", "utf8");
-  assert.match(runtimeSource, /placement\.building === "clinic"\) image\.setCrop\(0, 95, 520, 305\)/,
+  assert.match(runtimeSource, /placement\.building === "clinic"\) image\.setCrop\(0, 24, 520, 326\)/,
     "Clinic runtime must crop source-sheet captions while preserving its calibrated placement");
 }
