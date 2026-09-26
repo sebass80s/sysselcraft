@@ -239,3 +239,21 @@ Parent/backend lifecycle grouping is implemented: the parent surface now shows a
 ## 2026-09-25 handoff
 
 Historical handoff note: this refactor is no longer mid-flight. Section 13 remains the locked state-machine contract. Marker wiring/source filtering are implemented and the core lifecycle has passed physical iPhone acceptance through reject/resubmit/approve/explicit turn-in/restart. See the later 2026-09-25 acceptance records in the canonical readiness/handoff documents.
+
+
+## 14. Parent pre-release admin closeout — 2026-09-26
+
+Implemented after the child/native release candidate was synced. These changes are parent/backend controls and do not require a new native child bundle.
+
+- Quest templates now have an explicit **Återaktivera** flow. It opens the definition editor first; the final action is **Återaktivera quest**.
+- Reactivation creates a fresh available occurrence from the current definition and is rejected while the same definition already has an open `available`, `active`, `pending` or `approved` occurrence.
+- Editing a definition alone still does not create a new occurrence.
+- Recurring definitions now store a local `recurrence_time`, default 08:00.
+- Parent Mode uses `Europe/Stockholm` for recurrence. Daily/weekday/weekly materialisation waits until the configured Swedish local clock time, preserving wall-clock behavior across DST.
+- **Senast klara** and **Belöningshistorik** have non-destructive **Rensa historik** controls. They only hide rows in the current parent UI state; authoritative quest/reward/audit rows are not deleted.
+- Balance editing remains parked.
+- Parent-selected quest givers remain parked because that feature changes child-world presentation and should be introduced after the release candidate rather than reopening native acceptance.
+
+Live Supabase has the recurrence-time column and the authenticated-only admin RPCs. The corresponding migration is `20260926_parent_quest_admin_controls.sql`.
+
+Verification checkpoint: commit `37a4d431cb16d491723e23ecd1e16e4dc61e8303`, CI #887 passed the full `npm run verify` gate.
