@@ -376,3 +376,8 @@ PASS on physical iPhone. The recurring quest `testar tid` completed the release-
 ## Post-Clinic release-loop audit — 2026-09-26
 
 The authored-story endpoint now hands the child back into the recurring Quest v2 loop with explicit fiction: the village is not finished, future residents do not yet know it exists, and continued household quests prepare the village for its next build. This is intentionally a bridge, not an invented Act 2 resident/building. Regression coverage was updated to lock the new handoff copy while retaining the continuing-quest instruction. No new gameplay system or save schema is introduced by this change.
+
+
+### Clinic construction recovery audit — 2026-09-26
+
+Added regression coverage for an interrupted Clinic construction reveal: if a Clinic stage has been earned but the pending reveal list is missing at reload, construction normalization reconstructs the canonical pending reveal and keeps it routed to Sol. This protects the late-game child journey from a save/reload dead end between household-quest contribution thresholds and the visible Clinic reveal.
