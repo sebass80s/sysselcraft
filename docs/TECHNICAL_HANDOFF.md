@@ -506,3 +506,14 @@ A fresh live Supabase advisor pass was run after the Diamond/Quest work.
 Diamond reward purchase/delivery is physically accepted on iPhone against live Supabase. Observed wallet: 55 -> 54 for a single 1-Diamond purchase, matching live `child_game_state`. One redemption entered `pending_delivery`, parent delivery transitioned it to `delivered`, and a full child-app restart retained wallet 54. No replay/double debit was observed.
 
 Duplicate pending purchases are now blocked at two layers. The child shop reads its own pending redemption reward IDs and disables matching Mira buttons with `⏳ Väntar på förälder`; successful purchase also updates this local set immediately. Live migration `prevent_duplicate_pending_diamond_reward` updates `purchase_diamond_reward` to reject the same child/reward pair while a `pending_delivery` row exists. The physical immediate-disable behavior passed. Final code commit `be690488461a8dc5a937c3dcb523a5511f4172ef` has green CI #847.
+
+
+## Vercel deployment policy — locked 2026-09-26
+
+Vercel deploys are a managed resource, not a blocker.
+
+- Do **not** trigger deployments gratuitously for every tiny edit or documentation-only change.
+- Batch related changes when that is natural and does not slow down development or testing.
+- When a deployment is genuinely useful for testing, acceptance, debugging, or release progress, **use it without hesitation**.
+- Do not introduce awkward workarounds, delay validation, or complicate the workflow merely to save a Vercel deployment.
+- Practical rule: avoid waste, not Vercel.
