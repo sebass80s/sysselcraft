@@ -366,3 +366,8 @@ PASS so far on physical iPhone using update-in-place build `sysselcraft-build-da
 ### Native quest approval recovery — physical acceptance 2026-09-26
 
 PASS on physical iPhone after syncing commit `d2aef987`. An already-approved, unclaimed recurring quest (`testar tid`) was recovered from authoritative backend state after update-in-place and Linus correctly showed the `!` turn-in attention marker. No reinstall, save reset, or new quest was required. This closes the release-smoke regression where an approved reward could be invisible when the local awaiting-approval marker was missing. CI #900 passed for the regression coverage.
+
+
+### Native Quest v2 release smoke — CLOSED 2026-09-26
+
+PASS on physical iPhone. The recurring quest `testar tid` completed the release-smoke path available → active → pending → approved → child turn-in → claimed. After approval, the backend-authoritative recovery fix correctly restored Linus `!`; claiming awarded the reward and cleared the turn-in attention. Existing child save/world remained intact throughout update-in-place testing. This closes the critical Quest v2 native release gate for the current build.
