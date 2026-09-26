@@ -47,7 +47,7 @@ type WorldObjectDefinition = {
 
 // Painted master-scene board footprint is centered at world x=175, y=366.
 // Keep the marker over the board and approach from the path below it.
-const NOTICEBOARD_MARKER: Point = { x: 175, y: 270 };
+const NOTICEBOARD_MARKER: Point = { x: 140, y: 235 };
 const NOTICEBOARD_APPROACH: Point = { x: 175, y: 430 };
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
