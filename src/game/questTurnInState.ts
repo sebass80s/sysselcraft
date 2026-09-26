@@ -113,10 +113,19 @@ export async function recoverAwaitingQuestTurnIns(
   quests: BackendQuest[],
 ): Promise<PendingQuestTurnIn[]> {
   const awaiting = await loadAwaitingApprovalIds(childId);
-  if (awaiting.length === 0) return loadPendingQuestTurnIns(childId);
-
   let turnIns = await loadPendingQuestTurnIns(childId);
   const questById = new Map(quests.map((quest) => [quest.instanceId, quest]));
+
+  // Recover unclaimed approvals from backend truth even if the local awaiting marker
+  // was lost (for example after an app update or Preferences interruption).
+  for (const quest of quests) {
+    if (quest.state === "approved" && quest.claimedAt === null) {
+      turnIns = await rememberApprovedQuestTurnIn(childId, quest);
+    }
+  }
+
+  if (awaiting.length === 0) return turnIns;
+
   const keepAwaiting: string[] = [];
 
   for (const instanceId of awaiting) {
