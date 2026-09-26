@@ -5,7 +5,7 @@ export type QuestPresentationChannel = "home" | "noticeboard" | "npc" | "buildin
 export type QuestPresentation = {
   channel: QuestPresentationChannel;
   presenter: "home" | "noticeboard" | "linus" | "henning";
-  destination: "home" | "noticeboard" | "linus" | "recycling" | "bakery";
+  destination: "home" | "noticeboard" | "linus" | "bakery";
   reason: string;
 };
 
@@ -55,14 +55,6 @@ export function chooseQuestPresentation(
 ): QuestPresentation {
   if (HOME_TITLE_HINTS.test(quest.title)) {
     return { channel: "home", presenter: "home", destination: "home", reason: "obvious-home-task" };
-  }
-  if (RECYCLING_TITLE_HINTS.test(quest.title) && context.recyclingComplete) {
-    return {
-      channel: "building",
-      presenter: "linus",
-      destination: "recycling",
-      reason: "obvious-recycling-task",
-    };
   }
   if (BAKERY_TITLE_HINTS.test(quest.title) && context.bakeryUnlocked && context.henningPresent) {
     return {
