@@ -677,7 +677,9 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars\n  function openSolRuntimeTest() {
+  // Runtime harness stays compiled because regression tests exercise its safety guards.
+  // It is only launchable from explicit debug-tools UI, never normal Vuxenläge.
+  function openSolRuntimeTest() {
     setSolRuntimeDebugEvents([]);
     setLastLiveStoryTrigger("NONE");
     solRuntimeTestActiveRef.current = true;
@@ -720,6 +722,7 @@ export default function VillagePrototype() {
     else if (phase === "decision") transitionSolRuntimeTest("done", "DECISION_COMPLETE");
   }
   function openSolSafeTest() { setParentMenuOpen(false); setSolSafeTestPhase("purchase"); setSolSafeTestIndex(0); setSolSafeTestOpen(true); }
+  void openSolRuntimeTest;
   function advanceSolSafeTest() {
     const phase = solSafeTestPhase;
     const lines = phase === "bottle" ? bottleMessageDialogue : phase === "arrival" ? solArrivalDialogue : (["bakery","shop","linus","decision"] as string[]).includes(phase) ? solTourDialogue[phase as SolTourStop] : [];
