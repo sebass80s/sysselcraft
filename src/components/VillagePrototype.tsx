@@ -677,10 +677,12 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  // Retained for regression coverage; normal release UI intentionally exposes no launcher.\n  // eslint-disable-next-line @typescript-eslint/no-unused-vars\n  function openSolRuntimeTest() {
-    setParentMenuOpen(false);
+  function openSolRuntimeTest() {
+    setSolRuntimeDebugEvents([]);
+    setLastLiveStoryTrigger("NONE");
     solRuntimeTestActiveRef.current = true;
-    setSolRuntimeTestIndex(0);
+    recordSolRuntimeDebug("RUNTIME_OPEN", "activeRef=true");
+    setParentMenuOpen(false); setSolSafeTestOpen(false); setSolRuntimeTestIndex(0);
     transitionSolRuntimeTest("bottle-sent", "OPEN");
   }
   function closeSolRuntimeTest() {
@@ -754,14 +756,9 @@ export default function VillagePrototype() {
       setDialogueOpen(false);
       setLinusStoryMomentOpen(false);
       setIntroComplete(true);
-      // Pairing is deliberately deferred until the story introduction is complete so
-      // the child's first meeting with Linus is never interrupted by account setup.
       void getPairedChildId().then((pairedChildId) => {
         if (!pairedChildId) setChildPairingOpen(true);
-      }).catch(() => {
-        // The pairing panel can still be opened from Vuxenläge if the native
-        // preference lookup itself fails.
-      });
+      }).catch(() => {});
       return;
     }
     if (nextStep.kind === "reveal-dog") { setDogVisible(true); setDialogueIndex(nextIndex + 1); return; }
@@ -956,6 +953,7 @@ export default function VillagePrototype() {
     {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span>{[2,3,4].map((stage) => <button key={`recycling-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}{[1,2,3,4].map((stage) => <button key={`bakery-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.bakery !== stage - 1 || construction.earned.bakery >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `bakery:${stage}`))}>TEST: tjäna in Bakery stage {stage}</button>)}{[2,3,4].map((stage) => <button key={`clinic-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.clinic !== stage - 1 || construction.earned.clinic >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `clinic:${stage}`))}>TEST: tjäna in Clinic stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><button className="secondary-button" type="button" onClick={openSolSafeTest}>☀️ TEST: Sol-story utan att ändra sparning</button><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {storyMomentReplayControl && construction.revealed.clinic >= 4 && <div className="parent-profile-card"><span>STORY MOMENT TEST</span><button className="secondary-button" onClick={replayClinicStoryMoment}>▶ Sol + färdiga kliniken</button></div>}
     {nativeTestControls && <div className="parent-menu-footer"><span>Debugverktyg · aktiverade med ?debug=tools</span><button className="debug-reset-button" type="button" onClick={resetPrototypeSave} disabled={!saveReady || resettingSave || constructionBusy}>↺ Nollställ testsparning</button></div>}</section></div>}
+    </div>
     {solRuntimeTestPhase !== "idle" && (() => {
       const phase = solRuntimeTestPhase;
       const tour = (["bakery","shop","linus","decision"] as string[]).includes(phase) ? phase as SolTourStop : null;
@@ -995,5 +993,6 @@ export default function VillagePrototype() {
       <button className="primary-button" disabled={saveRetryBusy || constructionBusy} onClick={() => void retrySave()}>{saveRetryBusy ? "Sparar…" : "Försök spara igen"}</button>
     </section></div>}
     {childPairingOpen && <ChildPairingPanel onClose={() => setChildPairingOpen(false)} />}
-  </div></section>;
+
+  </section>;
 }
