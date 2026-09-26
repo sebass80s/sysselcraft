@@ -677,7 +677,7 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars\n  function openSolRuntimeTest() {
+  function openSolRuntimeTest() {
     setSolRuntimeDebugEvents([]);
     setLastLiveStoryTrigger("NONE");
     solRuntimeTestActiveRef.current = true;
