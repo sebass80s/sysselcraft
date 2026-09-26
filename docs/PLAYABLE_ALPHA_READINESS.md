@@ -351,3 +351,8 @@ Mira now treats Flaskpost as the deliberate Act 1 saving goal at **100 SysselBux
 The duplicate-pending Diamond behavior is now protected by canonical `npm run verify` coverage in addition to the existing physical acceptance. GitHub Actions CI #879 passed on exact commit `9718ebf0d64e4cfad083cbb5b7ba5de9f19d0980`, including visual audit, construction/save regressions, lint, production build, quest presentation/recovery/turn-in/request guards, Sol story, and Diamond reward checks.
 
 This is a green web/code checkpoint, not yet the final native release acceptance for the newer gameplay changes. Preserve the installed app and save. Next gate is update-in-place native sync/build and a short physical iPhone smoke test of the changed surfaces; do not reinstall or reset.
+
+
+## Parent quest admin physical acceptance — 2026-09-26
+
+PASS on the live parent web UI. Completed quests can be reactivated into a fresh available child instance; recurring quest scheduling persists an explicit Swedish local time (Europe/Stockholm) and due instances materialize correctly; the parent dashboard now refreshes quest state while open; and **Rensa historik** for completed quest history remains cleared after a full browser reload without deleting authoritative backend history. Final implementation checkpoint: `cbed8a27c2f1455f6f4c314b059db4443f612800`, GitHub Actions CI #895 SUCCESS, matching Vercel preview READY. Selectable quest givers and balance editing remain intentionally parked and are not release blockers.
