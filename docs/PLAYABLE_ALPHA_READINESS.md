@@ -381,3 +381,8 @@ The authored-story endpoint now hands the child back into the recurring Quest v2
 ### Clinic construction recovery audit — 2026-09-26
 
 Added regression coverage for an interrupted Clinic construction reveal: if a Clinic stage has been earned but the pending reveal list is missing at reload, construction normalization reconstructs the canonical pending reveal and keeps it routed to Sol. This protects the late-game child journey from a save/reload dead end between household-quest contribution thresholds and the visible Clinic reveal.
+
+
+### Clinic finale restart safety — 2026-09-26
+
+Regression coverage now locks the final Clinic story checkpoint in both directions: an unfinished finale resumes after restart when Clinic stage 4 is already revealed, while completing the finale persists `clinicCompletionSeen` before the overlay closes and restores that flag on the next launch. This prevents both loss of the Act 1 ending and accidental replay after completion.
