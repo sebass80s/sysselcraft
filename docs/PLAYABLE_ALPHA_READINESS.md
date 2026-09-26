@@ -386,3 +386,9 @@ Added regression coverage for an interrupted Clinic construction reveal: if a Cl
 ### Clinic finale restart safety — 2026-09-26
 
 Regression coverage now locks the final Clinic story checkpoint in both directions: an unfinished finale resumes after restart when Clinic stage 4 is already revealed, while completing the finale persists `clinicCompletionSeen` before the overlay closes and restores that flag on the next launch. This prevents both loss of the Act 1 ending and accidental replay after completion.
+
+
+## 2026-09-26 physical release-smoke closeout
+- Completed Recycling Center is physically verified interactive on the existing iPhone save: tapping the building routes the child to it and opens the contextual Linus dialogue.
+- Clinic artwork source-sheet caption leak is fixed. Physical iPhone acceptance on build `cf6d1215`: stray text is gone and the Clinic roof/visible artwork remains intact.
+- The Xcode/WebContent WEBP decoder warnings remain non-blocking unless a visible asset failure is observed; they were not the cause of the Clinic caption leak.
