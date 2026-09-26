@@ -100,6 +100,8 @@ assert.match(runtimeSource, /backendBakeryAttention/,
   "village runtime must track Bakery attention");
 assert.match(runtimeSource, /onQuestSourceInteract\?\.\("bakery"\)/,
   "Henning/Bakery interaction must open the Bakery quest source");
+assert.match(runtimeSource, /setHenningVisible\(visible: boolean\)[\s\S]*?setQuestSourceAttention\("bakery", requestedQuestSourceAttention\.bakery\)/,
+  "Henning visibility changes must restore Bakery quest attention");
 assert.equal(presentBackendQuests([backendQuest({ state: "approved" })], null).available.length, 0,
   "approved history is not presented as actionable world content");
 
