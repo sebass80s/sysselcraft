@@ -513,3 +513,15 @@ Locked presentation grammar: question mark means a new quest is available to acc
 ## Post-Clinic bridge toward Act 2 — 2026-09-26
 
 The Clinic completion now ends with a deliberate continuing-play handoff rather than a generic placeholder. Linus explicitly frames the restored village as unfinished, points to empty places and future residents who do not yet know the village exists, and tells the child to keep helping with household quests while the village becomes ready for its next build. Sol supports the forward-looking beat. This preserves the recurring quest loop as meaningful play after the current authored story ends without inventing the identity of the next resident/building. The exact Act 2 trigger and next resident remain future design work.
+
+
+## LOCKED world/act expansion grammar — 2026-09-26
+
+Future acts may expand beyond the restored village by opening authored exits into new outdoor areas. The child reaches a diegetic transition point such as a road, bridge, path or harbour; activating/crossing it changes to the next area's map and places the child at the corresponding entrance. Returning through that entrance restores the previous area at its matching spawn point. This is the canonical narrative grammar for geographic expansion and avoids turning the village into one indefinitely enlarged map.
+
+Each new outdoor act/area may therefore establish a strongly distinct setting with its own painted background, residents, landmarks, quests and story beats while global progression follows the child between areas. Locked buildings/paths may visibly open through story progression to reveal later areas.
+
+Interiors are a separate presentation grammar. The child's house, Mira's shop and comparable indoor spaces should be presented as fullscreen illustrated scenes with interaction hotspots, in the same family as Story Moments, rather than as additional avatar-navigation maps.
+
+### Child house and SysselBux loop
+The child's house is intended to become the first persistent personal interior and a meaningful SysselBux sink. Entering the house opens a fullscreen illustrated room. A first implementation should favor a small set of fixed decoration hotspots/slots over freeform furniture placement. Items bought with SysselBux can unlock owned visual variants for those slots, allowing the child to personalize the room without making ordinary village/story progression depend on spending currency. Quest work changes the shared world; spending SysselBux can express the child's choices inside their personal space.
