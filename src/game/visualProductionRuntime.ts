@@ -19,10 +19,15 @@ export function createVisualProductionBuildings(scene: Phaser.Scene, stages = OP
   return VISUAL_PRODUCTION_PLACEMENTS.flatMap((placement) => {
     const stage: VisualProductionStage | undefined = stages[placement.building];
     if (!stage) return [];
-    return [scene.add.image(placement.x, placement.baseY,
+    const image = scene.add.image(placement.x, placement.baseY,
       getVisualProductionTextureKey(placement.building, stage))
       .setOrigin(VISUAL_PRODUCTION_ORIGIN.x, VISUAL_PRODUCTION_ORIGIN.y)
       .setDisplaySize(placement.width, placement.height)
-      .setDepth(1000 + Math.round(placement.baseY))];
+      .setDepth(1000 + Math.round(placement.baseY));
+    // The supplied Clinic stage sheet carries neighboring source-sheet captions in its
+    // transparent top/bottom margins. Keep the calibrated canvas/anchor, but never render
+    // those non-game labels into the village.
+    if (placement.building === "clinic") image.setCrop(0, 95, 520, 305);
+    return [image];
   });
 }
