@@ -5,7 +5,7 @@ export type QuestPresentationChannel = "home" | "noticeboard" | "npc" | "buildin
 export type QuestPresentation = {
   channel: QuestPresentationChannel;
   presenter: "home" | "noticeboard" | "linus" | "henning";
-  destination: "home" | "noticeboard" | "linus" | "bakery";
+  destination: "home" | "noticeboard" | "linus" | "recycling" | "bakery";
   reason: string;
 };
 
@@ -17,7 +17,7 @@ export type QuestPresentationContext = {
 };
 
 const HOME_TITLE_HINTS = /\b(bädda|säng|rum|kläder|tänder|tand|pyjamas|leksak|städa|läxa|läxan|läxor|läxor|plugga|läs|läsa|bok|skolarbete)\b/i;
-const BAKERY_TITLE_HINTS = /\b(mat|baka|bröd|frukost|lunch|middag|disk|köket|kök)\b/i;
+const BAKERY_TITLE_HINTS = /\b(mat|baka|bröd|frukost|lunch|middag|disk|köket|kök)\b/i;\nconst RECYCLING_TITLE_HINTS = /\b(återvinn|återvinning|sortera|sopor|skräp|pant|flaskor|burkar|kartong|papper|plast|glas)\b/i;
 
 function categoryFallback(
   progressionClass: ProgressionClass,
@@ -55,6 +55,14 @@ export function chooseQuestPresentation(
 ): QuestPresentation {
   if (HOME_TITLE_HINTS.test(quest.title)) {
     return { channel: "home", presenter: "home", destination: "home", reason: "obvious-home-task" };
+  }
+  if (RECYCLING_TITLE_HINTS.test(quest.title) && context.recyclingComplete) {
+    return {
+      channel: "building",
+      presenter: "linus",
+      destination: "recycling",
+      reason: "obvious-recycling-task",
+    };
   }
   if (BAKERY_TITLE_HINTS.test(quest.title) && context.bakeryUnlocked && context.henningPresent) {
     return {
