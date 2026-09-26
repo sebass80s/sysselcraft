@@ -113,10 +113,19 @@ export async function recoverAwaitingQuestTurnIns(
   quests: BackendQuest[],
 ): Promise<PendingQuestTurnIn[]> {
   const awaiting = await loadAwaitingApprovalIds(childId);
-  if (awaiting.length === 0) return loadPendingQuestTurnIns(childId);
-
   let turnIns = await loadPendingQuestTurnIns(childId);
   const questById = new Map(quests.map((quest) => [quest.instanceId, quest]));
+
+  // Approved, unclaimed quests are authoritative backend state. Recover them even
+  // when the local "awaiting approval" marker was lost or predates this install.
+  for (const quest of quests) {
+    if (quest.state === "approved" && quest.claimedAt === null) {
+      turnIns = await rememberApprovedQuestTurnIn(childId, quest);
+    }
+  }
+
+  if (awaiting.length === 0) return turnIns;
+
   const keepAwaiting: string[] = [];
 
   for (const instanceId of awaiting) {
