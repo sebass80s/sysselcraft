@@ -37,6 +37,7 @@
 }
 
 .panel {
+  z-index: 40;
   pointer-events: auto;
   position: fixed;
   inset: max(.7rem, env(safe-area-inset-top)) max(.7rem, env(safe-area-inset-right)) max(.7rem, env(safe-area-inset-bottom)) max(.7rem, env(safe-area-inset-left));
