@@ -356,3 +356,8 @@ This is a green web/code checkpoint, not yet the final native release acceptance
 ## Parent quest admin physical acceptance — 2026-09-26
 
 PASS on the live parent web UI. Completed quests can be reactivated into a fresh available child instance; recurring quest scheduling persists an explicit Swedish local time (Europe/Stockholm) and due instances materialize correctly; the parent dashboard now refreshes quest state while open; and **Rensa historik** for completed quest history remains cleared after a full browser reload without deleting authoritative backend history. Final implementation checkpoint: `cbed8a27c2f1455f6f4c314b059db4443f612800`, GitHub Actions CI #895 SUCCESS, matching Vercel preview READY. Selectable quest givers and balance editing remain intentionally parked and are not release blockers.
+
+
+## Native release smoke — 2026-09-26
+
+PASS so far on physical iPhone using update-in-place build `sysselcraft-build-daec320` with the existing installed app and preserved child save. The game opened normally with the existing world intact. The scheduled recurring quest `testar tid` was visible diegetically on the noticeboard, could be accepted into the child's active quest list, and submission from the child appeared on the parent side for approval. This re-verifies the critical available -> active -> pending Quest v2 path on the current native build without reinstall/reset. Final approval/claim remains the next smoke step before closing this release gate.
