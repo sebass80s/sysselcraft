@@ -400,3 +400,12 @@ Regression coverage now locks the final Clinic story checkpoint in both directio
 - Current child quest routing remains Home for obvious household/school routines, Bakery/Henning for obvious food tasks when unlocked, and the noticeboard/general flow for other post-Recycling quests.
 - The post-Clinic bridge deliberately returns the child to recurring quests while Act 2 is authored; Flaskpost remains the 100 SysselBux Act 1 saving goal before Sol's arrival.
 - No new release blocker was found in this final pass. Remaining items are documented stress/edge/device coverage or explicitly deferred Act 2/product work rather than known failures in the physically accepted supervised gameplay path.
+
+
+## Fresh-install onboarding cleanup — 2026-09-26
+
+- Fixed same-session Linus intro replay: completing the opening immediately marks the runtime intro ref complete, not only the persisted/React state.
+- An unpaired fresh child device now automatically opens the existing child pairing flow **after** the Linus opening ends. This closes the silent state where no backend quests could appear because no child account had been paired.
+- Removed visible Sol test/spoiler launchers from normal Vuxenläge while preserving the hidden regression harness required by `test:sol-story`.
+- Final code checkpoint `7c001107cff16e8cae65650eb175af1134187bc7`; GitHub Actions CI #949 SUCCESS.
+- Physical iPhone acceptance remains required for this new onboarding delta: finish Linus intro unpaired -> pairing panel appears -> pair Adam -> Home receives the existing household/school quest attention. Until that passes, this delta is CI-green but not physically accepted.
