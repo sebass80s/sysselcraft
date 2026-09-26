@@ -292,3 +292,10 @@ Immediate gameplay work may now move on from the core quest-state-machine repair
 - GitHub Actions CI #830 passed on commit `d15a0945d2074071d80591ce1e4d49ff5d57b9fa`.
 - No production Diamond code or live data was changed by this regression closeout.
 - Physical Diamond acceptance remains OPEN because the test iPhone was not available. Do not mark the feature physically accepted until the real journey passes: parent creates reward -> paired child sees it at Mira -> purchase deducts exactly once -> parent sees pending delivery -> parent marks delivered -> restart preserves wallet/redemption state.
+
+
+## 2026-09-26 Diamond physical closeout
+
+Physical iPhone + live backend acceptance is complete for the Diamond/Mira reward loop. Parent-created `Diamond-test` (1 💎) appeared at Mira; purchase changed both device and backend wallet 55 -> 54 exactly once; parent saw the pending redemption, marked it delivered, and the live row transitioned to `delivered`; after full app restart the wallet remained 54. The previous handoff statement that Diamond physical acceptance is open is obsolete.
+
+The same session added and physically accepted the duplicate-purchase guard. While a reward has a `pending_delivery` redemption, Mira disables that reward and shows `⏳ Väntar på förälder`; a new purchase changes to this state immediately. The live `purchase_diamond_reward` RPC independently rejects another pending purchase of the same reward for the same child. Final implementation commit: `be690488461a8dc5a937c3dcb523a5511f4172ef`; CI #847 passed on that exact SHA.
