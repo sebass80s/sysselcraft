@@ -84,7 +84,7 @@ assert.match(styles, /\.sol-safe-test-image img \{[^}]*width:100%; height:100%; 
 assert.match(styles, /\.sol-safe-test-dialogue \{[^}]*left:max\([^}]*env\(safe-area-inset-left\)[^}]*right:max\([^}]*env\(safe-area-inset-right\)[^}]*bottom:max\([^}]*env\(safe-area-inset-bottom\)/, "Dialogue must respect iPhone safe areas");
 console.log("Sol story harness: PASS");
 console.log("production: shop purchase -> waterfront bottle -> persisted send -> Sol arrival -> tour -> stay -> clinic");
-const villageRuntime = readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
+const villageRuntime = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
 for (const label of ["Bageriet", "Mira", "Linus", "Sol"]) {
   assert.ok(villageRuntime.includes(`? "${label}"`) || villageRuntime.includes(`: "${label}"`),
     `Sol tour runtime should expose destination label ${label}`);
