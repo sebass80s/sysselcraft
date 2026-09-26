@@ -392,3 +392,11 @@ Regression coverage now locks the final Clinic story checkpoint in both directio
 - Completed Recycling Center is physically verified interactive on the existing iPhone save: tapping the building routes the child to it and opens the contextual Linus dialogue.
 - Clinic artwork source-sheet caption leak is fixed. Physical iPhone acceptance on build `cf6d1215`: stray text is gone and the Clinic roof/visible artwork remains intact.
 - The Xcode/WebContent WEBP decoder warnings remain non-blocking unless a visible asset failure is observed; they were not the cause of the Clinic caption leak.
+
+
+## Release audit closeout — 2026-09-26
+- Final cleanup checkpoint `d03a03d6` passed GitHub Actions CI #932 after the exploratory Recycling quest-source wiring was fully removed.
+- Recycling-specific quest routing is intentionally deferred to Act 2. No partial fifth quest-source plumbing remains in the release branch; the completed Recycling Center's physically accepted Linus interaction remains unchanged.
+- Current child quest routing remains Home for obvious household/school routines, Bakery/Henning for obvious food tasks when unlocked, and the noticeboard/general flow for other post-Recycling quests.
+- The post-Clinic bridge deliberately returns the child to recurring quests while Act 2 is authored; Flaskpost remains the 100 SysselBux Act 1 saving goal before Sol's arrival.
+- No new release blocker was found in this final pass. Remaining items are documented stress/edge/device coverage or explicitly deferred Act 2/product work rather than known failures in the physically accepted supervised gameplay path.
