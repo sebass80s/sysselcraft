@@ -86,12 +86,6 @@ export default function ParentModePage() {
   const [editingRewardId, setEditingRewardId] = useState<string | null>(null);
   const [adminTab, setAdminTab] = useState<"quests" | "rewards">("quests");
 
-  useEffect(() => {
-    try {
-      setHiddenQuestHistoryIds(new Set(JSON.parse(localStorage.getItem("sysselcraft:hidden-quest-history") || "[]")));
-      setHiddenRewardHistoryIds(new Set(JSON.parse(localStorage.getItem("sysselcraft:hidden-reward-history") || "[]")));
-    } catch { /* Ignore corrupt local UI preferences. */ }
-  }, []);
 
   function clearQuestHistory() {
     const ids = approved.map((quest) => quest.instanceId);
