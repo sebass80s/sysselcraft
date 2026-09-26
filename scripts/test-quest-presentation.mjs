@@ -54,8 +54,8 @@ const backendQuest = (overrides = {}) => ({
 });
 
 const localRecyclingComplete = presentBackendQuests([backendQuest()], null, { recyclingCenterStage: 4 });
-assert.equal(localRecyclingComplete.available[0].presentation.destination, "noticeboard",
-  "observe-only local Recycling completion may unlock routing without backend migration");
+assert.equal(localRecyclingComplete.available[0].presentation.destination, "home",
+  "obvious homework stays routed home even when local Recycling completion is ahead of backend migration");
 
 const mixedStates = presentBackendQuests([
   backendQuest({ instanceId: "home", title: "Städa rummet", progressionClass: "orderEnvironment" }),
