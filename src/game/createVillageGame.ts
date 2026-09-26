@@ -21,11 +21,11 @@ export type VillageGameHandle = {
   setSolTourStop: (stop: SolTourStop) => void;
   setShopOpen: (open: boolean) => void;
   setBottleMessageReady: (ready: boolean) => void;
-  setQuestSourceAttention: (source: "noticeboard" | "home" | "linus", marker: "?" | "!" | null) => void;
+  setQuestSourceAttention: (source: "noticeboard" | "home" | "linus" | "bakery", marker: "?" | "!" | null) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
 type Callbacks = {
-  onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus") => void;
+  onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus" | "bakery") => void;
   onLinusInteract: () => void;
   onHenningInteract: () => void;
   onShopInteract: () => void;
@@ -81,7 +81,7 @@ export async function createVillageGame(
   let requestedSolTourStop: SolTourStop = null;
   let requestedShopOpen = false;
   let requestedBottleMessageReady = false;
-  const requestedQuestSourceAttention: Record<"noticeboard" | "home" | "linus", "?" | "!" | null> = { noticeboard: null, home: null, linus: null };
+  const requestedQuestSourceAttention: Record<"noticeboard" | "home" | "linus" | "bakery", "?" | "!" | null> = { noticeboard: null, home: null, linus: null, bakery: null };
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -98,6 +98,8 @@ export async function createVillageGame(
     private noticeboardMarker?: GameObjects.Container;
     private backendHomeAttention = false;
     private backendLinusAttention = false;
+    private backendBakeryAttention = false;
+    private henningQuestMarker?: GameObjects.Container;
     private linusQuestMarker?: GameObjects.Container;
     private linusStoryMarker?: GameObjects.Container;
     private noticeboardInteractionPending = false;
@@ -180,6 +182,7 @@ export async function createVillageGame(
       this.setQuestSourceAttention("noticeboard", requestedQuestSourceAttention.noticeboard);
       this.setQuestSourceAttention("home", requestedQuestSourceAttention.home);
       this.setQuestSourceAttention("linus", requestedQuestSourceAttention.linus);
+      this.setQuestSourceAttention("bakery", requestedQuestSourceAttention.bakery);
       this.setIntroComplete(requestedIntroComplete);
       this.setConstruction(requestedConstruction);
       this.time.addEvent({
@@ -228,6 +231,10 @@ export async function createVillageGame(
         if (this.henning?.visible && this.henning.getBounds().contains(pointer.worldX, pointer.worldY)) {
           if (requestedConstruction.attention?.resident === "henning") {
             this.approachAttentionResident();
+            return;
+          }
+          if (this.backendBakeryAttention) {
+            callbacks.onQuestSourceInteract?.("bakery");
             return;
           }
           this.henningInteractionPending = true;
@@ -581,7 +588,7 @@ export async function createVillageGame(
         .setDepth(1000 + y);
     }
 
-    setQuestSourceAttention(source: "noticeboard" | "home" | "linus", marker: "?" | "!" | null) {
+    setQuestSourceAttention(source: "noticeboard" | "home" | "linus" | "bakery", marker: "?" | "!" | null) {
       requestedQuestSourceAttention[source] = marker;
       const active = marker !== null;
       if (source === "noticeboard") {
@@ -595,6 +602,30 @@ export async function createVillageGame(
       if (source === "home") {
         this.backendHomeAttention = active;
         this.homeQuestMarker?.setVisible(active);
+      }
+      if (source === "bakery") {
+        this.backendBakeryAttention = active;
+        this.henningQuestMarker?.destroy();
+        this.henningQuestMarker = undefined;
+        if (active && this.henning?.visible) {
+          const badge = this.add.graphics();
+          badge.fillStyle(0x5b3a1f, 0.94);
+          badge.lineStyle(3, 0xffd83d, 1);
+          badge.fillCircle(0, 0, 27);
+          badge.strokeCircle(0, 0, 27);
+          const label = this.add.text(0, -1, marker ?? "?", {
+            color: "#fff1a8", fontSize: "36px", fontStyle: "bold",
+            stroke: "#8a5a00", strokeThickness: 3,
+            shadow: { color: "#ffcf33", blur: 8, fill: true, stroke: true },
+          }).setOrigin(0.5);
+          this.henningQuestMarker = this.add.container(this.henning.x, this.henning.y - 178, [badge, label])
+            .setDepth(3000).setSize(76, 76).setInteractive({ useHandCursor: true });
+          this.henningQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+            event.stopPropagation();
+            callbacks.onQuestSourceInteract?.("bakery");
+          });
+          this.tweens.add({ targets: this.henningQuestMarker, y: "-=4", duration: 950, yoyo: true, repeat: -1, ease: "Sine.InOut" });
+        }
       }
       if (source === "linus") {
         this.backendLinusAttention = active;
