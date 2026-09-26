@@ -96,4 +96,7 @@ export const clinicCompletionDialogue: readonly ClinicCompletionLine[] = [
   { scene: "treatment", speaker: "Linus", text: "Bra." },
   { scene: "treatment", speaker: "Sol", text: "Jag skriver \"mystisk förbipasserande som går lite snett\" i journalen." },
   { scene: "treatment", speaker: "Linus", text: "…jag går hem nu." },
+  { scene: "complete", speaker: "Sol", text: "Kliniken är öppen nu. Men byn är inte färdig för det." },
+  { scene: "complete", speaker: "Sol", text: "Fortsätt hjälpa till med uppdragen. Jag tror att fler saker kommer börja hända här." },
+  { scene: "complete", speaker: "Barnet", text: "Då fortsätter vi." },
 ];
