@@ -20,6 +20,8 @@ import {
   listHouseholds,
   listParentQuestDefinitions,
   reviewQuest,
+  reactivateParentQuest,
+  setParentQuestRecurrenceTime,
   updateParentQuestV2,
   type ParentQuestDefinition,
   type QuestRecurrenceKind,
@@ -69,6 +71,10 @@ export default function ParentModePage() {
   const [editingQuestId, setEditingQuestId] = useState<string | null>(null);
   const [recurrenceKind, setRecurrenceKind] = useState<QuestRecurrenceKind>("once");
   const [recurrenceWeekdays, setRecurrenceWeekdays] = useState<number[]>([]);
+  const [recurrenceTime, setRecurrenceTime] = useState("08:00");
+  const [reactivatingQuestId, setReactivatingQuestId] = useState<string | null>(null);
+  const [hiddenQuestHistoryIds, setHiddenQuestHistoryIds] = useState<Set<string>>(new Set());
+  const [hiddenRewardHistoryIds, setHiddenRewardHistoryIds] = useState<Set<string>>(new Set());
   const [pairingCode, setPairingCode] = useState("");
   const [familyRequests] = useState(createQuestRequestGuard);
   const [childRequests] = useState(createQuestRequestGuard);
@@ -335,7 +341,11 @@ export default function ParentModePage() {
           recurrenceWeekdays,
           Intl.DateTimeFormat().resolvedOptions().timeZone,
         );
-        setMessage("Uppdraget är uppdaterat. ✏️");
+        await setParentQuestRecurrenceTime(editingQuestId, recurrenceTime);
+        if (reactivatingQuestId === editingQuestId) {
+          await reactivateParentQuest(editingQuestId);
+          setMessage("Questet är återaktiverat och finns hos barnet. ♻️");
+        } else setMessage("Uppdraget är uppdaterat. ✏️");
       } else {
         await createParentQuestV2(
           householdId,
@@ -345,12 +355,17 @@ export default function ParentModePage() {
           recurrenceWeekdays,
           Intl.DateTimeFormat().resolvedOptions().timeZone,
         );
+        const createdDefinitions = await listParentQuestDefinitions(childId);
+        const newest = createdDefinitions.sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0];
+        if (newest) await setParentQuestRecurrenceTime(newest.questId, recurrenceTime);
         setMessage("Uppdraget är skickat till Sysselcraft! 🎉");
       }
       setDraft(emptyDraft);
       setRecurrenceKind("once");
       setRecurrenceWeekdays([]);
+      setRecurrenceTime("08:00");
       setEditingQuestId(null);
+      setReactivatingQuestId(null);
       await loadChildQuests(childId);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte skapa uppdraget.");
@@ -369,14 +384,24 @@ export default function ParentModePage() {
     });
     setRecurrenceKind(definition.recurrenceKind);
     setRecurrenceWeekdays(definition.recurrenceWeekdays);
+    setRecurrenceTime(definition.recurrenceTime || "08:00");
+    setReactivatingQuestId(null);
     setMessage("Redigerar uppdrag. Historiska förekomster ändras inte.");
+  }
+
+  function beginReactivateDefinition(definition: ParentQuestDefinition) {
+    beginEditDefinition(definition);
+    setReactivatingQuestId(definition.questId);
+    setMessage("Kontrollera uppdraget och tryck Återaktivera quest när det är klart.");
   }
 
   function cancelEdit() {
     setEditingQuestId(null);
+    setReactivatingQuestId(null);
     setDraft(emptyDraft);
     setRecurrenceKind("once");
     setRecurrenceWeekdays([]);
+    setRecurrenceTime("08:00");
     setMessage("");
   }
 
@@ -717,7 +742,7 @@ export default function ParentModePage() {
             </section>
 
             <section className="parent-tool-card">
-              <h2>{editingQuestId ? "✏️ Redigera uppdrag" : "+ Nytt uppdrag"}</h2>
+              <h2>{reactivatingQuestId ? "♻️ Återaktivera quest" : editingQuestId ? "✏️ Redigera uppdrag" : "+ Nytt uppdrag"}</h2>
               <form className="parent-quest-form" onSubmit={submitDraft}>
                 <input
                   required
@@ -749,6 +774,7 @@ export default function ParentModePage() {
                     <option value="weekly">Varje vecka</option>
                   </select>
                 </label>
+                {recurrenceKind !== "once" && <label>Klockslag<input type="time" value={recurrenceTime} onChange={(event) => setRecurrenceTime(event.target.value)} /><small>Svensk lokal tid</small></label>}
                 {recurrenceKind === "weekdays" && (
                   <div className="parent-reward-row" aria-label="Veckodagar">
                     {[
@@ -856,9 +882,9 @@ export default function ParentModePage() {
             </section>
 
             <section className="parent-tool-card">
-              <div className="parent-section-heading"><h2>📜 Belöningshistorik</h2><span>{diamondRedemptions.filter(r=>r.status!=="pending_delivery").length}</span></div>
-              {diamondRedemptions.filter(r=>r.status!=="pending_delivery").slice(0,20).map(redemption=>{const owner=children.find(c=>c.id===redemption.childId);return <article className="parent-quest-card" key={redemption.id}><div><span>{redemption.status==="delivered"?"✅":"↩️"}</span><div><strong>{redemption.title}</strong><small>{owner?.displayName||"Barnet"} · {redemption.diamondPrice} 💎 · {redemption.status==="delivered"?"Levererad":"Refunderad"}</small></div></div></article>})}
-              {!diamondRedemptions.some(r=>r.status!=="pending_delivery")&&<div className="parent-empty-state">Historiken fylls på när en belöning levereras eller refunderas.</div>}
+              <div className="parent-section-heading"><h2>📜 Belöningshistorik</h2><span>{diamondRedemptions.filter(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id)).length}</span></div>{diamondRedemptions.some(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id))&&<button className="secondary-button compact" disabled={busy} onClick={()=>setHiddenRewardHistoryIds(new Set(diamondRedemptions.filter(r=>r.status!=="pending_delivery").map(r=>r.id)))}>Rensa historik</button>}
+              {diamondRedemptions.filter(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id)).slice(0,20).map(redemption=>{const owner=children.find(c=>c.id===redemption.childId);return <article className="parent-quest-card" key={redemption.id}><div><span>{redemption.status==="delivered"?"✅":"↩️"}</span><div><strong>{redemption.title}</strong><small>{owner?.displayName||"Barnet"} · {redemption.diamondPrice} 💎 · {redemption.status==="delivered"?"Levererad":"Refunderad"}</small></div></div></article>})}
+              {!diamondRedemptions.some(r=>r.status!=="pending_delivery"&&!hiddenRewardHistoryIds.has(r.id))&&<div className="parent-empty-state">Historiken fylls på när en belöning levereras eller refunderas.</div>}
             </section>
 
             </>}
@@ -929,13 +955,8 @@ export default function ParentModePage() {
                       </div>
                     </div>
                     <div className="parent-quest-actions">
-                      <button
-                        className="secondary-button compact"
-                        disabled={busy}
-                        onClick={() => beginEditDefinition(definition)}
-                      >
-                        Redigera
-                      </button>
+                      <button className="secondary-button compact" disabled={busy} onClick={() => beginEditDefinition(definition)}>Redigera</button>
+                      <button className="secondary-button compact" disabled={busy} onClick={() => beginReactivateDefinition(definition)}>Återaktivera</button>
                       <button
                         className="secondary-button compact"
                         disabled={busy}
@@ -954,10 +975,11 @@ export default function ParentModePage() {
             <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Senast klara</h2>
-                <span>{approved.length}</span>
+                <span>{approved.filter((quest) => !hiddenQuestHistoryIds.has(quest.instanceId)).length}</span>
               </div>
-              {approved.length ? (
-                approved.slice(0, 5).map((quest) => (
+              {approved.length > 0 && <button className="secondary-button compact" disabled={busy} onClick={() => setHiddenQuestHistoryIds(new Set(approved.map((quest) => quest.instanceId)))}>Rensa historik</button>}
+              {approved.filter((quest) => !hiddenQuestHistoryIds.has(quest.instanceId)).length ? (
+                approved.filter((quest) => !hiddenQuestHistoryIds.has(quest.instanceId)).slice(0, 5).map((quest) => (
                   <article className="parent-quest-card" key={quest.instanceId}>
                     <div>
                       <span>✅</span>
