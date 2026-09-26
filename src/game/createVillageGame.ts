@@ -27,6 +27,7 @@ export type VillageGameHandle = {
 type Callbacks = {
   onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus" | "bakery") => void;
   onLinusInteract: () => void;
+  onRecyclingInteract: () => void;
   onHenningInteract: () => void;
   onShopInteract: () => void;
   onAbandonedShopInteract: () => void;
@@ -124,6 +125,7 @@ export async function createVillageGame(
     private playerFacing: Facing = "south";
     private introComplete = false;
     private linusInteractionPending = false;
+    private recyclingInteractionPending = false;
 
     constructor() {
       super("VillageScene");
@@ -198,6 +200,19 @@ export async function createVillageGame(
       }
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!this.player) return;
+        const recyclingPlacement = VISUAL_PRODUCTION_PLACEMENTS.find((placement) => placement.building === "recycling");
+        if (requestedConstruction.stages.recycling === 4 && recyclingPlacement &&
+            Phaser.Geom.Rectangle.Contains(
+              new Phaser.Geom.Rectangle(recyclingPlacement.x - recyclingPlacement.width / 2, recyclingPlacement.baseY - recyclingPlacement.height * 0.92, recyclingPlacement.width, recyclingPlacement.height),
+              pointer.worldX, pointer.worldY)) {
+          this.recyclingInteractionPending = true;
+          this.linusInteractionPending = false;
+          this.path = findPath(this.player, recyclingPlacement.approach, this.navigationObstacles);
+          const target = this.path.at(-1);
+          if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+          else this.maybeCompleteWorldInteraction();
+          return;
+        }
         // Resolve NPC taps at scene level too. This avoids depending on Phaser's
         // object-level pointer event ordering in the native iOS WebView.
         if (this.linus && this.linus.getBounds().contains(pointer.worldX, pointer.worldY)) {
@@ -379,6 +394,19 @@ export async function createVillageGame(
     }
 
     private maybeCompleteWorldInteraction() {
+      if (this.recyclingInteractionPending && this.player) {
+        const recycling = VISUAL_PRODUCTION_PLACEMENTS.find((placement) => placement.building === "recycling");
+        if (!recycling || requestedConstruction.stages.recycling !== 4) {
+          this.recyclingInteractionPending = false;
+        } else if (distance(this.player, recycling.approach) <= 40) {
+          this.recyclingInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+          callbacks.onRecyclingInteract();
+          return;
+        }
+      }
+
       if (this.noticeboardInteractionPending && this.player) {
         if (!requestedQuestSourceAttention.noticeboard) {
           this.noticeboardInteractionPending = false;
