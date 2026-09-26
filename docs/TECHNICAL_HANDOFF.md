@@ -499,3 +499,10 @@ A fresh live Supabase advisor pass was run after the Diamond/Quest work.
 - Anonymous-access warnings are expected where the paired child device uses Supabase anonymous authentication; authorization must continue to be constrained by child-device binding checks.
 - Leaked-password protection is currently disabled in Supabase Auth. This is legitimate security hardening debt and may be enabled in a later auth-settings pass after checking plan/support and password UX impact.
 - Performance advisor reports four unindexed Diamond foreign keys and two multiple-permissive SELECT-policy warnings. Current data volume is tiny; these are non-blocking optimization debt, not a release blocker. Do not remove currently-unused indexes merely because the advisor has not observed traffic yet.
+
+
+## Diamond physical/runtime checkpoint — 2026-09-26
+
+Diamond reward purchase/delivery is physically accepted on iPhone against live Supabase. Observed wallet: 55 -> 54 for a single 1-Diamond purchase, matching live `child_game_state`. One redemption entered `pending_delivery`, parent delivery transitioned it to `delivered`, and a full child-app restart retained wallet 54. No replay/double debit was observed.
+
+Duplicate pending purchases are now blocked at two layers. The child shop reads its own pending redemption reward IDs and disables matching Mira buttons with `⏳ Väntar på förälder`; successful purchase also updates this local set immediately. Live migration `prevent_duplicate_pending_diamond_reward` updates `purchase_diamond_reward` to reject the same child/reward pair while a `pending_delivery` row exists. The physical immediate-disable behavior passed. Final code commit `be690488461a8dc5a937c3dcb523a5511f4172ef` has green CI #847.
