@@ -146,6 +146,9 @@ assert.equal(domain.syncClinicContributionProgress(clinic, 41, 40), clinic, "one
 clinic = domain.syncClinicContributionProgress(clinic, 42, 40);
 assert.deepEqual(clinic.pending, ["clinic:2"], "two post-baseline claims earn Clinic stage 2");
 assert.equal(domain.residentAttention(clinic)?.resident, "sol");
+assert.equal(constructionPresentation(clinic).attention?.resident, "sol", "earned Clinic reveal must surface Sol as the world guide");
+assert.equal(constructionPresentation(clinic).attention?.id, "clinic:2");
+assert.deepEqual(constructionPresentation(clinic).attention?.approach, { x: 1050, y: 515 }, "Clinic guidance must use the reachable authored approach point");
 clinic = domain.commitConstructionReveal(clinic, "clinic:2");
 clinic = domain.syncClinicContributionProgress(clinic, 44, 40);
 assert.deepEqual(clinic.pending, ["clinic:3"], "four post-baseline claims earn Clinic stage 3");
