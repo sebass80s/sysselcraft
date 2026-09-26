@@ -301,6 +301,8 @@ export async function createVillageGame(
     setHenningVisible(visible: boolean) {
       requestedHenningVisible = visible;
       this.henning?.setVisible(visible);
+      this.setQuestSourceAttention("bakery", requestedQuestSourceAttention.bakery);
+      if (requestedSolTourStop === "bakery") this.setSolTourStop("bakery");
     }
 
     setSolVisible(visible: boolean) {
