@@ -16,7 +16,7 @@ export type QuestPresentationContext = {
   noticeboardAvailable: boolean;
 };
 
-const HOME_TITLE_HINTS = /\b(bädda|säng|rum|kläder|tänder|tand|pyjamas|leksak|städa)\b/i;
+const HOME_TITLE_HINTS = /\b(bädda|säng|rum|kläder|tänder|tand|pyjamas|leksak|städa|läxa|läxan|läxor|läxor|plugga|läs|läsa|bok|skolarbete)\b/i;
 const BAKERY_TITLE_HINTS = /\b(mat|baka|bröd|frukost|lunch|middag|disk|köket|kök)\b/i;
 
 function categoryFallback(
