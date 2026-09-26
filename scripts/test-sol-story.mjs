@@ -91,7 +91,9 @@ for (const label of ["Bageriet", "Mira", "Linus", "Sol"]) {
 }
 
 const solStory = fs.readFileSync(new URL("../src/game/solStory.ts", import.meta.url), "utf8");
-assert.match(solStory, /Kliniken är öppen nu/);
+assert.match(solStory, /Är byn färdig nu\?/);
+assert.match(solStory, /Färdig\? Inte på långa vägar/);
+assert.match(solStory, /Nästa bygge börjar när byn är redo/);
 assert.match(solStory, /Fortsätt hjälpa till med uppdragen/);
 
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
