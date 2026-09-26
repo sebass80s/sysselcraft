@@ -529,3 +529,16 @@ PASS on the live parent web UI. Completed quests can be reactivated into a fresh
 The release now handles the previously silent unpaired-device state after the narrative introduction. At the terminal Linus intro step, `VillagePrototype.advanceDialogue()` marks the intro complete in both current-session and persisted state, then calls `getPairedChildId()`. If no binding exists, it opens the existing `ChildPairingPanel`. Pairing is deliberately deferred until after the Linus/puppy scene so technical setup cannot interrupt the first story beat. Backend quests still remain backend-owned and cannot appear before a valid child binding/session exists.
 
 Normal Vuxenläge has also been cleaned of the visible Sol test launchers. Do not delete the underlying Sol runtime harness: `scripts/test-sol-story.mjs` regression-tests its guard behavior. It may remain compiled without being exposed in release UI. A cleanup attempt that removed the launcher function broke this contract; final repaired checkpoint `7c001107cff16e8cae65650eb175af1134187bc7` passed CI #949.
+
+
+## World expansion architecture — LOCKED 2026-09-26
+
+SysselCraft expands through **discrete outdoor areas**, not one ever-growing Phaser mega-map. The current village is the first area. A world exit such as a road, bridge, forest path or harbour transition loads another area/map while preserving the same child identity, save/backend state, wallet, quest state, inventory/ownership and global story progression.
+
+Each outdoor area owns its own production background image plus its own navigation/walkable geometry, spawn points, exits, interactive hotspots, NPC placements and quest/story markers. Decorative complexity should remain baked into the painted background whenever it does not need runtime interaction. Interactive or state-changing elements may continue to use overlays/sprites as in the current village construction system.
+
+Area transitions are reciprocal and spawn-point based: leaving the village through a forest path can load the forest at a named `fromVillage` spawn; returning loads the village at the matching entrance. A separate abstract world-map UI is not required for the initial implementation.
+
+**Interior architecture is intentionally different.** House rooms, shops and comparable interiors use the existing fullscreen Story Moment / Mira-shop presentation model rather than becoming navigable Phaser maps. The first child-house interior should therefore be a fullscreen illustrated room with tappable hotspots and layered owned decorations. This keeps interiors visually rich and technically cheap while outdoor areas remain true avatar-controlled game maps.
+
+Locked rule: **interiors add depth; area/map swaps add breadth.** New acts can normally introduce a new painted outdoor background/map package without requiring a larger base-world canvas or a rewrite of the existing village.
