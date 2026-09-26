@@ -445,8 +445,8 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
           <button className={styles.closeButton} type="button" onClick={() => { setOpen(false); setSourceFilter(null); }} aria-label="Stäng uppdrag">×</button>
           <header>
             <div>
-              <strong>{sourceFilter === "noticeboard" ? "Anslagstavlan" : sourceFilter === "home" ? "Hemma" : sourceFilter === "linus" ? "Linus" : sourceFilter === "bakery" ? "Bageriet" : "Uppdrag hemifrån"}</strong>
-              <small>{sourceFilter ? "Uppdrag som hör hemma här" : "Skickade av en vuxen"}</small>
+              <strong>{sourceFilter === "noticeboard" ? "Anslagstavlan" : sourceFilter === "home" ? "Hemma" : sourceFilter === "linus" ? "Linus" : sourceFilter === "bakery" ? "Bageriet" : "Mina uppdrag"}</strong>
+              <small>{sourceFilter ? "Nya uppdrag som hör hemma här" : "Aktiva uppdrag och belöningar"}</small>
             </div>
             {gameState && (
               <div className={styles.wallet}>
@@ -472,7 +472,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
           {visibleQuests.length === 0 && !((sourceFilter === "linus" || sourceFilter === null) && turnIn) ? (
             <div className="parent-empty-state">
-              {approvedCount > 0 ? "Alla uppdrag är klara just nu. 🌱" : "Inga nya uppdrag just nu. 🌱"}
+              {approvedCount > 0 ? "Alla uppdrag är klara just nu. 🌱" : sourceFilter ? "Inga nya uppdrag här just nu. 🌱" : "Du har inga aktiva uppdrag just nu. 🌱"}
             </div>
           ) : (
             visibleQuests.map(({ quest, presentation }) => (
