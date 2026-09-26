@@ -677,7 +677,7 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  function openSolRuntimeTest() {
+  // Retained for regression coverage; normal release UI intentionally exposes no launcher.\n  // eslint-disable-next-line @typescript-eslint/no-unused-vars\n  function openSolRuntimeTest() {
     setParentMenuOpen(false);
     solRuntimeTestActiveRef.current = true;
     setSolRuntimeTestIndex(0);
