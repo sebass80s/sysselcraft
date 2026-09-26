@@ -288,6 +288,7 @@ export default function VillagePrototype() {
       const detail = (event as CustomEvent<QuestPresentationEventDetail>).detail;
       gameRef.current?.setQuestSourceAttention("noticeboard", (detail?.counts.noticeboard ?? 0) > 0 ? "?" : null);
       gameRef.current?.setQuestSourceAttention("home", (detail?.counts.home ?? 0) > 0 ? "?" : null);
+      gameRef.current?.setQuestSourceAttention("bakery", (detail?.counts.bakery ?? 0) > 0 ? "?" : null);
       const linusTurnIns = detail?.turnIns?.linus ?? 0;
       gameRef.current?.setQuestSourceAttention("linus", linusTurnIns > 0 ? "!" : (detail?.counts.linus ?? 0) > 0 ? "?" : null);
     };
@@ -367,6 +368,7 @@ export default function VillagePrototype() {
       handle.setQuestSourceAttention("noticeboard", questSources.noticeboard > 0 ? "?" : null);
       handle.setQuestSourceAttention("home", questSources.home > 0 ? "?" : null);
       handle.setQuestSourceAttention("linus", (questPresentation.turnIns?.linus ?? 0) > 0 ? "!" : questSources.linus > 0 ? "?" : null);
+      handle.setQuestSourceAttention("bakery", questSources.bakery > 0 ? "?" : null);
       handle.setDogVisible(restoredDogVisibleRef.current);
       handle.setHenningVisible(latestSaveRef.current?.worldFlags.henningArrivalSeen === true);
       handle.setSolVisible(latestSaveRef.current?.worldFlags.solArrivalSeen === true);
