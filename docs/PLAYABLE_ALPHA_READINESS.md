@@ -340,3 +340,14 @@ A follow-up physical test found and closed a child UX/concurrency gap: once a re
 ### Current playable-state classification
 
 No new core gameplay blocker was found in this closeout. Quest v2, update-in-place persistence, Recycling/Bakery/Mira/Sol/Clinic story progression, pairing core, wallet/reward persistence and the Diamond parent-delivery loop all have physical iPhone acceptance in their documented scopes. Remaining known debt is stress/edge coverage and the intermittent stale native/Xcode bundle issue, not a known failure in the accepted supervised playable loop. Preserve the existing app/save; do not use reinstall/session-loss testing as a routine release check.
+
+
+## 2026-09-26 final pre-release gameplay audit checkpoint
+
+The post-acceptance gameplay audit closed three discoverability/lifecycle gaps without resetting the preserved child save: approved quest turn-ins are reachable from the general quest dock, Bakery-routed quests now publish world attention to Henning and restore that attention when Henning becomes visible, and Sol tour attention names the required destination. Quest routing also uses the visible local Bakery/Henning state so backend flag lag cannot strand a matching quest.
+
+Mira now treats Flaskpost as the deliberate Act 1 saving goal at **100 SysselBux**. The live authoritative `purchase_story_item('bottle_message')` RPC and client constant use the same price, and the shop shows the child's current SysselBux progress toward 100. This intentionally gives the recurring quest loop useful runway before the Sol/Act 2 transition while later SysselBux inventory is authored.
+
+The duplicate-pending Diamond behavior is now protected by canonical `npm run verify` coverage in addition to the existing physical acceptance. GitHub Actions CI #879 passed on exact commit `9718ebf0d64e4cfad083cbb5b7ba5de9f19d0980`, including visual audit, construction/save regressions, lint, production build, quest presentation/recovery/turn-in/request guards, Sol story, and Diamond reward checks.
+
+This is a green web/code checkpoint, not yet the final native release acceptance for the newer gameplay changes. Preserve the installed app and save. Next gate is update-in-place native sync/build and a short physical iPhone smoke test of the changed surfaces; do not reinstall or reset.
