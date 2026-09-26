@@ -95,6 +95,10 @@ assert.match(solStory, /Är byn färdig nu\?/);
 assert.match(solStory, /Färdig\? Inte på långa vägar/);
 assert.match(solStory, /Nästa bygge börjar när byn är redo/);
 assert.match(solStory, /Fortsätt hjälpa till med uppdragen/);
+assert.match(component, /saved\.construction\.revealed\.clinic >= 4 && saved\.worldFlags\.clinicCompletionSeen !== true[\s\S]*setClinicStoryIndex\(0\)/, "unfinished Clinic finale must resume after restart");
+assert.match(component, /worldFlags: \{ \.\.\.latestSaveRef\.current\.worldFlags, clinicCompletionSeen: true \}/, "Clinic completion must persist before closing the finale");
+assert.match(component, /await saveSaveState\(snapshot, true\); latestSaveRef\.current = snapshot; setClinicCompletionSeen\(true\); setClinicStoryIndex\(null\)/, "Clinic finale must close only after the completion flag is saved");
+assert.match(component, /setClinicCompletionSeen\(saved\.worldFlags\.clinicCompletionSeen === true\)/, "Clinic completion must restore from save");
 
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.match(storyShop, /BOTTLE_MESSAGE_PRICE = 100/, "Flaskpost should remain the 100 SysselBux Act 1 saving goal");
