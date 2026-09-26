@@ -90,4 +90,8 @@ for (const label of ["Bageriet", "Mira", "Linus", "Sol"]) {
     `Sol tour runtime should expose destination label ${label}`);
 }
 
+const solStory = fs.readFileSync(new URL("../src/game/solStory.ts", import.meta.url), "utf8");
+assert.match(solStory, /Kliniken är öppen nu/);
+assert.match(solStory, /Fortsätt hjälpa till med uppdragen/);
+
 console.log("safe acceptance: purchase -> water -> letter -> bottle -> arrival -> bakery -> shop\/Mira -> Linus -> decision -> done (local React state only)");
