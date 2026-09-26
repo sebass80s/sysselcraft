@@ -80,9 +80,9 @@ assert.deepEqual(
   "rejected submission clears awaiting state without creating a turn-in",
 );
 assert.deepEqual(
-  await state.recoverAwaitingQuestTurnIns("child", [quest("rejected", "approved")]),
-  [],
-  "a later arbitrary approved read cannot resurrect a rejected submission",
+  (await state.recoverAwaitingQuestTurnIns("child", [quest("rejected", "approved")])).map(item => item.instanceId),
+  ["rejected"],
+  "authoritative approved-unclaimed backend state is recoverable even without a local awaiting marker",
 );
 
 
@@ -118,9 +118,9 @@ assert.deepEqual(
 
 storage = new Map();
 assert.deepEqual(
-  await state.recoverAwaitingQuestTurnIns("child", [quest("historical", "approved")]),
-  [],
-  "arbitrary approved history never creates a turn-in",
+  (await state.recoverAwaitingQuestTurnIns("child", [quest("historical", "approved")])).map(item => item.instanceId),
+  ["historical"],
+  "approved-unclaimed backend state reconstructs a missing local turn-in marker",
 );
 
 console.log("Quest turn-in persistence, offline recovery and replay-protection tests passed.");
