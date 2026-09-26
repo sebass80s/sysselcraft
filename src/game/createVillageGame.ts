@@ -522,8 +522,11 @@ export async function createVillageGame(
       if (!stop) return;
       const target = stop === "bakery" ? this.henning : stop === "shop" ? this.mira : stop === "decision" ? this.sol : this.linus;
       if (!target || !target.visible) return;
-      this.solTourMarker = this.add.text(target.x, target.y - 145, "☀️", {
-        fontSize: "28px", backgroundColor: "#fff2cf", padding: { x: 8, y: 5 },
+      const nextStopLabel = stop === "bakery" ? "Bageriet" : stop === "shop" ? "Mira" : stop === "linus" ? "Linus" : "Sol";
+      this.solTourMarker = this.add.text(target.x, target.y - 145, `☀️ ${nextStopLabel}`, {
+        fontSize: "22px", fontStyle: "bold", color: "#5b3a1f",
+        backgroundColor: "#fff2cf", padding: { x: 10, y: 6 },
+        stroke: "#fff2cf", strokeThickness: 2,
       }).setOrigin(0.5).setDepth(3100).setInteractive({ useHandCursor: true });
       this.solTourMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
