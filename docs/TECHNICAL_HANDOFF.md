@@ -522,3 +522,10 @@ Vercel deploys are a managed resource, not a blocker.
 ## Parent quest admin physical acceptance — 2026-09-26
 
 PASS on the live parent web UI. Completed quests can be reactivated into a fresh available child instance; recurring quest scheduling persists an explicit Swedish local time (Europe/Stockholm) and due instances materialize correctly; the parent dashboard now refreshes quest state while open; and **Rensa historik** for completed quest history remains cleared after a full browser reload without deleting authoritative backend history. Final implementation checkpoint: `cbed8a27c2f1455f6f4c314b059db4443f612800`, GitHub Actions CI #895 SUCCESS, matching Vercel preview READY. Selectable quest givers and balance editing remain intentionally parked and are not release blockers.
+
+
+## Fresh child-device onboarding checkpoint — 2026-09-26
+
+The release now handles the previously silent unpaired-device state after the narrative introduction. At the terminal Linus intro step, `VillagePrototype.advanceDialogue()` marks the intro complete in both current-session and persisted state, then calls `getPairedChildId()`. If no binding exists, it opens the existing `ChildPairingPanel`. Pairing is deliberately deferred until after the Linus/puppy scene so technical setup cannot interrupt the first story beat. Backend quests still remain backend-owned and cannot appear before a valid child binding/session exists.
+
+Normal Vuxenläge has also been cleaned of the visible Sol test launchers. Do not delete the underlying Sol runtime harness: `scripts/test-sol-story.mjs` regression-tests its guard behavior. It may remain compiled without being exposed in release UI. A cleanup attempt that removed the launcher function broke this contract; final repaired checkpoint `7c001107cff16e8cae65650eb175af1134187bc7` passed CI #949.
