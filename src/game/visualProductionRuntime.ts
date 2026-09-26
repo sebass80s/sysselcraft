@@ -27,7 +27,7 @@ export function createVisualProductionBuildings(scene: Phaser.Scene, stages = OP
     // The supplied Clinic stage sheet carries neighboring source-sheet captions in its
     // transparent top/bottom margins. Keep the calibrated canvas/anchor, but never render
     // those non-game labels into the village.
-    if (placement.building === "clinic") image.setCrop(0, 95, 520, 305);
+    if (placement.building === "clinic") image.setCrop(0, 24, 520, 326);
     return [image];
   });
 }
