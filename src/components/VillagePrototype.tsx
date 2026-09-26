@@ -995,6 +995,6 @@ export default function VillagePrototype() {
       <button className="primary-button" disabled={saveRetryBusy || constructionBusy} onClick={() => void retrySave()}>{saveRetryBusy ? "Sparar…" : "Försök spara igen"}</button>
     </section></div>}
     {childPairingOpen && <ChildPairingPanel onClose={() => setChildPairingOpen(false)} />}
-
+    </div>
   </section>;
 }
