@@ -677,14 +677,6 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
   }
 
-  function openSolRuntimeTest() {
-    setSolRuntimeDebugEvents([]);
-    setLastLiveStoryTrigger("NONE");
-    solRuntimeTestActiveRef.current = true;
-    recordSolRuntimeDebug("RUNTIME_OPEN", "activeRef=true");
-    setParentMenuOpen(false); setSolSafeTestOpen(false); setSolRuntimeTestIndex(0);
-    transitionSolRuntimeTest("bottle-sent", "OPEN");
-  }
   function closeSolRuntimeTest() {
     recordSolRuntimeDebug("RUNTIME_HARNESS_CLOSE", "activeRef=false");
     solRuntimeTestActiveRef.current = false;
