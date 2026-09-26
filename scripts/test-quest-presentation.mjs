@@ -21,7 +21,7 @@ assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "communit
 assert.equal(chooseQuestPresentation(
   quest("Gör läxan", "knowledgeCreativity"),
   { recyclingComplete: true, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: false },
-).presenter, "linus");
+).presenter, "home");
 assert.equal(chooseQuestPresentation(
   quest("Hjälp till med middagen", "community"),
   { recyclingComplete: true, bakeryUnlocked: true, henningPresent: false, noticeboardAvailable: true },
