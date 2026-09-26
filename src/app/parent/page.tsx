@@ -73,8 +73,20 @@ export default function ParentModePage() {
   const [recurrenceWeekdays, setRecurrenceWeekdays] = useState<number[]>([]);
   const [recurrenceTime, setRecurrenceTime] = useState("08:00");
   const [reactivatingQuestId, setReactivatingQuestId] = useState<string | null>(null);
-  const [hiddenQuestHistoryIds, setHiddenQuestHistoryIds] = useState<Set<string>>(new Set());
-  const [hiddenRewardHistoryIds, setHiddenRewardHistoryIds] = useState<Set<string>>(new Set());
+  const [hiddenQuestHistoryIds, setHiddenQuestHistoryIds] = useState<Set<string>>(() => {
+    if (typeof window === "undefined") return new Set();
+    try {
+      const ids: unknown = JSON.parse(localStorage.getItem("sysselcraft:hidden-quest-history") ?? "[]");
+      return new Set(Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : []);
+    } catch { return new Set(); }
+  });
+  const [hiddenRewardHistoryIds, setHiddenRewardHistoryIds] = useState<Set<string>>(() => {
+    if (typeof window === "undefined") return new Set();
+    try {
+      const ids: unknown = JSON.parse(localStorage.getItem("sysselcraft:hidden-reward-history") ?? "[]");
+      return new Set(Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : []);
+    } catch { return new Set(); }
+  });
   const [pairingCode, setPairingCode] = useState("");
   const [familyRequests] = useState(createQuestRequestGuard);
   const [childRequests] = useState(createQuestRequestGuard);
@@ -98,17 +110,6 @@ export default function ParentModePage() {
     setHiddenRewardHistoryIds(new Set(ids));
     localStorage.setItem("sysselcraft:hidden-reward-history", JSON.stringify(ids));
   }
-
-  useEffect(() => {
-    try {
-      const questIds = JSON.parse(localStorage.getItem("sysselcraft:hidden-quest-history") ?? "[]");
-      const rewardIds = JSON.parse(localStorage.getItem("sysselcraft:hidden-reward-history") ?? "[]");
-      if (Array.isArray(questIds)) setHiddenQuestHistoryIds(new Set(questIds.filter((id): id is string => typeof id === "string")));
-      if (Array.isArray(rewardIds)) setHiddenRewardHistoryIds(new Set(rewardIds.filter((id): id is string => typeof id === "string")));
-    } catch {
-      // Corrupt local history preferences should never block parent mode.
-    }
-  }, []);
 
   useEffect(() => {
     familyRequests.activate();
