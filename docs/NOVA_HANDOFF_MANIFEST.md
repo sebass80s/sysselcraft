@@ -316,3 +316,12 @@ The same session added and physically accepted the duplicate-purchase guard. Whi
 Two expansion primitives are now canonical and must not be conflated. **Outdoor world growth uses discrete map/area swaps:** each new act may load a new painted background plus area-specific navigation, exits, spawn points, hotspots, NPCs and markers while global player/backend state persists. Do not grow the current village into one giant map by default. **Interiors use fullscreen illustrated scene UI:** the child's house and comparable interiors should follow the Story Moment / Mira-shop model rather than become navigable Phaser maps.
 
 The child's house is planned as the first persistent personal interior and a SysselBux spending surface. Initial scope should favor a reusable illustrated base room with fixed decoration hotspots and owned overlay variants, not freeform Sims-style placement. SysselBux purchases may personalize the room; ordinary story/build progression must not require spending that currency.
+
+
+## 2026-09-26 LOCKED Act 2 story foundation
+
+Act 2 opens the lake area, already foreshadowed by the bottle-message/Sol sequence. The act should primarily deepen Linus, Henning, Mira and Sol. Its intended major new character is one child peer for the player.
+
+The new child's family formerly spent summers at a cottage by the lake. The property includes a cottage, jetty, boathouse and old motorboat, but fell out of use as the area emptied and deteriorated. The child wants to restore the summer place so the family will want and be able to return for summers, and meets the player at the old property.
+
+Canonical restoration spine: **cottage -> jetty -> boathouse -> motorboat**. Exact quest counts and stage thresholds remain open. The final payoff is the family returning to the restored summer place, potentially via Story Moment. The repaired motorboat becomes the route into Act 3, seeded by the child's memories of family trips across the lake. Act 3's destination remains deliberately open.
