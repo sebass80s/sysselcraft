@@ -94,4 +94,9 @@ const solStory = fs.readFileSync(new URL("../src/game/solStory.ts", import.meta.
 assert.match(solStory, /Kliniken är öppen nu/);
 assert.match(solStory, /Fortsätt hjälpa till med uppdragen/);
 
+const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
+assert.match(storyShop, /BOTTLE_MESSAGE_PRICE = 100/, "Flaskpost should remain the 100 SysselBux Act 1 saving goal");
+const storyPurchaseMigration = fs.readFileSync(new URL("../supabase/migrations/20260926_raise_bottle_message_price.sql", import.meta.url), "utf8");
+assert.match(storyPurchaseMigration, /v_price := 100/, "backend Flaskpost purchase must charge the same 100 SysselBux shown by the client");
+
 console.log("safe acceptance: purchase -> water -> letter -> bottle -> arrival -> bakery -> shop\/Mira -> Linus -> decision -> done (local React state only)");
