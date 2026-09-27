@@ -984,6 +984,7 @@ export default function VillagePrototype() {
       <Image className="house-room-scene" src="/assets/village/interiors/room/room-base.png" alt="Mitt rum" fill priority sizes="100vw" />
       {footballRugOwned && <Image className="house-room-decor" src="/assets/village/interiors/room/football-rug.svg" alt="" fill priority sizes="100vw" />}
       <button className="house-room-close" type="button" onClick={() => setRoomOpen(false)} aria-label="Gå tillbaka till byn">← Till byn</button>
+      <div className="dialogue-card story-moment-dialogue"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Jag borde inreda mitt rum så att det blir riktigt fint!</p></div>
     </div>}
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
