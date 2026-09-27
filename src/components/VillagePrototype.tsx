@@ -90,6 +90,7 @@ export default function VillagePrototype() {
   const [dogHomePendingReaction, setDogHomePendingReaction] = useState<1|2|3|4|undefined>(undefined);
   const [dogHomeDialogue, setDogHomeDialogue] = useState(0);
   const [dogHomeLine, setDogHomeLine] = useState(0);
+  const [dogHomeShowcase, setDogHomeShowcase] = useState(false);
   const [dogHomeLastDialogue, setDogHomeLastDialogue] = useState<number|undefined>(undefined);
   const [abandonedShopDialogueIndex, setAbandonedShopDialogueIndex] = useState<number | null>(null);
   const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
@@ -679,15 +680,15 @@ export default function VillagePrototype() {
   function openDogHome() {
     if (!dogVisible) return;
     const next = dogHomeLastDialogue === undefined ? 0 : chooseDogHomeDialogue(dogHomeStage, dogHomeLastDialogue);
-    setDogHomeDialogue(next); setDogHomeLine(0); setDogHomeOpen(true);
+    setDogHomeDialogue(next); setDogHomeLine(0); setDogHomeShowcase(false); setDogHomeOpen(true);
   }
 
   async function advanceDogHomeDialogue() {
     const special = dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null;
     const lines = special ?? dogHomeDialogues[dogHomeDialogue];
     if (dogHomeLine + 1 < lines.length) { setDogHomeLine((i) => i + 1); return; }
-    // One visit is one short exchange. Do not restart the same dialogue from line 1.
-    setDogHomePendingReaction(undefined); setDogHomeLastDialogue(dogHomeDialogue); setDogHomeLine(0); setDogHomeOpen(false);
+    // After the last line, hide dialogue and leave the upgraded scene unobstructed.
+    setDogHomePendingReaction(undefined); setDogHomeLastDialogue(dogHomeDialogue); setDogHomeLine(0); setDogHomeShowcase(true);
     if (latestSaveRef.current) { const snapshot: SaveStateV1={...latestSaveRef.current,worldFlags:{...latestSaveRef.current.worldFlags,dogHomePendingReaction:undefined,dogHomeLastDialogue:dogHomeDialogue}}; latestSaveRef.current=snapshot; await saveSaveState(snapshot,true); }
   }
 
@@ -1002,7 +1003,7 @@ export default function VillagePrototype() {
     <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser"><button className="dog-hud-button" type="button" onClick={() => setRoomOpen(true)} aria-label="Mitt rum" title="Mitt rum">🏠</button>{dogName && <button className="dog-hud-button" type="button" onClick={openDogHome} aria-label={`Besök ${dogName}`} title={`Besök ${dogName}`}>🐶</button>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {!solRuntimeTestActive && <>
-    {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={() => setDogHomeOpen(false)}>← Till byn</button>{line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Mys vidare"}</button></div>}</div>; })()}
+    {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`} onClick={dogHomeShowcase ? () => { setDogHomeShowcase(false); setDogHomeOpen(false); } : undefined}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={(event) => { event.stopPropagation(); setDogHomeShowcase(false); setDogHomeOpen(false); }}>← Till byn</button>{!dogHomeShowcase && line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Visa mig!"}</button></div>}</div>; })()}
     {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum">
       <Image className="house-room-scene" src={roomSceneSrc} alt="Mitt rum" fill priority sizes="100vw" />
       <button className="house-room-close" type="button" onClick={() => setRoomOpen(false)} aria-label="Gå tillbaka till byn">← Till byn</button>
