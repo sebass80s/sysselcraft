@@ -121,21 +121,19 @@ for (let stage = 1; stage <= 4; stage++) {
   assert.equal(assets.getVisualProductionAsset("bakery", stage), `/assets/village/buildings/bakery/bakery-stage-${stage}.webp`);
 }
 
-assert.deepEqual(domain.BAKERY_CONTRIBUTION_THRESHOLDS, [1, 3, 7, 10], "Bakery cumulative contribution thresholds must remain 1-3-7-10");
-assert.deepEqual([0,1,2,3,6,7,9,10,99].map(domain.deriveBakeryStageFromContributions), [0,1,1,2,2,3,3,4,4], "Bakery stage pacing must remain 1-2-4-3");
+assert.deepEqual(domain.BAKERY_CONTRIBUTION_THRESHOLDS, [1, 2, 3, 4], "Bakery cumulative contribution thresholds must remain 1-2-3-4");
+assert.deepEqual([0,1,2,3,4,99].map(domain.deriveBakeryStageFromContributions), [0,1,2,3,4,4], "Bakery stage pacing must remain 1-1-1-1");
 let pacedBakery = domain.normalizeConstruction({ earned: { recycling: 4, bakery: 0, clinic: 0 }, revealed: { recycling: 4, bakery: 0, clinic: 0 }, pending: [] });
 pacedBakery = domain.syncBakeryContributionProgress(pacedBakery, 11, 10);
 assert.deepEqual(pacedBakery.pending, ["bakery:1"], "first post-baseline claim earns Bakery stage 1");
-assert.equal(domain.syncBakeryContributionProgress(pacedBakery, 13, 10), pacedBakery, "pending reveal blocks earning later Bakery stages");
+assert.equal(domain.syncBakeryContributionProgress(pacedBakery, 14, 10), pacedBakery, "pending reveal blocks earning later Bakery stages");
 pacedBakery = domain.commitConstructionReveal(pacedBakery, "bakery:1");
-assert.equal(domain.syncBakeryContributionProgress(pacedBakery, 12, 10), pacedBakery, "two total claims do not reach stage 2");
-pacedBakery = domain.syncBakeryContributionProgress(pacedBakery, 13, 10);
-assert.deepEqual(pacedBakery.pending, ["bakery:2"], "third total claim earns Bakery stage 2");
+pacedBakery = domain.syncBakeryContributionProgress(pacedBakery, 12, 10);
+assert.deepEqual(pacedBakery.pending, ["bakery:2"], "second total claim earns Bakery stage 2");
 let migratedBakery = domain.normalizeConstruction({ earned: { recycling: 4, bakery: 2, clinic: 0 }, revealed: { recycling: 4, bakery: 2, clinic: 0 }, pending: [] });
 assert.equal(domain.syncBakeryContributionProgress(migratedBakery, 20, 20, 2), migratedBakery, "existing stage 2 save does not immediately advance at migration baseline");
-assert.equal(domain.syncBakeryContributionProgress(migratedBakery, 23, 20, 2), migratedBakery, "three new claims after stage 2 are still below stage 3 threshold");
-migratedBakery = domain.syncBakeryContributionProgress(migratedBakery, 24, 20, 2);
-assert.deepEqual(migratedBakery.pending, ["bakery:3"], "four new claims after existing stage 2 earn stage 3");
+migratedBakery = domain.syncBakeryContributionProgress(migratedBakery, 21, 20, 2);
+assert.deepEqual(migratedBakery.pending, ["bakery:3"], "one new claim after existing stage 2 earns stage 3");
 
 let clinic = domain.normalizeConstruction({ earned: { recycling: 4, bakery: 4, clinic: 0 }, revealed: { recycling: 4, bakery: 4, clinic: 0 }, pending: [] });
 clinic = domain.startClinicConstruction(clinic);
