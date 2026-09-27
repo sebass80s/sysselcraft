@@ -391,3 +391,24 @@ The room uses the locked A–H zone model in this document. For every production
 **Zone C precedent:** the Swedish football poster established the correct workflow: isolated poster raw art -> deterministic alpha cleanup/crop -> deterministic scale/perspective/placement on the left wall above the bed -> composite validation against canonical `room-base`. Future wall art in Zone C should reuse that established target geometry rather than asking image generation to guess the wall perspective again.
 
 A room-overlay task is not complete at raw-image generation. It is complete only when the accepted motif has passed canonical-base composite validation and the rest of the already-approved vertical slice has been executed as far as available tools permit.
+
+
+## CHILD ROOM PRODUCTION MODEL — SUPERSEDING LOCK 2026-09-27
+
+The earlier child-room overlay/zone pipeline in this document is **historical and superseded for the current room implementation**. It must not be used to convert the accepted room back to layered furniture overlays.
+
+The production room is a sequence of complete, individually authored landscape scenes with identical composition/perspective:
+- `room-base.png`: original room
+- `room-1.png`: football rug
+- `room-2.png`: + Swedish football poster
+- `room-3.png`: + computer/desk
+- `room-4.png`: + trophy shelf
+- `room-5.png`: + string lights
+- `room-6.png`: + aquarium
+
+Runtime chooses the full scene from sequential ownership state; dialogue and `Till byn` remain runtime UI and must not be baked into art. Existing old overlay files may remain as dead historical assets but are not visual/runtime authority.
+
+### Raster production rule
+**Spritesheets, contact sheets and multi-panel generation are forbidden unless Kalle explicitly requests one.** Important raster assets must be produced individually at intended final resolution. Do not generate a sheet and crop/upscale cells into production assets. This rule applies to Act 2 lake scenes, story moments, construction states and character art as well as the room.
+
+For Act 2, retain the canonical warm painted storybook language and true 2.5D outdoor grammar. The lake is a distinct second outdoor area with its own coherent production background/navigation geometry, not an extension pasted onto the village canvas.
