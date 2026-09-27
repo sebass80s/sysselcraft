@@ -139,20 +139,20 @@ let clinic = domain.normalizeConstruction({ earned: { recycling: 4, bakery: 4, c
 clinic = domain.startClinicConstruction(clinic);
 assert.equal(clinic.revealed.clinic, 1, "Sol's decision reveals Clinic stage 1 immediately");
 assert.equal(clinic.earned.clinic, 1);
-assert.deepEqual(domain.CLINIC_CONTRIBUTION_THRESHOLDS, [0, 2, 4, 8], "Clinic pacing must remain 0-2-4-8 from its authoritative baseline");
-assert.equal(domain.syncClinicContributionProgress(clinic, 41, 40), clinic, "one post-baseline claim does not advance Clinic");
-clinic = domain.syncClinicContributionProgress(clinic, 42, 40);
-assert.deepEqual(clinic.pending, ["clinic:2"], "two post-baseline claims earn Clinic stage 2");
+assert.deepEqual(domain.CLINIC_CONTRIBUTION_THRESHOLDS, [0, 3, 5, 9], "Clinic pacing must remain 1-4-6-10 total quest milestones");
+assert.equal(domain.syncClinicContributionProgress(clinic, 42, 40), clinic, "two post-baseline claims do not advance Clinic");
+clinic = domain.syncClinicContributionProgress(clinic, 43, 40);
+assert.deepEqual(clinic.pending, ["clinic:2"], "three post-baseline claims earn Clinic stage 2, milestone 4 including the opening step");
 assert.equal(domain.residentAttention(clinic)?.resident, "sol");
 assert.equal(constructionPresentation(clinic).attention?.resident, "sol", "earned Clinic reveal must surface Sol as the world guide");
 assert.equal(constructionPresentation(clinic).attention?.id, "clinic:2");
 assert.deepEqual(constructionPresentation(clinic).attention?.approach, { x: 1050, y: 515 }, "Clinic guidance must use the reachable authored approach point");
 clinic = domain.commitConstructionReveal(clinic, "clinic:2");
-clinic = domain.syncClinicContributionProgress(clinic, 44, 40);
-assert.deepEqual(clinic.pending, ["clinic:3"], "four post-baseline claims earn Clinic stage 3");
+clinic = domain.syncClinicContributionProgress(clinic, 45, 40);
+assert.deepEqual(clinic.pending, ["clinic:3"], "five post-baseline claims earn Clinic stage 3, milestone 6 including the opening step");
 clinic = domain.commitConstructionReveal(clinic, "clinic:3");
-clinic = domain.syncClinicContributionProgress(clinic, 48, 40);
-assert.deepEqual(clinic.pending, ["clinic:4"], "eight post-baseline claims earn Clinic stage 4");
+clinic = domain.syncClinicContributionProgress(clinic, 49, 40);
+assert.deepEqual(clinic.pending, ["clinic:4"], "nine post-baseline claims earn Clinic stage 4, milestone 10 including the opening step");
 clinic = domain.commitConstructionReveal(clinic, "clinic:4");
 assert.equal(clinic.revealed.clinic, 4);
 assert.equal(domain.syncClinicContributionProgress(clinic, 99, 40), clinic, "completed Clinic remains capped and idempotent");
@@ -163,10 +163,10 @@ const clinicPendingReload = domain.normalizeConstruction({
         earned: { recycling: 4, bakery: 4, clinic: 0 },
         revealed: { recycling: 4, bakery: 4, clinic: 0 },
         pending: [],
-      })), 42, 40),
+      })), 43, 40),
       "clinic:2",
     ),
-    44,
+    45,
     40,
   ),
   pending: [],
