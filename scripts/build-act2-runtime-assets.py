@@ -56,6 +56,19 @@ BAKED = {
     "boat-house-3.png",
 }
 
+# Locked source crop boxes from the accepted normalization pass.
+# These remove generator-edge fringe before checkerboard cleanup. Coordinates are
+# (left, top, right, bottom) in the original source raster and do not resize art.
+SOURCE_CROPS = {
+    "cabin-stage-2.png": (13, 0, 1774, 879),
+    "cabin-stage-3.png": (12, 5, 1767, 869),
+    "cabin-stage-4.png": (8, 0, 1774, 863),
+    "dock-stage-1.png": (6, 9, 1766, 887),
+    "dock-stage-2.png": (0, 0, 1766, 842),
+    "dock-stage-4.png": (8, 8, 1769, 866),
+    "boat-house-3.png": (17, 43, 1523, 964),
+}
+
 def neutral_light(rgb):
     r, g, b = rgb
     return min(r, g, b) >= 185 and (max(r, g, b) - min(r, g, b)) <= 18
@@ -108,10 +121,11 @@ def build_one(src_name, out_name, canvas_size):
         raise FileNotFoundError(src)
 
     with Image.open(src) as raw:
+        source = raw.crop(SOURCE_CROPS[src_name]) if src_name in SOURCE_CROPS else raw
         if src_name in BAKED:
-            im = remove_edge_background(raw)
+            im = remove_edge_background(source)
         else:
-            im = raw.convert("RGBA")
+            im = source.convert("RGBA")
         im = crop_alpha(im)
 
     cw, ch = canvas_size
