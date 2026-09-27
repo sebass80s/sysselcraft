@@ -1,6 +1,7 @@
 import fs from "node:fs";
 
 const source = fs.readFileSync("src/game/act2VisualAssets.ts", "utf8");
+const runtime = fs.readFileSync("src/game/createAct2LakeGame.ts", "utf8");
 
 const required = [
   'width: 1983',
@@ -20,8 +21,28 @@ for (const token of required) {
   if (!source.includes(token)) throw new Error(`Act 2 visual contract drifted: missing ${token}`);
 }
 
+for (const project of ["cabin", "dock", "boat-house", "motorboat"]) {
+  for (let stage = 1; stage <= 4; stage++) {
+    const filename = project === "boat-house"
+      ? `boat-house-${stage}.png`
+      : `${project}-stage-${stage}.png`;
+    const path = `public/assets/village/buildings/act 2/runtime/${filename}`;
+    if (!fs.existsSync(path)) throw new Error(`Missing Act 2 runtime asset: ${path}`);
+  }
+}
+
+for (const token of [
+  "ACT2_WORLD.master",
+  "getAct2DisplaySize(project)",
+  ".setOrigin(placement.origin.x, placement.origin.y)",
+  ".setDepth(1000 + placement.baseY)",
+  ".setDisplaySize(74, 118)",
+]) {
+  if (!runtime.includes(token)) throw new Error(`Act 2 runtime contract drifted: missing ${token}`);
+}
+
 if (/stage.*threshold|threshold.*stage/i.test(source)) {
   throw new Error("Act 2 visual contract must not invent progression thresholds");
 }
 
-console.log("Act 2 visual contract: PASS");
+console.log("Act 2 visual/runtime contract: PASS");
