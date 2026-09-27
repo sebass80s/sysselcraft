@@ -36,3 +36,19 @@ The local Recycling slice is separate from backend pairing/reconciliation. Backe
 The adult panel fix restores vertical overflow after the shared storybook theme's `overflow: hidden` and sizes the panel inside top/bottom safe areas. It changes no game logic. Native stage 2–4 test controls remain available so playtesting does not invent production quests.
 
 Henning is mentioned in the completion dialogue but is not spawned. Bakery remains stage 0/inactive. Bakery pacing can now be designed from Kalle's four-stage playtest; thresholds and exact Henning arrival are deliberately not implemented here.
+
+
+## CURRENT NATIVE CHECKPOINT — ACT 1 CLOSEOUT 2026-09-27
+
+The 2026-09-21 Recycling-only scope above is historical. The preserved native project remains valid, but the game has advanced through the complete Act 1 village arc, including Sol/Clinic. **Sol and Clinic are completed Act 1 content.**
+
+Current native workflow:
+1. Work only in `/Users/karoaa/Developer/sysselcraft` on `nova/local-construction-snapshot`.
+2. Run `npm run syssel`. The helper verifies the canonical repo/branch, preserves the known local `ios/App/App/config.xml` modification, pulls fast-forward only, builds and syncs the existing iOS project.
+3. Press Run in Xcode over the existing installed app.
+
+Never run `cap add ios`, regenerate the native project, uninstall the app, reset Adam's save, clean/stash/delete local native state merely for acceptance testing, or move the canonical repo back into OneDrive.
+
+Act 1 physical/backend work accumulated well beyond the original Recycling checkpoint, including Quest V2 approval/claim recovery and release smoke, Diamond purchase/delivery, parent quest administration, construction persistence and late-game Clinic restart safety. Treat the detailed dated evidence in `TECHNICAL_HANDOFF.md` as the evidence log.
+
+**Next native production target is Act 2 at the lake.** Prefer isolated harnesses/Test-Ture for destructive progression testing. Adam's existing installation is valuable live progression and must be preserved.
