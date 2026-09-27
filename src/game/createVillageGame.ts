@@ -643,7 +643,7 @@ export async function createVillageGame(
         .setDisplaySize(360, 300)
         .setAlpha(0.001)
         .setDepth(2900)
-        .setInteractive({ useHandCursor: true, pixelPerfect: false });
+        .setInteractive(new Phaser.Geom.Rectangle(-35, -18, 430, 340), Phaser.Geom.Rectangle.Contains);
 
       const enterHouse = (event: Types.Input.EventData) => {
         event.stopPropagation();
@@ -661,7 +661,7 @@ export async function createVillageGame(
       };
       this.house.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => enterHouse(event));
 
-      const houseMarker = this.add.text(245, 300, "🏠", {
+      const houseMarker = this.add.text(72, 276, "🏠", {
         fontSize: "27px",
         backgroundColor: "#fff2cf",
         padding: { x: 8, y: 5 },
