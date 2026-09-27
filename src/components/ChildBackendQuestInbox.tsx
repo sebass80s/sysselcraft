@@ -18,6 +18,7 @@ import {
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
 import { publishBackendWallet } from "@/game/backendWalletBridge";
+import { deriveDogHomeStageFromWorldFlags } from "@/backend/storyShop";
 import { createQuestRequestGuard } from "@/game/questRequestGuard";
 import { loadSaveState, saveSaveState, withConstructionState } from "@/game/saveState";
 import { syncBakeryContributionProgress, syncClinicContributionProgress, syncRecyclingContributionProgress } from "@/game/construction";
@@ -109,6 +110,14 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
       if (localSave && nextGameState) {
         let snapshot = localSave;
+        // Dog-home ownership lives in the backend wallet state. Repair stale local saves
+        // from those authoritative flags so Mira always offers the actual next upgrade.
+        const backendDogHomeStage = deriveDogHomeStageFromWorldFlags(nextGameState.worldFlags);
+        if ((snapshot.worldFlags.dogHomeStage ?? 0) !== backendDogHomeStage) {
+          snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, dogHomeStage: backendDogHomeStage } };
+          await saveSaveState(snapshot, true);
+          window.dispatchEvent(new CustomEvent("sysselcraft:construction-save-changed"));
+        }
         const backendRecyclingBaseline = typeof nextGameState.worldFlags.recyclingClaimBaseline === "number"
           && Number.isInteger(nextGameState.worldFlags.recyclingClaimBaseline)
           && nextGameState.worldFlags.recyclingClaimBaseline >= 0
