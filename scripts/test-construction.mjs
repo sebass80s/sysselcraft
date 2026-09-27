@@ -202,6 +202,32 @@ assert.equal(syncRecycling(revealedRestart.construction, historicalClaims + 1, r
   "restart after the reveal cannot replay the claim or advance another stage");
 console.log("PASS: historical Recycling claims establish a safe baseline; one new claim earns one explicit, idempotent reveal without cascade across sync/reload.");
 
+// Bakery: a large authoritative jump must still expose only one reveal at a time.
+// After each explicit reveal, the same progression may expose the next already-earned
+// stage on a later sync, but never skips directly to stage 4.
+let bakeryBurst = domain.initialConstruction();
+bakeryBurst = { ...bakeryBurst, earned: { ...bakeryBurst.earned, recycling: 4 }, revealed: { ...bakeryBurst.revealed, recycling: 4 } };
+const bakeryBaseline = 20;
+const fourClaimsAtOnce = bakeryBaseline + 4;
+const bakery1 = domain.syncBakeryContributionProgress(bakeryBurst, fourClaimsAtOnce, bakeryBaseline, 0);
+assert.equal(bakery1.earned.bakery, 1);
+assert.equal(bakery1.revealed.bakery, 0);
+assert.deepEqual(bakery1.pending, ["bakery:1"], "4+ queued claims still expose only bakery stage 1 first");
+assert.equal(domain.syncBakeryContributionProgress(bakery1, fourClaimsAtOnce, bakeryBaseline, 0), bakery1, "pending bakery reveal blocks cascade");
+const bakery1Shown = domain.commitConstructionReveal(bakery1, "bakery:1");
+const bakery2 = domain.syncBakeryContributionProgress(bakery1Shown, fourClaimsAtOnce, bakeryBaseline, 0);
+assert.equal(bakery2.earned.bakery, 2);
+assert.deepEqual(bakery2.pending, ["bakery:2"]);
+const bakery2Shown = domain.commitConstructionReveal(bakery2, "bakery:2");
+const bakery3 = domain.syncBakeryContributionProgress(bakery2Shown, fourClaimsAtOnce, bakeryBaseline, 0);
+assert.equal(bakery3.earned.bakery, 3);
+assert.deepEqual(bakery3.pending, ["bakery:3"]);
+const bakery3Shown = domain.commitConstructionReveal(bakery3, "bakery:3");
+const bakery4 = domain.syncBakeryContributionProgress(bakery3Shown, fourClaimsAtOnce, bakeryBaseline, 0);
+assert.equal(bakery4.earned.bakery, 4);
+assert.deepEqual(bakery4.pending, ["bakery:4"]);
+console.log("PASS: 4+ Bakery claims queue all earned progress safely, one explicit stage at a time without skipping.");
+
 const handle = await load("createVillageGame").createVillageGame({ clientWidth: 1280, clientHeight: 800 }, {
   onQuestOpen() {}, onLinusInteract() {}, onConstructionInteract() {},
 });
