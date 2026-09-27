@@ -43,6 +43,7 @@ export type SaveStateV1 = {
     henningArrivalSeen?: boolean;
     miraArrivalSeen?: boolean;
     bottleMessagePurchased?: boolean;
+    roomFootballRugOwned?: boolean;
     bottleMessageSent?: boolean;
     solArrivalSeen?: boolean;
     solTourBakerySeen?: boolean;
@@ -77,6 +78,7 @@ export function createDefaultSaveState(): SaveStateV1 {
       henningArrivalSeen: false,
       miraArrivalSeen: false,
       bottleMessagePurchased: false,
+      roomFootballRugOwned: false,
       bottleMessageSent: false,
       solArrivalSeen: false,
       solTourBakerySeen: false,
