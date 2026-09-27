@@ -440,7 +440,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
           </div>
         </section>
       )}
-      <aside className={styles.dock} aria-label="Föräldrauppdrag">
+      <aside className={`${styles.dock} ${open ? styles.dockOpen : ""}`} aria-label="Föräldrauppdrag">
       <button
         className={styles.toggle}
         type="button"
