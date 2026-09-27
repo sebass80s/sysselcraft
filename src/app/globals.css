@@ -180,7 +180,6 @@ main { min-height: 100dvh; }
 .house-room-decor { z-index:2; object-fit:cover; object-position:center; pointer-events:none; }
 .house-room-item { position:absolute !important; z-index:2; max-width:none; pointer-events:none; object-fit:contain; }
 /* Room-base is painted for landscape. Each furnishing gets its own stage position instead of fullscreen fill. */
-.house-room-poster { inset:auto auto auto auto !important; left:18.5% !important; top:12% !important; width:13.5% !important; height:34% !important; transform:rotate(-1.5deg); transform-origin:center; }
 .house-room-computer { inset:auto auto 8% 7.5% !important; width:31% !important; height:45% !important; }
 .house-room-trophies { inset:13% 19% auto auto !important; width:22% !important; height:27% !important; }
 .house-room-lights { inset:4% auto auto 31% !important; width:39% !important; height:25% !important; }
