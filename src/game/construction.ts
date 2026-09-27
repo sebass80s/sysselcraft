@@ -78,7 +78,7 @@ export const CONSTRUCTION_REVEALS: readonly ConstructionReveal[] = [{
   dialogue: [{ speaker: "Sol", text: "Vi gjorde det! Nu har byn en klinik." }], presentation: "construction",
 }];
 
-export const CLINIC_CONTRIBUTION_THRESHOLDS = [0, 2, 4, 8] as const;
+export const CLINIC_CONTRIBUTION_THRESHOLDS = [0, 3, 5, 9] as const;
 
 export function startClinicConstruction(state: ConstructionState): ConstructionState {
   if (state.revealed.clinic > 0 || state.earned.clinic > 0) return state;
@@ -88,15 +88,15 @@ export function startClinicConstruction(state: ConstructionState): ConstructionS
 export function syncClinicContributionProgress(state: ConstructionState, authoritativeWorldProgression: number, clinicBaseline: number): ConstructionState {
   if (state.revealed.clinic < 1 || state.revealed.clinic >= 4 || state.pending.some(id => id.startsWith("clinic:"))) return state;
   const contributions = Math.max(0, Math.floor(authoritativeWorldProgression) - Math.floor(clinicBaseline));
-  const target: BuildingStage = contributions >= 8 ? 4 : contributions >= 4 ? 3 : contributions >= 2 ? 2 : 1;
+  const target: BuildingStage = contributions >= CLINIC_CONTRIBUTION_THRESHOLDS[3] ? 4 : contributions >= CLINIC_CONTRIBUTION_THRESHOLDS[2] ? 3 : contributions >= CLINIC_CONTRIBUTION_THRESHOLDS[1] ? 2 : 1;
   const nextStage = (state.revealed.clinic + 1) as BuildingStage;
   return target >= nextStage ? earnConstruction(state, `clinic:${nextStage}`) : state;
 }
 
-export const BAKERY_CONTRIBUTION_THRESHOLDS = [1, 3, 7, 10] as const;
+export const BAKERY_CONTRIBUTION_THRESHOLDS = [1, 2, 3, 4] as const;
 
 /**
- * Bakery pacing is locked to 1-2-4-3 real quest turn-ins across stages 1-4.
+ * Bakery pacing is locked to 1-1-1-1 real quest turn-ins across stages 1-4.
  * The input is the number of authoritative child claims since the Bakery arc began,
  * never approvals or submissions. This pure rule deliberately does not decide how
  * the local save establishes its backend baseline; state ownership remains explicit.
