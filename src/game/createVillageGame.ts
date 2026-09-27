@@ -216,19 +216,12 @@ export async function createVillageGame(
           else this.maybeCompleteWorldInteraction();
           return;
         }
-        if (this.house?.getBounds().contains(pointer.worldX, pointer.worldY)) {
-          this.houseInteractionPending = true;
-          this.linusInteractionPending = false;
-          this.henningInteractionPending = false;
-          this.shopInteractionPending = false;
-          this.attentionInteractionPending = false;
-          this.noticeboardInteractionPending = false;
-          this.path = findPath(this.player, { x: 245, y: 405 }, this.navigationObstacles);
-          const target = this.path.at(-1);
-          if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
-          else this.maybeCompleteWorldInteraction();
-          return;
-        }
+        // House interaction is handled by the authored interactive hit area in drawHouse().
+        // Do not use the transparent image's transformed getBounds() here: its display box
+        // extends across the village path and used to be masked by the floating room marker.
+        // After that marker was removed, scene-level taps east of Linus were being stolen
+        // and rerouted back to the house approach point.
+
         // Resolve NPC taps at scene level too. This avoids depending on Phaser's
         // object-level pointer event ordering in the native iOS WebView.
         if (this.linus && this.linus.getBounds().contains(pointer.worldX, pointer.worldY)) {
