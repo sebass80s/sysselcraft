@@ -94,9 +94,7 @@ export async function createVillageGame(
     private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
     private targetMarker?: GameObjects.Arc;
-    private homeQuestMarker?: GameObjects.Container;
     private noticeboardMarker?: GameObjects.Container;
-    private backendHomeAttention = false;
     private backendLinusAttention = false;
     private backendBakeryAttention = false;
     private henningQuestMarker?: GameObjects.Container;
@@ -177,7 +175,6 @@ export async function createVillageGame(
       camera.centerOn(this.player.x, this.player.y);
       camera.startFollow(this.player, true, 0.08, 0.08);
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
-      this.createQuestMarker();
       this.createNoticeboardMarker();
       this.setQuestSourceAttention("noticeboard", requestedQuestSourceAttention.noticeboard);
       this.setQuestSourceAttention("home", requestedQuestSourceAttention.home);
@@ -635,10 +632,6 @@ export async function createVillageGame(
           this.targetMarker?.setVisible(false);
         }
       }
-      if (source === "home") {
-        this.backendHomeAttention = active;
-        this.homeQuestMarker?.setVisible(active);
-      }
       if (source === "bakery") {
         this.backendBakeryAttention = active;
         this.henningQuestMarker?.destroy();
@@ -743,31 +736,6 @@ export async function createVillageGame(
       });
     }
 
-    private createQuestMarker() {
-      // Quest language: glowing yellow ? means an available quest; glowing yellow !
-      // means a completed quest / interaction prompt.
-      const badge = this.add.graphics();
-      badge.fillStyle(0x5b3a1f, 0.94);
-      badge.lineStyle(3, 0xffd83d, 1);
-      badge.fillCircle(0, 0, 30);
-      badge.strokeCircle(0, 0, 30);
-      const glow = this.add.text(0, -1, "?", {
-        color: "#ffd83d",
-        fontSize: "38px",
-        fontStyle: "bold",
-        fontFamily: "Trebuchet MS",
-        stroke: "#8a5a00",
-        strokeThickness: 4,
-        shadow: { color: "#ffcf33", blur: 14, fill: true, stroke: true },
-      }).setOrigin(0.5).setName("label");
-      this.homeQuestMarker = this.add.container(HOME_QUEST_MARKER.x, HOME_QUEST_MARKER.y, [badge, glow])
-        .setDepth(3000).setSize(96, 96).setInteractive(new Phaser.Geom.Rectangle(-48, -48, 96, 96), Phaser.Geom.Rectangle.Contains).setVisible(false);
-      this.homeQuestMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
-        event.stopPropagation();
-        if (this.introComplete && this.backendHomeAttention) callbacks.onQuestSourceInteract?.("home");
-      });
-      this.tweens.add({ targets: [badge, glow], alpha: { from: 0.82, to: 1 }, scale: { from: 0.96, to: 1.05 }, duration: 850, yoyo: true, repeat: -1, ease: "Sine.InOut" });
-    }
 
     private applyBuildingPresentation(stages: Partial<Record<VisualProductionBuilding, VisualProductionStage>>) {
       const signature = JSON.stringify(stages);
