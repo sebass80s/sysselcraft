@@ -822,7 +822,16 @@ export async function createVillageGame(
       this.renderedBuildingStages = signature;
       this.productionBuildings.forEach(image => image.destroy());
       this.productionBuildings = createVisualProductionBuildings(this, stages);
-      this.navigationObstacles = [...STATIC_OBSTACLES, { type: "rect", x: 1130, y: 355, width: 205, height: 72 }, ...getVisualProductionObstacles(stages)];
+      // Bakery artwork sits north of the village path. Its authored 72px footprint
+      // reaches into the only east-west corridor once Bakery is rushed to stage 4,
+      // trapping the child around Linus and making quest sources to the east unreachable.
+      // Keep the visible Bakery intact, but do not treat its decorative footprint as a
+      // navigation wall. Recycling/Clinic still contribute their authored collision.
+      const productionObstacles = getVisualProductionObstacles(stages).filter((_, index) => {
+        const activePlacements = VISUAL_PRODUCTION_PLACEMENTS.filter((placement) => stages[placement.building]);
+        return activePlacements[index]?.building !== "bakery";
+      });
+      this.navigationObstacles = [...STATIC_OBSTACLES, { type: "rect", x: 1130, y: 355, width: 205, height: 72 }, ...productionObstacles];
       // A route planned before the reveal may now cross the new footprint.
       this.path = [];
       this.targetMarker?.setVisible(false);
