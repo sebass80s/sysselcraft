@@ -98,3 +98,23 @@ SysselBux digital purchases are a separate future ownership path and must not be
 ## 2026-09-25 quest lifecycle authority update
 
 Backend storage remains authoritative for quest occurrence state. The new lifecycle adds an explicit active state and accepted_at boundary: available -> active -> pending -> approved -> claimed. UI/world markers are derived presentation only and must not become a local quest ledger. Recycling now stores a local backend-progress baseline so historical progression is not replayed as new local construction work.
+
+
+## Story purchase and room ownership authority — LOCKED 2026-09-27
+
+The earlier statement that SysselBux digital purchases are merely a future ownership path is superseded for the implemented story/shop items.
+
+For implemented Mira story purchases, **Supabase is transaction authority**. `purchase_story_item` validates prerequisite/ownership/balance, locks the backend game-state row, deducts SysselBux exactly once and persists the corresponding backend world flag. An already-owned item must not debit again.
+
+Implemented story ownership includes the Flaskpost and sequential child-room upgrades. The local Capacitor save remains the renderer/offline presentation copy for these world flags, but backend ownership is allowed to repair that local copy during backend refresh. This is a deliberately narrow one-way reconciliation path, not permission for arbitrary max-merges or replaying rewards.
+
+Local save normalization and autosave must explicitly preserve:
+- `bottleMessagePurchased`
+- `roomFootballRugOwned`
+- `roomFootballPosterOwned`
+- `roomComputerDeskOwned`
+- `roomTrophyShelfOwned`
+- `roomStringLightsOwned`
+- `roomAquariumOwned`
+
+The room's visible stage is derived from the sequential owned flags. Backend wallet snapshots are authoritative for displayed SysselBux after connected purchases. Never manually alter a child's authoritative balance to repair a presentation mismatch without first proving a backend transaction error.
