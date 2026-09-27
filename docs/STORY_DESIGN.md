@@ -553,3 +553,10 @@ Exact quest counts, construction-stage thresholds and individual subquests remai
 By the end of Act 2 the cottage, jetty, boathouse and motorboat have been restored. The boy's family returns to the summer place, validating his reason for undertaking the restoration; they may be presented in an illustrated Story Moment rather than requiring full runtime NPC implementations. The boy remains an important recurring peer character who can naturally move between the lake and village stories.
 
 The repaired motorboat is also the deliberate bridge to **Act 3**. The boy remembers that his family used to travel across the lake and knows or partially remembers that there is something on the other side. Act 2 ends with the lake home restored and the boat capable of taking the children onward. The exact destination/content of Act 3 remains intentionally undefined.
+
+
+## ACT BOUNDARY LOCK — 2026-09-27
+
+**Act 1 is complete and includes the entire Sol/Clinic arc.** The restored village arc comprises Linus/puppy, Recycling, Henning/Bakery, Mira/lanthandel, Flaskpost, Sol's arrival/tour/decision, Clinic construction and Clinic finale, plus the implemented village-life customization loops such as the dog home and child's room. Earlier wording that calls Clinic/Sol a bridge *toward* Act 2 should be read only as historical implementation chronology, not as the act boundary.
+
+**Act 2 starts when authored play moves to the lake summer place.** Sol is not an Act 2 prerequisite, unfinished bridge, or opening Act 2 task. Preserve her completed Act 1 implementation unless a concrete regression is found.
