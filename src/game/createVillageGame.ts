@@ -646,7 +646,11 @@ export async function createVillageGame(
         .setDisplaySize(360, 300)
         .setAlpha(0.001)
         .setDepth(2900)
-        .setInteractive(new Phaser.Geom.Rectangle(-35, -18, 430, 340), Phaser.Geom.Rectangle.Contains);
+        // Phaser hit-area coordinates are local to the image. The previous rectangle
+        // (-35,-18,430,340) was authored as if it were world/display pixels, so after
+        // scaling it covered a huge invisible swath of the village and swallowed taps.
+        // Keep room entry on the painted house only.
+        .setInteractive(new Phaser.Geom.Rectangle(0, 0, 360, 250), Phaser.Geom.Rectangle.Contains);
 
       const enterHouse = (event: Types.Input.EventData) => {
         event.stopPropagation();
