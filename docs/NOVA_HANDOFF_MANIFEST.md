@@ -325,3 +325,65 @@ Act 2 opens the lake area, already foreshadowed by the bottle-message/Sol sequen
 The new child's family formerly spent summers at a cottage by the lake. The property includes a cottage, jetty, boathouse and old motorboat, but fell out of use as the area emptied and deteriorated. The child wants to restore the summer place so the family will want and be able to return for summers, and meets the player at the old property.
 
 Canonical restoration spine: **cottage -> jetty -> boathouse -> motorboat**. Exact quest counts and stage thresholds remain open. The final payoff is the family returning to the restored summer place, potentially via Story Moment. The repaired motorboat becomes the route into Act 3, seeded by the child's memories of family trips across the lake. Act 3's destination remains deliberately open.
+
+
+## 2026-09-27 — ACT 1 LOCKED / ACT 2 START CHECKPOINT
+
+Kalle has declared **Act 1 feature-complete** after the current room/shop/persistence pass. Treat new Act 1 work as bugfix/regression work unless Kalle explicitly reopens scope. The next production focus is **Act 2: the lake summer place** as locked in `docs/STORY_DESIGN.md`.
+
+Latest verified branch checkpoint before this handoff:
+- branch: `nova/local-construction-snapshot`
+- HEAD: `2d59a6b21452ca0b0f72f965a1460aeb6cc28d0f`
+- GitHub Actions run **#1071**: completed / success on that exact SHA
+- canonical local workspace remains `/Users/karoaa/Developer/sysselcraft`
+- native update flow remains `npm run syssel`, then Run in Xcode over the existing app; never uninstall/reset Adam's app or regenerate iOS.
+
+### Final Act 1 room/economy lessons to preserve
+- Room upgrades use **full-scene sequential images**, not composited runtime furniture: `room-base.png` then `room-1.png` … `room-6.png`.
+- **SPRITESHEETS ARE FORBIDDEN** unless Kalle explicitly asks for one. Produce each raster asset individually at intended final landscape resolution. Never use a contact sheet as a production source.
+- Backend is authoritative for story purchases and wallet. Current story ownership is reconciled backend → local save so purchases survive restart.
+- Autosave must explicitly carry every owned room flag. Do not rely on stale spread snapshots for ownership.
+- Purchased Mira room items remain visible as disabled `✓ Köpt`; only the next sequential unowned upgrade is offered.
+- Adam's live bottle-message purchase is legitimate. At the last backend inspection his authoritative balance was **110 SysselBux** and `bottleMessagePurchased=true`; do not manually adjust this balance merely because older UI appeared stale.
+- Dog home and child room both use a post-dialogue **showcase pause**: final `Visa mig!` hides dialogue and exposes the full scene before the next scene tap exits. Room showcase was added in HEAD `2d59a6b...`.
+- Never reset/uninstall Adam's save for testing. Use isolated harnesses or Test-Ture where appropriate.
+
+### Sol status found in the 2026-09-27 pre-Act-2 audit
+Do **not** rebuild Sol from memory. A substantial Sol/Clinic implementation already exists:
+- `src/game/solStory.ts` contains bottle, arrival, tour, decision and Clinic-completion dialogue.
+- Existing story assets include `bottle-letter.png`, `bottle-message.png`, `sol-arrival.png`, tour images, `sol-stays.png`, Clinic completion/treatment images, runtime Sol art, and Clinic stages 1–4.
+- `scripts/test-sol-story.mjs` covers the production sequence and isolated acceptance harness.
+- Save flags already include bottle sent, Sol arrival/tour/stay and Clinic baseline/completion state.
+- The locked flow in `STORY_DESIGN.md` is bottle → harbor arrival → playable hotspot tour (Bakery → Mira → Linus) → Sol chooses to stay → Clinic reveal → Clinic progression.
+- Clinic pacing is already locked to authoritative world-progression delta from its stored baseline: stage 1 at +0, stage 2 at +2, stage 3 at +4, stage 4 at +8.
+Therefore first Act 2 work must begin by verifying/finishing any remaining physical Sol/Clinic acceptance boundary, not by inventing a second Sol arc.
+
+### Act 2 canonical foundation
+Act 2 is **the lake summer place**, a persistent second outdoor area reached through the canonical physical area-transition grammar. It is not an enlarged village map.
+The major new character is one **boy/peer**, whose family formerly used a summer cottage at the lake. He wants to restore the place so his family can spend summers there again. He is a child with a personal motivation, not a child mechanic.
+Locked high-level restoration spine:
+1. summer cottage
+2. jetty
+3. boathouse
+4. motorboat
+The family returns at the emotional payoff; the repaired motorboat is the bridge to Act 3. Exact project thresholds, stage counts, individual quests, boy name/design, lake layout and Act 3 destination remain open and must not be invented as canon without a product decision.
+
+### Efficient Act 2 production law
+Apply the lessons from Act 1 from the first commit:
+1. verify repo/docs/HEAD before edits;
+2. design story state + backend authority + persistence + visuals together;
+3. use existing Quest V2/unified progression rather than parallel currencies/progression systems;
+4. define explicit baselines/ownership flags before wiring visible stages;
+5. build each important raster scene as its own production-ready landscape asset;
+6. test save/restart/reconciliation as part of each slice, not after content is complete;
+7. batch coherent story/content arcs so Adam cannot immediately outrun one-scene increments;
+8. keep isolated acceptance harnesses for destructive/story-state testing and preserve Adam's live save;
+9. only claim green/fixed/verified with exact evidence.
+
+### Immediate next-Nova order
+1. Re-verify branch HEAD and CI against this checkpoint.
+2. Read this manifest, `TECHNICAL_HANDOFF.md`, `ART_DIRECTION.md`, and the Act 2 section of `STORY_DESIGN.md`.
+3. Audit the existing Sol/Clinic production path and identify only genuinely unverified physical-device boundaries.
+4. Close any necessary Act 1/Sol bridge regression without expanding Act 1 scope.
+5. Then design Act 2 production architecture around lake area transition + boy introduction + the four restoration projects, explicitly locking open product decisions with Kalle before they become canon.
+6. Prefer a sizeable first playable Act 2 slice over isolated tiny patches.
