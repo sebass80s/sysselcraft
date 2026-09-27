@@ -825,6 +825,7 @@ export default function VillagePrototype() {
     if (last) {
       recordSolRuntimeDebug("HENNING_DIALOGUE_CLOSE", "setHenningDialogueOpen(false)", true);
       setHenningDialogueOpen(false); setHenningDialogueIndex(0);
+      gameRef.current?.setConstructionDialogueOpen(false);
     } else {
       recordSolRuntimeDebug("HENNING_DIALOGUE_ADVANCE", String(henningDialogueIndex + 1), true);
       setHenningDialogueIndex((index) => index + 1);
