@@ -44,6 +44,11 @@ export type SaveStateV1 = {
     miraArrivalSeen?: boolean;
     bottleMessagePurchased?: boolean;
     roomFootballRugOwned?: boolean;
+    roomFootballPosterOwned?: boolean;
+    roomComputerDeskOwned?: boolean;
+    roomTrophyShelfOwned?: boolean;
+    roomStringLightsOwned?: boolean;
+    roomAquariumOwned?: boolean;
     dogHomeStage?: 0 | 1 | 2 | 3 | 4;
     dogHomePendingReaction?: 1 | 2 | 3 | 4;
     dogHomeLastDialogue?: number;
@@ -82,6 +87,11 @@ export function createDefaultSaveState(): SaveStateV1 {
       miraArrivalSeen: false,
       bottleMessagePurchased: false,
       roomFootballRugOwned: false,
+      roomFootballPosterOwned: false,
+      roomComputerDeskOwned: false,
+      roomTrophyShelfOwned: false,
+      roomStringLightsOwned: false,
+      roomAquariumOwned: false,
       dogHomeStage: 0,
       dogHomePendingReaction: undefined,
       dogHomeLastDialogue: undefined,
