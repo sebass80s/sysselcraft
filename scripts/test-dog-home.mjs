@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { chooseDogHomeDialogue, dogHomeDialogueIndicesForStage } from "../src/game/dogHome.ts";
+import { deriveDogHomeStageFromWorldFlags } from "../src/backend/storyShop.ts";
 
 assert.deepEqual(dogHomeDialogueIndicesForStage(0), [0,1,2,3,4,7,9]);
 assert(!dogHomeDialogueIndicesForStage(0).includes(5), "ball dialogue is hidden before toys");
@@ -18,3 +19,10 @@ for (const stage of [0,1,2,3,4]) {
   }
 }
 console.log("PASS: dog-home dialogue only references visible upgrades and avoids immediate repeats.");
+
+assert.equal(deriveDogHomeStageFromWorldFlags({}), 0);
+assert.equal(deriveDogHomeStageFromWorldFlags({ dogHomeBedOwned: true }), 1);
+assert.equal(deriveDogHomeStageFromWorldFlags({ dogHomeBedOwned: true, dogHomeBowlsOwned: true }), 2);
+assert.equal(deriveDogHomeStageFromWorldFlags({ dogHomeToysOwned: true }), 3);
+assert.equal(deriveDogHomeStageFromWorldFlags({ dogHomeCozyOwned: true }), 4);
+console.log("PASS: backend dog-home ownership deterministically repairs the local stage.");
