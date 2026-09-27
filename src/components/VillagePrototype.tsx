@@ -32,7 +32,7 @@ import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, DOG_HOME_PRICES, commitStoryB
 import { getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
-import { dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
+import { chooseDogHomeDialogue, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
@@ -656,7 +656,7 @@ export default function VillagePrototype() {
 
   function openDogHome() {
     if (!dogVisible) return;
-    const next = dogHomeLastDialogue === undefined ? 0 : (dogHomeLastDialogue + 1 + Math.floor(Math.random() * 9)) % 10;
+    const next = dogHomeLastDialogue === undefined ? 0 : chooseDogHomeDialogue(dogHomeStage, dogHomeLastDialogue);
     setDogHomeDialogue(next); setDogHomeLine(0); setDogHomeOpen(true);
   }
 
