@@ -1,11 +1,11 @@
 import type { BackendQuest, ProgressionClass } from "@/backend/types";
 
-export type QuestPresentationChannel = "home" | "noticeboard" | "npc" | "building";
+export type QuestPresentationChannel = "noticeboard" | "npc" | "building";
 
 export type QuestPresentation = {
   channel: QuestPresentationChannel;
-  presenter: "home" | "noticeboard" | "linus" | "henning";
-  destination: "home" | "noticeboard" | "linus" | "bakery";
+  presenter: "noticeboard" | "linus" | "henning";
+  destination: "noticeboard" | "linus" | "bakery";
   reason: string;
 };
 
