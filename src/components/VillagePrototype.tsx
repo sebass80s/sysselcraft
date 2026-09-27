@@ -493,6 +493,9 @@ export default function VillagePrototype() {
       gameRef.current?.setHenningVisible(true);
       recordSolRuntimeDebug("HENNING_STORY_COMPLETE", "setHenningStoryIndex(null)", true);
       setHenningStoryIndex(null);
+      // Recycling deliberately keeps village movement locked while Henning's arrival
+      // cutscene takes over. Release that lock when the arrival story is finished.
+      gameRef.current?.setConstructionDialogueOpen(false);
     } catch {
       setConstructionError("Det gick inte att spara. Försök igen.");
     } finally {
