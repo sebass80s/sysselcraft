@@ -664,7 +664,8 @@ export default function VillagePrototype() {
     const special = dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null;
     const lines = special ?? dogHomeDialogues[dogHomeDialogue];
     if (dogHomeLine + 1 < lines.length) { setDogHomeLine((i) => i + 1); return; }
-        setDogHomePendingReaction(undefined); setDogHomeLastDialogue(dogHomeDialogue); setDogHomeLine(0);
+    // One visit is one short exchange. Do not restart the same dialogue from line 1.
+    setDogHomePendingReaction(undefined); setDogHomeLastDialogue(dogHomeDialogue); setDogHomeLine(0); setDogHomeOpen(false);
     if (latestSaveRef.current) { const snapshot: SaveStateV1={...latestSaveRef.current,worldFlags:{...latestSaveRef.current.worldFlags,dogHomePendingReaction:undefined,dogHomeLastDialogue:dogHomeDialogue}}; latestSaveRef.current=snapshot; await saveSaveState(snapshot,true); }
   }
 
