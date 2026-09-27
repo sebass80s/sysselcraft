@@ -473,7 +473,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
           <button className={styles.closeButton} type="button" onClick={() => { setOpen(false); setSourceFilter(null); }} aria-label="Stäng uppdrag">×</button>
           <header>
             <div>
-              <strong>{sourceFilter === "noticeboard" ? "Anslagstavlan" : sourceFilter === "home" ? "Hemma" : sourceFilter === "linus" ? "Linus" : sourceFilter === "bakery" ? "Bageriet" : "Mina uppdrag"}</strong>
+              <strong>{sourceFilter === "noticeboard" ? "Anslagstavlan" : sourceFilter === "linus" ? "Linus" : sourceFilter === "bakery" ? "Bageriet" : "Mina uppdrag"}</strong>
               <small>{sourceFilter ? "Nya uppdrag som hör hemma här" : "Aktiva uppdrag och belöningar"}</small>
             </div>
             {gameState && (
