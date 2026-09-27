@@ -28,10 +28,11 @@ import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
 import { bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
-import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, commitStoryBeat, purchaseBottleMessage, purchaseFootballRug } from "../backend/storyShop";
+import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, DOG_HOME_PRICES, commitStoryBeat, purchaseBottleMessage, purchaseFootballRug, purchaseDogHomeUpgrade } from "../backend/storyShop";
 import { getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
+import { dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
@@ -83,6 +84,12 @@ export default function VillagePrototype() {
   const [solTourStoryIndex, setSolTourStoryIndex] = useState(0);
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
   const [roomOpen, setRoomOpen] = useState(false);
+  const [dogHomeOpen, setDogHomeOpen] = useState(false);
+  const [dogHomeStage, setDogHomeStage] = useState<0|1|2|3|4>(0);
+  const [dogHomePendingReaction, setDogHomePendingReaction] = useState<1|2|3|4|undefined>(undefined);
+  const [dogHomeDialogue, setDogHomeDialogue] = useState(0);
+  const [dogHomeLine, setDogHomeLine] = useState(0);
+  const [dogHomeLastDialogue, setDogHomeLastDialogue] = useState<number|undefined>(undefined);
   const [abandonedShopDialogueIndex, setAbandonedShopDialogueIndex] = useState<number | null>(null);
   const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
   const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
@@ -213,6 +220,9 @@ export default function VillagePrototype() {
         setMiraArrivalSeen(saved.worldFlags.miraArrivalSeen === true);
         setBottleMessagePurchased(saved.worldFlags.bottleMessagePurchased === true);
         setFootballRugOwned(saved.worldFlags.roomFootballRugOwned === true);
+        setDogHomeStage(saved.worldFlags.dogHomeStage ?? 0);
+        setDogHomePendingReaction(saved.worldFlags.dogHomePendingReaction);
+        setDogHomeLastDialogue(saved.worldFlags.dogHomeLastDialogue);
         bottleMessageSentAtBootRef.current = saved.worldFlags.bottleMessageSent === true;
         setBottleMessageSent(saved.worldFlags.bottleMessageSent === true);
         setSolArrivalSeen(saved.worldFlags.solArrivalSeen === true);
@@ -272,6 +282,7 @@ export default function VillagePrototype() {
         henningArrivalSeen,
         miraArrivalSeen,
         bottleMessagePurchased,
+        dogHomeStage, dogHomePendingReaction, dogHomeLastDialogue,
         bottleMessageSent,
         solArrivalSeen,
         solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay,
@@ -283,7 +294,7 @@ export default function VillagePrototype() {
       () => setSaveError(false),
       () => setSaveError(true),
     );
-  }, [construction, constructionBusy, saveReady, resettingSave, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay, clinicCompletionSeen]);
+  }, [construction, constructionBusy, saveReady, resettingSave, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, dogHomeStage, dogHomePendingReaction, dogHomeLastDialogue, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay, clinicCompletionSeen]);
 
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
@@ -643,6 +654,40 @@ export default function VillagePrototype() {
     } finally { setShopBusy(false); }
   }
 
+  function openDogHome() {
+    if (!dogVisible) return;
+    const next = dogHomeLastDialogue === undefined ? 0 : (dogHomeLastDialogue + 1 + Math.floor(Math.random() * 9)) % 10;
+    setDogHomeDialogue(next); setDogHomeLine(0); setDogHomeOpen(true);
+  }
+
+  async function advanceDogHomeDialogue() {
+    const special = dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null;
+    const lines = special ?? dogHomeDialogues[dogHomeDialogue];
+    if (dogHomeLine + 1 < lines.length) { setDogHomeLine((i) => i + 1); return; }
+    const flags = { ...latestSaveRef.current?.worldFlags, dogHomePendingReaction: undefined, dogHomeLastDialogue: dogHomeDialogue };
+    setDogHomePendingReaction(undefined); setDogHomeLastDialogue(dogHomeDialogue); setDogHomeLine(0);
+    if (latestSaveRef.current) { const snapshot={...latestSaveRef.current,worldFlags:flags}; latestSaveRef.current=snapshot; await saveSaveState(snapshot,true); }
+  }
+
+  async function buyDogHomeUpgrade() {
+    if (shopBusy || dogHomeStage >= 4) return;
+    const index = dogHomeStage as 0|1|2|3;
+    const price = DOG_HOME_PRICES[index];
+    if (!window.confirm(`Köpa nästa sak till ${dogName || "hunden"} för ${price} 🪙?`)) return;
+    setShopBusy(true); setShopMessage("");
+    try {
+      const purchase=await purchaseDogHomeUpgrade(index);
+      const next=(index+1) as 1|2|3|4;
+      const currentWallet=getLatestBackendWallet() ?? backendWallet;
+      const wallet={diamonds:currentWallet?.diamonds ?? diamonds,sysselBux:purchase.sysselBux};
+      setBackendWallet(wallet); publishBackendWallet(wallet); setDogHomeStage(next); setDogHomePendingReaction(next);
+      if(latestSaveRef.current){const snapshot={...latestSaveRef.current,worldFlags:{...latestSaveRef.current.worldFlags,dogHomeStage:next,dogHomePendingReaction:next}};latestSaveRef.current=snapshot;await saveSaveState(snapshot,true);}
+      setShopMessage(`En ny sak väntar hos ${dogName || "hunden"}! 🐶`);
+      window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
+    } catch(error) { const message=error instanceof Error?error.message:"Köpet misslyckades."; setShopMessage(message.includes("insufficient sysselbux")?"Du har inte tillräckligt många SysselBux.":message.includes("previous dog home upgrade")?"Köp hundsakerna i ordning.":message); }
+    finally { setShopBusy(false); }
+  }
+
   function advanceBottleLetter() {
     setBottleLetterOpen(false);
     setBottleStoryIndex(0);
@@ -931,9 +976,10 @@ export default function VillagePrototype() {
   </div></section>;
 
   return <section className="prototype-shell">
-    <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
+    <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser">{dogName && <button className="dog-hud-button" type="button" onClick={openDogHome} aria-label={`Besök ${dogName}`}>🐶 {dogName}</button>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {!solRuntimeTestActive && <>
+    {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={() => setDogHomeOpen(false)}>← Till byn</button>{line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Mys vidare"}</button></div>}</div>; })()}
     {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum">
       <Image className="house-room-scene" src="/assets/village/interiors/room/room-base.png" alt="Mitt rum" fill priority sizes="100vw" />
       {footballRugOwned && <Image className="house-room-decor" src="/assets/village/interiors/room/football-rug.svg" alt="" fill priority sizes="100vw" />}
@@ -956,6 +1002,8 @@ export default function VillagePrototype() {
               {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Inga diamantbelöningar på hyllan just nu.</p>}
             </> : <div className="mira-shop-grid"><article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p>{!bottleMessagePurchased && <><small>⭐ Nästa steg i berättelsen</small><small>🪙 Du har {backendWallet?.sysselBux ?? sysselBux} / {BOTTLE_MESSAGE_PRICE} SysselBux</small></>}</div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article>
               <article className="mira-shop-item"><div><Image className="mira-shop-item-art" src="/assets/village/interiors/room/football-rug.svg" alt="" width={72} height={42} /><strong>Fotbollsmatta</strong><p>En mjuk fotbollsplan till golvet i ditt rum.</p></div><button className="primary-button" disabled={shopBusy || footballRugOwned || (backendWallet?.sysselBux ?? sysselBux) < FOOTBALL_RUG_PRICE} onClick={() => void buyFootballRug()}>{footballRugOwned ? "✓ Köpt" : `🪙 ${FOOTBALL_RUG_PRICE} · Köp`}</button></article>
+              {dogHomeStage < 4 && (() => { const names=["Mjuk hundbädd","Mat- och vattenskålar","Leksaker","Mysig hundhörna"]; const descriptions=["En egen mjuk plats att vila på.","Egna skålar för mat och vatten.","Boll, rep och annat kul att leka med.","Den sista mysiga uppgraderingen till hundhörnan."]; const i=dogHomeStage; const price=DOG_HOME_PRICES[i]; return <article className="mira-shop-item"><div><span>🐶</span><strong>{names[i]}</strong><p>{descriptions[i]}</p><small>Nästa uppgradering till {dogName || "hunden"}</small></div><button className="primary-button" disabled={shopBusy || (backendWallet?.sysselBux ?? sysselBux) < price} onClick={() => void buyDogHomeUpgrade()}>{`🪙 ${price} · Köp`}</button></article>; })()}
+              {dogHomeStage >= 4 && <article className="mira-shop-item"><div><span>🐶</span><strong>Hundhörnan är komplett</strong><p>{dogName || "Hunden"} har allt som behövs.</p></div><button className="primary-button" disabled>✓ Klart</button></article>}
             </div>}
             {shopMessage && <p className="pending-message mira-shop-message" role="status">{shopMessage}</p>}
           </div>
