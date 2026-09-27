@@ -48,10 +48,3 @@ export async function purchaseDogHomeUpgrade(index: DogHomeUpgradeIndex): Promis
   return purchaseStoryItem(DOG_HOME_ITEM_KEYS[index]);
 }
 
-export function deriveDogHomeStageFromWorldFlags(worldFlags: Record<string, unknown>): 0 | 1 | 2 | 3 | 4 {
-  if (worldFlags.dogHomeCozyOwned === true) return 4;
-  if (worldFlags.dogHomeToysOwned === true) return 3;
-  if (worldFlags.dogHomeBowlsOwned === true) return 2;
-  if (worldFlags.dogHomeBedOwned === true) return 1;
-  return 0;
-}
