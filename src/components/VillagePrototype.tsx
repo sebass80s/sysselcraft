@@ -420,6 +420,32 @@ export default function VillagePrototype() {
     return () => window.clearTimeout(timer);
   }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex, solRuntimeTestActive, recordSolRuntimeDebug]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
+  useEffect(() => {
+    // Phaser input locking is presentation state. Derive it from the React UI instead
+    // of relying on every dialogue/cutscene close path to remember to unlock it.
+    // This also self-heals stale locks after story transitions.
+    const villageInputLocked =
+      recyclingDialogueIndex !== null ||
+      constructionDialogueId !== null ||
+      recyclingStoryOpen ||
+      henningStoryIndex !== null ||
+      henningDialogueOpen ||
+      bottleLetterOpen ||
+      bottleStoryIndex !== null ||
+      shopPanelOpen ||
+      abandonedShopDialogueIndex !== null;
+    gameRef.current?.setConstructionDialogueOpen(villageInputLocked);
+  }, [
+    recyclingDialogueIndex,
+    constructionDialogueId,
+    recyclingStoryOpen,
+    henningStoryIndex,
+    henningDialogueOpen,
+    bottleLetterOpen,
+    bottleStoryIndex,
+    shopPanelOpen,
+    abandonedShopDialogueIndex,
+  ]);
 
   async function persistConstruction(next: ConstructionState, revealId?: string) {
     if (constructionWriteRef.current || !latestSaveRef.current || next === constructionRef.current) return;
