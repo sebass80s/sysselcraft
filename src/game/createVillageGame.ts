@@ -21,11 +21,11 @@ export type VillageGameHandle = {
   setSolTourStop: (stop: SolTourStop) => void;
   setShopOpen: (open: boolean) => void;
   setBottleMessageReady: (ready: boolean) => void;
-  setQuestSourceAttention: (source: "noticeboard" | "home" | "linus" | "bakery", marker: "?" | "!" | null) => void;
+  setQuestSourceAttention: (source: "noticeboard" | "linus" | "bakery", marker: "?" | "!" | null) => void;
   presentConstructionReveal: (id: string, commit: () => Promise<void>) => Promise<void>;
 };
 type Callbacks = {
-  onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus" | "bakery") => void;
+  onQuestSourceInteract?: (source: "noticeboard" | "linus" | "bakery") => void;
   onLinusInteract: () => void;
   onRecyclingInteract: () => void;
   onHenningInteract: () => void;
@@ -81,7 +81,7 @@ export async function createVillageGame(
   let requestedSolTourStop: SolTourStop = null;
   let requestedShopOpen = false;
   let requestedBottleMessageReady = false;
-  const requestedQuestSourceAttention: Record<"noticeboard" | "home" | "linus" | "bakery", "?" | "!" | null> = { noticeboard: null, home: null, linus: null, bakery: null };
+  const requestedQuestSourceAttention: Record<"noticeboard" | "linus" | "bakery", "?" | "!" | null> = { noticeboard: null, linus: null, bakery: null };
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -177,7 +177,6 @@ export async function createVillageGame(
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
       this.createNoticeboardMarker();
       this.setQuestSourceAttention("noticeboard", requestedQuestSourceAttention.noticeboard);
-      this.setQuestSourceAttention("home", requestedQuestSourceAttention.home);
       this.setQuestSourceAttention("linus", requestedQuestSourceAttention.linus);
       this.setQuestSourceAttention("bakery", requestedQuestSourceAttention.bakery);
       this.setIntroComplete(requestedIntroComplete);
@@ -621,7 +620,7 @@ export async function createVillageGame(
         .setDepth(1000 + y);
     }
 
-    setQuestSourceAttention(source: "noticeboard" | "home" | "linus" | "bakery", marker: "?" | "!" | null) {
+    setQuestSourceAttention(source: "noticeboard" | "linus" | "bakery", marker: "?" | "!" | null) {
       requestedQuestSourceAttention[source] = marker;
       const active = marker !== null;
       if (source === "noticeboard") {
