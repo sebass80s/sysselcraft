@@ -85,6 +85,7 @@ export default function VillagePrototype() {
   const [solTourStoryIndex, setSolTourStoryIndex] = useState(0);
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
   const [roomOpen, setRoomOpen] = useState(false);
+  const [roomShowcase, setRoomShowcase] = useState(false);
   const [dogHomeOpen, setDogHomeOpen] = useState(false);
   const [dogHomeStage, setDogHomeStage] = useState<0|1|2|3|4>(0);
   const [dogHomePendingReaction, setDogHomePendingReaction] = useState<1|2|3|4|undefined>(undefined);
@@ -1010,10 +1011,10 @@ export default function VillagePrototype() {
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {!solRuntimeTestActive && <>
     {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`} onClick={dogHomeShowcase ? () => { setDogHomeShowcase(false); setDogHomeOpen(false); } : undefined}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={(event) => { event.stopPropagation(); setDogHomeShowcase(false); setDogHomeOpen(false); }}>← Till byn</button>{!dogHomeShowcase && line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Visa mig!"}</button></div>}</div>; })()}
-    {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum">
+    {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum" onClick={() => { if (roomShowcase) { setRoomShowcase(false); setRoomOpen(false); } }}>
       <Image className="house-room-scene" src={roomSceneSrc} alt="Mitt rum" fill priority sizes="100vw" />
-      <button className="house-room-close" type="button" onClick={() => setRoomOpen(false)} aria-label="Gå tillbaka till byn">← Till byn</button>
-      <div className="dialogue-card story-moment-dialogue"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Jag borde inreda mitt rum så att det blir riktigt fint!</p></div>
+      <button className="house-room-close" type="button" onClick={(event) => { event.stopPropagation(); setRoomShowcase(false); setRoomOpen(false); }} aria-label="Gå tillbaka till byn">← Till byn</button>
+      {!roomShowcase && <div className="dialogue-card story-moment-dialogue"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Jag borde inreda mitt rum så att det blir riktigt fint!</p><button className="primary-button dialogue-next" onClick={(event) => { event.stopPropagation(); setRoomShowcase(true); }}>Visa mig!</button></div>}
     </div>}
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
