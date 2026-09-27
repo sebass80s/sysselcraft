@@ -18,7 +18,7 @@ import {
 import type { BackendChildGameState, BackendQuest } from "@/backend/types";
 import { presentBackendQuests, primaryPresentedQuest, questSourceCounts } from "@/game/backendQuestPresentation";
 import { publishBackendWallet } from "@/game/backendWalletBridge";
-import { deriveDogHomeStageFromWorldFlags } from "@/backend/storyShop";
+import { deriveDogHomeStageFromWorldFlags } from "@/game/dogHome";
 import { createQuestRequestGuard } from "@/game/questRequestGuard";
 import { loadSaveState, saveSaveState, withConstructionState } from "@/game/saveState";
 import { syncBakeryContributionProgress, syncClinicContributionProgress, syncRecyclingContributionProgress } from "@/game/construction";
