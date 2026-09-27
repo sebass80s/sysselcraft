@@ -327,7 +327,8 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
   // separately below and never masquerade as new quest-source attention.
   const visibleQuests = sourceFilter
     ? presented.available.filter(({ presentation }) => presentation.destination === sourceFilter)
-    : [...presented.active, ...presented.pending];
+    : [...presented.available, ...presented.active, ...presented.pending];
+  const availableCount = presented.available.length;
   const activeCount = presented.active.length;
   const pendingCount = presented.pending.length;
   const approvedCount = quests.filter((quest) => quest.state === "approved").length;
@@ -450,7 +451,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
         }}
       >
         📜 Uppdrag
-        {(activeCount + pendingCount) > 0 && <span>{activeCount + pendingCount}</span>}
+        {(availableCount + activeCount + pendingCount) > 0 && <span>{availableCount + activeCount + pendingCount}</span>}
         {pendingTurnIns.length > 0 && <span>!</span>}
       </button>
 
