@@ -62,3 +62,17 @@ Do not spawn Henning merely because a numeric stage reaches 4. Recycling complet
 - No hidden numeric construction meter is exposed to the child.
 - No automatic reconciliation writes yet.
 - No bakery/clinic pacing is inferred from recycling calibration.
+
+
+## STATUS SUPERSEDED — ACT 1 COMPLETE 2026-09-27
+
+The 2026-09-15 checklist above is retained as engineering history and must **not** be used as current project status. Its statements that Henning/Bakery/Clinic/Sol are unimplemented or awaiting pacing decisions are obsolete.
+
+Current truth is in `NOVA_HANDOFF_MANIFEST.md`, `TECHNICAL_HANDOFF.md`, `STORY_DESIGN.md` and `STATE_OWNERSHIP.md`:
+- **Act 1 is feature-complete, including Sol and Clinic.**
+- Quest V2 and the backend reward/wallet path are established production systems.
+- Recycling, Bakery and Clinic progression have implemented persistence/authority rules and regression coverage.
+- Mira/lanthandel, Flaskpost/Sol, dog home and the child's sequential full-scene room customization are implemented Act 1 systems/content.
+- Act 2 starts at the lake summer place, with a new peer boy and the restoration spine summer cottage → jetty → boathouse → motorboat.
+
+Do not resurrect the old `nova/mvp-night-20260915` work order or infer current tasks from the historical sections above. New engineering work should start from the canonical Act 2 handoff.
