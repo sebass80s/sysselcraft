@@ -47,3 +47,11 @@ const DOG_HOME_ITEM_KEYS = ["dog_home_bed", "dog_home_bowls", "dog_home_toys", "
 export async function purchaseDogHomeUpgrade(index: DogHomeUpgradeIndex): Promise<StoryItemPurchase> {
   return purchaseStoryItem(DOG_HOME_ITEM_KEYS[index]);
 }
+
+export function deriveDogHomeStageFromWorldFlags(worldFlags: Record<string, unknown>): 0 | 1 | 2 | 3 | 4 {
+  if (worldFlags.dogHomeCozyOwned === true) return 4;
+  if (worldFlags.dogHomeToysOwned === true) return 3;
+  if (worldFlags.dogHomeBowlsOwned === true) return 2;
+  if (worldFlags.dogHomeBedOwned === true) return 1;
+  return 0;
+}
