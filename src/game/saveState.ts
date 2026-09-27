@@ -182,6 +182,7 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       henningArrivalSeen: candidate.worldFlags?.henningArrivalSeen === true,
       miraArrivalSeen: candidate.worldFlags?.miraArrivalSeen === true,
       bottleMessagePurchased: candidate.worldFlags?.bottleMessagePurchased === true,
+      roomFootballRugOwned: candidate.worldFlags?.roomFootballRugOwned === true,
       bottleMessageSent: candidate.worldFlags?.bottleMessageSent === true,
       solArrivalSeen: candidate.worldFlags?.solArrivalSeen === true,
       solTourBakerySeen: candidate.worldFlags?.solTourBakerySeen === true,
