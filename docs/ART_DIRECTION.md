@@ -412,3 +412,200 @@ Runtime chooses the full scene from sequential ownership state; dialogue and `Ti
 **Spritesheets, contact sheets and multi-panel generation are forbidden unless Kalle explicitly requests one.** Important raster assets must be produced individually at intended final resolution. Do not generate a sheet and crop/upscale cells into production assets. This rule applies to Act 2 lake scenes, story moments, construction states and character art as well as the room.
 
 For Act 2, retain the canonical warm painted storybook language and true 2.5D outdoor grammar. The lake is a distinct second outdoor area with its own coherent production background/navigation geometry, not an extension pasted onto the village canvas.
+
+
+# 🔒 HARD VISUAL PRODUCTION METHOD — ACT 1 PROVEN PIPELINE (LOCKED 2026-09-27)
+
+This section is the default method for **all future SysselCraft world areas, construction projects and major environment art**. It records the method that made Act 1 visually coherent and exists specifically to prevent repeated redraw loops. If older art-production guidance conflicts with this section, **this section wins**.
+
+## Prime directive
+
+**Do not ask image generation to independently invent pieces that later need to fit together. Establish one visual authority first, then freeze its geometry.**
+
+Image generation is good at painting. It is bad at remembering exact camera geometry across repeated independent generations. Every unnecessary regeneration risks changing perspective, footprint, scale, lighting, vegetation, doors, roof shape or surrounding terrain. Those changes create expensive integration churn.
+
+The production order is therefore:
+
+**visual brief → one master world composition → lock geometry → extract/author dynamic contracts → fixed anchors/envelopes → individual stage assets → deterministic validation → runtime integration → physical screenshot comparison.**
+
+Do not reverse this order.
+
+## A. New outdoor area: exact pipeline
+
+### 1. Define the area before drawing
+Before generating the first image, write down:
+- final runtime canvas/aspect ratio and intended camera behavior;
+- permanent landmarks;
+- all major restoration/construction sites needed by the act;
+- entrances/exits and approximate player travel corridors;
+- water/shore/roads/paths and other composition-defining terrain;
+- places that must remain visually ordinary until a later reveal;
+- approximate avatar scale and the accepted Act 1 camera/perspective reference.
+
+Do **not** begin by generating separate cottage, jetty, boathouse, trees and terrain and hope they assemble later.
+
+### 2. Paint ONE coherent master scene
+Generate the whole area as one high-quality landscape composition in the locked SysselCraft language:
+- warm hand-painted illustrated storybook;
+- soft organic forms;
+- rich but controlled vegetation/material detail;
+- consistent three-quarter/isometric 2.5D projection;
+- visible volume and believable ground contact;
+- coherent sunlight/shadow direction;
+- no grid/tile look, no flat sticker assets, no retro/pixel language.
+
+For Act 1 the production master is the 1920×640 start-area world. Its key lesson is not the exact dimensions; it is that **the environment and building sites were composed together**.
+
+### 3. Approve the master ONCE, then freeze it
+After Kalle accepts the master composition, that image becomes **geometry authority**.
+
+Record:
+- pixel dimensions;
+- horizon/camera/projection feel;
+- avatar scale reference;
+- permanent landmark positions;
+- each dynamic project's ground/base anchor;
+- approximate render envelope;
+- ground footprint/collision region;
+- entrances and intended approach direction;
+- foreground occluders/depth boundaries.
+
+From this point, do not regenerate the master merely to add a project stage. Do not move terrain to accommodate a later asset unless Kalle explicitly reopens the master composition.
+
+### 4. Separate static and dynamic visual responsibility
+Bake into the master anything that never needs to change:
+- terrain;
+- shoreline;
+- ordinary vegetation;
+- distant scenery;
+- noninteractive permanent detail.
+
+Keep separate only what genuinely needs runtime state/depth/interaction:
+- construction/restoration projects;
+- NPCs/player/dog;
+- quest/story markers;
+- movable or state-changing props;
+- foreground masks/occluders when required for 2.5D traversal.
+
+This is why Act 1 can look painted rather than assembled from hundreds of little game objects.
+
+## B. Buildings/restoration projects: exact Act 1 method
+
+### 5. Lock one anchor for the entire project
+Every project has **one fixed world base point**. All stages use it.
+
+A construction stage is not allowed to wander because the generated image has different transparent bounds. The ground contact and doorway relationship to the world must remain stable.
+
+### 6. Lock one common render envelope
+Normalize every stage for that project into the same final canvas/envelope. Preserve transparent space where needed so stage switching does not alter placement math.
+
+Act 1 production precedent:
+- `recycling-stage-1.webp` … `recycling-stage-4.webp`
+- `bakery-stage-1.webp` … `bakery-stage-4.webp`
+- `clinic-stage-1.webp` … `clinic-stage-4.webp`
+
+All stages of each building share the same base point and normalized envelope.
+
+### 7. Author stages against the SAME visual contract
+Each stage must preserve:
+- camera angle/projection;
+- building footprint;
+- orientation;
+- doorway/ground-contact position;
+- material/style family;
+- lighting direction;
+- surrounding-world scale.
+
+Only the intended construction/restoration state changes.
+
+**Never independently prompt four stages as four unrelated buildings.** The accepted project design/stage is the reference for the next state. If generation cannot hold geometry closely enough, use deterministic image editing/normalization rather than repeatedly rolling the dice.
+
+### 8. Reveal sites without spoiling them
+Before a project is narratively revealed, its location should read as ordinary world scenery unless the story explicitly requires visible ruins. Do not place developer-looking empty foundations, signs or suspicious rectangular gaps simply because a future building needs coordinates.
+
+The master composition must nevertheless reserve enough visual/traversal space for the later dynamic asset. This was a key Act 1 design rule.
+
+## C. Deterministic finishing: where generation STOPS
+
+### 9. Generation paints, deterministic tools fit
+Once the artwork is artistically usable, stop regenerating it to solve technical problems.
+
+Use deterministic processing for:
+- transparent-background cleanup;
+- cropping/padding;
+- exact pixel dimensions;
+- common stage envelopes;
+- anchor alignment;
+- scale;
+- file conversion/optimization;
+- masks/foreground layers.
+
+Do not spend another generation trying to fix a 12-pixel alignment error, transparent halo, wrong crop or envelope mismatch.
+
+### 10. Composite before integration
+For every dynamic building/state, make a test composite over the **actual locked master** at the exact runtime anchor and scale.
+
+Reject before coding if:
+- perspective contradicts the ground;
+- base point jumps;
+- doorway floats or sinks;
+- scale differs from child/permanent architecture;
+- shadow/light direction conflicts;
+- vegetation/terrain collision looks impossible;
+- stage transition visibly shifts the structure;
+- transparent matte/box/halo is visible.
+
+This cheap composite gate prevents expensive runtime iteration.
+
+## D. Runtime 2.5D integration
+
+### 11. Artwork does not define collision
+Derive collision/navigation from the **ground footprint**, never the full rectangular sprite envelope. Roofs, canopies and tall walls may visually overlap the child without blocking the entire image rectangle.
+
+### 12. Depth uses base position
+Depth/Y-sorting and occlusion should correspond to ground/base position. Use foreground masks/layers from the painted scene where necessary so the child can genuinely move behind and in front of scenery.
+
+### 13. Preserve one human-scale reference
+The child/avatar and accepted Act 1 permanent architecture are the scale ruler. New areas may have stylized proportions, but do not silently change avatar-to-door/building scale from one act to another.
+
+## E. Mandatory visual acceptance gates
+
+An asset/project is not finished because the source image looks attractive.
+
+Pass these gates in order:
+1. **Source gate:** correct style, orientation and project identity.
+2. **Geometry gate:** correct fixed anchor, footprint, envelope and perspective.
+3. **Composite gate:** looks native on the locked master.
+4. **Stage gate:** toggling every state shows no positional jump or camera/perspective mutation.
+5. **Runtime gate:** actual playable scene preserves scale, depth, occlusion and traversal.
+6. **Physical gate:** iPhone screenshot/gameplay still reads as the same painted storybook world at device scale.
+
+If a gate fails, fix the earliest failing layer. Do not compensate for bad source geometry with increasingly strange Phaser scale/offset hacks.
+
+## F. Anti-redraw rules
+
+To protect production speed:
+- **Never regenerate an accepted master scene casually.**
+- **Never regenerate an accepted building merely to fix placement.**
+- **Never create construction stages independently without a locked reference.**
+- **Never change perspective/camera between stage images.**
+- **Never use runtime non-uniform stretching to repair bad source proportions.**
+- **Never draw future sites as obvious placeholders unless canon requires it.**
+- **Never use a spritesheet/contact sheet as a generation source.** Generate each final raster asset individually at intended resolution.
+- **Never show Kalle five technically broken iterations and ask which is best.** Reject contract-breaking output internally and continue until there is a real art/product choice.
+
+## G. Act 2 lake application
+
+Before producing Act 2 assets, lock the lake-area composition around the whole act, not only its first scene. The master must reserve and visually support:
+- the summer cottage restoration site;
+- jetty;
+- boathouse;
+- motorboat/water access;
+- village↔lake transition entrance;
+- child movement routes;
+- suitable meeting/story space for the new boy;
+- shoreline/water composition capable of supporting the final repaired boat.
+
+Then freeze the lake master and produce each restoration project's states against its recorded anchor/envelope. **Do not redesign the lake between cottage, jetty, boathouse and boat production.**
+
+The goal is that Act 2 art production becomes a controlled manufacturing pipeline, not a sequence of fresh illustration experiments.
