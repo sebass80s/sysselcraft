@@ -4,6 +4,8 @@ import { getSupabaseBrowserClient } from "./supabaseClient";
 
 export const BOTTLE_MESSAGE_PRICE = 100;
 export const FOOTBALL_RUG_PRICE = 30;
+export const ROOM_DECOR_PRICES = { footballPoster: 20, computerDesk: 80, trophyShelf: 35, stringLights: 25, aquarium: 60 } as const;
+export type RoomDecorKey = keyof typeof ROOM_DECOR_PRICES;
 export const DOG_HOME_PRICES = [40, 25, 30, 35] as const;
 export type DogHomeUpgradeIndex = 0 | 1 | 2 | 3;
 
@@ -14,7 +16,7 @@ export type StoryItemPurchase = {
   worldFlags: Record<string, unknown>;
 };
 
-async function purchaseStoryItem(itemKey: "bottle_message" | "room_football_rug" | "dog_home_bed" | "dog_home_bowls" | "dog_home_toys" | "dog_home_cozy"): Promise<StoryItemPurchase> {
+async function purchaseStoryItem(itemKey: "bottle_message" | "room_football_rug" | "room_football_poster" | "room_computer_desk" | "room_trophy_shelf" | "room_string_lights" | "room_aquarium" | "dog_home_bed" | "dog_home_bowls" | "dog_home_toys" | "dog_home_cozy"): Promise<StoryItemPurchase> {
   const { data, error } = await getSupabaseBrowserClient().rpc("purchase_story_item", {
     p_item_key: itemKey,
   });
@@ -35,6 +37,13 @@ export async function purchaseBottleMessage(): Promise<StoryItemPurchase> {
 
 export async function purchaseFootballRug(): Promise<StoryItemPurchase> {
   return purchaseStoryItem("room_football_rug");
+}
+
+const ROOM_DECOR_ITEM_KEYS: Record<RoomDecorKey, "room_football_poster" | "room_computer_desk" | "room_trophy_shelf" | "room_string_lights" | "room_aquarium"> = {
+  footballPoster: "room_football_poster", computerDesk: "room_computer_desk", trophyShelf: "room_trophy_shelf", stringLights: "room_string_lights", aquarium: "room_aquarium",
+};
+export async function purchaseRoomDecor(key: RoomDecorKey): Promise<StoryItemPurchase> {
+  return purchaseStoryItem(ROOM_DECOR_ITEM_KEYS[key]);
 }
 
 export async function commitStoryBeat(beat: "bottle_message_sent" | "sol_arrival_seen" | "sol_tour_bakery_seen" | "sol_tour_shop_seen" | "sol_tour_linus_seen" | "sol_chose_to_stay"): Promise<Record<string, unknown>> {
