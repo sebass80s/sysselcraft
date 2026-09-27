@@ -97,6 +97,8 @@ export default function VillagePrototype() {
   const [pendingDiamondRewardIds, setPendingDiamondRewardIds] = useState<Set<string>>(new Set());
   const [shopBusy, setShopBusy] = useState(false);
   const [shopMessage, setShopMessage] = useState("");
+  const roomStage = !footballRugOwned ? 0 : !roomDecorOwned.footballPoster ? 1 : !roomDecorOwned.computerDesk ? 2 : !roomDecorOwned.trophyShelf ? 3 : !roomDecorOwned.stringLights ? 4 : !roomDecorOwned.aquarium ? 5 : 6;
+  const roomSceneSrc = roomStage === 0 ? "/assets/village/interiors/room/room-base.png" : `/assets/village/interiors/room/room-${roomStage}.png`;
   const attention = residentAttention(construction);
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
@@ -1002,13 +1004,7 @@ export default function VillagePrototype() {
     {!solRuntimeTestActive && <>
     {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={() => setDogHomeOpen(false)}>← Till byn</button>{line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Mys vidare"}</button></div>}</div>; })()}
     {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum">
-      <Image className="house-room-scene" src="/assets/village/interiors/room/room-base.png" alt="Mitt rum" fill priority sizes="100vw" />
-      {footballRugOwned && <Image className="house-room-decor" src="/assets/village/interiors/room/football-rug.svg" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.footballPoster && <Image className="house-room-decor" src="/assets/village/interiors/room/room-poster-football-sweden.png" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.computerDesk && <Image className="house-room-item house-room-computer" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-computer-desk.png" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.trophyShelf && <Image className="house-room-item house-room-trophies" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-trophy-shelf.png" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.stringLights && <Image className="house-room-item house-room-lights" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-string-lights.png" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.aquarium && <Image className="house-room-item house-room-aquarium" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-aquarium.png" alt="" fill priority sizes="100vw" />}
+      <Image className="house-room-scene" src={roomSceneSrc} alt="Mitt rum" fill priority sizes="100vw" />
       <button className="house-room-close" type="button" onClick={() => setRoomOpen(false)} aria-label="Gå tillbaka till byn">← Till byn</button>
       <div className="dialogue-card story-moment-dialogue"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Jag borde inreda mitt rum så att det blir riktigt fint!</p></div>
     </div>}
