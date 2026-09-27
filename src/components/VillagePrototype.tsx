@@ -1004,11 +1004,11 @@ export default function VillagePrototype() {
     {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum">
       <Image className="house-room-scene" src="/assets/village/interiors/room/room-base.png" alt="Mitt rum" fill priority sizes="100vw" />
       {footballRugOwned && <Image className="house-room-decor" src="/assets/village/interiors/room/football-rug.svg" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.footballPoster && <Image className="house-room-item house-room-poster" src="/assets/village/interiors/room/room-poster-football-sweden.png" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.computerDesk && <Image className="house-room-item house-room-computer" src="/assets/village/interiors/room/room-computer-desk.png" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.trophyShelf && <Image className="house-room-item house-room-trophies" src="/assets/village/interiors/room/room-trophy-shelf.png" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.stringLights && <Image className="house-room-item house-room-lights" src="/assets/village/interiors/room/room-string-lights.png" alt="" fill priority sizes="100vw" />}
-      {roomDecorOwned.aquarium && <Image className="house-room-item house-room-aquarium" src="/assets/village/interiors/room/room-aquarium.png" alt="" fill priority sizes="100vw" />}
+      {roomDecorOwned.footballPoster && <Image className="house-room-item house-room-poster" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-poster-football-sweden.png" alt="" fill priority sizes="100vw" />}
+      {roomDecorOwned.computerDesk && <Image className="house-room-item house-room-computer" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-computer-desk.png" alt="" fill priority sizes="100vw" />}
+      {roomDecorOwned.trophyShelf && <Image className="house-room-item house-room-trophies" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-trophy-shelf.png" alt="" fill priority sizes="100vw" />}
+      {roomDecorOwned.stringLights && <Image className="house-room-item house-room-lights" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-string-lights.png" alt="" fill priority sizes="100vw" />}
+      {roomDecorOwned.aquarium && <Image className="house-room-item house-room-aquarium" style={{ position: "absolute" }} src="/assets/village/interiors/room/room-aquarium.png" alt="" fill priority sizes="100vw" />}
       <button className="house-room-close" type="button" onClick={() => setRoomOpen(false)} aria-label="Gå tillbaka till byn">← Till byn</button>
       <div className="dialogue-card story-moment-dialogue"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Jag borde inreda mitt rum så att det blir riktigt fint!</p></div>
     </div>}
