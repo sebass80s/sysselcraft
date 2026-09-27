@@ -44,6 +44,9 @@ export type SaveStateV1 = {
     miraArrivalSeen?: boolean;
     bottleMessagePurchased?: boolean;
     roomFootballRugOwned?: boolean;
+    dogHomeStage?: 0 | 1 | 2 | 3 | 4;
+    dogHomePendingReaction?: 1 | 2 | 3 | 4;
+    dogHomeLastDialogue?: number;
     bottleMessageSent?: boolean;
     solArrivalSeen?: boolean;
     solTourBakerySeen?: boolean;
@@ -79,6 +82,9 @@ export function createDefaultSaveState(): SaveStateV1 {
       miraArrivalSeen: false,
       bottleMessagePurchased: false,
       roomFootballRugOwned: false,
+      dogHomeStage: 0,
+      dogHomePendingReaction: undefined,
+      dogHomeLastDialogue: undefined,
       bottleMessageSent: false,
       solArrivalSeen: false,
       solTourBakerySeen: false,
@@ -183,6 +189,9 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       miraArrivalSeen: candidate.worldFlags?.miraArrivalSeen === true,
       bottleMessagePurchased: candidate.worldFlags?.bottleMessagePurchased === true,
       roomFootballRugOwned: candidate.worldFlags?.roomFootballRugOwned === true,
+      dogHomeStage: [0,1,2,3,4].includes(candidate.worldFlags?.dogHomeStage as number) ? candidate.worldFlags?.dogHomeStage as 0|1|2|3|4 : 0,
+      dogHomePendingReaction: [1,2,3,4].includes(candidate.worldFlags?.dogHomePendingReaction as number) ? candidate.worldFlags?.dogHomePendingReaction as 1|2|3|4 : undefined,
+      dogHomeLastDialogue: typeof candidate.worldFlags?.dogHomeLastDialogue === "number" && Number.isInteger(candidate.worldFlags.dogHomeLastDialogue) && candidate.worldFlags.dogHomeLastDialogue >= 0 && candidate.worldFlags.dogHomeLastDialogue < 10 ? candidate.worldFlags.dogHomeLastDialogue : undefined,
       bottleMessageSent: candidate.worldFlags?.bottleMessageSent === true,
       solArrivalSeen: candidate.worldFlags?.solArrivalSeen === true,
       solTourBakerySeen: candidate.worldFlags?.solTourBakerySeen === true,
