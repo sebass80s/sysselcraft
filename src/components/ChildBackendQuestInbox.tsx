@@ -145,7 +145,11 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
         let baseline = snapshot.worldFlags.bakeryClaimBaseline;
         let baselineStage = snapshot.worldFlags.bakeryClaimBaselineStage;
         const bakeryStarted = snapshot.construction.revealed.bakery > 0 || snapshot.construction.earned.bakery > 0;
-        if (baseline === undefined && bakeryStarted) {
+        const bakeryReadyToStart = snapshot.construction.revealed.recycling >= 4 && snapshot.worldFlags.henningArrivalSeen === true;
+        if (baseline === undefined && (bakeryStarted || bakeryReadyToStart)) {
+          // Establish the Bakery baseline as soon as Henning has arrived. This makes
+          // the next authoritative real-world claim earn bakery:1 instead of creating
+          // the baseline too late and swallowing that first contribution.
           baseline = Math.max(0, Math.floor(nextGameState.progression.worldProgression));
           baselineStage = snapshot.construction.revealed.bakery;
           snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, bakeryClaimBaseline: baseline, bakeryClaimBaselineStage: baselineStage } };
