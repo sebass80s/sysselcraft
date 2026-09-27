@@ -9,6 +9,12 @@
   color: #49392c;
 }
 
+.dockOpen {
+  /* Open quest UI is modal and must sit above the village HUD. The collapsed dock
+     remains at z-index 10 so story/cutscene layers can cover the Uppdrag button. */
+  z-index: 50;
+}
+
 .toggle {
   pointer-events: auto;
   display: inline-flex;
