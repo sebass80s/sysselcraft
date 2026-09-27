@@ -26,6 +26,7 @@ export type VillageGameHandle = {
 };
 type Callbacks = {
   onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus" | "bakery") => void;
+  onHouseInteract: () => void;
   onLinusInteract: () => void;
   onRecyclingInteract: () => void;
   onHenningInteract: () => void;
@@ -113,6 +114,8 @@ export async function createVillageGame(
     private shop?: GameObjects.Image;
     private mira?: GameObjects.Image;
     private shopInteractionPending = false;
+    private house?: GameObjects.Image;
+    private houseInteractionPending = false;
     private bottleMessageMarker?: GameObjects.Text;
     private bottleMessageInteractionPending = false;
     private attentionMarker?: GameObjects.Container;
@@ -213,6 +216,19 @@ export async function createVillageGame(
           else this.maybeCompleteWorldInteraction();
           return;
         }
+        if (this.house?.getBounds().contains(pointer.worldX, pointer.worldY)) {
+          this.houseInteractionPending = true;
+          this.linusInteractionPending = false;
+          this.henningInteractionPending = false;
+          this.shopInteractionPending = false;
+          this.attentionInteractionPending = false;
+          this.noticeboardInteractionPending = false;
+          this.path = findPath(this.player, { x: 245, y: 405 }, this.navigationObstacles);
+          const target = this.path.at(-1);
+          if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+          else this.maybeCompleteWorldInteraction();
+          return;
+        }
         // Resolve NPC taps at scene level too. This avoids depending on Phaser's
         // object-level pointer event ordering in the native iOS WebView.
         if (this.linus && this.linus.getBounds().contains(pointer.worldX, pointer.worldY)) {
@@ -262,6 +278,7 @@ export async function createVillageGame(
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
         this.shopInteractionPending = false;
+        this.houseInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
         this.path = findPath({ x: this.player.x, y: this.player.y }, { x: pointer.worldX, y: pointer.worldY }, this.navigationObstacles);
@@ -453,6 +470,16 @@ export async function createVillageGame(
         return;
       }
 
+      if (this.houseInteractionPending && this.player) {
+        const houseApproach = { x: 245, y: 405 };
+        if (distance(this.player, houseApproach) > 42) return;
+        this.houseInteractionPending = false;
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+        callbacks.onHouseInteract();
+        return;
+      }
+
       if (this.shopInteractionPending && this.player && this.shop?.visible) {
         const shopApproach = { x: 1130, y: 425 };
         const miraApproach = { x: 1050, y: 445 };
@@ -609,10 +636,25 @@ export async function createVillageGame(
     }
 
     private drawHouse() {
-      this.add.image(150, 250, "family-house")
+      this.house = this.add.image(150, 250, "family-house")
         .setOrigin(0.5, 1)
         .setDisplaySize(360, 300)
-        .setDepth(1250);
+        .setDepth(1250)
+        .setInteractive({ useHandCursor: true, pixelPerfect: false });
+      this.house.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player || constructionDialogueOpen) return;
+        this.houseInteractionPending = true;
+        this.linusInteractionPending = false;
+        this.henningInteractionPending = false;
+        this.shopInteractionPending = false;
+        this.attentionInteractionPending = false;
+        this.noticeboardInteractionPending = false;
+        this.path = findPath(this.player, { x: 245, y: 405 }, this.navigationObstacles);
+        const target = this.path.at(-1);
+        if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+        else this.maybeCompleteWorldInteraction();
+      });
     }
 
     private drawFence(x: number, y: number, count: number) {
