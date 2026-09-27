@@ -8,20 +8,22 @@ const starter = { recyclingComplete: false, bakeryUnlocked: false, henningPresen
 const recyclingDone = { recyclingComplete: true, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: true };
 const bakery = { recyclingComplete: true, bakeryUnlocked: true, henningPresent: true, noticeboardAvailable: true };
 
-assert.equal(chooseQuestPresentation(quest("Bädda sängen", "wellbeingRoutine"), starter).channel, "home");
-assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), starter).channel, "home");
+assert.equal(chooseQuestPresentation(quest("Bädda sängen", "wellbeingRoutine"), starter).channel, "npc");
+assert.equal(chooseQuestPresentation(quest("Bädda sängen", "wellbeingRoutine"), starter).destination, "linus");
+assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), starter).channel, "npc");
+assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), starter).destination, "linus");
 assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), bakery).channel, "npc");
 assert.equal(chooseQuestPresentation(quest("Ring mormor", "community"), bakery).presenter, "henning");
 assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), bakery).destination, "bakery");
-assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), recyclingDone).destination, "home");
-assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), recyclingDone).channel, "home");
-assert.equal(chooseQuestPresentation(quest("Läs en bok", "knowledgeCreativity"), recyclingDone).destination, "home");
+assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), recyclingDone).destination, "noticeboard");
+assert.equal(chooseQuestPresentation(quest("Gör läxan", "knowledgeCreativity"), recyclingDone).channel, "noticeboard");
+assert.equal(chooseQuestPresentation(quest("Läs en bok", "knowledgeCreativity"), recyclingDone).destination, "noticeboard");
 assert.equal(chooseQuestPresentation(quest("Hjälp till med middagen", "community"), recyclingDone).channel, "noticeboard");
 
 assert.equal(chooseQuestPresentation(
   quest("Gör läxan", "knowledgeCreativity"),
   { recyclingComplete: true, bakeryUnlocked: false, henningPresent: false, noticeboardAvailable: false },
-).presenter, "home");
+).presenter, "linus");
 assert.equal(chooseQuestPresentation(
   quest("Hjälp till med middagen", "community"),
   { recyclingComplete: true, bakeryUnlocked: true, henningPresent: false, noticeboardAvailable: true },
@@ -54,8 +56,8 @@ const backendQuest = (overrides = {}) => ({
 });
 
 const localRecyclingComplete = presentBackendQuests([backendQuest()], null, { recyclingCenterStage: 4 });
-assert.equal(localRecyclingComplete.available[0].presentation.destination, "home",
-  "obvious homework stays routed home even when local Recycling completion is ahead of backend migration");
+assert.equal(localRecyclingComplete.available[0].presentation.destination, "noticeboard",
+  "obvious homework uses the live noticeboard after local Recycling completion");
 
 const mixedStates = presentBackendQuests([
   backendQuest({ instanceId: "home", title: "Städa rummet", progressionClass: "orderEnvironment" }),
@@ -65,11 +67,11 @@ const mixedStates = presentBackendQuests([
   backendQuest({ instanceId: "approved", title: "Ring mormor", progressionClass: "community", state: "approved" }),
 ], null, { recyclingCenterStage: 4 });
 
-assert.deepEqual(questSourceCounts(mixedStates), { noticeboard: 0, home: 2, linus: 0, bakery: 0 },
+assert.deepEqual(questSourceCounts(mixedStates), { noticeboard: 2, home: 0, linus: 0, bakery: 0 },
   "only actionable available quests may light world-source attention");
 assert.equal(mixedStates.active.length, 1, "accepted quests live in active without re-lighting a world source");
 assert.equal(mixedStates.pending.length, 1, "pending quests stay discoverable in the general quest view");
-assert.equal(mixedStates.pending[0].presentation.destination, "home",
+assert.equal(mixedStates.pending[0].presentation.destination, "noticeboard",
   "pending quests keep presentation metadata without re-lighting the source");
 assert.equal(primaryPresentedQuest(mixedStates)?.quest.instanceId, "active",
   "accepted work remains primary in the general quest panel without relighting a world source");
