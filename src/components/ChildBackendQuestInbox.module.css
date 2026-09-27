@@ -2,7 +2,8 @@
   position: fixed;
   left: max(.65rem, env(safe-area-inset-left));
   bottom: max(.65rem, env(safe-area-inset-bottom));
-  z-index: 40;
+  /* Village story/cutscene layers start at z-index 20. Keep the Uppdrag dock\n     below them so it never covers cinematic UI. */
+  z-index: 10;
   width: auto;
   pointer-events: none;
   color: #49392c;
