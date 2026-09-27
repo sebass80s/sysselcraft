@@ -26,7 +26,6 @@ export type VillageGameHandle = {
 };
 type Callbacks = {
   onQuestSourceInteract?: (source: "noticeboard" | "home" | "linus" | "bakery") => void;
-  onHouseInteract: () => void;
   onLinusInteract: () => void;
   onRecyclingInteract: () => void;
   onHenningInteract: () => void;
@@ -52,7 +51,6 @@ const NOTICEBOARD_MARKER: Point = { x: 150, y: 305 };
 const NOTICEBOARD_APPROACH: Point = { x: 175, y: 430 };
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
-const HOME_QUEST_MARKER: Point = { x: 245, y: 338 };
 
 function distance(a: Point, b: Point) {
   return Math.hypot(a.x - b.x, a.y - b.y);
@@ -114,8 +112,6 @@ export async function createVillageGame(
     private shop?: GameObjects.Image;
     private mira?: GameObjects.Image;
     private shopInteractionPending = false;
-    private house?: GameObjects.Image;
-    private houseInteractionPending = false;
     private bottleMessageMarker?: GameObjects.Text;
     private bottleMessageInteractionPending = false;
     private attentionMarker?: GameObjects.Container;
@@ -136,7 +132,6 @@ export async function createVillageGame(
 
     preload() {
       preloadVisualProductionBuildings(this);
-      this.load.image("family-house", "/assets/village/reboot/family-house.webp");
       this.load.image("child-painted", "/assets/village/reboot/child.webp");
       this.load.image("master-scene", "/assets/village/reboot/start-area-master-1920x640.webp");
       this.load.image("linus-painted", "/assets/village/reboot/linus-painted.png");
@@ -271,7 +266,6 @@ export async function createVillageGame(
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
         this.shopInteractionPending = false;
-        this.houseInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
         const requestedTarget = { x: pointer.worldX, y: pointer.worldY };
@@ -473,15 +467,6 @@ export async function createVillageGame(
         return;
       }
 
-      if (this.houseInteractionPending && this.player) {
-        const houseApproach = { x: 245, y: 405 };
-        if (distance(this.player, houseApproach) > 42) return;
-        this.houseInteractionPending = false;
-        this.path = [];
-        this.targetMarker?.setVisible(false);
-        callbacks.onHouseInteract();
-        return;
-      }
 
       if (this.shopInteractionPending && this.player && this.shop?.visible) {
         const shopApproach = { x: 1130, y: 425 };
@@ -638,39 +623,6 @@ export async function createVillageGame(
       this.tweens.add({ targets: this.bottleMessageMarker, y: "-=5", duration: 900, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
-    private drawHouse() {
-      // The visible house already lives in master-scene. Keep this image effectively
-      // invisible so its authored footprint can serve as the generous tap target.
-      this.house = this.add.image(150, 250, "family-house")
-        .setOrigin(0.5, 1)
-        .setDisplaySize(360, 300)
-        .setAlpha(0.001)
-        .setDepth(2900)
-        // Phaser hit-area coordinates are local to the image. The previous rectangle
-        // (-35,-18,430,340) was authored as if it were world/display pixels, so after
-        // scaling it covered a huge invisible swath of the village and swallowed taps.
-        // Keep room entry on the painted house only.
-        .setInteractive(new Phaser.Geom.Rectangle(0, 0, 360, 250), Phaser.Geom.Rectangle.Contains);
-
-      const enterHouse = (event: Types.Input.EventData) => {
-        event.stopPropagation();
-        if (!this.player || constructionDialogueOpen) return;
-        this.houseInteractionPending = true;
-        this.linusInteractionPending = false;
-        this.henningInteractionPending = false;
-        this.shopInteractionPending = false;
-        this.attentionInteractionPending = false;
-        this.noticeboardInteractionPending = false;
-        this.path = findPath(this.player, { x: 245, y: 405 }, this.navigationObstacles);
-        const target = this.path.at(-1);
-        if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
-        else this.maybeCompleteWorldInteraction();
-      };
-      this.house.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => enterHouse(event));
-
-      // Room entry remains active on the house itself, but the temporary UI marker is hidden
-      // until the room decoration loop is ready for Adam.
-    }
 
     private drawFence(x: number, y: number, count: number) {
       this.add.image(x + count * 10, y, "fence-segment")
@@ -1000,8 +952,6 @@ export async function createVillageGame(
         this.events.once("shutdown", () => mask.destroy());
       }
 
-      // The family house is painted into the master scene. Add only its invisible interaction layer + affordance.
-      this.drawHouse();
       this.drawShop();
       this.drawBottleMessageMarker();
 
