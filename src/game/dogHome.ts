@@ -38,3 +38,11 @@ export const dogHomeUpgradeDialogues: Record<1|2|3|4, DogHomeLine[]> = {
   3:[{speaker:"Barnet",text:"Jag köpte några leksaker till dig!"},{speaker:"Hunden",text:"*griper genast en leksak och rusar iväg*"},{speaker:"Barnet",text:"Varsågod, antar jag."}],
   4:[{speaker:"Barnet",text:"Kolla på ditt ställe nu!"},{speaker:"Hunden",text:"*kryper ner bland sina saker och suckar nöjt*"},{speaker:"Barnet",text:"Du har det nästan bättre än jag."}],
 };
+
+export function deriveDogHomeStageFromWorldFlags(worldFlags: Record<string, unknown>): DogHomeStage {
+  if (worldFlags.dogHomeCozyOwned === true) return 4;
+  if (worldFlags.dogHomeToysOwned === true) return 3;
+  if (worldFlags.dogHomeBowlsOwned === true) return 2;
+  if (worldFlags.dogHomeBedOwned === true) return 1;
+  return 0;
+}
