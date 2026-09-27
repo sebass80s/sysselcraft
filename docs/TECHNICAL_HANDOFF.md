@@ -542,3 +542,22 @@ Area transitions are reciprocal and spawn-point based: leaving the village throu
 **Interior architecture is intentionally different.** House rooms, shops and comparable interiors use the existing fullscreen Story Moment / Mira-shop presentation model rather than becoming navigable Phaser maps. The first child-house interior should therefore be a fullscreen illustrated room with tappable hotspots and layered owned decorations. This keeps interiors visually rich and technically cheap while outdoor areas remain true avatar-controlled game maps.
 
 Locked rule: **interiors add depth; area/map swaps add breadth.** New acts can normally introduce a new painted outdoor background/map package without requiring a larger base-world canvas or a rewrite of the existing village.
+
+
+## ACT 1 CLOSEOUT / ACT 2 HANDOFF — 2026-09-27
+
+**Act 1 is feature-complete. Sol and the Clinic are part of Act 1 and are complete.** Do not reopen Recycling, Henning/Bakery, Mira/lanthandel, Flaskpost/Sol/Clinic, dog-home or child-room scope except for a concrete regression reported or reproduced.
+
+Current branch checkpoint entering this documentation closeout was `b48837730877148e5854ab1945440aa7beefb45a` on `nova/local-construction-snapshot`. The canonical local workspace remains `/Users/karoaa/Developer/sysselcraft`; routine native sync is `npm run syssel` followed by Run in Xcode over the existing installation. Never regenerate iOS and never uninstall/reset Adam's save for testing.
+
+Late Act 1 architecture that supersedes older sections in this document:
+- Quest V2/backend remains authoritative for real quest lifecycle, claimed rewards and the shared wallet/progression inputs used by production progression.
+- Supabase is authoritative for Mira story purchases. Story ownership is reconciled backend → local save for the implemented bottle/room purchases; purchases must be idempotent and survive restart.
+- The child room no longer uses runtime furniture overlays as its production model. It uses **full-scene sequential states**: `room-base.png` followed by `room-1.png` … `room-6.png`. Mira sells the next sequential upgrade; owned upgrades remain visible as `✓ Köpt`.
+- Room ownership flags are explicitly included in normalization/autosave. Backend story ownership repairs the local save rather than trusting a stale local purchase snapshot.
+- Dog home and room use the established post-dialogue showcase pause so the completed scene can be viewed unobstructed before exit.
+- Important raster production assets are generated individually at intended final resolution. **Spritesheets/contact sheets are forbidden unless Kalle explicitly requests one.**
+
+**Act 2 begins at the lake, not with Sol.** The next authored area is the lake summer place defined in `STORY_DESIGN.md`: persistent second outdoor area, one new peer boy, then summer cottage → jetty → boathouse → motorboat. The repaired boat bridges toward Act 3. Exact thresholds/stage counts, boy name/design and lake layout remain product decisions.
+
+Efficiency rule for Act 2: design story state, backend authority, persistence and visuals together; reuse Quest V2/unified progression; establish baselines before visible progression; test restart/reconciliation within each slice; use isolated/test-child acceptance paths rather than mutating Adam; and build coherent content arcs rather than one tiny scene at a time.
