@@ -54,7 +54,13 @@ export function chooseQuestPresentation(
   context: QuestPresentationContext,
 ): QuestPresentation {
   if (HOME_TITLE_HINTS.test(quest.title)) {
-    return { channel: "home", presenter: "home", destination: "home", reason: "obvious-home-task" };
+    // The old house quest source has been removed from the village. Household quests
+    // still exist, but until "Mitt rum" gets its future interface entry they must use
+    // a live world source so the child can discover and accept them in the village.
+    if (context.recyclingComplete && context.noticeboardAvailable) {
+      return { channel: "noticeboard", presenter: "noticeboard", destination: "noticeboard", reason: "home-task-via-noticeboard" };
+    }
+    return { channel: "npc", presenter: "linus", destination: "linus", reason: "home-task-via-starter-guide" };
   }
   if (BAKERY_TITLE_HINTS.test(quest.title) && context.bakeryUnlocked && context.henningPresent) {
     return {
