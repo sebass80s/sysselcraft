@@ -13,6 +13,25 @@ export const dogHomeDialogues: DogHomeLine[][] = [
   [{ speaker:"Barnet", text:"God natt, kompis." },{ speaker:"Hunden", text:"*lägger nosen mellan framtassarna och tittar upp*" },{ speaker:"Barnet", text:"Jag kommer tillbaka snart." }],
 ];
 
+export type DogHomeStage = 0 | 1 | 2 | 3 | 4;
+
+// Keep ambient dialogue consistent with what the child can actually see.
+// Stage 1 adds the bed. Stage 3 adds toys/ball. The remaining lines are safe at every stage.
+export function dogHomeDialogueIndicesForStage(stage: DogHomeStage): number[] {
+  const safe = [0, 1, 2, 3, 4, 7, 9];
+  if (stage >= 1) safe.push(6);
+  if (stage >= 3) safe.push(5, 8);
+  return safe;
+}
+
+export function chooseDogHomeDialogue(stage: DogHomeStage, lastDialogue?: number, random = Math.random): number {
+  const eligible = dogHomeDialogueIndicesForStage(stage);
+  const alternatives = eligible.filter((index) => index !== lastDialogue);
+  const pool = alternatives.length > 0 ? alternatives : eligible;
+  const position = Math.min(pool.length - 1, Math.floor(Math.max(0, Math.min(0.999999, random())) * pool.length));
+  return pool[position];
+}
+
 export const dogHomeUpgradeDialogues: Record<1|2|3|4, DogHomeLine[]> = {
   1:[{speaker:"Barnet",text:"Titta! En alldeles egen säng!"},{speaker:"Hunden",text:"*kastar sig ner i bädden och börjar bädda runt med tassarna*"},{speaker:"Barnet",text:"Japp. Den är godkänd."}],
   2:[{speaker:"Barnet",text:"Nu har du fått egna skålar också."},{speaker:"Hunden",text:"*undersöker matskålen mycket noggrant*"},{speaker:"Barnet",text:"Vattnet var tydligen mindre spännande."}],
