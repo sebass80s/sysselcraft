@@ -305,3 +305,45 @@ The earlier Mira attempts demonstrated two separate failure modes: realistic sou
 Geographic expansion should preserve the production advantage of SysselCraft's painted-world approach. Each new outdoor area/act is primarily authored as a new production-ready landscape background in the established soft painted isometric storybook language. Scenery that does not need to react to the player should be baked into that background; only navigation, hotspots, NPCs, quest/story markers and genuinely state-changing objects need separate runtime assets. New area art must preserve compatible camera/perspective/framing assumptions so the existing avatar scale and interaction language remain coherent across map swaps.
 
 Interiors follow a different visual contract: fullscreen illustrated scenes in the Story Moment / Mira-shop family. The child's room should be painted as a reusable base interior with intentional composition space for tappable decoration hotspots. Customizable furniture/decor should preferably be supplied as aligned transparent overlays/variants so combinations do not require a unique flattened room image for every loadout. The first room can remain deliberately compact, with roughly 5–8 authored slots and a small set of variants per slot; visual richness matters more than freeform placement in the initial version.
+
+
+## Asset production execution contract — LOCKED 2026-09-27
+
+Asset work is an **end-to-end production task**, not a request to stop after image generation. When Kalle says `kör`, `gör den`, or otherwise approves a previously described asset/work order, Nova must continue autonomously through every safe step that can be completed with available tools.
+
+### Default execution order
+
+1. **Verify repo reality first:** active branch/HEAD, canonical art/design docs, existing assets and the exact runtime integration point.
+2. **Identify the asset contract before generating:** purpose, canonical reference/base image, dimensions/aspect ratio, camera/perspective, placement/slot, transparency requirement, locked character/environment geometry and file format.
+3. **Generate/edit the requested production asset against those constraints.**
+4. **Inspect the actual output before accepting it.** Reject outputs with wrong geometry, background, transparency, framing, proportions, style, unwanted text/objects, or collateral changes. A visually attractive but contract-breaking image is not production-ready.
+5. **Iterate immediately when output is wrong.** Do not hand a failed generation to Kalle as the deliverable and stop.
+6. **Prepare the runtime file:** crop/alpha-clean/convert/optimize as appropriate while preserving required geometry and alignment.
+7. **Integrate it into the existing game/system**, rather than inventing a parallel system.
+8. **Wire the complete behavior requested by the work order** (for example purchase -> charge exactly once -> persistent ownership -> visible room overlay).
+9. **Commit and run available automated verification/CI.** Fix failures and continue.
+10. Stop only when the remaining blocker is genuinely external: physical iPhone acceptance, missing permission/credential/source asset, a real product decision, or an explicitly risky/destructive action.
+
+Do **not** narrate a plan and stop after step 1–3 when later steps are executable. Do **not** interpret “make the asset” as “make a concept image” when the surrounding work order is for production integration.
+
+### Locked-base / overlay rule
+
+When a base scene, room, character, or other reference is already accepted, it is **visual geometry authority**. Do not regenerate or reinterpret that base merely to create an add-on asset.
+
+For the child's room specifically:
+
+- `room-base` is the locked coordinate/perspective authority.
+- Purchasable decorations are isolated assets aligned to that exact room.
+- A decoration request must not produce a newly imagined room.
+- Overlay assets must use true transparency unless a different representation is explicitly required.
+- Do not move/redesign the bed, desk, window, walls, floor, camera, lighting direction, or other locked room geometry while producing an overlay.
+- Validate the overlay composited over the canonical base before accepting it.
+- Full-frame transparent overlays are acceptable when they make alignment safer; optimize to smaller bounding boxes only when runtime/file-size needs justify it.
+
+### Example: SysselBux room item
+
+If the approved work order is “make the football rug”, the default meaning is the **whole vertical slice** when that slice has already been specified:
+
+`canonical room-base -> production transparent rug overlay in its authored slot -> optimized asset -> existing Mira SysselBux shop item -> authoritative/idempotent purchase -> deduct SB exactly once -> persist ownership -> render rug in room when owned -> survive restart -> commit -> CI -> physical acceptance handoff`.
+
+Generating a picture of a rug, or generating a new room containing a rug, is **not completion** of that work order.
