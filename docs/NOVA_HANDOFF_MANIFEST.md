@@ -348,15 +348,8 @@ Latest verified branch checkpoint before this handoff:
 - Dog home and child room both use a post-dialogue **showcase pause**: final `Visa mig!` hides dialogue and exposes the full scene before the next scene tap exits. Room showcase was added in HEAD `2d59a6b...`.
 - Never reset/uninstall Adam's save for testing. Use isolated harnesses or Test-Ture where appropriate.
 
-### Sol status found in the 2026-09-27 pre-Act-2 audit
-Do **not** rebuild Sol from memory. A substantial Sol/Clinic implementation already exists:
-- `src/game/solStory.ts` contains bottle, arrival, tour, decision and Clinic-completion dialogue.
-- Existing story assets include `bottle-letter.png`, `bottle-message.png`, `sol-arrival.png`, tour images, `sol-stays.png`, Clinic completion/treatment images, runtime Sol art, and Clinic stages 1–4.
-- `scripts/test-sol-story.mjs` covers the production sequence and isolated acceptance harness.
-- Save flags already include bottle sent, Sol arrival/tour/stay and Clinic baseline/completion state.
-- The locked flow in `STORY_DESIGN.md` is bottle → harbor arrival → playable hotspot tour (Bakery → Mira → Linus) → Sol chooses to stay → Clinic reveal → Clinic progression.
-- Clinic pacing is already locked to authoritative world-progression delta from its stored baseline: stage 1 at +0, stage 2 at +2, stage 3 at +4, stage 4 at +8.
-Therefore first Act 2 work must begin by verifying/finishing any remaining physical Sol/Clinic acceptance boundary, not by inventing a second Sol arc.
+### Act 1 boundary correction — Sol/Clinic is DONE
+**Sol and the Clinic belong to Act 1 and are complete.** Do not treat Sol/Clinic as an Act 2 bridge, acceptance prerequisite, or remaining production task. Do not reopen or rebuild that arc unless Kalle reports a concrete regression/bug. The existing Sol/Clinic code, assets, save flags and tests are completed Act 1 implementation and should simply be preserved.
 
 ### Act 2 canonical foundation
 Act 2 is **the lake summer place**, a persistent second outdoor area reached through the canonical physical area-transition grammar. It is not an enlarged village map.
@@ -383,7 +376,6 @@ Apply the lessons from Act 1 from the first commit:
 ### Immediate next-Nova order
 1. Re-verify branch HEAD and CI against this checkpoint.
 2. Read this manifest, `TECHNICAL_HANDOFF.md`, `ART_DIRECTION.md`, and the Act 2 section of `STORY_DESIGN.md`.
-3. Audit the existing Sol/Clinic production path and identify only genuinely unverified physical-device boundaries.
-4. Close any necessary Act 1/Sol bridge regression without expanding Act 1 scope.
-5. Then design Act 2 production architecture around lake area transition + boy introduction + the four restoration projects, explicitly locking open product decisions with Kalle before they become canon.
-6. Prefer a sizeable first playable Act 2 slice over isolated tiny patches.
+3. Treat Sol/Clinic as completed Act 1 and leave it alone unless a concrete regression is reported.
+4. Design Act 2 production architecture around lake area transition + boy introduction + the four restoration projects, explicitly locking open product decisions with Kalle before they become canon.
+5. Prefer a sizeable first playable Act 2 slice over isolated tiny patches.
