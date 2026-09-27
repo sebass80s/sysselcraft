@@ -3,6 +3,7 @@
 import { getSupabaseBrowserClient } from "./supabaseClient";
 
 export const BOTTLE_MESSAGE_PRICE = 100;
+export const FOOTBALL_RUG_PRICE = 30;
 
 export type StoryItemPurchase = {
   childId: string;
@@ -11,9 +12,9 @@ export type StoryItemPurchase = {
   worldFlags: Record<string, unknown>;
 };
 
-export async function purchaseBottleMessage(): Promise<StoryItemPurchase> {
+async function purchaseStoryItem(itemKey: "bottle_message" | "room_football_rug"): Promise<StoryItemPurchase> {
   const { data, error } = await getSupabaseBrowserClient().rpc("purchase_story_item", {
-    p_item_key: "bottle_message",
+    p_item_key: itemKey,
   });
   if (error) throw error;
   if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("Ogiltigt svar från storyköpet.");
@@ -26,6 +27,13 @@ export async function purchaseBottleMessage(): Promise<StoryItemPurchase> {
   };
 }
 
+export async function purchaseBottleMessage(): Promise<StoryItemPurchase> {
+  return purchaseStoryItem("bottle_message");
+}
+
+export async function purchaseFootballRug(): Promise<StoryItemPurchase> {
+  return purchaseStoryItem("room_football_rug");
+}
 
 export async function commitStoryBeat(beat: "bottle_message_sent" | "sol_arrival_seen" | "sol_tour_bakery_seen" | "sol_tour_shop_seen" | "sol_tour_linus_seen" | "sol_chose_to_stay"): Promise<Record<string, unknown>> {
   const { data, error } = await getSupabaseBrowserClient().rpc("commit_story_beat", { p_beat_key: beat });
