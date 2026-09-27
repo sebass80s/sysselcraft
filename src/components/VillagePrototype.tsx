@@ -1025,13 +1025,18 @@ export default function VillagePrototype() {
               {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Inga diamantbelöningar på hyllan just nu.</p>}
             </> : <div className="mira-shop-grid"><article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p>{!bottleMessagePurchased && <><small>⭐ Nästa steg i berättelsen</small><small>🪙 Du har {backendWallet?.sysselBux ?? sysselBux} / {BOTTLE_MESSAGE_PRICE} SysselBux</small></>}</div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article>
               <article className="mira-shop-item"><div><Image className="mira-shop-item-art" src="/assets/village/interiors/room/football-rug.svg" alt="" width={72} height={42} /><strong>Fotbollsmatta</strong><p>En mjuk fotbollsplan till golvet i ditt rum.</p></div><button className="primary-button" disabled={shopBusy || footballRugOwned || (backendWallet?.sysselBux ?? sysselBux) < FOOTBALL_RUG_PRICE} onClick={() => void buyFootballRug()}>{footballRugOwned ? "✓ Köpt" : `🪙 ${FOOTBALL_RUG_PRICE} · Köp`}</button></article>
-              {([
-                ["footballPoster","Fotbollsposter","room-poster-football-sweden.png"],
-                ["computerDesk","Dator och skrivbord","room-computer-desk.png"],
-                ["trophyShelf","Pokalhylla","room-trophy-shelf.png"],
-                ["stringLights","Ljusslinga","room-string-lights.png"],
-                ["aquarium","Akvarium","room-aquarium.png"],
-              ] as [RoomDecorKey,string,string][]).map(([key,label,file]) => <article className="mira-shop-item" key={key}><div><Image className="mira-shop-item-art" src={`/assets/village/interiors/room/${file}`} alt="" width={72} height={42} /><strong>{label}</strong><p>Gör ditt rum lite mer personligt.</p></div><button className="primary-button" disabled={shopBusy || roomDecorOwned[key] || (backendWallet?.sysselBux ?? sysselBux) < ROOM_DECOR_PRICES[key]} onClick={() => void buyRoomDecor(key,label)}>{roomDecorOwned[key] ? "✓ Köpt" : `🪙 ${ROOM_DECOR_PRICES[key]} · Köp`}</button></article>)}
+              {roomStage >= 1 && roomStage < 6 && (() => {
+                const upgrades: [RoomDecorKey,string,string][] = [
+                  ["footballPoster","Fotbollsposter","room-2.png"],
+                  ["computerDesk","Dator och skrivbord","room-3.png"],
+                  ["trophyShelf","Pokalhylla","room-4.png"],
+                  ["stringLights","Ljusslinga","room-5.png"],
+                  ["aquarium","Akvarium","room-6.png"],
+                ];
+                const [key,label,file]=upgrades[roomStage-1];
+                return <article className="mira-shop-item"><div><Image className="mira-shop-item-art" src={`/assets/village/interiors/room/${file}`} alt="" width={72} height={42} /><strong>{label}</strong><p>Nästa uppgradering till ditt rum.</p></div><button className="primary-button" disabled={shopBusy || (backendWallet?.sysselBux ?? sysselBux) < ROOM_DECOR_PRICES[key]} onClick={() => void buyRoomDecor(key,label)}>{`🪙 ${ROOM_DECOR_PRICES[key]} · Köp`}</button></article>;
+              })()}
+              {roomStage === 6 && <article className="mira-shop-item"><div><span>🏠</span><strong>Rummet är komplett</strong><p>Du har alla rumsuppgraderingar.</p></div><button className="primary-button" disabled>✓ Klart</button></article>}
               {dogHomeStage < 4 && (() => { const names=["Mjuk hundbädd","Mat- och vattenskålar","Leksaker","Mysig hundhörna"]; const descriptions=["En egen mjuk plats att vila på.","Egna skålar för mat och vatten.","Boll, rep och annat kul att leka med.","Den sista mysiga uppgraderingen till hundhörnan."]; const i=dogHomeStage as 0|1|2|3; const price=DOG_HOME_PRICES[i]; return <article className="mira-shop-item"><div><span>🐶</span><strong>{names[i]}</strong><p>{descriptions[i]}</p><small>Nästa uppgradering till {dogName || "hunden"}</small></div><button className="primary-button" disabled={shopBusy || (backendWallet?.sysselBux ?? sysselBux) < price} onClick={() => void buyDogHomeUpgrade()}>{`🪙 ${price} · Köp`}</button></article>; })()}
               {dogHomeStage >= 4 && <article className="mira-shop-item"><div><span>🐶</span><strong>Hundhörnan är komplett</strong><p>{dogName || "Hunden"} har allt som behövs.</p></div><button className="primary-button" disabled>✓ Klart</button></article>}
             </div>}
