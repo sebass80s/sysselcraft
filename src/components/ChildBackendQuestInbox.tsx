@@ -112,7 +112,32 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
         let snapshot = localSave;
         // Dog-home ownership lives in the backend wallet state. Repair stale local saves
         // from those authoritative flags so Mira always offers the actual next upgrade.
-        const backendDogHomeStage = deriveDogHomeStageFromWorldFlags(nextGameState.worldFlags);
+        const backendStoryFlags = nextGameState.worldFlags;
+        const storyFlagKeys = [
+          "bottleMessagePurchased",
+          "roomFootballRugOwned",
+          "roomFootballPosterOwned",
+          "roomComputerDeskOwned",
+          "roomTrophyShelfOwned",
+          "roomStringLightsOwned",
+          "roomAquariumOwned",
+        ] as const;
+        const repairedStoryFlags = { ...snapshot.worldFlags };
+        let storyFlagsChanged = false;
+        for (const key of storyFlagKeys) {
+          const backendOwned = backendStoryFlags[key] === true;
+          if (repairedStoryFlags[key] !== backendOwned) {
+            repairedStoryFlags[key] = backendOwned;
+            storyFlagsChanged = true;
+          }
+        }
+        if (storyFlagsChanged) {
+          snapshot = { ...snapshot, worldFlags: repairedStoryFlags };
+          await saveSaveState(snapshot, true);
+          window.dispatchEvent(new CustomEvent("sysselcraft:construction-save-changed"));
+        }
+
+                const backendDogHomeStage = deriveDogHomeStageFromWorldFlags(nextGameState.worldFlags);
         if ((snapshot.worldFlags.dogHomeStage ?? 0) !== backendDogHomeStage) {
           snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, dogHomeStage: backendDogHomeStage } };
           await saveSaveState(snapshot, true);
