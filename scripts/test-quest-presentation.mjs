@@ -60,14 +60,14 @@ assert.equal(localRecyclingComplete.available[0].presentation.destination, "noti
   "obvious homework uses the live noticeboard after local Recycling completion");
 
 const mixedStates = presentBackendQuests([
-  backendQuest({ instanceId: "home", title: "Städa rummet", progressionClass: "orderEnvironment" }),
+  backendQuest({ instanceId: "household", title: "Städa rummet", progressionClass: "orderEnvironment" }),
   backendQuest({ instanceId: "board", title: "Gör läxan" }),
   backendQuest({ instanceId: "active", title: "Spring en runda", progressionClass: "movementActivity", state: "active", acceptedAt: "2026-09-22T10:05:00Z" }),
   backendQuest({ instanceId: "pending", title: "Läs en bok", progressionClass: "knowledgeCreativity", state: "pending" }),
   backendQuest({ instanceId: "approved", title: "Ring mormor", progressionClass: "community", state: "approved" }),
 ], null, { recyclingCenterStage: 4 });
 
-assert.deepEqual(questSourceCounts(mixedStates), { noticeboard: 2, home: 0, linus: 0, bakery: 0 },
+assert.deepEqual(questSourceCounts(mixedStates), { noticeboard: 2, linus: 0, bakery: 0 },
   "only actionable available quests may light world-source attention");
 assert.equal(mixedStates.active.length, 1, "accepted quests live in active without re-lighting a world source");
 assert.equal(mixedStates.pending.length, 1, "pending quests stay discoverable in the general quest view");
@@ -82,7 +82,7 @@ const bakeryAvailable = presentBackendQuests([
   diamonds: 0, sysselBux: 0, progression: { worldProgression: 0 },
   worldFlags: { recyclingComplete: true, bakeryUnlocked: true, henningPresent: true },
 });
-assert.deepEqual(questSourceCounts(bakeryAvailable), { noticeboard: 0, home: 0, linus: 0, bakery: 1 },
+assert.deepEqual(questSourceCounts(bakeryAvailable), { noticeboard: 0, linus: 0, bakery: 1 },
   "an available Bakery quest must light Henning/Bakery world attention");
 
 const bakeryFromVisibleLocalWorld = presentBackendQuests([
