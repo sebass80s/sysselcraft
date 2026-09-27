@@ -28,7 +28,7 @@ import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
 import { bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
-import { BOTTLE_MESSAGE_PRICE, commitStoryBeat, purchaseBottleMessage } from "../backend/storyShop";
+import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, commitStoryBeat, purchaseBottleMessage, purchaseFootballRug } from "../backend/storyShop";
 import { getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
@@ -72,6 +72,7 @@ export default function VillagePrototype() {
   const [bottleLetterOpen, setBottleLetterOpen] = useState(false);
   const [solStoryIndex, setSolStoryIndex] = useState<number | null>(null);
   const [bottleMessagePurchased, setBottleMessagePurchased] = useState(false);
+  const [footballRugOwned, setFootballRugOwned] = useState(false);
   const [bottleMessageSent, setBottleMessageSent] = useState(false);
   const [solArrivalSeen, setSolArrivalSeen] = useState(false);
   const [solTourBakerySeen, setSolTourBakerySeen] = useState(false);
@@ -211,6 +212,7 @@ export default function VillagePrototype() {
         setHenningArrivalSeen(saved.worldFlags.henningArrivalSeen === true);
         setMiraArrivalSeen(saved.worldFlags.miraArrivalSeen === true);
         setBottleMessagePurchased(saved.worldFlags.bottleMessagePurchased === true);
+        setFootballRugOwned(saved.worldFlags.roomFootballRugOwned === true);
         bottleMessageSentAtBootRef.current = saved.worldFlags.bottleMessageSent === true;
         setBottleMessageSent(saved.worldFlags.bottleMessageSent === true);
         setSolArrivalSeen(saved.worldFlags.solArrivalSeen === true);
@@ -586,6 +588,33 @@ export default function VillagePrototype() {
     } finally { setShopBusy(false); }
   }
 
+  async function buyFootballRug() {
+    if (shopBusy || footballRugOwned) return;
+    if (!window.confirm(`Köpa Fotbollsmatta för ${FOOTBALL_RUG_PRICE} 🪙?`)) return;
+    setShopBusy(true); setShopMessage("");
+    try {
+      const purchase = await purchaseFootballRug();
+      const currentWallet = getLatestBackendWallet() ?? backendWallet;
+      const purchasedWallet: BackendWalletSnapshot = {
+        diamonds: currentWallet?.diamonds ?? diamonds,
+        sysselBux: purchase.sysselBux,
+      };
+      setBackendWallet(purchasedWallet);
+      publishBackendWallet(purchasedWallet);
+      setFootballRugOwned(true);
+      if (latestSaveRef.current) {
+        const snapshot = { ...latestSaveRef.current, worldFlags: { ...latestSaveRef.current.worldFlags, roomFootballRugOwned: true } };
+        latestSaveRef.current = snapshot;
+        await saveSaveState(snapshot, true);
+      }
+      setShopMessage("Fotbollsmattan ligger nu i ditt rum! ⚽");
+      window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Köpet misslyckades.";
+      setShopMessage(message.includes("insufficient sysselbux") ? "Du har inte tillräckligt många SysselBux." : message);
+    } finally { setShopBusy(false); }
+  }
+
   function advanceBottleLetter() {
     setBottleLetterOpen(false);
     setBottleStoryIndex(0);
@@ -878,6 +907,7 @@ export default function VillagePrototype() {
     {!solRuntimeTestActive && <>
     {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum">
       <Image className="house-room-scene" src="/assets/village/interiors/room/room-base.png" alt="Mitt rum" fill priority sizes="100vw" />
+      {footballRugOwned && <Image className="house-room-decor" src="/assets/village/interiors/room/football-rug.svg" alt="" fill priority sizes="100vw" />}
       <button className="house-room-close" type="button" onClick={() => setRoomOpen(false)} aria-label="Gå tillbaka till byn">← Till byn</button>
     </div>}
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
@@ -895,7 +925,9 @@ export default function VillagePrototype() {
             {shopCurrency === "diamonds" ? <>
               <div className="mira-shop-grid">{shopRewards.map((reward) => { const pending = pendingDiamondRewardIds.has(reward.id); return <article className="mira-shop-item" key={reward.id}><div><span>🎁</span><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}</div><button className="primary-button" disabled={shopBusy || pending || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>{pending ? "⏳ Väntar på förälder" : `💎 ${reward.diamondPrice} · Köp`}</button></article>; })}</div>
               {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Inga diamantbelöningar på hyllan just nu.</p>}
-            </> : <div className="mira-shop-grid"><article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p>{!bottleMessagePurchased && <><small>⭐ Nästa steg i berättelsen</small><small>🪙 Du har {backendWallet?.sysselBux ?? sysselBux} / {BOTTLE_MESSAGE_PRICE} SysselBux</small></>}</div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article></div>}
+            </> : <div className="mira-shop-grid"><article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p>{!bottleMessagePurchased && <><small>⭐ Nästa steg i berättelsen</small><small>🪙 Du har {backendWallet?.sysselBux ?? sysselBux} / {BOTTLE_MESSAGE_PRICE} SysselBux</small></>}</div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article>
+              <article className="mira-shop-item"><div><Image className="mira-shop-item-art" src="/assets/village/interiors/room/football-rug.svg" alt="" width={72} height={42} /><strong>Fotbollsmatta</strong><p>En mjuk fotbollsplan till golvet i ditt rum.</p></div><button className="primary-button" disabled={shopBusy || footballRugOwned || (backendWallet?.sysselBux ?? sysselBux) < FOOTBALL_RUG_PRICE} onClick={() => void buyFootballRug()}>{footballRugOwned ? "✓ Köpt" : `🪙 ${FOOTBALL_RUG_PRICE} · Köp`}</button></article>
+            </div>}
             {shopMessage && <p className="pending-message mira-shop-message" role="status">{shopMessage}</p>}
           </div>
         </section>
