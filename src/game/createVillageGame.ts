@@ -661,13 +661,8 @@ export async function createVillageGame(
       };
       this.house.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => enterHouse(event));
 
-      const houseMarker = this.add.text(72, 276, "🏠", {
-        fontSize: "27px",
-        backgroundColor: "#fff2cf",
-        padding: { x: 8, y: 5 },
-      }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
-      houseMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => enterHouse(event));
-      this.tweens.add({ targets: houseMarker, y: "-=4", duration: 1000, yoyo: true, repeat: -1, ease: "Sine.InOut" });
+      // Room entry remains active on the house itself, but the temporary UI marker is hidden
+      // until the room decoration loop is ready for Adam.
     }
 
     private drawFence(x: number, y: number, count: number) {
