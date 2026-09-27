@@ -288,6 +288,12 @@ export default function VillagePrototype() {
         henningArrivalSeen,
         miraArrivalSeen,
         bottleMessagePurchased,
+        roomFootballRugOwned: footballRugOwned,
+        roomFootballPosterOwned: roomDecorOwned.footballPoster,
+        roomComputerDeskOwned: roomDecorOwned.computerDesk,
+        roomTrophyShelfOwned: roomDecorOwned.trophyShelf,
+        roomStringLightsOwned: roomDecorOwned.stringLights,
+        roomAquariumOwned: roomDecorOwned.aquarium,
         dogHomeStage, dogHomePendingReaction, dogHomeLastDialogue,
         bottleMessageSent,
         solArrivalSeen,
@@ -300,7 +306,7 @@ export default function VillagePrototype() {
       () => setSaveError(false),
       () => setSaveError(true),
     );
-  }, [construction, constructionBusy, saveReady, resettingSave, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, dogHomeStage, dogHomePendingReaction, dogHomeLastDialogue, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay, clinicCompletionSeen]);
+  }, [construction, constructionBusy, saveReady, resettingSave, progression, diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, recyclingCenterStage, henningArrivalSeen, miraArrivalSeen, bottleMessagePurchased, footballRugOwned, roomDecorOwned, dogHomeStage, dogHomePendingReaction, dogHomeLastDialogue, bottleMessageSent, solArrivalSeen, solTourBakerySeen, solTourShopSeen, solTourLinusSeen, solChoseToStay, clinicCompletionSeen]);
 
   useEffect(() => {
     const syncQuestPresentation = (event: Event) => {
