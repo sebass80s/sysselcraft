@@ -347,3 +347,22 @@ If the approved work order is “make the football rug”, the default meaning i
 `canonical room-base -> production transparent rug overlay in its authored slot -> optimized asset -> existing Mira SysselBux shop item -> authoritative/idempotent purchase -> deduct SB exactly once -> persist ownership -> render rug in room when owned -> survive restart -> commit -> CI -> physical acceptance handoff`.
 
 Generating a picture of a rug, or generating a new room containing a rug, is **not completion** of that work order.
+
+
+### Deterministic finishing rule — LOCKED 2026-09-27
+
+**Generative image output is raw material, not a production asset.** Nova must never present or integrate a newly generated room decoration as finished merely because the generation looks good or claims transparency.
+
+For every asset that must align to an accepted base scene:
+
+1. Use image generation only for illustration/raw visual material when needed.
+2. Inspect the actual generated file, including alpha channel and visible pixels. A nominal RGBA file is not enough: glow, matte, halo, fake checkerboard, background color, or unwanted shadow outside the intended object counts as a failed cutout.
+3. Finish the asset deterministically where required: alpha cleanup/masking, crop, resize, perspective transform, placement/alignment and format optimization. Do not ask the generative model to repeatedly guess exact geometry when deterministic image processing can solve it.
+4. Composite the finished candidate over the **canonical base image** at its intended runtime position.
+5. Inspect that composite for perspective, scale, edge quality, lighting/style fit, collisions and unwanted collateral changes.
+6. Only after the composite passes may the file be called **production-ready**, committed, wired into the shop/runtime, or shown to Kalle as the completed asset.
+7. If the composite fails, continue fixing it autonomously. Do not stop and hand Kalle the failed intermediate result unless a genuine product/art decision is required.
+
+For the child's room, `room-base` is the geometry authority. Zone overlays must be validated on that exact base. Image generation must not regenerate the room, invent a substitute wall/floor, or be trusted to perform exact perspective/alignment by prompt alone.
+
+**Presentation rule:** intermediate generative outputs are workshop material. Kalle should normally see the asset only after deterministic finishing and canonical-base composite validation have passed.
