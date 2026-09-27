@@ -366,3 +366,28 @@ For every asset that must align to an accepted base scene:
 For the child's room, `room-base` is the geometry authority. Zone overlays must be validated on that exact base. Image generation must not regenerate the room, invent a substitute wall/floor, or be trusted to perform exact perspective/alignment by prompt alone.
 
 **Presentation rule:** intermediate generative outputs are workshop material. Kalle should normally see the asset only after deterministic finishing and canonical-base composite validation have passed.
+
+
+### Room overlay fast path — LOCKED 2026-09-27
+
+This is the default production pipeline for purchasable room decorations. It overrides any looser interpretation of the generic asset workflow above.
+
+**Core rule:** `room-base` is absolute geometry authority. **Image generation paints; deterministic image processing mounts.**
+
+1. Generate only an **isolated raw motif/object** when new illustration is needed. Never generate a replacement room as part of a decoration task.
+2. As soon as a visually usable raw motif exists, **do not use image generation again for finishing that asset**.
+3. From that point onward, finishing is deterministic: alpha cleanup/masking, crop, resize, perspective transform, exact positioning and runtime-format conversion/optimization.
+4. Composite the candidate automatically over the canonical `room-base` in its authored zone.
+5. Nova inspects the real composite. If transparency, scale, perspective, edges or placement are technically wrong, adjust the deterministic transform and composite again. **Do not regenerate the motif to solve geometry.**
+6. A new image-generation pass is allowed only when the **motif itself is artistically unusable**, not to solve transparency, perspective, scale, crop or placement.
+7. Do not present raw generations or failed technical iterations to Kalle as deliverables. Normally show only the accepted composite/finished asset, unless a genuine art/product choice requires input.
+8. Once graphics pass, continue the same approved work order through repo integration, the existing Mira SysselBux shop, authoritative/idempotent purchase, persistent ownership, room rendering, automated checks/CI and then physical-device acceptance.
+9. Record reusable placement/transform data for each room zone as soon as a working placement is established. Future assets for the same zone should reuse that geometry instead of rediscovering it.
+
+#### Zone transform registry
+
+The room uses the locked A–H zone model in this document. For every production overlay, preserve enough deterministic data to reproduce placement: canonical base dimensions, target zone, overlay dimensions/bounds, target position, and any perspective transform. Store these values alongside the runtime implementation or asset metadata where practical.
+
+**Zone C precedent:** the Swedish football poster established the correct workflow: isolated poster raw art -> deterministic alpha cleanup/crop -> deterministic scale/perspective/placement on the left wall above the bed -> composite validation against canonical `room-base`. Future wall art in Zone C should reuse that established target geometry rather than asking image generation to guess the wall perspective again.
+
+A room-overlay task is not complete at raw-image generation. It is complete only when the accepted motif has passed canonical-base composite validation and the rest of the already-approved vertical slice has been executed as far as available tools permit.
