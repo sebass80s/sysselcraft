@@ -109,8 +109,18 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
       if (localSave && nextGameState) {
         let snapshot = localSave;
-        let recyclingBaseline = snapshot.worldFlags.recyclingClaimBaseline;
+        const backendRecyclingBaseline = typeof nextGameState.worldFlags.recyclingClaimBaseline === "number"
+          && Number.isInteger(nextGameState.worldFlags.recyclingClaimBaseline)
+          && nextGameState.worldFlags.recyclingClaimBaseline >= 0
+          ? nextGameState.worldFlags.recyclingClaimBaseline
+          : undefined;
+        let recyclingBaseline = backendRecyclingBaseline ?? snapshot.worldFlags.recyclingClaimBaseline;
         let recyclingBaselineStage = snapshot.worldFlags.recyclingClaimBaselineStage;
+        if (backendRecyclingBaseline !== undefined && snapshot.worldFlags.recyclingClaimBaseline !== backendRecyclingBaseline) {
+          recyclingBaselineStage = snapshot.construction.revealed.recycling;
+          snapshot = { ...snapshot, worldFlags: { ...snapshot.worldFlags, recyclingClaimBaseline: backendRecyclingBaseline, recyclingClaimBaselineStage: recyclingBaselineStage } };
+          await saveSaveState(snapshot, true);
+        }
         if (recyclingBaseline === undefined) {
           recyclingBaseline = Math.max(0, Math.floor(nextGameState.progression.worldProgression));
           recyclingBaselineStage = snapshot.construction.revealed.recycling;
