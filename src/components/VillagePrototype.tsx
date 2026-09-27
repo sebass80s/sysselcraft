@@ -306,7 +306,6 @@ export default function VillagePrototype() {
       if (cancelled || !hostRef.current) return;
       const handle = await createVillageGame(hostRef.current, {
         onQuestSourceInteract: (source) => { if (!solRuntimeTestActiveRef.current) requestQuestSourceOpen(source); },
-        onHouseInteract: () => { if (!solRuntimeTestActiveRef.current) setRoomOpen(true); },
         onConstructionInteract: (id) => {
           if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_CONSTRUCTION_INTERACT_BLOCKED", id, true); return; }
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
