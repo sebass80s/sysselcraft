@@ -28,11 +28,11 @@ import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
 import { bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
-import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, DOG_HOME_PRICES, commitStoryBeat, deriveDogHomeStageFromWorldFlags, purchaseBottleMessage, purchaseFootballRug, purchaseDogHomeUpgrade } from "../backend/storyShop";
+import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, DOG_HOME_PRICES, commitStoryBeat , purchaseBottleMessage, purchaseFootballRug, purchaseDogHomeUpgrade } from "../backend/storyShop";
 import { getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
-import { chooseDogHomeDialogue, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
+import { chooseDogHomeDialogue, deriveDogHomeStageFromWorldFlags, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
