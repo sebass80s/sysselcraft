@@ -636,12 +636,16 @@ export async function createVillageGame(
     }
 
     private drawHouse() {
+      // The visible house already lives in master-scene. Keep this image effectively
+      // invisible so its authored footprint can serve as the generous tap target.
       this.house = this.add.image(150, 250, "family-house")
         .setOrigin(0.5, 1)
         .setDisplaySize(360, 300)
-        .setDepth(1250)
+        .setAlpha(0.001)
+        .setDepth(2900)
         .setInteractive({ useHandCursor: true, pixelPerfect: false });
-      this.house.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+
+      const enterHouse = (event: Types.Input.EventData) => {
         event.stopPropagation();
         if (!this.player || constructionDialogueOpen) return;
         this.houseInteractionPending = true;
@@ -654,7 +658,16 @@ export async function createVillageGame(
         const target = this.path.at(-1);
         if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
-      });
+      };
+      this.house.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => enterHouse(event));
+
+      const houseMarker = this.add.text(245, 300, "🏠", {
+        fontSize: "27px",
+        backgroundColor: "#fff2cf",
+        padding: { x: 8, y: 5 },
+      }).setOrigin(0.5).setDepth(3000).setInteractive({ useHandCursor: true });
+      houseMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => enterHouse(event));
+      this.tweens.add({ targets: houseMarker, y: "-=4", duration: 1000, yoyo: true, repeat: -1, ease: "Sine.InOut" });
     }
 
     private drawFence(x: number, y: number, count: number) {
@@ -976,6 +989,8 @@ export async function createVillageGame(
         this.events.once("shutdown", () => mask.destroy());
       }
 
+      // The family house is painted into the master scene. Add only its invisible interaction layer + affordance.
+      this.drawHouse();
       this.drawShop();
       this.drawBottleMessageMarker();
 
