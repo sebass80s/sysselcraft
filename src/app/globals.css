@@ -179,3 +179,8 @@ main { min-height: 100dvh; }
 .house-room-scene { object-fit:cover; object-position:center; }
 .house-room-decor { z-index:2; object-fit:cover; object-position:center; pointer-events:none; }
 .house-room-close { position:absolute; z-index:3; top:max(.7rem,env(safe-area-inset-top)); left:max(.8rem,env(safe-area-inset-left)); border:2px solid rgba(79,46,24,.92); border-radius:14px; padding:.55rem .82rem; font-weight:900; cursor:pointer; color:#fff7df; background:rgba(116,69,34,.82); box-shadow:0 4px 12px rgba(45,25,10,.25); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+
+.dog-hud-button { border:1px solid rgba(31,42,31,.12); border-radius:999px; padding:.42rem .62rem; font:inherit; font-weight:800; color:inherit; background:rgba(255,255,255,.86); box-shadow:0 4px 14px rgba(0,0,0,.12); cursor:pointer; }
+.dog-home { position:fixed; inset:0; z-index:35; overflow:hidden; background:#1d281f; }
+.dog-home-scene { object-fit:cover; object-position:center; }
+.dog-home .story-moment-dialogue { z-index:38; }
