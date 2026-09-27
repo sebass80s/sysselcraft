@@ -31,9 +31,8 @@ function clampNextStage(stage: BuildingStage): BuildingStage {
  * Its input must come from the authoritative approval layer. A stable contribution id makes
  * replay/reload safe: the same approval event can be observed repeatedly without advancing twice.
  *
- * The first recycling arc is calibrated to four contributions. Bakery is product-locked to
- * ten authoritative claims with stage pacing 1-2-4-3 (cumulative thresholds 1/3/7/10).
- * Clinic is product-locked to stage 1 at start, then stages 2-4 after 2/4/8 authoritative
+ * Recycling and Bakery are each calibrated to four authoritative claims, one per stage.
+ * Clinic starts at stage 1 when Sol stays, then stages 2-4 unlock after 3/5/9 authoritative
  * claims from its persisted baseline. Those authored thresholds live in construction.ts;
  * this generic reducer must not invent or replace them.
  */
