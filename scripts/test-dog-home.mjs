@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
-import { chooseDogHomeDialogue, dogHomeDialogueIndicesForStage } from "../src/game/dogHome.ts";
-import { deriveDogHomeStageFromWorldFlags } from "../src/backend/storyShop.ts";
+import { chooseDogHomeDialogue, deriveDogHomeStageFromWorldFlags, dogHomeDialogueIndicesForStage } from "../src/game/dogHome.ts";
 
 assert.deepEqual(dogHomeDialogueIndicesForStage(0), [0,1,2,3,4,7,9]);
 assert(!dogHomeDialogueIndicesForStage(0).includes(5), "ball dialogue is hidden before toys");
