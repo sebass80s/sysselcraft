@@ -343,7 +343,7 @@ export async function createVillageGame(
     }
 
     update(_: number, delta: number) {
-      if (!this.player || constructionDialogueOpen) return;
+      if (!this.player) return;
       this.updateDog();
       if (isTextControlFocused()) {
         this.attentionInteractionPending = false;
