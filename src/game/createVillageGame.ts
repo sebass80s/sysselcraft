@@ -281,9 +281,19 @@ export async function createVillageGame(
         this.houseInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
-        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: pointer.worldX, y: pointer.worldY }, this.navigationObstacles);
+        const requestedTarget = { x: pointer.worldX, y: pointer.worldY };
+        this.path = findPath({ x: this.player.x, y: this.player.y }, requestedTarget, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
-        if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+        if (finalPoint) {
+          this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+        } else if (isWalkable(requestedTarget, this.navigationObstacles)) {
+          // The coarse A* grid can report no route from an off-grid player position
+          // even when the tapped ground is directly reachable. Preserve touch movement
+          // by falling back to the exact walkable target; tryMove still enforces every
+          // authored obstacle on the way there.
+          this.path = [requestedTarget];
+          this.targetMarker?.setPosition(requestedTarget.x, requestedTarget.y).setVisible(true);
+        }
       });
     }
 
