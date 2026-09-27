@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941" width="1672" height="941">
+  <defs>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="7"/>
+      <feOffset dy="8"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".28"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="fiber" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency=".45" numOctaves="2" seed="27" result="noise"/>
+      <feComposite in="noise" in2="SourceGraphic" operator="in" result="texture"/>
+      <feBlend in="SourceGraphic" in2="texture" mode="soft-light"/>
+    </filter>
+    <clipPath id="rugClip"><path d="M646 559 L1018 559 Q1035 560 1044 575 L1181 820 Q1190 842 1166 850 L505 850 Q481 843 491 820 L628 575 Q636 560 646 559Z"/></clipPath>
+    <linearGradient id="green" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#58a93b"/><stop offset="1" stop-color="#278333"/></linearGradient>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M646 559 L1018 559 Q1035 560 1044 575 L1181 820 Q1190 842 1166 850 L505 850 Q481 843 491 820 L628 575 Q636 560 646 559Z" fill="#145f2c" stroke="#0d4e25" stroke-width="8"/>
+    <g clip-path="url(#rugClip)" filter="url(#fiber)">
+      <rect x="480" y="550" width="720" height="310" fill="url(#green)"/>
+      <g opacity=".22" fill="#0b622d">
+        <path d="M520 550h92l-90 310h-105z"/><path d="M700 550h92l-30 310h-105z"/><path d="M880 550h92l30 310H897z"/><path d="M1060 550h92l90 310h-105z"/>
+      </g>
+      <g fill="none" stroke="#f4e8c6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M650 575 L1014 575 L1146 823 L523 823 Z" stroke-width="10"/>
+        <path d="M832 575 L834 823" stroke-width="8"/>
+        <ellipse cx="833" cy="686" rx="66" ry="29" stroke-width="8"/>
+        <path d="M735 575 L748 612 L916 612 L930 575" stroke-width="8"/>
+        <path d="M676 823 L703 772 L964 772 L991 823" stroke-width="8"/>
+      </g>
+      <g transform="translate(833 686) scale(.75 .36)">
+        <circle r="55" fill="#f6edda" stroke="#2f2c2b" stroke-width="5"/>
+        <path d="M0-20 19-6 12 17-12 17-19-6Z" fill="#343232"/>
+        <g fill="#343232">
+          <path d="M0-52 16-43 11-26-10-26-16-43Z"/><path d="M49-16 55 3 40 15 27 0 34-17Z"/><path d="M30 42 13 54-4 43 5 25 25 24Z"/><path d="M-30 42-13 54 4 43-5 25-25 24Z"/><path d="M-49-16-55 3-40 15-27 0-34-17Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
