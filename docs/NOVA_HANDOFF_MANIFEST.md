@@ -379,3 +379,11 @@ Apply the lessons from Act 1 from the first commit:
 3. Treat Sol/Clinic as completed Act 1 and leave it alone unless a concrete regression is reported.
 4. Design Act 2 production architecture around lake area transition + boy introduction + the four restoration projects, explicitly locking open product decisions with Kalle before they become canon.
 5. Prefer a sizeable first playable Act 2 slice over isolated tiny patches.
+
+
+### HARD VISUAL METHOD — mandatory before Act 2 art
+Before drawing any Act 2 world/building art, read the final **HARD VISUAL PRODUCTION METHOD — ACT 1 PROVEN PIPELINE** section of `docs/ART_DIRECTION.md`. It is the authoritative production procedure and exists to prevent the redraw churn that consumed substantial Act 1 time.
+
+Core sequence: **define whole area → paint one coherent master → Kalle accepts → freeze geometry → record project anchors/envelopes/footprints → author each project state against that same reference → deterministic normalization/composite validation → runtime 2.5D integration → iPhone acceptance.**
+
+Do not independently generate pieces and try to assemble them later. Do not regenerate an accepted master/building to solve placement. Do not ask image generation to solve crop/alpha/alignment/envelope problems. Do not produce stage variants with drifting perspective/footprints. Never use spritesheets/contact sheets unless Kalle explicitly requests one.
