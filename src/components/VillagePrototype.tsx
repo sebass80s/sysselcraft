@@ -81,6 +81,7 @@ export default function VillagePrototype() {
   const [solTourStoryStop, setSolTourStoryStop] = useState<SolTourStop | null>(null);
   const [solTourStoryIndex, setSolTourStoryIndex] = useState(0);
   const [shopPanelOpen, setShopPanelOpen] = useState(false);
+  const [roomOpen, setRoomOpen] = useState(false);
   const [abandonedShopDialogueIndex, setAbandonedShopDialogueIndex] = useState<number | null>(null);
   const [shopCurrency, setShopCurrency] = useState<"diamonds" | "sysselbux">("diamonds");
   const [shopRewards, setShopRewards] = useState<DiamondRewardDefinition[]>([]);
@@ -303,6 +304,7 @@ export default function VillagePrototype() {
       if (cancelled || !hostRef.current) return;
       const handle = await createVillageGame(hostRef.current, {
         onQuestSourceInteract: (source) => { if (!solRuntimeTestActiveRef.current) requestQuestSourceOpen(source); },
+        onHouseInteract: () => { if (!solRuntimeTestActiveRef.current) setRoomOpen(true); },
         onConstructionInteract: (id) => {
           if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_CONSTRUCTION_INTERACT_BLOCKED", id, true); return; }
           if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
@@ -874,6 +876,10 @@ export default function VillagePrototype() {
     <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser">{dogName && <strong>🐶 {dogName}</strong>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {!solRuntimeTestActive && <>
+    {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum">
+      <Image className="house-room-scene" src="/assets/village/interiors/room/room-base.png" alt="Mitt rum" fill priority sizes="100vw" />
+      <button className="house-room-close" type="button" onClick={() => setRoomOpen(false)} aria-label="Gå tillbaka till byn">← Till byn</button>
+    </div>}
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
       <div className="mira-shop-ui">
