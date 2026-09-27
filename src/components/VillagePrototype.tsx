@@ -28,7 +28,7 @@ import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
 import { bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
-import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, DOG_HOME_PRICES, commitStoryBeat, purchaseBottleMessage, purchaseFootballRug, purchaseDogHomeUpgrade } from "../backend/storyShop";
+import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, DOG_HOME_PRICES, commitStoryBeat, deriveDogHomeStageFromWorldFlags, purchaseBottleMessage, purchaseFootballRug, purchaseDogHomeUpgrade } from "../backend/storyShop";
 import { getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
@@ -184,6 +184,7 @@ export default function VillagePrototype() {
         latestSaveRef.current = saved;
         constructionRef.current = saved.construction;
         setConstruction(saved.construction);
+        setDogHomeStage(saved.worldFlags.dogHomeStage ?? 0);
       } catch {
         setConstructionError("Byggframstegen kunde inte läsas om.");
       }
@@ -677,7 +678,8 @@ export default function VillagePrototype() {
     setShopBusy(true); setShopMessage("");
     try {
       const purchase=await purchaseDogHomeUpgrade(index);
-      const next=(index+1) as 1|2|3|4;
+      const backendStage=deriveDogHomeStageFromWorldFlags(purchase.worldFlags);
+      const next=(backendStage > 0 ? backendStage : index + 1) as 1|2|3|4;
       const currentWallet=getLatestBackendWallet() ?? backendWallet;
       const wallet={diamonds:currentWallet?.diamonds ?? diamonds,sysselBux:purchase.sysselBux};
       setBackendWallet(wallet); publishBackendWallet(wallet); setDogHomeStage(next); setDogHomePendingReaction(next);
