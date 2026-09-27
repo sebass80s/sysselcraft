@@ -331,10 +331,10 @@ Canonical restoration spine: **cottage -> jetty -> boathouse -> motorboat**. Exa
 
 Kalle has declared **Act 1 feature-complete** after the current room/shop/persistence pass. Treat new Act 1 work as bugfix/regression work unless Kalle explicitly reopens scope. The next production focus is **Act 2: the lake summer place** as locked in `docs/STORY_DESIGN.md`.
 
-Latest verified branch checkpoint before this handoff:
-- branch: `nova/local-construction-snapshot`
-- HEAD: `2d59a6b21452ca0b0f72f965a1460aeb6cc28d0f`
-- GitHub Actions run **#1071**: completed / success on that exact SHA
+Latest verified gameplay-code checkpoint before the documentation closeout:
+- gameplay HEAD: `2d59a6b21452ca0b0f72f965a1460aeb6cc28d0f`
+- GitHub Actions run **#1071**: completed / success on that exact gameplay SHA
+- canonical documentation was then closed out through commit `7641340721add513675b640d23b1324e97c97dc4`; verify the latest branch HEAD/CI rather than expecting the gameplay SHA to remain HEAD
 - canonical local workspace remains `/Users/karoaa/Developer/sysselcraft`
 - native update flow remains `npm run syssel`, then Run in Xcode over the existing app; never uninstall/reset Adam's app or regenerate iOS.
 
