@@ -143,6 +143,7 @@ main { min-height: 100dvh; }
 .mira-shop-item { min-height:76px; padding:.55rem .65rem; border:2px solid rgba(125,91,53,.68); border-radius:14px; background:rgba(255,247,224,.76); display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:.65rem; box-shadow:0 4px 14px rgba(45,25,10,.15); backdrop-filter:blur(8px); }
 .mira-shop-item > div { min-width:0; display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:.55rem; align-items:center; }
 .mira-shop-item span { grid-row:1 / span 2; display:block; font-size:1.55rem; margin:0; }
+.mira-shop-item-art { grid-row:1 / span 2; width:72px; height:42px; object-fit:contain; }
 .mira-shop-item strong { display:block; font-size:1rem; }
 .mira-shop-item p { margin:.05rem 0 0; color:#594832; font-size:.78rem; line-height:1.2; }
 .mira-shop-item .primary-button { min-width:120px; padding:.55rem .7rem; white-space:nowrap; }
@@ -176,4 +177,5 @@ main { min-height: 100dvh; }
 /* Player house: fixed 16:9 room art is the coordinate system for future decor overlays. */
 .house-room { position:fixed; inset:0; z-index:35; overflow:hidden; background:#35281e; }
 .house-room-scene { object-fit:cover; object-position:center; }
+.house-room-decor { z-index:2; object-fit:cover; object-position:center; pointer-events:none; }
 .house-room-close { position:absolute; z-index:3; top:max(.7rem,env(safe-area-inset-top)); left:max(.8rem,env(safe-area-inset-left)); border:2px solid rgba(79,46,24,.92); border-radius:14px; padding:.55rem .82rem; font-weight:900; cursor:pointer; color:#fff7df; background:rgba(116,69,34,.82); box-shadow:0 4px 12px rgba(45,25,10,.25); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
