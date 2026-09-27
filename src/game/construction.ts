@@ -165,7 +165,7 @@ export function bakeryContributionOffsetForStage(stage: BuildingStage): number {
   return BAKERY_CONTRIBUTION_THRESHOLDS[stage - 1];
 }
 
-const RECYCLING_CONTRIBUTION_THRESHOLDS = [1, 2, 4, 5] as const;
+export const RECYCLING_CONTRIBUTION_THRESHOLDS = [1, 2, 3, 4] as const;
 
 export function syncRecyclingContributionProgress(
   state: ConstructionState,
