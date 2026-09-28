@@ -303,3 +303,84 @@ With Bryggan now individually authored, the raw 64-beat pass contains **42 dedic
 ### Triage gate update
 
 **JETTY-05…15 are now individually authored in STORY_DESIGN.** The 64 contribution beats are sufficiently granular for the next pass: scene-family consolidation and reuse audit. Exact production image count remains intentionally unlocked until that pass is complete.
+
+
+## Scene-family consolidation pass v1 — 2026-09-28
+
+The raw triage intentionally over-counted visual candidates. This pass asks a stricter question: **which moments truly need a distinct composition?** Stage changes remain persistent runtime assets and dialogue can advance over a held still. The queue below is a proposed production set, not generation authorization.
+
+### Stugan scene families
+- **IMG-A2-COT-001 — Memory discoveries.** Serves COTTAGE-02 + COTTAGE-03 as one authored discovery sequence/composition: uncovered height marks plus family photograph, with dialogue changing over the held image. Do not require two separate stills unless composition audit proves both cannot read clearly.
+- **IMG-A2-COT-002 — Why Alve is rebuilding.** COTTAGE-04 MAJOR. First substantial restoration and Alve's family-return hope.
+- **IMG-A2-COT-003 — Floor is lava.** COTTAGE-06. Playful friendship image.
+- **IMG-A2-COT-004 — Rain/game.** COTTAGE-07 + COTTAGE-08. One MAJOR rain composition can carry cheating dialogue, “Regnet” and “Det ser bättre ut” if the stage swap happens immediately after/under runtime rather than requiring a second still.
+- **IMG-A2-COT-005 — VÅR STUGA drawing.** COTTAGE-09. Discovery composition.
+- **IMG-A2-COT-006 — Someone was here.** COTTAGE-12 MAJOR. Evidence from home, no family shown.
+- **IMG-A2-COT-007 — Ready for people.** COTTAGE-15 + COTTAGE-16 candidate consolidation: warm finished/near-finished cottage, Alve imagining family, then completion dialogue. Must audit whether final-stage state can honestly serve both beats.
+
+**Stugan proposed queue: 7 images** (down from 9 dedicated candidates + reuse candidate).
+
+### Bryggan scene families
+- **IMG-A2-JET-001 — Worse underneath.** JETTY-02. Damage reveal.
+- **IMG-A2-JET-002 — Linus returns to lake.** JETTY-03 + JETTY-04 candidate consolidation: salvage arrival and first major repair payoff. Stage transition can happen in runtime after dialogue.
+- **IMG-A2-JET-003 — Sol safety visit.** JETTY-06. One image carries inspection dialogue and life-buoy requirement.
+- **IMG-A2-JET-004 — Life buoy installed.** JETTY-08 MAJOR. Permanent safety/social milestone.
+- **IMG-A2-JET-005 — First visitor / first use.** JETTY-10 + JETTY-11 candidate family. Prefer one authored visitor who can plausibly witness/join the first water break; exact visitor must be locked before generation. If that harms the friendship beat, split.
+- **IMG-A2-JET-006 — Summer place complete.** JETTY-12 + JETTY-15 + JETTY-16 candidate consolidation. Use the final beautiful jetty composition for near-completion anticipation and completion dialogue while runtime owns the actual 4/4 persistent state. Do not populate it with the later random ambient pool during the completion moment unless story specifically calls for it.
+
+**Bryggan proposed queue: 6 images** (down from 10 candidates).
+
+### Båthuset scene families
+- **IMG-A2-BOAT-001 — Locked chest discovered.** BOATHOUSE-01 + BOATHOUSE-02. One composition, dialogue covers failed reasonable attempts.
+- **IMG-A2-BOAT-002 — BOOM aftermath.** BOATHOUSE-03 MAJOR. Soot-covered Henning, open chest; never depict actionable explosive setup.
+- **IMG-A2-BOAT-003 — Photograph/motorboat mystery.** BOATHOUSE-04 MAJOR. Chest contents + photograph readable enough for reaction.
+- **IMG-A2-BOAT-004 — Mira/workshop transformation.** BOATHOUSE-07 + BOATHOUSE-08 candidate consolidation. Prefer workshop-supply arrival leading directly into functioning-workshop payoff; Mira need not remain in final workshop frame if continuity demands split.
+- **IMG-A2-BOAT-005 — Soapbox plan.** BOATHOUSE-09.
+- **IMG-A2-BOAT-006 — Wheel-off test.** BOATHOUSE-11 MAJOR.
+- **IMG-A2-BOAT-007 — Successful soapbox car.** BOATHOUSE-12. Needed because failure and success communicate different story facts.
+- **IMG-A2-BOAT-008 — Slip restored.** BOATHOUSE-14. Linus support can occur through dialogue/runtime around this composition.
+- **IMG-A2-BOAT-009 — Workshop complete / “Den.”** BOATHOUSE-16 MAJOR. Must preserve workbench, photo, soapbox car and working slip.
+
+**Båthuset proposed queue: 9 images** (down from 11 candidates).
+
+### Motorbåten scene families
+- **IMG-A2-MTR-001 — Old boat enters workshop / same boat.** MOTORBOAT-01 + MOTORBOAT-02 consolidation: boat on restored slip with old photograph available for comparison.
+- **IMG-A2-MTR-002 — First substantial repair / “Inte idag”.** MOTORBOAT-04 MAJOR.
+- **IMG-A2-MTR-003 — Mira package.** MOTORBOAT-06. Reuse the canonical Mira/shop environment family rather than inventing a new visual language.
+- **IMG-A2-MTR-004 — First sign of life.** MOTORBOAT-08 MAJOR.
+- **IMG-A2-MTR-005 — It floats.** MOTORBOAT-09.
+- **IMG-A2-MTR-006 — First powered attempt.** MOTORBOAT-10 MAJOR; Henning's shore dialogue can run over same still.
+- **IMG-A2-MTR-007 — Village makes it journey-ready.** MOTORBOAT-11. Ensemble only if canonical references can be held reliably; otherwise prefer runtime dialogue over multiplying stills.
+- **IMG-A2-MTR-008 — Their named boat.** MOTORBOAT-12 MAJOR. Do not bake a dynamic player-chosen name into generated pixels; render/overlay name in runtime if required.
+- **IMG-A2-MTR-009 — We are actually boating.** MOTORBOAT-14 MAJOR. Reusable foundation for later ordinary crossings only if future continuity matches.
+- **IMG-A2-MTR-010 — “Inte idag” on the water.** MOTORBOAT-15 MAJOR. Distinct emotional composition looking toward undefined other side; show no Act 3 destination.
+- **IMG-A2-MTR-011 — Homecoming / cottage anomaly.** MOTORBOAT-16 MAJOR. Can carry arrival dialogue and transition attention toward open/lit cottage.
+
+**Motorbåten proposed queue: 11 images** (down from 12 candidates).
+
+### Family finale protected queue
+These are outside the 64 contribution count and are not aggressively collapsed because they carry the Act 2 emotional climax.
+- **IMG-A2-FIN-001 — Something is wrong at the cottage.** Alve + Adam approach; jacket/bag/open door/light; suspense, no family reveal yet.
+- **IMG-A2-FIN-002 — Familiar laughter / family reveal.** Alve recognizes what he hears/sees; family visibly unpacking/using cottage.
+- **IMG-A2-FIN-003 — Family embrace.** MAJOR. Alve breaks into embrace; Adam slightly behind and strictly back-facing. Dialogue can continue into “Han är min kompis.”
+- **IMG-A2-FIN-004 — Preserved memories.** Height marks / game / VÅR STUGA discovery by family. Candidate REUSE of FIN-002 if composition can honestly show these details; do not force.
+- **IMG-A2-FIN-005 — Veranda / living lake / “Det är bättre.”** MAJOR final Act 2 emotional image. Must show restored lake without revealing Act 3 destination.
+
+**Finale protected queue: 5 images, with FIN-004 a consolidation candidate.**
+
+### Consolidated count v1
+- Stugan: 7
+- Bryggan: 6
+- Båthuset: 9
+- Motorbåten: 11
+- Finale: 5
+
+**Proposed maximum production queue after first consolidation: 38 images.** If FIN-004 folds into FIN-002, 37. This is substantially below the raw candidate ceiling but still intentionally conservative: no story payoff has been deleted merely to chase a target number.
+
+### Next reduction pass
+Before writing generation contracts, challenge each of these 38 with three tests:
+1. Can the same story fact be communicated by the accepted runtime world + dialogue with no emotional loss?
+2. Can two adjacent image IDs share one composition without lying about stage/props/cast/time?
+3. Is this image memorable enough that Adam would notice its absence?
+
+Only survivors receive Generation Contracts.
