@@ -488,3 +488,14 @@ Canonical detail lives in `docs/STORY_DESIGN.md`. **Motorbåten 1–16 is fully 
 - Family sees preserved height marks, old game and childhood drawing, then the restored living lake from the veranda. Locked final family-arc payoff: **“Det är inte riktigt som förr.” / “Nej. …Det är bättre.”** This pays off Stugan 8 and the core theme: Alve did not recreate the old summer; together they made a new one.
 - Do not immediately reveal Act 3 after the family scene. Let the payoff land. Later Adam+Alve return to the named boat and destination-neutral mystery; the first true crossing is Act 3's opening.
 - Family reveal is **not contribution 17**. It is the Act 2 emotional payoff unlocked by Motorbåten 16.
+
+
+## Act 2 Stugan visual-production checkpoint — 2026-09-28
+
+Stugan 1–16 remains the locked narrative arc in STORY_DESIGN. Visual pre-production/creative production has now completed a **9-still Story Moment set**: six narrative/memory/payoff stills plus three restoration-work stills added after review showed the original six-image plan underrepresented the actual rebuilding.
+
+Canonical visual rules remain absolute: Barnet only from behind with canonical cap/backpack/clothes; canonical Alve; Valpen present/passive whenever Barnet appears; accepted Stugan stages are visual ground truth; isolated lake wilderness only with **no visible civilization**. Attempts violating Barnet orientation or showing village/church/harbor/civilization were rejected and are not canon.
+
+COTTAGE-12's previously open home clue is now locked as **Alve's familiar keyring from home**. It proves somebody from home visited without revealing who.
+
+Creative image production being complete does not equal runtime integration. Next concrete Stugan step is to add the accepted exported files to the Act 2 Stugan Story Moment asset folder and wire the 1–16 contribution sequence into isolated `/act2-test`, preserving the rule that Story Moments occur only at their mapped quest contributions. Do not connect the Act 2 map/save progression yet.
