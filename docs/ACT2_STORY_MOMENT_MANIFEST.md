@@ -384,3 +384,84 @@ Before writing generation contracts, challenge each of these 38 with three tests
 3. Is this image memorable enough that Adam would notice its absence?
 
 Only survivors receive Generation Contracts.
+
+
+## Ruthless reduction pass v2 — 2026-09-28
+
+Applied the three locked tests to the 38-image v1 queue: runtime sufficiency, honest adjacent consolidation, and “would Adam notice the missing still?”. This pass protects reveals/payoffs and removes stills whose only job is to document work already visible in runtime assets.
+
+### Stugan: 7 → 6
+- **KEEP COT-001 Memory discoveries** — height marks + family photo are foundational visual evidence.
+- **KEEP COT-002 Why Alve is rebuilding** — emotional thesis.
+- **CUT COT-003 Floor is lava as dedicated still** — the joke/play can run as in-world dialogue/animation; the stronger friendship image is the rain scene immediately afterward.
+- **KEEP COT-004 Rain/game** — MAJOR, unique mood/new memory.
+- **KEEP COT-005 VÅR STUGA drawing** — concrete memory object and later finale callback.
+- **KEEP COT-006 Someone was here** — mystery/hope reveal needs visual evidence.
+- **KEEP COT-007 Ready for people / cottage completion** — carries COTTAGE-15→16.
+
+### Bryggan: 6 → 4
+- **CUT JET-001 Worse underneath** — damaged runtime jetty + dialogue can communicate deeper rot.
+- **KEEP JET-002 Linus returns / salvage repair** — first Act 1 resident returning to lake and first major restoration payoff.
+- **KEEP JET-003 Sol safety visit** — distinct character/world-support scene; establishes life-buoy causality.
+- **CUT JET-004 Life buoy installed as dedicated still** — permanent buoy and stage advance are better shown directly in runtime; dialogue can celebrate installation.
+- **KEEP JET-005 First visitor / first use** — proof the lake is becoming social again. Lock visitor during contract pass; composition should privilege Adam+Alve friendship rather than crowd spectacle.
+- **KEEP JET-006 Summer place complete** — project completion payoff.
+
+### Båthuset: 9 → 7
+- **KEEP BOAT-001 Locked chest discovered** — mystery object setup.
+- **KEEP BOAT-002 BOOM aftermath** — unique comic MAJOR.
+- **KEEP BOAT-003 Photograph/motorboat mystery** — Act 3 seed.
+- **CUT BOAT-004 Mira/workshop transformation as dedicated still** — Mira purchase can occur in existing shop presentation; workshop stage/state is visible in runtime. Preserve locked dialogue there.
+- **KEEP BOAT-005 Soapbox plan** — visual object starts the self-directed friendship project.
+- **KEEP BOAT-006 Wheel-off test** — unique comic action.
+- **CUT BOAT-007 Successful soapbox-car still** — completed car becomes a persistent runtime prop; success dialogue can occur beside it. Failure image + persistent finished prop communicates the arc without another still.
+- **KEEP BOAT-008 Slip restored** — important physical setup/payoff for later motorboat project.
+- **KEEP BOAT-009 Workshop complete / “Den.”** — completion MAJOR.
+
+### Motorbåten: 11 → 8
+- **KEEP MTR-001 Old boat enters workshop / same boat** — joins boathouse payoff to photograph history.
+- **KEEP MTR-002 First substantial repair / “Inte idag”** — thematic setup.
+- **CUT MTR-003 Mira package as dedicated still** — use existing shop presentation + runtime package at worksite. No need to redraw Mira for a transaction.
+- **KEEP MTR-004 First sign of life** — MAJOR.
+- **CUT MTR-005 It floats as dedicated still** — runtime boat-in-water state can carry the short “den flyter” joke.
+- **KEEP MTR-006 First powered attempt** — MAJOR and genuinely different action.
+- **CUT MTR-007 Village makes it journey-ready as dedicated still** — ensemble generation is expensive/error-prone and the story fact is better delivered through individual village interactions + accumulating runtime props.
+- **KEEP MTR-008 Their named boat** — ownership/emotional transition; exact name rendered in runtime, not generated pixels.
+- **KEEP MTR-009 We are actually boating** — MAJOR, new viewpoint and later transport visual foundation.
+- **KEEP MTR-010 “Inte idag” on water** — character-arc payoff and mystery horizon.
+- **KEEP MTR-011 Homecoming / cottage anomaly** — finale transition.
+
+### Finale: 5 → 4
+- **KEEP FIN-001 Something is wrong at cottage** — suspense before reveal.
+- **MERGE FIN-002 + FIN-004 → FIN-002 Family reveal / returned home** — family unpacking/using cottage with old game and preserved memories visible in environment. Dialogue can later call attention to height marks/drawing without a separate still.
+- **KEEP FIN-003 Family embrace / “Han är min kompis”** — protected emotional MAJOR.
+- **KEEP FIN-005 Veranda / “Det är bättre”** — protected final Act 2 image.
+
+### Production queue v2
+
+| Family | v1 | v2 |
+|---|---:|---:|
+| Stugan | 7 | **6** |
+| Bryggan | 6 | **4** |
+| Båthuset | 9 | **7** |
+| Motorbåten | 11 | **8** |
+| Finale | 5 | **4** |
+| **TOTAL** | **38** | **29** |
+
+**29 images is the current proposed production queue.** This pass removes 9 generation targets without deleting a locked narrative beat. Removed moments are explicitly reassigned to runtime/dialogue/persistent props rather than silently disappearing.
+
+### Stop condition for further cutting
+Do not chase a smaller number for its own sake. A third reduction pass should only remove an image if a concrete runtime/reuse replacement is named. In particular, protect:
+- Stugan rain/new-memory beat;
+- somebody-was-here clue;
+- Henning BOOM aftermath;
+- motorboat photograph mystery;
+- soapbox failure;
+- first motor life;
+- first powered attempt;
+- first real boat trip;
+- transformed “Inte idag”;
+- family suspense/reveal/embrace/veranda payoff.
+
+### Next gate
+The 29-image queue is now small enough to begin **contract drafting by scene family**. Draft contracts before generation, starting with Stugan because it has the most contained cast/environment continuity. No image generation is authorized by this reduction pass alone.
