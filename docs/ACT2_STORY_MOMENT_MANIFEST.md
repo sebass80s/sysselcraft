@@ -183,3 +183,123 @@ Within a family, keep the same canonical reference batch and environment referen
 
 ### Asset-economy target
 There is deliberately **no fixed image-count target** before triage. The optimization target is minimum generation attempts while preserving every story beat that materially benefits from a still. A lower image count is not success if it weakens a locked payoff.
+
+
+## 64-beat triage v1 — 2026-09-28
+
+This is the first production-economy pass, grounded in the locked paper design. **LIVE means no dedicated still is currently justified.** IMAGE/MAJOR are candidates, not generation authorization. Where STORY_DESIGN intentionally leaves an individual contribution unordered/unauthored, this table says so rather than inventing canon.
+
+### Stugan
+
+| Beat | Core event | Delivery | Visual delta / family | Notes |
+|---|---|---|---|---|
+| COTTAGE-01 | Enter/air/clear neglected cottage; Alve knows the old layout | LIVE | first worksite activity | Runtime + dialogue carries it |
+| COTTAGE-02 | Old height marks are uncovered | IMAGE | height marks become protected persistent prop | Visual discovery worth preserving |
+| COTTAGE-03 | Warm old family photograph is found | IMAGE | family photo becomes persistent memory prop | First concrete family reveal |
+| COTTAGE-04 | First substantial restoration; Alve reveals hope family may return | MAJOR | cottage 1/4→2/4 | Emotional project thesis |
+| COTTAGE-05 | Old family board/card game is recovered | LIVE | game becomes persistent prop | Can stage in runtime/dialogue |
+| COTTAGE-06 | Furniture memories / floor-is-lava play | IMAGE | room increasingly usable | Distinct playful visual beat |
+| COTTAGE-07 | Rain traps Adam+Alve; they play the old game | MAJOR | new memory in old cottage | Puppy may be present; rain continuity |
+| COTTAGE-08 | “Regnet” / “Det ser bättre ut” payoff and next restoration step | REUSE | next cottage stage | Candidate reuse of rain-family scene if stage continuity works; audit required |
+| COTTAGE-09 | Childhood drawing “VÅR STUGA” discovered | IMAGE | drawing becomes persistent prop | Must preserve exact in-world drawing concept |
+| COTTAGE-10 | Drawing motivates veranda work; ordinary family memories | LIVE | veranda work begins | Dialogue/runtime sufficient |
+| COTTAGE-11 | Adam asks if family knows; restoration confirmed as Alve's surprise | LIVE | no required new visual | Character beat |
+| COTTAGE-12 | Evidence somebody from home visited unseen; hope surges | MAJOR | mystery object + restored veranda/next stage | Do not show family; exact object still open |
+| COTTAGE-13 | Remaining substantial damage addressed | LIVE | incremental work | No unique still needed |
+| COTTAGE-14 | Shift from repair to preparing for actual people | LIVE | chairs/sleeping/guest readiness | Runtime props preferred |
+| COTTAGE-15 | Alve openly imagines family using the rooms again | IMAGE | cottage reads ready for people | Quiet emotional composition candidate |
+| COTTAGE-16 | Cottage complete; nobody arrives; “Inte idag” | MAJOR | final cottage state with all memory props | Family must NOT appear |
+
+**Stugan v1:** 6 LIVE, 5 IMAGE, 4 MAJOR, 1 REUSE candidate = **9 dedicated-image candidates before reuse audit**.
+
+### Bryggan
+
+| Beat | Core event | Delivery | Visual delta / family | Notes |
+|---|---|---|---|---|
+| JETTY-01 | Adam+Alve begin clearing/inspecting, expecting mostly boards | LIVE | worksite starts | Locked block, exact micro-dialogue open |
+| JETTY-02 | Deeper rot/support damage discovered | IMAGE | true scale of damage becomes visible | Natural visual reveal |
+| JETTY-03 | Linus/Recycling salvage reaches lake; Linus briefly reacts to old place | IMAGE | salvage material appears; Linus at lake | First meaningful Linus lake return |
+| JETTY-04 | First substantial salvage repair | MAJOR | jetty 1/4→2/4 | First major jetty visual advance |
+| JETTY-05 | Middle-block contribution A | TBD | middle arc | Exact contribution mapping is **not authored in STORY_DESIGN**; do not invent |
+| JETTY-06 | Middle-block contribution B | TBD | middle arc | Sol safety chain occurs in this region but purchase is not a contribution |
+| JETTY-07 | Middle-block contribution C | TBD | middle arc | Cleanup/life-buoy causal chain locked, per-contribution order open |
+| JETTY-08 | Middle-block contribution D | TBD | middle arc / next stage expected by 4+4 structure | Needs narrative split before image triage |
+| JETTY-09 | Later-block contribution A: focus shifts toward swimming/summer use | TBD | social-use foreshadowing | Exact beat/order explicitly open |
+| JETTY-10 | Later-block contribution B | TBD | possible resident-return signal | Exact beat/order explicitly open |
+| JETTY-11 | Later-block contribution C | TBD | summer-life progression | Exact beat/order explicitly open |
+| JETTY-12 | Later-block contribution D | TBD | later restoration state | Exact beat/order explicitly open |
+| JETTY-13 | Final-push contribution A | TBD | final restoration push | Exact beat not authored |
+| JETTY-14 | Final-push contribution B | TBD | final restoration push | Exact beat not authored |
+| JETTY-15 | Final-push contribution C | TBD | final restoration push | Exact beat not authored |
+| JETTY-16 | Jetty completes; ambient-life pool becomes eligible | MAJOR | complete jetty + permanent life buoy + future social pool | Completion payoff |
+
+**Bryggan v1:** 1 LIVE, 2 IMAGE, 2 MAJOR, **11 unresolved/TBD**. This is a useful triage finding: Bryggan is block-locked but not yet authored finely enough for honest 64-beat image production. The locked intermediate **Sol safety check → Mira life-buoy purchase → permanent life buoy** remains outside contribution numbering until the middle block is split deliberately.
+
+### Båthuset
+
+| Beat | Core event | Delivery | Visual delta / family | Notes |
+|---|---|---|---|---|
+| BOATHOUSE-01 | Clearing reveals heavy old locked chest | IMAGE | chest becomes focal prop | Discovery visual |
+| BOATHOUSE-02 | Reasonable opening attempts fail | LIVE | chest remains locked | Dialogue/action can carry |
+| BOATHOUSE-03 | Henning's excessive solution; cut-away BOOM aftermath | MAJOR | chest opens; soot gag | No instructional depiction of explosives |
+| BOATHOUSE-04 | Chest contents + photograph reveal same motorboat/mystery | MAJOR | tools/boat parts/photo become persistent | Act 3 mystery seed |
+| BOATHOUSE-05 | Inventory finds; old work area too ruined/disorganized | LIVE | workbench problem established | Runtime staging |
+| BOATHOUSE-06 | Clear/repair workbench area | LIVE | workshop starts taking shape | Runtime work |
+| BOATHOUSE-07 | Mira organization solution / story purchase occurs around block | IMAGE | workshop supplies arrive | Purchase itself is intermediate, not contribution; exact mapping needs implementation care |
+| BOATHOUSE-08 | Workshop becomes functional; photo mounted; “Allt… båten” | MAJOR | workshop state established | Strong visual identity payoff |
+| BOATHOUSE-09 | Old hand-drawn soapbox-car plan found | IMAGE | plan becomes project prop | New side-project reveal |
+| BOATHOUSE-10 | Collect/reuse parts and build first car | LIVE | car-in-progress | Runtime props/action |
+| BOATHOUSE-11 | First test fails harmlessly; wheel comes off | MAJOR | failed prototype | Comic action worth dedicated still |
+| BOATHOUSE-12 | Improved car succeeds; friendship payoff | IMAGE | completed soapbox car persists | Could become REUSE only if one composition can honestly carry success/failure, unlikely |
+| BOATHOUSE-13 | Clear boat bay/slip area | LIVE | bay opens | Runtime work |
+| BOATHOUSE-14 | Old trolley/slip mechanism restored; Linus may help | IMAGE | slip mechanism becomes functional-looking | Early chest parts may pay off |
+| BOATHOUSE-15 | Safely test trolley/slip | LIVE | proves motorboat can later be brought in | Runtime animation/dialogue |
+| BOATHOUSE-16 | Boathouse complete; “Den.” motorboat payoff | MAJOR | final workshop + photo + car + working slip | Completion Story Moment |
+
+**Båthuset v1:** 5 LIVE, 5 IMAGE, 6 MAJOR = **11 dedicated-image candidates** before reuse audit.
+
+### Motorbåten
+
+| Beat | Core event | Delivery | Visual delta / family | Notes |
+|---|---|---|---|---|
+| MOTORBOAT-01 | Use restored slip to bring old motorboat into workshop | IMAGE | motorboat physically enters boathouse project space | Strong payoff to boathouse infrastructure |
+| MOTORBOAT-02 | Clean/uncover and compare with old photograph; confirm same boat | IMAGE | identity detail becomes readable | Could potentially share image family with 01, not assumed |
+| MOTORBOAT-03 | Damage worse than expected; Linus recognizes boat/mystery | LIVE | Linus joins repair support | Dialogue/runtime can carry recognition if boat/photo already established |
+| MOTORBOAT-04 | First substantial repair; “Inte idag” setup | MAJOR | motorboat 1/4→2/4 | Thematic seed for beat 15 |
+| MOTORBOAT-05 | Missing/unsalvageable need discovered | LIVE | need established | Keep deliberately non-technical |
+| MOTORBOAT-06 | Mira can source it; major story-bound SysselBux purchase | IMAGE | package/order story beat | Exact item/price open; shop scene family |
+| MOTORBOAT-07 | Package arrives; Alve wants to skip preparation, Linus stops him | LIVE | package at workshop | Runtime/dialogue sufficient |
+| MOTORBOAT-08 | First controlled sign of life; “DEN LEVER LUGNT” | MAJOR | motorboat 2/4→3/4 | Comic/emotional mechanical payoff |
+| MOTORBOAT-09 | Boat enters water via restored slip and floats | IMAGE | first water state | Distinct visual milestone |
+| MOTORBOAT-10 | First powered water test, brief success then stop | MAJOR | boat moves under own power | Henning jetty gag can live on this image/dialogue |
+| MOTORBOAT-11 | Village helps make boat journey-ready | IMAGE | safety/practical/provisions accumulate | Ensemble candidate; avoid checklist composition |
+| MOTORBOAT-12 | Boat visually 4/4; Adam+Alve give it persistent name | MAJOR | restored named boat | Exact naming UX open; image should not bake dynamic name unless runtime overlay handles it |
+| MOTORBOAT-13 | Prepare longer test; Linus deliberately stays ashore | LIVE | final prep | Runtime/dialogue sufficient |
+| MOTORBOAT-14 | First real trip; restored lake seen from water | MAJOR | new lake perspective | Explicitly locked Major Story Moment |
+| MOTORBOAT-15 | Harmless problem solved independently; “Inte idag” transformed | MAJOR | no damage regression | Character-arc payoff, other side remains undefined |
+| MOTORBOAT-16 | Successful homecoming; cottage anomaly noticed; Alve runs | MAJOR | motorboat story complete → finale transition | May need one homecoming image plus finale-family sequence outside 64 |
+
+**Motorbåten v1:** 4 LIVE, 5 IMAGE, 7 MAJOR = **12 dedicated-image candidates** before reuse audit.
+
+### Triage result
+
+Known candidate load before any reuse consolidation:
+- Stugan: **9** dedicated-image candidates + 1 REUSE candidate.
+- Bryggan: **4** known dedicated-image candidates, but **11 beats still need honest individual authoring** before its image count can be calculated.
+- Båthuset: **11** dedicated-image candidates.
+- Motorbåten: **12** dedicated-image candidates.
+- Family finale: outside the 64 contribution count and still requires its own consolidation pass.
+
+This first pass therefore **does not support the earlier illustrative “around 20 images” guess**. Current locked story, if every visual candidate received its own still, is already at least 36 dedicated candidates before the unresolved Bryggan beats and finale. That is exactly why reuse/scene-family consolidation must happen before generation.
+
+### Immediate optimization opportunities
+
+1. **Do not generate stage-change proof twice.** If a MAJOR image is already the emotional scene that introduces a new 2/4, 3/4 or 4/4 state, the runtime construction asset remains the canonical persistent proof afterward.
+2. **Discovery + reaction may share one image** when the discovered object and characters can coexist honestly in the same composition (for example photograph reveals), with dialogue advancing over the still.
+3. **Village-shop purchases should reuse scene families** where character/environment continuity allows, rather than inventing unique shop compositions for every purchase.
+4. **Work beats remain LIVE** unless the work itself is the joke/reveal/payoff.
+5. **Finale gets protected budget.** Do not cannibalize the family embrace/veranda payoff merely to hit a smaller image count.
+
+### Blocker exposed by triage
+
+Before image-count lock, author **JETTY-05…15** at the same granularity as Stugan/Båthuset/Motorbåten. This is narrative completion work, not image-generation work. Until then any exact total image count would be invented.
