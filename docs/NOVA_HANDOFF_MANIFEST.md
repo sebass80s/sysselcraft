@@ -428,3 +428,16 @@ Do not independently generate pieces and try to assemble them later. Do not rege
 - These roles are not mandatory checklists. Use short authored trips/interactions where they naturally fit.
 - Core pacing loop: **lake restoration ↔ village support ↔ lake restoration**, powered underneath by ordinary real-world quest completion.
 - Product principle: **the world Adam restored in Act 1 becomes the toolkit and community that makes Act 2 possible.**
+
+
+### Act 2 lake project/finale paper lock — 2026-09-28
+- Completed lake projects unlock controlled-random ambient resident scenes selected from authored pools and held stable for the current lake visit/session. Pools include a real empty-state chance. Ambient click dialogue is optional/non-gating.
+- Bryggan identity = swimming/summer/social life. Båthuset = workshop/tools/finds/small projects and future motorboat-repair credibility. Stugan = Alve's emotional/family-memory location.
+- Stugan reveals Alve gradually through concrete objects/memories; family hardship cause remains unspecified. Cottage completion does not summon the family.
+- Family return is Act 2's end payoff after the motorboat: boat complete → quiet aftermath → signs somebody is in the supposedly empty/locked cottage → Alve suspects burglars → Adam/Alve investigate → reveal Alve's family.
+- After Act 2, Alve becomes permanent motorboat transport across the lake. Use a reusable Adam+Alve boat Story Moment whose dialogue can vary later.
+- Act 2 may hint subtly at something on the other side, but Act 3 destination is deliberately undefined. Hints must be destination-neutral. **Mystery is canon; answer is not.**
+- Baseline for Stugan/Bryggan/Båthuset is locked at **4+4+4+4 = 16 authoritative real-world contributions per project**. Motorboat count remains open.
+- Bryggan 1–4: Adam/Alve discover deeper rot; after contribution 2 they need reusable timber; Linus/Recycling supplies suitable salvage; Linus comes to the lake and briefly reacts to the old place; contribution 4 advances jetty 1/4→2/4.
+- Bryggan middle: as swimming becomes plausible, Sol performs a practical bathing-place safety check, prompting cleanup and a **life buoy** requirement. Only then does the life buoy appear as a story item at Mira. Adam buys it with authoritative SysselBux; exact price remains open; it returns to the lake and becomes permanently visible at the jetty. Purchase is a story beat, not one of the 16 contributions.
+- Bryggan 9–12 increasingly foreshadows swimming/summer use and resident return. 13–16 is final push; contribution 16 completes the project and enables the permanent controlled-random jetty ambient pool (e.g. empty, Linus+Henning, Sol+Mira). Exact dialogue/content pool remains production work.
