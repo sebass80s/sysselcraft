@@ -29,7 +29,7 @@ import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraSto
 import { bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
 import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, ROOM_DECOR_PRICES, DOG_HOME_PRICES, commitStoryBeat, purchaseBottleMessage, purchaseFootballRug, purchaseRoomDecor, purchaseDogHomeUpgrade, type RoomDecorKey } from "../backend/storyShop";
-import { getPairedChildId } from "../backend/childDeviceBinding";
+import { CHILD_BINDING_CHANGED, getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { chooseDogHomeDialogue, deriveDogHomeStageFromWorldFlags, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
@@ -112,6 +112,7 @@ export default function VillagePrototype() {
   const [diamonds, setDiamonds] = useState(0);
   const [sysselBux, setSysselBux] = useState(0);
   const [backendWallet, setBackendWallet] = useState<BackendWalletSnapshot | null>(() => getLatestBackendWallet());
+  const [backendWalletExpected, setBackendWalletExpected] = useState<boolean | null>(null);
   const [progression, setProgression] = useState<ProgressionState>(createEmptyProgression);
   const [introComplete, setIntroComplete] = useState(false);
   const [dialogueOpen, setDialogueOpen] = useState(false);
@@ -269,6 +270,25 @@ export default function VillagePrototype() {
     const syncBackendWallet = (event: Event) => setBackendWallet((event as CustomEvent<BackendWalletSnapshot | null>).detail ?? null);
     window.addEventListener(BACKEND_WALLET_EVENT, syncBackendWallet);
     return () => window.removeEventListener(BACKEND_WALLET_EVENT, syncBackendWallet);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const refreshWalletExpectation = () => {
+      void getPairedChildId()
+        .then((pairedChildId) => {
+          if (!cancelled) setBackendWalletExpected(Boolean(pairedChildId));
+        })
+        .catch(() => {
+          if (!cancelled) setBackendWalletExpected(false);
+        });
+    };
+    refreshWalletExpectation();
+    window.addEventListener(CHILD_BINDING_CHANGED, refreshWalletExpectation);
+    return () => {
+      cancelled = true;
+      window.removeEventListener(CHILD_BINDING_CHANGED, refreshWalletExpectation);
+    };
   }, []);
 
   useEffect(() => {
@@ -1007,7 +1027,7 @@ export default function VillagePrototype() {
   </div></section>;
 
   return <section className="prototype-shell">
-    <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser"><button className="dog-hud-button" type="button" onClick={() => setRoomOpen(true)} aria-label="Mitt rum" title="Mitt rum">🏠</button>{dogName && <button className="dog-hud-button" type="button" onClick={openDogHome} aria-label={`Besök ${dogName}`} title={`Besök ${dogName}`}>🐶</button>}<strong>💎 {backendWallet?.diamonds ?? diamonds}</strong><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong></div></header>
+    <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser"><button className="dog-hud-button" type="button" onClick={() => setRoomOpen(true)} aria-label="Mitt rum" title="Mitt rum">🏠</button>{dogName && <button className="dog-hud-button" type="button" onClick={openDogHome} aria-label={`Besök ${dogName}`} title={`Besök ${dogName}`}>🐶</button>}<strong>💎 {backendWallet?.diamonds ?? (backendWalletExpected === false ? diamonds : "…")}</strong><strong>🪙 {backendWallet?.sysselBux ?? (backendWalletExpected === false ? sysselBux : "…")}</strong></div></header>
     <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>
     {!solRuntimeTestActive && <>
     {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`} onClick={dogHomeShowcase ? () => { setDogHomeShowcase(false); setDogHomeOpen(false); } : undefined}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={(event) => { event.stopPropagation(); setDogHomeShowcase(false); setDogHomeOpen(false); }}>← Till byn</button>{!dogHomeShowcase && line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Visa mig!"}</button></div>}</div>; })()}
