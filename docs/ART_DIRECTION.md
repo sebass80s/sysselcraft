@@ -609,3 +609,19 @@ Before producing Act 2 assets, lock the lake-area composition around the whole a
 Then freeze the lake master and produce each restoration project's states against its recorded anchor/envelope. **Do not redesign the lake between cottage, jetty, boathouse and boat production.**
 
 The goal is that Act 2 art production becomes a controlled manufacturing pipeline, not a sequence of fresh illustration experiments.
+
+
+## Act 2 canonical character-reference workflow — LOCKED 2026-09-28
+
+Act 2 Story Moments must preserve established character identity. Do not regenerate an established character from prose or memory alone.
+
+- Kalle maintains a small canonical character-reference set for **Adam/the child, Valpen, Linus, Henning, Mira and Sol**; add Alve after his design is accepted.
+- Persistent Library copies are useful for Nova to visually inspect and audit, but current tooling does **not** reliably pass a Library image through as an actual image-generation reference. The tested Library → materialize → image-generation route failed. Do not claim otherwise.
+- For production image sessions, Kalle uploads the canonical reference images into the active conversation in one batch. Only then may image generation use established characters. If a required reference is not actually available to the image generator, stop and say so rather than inventing the character.
+- **The child is always shown from behind in Story Moments/cutscenes.** Preserve the established cap, backpack, clothing, proportions and silhouette. Never invent or reveal the child's face. Camera angle may vary only while this rule remains true.
+- Canonical Sol was visually re-locked on 2026-09-28 from the accepted revised arrival render: adult blonde doctor, warm semi-realistic/cinematic SysselCraft rendering, teal scrubs, white coat, stethoscope and established hair/face identity. The older more cartoon-like Sol rendering is superseded as a character-style reference.
+- The accepted Act 2 ensemble rendering target is the warm, cinematic, semi-realistic/photographic storybook look demonstrated when Mira, Sol, Linus and Henning read as one coherent cast. Avoid anime drift, glossy generic animation/Pixar drift, or independently stylized characters.
+- The 2026-09-28 swimming group image is accepted as an **ensemble/style test**, but not as production canon for the child because it accidentally showed the child's face. The back-view rule overrides that image.
+- Reference images define **identity**; scene prompts define pose, wardrobe appropriate to the scene (e.g. ordinary swimwear), expression and action without replacing identity.
+
+Production gate: **inspect the actual canonical refs → confirm they are available as real image inputs in the active conversation → generate → compare identity/style → reject drift before integrating the asset.**
