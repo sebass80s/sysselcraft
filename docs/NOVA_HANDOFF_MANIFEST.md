@@ -395,3 +395,22 @@ Before drawing any Act 2 world/building art, read the final **HARD VISUAL PRODUC
 Core sequence: **define whole area → paint one coherent master → Kalle accepts → freeze geometry → record project anchors/envelopes/footprints → author each project state against that same reference → deterministic normalization/composite validation → runtime 2.5D integration → iPhone acceptance.**
 
 Do not independently generate pieces and try to assemble them later. Do not regenerate an accepted master/building to solve placement. Do not ask image generation to solve crop/alpha/alignment/envelope problems. Do not produce stage variants with drifting perspective/footprints. Never use spritesheets/contact sheets unless Kalle explicitly requests one.
+
+
+## Act 2 paper-design lock — Alve/opening/project UX (2026-09-28)
+
+- Late Act 1 foreshadows the lake with an overgrown **SJÖN →** sign and a brief Linus memory; no immediate quest.
+- Act 2 starts when the dog runs down that remembered path. Forest travel is cinematic only, not a playable map, ending in the lake reveal.
+- First clue at the apparently abandoned lake is a bicycle against a tree. Adam finds **Alve** attempting to repair his family's old summer cottage alone.
+- Nameplate starts as **Barnet** and changes to **Alve** only when the children introduce themselves.
+- Alve is wild/impulsive but kind. His family has had a difficult period whose exact cause stays unspecified. He wants to revive the summer place because of good family memories.
+- Adam offers to help. Alve asks what to begin with.
+- Project selection happens inside the Story Moment through three hotspots: **Stugan / Bryggan / Båthuset**. A hotspot previews/marks a choice and triggers a short Alve motivation; it does not commit yet.
+- Confirmation is explicit via **Laga [objekt]**. After confirmation Alve says **“Bra val! Vi fixar [objektet] först!”**. The word “först” does not create a canonical project order.
+- Locked selection lines: Bryggan = future boat mooring + swimming; Båthuset = needed to repair the boat; Stugan = Alve hopes his family will return when it is restored.
+- Motorboat is the visible final goal and remains unavailable until all three independent projects are complete; its lock should make fictional sense, not read as an arbitrary 3/3 gate.
+- Once a project is active, **Alve appears/works at that site**, providing the visual active-project marker while the object itself advances through construction stages.
+- Clicking Alve at the active project opens short project-specific friend cutscenes. Mix project talk, banter and gradually revealed family/lake memories. Do not use him as a quest-vending machine.
+- Alve's story is deliberately revealed over time: **stranger → building companion → friend** in parallel with **neglected lake → restored lake → living lake**.
+- When a project is complete, lake residents/activities can replace the “worksite” feeling. Guiding principle: **Alve works where restoration is active; village life appears where restoration is complete.**
+- Still paper design. Do not connect /act2-test, add progression/save flags, or implement the opening until Kalle explicitly moves this slice into production.
