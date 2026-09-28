@@ -414,3 +414,17 @@ Do not independently generate pieces and try to assemble them later. Do not rege
 - Alve's story is deliberately revealed over time: **stranger → building companion → friend** in parallel with **neglected lake → restored lake → living lake**.
 - When a project is complete, lake residents/activities can replace the “worksite” feeling. Guiding principle: **Alve works where restoration is active; village life appears where restoration is complete.**
 - Still paper design. Do not connect /act2-test, add progression/save flags, or implement the opening until Kalle explicitly moves this slice into production.
+
+
+### Act 2 pacing/economy/village integration — LOCKED 2026-09-28
+- Act 2 is intentionally slow-burn. Four visual stages do **not** mean four quests. Exact contribution thresholds remain open, but major restorations must take long enough that Adam cannot burn through authored content immediately.
+- Something should happen between major visual stage changes, both **at the lake and back in the village**: Alve/friend scenes, props/environment, visitors/activities, resident dialogue, inventory changes and authored village interactions.
+- SysselBux is more deeply integrated into Act 2 story as an economy sink. Restoration can reveal natural needs for tools/supplies that require story-bound purchases from Mira. Required purchases must be affordable from normal earnings and use the authoritative backend wallet. Exact prices remain unlocked pending real economy balancing.
+- The restored Act 1 village is Act 2's support network, not obsolete scenery:
+  - Återvinningen/Linus = salvage and reuse;
+  - Bageriet/Henning = food, community and occasional useful Henning events;
+  - Sjukhuset/Sol = practical care/safety and minor age-appropriate incidents, never manufactured emergencies;
+  - Lanthandeln/Mira = equipment/supplies and SysselBux story purchases.
+- These roles are not mandatory checklists. Use short authored trips/interactions where they naturally fit.
+- Core pacing loop: **lake restoration ↔ village support ↔ lake restoration**, powered underneath by ordinary real-world quest completion.
+- Product principle: **the world Adam restored in Act 1 becomes the toolkit and community that makes Act 2 possible.**
