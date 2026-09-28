@@ -586,3 +586,12 @@ Story-bound SysselBux purchases remain part of the existing authoritative backen
 The Bakery, Clinic, Recycling and Mira shop may all receive Act 2 interactions. Preserve their completed Act 1 implementation and add state-eligible Act 2 behavior rather than reopening/replacing their Act 1 arcs. Cross-area interactions must remain compatible with discrete-area architecture and save/restart reconciliation.
 
 Pacing requirement: four project art stages must not be interpreted as four quest contributions. Major visual stages are sparse milestones; intermediate authored beats may occur without a construction sprite change. Exact contribution thresholds remain deliberately undefined until the progression/economy model is balanced.
+
+
+### Act 2 isolated content-lab checkpoint — 2026-09-28
+
+The existing `/act2-test` route is now doing double duty as the accepted visual lake-map harness and an isolated Story Moment sequencing lab. It currently includes the Alve intro, Båthuset and Stugan content. Stugan integration landed in `3155894ebc62edb74b117c479b0676133b638c4a`; Kalle reported CI green and completed browser visual acceptance.
+
+This checkpoint does **not** change the production boundary above. `/act2-test` must remain detached from Adam's authoritative production save, Quest V2 progression and Act 1→Act 2 transition until an explicit production-integration slice is designed and requested. Do not infer persistence from the test controls. The test route may freely sequence authored content and stage swaps for acceptance without establishing save semantics.
+
+Canonical Stugan test assets live under `public/assets/village/story-moments/act2/cabin/`. The accepted runtime mapping uses nine images across sixteen contributions, so implementation must preserve the rule that **contribution count, Story Moment count and four visual construction stages are three different layers**. Do not collapse them into one-to-one progression.
