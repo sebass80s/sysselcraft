@@ -575,3 +575,14 @@ Established Act 1 residents must support authored lake presence as restoration a
 Do not implement these flags by casually mutating SaveStateV1 or inventing backend ownership. Persistence/authority must be designed against STATE_OWNERSHIP.md and existing Quest V2 progression before implementation. This section locks product behavior, not a premature storage schema.
 
 The isolated /act2-test lake acceptance route remains separate from Act 1 progression until Kalle explicitly asks to connect the area.
+
+
+### Act 2 cross-area progression consumers — LOCKED PRODUCT CONTRACT 2026-09-28
+
+Act 2 progression is intentionally consumed by both the lake area and the existing Act 1 village. A restoration beat may expose an authored need that activates a village interaction, and completion/progress may unlock lake ambience, resident presence, village dialogue or shop inventory. Implement these as consumers of authoritative progression/story state rather than by duplicating project-order logic in each location.
+
+Story-bound SysselBux purchases remain part of the existing authoritative backend wallet/economy. Do **not** create an Act 2 local wallet, client-side deduction shortcut or parallel construction currency. Exact required items/prices are product-balancing decisions and are not locked by this technical contract.
+
+The Bakery, Clinic, Recycling and Mira shop may all receive Act 2 interactions. Preserve their completed Act 1 implementation and add state-eligible Act 2 behavior rather than reopening/replacing their Act 1 arcs. Cross-area interactions must remain compatible with discrete-area architecture and save/restart reconciliation.
+
+Pacing requirement: four project art stages must not be interpreted as four quest contributions. Major visual stages are sparse milestones; intermediate authored beats may occur without a construction sprite change. Exact contribution thresholds remain deliberately undefined until the progression/economy model is balanced.
