@@ -688,3 +688,78 @@ This creates the intended Act 2 geography and pacing loop:
 **lake restoration ↔ village support ↔ lake restoration**, while ordinary real-world quests continue to power the broader progression.
 
 The narrative payoff is important: Act 1's buildings were not disposable progression trophies. **The world Adam restored in Act 1 becomes the toolkit and community that makes Act 2 possible.**
+
+
+## Act 2 lake social states, project identities and transport — LOCKED 2026-09-28
+
+### Completed-site ambient life
+Completed lake projects unlock **controlled-random ambient social scenes**. Eligible scenes are selected from authored pools when the lake area is entered/loaded and remain stable for the current visit/session; NPCs must not visibly reshuffle or teleport simply because the child moves around. Every pool should include a real chance that nobody is present, so visits feel discovered rather than scheduled.
+
+Ambient scenes may have short optional click dialogue, but they are not required Story Moments and must not gate progression. The pool may grow as more lake projects become complete.
+
+For the completed **jetty**, eligible examples include an empty jetty, Linus + Henning by the water, or Sol + Mira swimming/hanging out. Exact combinations/dialogue pools remain content-production work.
+
+Guiding rule remains: **Alve works where restoration is active; village life appears where restoration is complete.**
+
+### Project identities
+The three independent projects must feel different after restoration:
+- **Bryggan:** swimming, relaxation, friendship and summer life.
+- **Båthuset:** workshop, tools, discoveries, small projects and comic incidents. It establishes a credible place for later motorboat repair. Once complete it may host controlled-random ambient scenes with established residents or Alve and may contain small optional clickable finds/events. It should not merely duplicate the jetty's social-hangout role.
+- **Stugan:** the emotional Alve location. Its restoration gradually reveals personal/family memories through objects and concrete details rather than an exposition dump. Candidate devices include an old family photograph, childhood drawing, height marks, old game/toy or other traces of earlier summers. The exact cause of the family's difficult period remains deliberately unspecified.
+
+Completing the cottage does **not** immediately bring Alve's family back. Alve has completed the thing he originally hoped might make them return, but must live with uncertainty while the rest of Act 2 continues.
+
+### Act 2 family payoff
+Alve's family returns only at the **end of Act 2**, after the wider lake restoration and motorboat project have naturally allowed significant time to pass.
+
+Locked final reveal structure:
+**motorboat complete → quiet aftermath → Adam/Alve notice signs that somebody is inside the restored cottage → because the cottage was established as empty/locked, Alve suspects intruders → they rush to investigate → the people inside are Alve's family.**
+
+The reveal should initially play as an Alve-style “there's someone in the cottage / let's see if they're burglars” discovery rather than announcing the family ceremonially in advance. The family reveal is the emotional payoff for Alve's whole Act 2 arc, not merely the cottage completion reward.
+
+### Alve after Act 2 and the other side of the lake
+After the motorboat is restored, **Alve becomes the permanent boat driver/transport character**. Alve + motorboat form the authored transport link from the lake to a future area on the other side and back again.
+
+Produce/use a reusable Story Moment/cinematic scene of **Adam and Alve travelling in the motorboat**. The same visual can carry different dialogue in future story states. The first crossing may later contain Act 3 introduction dialogue; routine later crossings can use shorter contextual dialogue.
+
+Act 2 may subtly seed curiosity about the **other side of the lake**, but the destination itself is explicitly undefined. Hints must remain destination-neutral and still make sense regardless of what Act 3 eventually becomes. Allowed grammar includes vague family memories, traces of old trips, uncertain remarks or unexplained objects. Do not name, depict or promise a specific destination until Act 3 is designed.
+
+Canonical rule: **the mystery exists; the answer is not canon yet.**
+
+## Bryggan restoration arc — LOCKED 2026-09-28
+
+### Progression baseline
+For **Stugan, Bryggan and Båthuset**, the locked baseline is **4 + 4 + 4 + 4 authoritative real-world quest contributions**, 16 contributions per project. Four visual stages are sparse milestones inside a longer arc, not four total quests. Story/world beats and visible prop changes occur between major stage swaps. The motorboat contribution count remains open until its own arc is designed.
+
+For the jetty, the four contribution blocks form one continuous authored story. Exact dialogue can be polished later without changing the locked causal beats below.
+
+### Bryggan contributions 1–4: discover the real problem / Linus and Recycling
+Adam and Alve initially believe the ruined jetty mostly needs some replacement boards. During contributions 1–2 they clear and inspect it and discover that substantially more of the old timber/support structure is rotten than Alve expected.
+
+After contribution 2, the need for sound reusable timber/material creates a natural reason to return to **Linus and Återvinningen**. Linus helps them locate and sort appropriate reusable material. This is the Act 2 role of Recycling in action: an existing Act 1 location solves a real restoration problem rather than serving as an arbitrary fetch stop.
+
+Around contribution 3, Linus comes down to the lake with/helping deliver the salvaged material. This is his first meaningful return to the old lake place after the earlier SJÖN foreshadowing. His reaction should be restrained and brief, establishing that the lake used to matter to the village without a lore dump.
+
+Contribution 4 lets Adam and Alve make the first substantial repair with the salvaged material and triggers the first major jetty visual advance: **Bryggan 1/4 → 2/4**. Salvaged materials may appear around the worksite before that stage transition as intermediate visual feedback.
+
+### Bryggan middle arc: Sol safety check / Mira life buoy
+As the jetty becomes plausibly usable for swimming, Alve's enthusiasm for bathing leads naturally to **Sol** becoming involved in her professional role. Sol comes to the lake for a practical, age-appropriate safety check of the neglected bathing place: access, shoreline/bottom hazards and old sharp/rubbish debris where people will enter the water. This is prevention/safety, not a manufactured medical emergency.
+
+The check creates an authored cleanup/safety beat and Sol establishes that a proper bathing place needs a **life buoy**. The life buoy is a permanent visible consequence of Sol's involvement.
+
+Only after Sol establishes that need does a **story-bound life buoy item appear in Mira's shop**. Adam buys it with authoritative SysselBux, providing a natural Act 2 currency sink. The exact price remains open until balanced against real earning rate. Returning the life buoy to the lake produces dialogue/visible payoff and it is mounted permanently at the jetty when the current construction state can support it.
+
+Locked causal chain:
+**jetty work → bathing becomes plausible → Sol safety check → cleanup/safety need → life buoy requirement → life buoy appears at Mira → SysselBux purchase → return to lake → permanent life buoy → restoration continues.**
+
+This purchase is an intermediate story beat, not a substitute for one of the 16 real-world quest contributions.
+
+### Bryggan later/final arc
+Contributions 9–12 should increasingly shift the emotional focus from “repairing broken timber” toward **what the restored place will be used for**: swimming, summer life and residents returning to the lake. This may include a first resident visit/comment before completion. Exact beat/dialogue ordering remains to be authored.
+
+Contributions 13–16 are the final push. Contribution 16 completes the jetty and its authored payoff, after which Alve no longer functions as the worksite marker there and the permanent **jetty ambient-life pool** becomes eligible.
+
+The completed jetty therefore carries three persistent consequences:
+1. it is a visibly restored usable structure;
+2. Sol's life buoy remains visibly mounted;
+3. controlled-random swimming/hanging scenes with village residents can appear on future lake visits.
