@@ -678,3 +678,12 @@ Failed generations that showed Barnet from the front or visible civilization are
 The Stugan Story Moment production pass is complete at the conversation/creative-acceptance level: **9 intended production stills total** (COT-001…COT-009). The six narrative stills cover memory discoveries, Alve's motive, rain/game friendship, VÅR STUGA, the home-keyring clue and completed cottage. The three added work stills cover the missing physical-restoration rhythm.
 
 This does **not** mean runtime integration is complete. Next implementation gate is: place the accepted exported files under the Act 2 Stugan Story Moment asset folder, map them to the correct contribution beats, then verify the 1–16 sequence in isolated `/act2-test` before any production Act 2 map/save integration.
+
+
+### Stugan runtime acceptance — 2026-09-28
+
+The exported Stugan set is now present in repo at `public/assets/village/story-moments/act2/cabin/`: ordered narrative stills `1.png` through `6.png` plus `renovating-cabin1.png`, `renovating-cabin2.png`, and `renovating-cabin3.png`.
+
+The isolated `/act2-test` sequence was wired in commit `3155894ebc62edb74b117c479b0676133b638c4a`. The three work stills were placed into the authored rhythm rather than treated as extra contributions: early work at 1/16, mid work at 5–6/16, veranda work at 10–11/16. The six ordered narrative stills retain their canonical story order. Kalle played the resulting browser flow and accepted the visual/story sequence on 2026-09-28.
+
+**Status: Stugan Story Moment production + isolated browser acceptance complete. Production Act 2 save/map integration remains deliberately NOT done.**
