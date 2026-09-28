@@ -966,7 +966,7 @@ Adam eventually asks whether Alve's family knows he is restoring the cottage:
 
 This confirms that the restoration has been Alve's surprise for them.
 
-Later Adam and Alve return and notice subtle evidence that **someone has visited the cottage while they were away**. Nothing dramatic is shown. They find a small ordinary object that Alve immediately recognizes as coming from home. The exact object remains open.
+Later Adam and Alve return and notice subtle evidence that **someone has visited the cottage while they were away**. Nothing dramatic is shown. They find a small ordinary object that Alve immediately recognizes as coming from home. The object is **Alve's familiar keyring from home**. It is recognizable to Alve but does not reveal which family member visited.
 
 Locked beat:
 > **Adam:** “Vad är det?”  
