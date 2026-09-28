@@ -473,3 +473,18 @@ Canonical detail lives in `docs/STORY_DESIGN.md`. **Stugan 1–16 is fully LOCKE
 - Previously locked Act 2 finale remains unchanged: family return occurs only after wider lake restoration + motorboat, through the unexpected-person-inside-cottage reveal.
 
 Emotional progression: **restore the past → create something new → renewed hope → finish and keep living while waiting.**
+
+
+## Act 2 Motorbåten + finale paper lock — 2026-09-28
+
+Canonical detail lives in `docs/STORY_DESIGN.md`. **Motorbåten 1–16 is fully LOCKED on paper**, completing the Act 2 baseline at **64 authoritative real-world contributions total**: 16 Stugan + 16 Bryggan + 16 Båthuset + 16 Motorbåten.
+
+- Motorbåten unlocks only after all three main lake restorations. It gathers Alve's family history, restored boathouse, village support network and Adam/Alve friendship into the vehicle that eventually opens Act 3. Destination across the lake remains undefined.
+- **1–4 LOCKED:** use restored slip; confirm the wreck is the same boat from the boathouse photograph; damage is worse than expected; Linus recognizes it and provides practical salvage support without revealing destination. Contribution 4 advances 1/4→2/4. Theme: **“Inte idag”** initially frustrates Alve, while Adam reframes it as continuing tomorrow.
+- **5–8 LOCKED:** one deliberately non-technical missing need sends them to Mira for the motorboat's major story-bound SysselBux purchase, exact item/price open. Alve learns not to skip preparation. Contribution 8 produces the first sign of life and advances 2/4→3/4. Locked gag: **“DEN LEVER.” / “Lugn.” / “DEN LEVER LUGNT.”**
+- **9–12 LOCKED:** restored boathouse slip puts the boat into the lake; first short powered water test succeeds briefly then stops. Whole restored village helps prepare it for real use without becoming a rigid fetch checklist. Contribution 12 visually reaches 4/4; Adam and Alve give the boat a persistent name. It is now their adventure boat, but still needs a proper endurance test.
+- **13–16 LOCKED:** longer test stays on their own side of lake. Linus remains ashore so Adam/Alve prove they can handle it. A harmless practical issue in 15 pays off Alve's growth; Adam says **“Inte idag”** about continuing across the lake and Alve calmly repeats it. Contribution 16 is successful homecoming and completes the motorboat story.
+- **Family return payoff LOCKED:** after the homecoming Alve sees signs somebody is inside the supposedly empty cottage, assumes burglars and runs there with Adam. Familiar laughter changes the tone before entry. Family is unpacking/using the cottage, not merely visiting. They intend to stay/use it again. Alve runs into a family embrace. When asked who Adam is, locked answer: **“Det är Adam. …Han är min kompis.”**
+- Family sees preserved height marks, old game and childhood drawing, then the restored living lake from the veranda. Locked final family-arc payoff: **“Det är inte riktigt som förr.” / “Nej. …Det är bättre.”** This pays off Stugan 8 and the core theme: Alve did not recreate the old summer; together they made a new one.
+- Do not immediately reveal Act 3 after the family scene. Let the payoff land. Later Adam+Alve return to the named boat and destination-neutral mystery; the first true crossing is Act 3's opening.
+- Family reveal is **not contribution 17**. It is the Act 2 emotional payoff unlocked by Motorbåten 16.
