@@ -12,8 +12,8 @@ Canonical narrative source: `docs/STORY_DESIGN.md`. If this manifest conflicts w
 ## Non-negotiable visual contract
 
 - One generation = one finished production image. **No concept art, contact sheets or spritesheets.**
-- Established characters are never regenerated from prose/memory alone. Production sessions begin with the canonical reference batch uploaded into the active image conversation: Adam/child, puppy, Linus, Henning, Mira, Sol and approved Alve reference.
-- Adam is **always seen from behind** in Story Moments: canonical cap, backpack, clothes, proportions and silhouette; face never visible or invented.
+- Established characters are never regenerated from prose/memory alone. Production sessions begin with the canonical reference batch uploaded into the active image conversation: Barnet, puppy, Linus, Henning, Mira, Sol and approved Alve reference.
+- Barnet is **always seen from behind** in Story Moments: canonical cap, backpack, clothes, proportions and silhouette; face never visible or invented.
 - NPCs use canonical references only. No free reinterpretation.
 - Target look is warm cinematic semi-realistic/photographic SysselCraft storybook rendering, coherent with accepted Story Moments; no anime or generic glossy-animation drift.
 - Environment must match the accepted Lake Master and the correct project state 1/4–4/4. Do not casually regenerate accepted master/building states.
@@ -51,7 +51,7 @@ Each of the 64 IDs must contain:
 4. **Environment state** — Lake Master + exact project visual stage and persistent props already present.
 5. **Characters present** — exact cast.
 6. **Canonical character refs** — reference IDs/files required for production.
-7. **Adam constraint** — explicit back-view composition when Adam is visible.
+7. **Barnet constraint** — explicit back-view composition when Adam is visible.
 8. **Composition/action** — camera, blocking and visible action.
 9. **Required props/details** — only story-required objects.
 10. **Must NOT show** — continuity traps and forbidden additions.
@@ -78,7 +78,7 @@ Every NEW IMAGE or MAJOR STORY MOMENT gets both:
 - aspect/framing target;
 - camera and composition;
 - character placement/pose/expression constraints;
-- Adam back-view enforcement;
+- Barnet back-view enforcement;
 - required props;
 - forbidden additions/changes;
 - lighting/weather/time continuity;
@@ -204,7 +204,7 @@ This is the first production-economy pass, grounded in the locked paper design. 
 | COTTAGE-09 | Childhood drawing “VÅR STUGA” discovered | IMAGE | drawing becomes persistent prop | Must preserve exact in-world drawing concept |
 | COTTAGE-10 | Drawing motivates veranda work; ordinary family memories | LIVE | veranda work begins | Dialogue/runtime sufficient |
 | COTTAGE-11 | Adam asks if family knows; restoration confirmed as Alve's surprise | LIVE | no required new visual | Character beat |
-| COTTAGE-12 | Evidence somebody from home visited unseen; hope surges | MAJOR | mystery object + restored veranda/next stage | Do not show family; exact object still open |
+| COTTAGE-12 | Evidence somebody from home visited unseen; hope surges | MAJOR | mystery object + restored veranda/next stage | Do not show family; exact object locked: Alve's familiar keyring from home |
 | COTTAGE-13 | Remaining substantial damage addressed | LIVE | incremental work | No unique still needed |
 | COTTAGE-14 | Shift from repair to preparing for actual people | LIVE | chairs/sleeping/guest readiness | Runtime props preferred |
 | COTTAGE-15 | Alve openly imagines family using the rooms again | IMAGE | cottage reads ready for people | Quiet emotional composition candidate |
@@ -517,7 +517,7 @@ This accepted first-meeting image is the proof that the character-sheet workflow
 
 ## Stugan production contracts - LOCKED PRE-GENERATION 2026-09-28
 
-This section completes the image-production gate for Stugan only. It deliberately reduces the 16 contribution beats to six production stills. Every omitted beat remains authored gameplay delivered through runtime dialogue, project-state changes or persistent props. Do not generate extra Stugan images unless a concrete runtime acceptance test proves one of these six cannot carry its assigned story function.
+This section completes the image-production gate for Stugan only. It deliberately reduces the 16 contribution beats to nine production stills. Every omitted beat remains authored gameplay delivered through runtime dialogue, project-state changes or persistent props. Do not generate extra Stugan images unless a concrete runtime acceptance test proves one of these nine cannot carry its assigned story function.
 
 ### Stugan beat-to-delivery map
 
@@ -540,7 +540,7 @@ This section completes the image-production gate for Stugan only. It deliberatel
 | COTTAGE-15 | REUSE | Alve imagines family using the ready cottage over COT-006. |
 | COTTAGE-16 | MAJOR | COT-006. Cottage complete; nobody arrives. |
 
-### Shared visual contract for all six Stugan images
+### Shared visual contract for all nine Stugan images
 
 Required reference inputs before generation:
 - canonical Barnet character sheet;
@@ -557,7 +557,7 @@ Hard locks:
 - Warm cinematic semi-realistic CGI/storybook look. No anime, glossy-cartoon drift, enlarged eyes or chibi proportions.
 - Landscape/iPhone Story Moment framing.
 - No visible civilization: no village skyline, church, house rows, harbor, streets, unrelated buildings or modern boat traffic.
-- Do not add Linus, Henning, Mira, Sol, Alve's family or other people to any of these six images.
+- Do not add Linus, Henning, Mira, Sol, Alve's family or other people to any of these nine images.
 - Do not add the motorboat mystery photograph from Båthuset. The Stugan family photograph is a separate ordinary family memory.
 - Do not bake runtime dialogue into pixels.
 - Persistent memory objects survive later Stugan images once introduced: height marks, family photo, old game and VÅR STUGA drawing according to chronology.
@@ -616,7 +616,7 @@ Serves COTTAGE-12. A subtle visual mystery changes Alve's hope. Somebody from ho
 
 Exact moment: Barnet and Alve notice a small ordinary object from Alve's home that was not in cottage before. Alve recognizes it immediately.
 
-OPEN PROP DECISION: STORY_DESIGN intentionally leaves the object unspecified. Do not generate this image until the physical clue is explicitly locked. This is the only remaining Stugan production decision requiring Kalle's input. The object must be mundane, visually legible, non-diagnostic and plausible for a family member to leave.
+LOCKED PROP: the clue is **Alve's familiar keyring from home**. It is mundane, visually legible and personal enough for Alve to recognize without identifying which family member visited.
 
 Composition: restored-progress cottage/veranda vicinity. Barnet rear-facing. Alve focused on clue, surprised/newly hopeful rather than frightened. Valpen passive. Restored veranda/progress places scene late in third block.
 Must not show: family member, silhouette, vehicle, identifying footprints, explanatory note, burglary framing, Act 3 clue.
@@ -645,11 +645,36 @@ Generate in this order only after required references are uploaded into active i
 5. IMG-A2-COT-005 Someone was here
 6. IMG-A2-COT-006 Complete, but not today
 
-Exact Stugan production count is locked at six stills unless runtime acceptance proves a concrete missing visual.
+Stugan production count is now locked at **nine accepted-intent stills**: the six narrative/memory stills plus three restoration-work stills added after visual continuity review showed that the 16-contribution arc otherwise skipped too much of the actual rebuilding.
 
 Do not start image generation until:
 - Barnet, Alve and Valpen canonical sheets are present in active image conversation;
 - a reliable Stugan environment/stage reference is present for the relevant still;
-- the COTTAGE-12 clue object is locked before generating COT-005.
+- the COTTAGE-12 clue is Alve's familiar keyring from home.
 
-No Linus/Henning/Mira/Sol reference is needed for this six-image Stugan batch.
+No Linus/Henning/Mira/Sol reference is needed for this nine-image Stugan batch.
+
+
+### Stugan restoration-work addendum — LOCKED AFTER PRODUCTION REVIEW 2026-09-28
+
+Runtime/story review exposed one concrete visual gap in the original six-still economy pass: Stugan showed discoveries and emotional payoffs but too little of Barnet and Alve physically restoring the building. Three work stills are therefore canonical production requirements. They do **not** create extra contribution beats; they visualize existing restoration progress between the locked 1–16 beats.
+
+- **IMG-A2-COT-007 — Early restoration work.** Barnet and Alve actively clear/repair the still badly damaged cottage. Barnet strictly rear-facing, canonical cap/backpack/clothes; Alve canonical; Valpen passive. Cottage remains clearly early-stage.
+- **IMG-A2-COT-008 — Mid restoration work.** Barnet and Alve repair structural/porch elements together with visible progress but substantial work remaining. Same character locks and isolated-lake environment.
+- **IMG-A2-COT-009 — Veranda restoration.** Barnet and Alve actively restore the veranda/outdoor area motivated by the VÅR STUGA drawing. This visually bridges COTTAGE-09 through COTTAGE-12 and the restored-veranda state.
+
+Hard acceptance for all three work stills:
+- Barnet is visible only from behind/rear-three-quarter; face never visible.
+- Alve matches the canonical reference sheet and semi-realistic style.
+- Valpen is present and passive.
+- Background is isolated Act 2 lake wilderness only: forest, water, rocks, reeds/nature. **No church, village, house rows, harbor, roads, modern boat traffic or other civilization.**
+- Use the accepted Stugan stage progression as visual ground truth; do not redesign the cottage.
+- No extra characters or invented story events.
+
+Failed generations that showed Barnet from the front or visible civilization are explicitly rejected and are **not canon assets**.
+
+### Stugan image-production status — 2026-09-28
+
+The Stugan Story Moment production pass is complete at the conversation/creative-acceptance level: **9 intended production stills total** (COT-001…COT-009). The six narrative stills cover memory discoveries, Alve's motive, rain/game friendship, VÅR STUGA, the home-keyring clue and completed cottage. The three added work stills cover the missing physical-restoration rhythm.
+
+This does **not** mean runtime integration is complete. Next implementation gate is: place the accepted exported files under the Act 2 Stugan Story Moment asset folder, map them to the correct contribution beats, then verify the 1–16 sequence in isolated `/act2-test` before any production Act 2 map/save integration.
