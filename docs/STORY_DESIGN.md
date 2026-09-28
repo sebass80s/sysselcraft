@@ -763,3 +763,76 @@ The completed jetty therefore carries three persistent consequences:
 1. it is a visibly restored usable structure;
 2. Sol's life buoy remains visibly mounted;
 3. controlled-random swimming/hanging scenes with village residents can appear on future lake visits.
+
+
+## Båthuset restoration arc — LOCKED 2026-09-28
+
+Båthuset keeps its locked identity as **verktyg, fynd, projekt och upptåg**. It is Adam and Alve's workshop/discovery space, not another generic social hangout. The baseline is the same **4 + 4 + 4 + 4 authoritative real-world quest contributions** as the other main Act 2 restoration tracks.
+
+### Contributions 1–4: the locked chest / Henning / first clue across the lake
+Adam and Alve begin by clearing the neglected boathouse and discovering old objects. During the work they uncover a **heavy old locked chest/box** buried or wedged among the clutter. The missing/stubborn lock resists their reasonable attempts to open it.
+
+Henning becomes the block's major village-support character. His solution is deliberately excessive and comic: **dynamite**. This is a Story Moment/cinematic gag only, never a usable game mechanic or instructional sequence. The presentation is essentially setup → cut away → **BOOM** → aftermath, with a soot-covered but satisfied Henning and the chest now open.
+
+The chest contains **old tools and useful boat parts**, planting material that can matter later when the motorboat project becomes available. More importantly it contains an **old photograph of the lake during its better days**, tied to Alve's family history. The same now-broken motorboat is visible in the photograph travelling out across the lake. The back carries the handwritten line:
+
+> **“Sista turen över sjön innan hösten.”**
+
+Alve recognizes that the boat in the photograph is the old motorboat at the lake. This is the first strong Act 3 transport/mystery seed: the boat used to take people somewhere across the lake, but neither the photograph nor the dialogue defines the destination.
+
+Target discovery beat:
+> **Alve:** “Den där båten…”  
+> **Adam:** “Vadå?”  
+> **Alve:** “Det är ju den.”  
+> **Adam:** “Den på bilden?”  
+> **Alve:** “Mm.”  
+> **Alve:** “Jag undrar vart de brukade åka.”
+
+Henning's incident also establishes the intended Adam/Alve/village tone:
+> **Alve:** “Är alla i din by så här?”  
+> **Adam:** “Typ.”  
+> **Alve:** “…jag gillar den här byn.”
+
+### Contributions 5–8: the workshop is born / Mira
+The second block is a consequence of the chest rather than a new unrelated mystery. Adam and Alve inventory the surviving tools and boat parts and discover that the old work area is too ruined/disorganized to use properly. Their restoration focus shifts toward turning the boathouse into a **real working workshop**.
+
+They clear and repair the work area/workbench. Alve is already eager to work on the motorboat parts, but they first need a usable place to work and a way to organize everything they found.
+
+**Mira** gets the major village-support role in this block. She sees the chaos of loose tools, fittings and boat parts and identifies the practical problem: they do not primarily need more tools, they need to be able to find and use the ones they already have. This can unlock an authored workshop-supply package such as tool storage/pegboard, boxes and suitable work lighting.
+
+This block should contain a natural **story-bound SysselBux purchase from Mira** for the workshop supplies. Exact contents and price remain open for balancing. It is an intermediate story/economy beat and does not replace one of the four real-world quest contributions.
+
+By contribution 8, the boathouse visibly reads as Adam and Alve's functioning project workshop. The photograph from the chest is mounted permanently above/near the workbench, keeping the old motorboat and unanswered trip across the lake present in the environment.
+
+Locked closing exchange:
+> **Adam:** “Vad ska vi bygga?”  
+> **Alve:** “Allt.”  
+> *Alve tittar mot den gamla motorbåten.*  
+> **Alve:** “Men först ska vi fixa den gamla båten.”
+
+Alve wants to start immediately, but the motorboat remains the later locked project until the three main lake restorations are complete.
+
+### Contributions 9–12: the soapbox car / friendship
+Once the workshop exists, the boathouse should demonstrate its own value rather than functioning only as motorboat preparation. Adam and Alve find an **old hand-drawn plan for a small soapbox car / lådbil** among the remaining material. Alve immediately decides they should build one.
+
+The block becomes their first substantial self-directed workshop project:
+1. they discover the old plan and decide to build the car;
+2. they collect/reuse suitable parts, naturally allowing Linus/Recycling and existing village resources to contribute without turning the sequence into a rigid building checklist;
+3. Alve performs the first test drive, which works briefly before an amusing, harmless failure such as a wheel coming off;
+4. they diagnose the problem, improve the build and complete a successful second version.
+
+Target failed-test beat:
+> **Adam:** “Gick det bra?”  
+> **Alve:** “Japp.”  
+> **Adam:** “Hjulet lossnade.”  
+> **Alve:** “Då vet vi vad vi ska fixa.”
+
+The block's emotional purpose is friendship. Adam and Alve are no longer merely two children restoring the same place; they are now friends who build ridiculous things together. The completed soapbox car remains as a persistent prop at/around the boathouse and may later imply continued use.
+
+Locked closing exchange:
+> **Alve:** “Okej. Den där var övning.”  
+> **Adam:** “För vad?”  
+> **Alve:** “Båten.”
+
+### Contributions 13–16: still open
+The final boathouse block remains deliberately **unlocked**. Its purpose will be the final restoration push and boathouse payoff, transitioning the site from Adam and Alve's private worksite into a completed, persistent part of lake life while preserving its workshop/discovery identity. Exact beats, village involvement, Story Moments and completion dialogue are still to be designed.
