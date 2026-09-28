@@ -561,3 +561,17 @@ Late Act 1 architecture that supersedes older sections in this document:
 **Act 2 begins at the lake, not with Sol.** The next authored area is the lake summer place defined in `STORY_DESIGN.md`: persistent second outdoor area, one new peer boy, then summer cottage → jetty → boathouse → motorboat. The repaired boat bridges toward Act 3. Exact thresholds/stage counts, boy name/design and lake layout remain product decisions.
 
 Efficiency rule for Act 2: design story state, backend authority, persistence and visuals together; reuse Quest V2/unified progression; establish baselines before visible progression; test restart/reconciliation within each slice; use isolated/test-child acceptance paths rather than mutating Adam; and build coherent content arcs rather than one tiny scene at a time.
+
+### Act 2 restoration-state contract — LOCKED 2026-09-28
+
+Act 2 uses three independently completable lake restoration tracks: **summer cottage, jetty and boathouse**. The player may complete these in any order. Their quest/story/dialogue implementations must remain order-independent: no combinatorial dialogue tree and no cross-track prerequisite based on which project came first.
+
+The **motorboat is a separate final track**. It may be visible in the lake scene from the start, but restoration interaction remains locked until cottage + jetty + boathouse are all complete. The unlock condition is the conjunction of those three authoritative completion states, not a hidden preferred order.
+
+Each project completion should expose a simple durable world-state fact that other systems can consume independently. Intended consumers include Mira shop inventory, optional activities/quest templates, ambient lake dressing and resident lake placements. Consumers should subscribe to completion state rather than duplicating restoration-order logic.
+
+Established Act 1 residents must support authored lake presence as restoration advances. This is not a requirement for a clock/simulation system. Deterministic/state-eligible placements are sufficient. Example: jetty complete may make swimming/jetty ambient placements eligible; cottage complete may make cottage social placements eligible; boathouse complete may make boathouse/work-area placements eligible. At 3/3 the lake should support a visibly livelier village gathering state.
+
+Do not implement these flags by casually mutating SaveStateV1 or inventing backend ownership. Persistence/authority must be designed against STATE_OWNERSHIP.md and existing Quest V2 progression before implementation. This section locks product behavior, not a premature storage schema.
+
+The isolated /act2-test lake acceptance route remains separate from Act 1 progression until Kalle explicitly asks to connect the area.
