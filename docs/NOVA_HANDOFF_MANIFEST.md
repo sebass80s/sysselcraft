@@ -96,6 +96,14 @@ After the user says “kör”, “kör på”, “bara kör”, “bygg på nu�
 
 Read `docs/ART_DIRECTION.md`, `docs/START_AREA_DESIGN.md` and `docs/TECHNICAL_HANDOFF.md` before visual work.
 
+## 🔒 ACT 2 LAKE RESTORATION DESIGN — 2026-09-28
+
+Act 2 lake restoration uses three player-chosen, order-independent tracks: summer cottage, jetty and boathouse. Keep their stories/dialogue self-contained; do not branch copy or prerequisites based on completion order. The motorboat is visible but locked until all three are complete, then becomes the Act 2 final restoration and Act 3 bridge.
+
+Each completed project may independently unlock world reactions such as new Mira shop goods, optional activities and ambient changes. Established Act 1 residents should increasingly spend time at the lake as it comes alive; notably, a completed jetty can make swimming/jetty hangout activity eligible. At 3/3 the lake should feel like the village's summer gathering place.
+
+The isolated /act2-test route remains disconnected from Act 1 progression until Kalle explicitly asks to wire the area.
+
 ## Product thesis and locked laws
 
 **Parent creates quest → quest appears in village → child performs it in real life → child marks it done → parent reviews → approval gives feedback + rewards + hidden progression → village changes.**
