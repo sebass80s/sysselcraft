@@ -724,7 +724,7 @@ Required references before generation:
 - canonical Valpen character sheet;
 - canonical Linus sheet for JET-001;
 - canonical Sol sheet for JET-002;
-- canonical sheet for the authored first visitor in JET-003 once identity is locked;
+- canonical Henning sheet for JET-003;
 - accepted Lake Master + correct Bryggan visual stage reference.
 
 Hard locks:
@@ -765,11 +765,11 @@ Acceptance: scene reads inspection/prevention, not accident; Sol canonical; two 
 
 Serves JETTY-10 + JETTY-11. Proof that restoration is changing village behaviour before project completion, followed by Adam+Alve getting something back from the place themselves.
 
-**Visitor identity remains a content-polish lock before generation.** Do not invent the visitor during generation. The selected resident must already be established in Act 1 and use their canonical sheet.
+**Visitor identity is LOCKED: Henning.** He is the first social visitor who comes down because the restoration is making the lake inviting again. Sol's earlier JETTY-06 visit remains a practical safety inspection and is not this social-return beat. Use Henning's canonical sheet.
 
 Narrative contract: one established resident has deliberately come to the lake because the jetty is becoming usable. The emotional center remains Adam and Alve. The scene must be able to hold the transition into their first proper water break without looking like the full post-completion social ensemble.
 
-Generation contract: stage-3 / unfinished-but-usable jetty. Permanent mounted life buoy visible. Barnet rear-facing; Alve canonical; Valpen passive; exactly one authored visitor. Adam+Alve occupy the primary composition, with visitor clearly present but secondary. Work traces remain enough to show project is not finished. Towels/ordinary summer-use cues are allowed only where natural.
+Generation contract: stage-3 / unfinished-but-usable jetty. Permanent mounted life buoy visible. Barnet rear-facing; Alve canonical; Valpen passive; Henning as the only visitor. Adam+Alve occupy the primary composition, with visitor clearly present but secondary. Work traces remain enough to show project is not finished. Towels/ordinary summer-use cues are allowed only where natural.
 Must not show: multiple residents, Sol+Mira ambient pair unless one is explicitly chosen as sole visitor, Linus+Henning pair, full completion celebration, finished crowd scene.
 Acceptance: first behavioural return is readable; friendship remains focal; jetty still unfinished; buoy persists.
 
@@ -826,10 +826,10 @@ Recommended generation order by continuity:
 3. IMG-A2-JET-002 Sol safety visit
 4. IMG-A2-JET-006 Bathing-edge restoration
 5. IMG-A2-JET-007 Late restoration work
-6. IMG-A2-JET-003 First visitor / first use — **only after visitor identity is locked**
+6. IMG-A2-JET-003 First social visitor / first use — Henning
 7. IMG-A2-JET-004 Summer place complete
 
-**Bryggan production count is locked at seven accepted-intent stills, subject only to the unresolved authored visitor identity for JET-003.**
+**Bryggan production count is locked at seven accepted-intent stills, with JET-003's visitor locked as Henning.**
 
 ### Bryggan pre-generation gate status
 
@@ -840,9 +840,9 @@ Recommended generation order by continuity:
 - [x] Narrative + generation contracts drafted.
 - [x] Production queue locked.
 - [x] Life-buoy price deliberately deferred/TBD.
-- [ ] JET-003 first visitor identity locked.
+- [ ] JET-003 first social visitor identity locked: Henning.
 - [ ] Canonical Barnet/Alve/Valpen/Linus/Sol references uploaded into active image conversation as needed.
 - [ ] Accepted Bryggan stage/environment reference present.
 - [ ] Image generation authorized after the remaining reference/visitor gates.
 
-Do not generate JET-003 until visitor identity is deliberately chosen. The other six contracts do not depend on that decision.
+JET-003 visitor identity is locked as Henning. Sol remains the earlier safety visitor; Henning is the first social return.
