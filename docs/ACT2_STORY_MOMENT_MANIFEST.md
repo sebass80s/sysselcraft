@@ -689,6 +689,108 @@ The isolated `/act2-test` sequence was wired in commit `3155894ebc62edb74b117c47
 **Status: Stugan Story Moment production + isolated browser acceptance complete. Production Act 2 save/map integration remains deliberately NOT done.**
 
 
+## ACT 2 IMAGE GENERATION PROTOCOL — HARD LOCK 2026-09-29
+
+This protocol exists because prose rules alone did not prevent prompt/style drift during Bryggan production. It is a mechanical production gate, not optional guidance.
+
+### Core law
+
+**Do not freely rewrite image-generation prompts between images.** Every Act 2 production generation must use the same frozen base contract below. Only the per-image variables may change.
+
+Allowed variables:
+- `IMAGE_ID`
+- `CAST`
+- `VISUAL_STAGE_REFERENCE`
+- `ACTION`
+- `CONTINUITY_OBJECTS`
+- `IMAGE_SPECIFIC_MUST_NOT_SHOW`
+
+Everything else is frozen. Do not creatively paraphrase, embellish, shorten, substitute a style synonym, or add an aesthetic label.
+
+### Reference hierarchy
+
+1. The correct accepted environment/stage image is authority for project geometry/state and Act 2 environment.
+2. Canonical character sheets are authority for character identity, clothing, proportions and silhouette only.
+3. Character-sheet backgrounds are NEVER environment references and must be ignored.
+4. The locked story/Story Moment contract is authority for action, cast and continuity.
+5. If references conflict or a required reference is absent, STOP. Do not improvise.
+
+### Frozen base generation contract — COPY VERBATIM
+
+> Create ONE finished landscape/iPhone SysselCraft Story Moment for IMAGE_ID.
+>
+> Use VISUAL_STAGE_REFERENCE as the visual authority for the restoration project's geometry, construction state and lake environment. Do not redesign the accepted project stage.
+>
+> Use the supplied canonical character sheets ONLY for the identities, clothing, proportions and silhouettes of CAST. Ignore every background/environment visible in character reference sheets.
+>
+> STYLE LOCK: warm cinematic semi-realistic CGI / photographic storybook. Natural human anatomy and proportions. Natural small eyes. Realistic skin, hair, fabric, wood, water and vegetation. Subtle believable facial expressions. Cinematic natural daylight and physically believable materials. Preserve the established SysselCraft character identities without converting them into an animated-film aesthetic.
+>
+> ABSOLUTELY FORBIDDEN STYLE DRIFT: cartoon, glossy cartoon, animated-film aesthetic, Pixar-like rendering, Disney-like rendering, anime, chibi, giant or exaggerated eyes, oversized heads, plastic toy-like skin/materials, caricatured faces, flat vector/clipart styling.
+>
+> CHILD LOCK: Barnet/Adam is shown only from the back or rear-three-quarter. His face must never be visible, inferred or invented. Preserve his canonical cap, red hoodie, blue cargo pants, blue/gray shoes, rugged olive/brown backpack and established body proportions.
+>
+> PUPPY LOCK: when Barnet is present, Valpen is present unless the image contract explicitly says otherwise. Valpen remains passive/background unless the image contract explicitly authors an action.
+>
+> ALVE LOCK: when Alve is present, preserve his canonical messy reddish-brown hair, freckles, natural/small eyes, olive/gray hoodie, gray-brown cargo shorts, sturdy brown boots, work gloves, tool belt/pouches and established natural proportions.
+>
+> ENVIRONMENT LOCK: isolated Act 2 lake wilderness only: lake, forest, rocks, reeds and natural vegetation consistent with VISUAL_STAGE_REFERENCE. Absolutely no village skyline, church, houses, house rows, harbor, roads, vehicles, modern traffic, unrelated buildings, random people or other signs of civilization.
+>
+> COMPOSITION LOCK: one coherent full-frame image only. No diptych, split screen, collage, contact sheet, sprite sheet, multiple panels, inset image, UI, caption or baked-in text.
+>
+> CAST LOCK: show exactly CAST and no additional people or characters.
+>
+> ACTION: ACTION
+>
+> CONTINUITY OBJECTS: CONTINUITY_OBJECTS
+>
+> IMAGE-SPECIFIC MUST NOT SHOW: IMAGE_SPECIFIC_MUST_NOT_SHOW
+>
+> Do not add story events, props, purchases, injuries, residents, construction progress or environmental features not authorized by the image contract.
+
+### Mandatory preflight before EVERY generation
+
+Before invoking image generation, resolve all of these from repo + active conversation:
+
+- [ ] Exact `IMAGE_ID` matches the locked production queue.
+- [ ] Exact per-image contract has been reread, not recalled from memory.
+- [ ] Correct accepted visual stage reference is present in the active image conversation.
+- [ ] Every required canonical character reference is present in the active image conversation.
+- [ ] `CAST` lists every visible character and no others.
+- [ ] `ACTION` is copied from the locked beat/contract without adding a new story event.
+- [ ] `CONTINUITY_OBJECTS` matches this point in the story.
+- [ ] `IMAGE_SPECIFIC_MUST_NOT_SHOW` includes the per-image prohibitions.
+- [ ] Frozen style/environment/Child/puppy/composition blocks remain unchanged.
+- [ ] Exactly ONE production image is requested.
+
+If any box cannot be checked, **do not generate**. Resolve the missing reference/decision first.
+
+### Mandatory acceptance check after EVERY generation
+
+Do not advance to the next production ID until the generated image has been checked against:
+
+1. correct cast;
+2. canonical character identities/proportions;
+3. Barnet face hidden;
+4. Valpen passive unless explicitly authored;
+5. correct accepted project stage/geometry;
+6. correct authored action;
+7. correct continuity objects;
+8. isolated wilderness with zero civilization leakage;
+9. semi-realistic photographic/cinematic Story Moment style with zero cartoon/animated-film drift;
+10. one image only, no panels/text/UI;
+11. every image-specific `must not show` rule.
+
+A failure on any item means the generation is rejected and does not count as a production image. **Never use a rejected image as a visual reference for later images.**
+
+### Queue discipline
+
+A user reply such as `2`, `next`, `nästa` or `kör vidare` means advance to the next unresolved **production ID in the locked queue**, not regenerate the previous image. Always identify the next ID from the manifest before generation.
+
+### Drift rule
+
+If two consecutive generations fail because of prompt/style/cast/reference drift, STOP generation and reread this protocol plus the exact per-image contract before another attempt. Do not compensate by improvising a new aesthetic prompt.
+
+
 ## Bryggan production contracts - LOCKED PRE-GENERATION 2026-09-29
 
 This section completes the image-production gate for Bryggan only. The earlier four-image economy proposal was re-audited against the accepted Stugan runtime lesson: story stills alone make a 16-contribution restoration visually skip too much of the actual work. Bryggan therefore uses **seven production stills total**: four narrative/social stills plus three restoration-work stills. No contribution count changes.
@@ -840,7 +942,7 @@ Recommended generation order by continuity:
 - [x] Narrative + generation contracts drafted.
 - [x] Production queue locked.
 - [x] Life-buoy price deliberately deferred/TBD.
-- [ ] JET-003 first social visitor identity locked: Henning.
+- [x] JET-003 first social visitor identity locked: Henning.
 - [ ] Canonical Barnet/Alve/Valpen/Linus/Sol references uploaded into active image conversation as needed.
 - [ ] Accepted Bryggan stage/environment reference present.
 - [ ] Image generation authorized after the remaining reference/visitor gates.
