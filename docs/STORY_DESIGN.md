@@ -594,3 +594,51 @@ The repaired motorboat is also the deliberate bridge to **Act 3**. The boy remem
 **Act 1 is complete and includes the entire Sol/Clinic arc.** The restored village arc comprises Linus/puppy, Recycling, Henning/Bakery, Mira/lanthandel, Flaskpost, Sol's arrival/tour/decision, Clinic construction and Clinic finale, plus the implemented village-life customization loops such as the dog home and child's room. Earlier wording that calls Clinic/Sol a bridge *toward* Act 2 should be read only as historical implementation chronology, not as the act boundary.
 
 **Act 2 starts when authored play moves to the lake summer place.** Sol is not an Act 2 prerequisite, unfinished bridge, or opening Act 2 task. Preserve her completed Act 1 implementation unless a concrete regression is found.
+
+
+## Act 2 opening, Alve and project-selection UX — LOCKED 2026-09-28
+
+### Foreshadowing and arrival
+Late in Act 1, Adam and Linus encounter or establish an old, almost overgrown sign at the forest edge: **“SJÖN →”**. Linus briefly explains that the old path leads to a lake where people from the village used to spend summers, but that nobody seems to use the place anymore. This is story planting only: no quest marker and no immediate Act 2 continuation.
+
+When Act 2 begins, the dog suddenly runs toward that old forest path. Adam recognizes the place and follows. The journey through the forest is a **cutscene/Story Moment sequence, not a playable forest map**: the path becomes increasingly dense and child-adventure eerie, then light returns, the dog reaches the opening first and Adam follows into the large lake reveal. Gameplay then begins on the lake area.
+
+### First encounter with Alve
+The lake initially appears abandoned. A **bicycle leaning against a tree** is the first strong clue that somebody is there. Adam then discovers a boy trying to repair the summer cottage himself. The boy arrived by another route, brought some tools and has already discovered that the job is much larger than he expected.
+
+The boy's dialogue nameplate initially reads **“Barnet”**. Adam and the boy must actually introduce themselves. At the moment the boy says his name, the nameplate changes permanently from **Barnet → Alve**.
+
+Alve is a little wild but kind: energetic, impulsive, practical, warm-hearted and inclined to act before checking whether his plan is realistic. He is not destructive or mean. His family has had a difficult period, deliberately left unspecified. He remembers the cottage/lake as a place where his family used to have good summers together, and he came to repair it in the hope that they might want to return.
+
+Adam is the one who offers that they might fix the place together. Alve then asks what they should begin with.
+
+### Project-selection Story Moment — LOCKED
+The first restoration choice is presented **inside the cinematic/Story Moment**, not as a detached menu. Three clickable hotspots are active: **Stugan, Bryggan and Båthuset**. Selecting a hotspot only marks/previews that choice; it does not start the project yet. Alve gives a short motivation for the selected object and a confirmation button appears: **“Laga [objekt]”**.
+
+Locked dialogue intent/copy:
+- **Bryggan:** “Bryggan är bra. Då kan vi knyta fast båten här sen. Och bada!”
+- **Båthuset:** “Båthuset måste vi fixa om vi ska kunna laga båten.”
+- **Stugan:** “Stugan... Jag hoppas min familj vill komma hit igen om vi får ordning på den.”
+
+The player may switch between the three hotspots before confirming. Only pressing **“Laga [objekt]”** commits the active project. Alve then confirms the choice with **“Bra val! Vi fixar [objektet] först!”**. “Först” refers only to the player's current choice and does not establish a canonical restoration order.
+
+The motorboat is the visible shared goal but is not one of the three initial selectable projects. The fiction must explain its lock: the cottage, jetty and boathouse restore the place/infrastructure needed before the boat can sensibly be repaired and used. Mechanically, motorboat restoration remains locked until all three independent projects are complete.
+
+### Alve as active-project marker and friend — LOCKED
+After a project is chosen, **Alve moves to/appears at the active construction site and visually works there**. This is the primary in-world signal for which restoration project is currently active. The project's own construction sprite also changes through its authored visual stages as progress is made.
+
+Alve is interactable at the active project. Clicking him opens a **short project-specific cutscene/dialogue**. These interactions are not merely quest delivery. They mix:
+- comments about the current restoration project and its progress;
+- ordinary friend banter, jokes, the dog, the village and shared experiences;
+- gradual pieces of Alve's personal story, family memories and why the lake matters to him.
+
+Alve's backstory must be **revealed gradually across Act 2**, not dumped during the first meeting. The game should deliberately leave the exact cause of the family's difficult period unspecified. Instead, Alve opens up through concrete memories and small observations as the friendship develops.
+
+The parallel emotional progression is:
+**lake: neglected → restored → alive**
+and
+**Alve: stranger → building companion → friend → trusts Adam with why the place matters so much**.
+
+When a project is complete, Alve no longer needs to function as its work marker. The restored place can instead gain life through residents and activities enabled by that completion state. The design principle is: **Alve works where the restoration is active; village life appears where restoration is complete.**
+
+Exact quest counts, construction thresholds, individual Alve dialogue pools and detailed resident schedules remain open production decisions.
