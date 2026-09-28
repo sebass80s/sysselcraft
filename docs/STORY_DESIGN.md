@@ -866,3 +866,137 @@ Once complete, the boathouse becomes eligible for controlled-random ambient life
 
 Canonical arc shape:
 **1–4: discovery/mystery → 5–8: workshop is born → 9–12: Adam/Alve friendship through their own build → 13–16: prepare the site for the motorboat and complete the boathouse.**
+
+
+## Stugan restoration arc — LOCKED 2026-09-28
+
+Stugan is the emotional Alve location. Its 16 authoritative real-world quest contributions use the same **4 + 4 + 4 + 4** baseline as Bryggan and Båthuset, but the restoration is primarily a vehicle for revealing Alve, his memories and his hope that his family might return. Do not turn it into another material-fetch construction arc.
+
+The exact reason Alve's family has had a difficult period remains deliberately unspecified. The story should communicate the child's experience without diagnosing or explaining the adults' problems.
+
+A central visual rule is that meaningful traces survive the restoration. The finished cottage should contain both **old memories and new memories**, rather than looking reset or generic.
+
+### Contributions 1–4: “Jag vill att det ska bli som förr”
+Adam and Alve begin by properly entering, airing and clearing the neglected cottage. Alve instinctively knows where things used to stand, revealing how familiar the place once was.
+
+Target early beat:
+> **Adam:** “Du hittar rätt bra här.”  
+> **Alve:** “Jag har varit här typ en miljard gånger.”  
+> **Alve:** “Eller… var.”
+
+During the clearing they uncover **Alve's old height marks** on a wall/door frame, including traces of other family members. The marks are protected and must remain visible through the completed restoration. This discovery can carry light banter:
+> **Alve:** “Jag var jätteliten.”  
+> **Adam:** “Du är fortfarande ganska liten.”  
+> **Alve:** “Tyst.”
+
+They also find a **family photograph from an earlier summer at the cottage/lake**. This is distinct from the boathouse motorboat photograph. It is an ordinary warm family memory rather than an Act 3 mystery clue.
+
+Target beat:
+> **Adam:** “Är det din familj?”  
+> **Alve:** “Mm.”  
+> **Adam:** “Ni ser glada ut.”  
+> **Alve:** “Vi var här hela tiden då.”  
+> **Alve:** “Sen slutade vi komma.”
+
+Contribution 4 produces the first substantial cottage visual restoration step. At its close Alve reveals the real motive behind trying to repair the place alone:
+> **Adam:** “Det börjar ju faktiskt se bra ut.”  
+> **Alve:** “Inte tillräckligt.”  
+> **Adam:** “För vad?”  
+> **Alve:** “Jag tänkte att om det såg ut som förr…”  
+> **Alve:** “…så kanske de skulle vilja komma hit igen.”
+
+This is the block's emotional reveal: Alve is trying to restore a place where his family used to be happy in the hope that it might draw them back.
+
+### Contributions 5–8: “Det kan bli bra på ett nytt sätt”
+The second block deliberately brings joy and play into the cottage rather than escalating sadness.
+
+Adam and Alve find an **old worn family board/card game** in a cupboard. Alve remembers rainy days, family cheating/arguments and ordinary summer details. The family should begin to feel like real people through trivial memories rather than exposition.
+
+As they make the room usable again, Alve remembers how furniture used to stand and admits to childhood games such as treating the floor as lava. Adam joins in. A small Story Moment may show them crossing the half-restored room without touching the floor. This establishes why Alve loved the cottage, not merely why he misses it.
+
+A rain shower later traps Adam and Alve inside the cottage. They play the recovered game while the puppy rests nearby and rain hits the windows. Alve predictably cheats:
+> **Adam:** “Du fuskar.”  
+> **Alve:** “Nej.”  
+> **Adam:** “Du flyttade den där.”  
+> **Alve:** “Det gjorde vinden.”  
+> **Adam:** “Vi är inomhus.”  
+> **Alve:** “Jättekonstig vind.”
+
+After the joke, Alve notices:
+> **Alve:** “Det låter likadant.”  
+> **Adam:** “Vadå?”  
+> **Alve:** “Regnet.”
+
+This is important: Alve is now creating a **new good memory** in the cottage with Adam instead of only excavating old ones.
+
+Contribution 8 completes another substantial cottage step. The game remains visible and the protected height marks remain. Locked closing beat:
+> **Adam:** “Ser det ut som förr nu?”  
+> **Alve:** “Nej.”  
+> **Alve:** “Det ser bättre ut.”
+
+The emotional movement is from recreating the past exactly toward accepting that the cottage can become good in a new way.
+
+### Contributions 9–12: “Då måste vi hinna klart”
+During continued clearing Adam finds an old **childhood drawing by Alve** showing the cottage, lake, family and an amusingly disproportionate boat, headed **“VÅR STUGA”**. Alve initially tries to deny authorship despite his name being on it:
+> **Adam:** “Är det där du?”  
+> **Alve:** “Nej.”  
+> **Adam:** “Det står Alve bredvid.”  
+> **Alve:** “…någon annan Alve.”
+
+The drawing shows the family together on the cottage veranda/outdoor area and motivates restoration of that social space. While working there, Alve recalls ordinary details: breakfast outside, coffee, running toward the lake before putting shoes on, being told to close the door. These mundane memories are preferred over lore exposition.
+
+Adam eventually asks whether Alve's family knows he is restoring the cottage:
+> **Adam:** “Vet de att du är här?”  
+> **Alve:** “Inte riktigt.”
+
+This confirms that the restoration has been Alve's surprise for them.
+
+Later Adam and Alve return and notice subtle evidence that **someone has visited the cottage while they were away**. Nothing dramatic is shown. They find a small ordinary object that Alve immediately recognizes as coming from home. The exact object remains open.
+
+Locked beat:
+> **Adam:** “Vad är det?”  
+> **Alve:** “Den här är inte härifrån.”  
+> **Adam:** “Varifrån är den då?”  
+> **Alve:** “Hemma.”
+
+Do not reveal who visited, why, or show the family. The point is that somebody from home has seen the cottage. For Alve this creates renewed hope.
+
+He becomes intensely motivated to finish:
+> **Alve:** “De har varit här.”  
+> **Adam:** “Det verkar så.”  
+> **Alve:** “Då såg de den.”  
+> **Adam:** “Stugan?”  
+> **Alve:** “Ja.”  
+> **Alve:** “Då måste vi hinna klart.”
+
+If Adam asks before what:
+> **Alve:** “Bara… innan.”
+
+Contribution 12 produces the next major cottage visual step, including the restored veranda/outdoor area. The childhood drawing can join the family photograph and game as a persistent interior memory object.
+
+### Contributions 13–16: finish everything / wait without being alone
+The final block introduces no new major mystery. Adam and Alve give the cottage everything they have and finish what Alve originally set out to do.
+
+Contribution 13 addresses the remaining substantial damage. Contribution 14 increasingly shifts from repairing a building to **preparing a place for people**: arranging chairs, making sleeping space usable, putting things where guests/family could actually return. Contribution 15 lets Alve openly imagine them there again:
+> **Alve:** “De kan sova där.”  
+> **Alve:** “Och vi kan ha spelet här.”  
+> **Alve:** “Och om det regnar…”
+
+Contribution 16 completes Stugan. The completion Story Moment should show the transformation from the abandoned cottage at Alve's introduction into a warm, intact place containing its accumulated history: **height marks, family photograph, childhood drawing, old game and evidence of Adam and Alve's new memories together**.
+
+The family does **not** arrive at cottage completion. Adam and Alve wait briefly, but nobody comes.
+
+Locked completion beat:
+> **Adam:** “Tror du de kommer?”  
+> **Alve:** “Inte idag.”  
+> **Alve:** “Men den är klar.”  
+> **Adam:** “Vi kommer ju tillbaka imorgon.”  
+> **Alve:** “Ja.”  
+> **Alve:** “Vi har ju en båt att laga.”
+
+Alve does not collapse or treat the restoration as a failure. Adam has not “fixed” Alve's family by completing enough chores. The emotional payoff is that Alve no longer has to wait or work alone, and his life at the lake now contains new friendships and memories alongside the old ones.
+
+The previously locked Act 2 family-return payoff remains unchanged: only after the wider lake restoration and motorboat project do Adam and Alve later discover someone unexpectedly inside the cottage and reveal Alve's family. Cottage completion must leave enough uncertainty and time for that final return to matter.
+
+Canonical emotional progression:
+**1–4: “Jag vill att det ska bli som förr.” → 5–8: “Det kan bli bra på ett nytt sätt.” → 9–12: “De har varit här; de kanske kommer tillbaka.” → 13–16: “Stugan är klar, men Alve behöver inte vänta ensam.”**
