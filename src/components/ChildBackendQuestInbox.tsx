@@ -110,6 +110,12 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
       if (localSave && nextGameState) {
         let snapshot = localSave;
+        // Backend is authoritative for currency. Mirror the last confirmed wallet into the
+        // device save so an offline/unpaired fallback never resurrects a stale 0/0 balance.
+        if (snapshot.diamonds !== nextGameState.diamonds || snapshot.sysselBux !== nextGameState.sysselBux) {
+          snapshot = { ...snapshot, diamonds: nextGameState.diamonds, sysselBux: nextGameState.sysselBux };
+          await saveSaveState(snapshot, true);
+        }
         // Dog-home ownership lives in the backend wallet state. Repair stale local saves
         // from those authoritative flags so Mira always offers the actual next upgrade.
         const backendStoryFlags = nextGameState.worldFlags;
