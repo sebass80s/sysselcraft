@@ -450,3 +450,12 @@ Do not independently generate pieces and try to assemble them later. Do not rege
 - **Canonical Sol was re-locked 2026-09-28** using the accepted more photorealistic/cinematic arrival render. It preserves her adult blonde-doctor identity, teal scrubs, white coat and stethoscope while matching Mira/Linus/Henning rendering better. Older cartoonier Sol is superseded as a style reference.
 - Ensemble target: warm cinematic semi-realistic/photographic SysselCraft storybook rendering, coherent across the whole cast; no anime or generic glossy-animation drift.
 - The accepted swimming group image proves the ensemble look, but its front-facing child is a known violation and must not be copied. Character identity/style acceptance does not override the back-view child law.
+
+
+## Act 2 Båthuset paper lock — 2026-09-28
+
+Canonical detail lives in `docs/STORY_DESIGN.md`. Current boathouse status:
+- **1–4 LOCKED:** clearing reveals a stubborn locked old chest; reasonable opening attempts fail; Henning solves it as a non-interactive cinematic dynamite gag (cut → BOOM → soot). Chest contains old tools/boat parts plus a family-linked lake photograph showing the same motorboat travelling across the lake. Back text: **“Sista turen över sjön innan hösten.”** This seeds the motorboat/other-side mystery without defining Act 3's destination. Locked Alve/Adam village exchange: **“Är alla i din by så här?” / “Typ.” / “…jag gillar den här byn.”**
+- **5–8 LOCKED:** Adam and Alve turn the boathouse into a functioning workshop. Mira supplies the practical organization/workshop solution through a story-bound SysselBux purchase; exact package/price open. The photograph becomes a permanent workshop prop. Locked ending: **“Vad ska vi bygga?” / “Allt. Men först ska vi fixa den gamla båten.”** Motorboat remains progression-locked until all three main lake projects are complete.
+- **9–12 LOCKED:** they find an old soapbox-car/lådbil plan and build one. Village/recycled parts can feed the build. Alve's first harmless test fails (including locked **“Hjulet lossnade.” / “Då vet vi vad vi ska fixa.”** beat); they improve it and succeed. The car remains as a persistent boathouse prop. Emotional purpose is Adam/Alve friendship. Locked ending: **“Okej. Den där var övning.” / “För vad?” / “Båten.”**
+- **13–16 OPEN:** final restoration/payoff still needs paper design. It should complete the site and preserve the boathouse identity as workshop/discovery/project space rather than duplicating the jetty.
