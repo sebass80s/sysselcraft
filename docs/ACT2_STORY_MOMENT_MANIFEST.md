@@ -144,3 +144,42 @@ Do not attach an Act 3 reveal directly to this sequence. First true crossing rem
 - [ ] Image generation authorized.
 
 **No Act 2 production Story Moment image generation before the unchecked pre-production gates above are complete.**
+
+
+## Streamlined triage pass — working table
+
+Before expanding full beat cards, run one compact pass over all 64 beats. This is intentionally cheaper to edit than 64 generation contracts.
+
+For every beat record only:
+
+| Field | Meaning |
+|---|---|
+| Beat | Permanent ID |
+| Core event | One-sentence story action |
+| Delivery | LIVE / REUSE / IMAGE / MAJOR |
+| Visual delta | What becomes newly visible/persistent after this beat |
+| Cast delta | New/changed character presence requiring visual proof |
+| Candidate image family | Shared scene/environment group if applicable |
+| Notes | Continuity dependency or locked dialogue cue |
+
+### Decision rule
+Use this order for every beat:
+1. Can Phaser/runtime + dialogue communicate the beat without losing an important reveal/emotion? → **LIVE**.
+2. If not, does an already-required image honestly depict the same visual moment/state? → **REUSE**.
+3. If not, does the beat require a visual reveal/action that runtime cannot carry well? → **IMAGE**.
+4. If the beat is an act/project emotional or cinematic payoff whose composition itself matters → **MAJOR**.
+
+Never create an IMAGE merely because a contribution occurred. Never reuse an image across incompatible project stages, props, weather/time, character knowledge or emotional state.
+
+### Production batching
+After triage, group IMAGE/MAJOR candidates by scene family rather than chronological order:
+1. Stugan interiors/exteriors;
+2. Bryggan/lakeshore;
+3. Båthuset/workshop;
+4. Motorbåten/slip/water;
+5. cross-project finale/family.
+
+Within a family, keep the same canonical reference batch and environment references active. Produce the highest-continuity anchor image first, accept it, then use it as an additional visual continuity reference for later images where the tool/context allows. This does not replace canonical character references.
+
+### Asset-economy target
+There is deliberately **no fixed image-count target** before triage. The optimization target is minimum generation attempts while preserving every story beat that materially benefits from a still. A lower image count is not success if it weakens a locked payoff.
