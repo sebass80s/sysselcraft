@@ -728,41 +728,56 @@ Canonical rule: **the mystery exists; the answer is not canon yet.**
 
 ## Bryggan restoration arc — LOCKED 2026-09-28
 
-### Progression baseline
-For **Stugan, Bryggan and Båthuset**, the locked baseline is **4 + 4 + 4 + 4 authoritative real-world quest contributions**, 16 contributions per project. Four visual stages are sparse milestones inside a longer arc, not four total quests. Story/world beats and visible prop changes occur between major stage swaps. The motorboat contribution count remains open until its own arc is designed.
+Bryggan uses the canonical **4 + 4 + 4 + 4 = 16 authoritative real-world contributions**. Its identity is bad, vila, kompisar och sommarliv. The arc moves from repairing unsafe timber to making a place people actually want to use. The life-buoy purchase is an intermediate economy/story beat and never substitutes for a contribution.
 
-For the jetty, the four contribution blocks form one continuous authored story. Exact dialogue can be polished later without changing the locked causal beats below.
+### Contributions 1–4: the real problem / Linus and Recycling
 
-### Bryggan contributions 1–4: discover the real problem / Linus and Recycling
-Adam and Alve initially believe the ruined jetty mostly needs some replacement boards. During contributions 1–2 they clear and inspect it and discover that substantially more of the old timber/support structure is rotten than Alve expected.
+**1 — Start clearing.** Adam and Alve clear loose debris and damaged boards. Alve initially treats it as an easy plank-replacement job.
 
-After contribution 2, the need for sound reusable timber/material creates a natural reason to return to **Linus and Återvinningen**. Linus helps them locate and sort appropriate reusable material. This is the Act 2 role of Recycling in action: an existing Act 1 location solves a real restoration problem rather than serving as an arbitrary fetch stop.
+**2 — Worse underneath.** More of the old support/timber is rotten than expected. The project now clearly needs sound replacement material rather than cosmetic patching.
 
-Around contribution 3, Linus comes down to the lake with/helping deliver the salvaged material. This is his first meaningful return to the old lake place after the earlier SJÖN foreshadowing. His reaction should be restrained and brief, establishing that the lake used to matter to the village without a lore dump.
+**3 — Linus and salvage.** The need sends them naturally to Linus/Återvinningen. Linus helps choose reusable timber/material and comes to the lake with/helping deliver it. His reaction to the old place is brief and restrained: the lake used to matter to the village, but this is not a lore dump.
 
-Contribution 4 lets Adam and Alve make the first substantial repair with the salvaged material and triggers the first major jetty visual advance: **Bryggan 1/4 → 2/4**. Salvaged materials may appear around the worksite before that stage transition as intermediate visual feedback.
+**4 — First real repair.** Adam and Alve use the salvaged material for the first substantial structural repair. **Bryggan 1/4→2/4.** Salvage can remain visible at the worksite as intermediate feedback.
 
-### Bryggan middle arc: Sol safety check / Mira life buoy
-As the jetty becomes plausibly usable for swimming, Alve's enthusiasm for bathing leads naturally to **Sol** becoming involved in her professional role. Sol comes to the lake for a practical, age-appropriate safety check of the neglected bathing place: access, shoreline/bottom hazards and old sharp/rubbish debris where people will enter the water. This is prevention/safety, not a manufactured medical emergency.
+### Contributions 5–8: make it a bathing place / Sol / life buoy
 
-The check creates an authored cleanup/safety beat and Sol establishes that a proper bathing place needs a **life buoy**. The life buoy is a permanent visible consequence of Sol's involvement.
+**5 — The water becomes tempting.** With the worst first section repaired, Alve immediately starts talking about swimming. Adam and Alve clear the approach/edge and discover that making a dock physically stronger is not the same as making the bathing area ready for people.
 
-Only after Sol establishes that need does a **story-bound life buoy item appear in Mira's shop**. Adam buys it with authoritative SysselBux, providing a natural Act 2 currency sink. The exact price remains open until balanced against real earning rate. Returning the life buoy to the lake produces dialogue/visible payoff and it is mounted permanently at the jetty when the current construction state can support it.
+**6 — Sol inspects.** Sol hears that the children intend to swim and visits in her professional role. She performs a simple, age-appropriate safety check: access into/out of the water and old sharp/rubbish debris around the bathing edge. No injury or manufactured emergency occurs. Sol identifies two jobs: clear the bathing area and add a proper life buoy.
 
-Locked causal chain:
-**jetty work → bathing becomes plausible → Sol safety check → cleanup/safety need → life buoy requirement → life buoy appears at Mira → SysselBux purchase → return to lake → permanent life buoy → restoration continues.**
+This unlocks the intermediate story/economy chain: **life buoy appears at Mira → Adam buys it with authoritative SysselBux → returns to lake.** Exact price remains open. The purchase is not contribution 7.
 
-This purchase is an intermediate story beat, not a substitute for one of the 16 real-world quest contributions.
+**7 — Make Sol's checklist real.** Adam and Alve clear the bathing edge/shoreline and finish the practical safety cleanup. The purchased life buoy is brought to the site and can be staged ready for mounting. Sol need not supervise the work.
 
-### Bryggan later/final arc
-Contributions 9–12 should increasingly shift the emotional focus from “repairing broken timber” toward **what the restored place will be used for**: swimming, summer life and residents returning to the lake. This may include a first resident visit/comment before completion. Exact beat/dialogue ordering remains to be authored.
+**8 — Ready for people.** The life buoy is mounted permanently and the next substantial restoration step is completed. **Bryggan 2/4→3/4.** Alve's focus shifts from “we are fixing a broken dock” to “people can actually be here soon.”
 
-Contributions 13–16 are the final push. Contribution 16 completes the jetty and its authored payoff, after which Alve no longer functions as the worksite marker there and the permanent **jetty ambient-life pool** becomes eligible.
+### Contributions 9–12: the lake starts attracting people again
+
+**9 — Prepare the summer end of the dock.** Adam and Alve improve the usable/social part of the jetty: clear remaining clutter and make space to sit, leave towels or climb out after swimming. Keep this as ordinary restoration rather than inventing a new purchased furniture system.
+
+**10 — First visitor.** One established village resident arrives while work is still unfinished and reacts to seeing the place coming back. The visitor should be selected as authored content rather than random ambience at this point. The key story fact is that somebody comes to the lake **because Adam and Alve are restoring it**. This is the first proof that the project is changing village behaviour before completion.
+
+**11 — First proper water break.** Adam and Alve finally take a short break at the usable section of the jetty. This is not the full completed-lake swimming ensemble. It is a small friendship beat: the place they have spent so long repairing can already give them something back. The puppy can remain ashore/nearby as appropriate.
+
+**12 — From worksite toward summer place.** They finish the remaining major mid-stage repair and tidy the social/bathing area. **Bryggan 3/4→4/4 visually**, while final completion still requires the last four contributions. The dock now looks nearly finished and residents can plausibly talk about using it, but the permanent ambient pool remains locked.
+
+### Contributions 13–16: finish it and give it back to the village
+
+**13 — Final weak spot.** Adam and Alve find/finish the last substantial piece that still makes the nearly restored dock read as a worksite. No new mystery or shopping chain is introduced.
+
+**14 — Finish for use, not construction.** They remove leftover work material and make the dock ready for ordinary summer life. Persistent life buoy remains visible. This beat deliberately transitions visual language from tools/materials toward towels, sitting space and clear access.
+
+**15 — Alve realizes they are done building.** A quiet pre-completion beat. Adam and Alve look over the lake and the nearly finished dock and talk about who might come down once it is open. The emphasis is anticipation rather than another repair surprise.
+
+**16 — Bryggan complete.** Final authoritative contribution completes the project and removes Alve's worksite role there. The completion Story Moment should show a genuinely usable summer place with the permanent life buoy and restored structure. The controlled-random jetty ambient pool becomes eligible on later visits, including a real empty state and authored combinations such as Linus+Henning or Sol+Mira.
 
 The completed jetty therefore carries three persistent consequences:
-1. it is a visibly restored usable structure;
-2. Sol's life buoy remains visibly mounted;
-3. controlled-random swimming/hanging scenes with village residents can appear on future lake visits.
+1. visibly restored usable structure;
+2. Sol's life buoy permanently mounted;
+3. controlled-random swimming/hanging scenes can appear on later lake visits.
+
+Canonical arc: **1–4 discover real damage/reuse Linus material → 5–8 make bathing safe and install life buoy → 9–12 people begin returning before completion → 13–16 finish and hand the place back to summer life.**
 
 
 ## Båthuset restoration arc — LOCKED 2026-09-28
