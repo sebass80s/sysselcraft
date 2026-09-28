@@ -465,3 +465,51 @@ Do not chase a smaller number for its own sake. A third reduction pass should on
 
 ### Next gate
 The 29-image queue is now small enough to begin **contract drafting by scene family**. Draft contracts before generation, starting with Stugan because it has the most contained cast/environment continuity. No image generation is authorized by this reduction pass alone.
+
+
+## Proof-of-concept visual locks — 2026-09-28
+
+The first Barnet + Alve Story Moment pipeline test produced an accepted keeper. The following rules are now production constraints for all Act 2 Story Moments:
+
+### Canonical character reference pack
+The local production reference pack contains clean canonical sheets for:
+- Barnet
+- Alve
+- Linus
+- Henning
+- Mira
+- Sol
+- Valpen
+
+These sheets are identity ground truth. Upload the relevant sheets into the active image-production conversation before generating a scene. Do not reconstruct established characters from prose or memory when a sheet exists.
+
+### Barnet
+- Always shown from behind or a rear angle.
+- Face must never be shown or invented.
+- Preserve canonical cap, backpack, clothes, shoes, proportions and silhouette.
+
+### Valpen — default presence rule
+- **Valpen is present in every Story Moment in which Barnet appears.**
+- Unless the locked story beat explicitly gives Valpen an action, Valpen is a passive/background participant only.
+- Passive examples: sitting, lying down, standing nearby, quietly looking/nosing around.
+- Do not let Valpen steal focus, initiate action, alter blocking, or create a new story event unless the beat explicitly requires it.
+- Use the canonical Valpen reference sheet, not a generic puppy.
+
+### Act 2 background rule
+- **No visible civilization in Act 2 lake Story Moments unless a later locked story beat explicitly establishes it.**
+- No Act 1 village skyline, church, house rows, harbor, modern boat traffic, streets or unrelated buildings in the distance.
+- Background language is isolated lake wilderness: forest, water, rocks, reeds, overgrown paths and the established Act 2 project locations.
+- Residents may appear when the story brings them to the lake, but the background must not imply the village is physically adjacent.
+
+### First meeting — accepted visual contract
+The accepted first-meeting composition establishes the intended baseline:
+- Barnet arrives at the neglected cottage and is seen strictly from behind.
+- Valpen accompanies Barnet but remains passive.
+- Alve is already attempting to repair the cottage alone, with ordinary hand tools and visibly over-ambitious work around him.
+- Alve looks up with **mild suspicion / guarded surprise**, not fear, hostility or immediate friendliness.
+- Alve does not present the cottage or ask for help in the image; Barnet has interrupted his work.
+- The cottage reads as an abandoned/neglected family cottage at an isolated lake, not a harbor shed or boathouse.
+- Warm cinematic semi-realistic CGI/storybook rendering consistent with the canonical character sheets and accepted SysselCraft Story Moments.
+- Landscape composition suitable for the game's iPhone Story Moment presentation.
+
+This accepted first-meeting image is the proof that the character-sheet workflow can preserve Barnet + Alve + Valpen in one production composition. Future generations should use this workflow rather than treating each Story Moment as a fresh character-design task.
