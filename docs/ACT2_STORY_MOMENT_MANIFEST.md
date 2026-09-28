@@ -216,24 +216,24 @@ This is the first production-economy pass, grounded in the locked paper design. 
 
 | Beat | Core event | Delivery | Visual delta / family | Notes |
 |---|---|---|---|---|
-| JETTY-01 | Adam+Alve begin clearing/inspecting, expecting mostly boards | LIVE | worksite starts | Locked block, exact micro-dialogue open |
-| JETTY-02 | Deeper rot/support damage discovered | IMAGE | true scale of damage becomes visible | Natural visual reveal |
-| JETTY-03 | Linus/Recycling salvage reaches lake; Linus briefly reacts to old place | IMAGE | salvage material appears; Linus at lake | First meaningful Linus lake return |
-| JETTY-04 | First substantial salvage repair | MAJOR | jetty 1/4→2/4 | First major jetty visual advance |
-| JETTY-05 | Middle-block contribution A | TBD | middle arc | Exact contribution mapping is **not authored in STORY_DESIGN**; do not invent |
-| JETTY-06 | Middle-block contribution B | TBD | middle arc | Sol safety chain occurs in this region but purchase is not a contribution |
-| JETTY-07 | Middle-block contribution C | TBD | middle arc | Cleanup/life-buoy causal chain locked, per-contribution order open |
-| JETTY-08 | Middle-block contribution D | TBD | middle arc / next stage expected by 4+4 structure | Needs narrative split before image triage |
-| JETTY-09 | Later-block contribution A: focus shifts toward swimming/summer use | TBD | social-use foreshadowing | Exact beat/order explicitly open |
-| JETTY-10 | Later-block contribution B | TBD | possible resident-return signal | Exact beat/order explicitly open |
-| JETTY-11 | Later-block contribution C | TBD | summer-life progression | Exact beat/order explicitly open |
-| JETTY-12 | Later-block contribution D | TBD | later restoration state | Exact beat/order explicitly open |
-| JETTY-13 | Final-push contribution A | TBD | final restoration push | Exact beat not authored |
-| JETTY-14 | Final-push contribution B | TBD | final restoration push | Exact beat not authored |
-| JETTY-15 | Final-push contribution C | TBD | final restoration push | Exact beat not authored |
-| JETTY-16 | Jetty completes; ambient-life pool becomes eligible | MAJOR | complete jetty + permanent life buoy + future social pool | Completion payoff |
+| JETTY-01 | Begin clearing/inspection, expecting mostly boards | LIVE | worksite starts | Runtime work/dialogue |
+| JETTY-02 | Deeper rot/support damage discovered | IMAGE | true scale of damage visible | Visual reveal |
+| JETTY-03 | Linus/Recycling salvage reaches lake; Linus reacts briefly | IMAGE | salvage + Linus at lake | First meaningful Linus lake return |
+| JETTY-04 | First substantial salvage repair | MAJOR | jetty 1/4→2/4 | First major visual advance |
+| JETTY-05 | Repaired section makes swimming tempting; bathing edge still neglected | LIVE | attention shifts toward water access | Runtime dialogue/work |
+| JETTY-06 | Sol performs practical bathing-place safety check | IMAGE | Sol at lake; hazards/checklist established | Prevention, no injury |
+| JETTY-07 | Adam+Alve clear bathing edge; purchased life buoy arrives ready to mount | LIVE | cleanup + buoy staged | Mira purchase is intermediate, not contribution |
+| JETTY-08 | Life buoy mounted; bathing place reads usable | MAJOR | jetty 2/4→3/4 + permanent buoy | Strong causal payoff |
+| JETTY-09 | Improve social/summer-use portion of jetty | LIVE | sitting/towel/clear-use space | No new furniture system |
+| JETTY-10 | First authored village visitor comes because restoration is happening | IMAGE | first behavioural return to lake | Visitor identity can be chosen during dialogue polish |
+| JETTY-11 | Adam+Alve take first proper water break | MAJOR | friendship/use payoff | Not full ensemble swim image |
+| JETTY-12 | Finish major mid-stage repair; nearly complete summer place | MAJOR | jetty 3/4→4/4 visually | Ambient pool still locked |
+| JETTY-13 | Finish last substantial weak/worksite element | LIVE | final repair | No new mystery/purchase |
+| JETTY-14 | Remove work clutter; prepare for ordinary use | LIVE | worksite language disappears | Buoy persists |
+| JETTY-15 | Quiet anticipation: who will use it when open? | IMAGE | near-complete social place | Could become REUSE after consolidation |
+| JETTY-16 | Jetty complete; ambient-life pool unlocks | MAJOR | completed summer/social identity | Empty state + authored resident pools later |
 
-**Bryggan v1:** 1 LIVE, 2 IMAGE, 2 MAJOR, **11 unresolved/TBD**. This is a useful triage finding: Bryggan is block-locked but not yet authored finely enough for honest 64-beat image production. The locked intermediate **Sol safety check → Mira life-buoy purchase → permanent life buoy** remains outside contribution numbering until the middle block is split deliberately.
+**Bryggan v1:** 6 LIVE, 5 IMAGE, 5 MAJOR = **10 dedicated-image candidates** before reuse audit.
 
 ### Båthuset
 
@@ -285,12 +285,12 @@ This is the first production-economy pass, grounded in the locked paper design. 
 
 Known candidate load before any reuse consolidation:
 - Stugan: **9** dedicated-image candidates + 1 REUSE candidate.
-- Bryggan: **4** known dedicated-image candidates, but **11 beats still need honest individual authoring** before its image count can be calculated.
+- Bryggan: **10** dedicated-image candidates.
 - Båthuset: **11** dedicated-image candidates.
 - Motorbåten: **12** dedicated-image candidates.
 - Family finale: outside the 64 contribution count and still requires its own consolidation pass.
 
-This first pass therefore **does not support the earlier illustrative “around 20 images” guess**. Current locked story, if every visual candidate received its own still, is already at least 36 dedicated candidates before the unresolved Bryggan beats and finale. That is exactly why reuse/scene-family consolidation must happen before generation.
+With Bryggan now individually authored, the raw 64-beat pass contains **42 dedicated-image candidates before reuse consolidation**, plus the family finale outside the 64. This is intentionally a ceiling-like first pass, not the production count. Scene-family consolidation and honest reuse now determine the real generation queue.
 
 ### Immediate optimization opportunities
 
@@ -300,6 +300,6 @@ This first pass therefore **does not support the earlier illustrative “around 
 4. **Work beats remain LIVE** unless the work itself is the joke/reveal/payoff.
 5. **Finale gets protected budget.** Do not cannibalize the family embrace/veranda payoff merely to hit a smaller image count.
 
-### Blocker exposed by triage
+### Triage gate update
 
-Before image-count lock, author **JETTY-05…15** at the same granularity as Stugan/Båthuset/Motorbåten. This is narrative completion work, not image-generation work. Until then any exact total image count would be invented.
+**JETTY-05…15 are now individually authored in STORY_DESIGN.** The 64 contribution beats are sufficiently granular for the next pass: scene-family consolidation and reuse audit. Exact production image count remains intentionally unlocked until that pass is complete.
