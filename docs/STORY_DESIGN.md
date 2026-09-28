@@ -834,5 +834,35 @@ Locked closing exchange:
 > **Adam:** “För vad?”  
 > **Alve:** “Båten.”
 
-### Contributions 13–16: still open
-The final boathouse block remains deliberately **unlocked**. Its purpose will be the final restoration push and boathouse payoff, transitioning the site from Adam and Alve's private worksite into a completed, persistent part of lake life while preserving its workshop/discovery identity. Exact beats, village involvement, Story Moments and completion dialogue are still to be designed.
+### Contributions 13–16: prepare the boathouse for the motorboat / completion
+The final block pays off the boathouse arc rather than introducing another major side story. Its purpose is to make the restored workshop physically ready for the later motorboat project and to turn it into a persistent part of lake life.
+
+**13 — Make room for the boat.** After the soapbox-car project, Alve notices the obvious remaining problem: the workshop is usable, but the actual boat bay/slip area is still blocked by old clutter and debris. Adam and Alve begin the final clearing work so the motorboat can eventually be brought inside for repair.
+
+**14 — Restore the old boat trolley/slip mechanism.** Clearing reveals the old equipment used to pull a boat into the boathouse. It is seized/damaged. Linus may make a small return here as practical support rather than starting a new large story chain. He recognizes how the old construction works and helps identify what can be reused. Some of the old boat parts recovered from the dynamite-opened chest in contributions 1–4 turn out to belong to or fit this mechanism, giving the early discovery a concrete later payoff.
+
+**15 — Test the mechanism.** Adam and Alve repair and safely test the trolley/slip without beginning the motorboat restoration itself. It works, proving that the boathouse is now ready to receive the boat when progression allows it.
+
+Locked beat:
+> **Alve:** “Då kan vi få in båten.”  
+> **Adam:** “När vi får laga den.”  
+> **Alve:** “När vi får laga den.”
+
+Around this point the world may also begin hinting that the village recognizes the boathouse as a useful workshop, for example through a small broken object left on the workbench with a note asking whether Adam and Alve can fix it. This is flavor/world progression, not a new system or gating quest.
+
+**16 — Båthuset complete.** The final authoritative contribution completes the restoration. The completion Story Moment should visibly preserve the history of the whole arc: functioning workbench and tools, the old photograph mounted on the wall, the soapbox car, and the now-working boat bay/slip. The location should feel like Adam and Alve's established workshop rather than a reset generic building.
+
+Locked completion exchange:
+> **Adam:** “Klart.”  
+> **Alve:** “Nästan.”  
+> **Adam:** “Vad är det som är kvar?”  
+> *Alve pekar mot motorbåten.*  
+> **Alve:** “Den.”
+
+The motorboat remains progression-locked until all three main lake projects are complete. Båthuset completion therefore ends with a clear future goal rather than starting the motorboat early.
+
+### Completed boathouse ambient identity
+Once complete, the boathouse becomes eligible for controlled-random ambient life while retaining its distinct workshop/discovery identity. Examples may include Linus tinkering with something, Mira leaving something to be repaired, Henning being questionably unsupervised around the tools, Alve working on another small project, or an empty workshop with a half-finished project on the bench. Exact pools/dialogue remain content-production work.
+
+Canonical arc shape:
+**1–4: discovery/mystery → 5–8: workshop is born → 9–12: Adam/Alve friendship through their own build → 13–16: prepare the site for the motorboat and complete the boathouse.**
