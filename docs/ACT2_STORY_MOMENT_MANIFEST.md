@@ -513,3 +513,143 @@ The accepted first-meeting composition establishes the intended baseline:
 - Landscape composition suitable for the game's iPhone Story Moment presentation.
 
 This accepted first-meeting image is the proof that the character-sheet workflow can preserve Barnet + Alve + Valpen in one production composition. Future generations should use this workflow rather than treating each Story Moment as a fresh character-design task.
+
+
+## Stugan production contracts - LOCKED PRE-GENERATION 2026-09-28
+
+This section completes the image-production gate for Stugan only. It deliberately reduces the 16 contribution beats to six production stills. Every omitted beat remains authored gameplay delivered through runtime dialogue, project-state changes or persistent props. Do not generate extra Stugan images unless a concrete runtime acceptance test proves one of these six cannot carry its assigned story function.
+
+### Stugan beat-to-delivery map
+
+| Beat | Delivery | Production handling |
+|---|---|---|
+| COTTAGE-01 | LIVE | Enter/air/clear in runtime. Alve's familiarity comes through dialogue. |
+| COTTAGE-02 | IMAGE | Served by COT-001 together with COTTAGE-03. |
+| COTTAGE-03 | IMAGE | Served by COT-001 together with COTTAGE-02. |
+| COTTAGE-04 | MAJOR | COT-002. First substantial restoration and Alve's motive. |
+| COTTAGE-05 | LIVE | Recover old game in runtime; game becomes persistent prop. |
+| COTTAGE-06 | LIVE | Floor-is-lava memory/play in runtime. No dedicated still. |
+| COTTAGE-07 | MAJOR | COT-003. Rain + old game + first new good cottage memory. |
+| COTTAGE-08 | REUSE | Continue dialogue over COT-003, then swap persistent cottage stage in runtime. |
+| COTTAGE-09 | IMAGE | COT-004. VÅR STUGA drawing discovery. |
+| COTTAGE-10 | LIVE | Veranda work and ordinary memories in runtime. |
+| COTTAGE-11 | LIVE | Family-knowledge dialogue in runtime. |
+| COTTAGE-12 | MAJOR | COT-005. Evidence somebody from home visited unseen. |
+| COTTAGE-13 | LIVE | Remaining repair in runtime. |
+| COTTAGE-14 | LIVE | Prepare chairs/sleeping/guest readiness through persistent props. |
+| COTTAGE-15 | REUSE | Alve imagines family using the ready cottage over COT-006. |
+| COTTAGE-16 | MAJOR | COT-006. Cottage complete; nobody arrives. |
+
+### Shared visual contract for all six Stugan images
+
+Required reference inputs before generation:
+- canonical Barnet character sheet;
+- canonical Alve character sheet;
+- canonical Valpen character sheet;
+- the accepted Act 2 cottage/stuga environment state appropriate to the beat, preferably the actual runtime stage asset or a screenshot/composite from the accepted Lake Master;
+- once COT-001 is accepted, accepted Stugan stills may be secondary continuity references. They never replace canonical character sheets.
+
+Hard locks:
+- Barnet is always rear/rear-three-quarter only. Never show or invent the face.
+- Preserve Barnet's canonical cap, backpack, red hoodie, blue cargo pants, shoes, proportions and silhouette.
+- Valpen is present whenever Barnet appears, passive unless the beat explicitly requires otherwise.
+- Alve must match the canonical sheet, including child proportions, hair/freckles, clothing and practical/wild personality.
+- Warm cinematic semi-realistic CGI/storybook look. No anime, glossy-cartoon drift, enlarged eyes or chibi proportions.
+- Landscape/iPhone Story Moment framing.
+- No visible civilization: no village skyline, church, house rows, harbor, streets, unrelated buildings or modern boat traffic.
+- Do not add Linus, Henning, Mira, Sol, Alve's family or other people to any of these six images.
+- Do not add the motorboat mystery photograph from Båthuset. The Stugan family photograph is a separate ordinary family memory.
+- Do not bake runtime dialogue into pixels.
+- Persistent memory objects survive later Stugan images once introduced: height marks, family photo, old game and VÅR STUGA drawing according to chronology.
+- The cottage evolves from neglected to warm/usable without losing its recognizable identity. Do not redesign it between stills.
+- Alve's family never appears in the Stugan 1-16 image batch. Their return belongs after MOTORBOAT-16.
+
+### IMG-A2-COT-001 - Memory discoveries
+
+Serves COTTAGE-02 + COTTAGE-03. Half-cleared neglected cottage interior. Alve has exposed old height marks on a wall/door frame while the newly found ordinary family photograph is also readable as an object in the scene. Dialogue first focuses on the marks and then the photo without changing image.
+
+Composition: interior medium-wide. Barnet rear-facing, looking toward Alve/marks. Alve close enough to marks/photo that the discoveries connect visually to him. Valpen passive near Barnet or floor edge. Room still reads neglected and early-restoration.
+
+Required: height marks, small family photograph, clearing/work traces, canonical characters.
+Must not show: invented readable family names/dates, family physically present, pristine room, Båthuset motorboat photo, extra workers.
+Continuity out: height marks protected forever; family photo becomes persistent cottage memory.
+Acceptance: both discoveries readable without prop-close-up composition; Barnet face invisible; Alve canonical; Valpen passive; cottage clearly early-stage.
+
+### IMG-A2-COT-002 - Why Alve is rebuilding
+
+Serves COTTAGE-04. First substantial restoration payoff and emotional thesis. Alve reveals he hoped that making the cottage look like before might make his family want to return.
+
+Exact moment: after visible first restoration progress, Barnet and Alve pause and look at what they achieved. Alve is quieter/more vulnerable than usual, not melodramatic.
+
+Composition: warm medium-wide interior or threshold showing meaningful improvement over COT-001 while preserving cottage identity. Barnet rear-facing. Alve emotional focal point. Valpen passive.
+Required: protected height marks if that wall is visible, family photo deliberately kept, repaired/cleared area.
+Must not show: family, fully completed cottage, rain-game setup, fully restored veranda.
+Runtime dialogue carries the locked COTTAGE-04 exchange.
+Continuity out: cottage advances to next persistent visual stage; Alve's motive is known.
+
+### IMG-A2-COT-003 - Rain and the old game
+
+Serves COTTAGE-07 + COTTAGE-08. Alve stops merely excavating old happiness and creates a new good cottage memory with Barnet. This is the strongest friendship image in the Stugan batch.
+
+Exact moment: rain against windows. Barnet and Alve are inside the partly restored cottage playing the recovered worn family board/card game. Alve has playful energy supporting the cheating joke. Valpen rests nearby.
+
+Composition: cozy interior wide/medium-wide. Rain clearly visible without making room gloomy. Barnet strictly rear/rear-three-quarter. Alve visible across/beside game. Valpen relaxed. Old memory props may sit naturally in background.
+Required: old game, rain, partial restoration, prior memory props if visible.
+Must not show: family, storm damage, horror/sadness framing, finished cottage, unrelated toys.
+Runtime dialogue: cheating joke, then the locked rain exchange and COTTAGE-08 payoff. Persistent stage swap happens in runtime after/around this held image.
+Continuity out: old game remains persistent; scene is a new Barnet+Alve memory.
+
+### IMG-A2-COT-004 - VÅR STUGA
+
+Serves COTTAGE-09. Reveal Alve's childhood drawing and let an ordinary embarrassing childhood object motivate veranda restoration.
+
+Exact moment: Barnet has found the old drawing. Alve recognizes it and is mildly embarrassed/defensive.
+Composition: interior medium shot, Barnet rear-facing holding or indicating drawing while Alve reacts. Valpen passive. Drawing reads as a child's drawing of cottage + lake + family + amusingly disproportionate boat, headed VÅR STUGA. If generated fine lettering is unreliable, runtime close-up/overlay may carry exact text instead.
+Required: childlike drawing; established memory props where composition permits.
+Must not show: Act 3 destination, Båthuset motorboat photo, family physically present, invented family lore.
+Runtime dialogue carries the locked denial joke.
+Continuity out: drawing becomes persistent cottage memory and motivates veranda work.
+
+### IMG-A2-COT-005 - Someone was here
+
+Serves COTTAGE-12. A subtle visual mystery changes Alve's hope. Somebody from home has visited while Barnet and Alve were away, but story withholds who and why.
+
+Exact moment: Barnet and Alve notice a small ordinary object from Alve's home that was not in cottage before. Alve recognizes it immediately.
+
+OPEN PROP DECISION: STORY_DESIGN intentionally leaves the object unspecified. Do not generate this image until the physical clue is explicitly locked. This is the only remaining Stugan production decision requiring Kalle's input. The object must be mundane, visually legible, non-diagnostic and plausible for a family member to leave.
+
+Composition: restored-progress cottage/veranda vicinity. Barnet rear-facing. Alve focused on clue, surprised/newly hopeful rather than frightened. Valpen passive. Restored veranda/progress places scene late in third block.
+Must not show: family member, silhouette, vehicle, identifying footprints, explanatory note, burglary framing, Act 3 clue.
+Runtime dialogue carries the locked “Hemma” and “Då måste vi hinna klart” exchange.
+Continuity out: Alve knows somebody from home has seen cottage; identity remains unknown.
+
+### IMG-A2-COT-006 - Complete, but not today
+
+Serves COTTAGE-15 + COTTAGE-16. Show finished emotional place containing old memories and new ones. Alve can imagine family here, but nobody arrives. Hopeful, not abandoned.
+
+Exact moment: cottage complete and genuinely ready for people. Barnet and Alve have finished arranging it and pause after briefly waiting. Alve's attention can suggest empty doorway/path without making composition lonely.
+
+Composition: beautiful wide establishment of completed cottage interior/threshold with enough environment to read accumulated history. Barnet rear-facing. Alve relaxed/thoughtful. Valpen passive. This is definitive Stugan completion still.
+Required persistent history: height marks, family photo, old game, VÅR STUGA drawing, evidence room is ready for people, subtle evidence of Barnet+Alve's new memories. Natural composition, not checklist tableau.
+Must not show: Alve's family, surprise visitors, motorboat restoration underway, Act 3 destination, generic reset interior.
+Runtime dialogue carries COTTAGE-15 imagination then locked completion exchange ending with “Vi har ju en båt att laga.”
+Continuity out: Stugan story-complete and remains warm usable place; family return reserved for post-MOTORBOAT-16.
+
+### Stugan production queue and stop gate
+
+Generate in this order only after required references are uploaded into active image conversation:
+1. IMG-A2-COT-001 Memory discoveries
+2. IMG-A2-COT-002 Why Alve is rebuilding
+3. IMG-A2-COT-003 Rain and the old game
+4. IMG-A2-COT-004 VÅR STUGA
+5. IMG-A2-COT-005 Someone was here
+6. IMG-A2-COT-006 Complete, but not today
+
+Exact Stugan production count is locked at six stills unless runtime acceptance proves a concrete missing visual.
+
+Do not start image generation until:
+- Barnet, Alve and Valpen canonical sheets are present in active image conversation;
+- a reliable Stugan environment/stage reference is present for the relevant still;
+- the COTTAGE-12 clue object is locked before generating COT-005.
+
+No Linus/Henning/Mira/Sol reference is needed for this six-image Stugan batch.
