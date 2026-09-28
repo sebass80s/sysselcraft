@@ -499,3 +499,15 @@ Canonical visual rules remain absolute: Barnet only from behind with canonical c
 COTTAGE-12's previously open home clue is now locked as **Alve's familiar keyring from home**. It proves somebody from home visited without revealing who.
 
 Creative image production being complete does not equal runtime integration. Next concrete Stugan step is to add the accepted exported files to the Act 2 Stugan Story Moment asset folder and wire the 1–16 contribution sequence into isolated `/act2-test`, preserving the rule that Story Moments occur only at their mapped quest contributions. Do not connect the Act 2 map/save progression yet.
+
+
+## Act 2 Stugan browser acceptance — 2026-09-28
+
+**Stugan is now integrated and human-accepted in the isolated `/act2-test` browser lab. Leave this slice alone unless a concrete regression is found.**
+
+- Runtime/test integration commit: `3155894ebc62edb74b117c479b0676133b638c4a` (`Add Stugan story flow to Act 2 test`). Kalle reported its CI as green and then visually played the flow in the browser and accepted it: **“Det ser bra ut tycker jag.”**
+- Canonical assets are present under `public/assets/village/story-moments/act2/cabin/`: `1.png` … `6.png` plus `renovating-cabin1.png`, `renovating-cabin2.png`, `renovating-cabin3.png`.
+- Current test mapping: early work at 1/16; memory discoveries at 2–3; Alve motive at 4; mid work at 5–6; rain/game at 7–8; VÅR STUGA at 9; veranda work at 10–11; home keyring at 12; completed-cottage still across the final preparation/completion beats 13–16.
+- `/act2-test` now contains the Alve intro, Båthuset sequence and Stugan sequence. This is an acceptance harness, not production progression.
+- **Do not connect Act 2 to production map/save/progression merely because the browser slice is accepted.** Adam's physical iPhone save remains untouched. Production integration is a separate explicit gate.
+- Next Nova must begin by verifying branch/HEAD and canonical docs against repo reality. The next content track should start from the existing locked Act 2 design rather than reopening accepted Stugan visuals.
