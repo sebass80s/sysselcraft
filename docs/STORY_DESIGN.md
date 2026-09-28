@@ -1000,3 +1000,125 @@ The previously locked Act 2 family-return payoff remains unchanged: only after t
 
 Canonical emotional progression:
 **1–4: “Jag vill att det ska bli som förr.” → 5–8: “Det kan bli bra på ett nytt sätt.” → 9–12: “De har varit här; de kanske kommer tillbaka.” → 13–16: “Stugan är klar, men Alve behöver inte vänta ensam.”**
+
+
+## Motorbåten restoration arc — LOCKED 2026-09-28
+
+Motorbåten unlocks only after Stugan, Bryggan and Båthuset are complete. It uses the same **4+4+4+4 = 16 authoritative real-world contributions**. Unlike the first three projects, its arc is not primarily about saving another place: it gathers the restored lake, village support network, Alve's family history and Adam/Alve friendship into the vehicle that will eventually carry them toward Act 3. The Act 3 destination remains deliberately undefined.
+
+### Contributions 1–4: the old boat becomes a real project
+Adam and Alve use the restored boathouse slip to bring the motorboat inside. Alve has been waiting for this throughout the act. They uncover/clean it and compare it with the old boathouse photograph, confirming through a distinctive visual detail that it is the same boat shown on the old trip across the lake. The boat is therefore a physical piece of Alve's family history, not a random wreck.
+
+The damage is much worse than Alve expects. Keep the repair fiction child-readable and non-instructional rather than depicting real motor-repair procedures. Linus becomes the primary adult support because of his salvage/reuse/practical-old-things role. He recognizes the boat but does not define its former destination. Locked mystery beat:
+> **Alve:** “Vet du vart den åkte?”  
+> **Linus:** “Över sjön.”  
+> **Alve:** “Ja, men vart?”  
+> **Linus:** “Det får ni väl ta reda på.”
+
+Linus helps classify what can be saved/reused/must be replaced without solving the project for them. Old boat parts from the boathouse chest may pay off here. Contribution 4 produces the first substantial motorboat restoration step, **1/4→2/4**. Locked thematic close:
+> **Alve:** “Tror du den kommer funka?”  
+> **Linus:** “Inte idag.”  
+> **Alve:** “Alla säger så hela tiden.”  
+> **Adam:** “Vadå?”  
+> **Alve:** “Inte idag.”  
+> **Adam:** “Då fortsätter vi imorgon.”
+
+### Contributions 5–8: village support and the first sign of life
+Continued sorting/repair reveals one important missing/unsalvageable need. Keep it deliberately non-technical in child-facing dialogue. Linus cannot fabricate it. Mira can source the required replacement/support package, creating the motorboat's major **story-bound SysselBux purchase**. Exact item and price remain open for economy balancing; it must be affordable through normal play and use the authoritative backend wallet.
+
+Mira's tone should recognize the Adam/Alve combination rather than turn the scene into a shop tutorial. Target gag:
+> **Mira:** “Så ni tänker verkligen få igång den där gamla båten?”  
+> **Adam:** “Ja.”  
+> **Mira:** “Och Alve är inblandad?”  
+> **Adam:** “Ja.”  
+> *Mira funderar.*  
+> **Mira:** “Jag beställer två.”
+
+When the package arrives Alve wants to skip ahead and try the boat immediately. Linus stops him; Alve reluctantly accepts that doing the work properly is part of “det löser vi”. Contribution 8 culminates in the first controlled attempt while the boat is still safely at the boathouse/slip. At first nothing happens, then the boat gives a brief first sign of life before stopping again.
+
+Locked comic payoff:
+> **Alve:** “Hörde du?!”  
+> **Adam:** “Ja.”  
+> **Alve:** “DEN LEVER.”  
+> **Linus:** “Lugn.”  
+> **Alve:** “DEN LEVER LUGNT.”
+
+This advances **2/4→3/4** and shifts the mystery from Alve's past toward Adam and Alve's future: they now know the old boat can plausibly live again.
+
+### Contributions 9–12: onto the lake / from repaired object to their boat
+The restored boathouse slip finally pays off as Adam and Alve move the boat into the water. It floats. The first true water test briefly succeeds: the motor runs, they leave the jetty under their own power, travel only a short distance, then it stops and they need help back. This is progress, not a reset.
+
+Target jetty gag:
+> **Henning:** “Går det bra?”  
+> **Alve:** “JAPP!”  
+> **Adam:** “Det gör det inte.”  
+> **Alve:** “DET GÅR GANSKA BRA!”
+
+The remaining work is framed as making the boat ready for an actual journey rather than buying another magic engine part. The whole restored Act 1 village can contribute naturally: Linus with reusable practical material, Mira with useful supplies, Sol with simple safety/floating equipment, Henning with provisions. Do not turn these into four mandatory fetch systems.
+
+Contribution 12 leaves the boat visually restored at **4/4**, but not yet proven for a real trip. Adam and Alve give it a persistent name. Exact naming UX/default options remain implementation design, but the chosen name should later be usable in dialogue and visually belong to their boat. This marks the emotional transition from Alve's family's old wreck to Adam and Alve's shared adventure boat.
+
+Locked setup for the final block:
+> **Alve:** “Nu är den klar.”  
+> **Linus:** “Nej.”  
+> **Alve:** “VA?”  
+> **Linus:** “Ni har inte provat om den håller hela vägen.”
+
+### Contributions 13–16: the proper test / Act 2 climax
+The final block adds no new purchase or major repair. It proves that Adam and Alve can use what they restored.
+
+**13 — Prepare the proper test.** They plan a longer test run along their own side of the lake, explicitly not the Act 3 crossing. Sol's safety contribution, Mira's practical supplies, Henning's excessive provisions and Linus's final check can all pay off. Adam and Alve perform the preparation themselves. Linus deliberately remains behind:
+> **Linus:** “Redo?”  
+> **Alve:** “Japp.”  
+> **Adam:** “Japp.”  
+> **Linus:** “Bra. Då behöver ni inte mig.”
+
+**14 — First real trip.** Major Story Moment. Adam and Alve leave the restored jetty and see the restored cottage, boathouse and lake from the water for the first time. Keep the beat simple enough to let the payoff breathe:
+> **Alve:** “Adam.”  
+> **Adam:** “Mm?”  
+> **Alve:** “Vi åker båt.”  
+> **Adam:** “Det var planen.”  
+> **Alve:** “Jag vet.”  
+> *Paus.*  
+> **Alve:** “Men vi åker faktiskt båt.”
+
+**15 — Small problem, big character payoff.** A harmless practical issue such as unsecured gear/rope/latch occurs. Do not break the motor again or erase progress. Alve initially lunges to fix it, then stops and applies what he has learned: first make the situation safe, then solve it together with Adam, without an adult rescue. From their turnaround point they can look toward the undefined other side. Alve suggests continuing; Adam answers **“Inte idag.”** Alve accepts and repeats **“Inte idag.”** This line is locked. What Alve once heard as rejection now means *later*.
+
+**16 — Homecoming.** The boat completes the entire test and returns to the restored jetty. Residents who followed the project may be present naturally; puppy can greet them ashore. The motorboat is now story-complete. After a brief ordinary celebration, Alve notices the supposedly empty cottage has changed: the door is open and/or a light is visible. He concludes there are burglars and runs to investigate, Adam following. This transitions directly into the Act 2 family payoff rather than creating a seventeenth contribution.
+
+### Act 2 family-return payoff — LOCKED
+The family return is the emotional climax of Act 2 and must receive real dramatic space. It is **not contribution 17** and does not become another quest.
+
+At the cottage, additional clues build tension: a jacket or bag, then familiar laughter from inside. Alve recognizes the laugh and slows before entering. His family is not merely standing there for a reveal: they are unpacking and using the restored cottage, including the recovered old game. The visual message is that they have come back to stay/use the place, not merely inspect Alve's work.
+
+Target reveal:
+> **Alve:** “…vad gör ni här?”  
+> **Familjemedlem:** “Vi tänkte att det kanske var dags.”  
+> **Alve:** “Ska ni stanna?”  
+> *Paus.*  
+> **Familjemedlem:** “Om vi får.”
+
+Alve finally breaks his usual composure and runs into a family embrace. This is a major Story Moment. Adam remains slightly behind, always under the canonical back-view child rule. A family member notices him:
+> **Familjemedlem:** “Och vem är det där?”  
+> **Alve:** “Det är Adam.”  
+> *Paus.*  
+> **Alve:** “Han är min kompis.”
+
+This is a core emotional payoff. Alve arrived at the lake alone trying to restore the past; by the finale he has both his returning family and a real friend.
+
+The family then discovers the preserved history inside the cottage. A family member notices the height marks: **“Ni sparade dem.” / “Klart vi gjorde.”** Alve tries to hide/remove the embarrassing childhood **VÅR STUGA** drawing; Adam insists it stays.
+
+Finally the family steps onto the veranda and sees the whole restored lake: cottage, living jetty, boathouse and motorboat. Locked final family-arc exchange:
+> **Familjemedlem:** “Det är inte riktigt som förr.”  
+> *Alve tittar ut över sjön och sedan på Adam.*  
+> **Alve:** “Nej.”  
+> *Paus.*  
+> **Alve:** “Det är bättre.”
+
+This explicitly pays off Stugan contribution 8 and the Act 2 theme: Alve did not recreate the old summer; together they made a new one.
+
+Do not immediately undercut the family scene with an Act 3 reveal. Let it land. Later, in normal post-finale play, Adam and Alve can return to the boat and the old photograph/mystery. The first true crossing becomes the **opening of Act 3**, with destination still undefined. After Act 2, Alve + the named motorboat become the permanent transport link across the lake.
+
+Canonical Motorbåten arc: **1–4 history/diagnosis → 5–8 village support/first life → 9–12 water test/their boat → 13–16 independent proper test/homecoming → family return payoff.**
+
+Canonical Act 2 contribution count is now **64 authored contributions total: 16 Stugan + 16 Bryggan + 16 Båthuset + 16 Motorbåten.**
