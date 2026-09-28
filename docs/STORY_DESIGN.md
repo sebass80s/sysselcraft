@@ -642,3 +642,49 @@ and
 When a project is complete, Alve no longer needs to function as its work marker. The restored place can instead gain life through residents and activities enabled by that completion state. The design principle is: **Alve works where the restoration is active; village life appears where restoration is complete.**
 
 Exact quest counts, construction thresholds, individual Alve dialogue pools and detailed resident schedules remain open production decisions.
+
+
+## Act 2 pacing, SysselBux sinks and whole-village reuse — LOCKED 2026-09-28
+
+### Slow-burn progression
+A primary lesson from Act 1 is that major authored content must **not be consumed too quickly**. The four visual states of each Act 2 restoration project do not imply four household quests or one quest per visual step. Major project progression should be deliberately slower, with meaningful events between construction-stage changes.
+
+Exact contribution counts and thresholds remain open until economy/progression balancing, but the target experience is **weeks of living progression rather than a handful of quests completed in a day**. The player should have frequent evidence that effort matters without every reward being another building-stage swap.
+
+Act 2 therefore runs several progression layers in parallel:
+- **major restoration progression**: slow movement through the four authored visual states;
+- **lake/shore progression**: Alve scenes, worksite details, materials/props, visitors, activities and environmental changes;
+- **village progression**: new dialogue, shop stock, building interactions, resident scenes and other consequences back in the Act 1 village.
+
+Project-specific beats follow the currently active restoration track. Global Act 2 beats may react to overall progress/completion state. Neither layer may introduce order-dependent branching among cottage, jetty and boathouse.
+
+### Story-driven SysselBux sinks
+Act 2 should integrate **SysselBux into the main story more strongly**. During restoration, Adam and Alve may discover that they need tools, supplies or other concrete items. Some of these needs become story-bound purchases from Mira.
+
+The intended loop is:
+**real quests → earn SysselBux → restoration reveals a need → return to village/Mira → buy the needed item → item/dialogue visibly feeds back into the lake project → restoration continues.**
+
+These purchases have an explicit economy purpose: **regularly remove earned SysselBux from circulation so the child does not accumulate an effectively unlimited balance and trivialize later purchases**. They should feel like natural story expenses, not arbitrary toll gates.
+
+Locked safeguards:
+- required story purchases must be reasonably affordable from normal quest earnings;
+- do not set exact prices until balanced against the real earning rate/economy;
+- vary purchase timing rather than imposing a predictable “pay every N quests” pattern;
+- optional cosmetic/personal purchases remain valuable choices alongside required story expenses;
+- backend wallet authority remains canonical; do not create a parallel local Act 2 currency or client-side deduction path.
+
+### The Act 1 village is Act 2's support network
+Act 2 must deliberately reuse **all major restored Act 1 locations**, not only Mira's shop. The village Adam rebuilt becomes the practical/social support network that helps Adam and Alve restore the lake.
+
+Each major location has a distinct reusable role:
+- **Återvinningen / Linus:** finding, salvaging and reusing useful materials, fittings, boards, rope, containers or other appropriate supplies.
+- **Bageriet / Henning:** food, community, provisions for work at the lake and occasional Henning-style ideas/events that can help or enliven a restoration beat.
+- **Sjukhuset / Sol:** care, practical health/safety support and character scenes around minor, age-appropriate mishaps or preparation. Do not manufacture medical emergencies merely to make the Clinic relevant.
+- **Lanthandeln / Mira:** new equipment, supplies and story-bound SysselBux purchases.
+
+These are **roles, not rigid fetch-quest templates**. A lake problem may send Adam back into the village for a short authored interaction, then return him to Alve/the active project. Do not force every project through every building, and do not turn the village into a checklist.
+
+This creates the intended Act 2 geography and pacing loop:
+**lake restoration ↔ village support ↔ lake restoration**, while ordinary real-world quests continue to power the broader progression.
+
+The narrative payoff is important: Act 1's buildings were not disposable progression trophies. **The world Adam restored in Act 1 becomes the toolkit and community that makes Act 2 possible.**
