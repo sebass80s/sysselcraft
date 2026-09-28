@@ -539,15 +539,49 @@ The new boy's family used to have a **summer cottage by the lake**, with its own
 
 The boy wants to restore the place so his family will **want and be able to spend summers there again**. He returns to the old summer place and meets the player there. His motivation is personal and age-appropriate; he is not a child mechanic. The player, existing residents and household-quest progression provide the practical restoration momentum while friendship with the boy develops through the act.
 
-### Act 2 restoration spine
-The lake area is restored through several visible projects rather than one long boat repair. Canonical high-level order is:
+### Act 2 restoration spine — UPDATED/LOCKED 2026-09-28
+The lake area is restored through several visible projects rather than one long boat repair.
 
-1. **Summer cottage** — make the family place usable and begin revealing the boy/family history.
-2. **Jetty** — restore safe/useful access to the water.
-3. **Boathouse** — restore the family's lakeside workspace/storage and reveal more of the site's past.
-4. **Motorboat** — the final major restoration project; making it seaworthy is Act 2's mechanical and narrative climax.
+The first three restoration projects are available as **player-chosen independent tracks**:
+- **Summer cottage** — make the family place usable.
+- **Jetty** — restore safe/useful access to the water.
+- **Boathouse** — restore the family's lakeside workspace/storage.
+
+The player chooses which of these three to restore first, then chooses between the two remaining projects, then completes the last one. Their stories and dialogue must remain **self-contained and order-independent**. Do not create alternate dialogue branches, prerequisites or narrative variants based on which of the three was completed first. The meaningful choice is which part of the lake place the child wants to bring to life next, not a branching-story matrix.
+
+The **motorboat is visible from the beginning but locked as a restoration project until all three buildings are complete**. Completion state therefore converges cleanly:
+
+**0/3 → 1/3 → 2/3 → 3/3 → motorboat unlocks → Act 2 final restoration → Act 3 bridge.**
 
 Exact quest counts, construction-stage thresholds and individual subquests remain deliberately unlocked until Act 2 production design. Each project should have visible progression so repeated household quests create several meaningful transformation milestones rather than feeling like repeated work on one object.
+
+### Lake-life world response — LOCKED 2026-09-28
+
+Completing a lake project must do more than replace its construction sprite. Each completed project may independently unlock persistent, non-branching changes elsewhere in SysselCraft. These reactions key off the completed project's world state and must not depend on restoration order.
+
+Examples of the intended grammar:
+- a completed **summer cottage** can unlock cottage furnishings/decorations or related goods in Mira's shop;
+- a completed **jetty** can unlock lake/bathing/fishing-themed goods and lake activities;
+- a completed **boathouse** can unlock workshop/boat-related goods or activities;
+- completing all three unlocks the **motorboat restoration finale**.
+
+Mira's shop is an important example, not the only allowed response. New quest templates, activities, optional interactions, items and environmental details may also become available when a project is complete. These additions should remain modular so adding one does not create cross-project dialogue dependencies.
+
+### Established residents at the lake — LOCKED 2026-09-28
+
+Act 2 must keep the Act 1 cast alive as residents rather than leaving them standing indefinitely at their old village positions. As the lake restoration progresses, **Linus, Henning, Mira, Sol and other established residents can begin spending time at the lake and using what the child has restored**.
+
+The social transformation should be visible:
+- before restoration, the lake summer place feels neglected and quiet;
+- as projects complete, residents increasingly visit and use the area;
+- when the **jetty is complete**, residents may be at the lake swimming, sitting by/on the jetty or otherwise enjoying the water;
+- when the **cottage is complete**, residents may gather around/use the cottage as a social place;
+- when the **boathouse is complete**, residents may create activity around the boathouse/work area;
+- at **3/3**, the lake should read as a lively summer gathering place for the village before the motorboat finale begins.
+
+This is world-state reactivity, not branching narrative. Resident lake presence and ambient activities should be eligible from simple completion flags and should not require dialogue variants for every possible project order. Residents do not need to be permanently removed from their village roles; authored placement/availability can present them where they make sense while preserving required interactions such as Mira's shop.
+
+The emotional design target is: **the child is not merely repairing three objects; the child is creating a place where the village wants to spend time.**
 
 ### Emotional payoff and Act 3 bridge
 By the end of Act 2 the cottage, jetty, boathouse and motorboat have been restored. The boy's family returns to the summer place, validating his reason for undertaking the restoration; they may be presented in an illustrated Story Moment rather than requiring full runtime NPC implementations. The boy remains an important recurring peer character who can naturally move between the lake and village stories.
