@@ -441,3 +441,12 @@ Do not independently generate pieces and try to assemble them later. Do not rege
 - Bryggan 1–4: Adam/Alve discover deeper rot; after contribution 2 they need reusable timber; Linus/Recycling supplies suitable salvage; Linus comes to the lake and briefly reacts to the old place; contribution 4 advances jetty 1/4→2/4.
 - Bryggan middle: as swimming becomes plausible, Sol performs a practical bathing-place safety check, prompting cleanup and a **life buoy** requirement. Only then does the life buoy appear as a story item at Mira. Adam buys it with authoritative SysselBux; exact price remains open; it returns to the lake and becomes permanently visible at the jetty. Purchase is a story beat, not one of the 16 contributions.
 - Bryggan 9–12 increasingly foreshadows swimming/summer use and resident return. 13–16 is final push; contribution 16 completes the project and enables the permanent controlled-random jetty ambient pool (e.g. empty, Linus+Henning, Sol+Mira). Exact dialogue/content pool remains production work.
+
+
+### Act 2 character visual-reference lock — 2026-09-28
+- Established characters may not be generated from prose/memory alone. Production image sessions begin by uploading the canonical reference batch into the active conversation: child, puppy, Linus, Henning, Mira, Sol; Alve joins after approval.
+- ChatGPT Library is useful for visual inspection but was experimentally confirmed not to provide a reliable direct image-reference bridge to image generation. A raw-byte materialization attempt failed. Never pretend a Library/repo image was supplied to the generator when it was not.
+- Child Story Moment rule is absolute: **always seen from behind**, with canonical cap/backpack/clothes/proportions/silhouette; never invent/show the face.
+- **Canonical Sol was re-locked 2026-09-28** using the accepted more photorealistic/cinematic arrival render. It preserves her adult blonde-doctor identity, teal scrubs, white coat and stethoscope while matching Mira/Linus/Henning rendering better. Older cartoonier Sol is superseded as a style reference.
+- Ensemble target: warm cinematic semi-realistic/photographic SysselCraft storybook rendering, coherent across the whole cast; no anime or generic glossy-animation drift.
+- The accepted swimming group image proves the ensemble look, but its front-facing child is a known violation and must not be copied. Character identity/style acceptance does not override the back-view child law.
