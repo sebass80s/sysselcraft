@@ -961,7 +961,7 @@ Barnet skrattar. Alve kliver ner i båten.
 
 > **Alve:** “Det finns bara ett sätt att ta reda på det.”
 
-Barnet tittar på honom.
+Du tittar på honom.
 
 > **Barnet:** “Är det här en av dina planer?”  
 > **Alve:** “Ja.”  
@@ -1578,7 +1578,7 @@ Ni börjar flytta bort gammalt bråte och lösa plankor.
 > **Barnet:** “Och gjorde vad?”  
 > **Alve:** “Inget särskilt.”
 
-Barnet tittar på honom.
+Du tittar på honom.
 
 > **Barnet:** “Det låter ganska tråkigt.”  
 > **Alve:** “Nej.”  
@@ -2473,7 +2473,7 @@ Han flyttar undan några saker.
 > **Barnet:** “Du tänker väldigt mycket på var folk ska ha sina saker.”  
 > **Alve:** “Man vill ju inte att någon ska komma hit och känna att de är i vägen.”
 
-Barnet tittar på honom.
+Du tittar på honom.
 
 > **Barnet:** “Det kommer de nog inte göra.”
 
@@ -2749,6 +2749,8 @@ Motorbåten unlocks only after Stugan, Bryggan and Båthuset are complete. It us
 
 ### Motorbåten dialogue lock — beats 1–3
 
+**Narration rule:** player-facing prose uses **du/ni**, never “Barnet” in third person. **Barnet** remains the dialogue speaker label.
+
 **1/16 — Äntligen båten**
 
 Ni står i det färdiga båthuset och tittar på motorbåten.
@@ -2835,7 +2837,7 @@ När ni går igenom båten upptäcker Barnet en detalj på sidan.
 > **Alve:** “Båten?”  
 > **Barnet:** “Nej, den där.”
 
-Barnet pekar på ett gammalt märke i sidan.
+Du pekar på ett gammalt märke i sidan.
 
 Alve böjer sig ner.
 
@@ -2843,7 +2845,7 @@ Alve böjer sig ner.
 > **Barnet:** “Fotot.”  
 > **Alve:** “Vilket foto?”
 
-Barnet tittar på honom.
+Du tittar på honom.
 
 > **Barnet:** “Det vi hittade i båthuset.”  
 > **Alve:** “Just det.”  
@@ -2891,7 +2893,7 @@ Alve tittar på honom.
 > **Barnet:** “Så ja.”  
 > **Alve:** “Kanske.”
 
-Barnet tittar på fotografiet igen.
+Du tittar på fotografiet igen.
 
 > **Barnet:** “Det är lite konstigt.”  
 > **Alve:** “Vadå?”  
@@ -2973,7 +2975,7 @@ Linus räcker tillbaka fotografiet.
 > **Alve:** “Det där är inte ett svar.”  
 > **Linus:** “Det var inte meningen heller.”
 
-Barnet tittar på Alve.
+Du tittar på Alve.
 
 > **Barnet:** “Han är ganska bra på det här.”  
 > **Alve:** “Fruktansvärt bra.”
