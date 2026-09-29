@@ -717,6 +717,304 @@ Locked final reveal structure:
 
 The reveal should initially play as an Alve-style “there's someone in the cottage / let's see if they're burglars” discovery rather than announcing the family ceremonially in advance. The family reveal is the emotional payoff for Alve's whole Act 2 arc, not merely the cottage completion reward.
 
+### Act 2 finale dialogue — family return and first crossing
+
+This sequence is the locked emotional ending of Act 2. It triggers **after the motorboat restoration is complete** and after the quiet aftermath. It pays off the entire Alve/family arc and then immediately uses the repaired motorboat as the bridge into the next chapter.
+
+#### Scene 1 — After the motorboat
+
+Motorbåten är klar. För första gången finns det inget stort projekt kvar vid sjön.
+
+Barnet och Alve står nere vid vattnet och tittar på båten.
+
+> **Alve:** “Den fungerar.”  
+> **Barnet:** “Japp.”  
+> **Alve:** “På riktigt.”  
+> **Barnet:** “På riktigt.”
+
+Alve lägger handen på relingen.
+
+> **Alve:** “Det är lite konstigt.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “När jag kom hit var allt trasigt.”
+
+Han tittar bort mot stugan, bryggan och båthuset.
+
+> **Alve:** “Nu är inget trasigt längre.”  
+> **Barnet:** “Vi kan säkert hitta något.”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Du brukar gilla projekt.”  
+> **Alve:** “Jag har fått nog av projekt för typ fem minuter.”
+
+Barnet ler.
+
+> **Barnet:** “Vad gör vi då?”
+
+Alve tittar ut över sjön.
+
+> **Alve:** “Vi skulle kunna åka.”  
+> **Barnet:** “Vart?”  
+> **Alve:** “Vet inte.”  
+> **Barnet:** “Bra plan.”  
+> **Alve:** “Jag har blivit bättre på planer.”  
+> **Barnet:** “Har du?”  
+> **Alve:** “Lite.”
+
+Ni börjar gå tillbaka mot stugan.
+
+#### Scene 2 — Någon är där
+
+När ni kommer närmare stugan stannar Alve plötsligt.
+
+> **Alve:** “Vänta.”  
+> **Barnet:** “Vad?”  
+> **Alve:** “Dörren.”
+
+Barnet tittar.
+
+> **Barnet:** “Vad är det med den?”  
+> **Alve:** “Den är öppen.”  
+> **Barnet:** “Glömde vi stänga?”  
+> **Alve:** “Nej.”
+
+Alve går några steg närmare.
+
+> **Alve:** “Jag stänger alltid.”  
+> **Barnet:** “Alltid?”  
+> **Alve:** “Nu gör jag det.”
+
+Ni hör ett ljud inifrån. Alve stelnar till.
+
+> **Alve:** “Det är någon där.”  
+> **Barnet:** “Ja.”  
+> **Alve:** “Det kan vara inbrottstjuvar.”  
+> **Barnet:** “I en stuga mitt ute vid sjön?”  
+> **Alve:** “Perfekt ställe för inbrottstjuvar.”  
+> **Barnet:** “Vad skulle de stjäla?”
+
+Alve tänker.
+
+> **Alve:** “Spelet.”  
+> **Barnet:** “Ingen bryter sig in för att stjäla ditt gamla spel.”  
+> **Alve:** “Du vet inte hur bra det är.”
+
+Ett nytt ljud hörs därinne.
+
+> **Alve:** “Okej.”  
+> **Barnet:** “Vad gör vi?”  
+> **Alve:** “Vi smyger fram.”  
+> **Barnet:** “Varför?”  
+> **Alve:** “Så de inte märker oss.”  
+> **Barnet:** “Och sen?”  
+> **Alve:** “Det kommer i nästa del av planen.”  
+> **Barnet:** “Du har fortfarande inte blivit bättre på planer.”  
+> **Alve:** “Tyst.”
+
+Ni går försiktigt fram mot dörren.
+
+#### Scene 3 — Familjen
+
+Alve öppnar dörren försiktigt.
+
+Han stannar.
+
+Någon därinne håller på att ställa en väska på golvet. Sedan vänder personen sig om.
+
+Alve säger ingenting.
+
+> **Barnet:** “Alve?”
+
+Sedan hörs en röst inifrån.
+
+> **Familjen:** “Alve?”
+
+Alve tar ett steg fram.
+
+> **Alve:** “Vad gör ni här?”
+
+Det kommer ut lite för snabbt.
+
+> **Familjen:** “Vi tänkte att det var dags.”
+
+Alve tittar runt. Fler väskor. Några saker från hemmet. Någon håller i den gamla nyckelringen.
+
+> **Alve:** “Ni kom.”  
+> **Familjen:** “Ja.”
+
+Alve står fortfarande helt still.
+
+> **Familjen:** “Du har gjort allt det här?”
+
+Alve tittar mot Barnet.
+
+> **Alve:** “Vi gjorde det.”
+
+Barnet ler.
+
+> **Familjen:** “Det är fantastiskt.”  
+> **Alve:** “Det var ganska mycket jobb.”  
+> **Barnet:** “Ganska?”  
+> **Alve:** “Okej. Väldigt mycket jobb.”
+
+Familjen tittar mot märkena på väggen.
+
+> **Familjen:** “De är kvar.”
+
+Alve tittar dit.
+
+> **Alve:** “Klart de är.”
+
+Sedan mot fotot.
+
+> **Familjen:** “Och fotot.”  
+> **Alve:** “Det hittade vi.”  
+> **Familjen:** “Och spelet?”
+
+Alve tittar misstänksamt.
+
+> **Alve:** “Ingen får ändra reglerna.”
+
+Barnet börjar skratta.
+
+> **Barnet:** “Nu vet vi var han fått det ifrån.”  
+> **Alve:** “Va?”
+
+Ingen svarar direkt.
+
+Alve tittar runt i rummet igen. Sedan på familjen.
+
+> **Alve:** “Ska ni stanna?”
+
+Det blir tyst. Den här gången svarar de direkt.
+
+> **Familjen:** “Ja.”
+
+Alve blinkar.
+
+> **Alve:** “Hur länge?”  
+> **Familjen:** “Vi tänkte börja med sommaren.”
+
+Alve tittar på Barnet. Han försöker säga något, men får inte riktigt fram det.
+
+> **Barnet:** “Du kan säga det.”  
+> **Alve:** “Vadå?”  
+> **Barnet:** “Att du är glad.”  
+> **Alve:** “Jag är jätteglad.”
+
+Paus.
+
+> **Alve:** “Jag försöker bara att inte vara konstig.”  
+> **Barnet:** “Det går sådär.”
+
+Alve skrattar till och går fram till familjen. The reunion itself should be allowed to land visually; do not over-write the hug.
+
+#### Scene 4 — Första turen
+
+Lite senare står Barnet och Alve vid bryggan.
+
+Familjen är kvar vid stugan bakom dem. Väskor har burits in, dörren står öppen och platsen känns för första gången riktigt bebodd.
+
+Alve tittar mot motorbåten.
+
+> **Alve:** “Så.”  
+> **Barnet:** “Så?”  
+> **Alve:** “Den fungerar.”  
+> **Barnet:** “Det har vi redan konstaterat.”  
+> **Alve:** “Ja, men nu känns det annorlunda.”  
+> **Barnet:** “Hur då?”
+
+Alve tittar tillbaka mot stugan.
+
+> **Alve:** “Nu behöver jag inte vänta här längre.”
+
+Barnet följer hans blick.
+
+> **Barnet:** “De kom.”  
+> **Alve:** “Ja.”
+
+Paus.
+
+> **Alve:** “De kom faktiskt.”  
+> **Barnet:** “Jag sa ju att de kanske skulle göra det.”  
+> **Alve:** “Du sa att du hoppades.”  
+> **Barnet:** “Nästan samma sak.”
+
+Alve tittar ut över sjön.
+
+> **Alve:** “Vet du vad jag tänkt på?”  
+> **Barnet:** “Det låter farligt.”  
+> **Alve:** “Andra sidan.”  
+> **Barnet:** “Vad finns där?”  
+> **Alve:** “Jag minns inte riktigt.”  
+> **Barnet:** “Har du varit där?”  
+> **Alve:** “När jag var mindre. Med familjen.”  
+> **Barnet:** “Och du kommer inte ihåg?”  
+> **Alve:** “Lite.”  
+> **Barnet:** “Vad minns du?”  
+> **Alve:** “Träd.”  
+> **Barnet:** “Starkt.”  
+> **Alve:** “Vatten.”  
+> **Barnet:** “Vi står vid en sjö.”  
+> **Alve:** “Jag försöker.”
+
+Barnet skrattar. Alve kliver ner i båten.
+
+> **Alve:** “Det finns bara ett sätt att ta reda på det.”
+
+Barnet tittar på honom.
+
+> **Barnet:** “Är det här en av dina planer?”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Har den fler delar den här gången?”
+
+Alve tittar på motorn.
+
+> **Alve:** “Starta båten.”
+
+Han pekar ut över sjön.
+
+> **Alve:** “Åk ditåt.”  
+> **Barnet:** “Två delar.”  
+> **Alve:** “Jag blir bättre.”
+
+Barnet kliver ner i båten.
+
+Från stugan hörs någon ropa:
+
+> **Familjen:** “Inte för långt!”
+
+Alve tittar på Barnet.
+
+> **Alve:** “Det där känner jag igen.”  
+> **Barnet:** “Kommer du lyssna?”  
+> **Alve:** “Självklart.”
+
+Paus.
+
+> **Alve:** “Ungefär.”
+
+Motorn startar.
+
+Båten lämnar bryggan.
+
+Barnet tittar tillbaka mot stugan, bryggan och hela platsen ni byggt upp tillsammans. Alve tittar framåt.
+
+> **Barnet:** “Redo?”  
+> **Alve:** “Japp.”  
+> **Barnet:** “Vart åker vi?”
+
+Alve ler.
+
+> **Alve:** “Vi får se.”
+
+Båten fortsätter ut över sjön.
+
+Sedan svart.
+
+## SLUT PÅ ANDRA KAPITLET
+
+The act therefore ends with **Barnet and Alve physically leaving in the restored motorboat**. Do not stop on a “someday” promise or a stationary teaser. The first departure itself is the final authored image/action of Act 2.
+
 ### Alve after Act 2 and the other side of the lake
 After the motorboat is restored, **Alve becomes the permanent boat driver/transport character**. Alve + motorboat form the authored transport link from the lake to a future area on the other side and back again.
 
