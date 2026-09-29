@@ -26,7 +26,8 @@
     "test:sol-story": "node scripts/test-sol-story.mjs",
     "test:diamond-rewards": "node scripts/test-diamond-rewards.mjs",
     "test:dog-home": "node --experimental-strip-types scripts/test-dog-home.mjs",
-    "test:act2-visual": "node scripts/test-act2-visual-contract.mjs"
+    "test:act2-visual": "node scripts/test-act2-visual-contract.mjs",
+    "image:act2:prompt": "node scripts/act2-image-prompt.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
