@@ -873,160 +873,132 @@ A user reply such as `2`, `next`, `nästa` or `kör vidare` means advance to the
 If two consecutive generations fail because of prompt/style/cast/reference drift, STOP generation and reread this protocol plus the exact per-image contract before another attempt. Do not compensate by improvising a new aesthetic prompt.
 
 
-## Bryggan production contracts - LOCKED PRE-GENERATION 2026-09-29
+## Bryggan production contracts - LOCKED POST-PRODUCTION 2026-09-29
 
-This section completes the image-production gate for Bryggan only. The earlier four-image economy proposal was re-audited against the accepted Stugan runtime lesson: story stills alone make a 16-contribution restoration visually skip too much of the actual work. Bryggan therefore uses **seven production stills total**: four narrative/social stills plus three restoration-work stills. No contribution count changes.
+Bryggan image production is complete in the repository. The earlier seven-still pre-generation plan is superseded by the **nine accepted production assets** now present under:
 
-**Economy lock:** the life-buoy purchase remains story-canonical, but its SysselBux price is deliberately **TBD**. Do not invent or bake a price into art, dialogue or runtime until economy balancing is explicitly done.
+`public/assets/village/story-moments/act2/jetty/`
+
+The story still uses **16 authoritative real-world contributions**. Image count, contribution count and visual stage count remain separate concepts.
+
+**Economy lock:** the life-buoy purchase is story-canonical, but its SysselBux price remains deliberately **TBD**. No price is baked into art or runtime.
+
+### Authoritative Bryggan asset set
+
+| # | Asset | Purpose |
+|---:|---|---|
+| 01 | `01-early-restoration.png` | Adam + Alve begin clearing the damaged jetty and discover deeper rot. |
+| 02 | `02-linus-salvaged-timber.png` | Linus returns with reusable timber/material for the first substantial repair. |
+| 03 | `03-sol-safety-check.png` | Sol performs the calm bathing-area safety inspection. |
+| 04 | `04-mira-lifebuoy-purchase.png` | Adam buys the proper life buoy from Mira in the village shop. |
+| 05 | `05-bathing-edge-cleanup.png` | Adam + Alve clear the bathing edge and bring/mount the new life buoy. |
+| 06 | `06-late-restoration.png` | Later substantial restoration work while the jetty is nearing completion. |
+| 07 | `07-henning-first-visitor.png` | Henning becomes the first authored social visitor before completion. |
+| 08 | `08-first-water-break.png` | Adam + Alve take their first proper water break; friendship is the focus. |
+| 09 | `09-jetty-complete.png` | Definitive completed Bryggan / summer-place image. |
+
+All nine files have been verified on branch `nova/local-construction-snapshot`.
 
 ### Bryggan beat-to-delivery map
 
-| Beat | Delivery | Production handling |
+| Beat | Delivery | Authoritative visual handling |
 |---|---|---|
-| JETTY-01 | IMAGE | JET-005 early restoration work: Adam+Alve clear damaged boards/debris. |
-| JETTY-02 | REUSE | Continue over JET-005; deeper support rot becomes apparent through composition + runtime dialogue. |
-| JETTY-03 | IMAGE | JET-001 Linus returns to lake with salvaged timber/material. |
-| JETTY-04 | REUSE | First substantial repair payoff is carried by JET-001 plus runtime stage swap 1/4→2/4. |
-| JETTY-05 | LIVE | Alve talks swimming; attention shifts to bathing edge in runtime. |
-| JETTY-06 | IMAGE | JET-002 Sol safety visit. No injury/emergency. |
-| JETTY-07 | IMAGE | JET-006 mid restoration work: Adam+Alve clear bathing edge; purchased life buoy staged ready to mount. Price remains TBD and is never shown. |
-| JETTY-08 | REUSE | JET-006 carries mounting work; runtime stage swap 2/4→3/4 makes buoy permanent. |
-| JETTY-09 | LIVE | Social/summer-use portion improved in runtime. |
-| JETTY-10 | IMAGE | JET-003 first authored visitor while work remains unfinished. |
-| JETTY-11 | REUSE | First proper water break continues over JET-003; composition must privilege Adam+Alve friendship rather than visitor spectacle. |
-| JETTY-12 | IMAGE | JET-007 late restoration work: nearly finished jetty, final major mid-stage work, runtime stage swap 3/4→4/4. |
-| JETTY-13 | LIVE | Last substantial weak/worksite element finished in runtime. |
-| JETTY-14 | LIVE | Work clutter removed; visual language shifts to ordinary summer use. |
-| JETTY-15 | REUSE | Quiet anticipation carried by final-completion composition JET-004 before completion dialogue resolves. |
-| JETTY-16 | MAJOR | JET-004 completed summer place; permanent life buoy; worksite role ends and ambient pool becomes eligible on later visits. |
+| JETTY-01 | IMAGE | `01-early-restoration.png` — Adam + Alve clear damaged boards/debris. |
+| JETTY-02 | REUSE | Continue over `01-early-restoration.png`; deeper support rot is discovered. |
+| JETTY-03 | IMAGE | `02-linus-salvaged-timber.png` — Linus returns with reused sound timber/material. |
+| JETTY-04 | REUSE | `02-linus-salvaged-timber.png` carries the first substantial repair sequence; runtime stage swap 1/4→2/4. |
+| JETTY-05 | LIVE | Alve talks swimming; attention shifts to the bathing edge. |
+| JETTY-06 | IMAGE | `03-sol-safety-check.png` — Sol inspects bathing access and identifies cleanup + life-buoy needs. |
+| INTERMEDIATE ECONOMY BEAT | IMAGE | `04-mira-lifebuoy-purchase.png` — Adam buys the proper life buoy from Mira. **This is not a real-world contribution.** Price remains TBD. |
+| JETTY-07 | IMAGE | `05-bathing-edge-cleanup.png` — Adam + Alve clear the bathing edge; new life buoy is present for mounting. |
+| JETTY-08 | REUSE | `05-bathing-edge-cleanup.png` carries the mounting transition; runtime stage swap 2/4→3/4 makes the life buoy permanent. |
+| JETTY-09 | LIVE | Social/summer-use portion is improved in runtime. |
+| JETTY-10 | IMAGE | `07-henning-first-visitor.png` — Henning is the first authored social visitor. |
+| JETTY-11 | IMAGE | `08-first-water-break.png` — Adam + Alve take their first proper water break; friendship remains focal. |
+| JETTY-12 | IMAGE | `06-late-restoration.png` — later substantial restoration work; supports runtime 3/4→4/4 progression. |
+| JETTY-13 | LIVE | Last substantial weak/worksite element is finished. |
+| JETTY-14 | LIVE | Remaining work clutter is removed; visual language shifts to ordinary summer use. |
+| JETTY-15 | REUSE | `09-jetty-complete.png` carries the quiet pre-completion anticipation over the essentially finished physical state. |
+| JETTY-16 | MAJOR | `09-jetty-complete.png` — authoritative completion; worksite role ends and later ambient use becomes eligible. |
 
-### Shared visual contract for all seven Bryggan images
+**Important ordering note:** numeric asset filenames reflect the final folder/production sequence chosen during image production. Runtime story mapping remains authoritative. In story order, the late-restoration beat at JETTY-12 occurs after Henning's JETTY-10 visit and the JETTY-11 water break even though its file is named `06-late-restoration.png`.
 
-Required references before generation:
-- canonical Barnet character sheet;
-- canonical Alve character sheet;
-- canonical Valpen character sheet;
-- canonical Linus sheet for JET-001;
-- canonical Sol sheet for JET-002;
-- canonical Henning sheet for JET-003;
-- accepted Lake Master + correct Bryggan visual stage reference.
+### Shared visual contract for the final Bryggan set
 
-Hard locks:
-- Barnet is rear/rear-three-quarter only; face never visible or invented.
-- Preserve canonical cap, backpack, clothes, shoes, proportions and silhouette.
-- Valpen is present whenever Barnet appears and remains passive unless explicitly authored otherwise.
-- Alve matches canonical reference and remains the active-project companion.
-- Landscape/iPhone Story Moment framing; warm cinematic semi-realistic SysselCraft storybook rendering.
-- Background is isolated lake wilderness only. No village skyline, church, house rows, harbor, roads, unrelated buildings or modern boat traffic.
-- Do not redesign the accepted jetty stages. Images visualize authored states and work between them.
-- No extra residents beyond the exact cast of each image.
-- Life buoy first appears only after Sol identifies the need and the Mira purchase has occurred. Its price is never visible.
-- Once mounted after JETTY-08, the life buoy is persistent in every later Bryggan state.
-- Do not show a completed social crowd before JETTY-16. The controlled-random ambient pool unlocks only after completion.
+- Barnet remains rear/rear-three-quarter only; face is never intentionally shown or invented.
+- Preserve canonical cap, backpack, clothing, shoes, proportions and silhouette.
+- Valpen is present with Barnet where authored and remains secondary/passive unless explicitly part of the moment.
+- Alve matches the canonical character sheet and remains the active restoration companion.
+- Landscape/iPhone Story Moment framing; warm cinematic semi-realistic SysselCraft rendering.
+- Lake Story Moments use isolated Act 2 wilderness. No village skyline, church, house rows, harbor, roads or unrelated civilization in lake scenes.
+- The Mira purchase is the explicit exception because it takes place in **Mira's village shop**, not at the lake.
+- Accepted Bryggan stage geometry remains authoritative.
+- No extra residents beyond the exact authored cast.
+- The life buoy first becomes a story object after Sol identifies the need and is purchased from Mira in `04-mira-lifebuoy-purchase.png`.
+- Once mounted through JETTY-08, the life buoy persists in all later Bryggan states.
+- No completed social crowd is canonized before completion.
 - No baked-in dialogue/UI text.
 
-### IMG-A2-JET-001 - Linus returns / salvage repair
+### Final image/story contracts
 
-Serves JETTY-03 + JETTY-04. First meaningful Act 1 resident return to the lake and first major repair transition.
+#### 01 — Early restoration
+Asset: `01-early-restoration.png`  
+Serves JETTY-01 + JETTY-02. Adam and Alve clear loose debris/damaged boards and discover deeper rotten supports/timber. No replacement timber has arrived yet.
 
-Narrative contract: Linus has helped choose reusable sound timber/material at Återvinningen and has come to the isolated lake with/helping deliver it. His reaction is restrained: this place used to matter, but the image is about practical help and continuity, not nostalgia theatre. Adam and Alve now have credible material for the first substantial structural repair.
+#### 02 — Linus + salvaged timber
+Asset: `02-linus-salvaged-timber.png`  
+Serves JETTY-03 + JETTY-04. Linus provides practical continuity from Återvinningen and sound reused material for the first substantial repair. Jetty remains incomplete.
 
-Generation contract: early damaged jetty/lakeshore. Barnet rear-facing; Alve and Linus canonical; Valpen passive. Salvaged boards/timber are clearly reused but sound/usable, staged naturally at the worksite. Linus participates practically or inspects material, not posed ceremonially. No truck is required unless an accepted environment reference establishes one. Jetty remains visibly incomplete; runtime performs 1/4→2/4 transition around this moment.
-Must not show: Sol, Mira, life buoy, swimmers, completed jetty, village/civilization, sentimental memorial framing.
-Acceptance: Linus unmistakably canonical; salvage causality readable; Adam face hidden; isolated lake preserved; repair still incomplete.
+#### 03 — Sol safety check
+Asset: `03-sol-safety-check.png`  
+Serves JETTY-06. Sol performs a calm prevention/safety inspection because Adam and Alve intend to swim. Nobody is hurt. She identifies shoreline/bathing-edge cleanup and the need for a proper life buoy.
 
-### IMG-A2-JET-002 - Sol safety visit
+#### 04 — Mira life-buoy purchase
+Asset: `04-mira-lifebuoy-purchase.png`  
+Intermediate economy/story beat between JETTY-06 and JETTY-07. Adam buys the proper life buoy from Mira in her village shop; Alve may accompany him. This image is **not** contribution 7 and does not increase restoration contribution count. Exact SysselBux price remains TBD.
 
-Serves JETTY-06. Establishes that making the dock stronger is not yet enough to make the bathing place ready.
+#### 05 — Bathing-edge cleanup
+Asset: `05-bathing-edge-cleanup.png`  
+Serves JETTY-07 + transition into JETTY-08. Adam and Alve clear the bathing edge after Sol's inspection. The newly purchased life buoy is present and becomes permanently mounted through this sequence.
 
-Narrative contract: Sol visits because Adam and Alve intend to swim. She performs a calm age-appropriate prevention/safety check and identifies two practical needs: clear old sharp/rubbish debris around the bathing edge and provide a proper life buoy. Nobody is hurt.
+#### 06 — Late restoration
+Asset: `06-late-restoration.png`  
+Serves JETTY-12. Adam and Alve continue the substantial later repair/tidy work while the location is nearing completion. Life buoy persists. The scene remains visibly a worksite.
 
-Generation contract: stage-2 jetty and bathing edge. Barnet rear-facing; Alve, Sol canonical; Valpen passive. Sol examines/indicates access into/out of water or visible old harmless debris/hazards at shoreline. Professional, calm, ordinary. Water should look inviting enough to explain Alve's interest, while edge still visibly needs cleanup.
-Must not show: injury, blood, emergency treatment, ambulance, panic, already-mounted life buoy, Mira, crowd, completed jetty.
-Acceptance: scene reads inspection/prevention, not accident; Sol canonical; two practical safety concerns visually plausible; isolated lake preserved.
+#### 07 — Henning first visitor
+Asset: `07-henning-first-visitor.png`  
+Serves JETTY-10. **Henning is locked as the first social visitor.** Sol's earlier visit is a safety inspection, not the social-return beat. Henning's arrival demonstrates that restoration is changing village behaviour before completion.
 
-### IMG-A2-JET-003 - First visitor / first use
+#### 08 — First water break
+Asset: `08-first-water-break.png`  
+Serves JETTY-11. Adam and Alve take their first proper water break at the now-usable section. Friendship is the emotional center; this is not the post-completion ambient crowd.
 
-Serves JETTY-10 + JETTY-11. Proof that restoration is changing village behaviour before project completion, followed by Adam+Alve getting something back from the place themselves.
+#### 09 — Jetty complete
+Asset: `09-jetty-complete.png`  
+Serves JETTY-15 + JETTY-16. Definitive completion image using the accepted stage-4 Bryggan. Permanent life buoy remains. Construction clutter is gone. Adam + Alve can finally experience the location as a real summer place rather than a worksite.
 
-**Visitor identity is LOCKED: Henning.** He is the first social visitor who comes down because the restoration is making the lake inviting again. Sol's earlier JETTY-06 visit remains a practical safety inspection and is not this social-return beat. Use Henning's canonical sheet.
+### Bryggan continuity / reuse audit — FINAL
 
-Narrative contract: one established resident has deliberately come to the lake because the jetty is becoming usable. The emotional center remains Adam and Alve. The scene must be able to hold the transition into their first proper water break without looking like the full post-completion social ensemble.
+- 01 may serve JETTY-01→02 because the same clearing work reveals the deeper damage.
+- 02 may serve JETTY-03→04 because salvage arrival and first major structural repair are one causal sequence; persistent stage swap remains runtime-authoritative.
+- 03 is unique to Sol's safety inspection.
+- 04 is unique to the village-shop economy beat and does **not** consume a restoration contribution.
+- 05 may serve JETTY-07→08 because cleanup and life-buoy mounting are one causal sequence.
+- 07 and 08 are now separate images. The earlier plan to reuse the Henning frame for the first water break is superseded.
+- 06 remains the dedicated late-restoration frame for JETTY-12.
+- 09 may serve JETTY-15→16 because both beats share the essentially finished physical state; dialogue/progression distinguishes anticipation from authoritative completion.
+- No image crosses an incompatible life-buoy continuity boundary.
 
-Generation contract: stage-3 / unfinished-but-usable jetty. Permanent mounted life buoy visible. Barnet rear-facing; Alve canonical; Valpen passive; Henning as the only visitor. Adam+Alve occupy the primary composition, with visitor clearly present but secondary. Work traces remain enough to show project is not finished. Towels/ordinary summer-use cues are allowed only where natural.
-Must not show: multiple residents, Sol+Mira ambient pair unless one is explicitly chosen as sole visitor, Linus+Henning pair, full completion celebration, finished crowd scene.
-Acceptance: first behavioural return is readable; friendship remains focal; jetty still unfinished; buoy persists.
-
-### IMG-A2-JET-004 - Summer place complete
-
-Serves JETTY-15 + JETTY-16. Definitive Bryggan completion image.
-
-Narrative contract: Adam and Alve have stopped looking at a construction problem and can see a real summer place. The quiet anticipation of JETTY-15 resolves into completion at JETTY-16. Alve's worksite role ends here. Future visits may populate the location through the controlled-random ambient pool, but this completion image does not need to pre-render that pool.
-
-Generation contract: completed accepted jetty state, clean and genuinely usable. Permanent life buoy mounted. Barnet rear-facing; Alve canonical; Valpen passive. Tools/material clutter removed. Composition should emphasize lake, sitting/swimming access and the feeling of a place handed back to ordinary summer life. Prefer Adam+Alve alone so later ambient combinations remain discoveries rather than being canonized into the completion frame.
-Must not show: construction debris, unsafe broken boards, crowd, family-return material, motorboat completion, Act 3 destination/civilization.
-Acceptance: unmistakably finished structure; buoy present; no worksite language; warm social potential without forced crowd; isolated lake preserved.
-
-### IMG-A2-JET-005 - Early restoration work
-
-Serves JETTY-01 + JETTY-02. First of three explicit work stills.
-
-Adam and Alve actively clear loose debris/damaged boards and expose that deeper supports/timber are rotten. Barnet rear-facing, Alve canonical, Valpen passive. Jetty remains stage-1 damaged. Ordinary hand tools only; no salvaged replacement timber has arrived yet.
-Must not show: Linus, Sol, life buoy, new replacement structure, completed sections beyond accepted stage.
-Acceptance: both children visibly working; deeper damage readable; no invented accident; isolated lake only.
-
-### IMG-A2-JET-006 - Bathing-edge restoration
-
-Serves JETTY-07 + transition into JETTY-08. Second explicit work still.
-
-Adam and Alve actively clear the bathing edge/shoreline after Sol's inspection. The already-purchased proper life buoy is physically present at the site ready to mount or being mounted. Barnet rear-facing; Alve canonical; Valpen passive. Jetty is stage-2 moving toward stage-3.
-Must not show: Mira transaction, price/signage, Sol supervising, injury, crowd, buoy already weathered/old.
-Acceptance: cleanup and safety causality readable; buoy clearly new and story-relevant; children visibly doing the work; price absent.
-
-### IMG-A2-JET-007 - Late restoration work
-
-Serves JETTY-12 and visually bridges the long 16-contribution arc toward completion.
-
-Adam and Alve actively finish the remaining major mid-stage repair and tidy the social/bathing portion. Jetty should read nearly complete but still contain enough tools/material to remain a worksite. Mounted life buoy persists. Barnet rear-facing; Alve canonical; Valpen passive. This image supports runtime 3/4→4/4 visual transition.
-Must not show: completion crowd, removed-all-tools final state, new purchased furniture system, extra residents.
-Acceptance: clear progress beyond JET-006; still visibly active work; buoy persistent; final JET-004 can credibly follow after beats 13–15.
-
-### Bryggan continuity / reuse audit
-
-- JET-005 can honestly serve JETTY-01 and JETTY-02 because both occur in the same early damaged state and the second beat is discovery of damage exposed by the same work.
-- JET-001 can carry JETTY-03 and the JETTY-04 transition because salvage arrival and first structural repair are one causal sequence; the actual persistent stage swap remains runtime-authoritative.
-- JET-002 is unique. Reusing it after the purchase would incorrectly imply Sol remains to supervise and would blur prevention with execution.
-- JET-006 can carry JETTY-07→08 because the life buoy is already purchased and the same work scene naturally precedes the runtime-mounted persistent state.
-- JET-003 can carry JETTY-10→11 only if exactly one authored visitor is selected and the composition leaves Adam+Alve as emotional center.
-- JET-007 is required because otherwise the sequence jumps from first social use to completion without showing the children doing the late restoration work.
-- JET-004 can carry JETTY-15→16 because both share the same essentially finished physical state; dialogue marks anticipation versus authoritative completion.
-- No Bryggan image is reused across a life-buoy continuity boundary or incompatible jetty stage.
-
-### Bryggan production queue
-
-Recommended generation order by continuity:
-1. IMG-A2-JET-005 Early restoration work
-2. IMG-A2-JET-001 Linus returns / salvage repair
-3. IMG-A2-JET-002 Sol safety visit
-4. IMG-A2-JET-006 Bathing-edge restoration
-5. IMG-A2-JET-007 Late restoration work
-6. IMG-A2-JET-003 First social visitor / first use — Henning
-7. IMG-A2-JET-004 Summer place complete
-
-**Bryggan production count is locked at seven accepted-intent stills, with JET-003's visitor locked as Henning.**
-
-### Bryggan pre-generation gate status
+### Bryggan production status
 
 - [x] 16 beats mapped to delivery.
 - [x] Narrative continuity audit complete.
-- [x] Reuse audit complete.
-- [x] Exact image count locked: 7.
-- [x] Narrative + generation contracts drafted.
-- [x] Production queue locked.
-- [x] Life-buoy price deliberately deferred/TBD.
-- [x] JET-003 first social visitor identity locked: Henning.
-- [ ] Canonical Barnet/Alve/Valpen/Linus/Sol references uploaded into active image conversation as needed.
-- [ ] Accepted Bryggan stage/environment reference present.
-- [ ] Image generation authorized after the remaining reference/visitor gates.
+- [x] Life-buoy economy beat represented separately from contribution count.
+- [x] Henning locked as first social visitor.
+- [x] First water break has its own dedicated image.
+- [x] Exact final production asset count: **9**.
+- [x] All 9 production assets verified in `public/assets/village/story-moments/act2/jetty/`.
+- [x] Final completion image corrected so Barnet is shown from behind.
+- [x] Bryggan Story Moment image production complete.
 
-JET-003 visitor identity is locked as Henning. Sol remains the earlier safety visitor; Henning is the first social return.
+The old seven-image Bryggan production queue is superseded by this nine-asset final manifest.
