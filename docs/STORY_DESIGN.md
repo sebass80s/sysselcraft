@@ -2251,6 +2251,105 @@ Alve tittar runt en sista gång.
 > **Barnet:** “Det gör det.”
 
 
+### Stugan waiting-state dialogue — after completion, before family return
+
+This scene becomes available when **Stugan is complete but the wider Act 2 return condition has not yet been met**. It is an optional/revisit emotional scene, not contribution 17. The completed cottage remains visually finished. The family still does not appear.
+
+Ni sitter utanför den färdiga stugan en stund. Allt är klart nu. Dörren går att stänga, verandan är lagad och inne i stugan står spelet och fotot kvar.
+
+> **Barnet:** “Väntar du på dem?”
+
+Alve svarar inte direkt.
+
+> **Alve:** “Lite.”  
+> **Barnet:** “Gör du det varje gång vi kommer hit?”
+
+Alve rycker på axlarna.
+
+> **Alve:** “Kanske.”  
+> **Barnet:** “Tror du att de kommer?”
+
+Alve tittar ner.
+
+> **Alve:** “Jag vet inte.”  
+> **Barnet:** “Inte alls?”  
+> **Alve:** “Ibland tror jag det.”  
+> **Barnet:** “Och ibland?”
+
+Alve tittar mot stugan.
+
+> **Alve:** “Ibland tänker jag att om de ville komma så hade de redan gjort det.”
+
+Barnet blir tyst en stund.
+
+> **Barnet:** “Men någon var ju här.”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Nyckelringen.”  
+> **Alve:** “Jag vet.”  
+> **Barnet:** “Så de vet hur det ser ut nu.”  
+> **Alve:** “Ja.”
+
+Paus.
+
+> **Barnet:** “Tror du att din familj någonsin kommer tillbaka?”
+
+Alve funderar länge innan han svarar.
+
+> **Alve:** “Jag hoppas det.”  
+> **Barnet:** “Det var inte riktigt det jag frågade.”  
+> **Alve:** “Jag vet.”
+
+Barnet väntar.
+
+> **Alve:** “Jag vet faktiskt inte.”
+
+Alve ser mot verandan.
+
+> **Alve:** “När jag började laga stugan tänkte jag att om jag bara gjorde den fin igen så skulle allt bli som förut.”  
+> **Barnet:** “Men det blev inte så.”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Är du ledsen för det?”
+
+Alve tänker efter.
+
+> **Alve:** “Lite.”
+
+Sedan tittar han på Barnet.
+
+> **Alve:** “Men inte lika mycket som jag trodde.”  
+> **Barnet:** “Varför inte?”  
+> **Alve:** “För att det inte känns tomt här längre.”
+
+Barnet tittar mot stugan.
+
+> **Barnet:** “Fast de inte är här?”  
+> **Alve:** “Du är ju här.”
+
+Paus.
+
+> **Barnet:** “Ja.”  
+> **Alve:** “Och Valpen.”  
+> **Barnet:** “Han räknas väldigt mycket.”  
+> **Alve:** “Och vi har saker kvar att göra.”  
+> **Barnet:** “Båten.”
+
+Alve nickar.
+
+> **Alve:** “Båten.”
+
+Barnet reser sig.
+
+> **Barnet:** “Då väntar vi inte hela dagen.”
+
+Alve ler lite.
+
+> **Alve:** “Nej.”
+
+Han kastar en sista blick mot vägen.
+
+> **Alve:** “Men kanske lite till.”
+
+
 Contribution 16 completes Stugan. The completion Story Moment should show the transformation from the abandoned cottage at Alve's introduction into a warm, intact place containing its accumulated history: **height marks, family photograph, childhood drawing, old game and evidence of Adam and Alve's new memories together**.
 
 The family does **not** arrive at cottage completion. Adam and Alve wait briefly, but nobody comes.
