@@ -7,7 +7,7 @@ import type { Act2VisualStage } from "../../game/act2VisualAssets";
 type StoryBeat = {
   id: string;
   title: string;
-  image: string;
+  image?: string;
   body: string[];
   stage?: Act2VisualStage;
 };
@@ -278,7 +278,6 @@ const STORY_BEATS: StoryBeat[] = [
   {
     id: "jetty-05",
     title: "5/16 · Det börjar se badbart ut",
-    image: "/assets/village/buildings/act 2/runtime/dock-stage-2.png",
     body: [
       "Alve: Vet du vad som är det bästa med en brygga?",
       "Barnet: Att den inte ramlar ihop?",
@@ -408,7 +407,6 @@ const STORY_BEATS: StoryBeat[] = [
   {
     id: "jetty-09",
     title: "9/16 · Plats för sommaren",
-    image: "/assets/village/buildings/act 2/runtime/dock-stage-3.png",
     body: [
       "Alve: Okej, nu börjar den se ut som en plats man faktiskt vill vara på.",
       "Barnet: Det hjälper att det inte ligger plankor och verktyg överallt.",
@@ -514,7 +512,6 @@ const STORY_BEATS: StoryBeat[] = [
   {
     id: "jetty-13",
     title: "13/16 · Sista svaga punkten",
-    image: "/assets/village/buildings/act 2/runtime/dock-stage-4.png",
     body: [
       "Barnet: Där.",
       "Alve: Nej.",
@@ -539,7 +536,6 @@ const STORY_BEATS: StoryBeat[] = [
   {
     id: "jetty-14",
     title: "14/16 · Gör klart för att använda",
-    image: "/assets/village/buildings/act 2/runtime/dock-stage-4.png",
     body: [
       "Alve: Vad gör vi med allt det här?",
       "Barnet: Plankorna tillbaka till Linus. Verktygen bort. Skräpet slänger vi.",
@@ -750,27 +746,31 @@ export default function Act2TestPage() {
       {activeBeat && (
         <div style={{
           position: "fixed", inset: 0, zIndex: 100,
-          background: "rgba(9, 14, 10, .94)",
-          display: "grid", placeItems: "center", padding: 16,
+          background: activeBeat.image ? "rgba(9, 14, 10, .94)" : "rgba(9, 14, 10, .28)",
+          display: "grid", placeItems: activeBeat.image ? "center" : "end center", padding: 16,
         }}>
           <div style={{
-            width: "min(1180px, 100%)", height: "min(92dvh, 760px)",
-            display: "grid", gridTemplateRows: "1fr auto",
-            borderRadius: 18, overflow: "hidden", background: "#111711",
+            width: activeBeat.image ? "min(1180px, 100%)" : "min(920px, 100%)",
+            height: activeBeat.image ? "min(92dvh, 760px)" : "auto",
+            maxHeight: activeBeat.image ? undefined : "52dvh",
+            display: "grid", gridTemplateRows: activeBeat.image ? "1fr auto" : "auto",
+            borderRadius: 18, overflow: "hidden", background: activeBeat.image ? "#111711" : "transparent",
             boxShadow: "0 18px 60px rgba(0,0,0,.45)",
           }}>
-            <div style={{ position: "relative", minHeight: 0, background: "#0b0f0c" }}>
-              <img
-                src={activeBeat.image}
-                alt={activeBeat.title}
-                style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
-              />
-              <button type="button" onClick={closeStory} aria-label="Stäng" style={{
-                position: "absolute", top: 12, right: 12, width: 42, height: 42,
-                borderRadius: 21, border: 0, cursor: "pointer", fontSize: 22, fontWeight: 800,
-                background: "rgba(255,255,255,.9)", color: "#283326",
-              }}>×</button>
-            </div>
+            {activeBeat.image && (
+              <div style={{ position: "relative", minHeight: 0, background: "#0b0f0c" }}>
+                <img
+                  src={activeBeat.image}
+                  alt={activeBeat.title}
+                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                />
+                <button type="button" onClick={closeStory} aria-label="Stäng" style={{
+                  position: "absolute", top: 12, right: 12, width: 42, height: 42,
+                  borderRadius: 21, border: 0, cursor: "pointer", fontSize: 22, fontWeight: 800,
+                  background: "rgba(255,255,255,.9)", color: "#283326",
+                }}>×</button>
+              </div>
+            )}
 
             <div style={{
               display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center",
