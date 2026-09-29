@@ -3315,6 +3315,77 @@ Han ler.
 
 > **Alve:** “Men ganska mycket för den.”
 
+### Båthuset dialogue lock — beat 16
+
+**16/16 — Båthuset är klart**
+
+När ni kommer tillbaka till båthuset nästa gång finns det egentligen inget kvar att reparera.
+
+Verkstaden fungerar. Verktygen har sina platser. Fotografiet sitter ovanför arbetsbordet. Lådbilen står parkerad vid väggen. Slipvagnen fungerar och båtplatsen är röjd.
+
+Alve står mitt i allt och ser sig omkring.
+
+> **Barnet:** “Klart.”
+
+Alve tittar runt ett varv till.
+
+> **Alve:** “Nästan.”
+
+Du följer hans blick.
+
+> **Barnet:** “Vad är det som är kvar?”
+
+Alve pekar mot motorbåten.
+
+> **Alve:** “Den.”
+
+Du tittar på honom.
+
+> **Barnet:** “Båthuset är klart.”  
+> **Alve:** “Jag vet.”
+
+Han går fram till arbetsbordet och tittar på fotografiet från kistan.
+
+Den gamla bilden visar båten ute på sjön, från en tid när allt här användes.
+
+> **Alve:** “När vi hittade den här trodde jag mest att vi hade hittat ännu en gammal grej.”  
+> **Barnet:** “Och nu?”
+
+Alve ser sig omkring.
+
+> **Alve:** “Nu känns det som att allt här hänger ihop. Verktygen, delarna, slipen, båten…”
+
+Han tittar på lådbilen och ler.
+
+> **Alve:** “Och en väldigt snabb bil.”  
+> **Barnet:** “Med fyra hjul.”  
+> **Alve:** “Numera.”
+
+Han går fram till motorbåten.
+
+> **Alve:** “Förut stod den bara här och blev äldre. Nu har vi faktiskt någonstans att laga den.”
+
+Du tittar mot båten.
+
+> **Barnet:** “När det är dags.”
+
+Alve nickar.
+
+Den här gången utan att protestera.
+
+> **Alve:** “När det är dags.”
+
+Han lägger handen mot båten.
+
+> **Alve:** “Men då är det vår tur.”  
+> **Barnet:** “Vår tur?”
+
+Alve tittar från båten till fotografiet och sedan ut över sjön.
+
+> **Alve:** “Att ta reda på om den fortfarande kan åka någonstans.”
+
+**Order-independence lock:** this scene must remain valid whether Båthuset is the first, second or third restoration project. It must not assume that Stugan or Bryggan is unfinished or complete.
+
 ### Contributions 13–16: prepare the boathouse for the motorboat / completion
 The final block pays off the boathouse arc rather than introducing another major side story. Its purpose is to make the restored workshop physically ready for the later motorboat project and to turn it into a persistent part of lake life.
 
