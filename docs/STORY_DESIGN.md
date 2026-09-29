@@ -3007,6 +3007,256 @@ Linus helps classify what can be saved/reused/must be replaced without solving t
 > **Alve:** “Inte idag.”  
 > **Adam:** “Då fortsätter vi imorgon.”
 
+### Motorbåten dialogue lock — beats 4–6
+
+**4/16 — Inte idag**
+
+Ni har jobbat vidare med båten tillsammans med Linus. En del går att rädda, annat får bytas, och för första gången börjar den faktiskt se ut som något som skulle kunna bli en båt igen.
+
+Alve står med händerna i sidorna och granskar resultatet.
+
+> **Alve:** “Nu då?”  
+> **Linus:** “Nu vadå?”  
+> **Alve:** “Nu borde den väl nästan funka.”
+
+Linus tittar på honom.
+
+> **Linus:** “Nej.”  
+> **Alve:** “Du behövde inte svara så snabbt.”  
+> **Linus:** “Jag visste svaret redan.”
+
+Du tittar på båten.
+
+> **Barnet:** “Den ser mycket bättre ut.”  
+> **Alve:** “Exakt.”  
+> **Linus:** “Det är inte samma sak som att den fungerar.”  
+> **Alve:** “Du är väldigt dålig på att bygga upp stämningen.”  
+> **Linus:** “Jag försöker bygga en båt.”
+
+Alve böjer sig ner och tittar på en av delarna ni sorterat.
+
+> **Alve:** “Den här sparar vi?”  
+> **Linus:** “Ja.”  
+> **Alve:** “Och den där?”  
+> **Linus:** “Nej.”  
+> **Alve:** “Varför inte?”  
+> **Linus:** “För att den är slut.”  
+> **Alve:** “Kan man inte laga den?”  
+> **Linus:** “Allt går inte att laga.”
+
+Alve blir tyst en sekund.
+
+> **Alve:** “Det där låter väldigt vuxet.”  
+> **Linus:** “Det var inte meningen.”
+
+Du håller upp en annan gammal del.
+
+> **Barnet:** “Den här då?”
+
+Linus tittar.
+
+> **Linus:** “Den kan vi använda.”
+
+Alve tar den direkt.
+
+> **Alve:** “Bra.”  
+> **Barnet:** “Du gillar den.”  
+> **Alve:** “Jag gillar saker vi slipper kasta.”  
+> **Linus:** “Då har du lärt dig något.”  
+> **Alve:** “Säg inte det till någon.”
+
+Ni fortsätter en stund.
+
+Till slut backar Linus undan och tittar på båten.
+
+> **Linus:** “Det räcker för idag.”  
+> **Alve:** “Va?”  
+> **Linus:** “För idag.”  
+> **Alve:** “Men vi är ju igång.”  
+> **Linus:** “Precis.”  
+> **Alve:** “Det där är ett dåligt argument för att sluta.”
+
+Linus börjar plocka ihop verktygen.
+
+> **Alve:** “Tror du den kommer funka?”
+
+Linus tittar på båten.
+
+> **Linus:** “Inte idag.”
+
+Alve suckar djupt.
+
+> **Alve:** “Alla säger så hela tiden.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Inte idag.”
+
+Du tittar på båten.
+
+> **Barnet:** “Då fortsätter vi imorgon.”
+
+Alve tittar på dig. Sedan på båten.
+
+> **Alve:** “Okej.”
+
+Paus.
+
+> **Alve:** “Men tidigt.”  
+> **Barnet:** “Hur tidigt?”  
+> **Alve:** “Jättetidigt.”  
+> **Linus:** “Nej.”  
+> **Alve:** “Du behöver verkligen sluta svara så snabbt.”
+
+**5/16 — Det som saknas**
+
+Nästa gång ni fortsätter har Alve redan lagt ut delarna på golvet i små högar.
+
+Du stannar i dörren.
+
+> **Barnet:** “Vad har hänt här?”  
+> **Alve:** “Ordning.”  
+> **Barnet:** “Det där ser inte ut som ordning.”  
+> **Alve:** “Jo.”
+
+Alve pekar.
+
+> **Alve:** “Bra saker.”
+
+En annan hög.
+
+> **Alve:** “Dåliga saker.”
+
+En tredje.
+
+> **Alve:** “Saker jag inte vet.”  
+> **Barnet:** “Det är den största högen.”  
+> **Alve:** “Jag är fortfarande i början.”
+
+Linus kommer in och tittar på golvet.
+
+> **Linus:** “Vad är det här?”  
+> **Alve:** “System.”  
+> **Linus:** “Nej.”  
+> **Barnet:** “Jag sa nästan samma sak.”
+
+Linus går igenom delarna och stannar vid en tom plats.
+
+> **Linus:** “Här har vi problemet.”  
+> **Alve:** “Vilket problem?”  
+> **Linus:** “Några av delarna till motorn är för slitna. De går inte att rädda.”  
+> **Alve:** “Kan vi hitta gamla?”  
+> **Linus:** “Inte sådana jag skulle sätta tillbaka i den här båten.”  
+> **Barnet:** “Så vad behöver vi?”  
+> **Linus:** “Ett reservdelspaket.”  
+> **Alve:** “Har du ett?”  
+> **Linus:** “Nej.”  
+> **Alve:** “Kan du göra ett?”  
+> **Linus:** “Nej.”  
+> **Alve:** “Du säger nej väldigt mycket idag.”  
+> **Linus:** “Mira kan få tag på ett.”
+
+Alve tittar på dig.
+
+> **Alve:** “Lanthandeln?”  
+> **Barnet:** “Lanthandeln.”  
+> **Alve:** “Bra. Då går vi.”
+
+Han börjar redan gå.
+
+> **Linus:** “Alve.”
+
+Alve stannar.
+
+> **Alve:** “Vad?”  
+> **Linus:** “Ta reda på vad ni ska köpa först.”
+
+Alve går tillbaka.
+
+> **Alve:** “Just det.”  
+> **Barnet:** “Bra plan.”  
+> **Alve:** “Jag hade nästan hela.”
+
+Linus förklarar vad reservdelspaketet ska lösa, enkelt och utan tekniska motorinstruktioner.
+
+Du lyssnar. Alve nickar väldigt allvarligt.
+
+När Linus är klar blir det tyst.
+
+> **Barnet:** “Kommer du ihåg allt?”  
+> **Alve:** “Nej.”  
+> **Linus:** “Jag skriver ner det.”  
+> **Alve:** “Det var också min plan.”
+
+**6/16 — Mira beställer två**
+
+Ni kommer in till Mira med lappen från Linus.
+
+Mira läser den. Sedan läser hon den en gång till.
+
+> **Mira:** “Så ni tänker verkligen få igång den där gamla båten?”  
+> **Barnet:** “Ja.”  
+> **Mira:** “Och Alve är inblandad?”  
+> **Barnet:** “Ja.”
+
+Mira tittar på Alve.
+
+> **Alve:** “Hej.”
+
+Mira tittar tillbaka på beställningen.
+
+> **Mira:** “Jag beställer ett reservdelspaket.”  
+> **Alve:** “Bra.”  
+> **Mira:** “Och en extra av den viktigaste delen.”  
+> **Alve:** “Varför?”  
+> **Mira:** “För att du är inblandad.”
+
+Du börjar skratta.
+
+> **Alve:** “Vad betyder ens det?”  
+> **Mira:** “Att jag har träffat dig.”  
+> **Alve:** “Jag tycker inte om vart det här samtalet är på väg.”
+
+Mira lägger undan lappen.
+
+> **Mira:** “Det blir 150 SysselBux.”
+
+Alve tittar på dig.
+
+> **Alve:** “Vi har råd, eller hur?”  
+> **Barnet:** “Ja.”  
+> **Alve:** “Bra. För jag har redan bestämt mig.”  
+> **Mira:** “Det märktes.”
+
+Du betalar 150 SysselBux genom den vanliga auktoritativa wallet-loopen.
+
+Mira gör klart beställningen.
+
+> **Mira:** “Det kommer inte göra båten färdig.”  
+> **Alve:** “Jag vet.”
+
+Mira tittar på honom lite misstänksamt.
+
+> **Mira:** “Gör du?”  
+> **Alve:** “Ja.”  
+> **Mira:** “Och du tänker inte försöka starta den direkt?”
+
+Alve blir tyst.
+
+Du tittar på honom.
+
+Mira tittar på honom.
+
+> **Alve:** “Vad räknas som direkt?”  
+> **Mira:** “Alve.”  
+> **Alve:** “Okej.”
+
+Han tittar på dig.
+
+> **Alve:** “Inte direkt.”  
+> **Barnet:** “Det där lät inte särskilt pålitligt.”  
+> **Mira:** “Därför beställde jag två.”
+
+**Economy lock:** the motorboat story purchase is a **reservdelspaket** costing **150 SysselBux**. It must use the authoritative backend wallet and is an intermediate story/economy beat, not a contribution.
+
 ### Contributions 5–8: village support and the first sign of life
 Continued sorting/repair reveals one important missing/unsalvageable need. Keep it deliberately non-technical in child-facing dialogue. Linus cannot fabricate it. Mira can source the required replacement/support package, creating the motorboat's major **story-bound SysselBux purchase**. Exact item and price remain open for economy balancing; it must be affordable through normal play and use the authoritative backend wallet.
 
