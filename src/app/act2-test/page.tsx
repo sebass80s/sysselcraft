@@ -219,7 +219,7 @@ const STORY_BEATS: StoryBeat[] = [
     id: "jetty-lifebuoy",
     title: "Mellan 6 och 7 · Livbojen",
     image: "/assets/village/story-moments/act2/jetty/04-mira-lifebuoy-purchase.png",
-    body: ["Barnet och Alve går tillbaka till byn och köper en riktig livboj av Mira.", "Det här är ett story- och economy-beat, inte en extra contribution."],
+    body: ["Barnet och Alve går tillbaka till byn och köper en riktig livboj av Mira för 300 SysselBux.", "Det här är ett story- och economy-beat, inte en extra contribution."],
     stage: 2,
   },
   {
