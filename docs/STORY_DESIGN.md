@@ -1069,6 +1069,136 @@ Image: `08-first-water-break.png`.
 > **Alve:** “Vår plats.”
 
 
+**12/16 — Från arbetsplats till sommarplats**  
+Image: `06-late-restoration.png`; runtime stage becomes visually 4/4 after the scene, while the restoration line remains incomplete until contribution 16.
+
+Ni gör den sista stora reparationen och städar upp runt den del som ska användas för bad och häng.
+
+> **Alve:** “Nu börjar jag få slut på saker att laga.”  
+> **Barnet:** “Det låter som ett bra problem.”  
+> **Alve:** “Lite konstigt ändå.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Förut såg allt trasigt ut. Nu får man nästan leta efter det.”  
+> **Barnet:** “Kommer du ihåg hur den såg ut när vi började?”  
+> **Alve:** “Tyvärr.”  
+> **Barnet:** “Jag trodde faktiskt inte den skulle bli så här bra.”  
+> **Alve:** “Jag gjorde det.”  
+> **Alve:** “Okej. Jag hoppades.”  
+> **Alve:** “Det är bättre än jag tänkte.”  
+> **Barnet:** “Det där lät nästan som ett erkännande.”  
+> **Alve:** “Säg inget till Linus.”
+
+**13/16 — Sista svaga punkten**  
+LIVE over runtime jetty stage 4.
+
+> **Barnet:** “Där.”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Jo.”  
+> **Alve:** “Jag tänker låtsas att jag inte såg det.”  
+> **Barnet:** “Det kommer fortfarande vara trasigt.”  
+> **Alve:** “Då var det en dålig plan.”  
+> **Alve:** “Det är inte jättemycket.”  
+> **Barnet:** “Det sa du i början också.”  
+> **Alve:** “Det här är annorlunda.”  
+> **Barnet:** “Hur då?”  
+> **Alve:** “Nu vet jag att du kommer påminna mig om det om jag har fel.”  
+> **Alve:** “Så.”  
+> **Barnet:** “Så?”  
+> **Alve:** “Nu får du hitta något mer.”  
+> **Barnet:** “Jag tror faktiskt inte jag kan.”  
+> **Alve:** “På riktigt?”  
+> **Barnet:** “På riktigt.”
+
+**14/16 — Gör klart för att använda**  
+LIVE over runtime jetty stage 4.
+
+> **Alve:** “Vad gör vi med allt det här?”  
+> **Barnet:** “Plankorna tillbaka till Linus. Verktygen bort. Skräpet slänger vi.”  
+> **Alve:** “Så vi städar.”  
+> **Barnet:** “Ja.”  
+> **Alve:** “Det känns som ett väldigt tråkigt sätt att bli klar på.”  
+> **Barnet:** “Vill du hellre lämna allt här?”  
+> **Alve:** “Nej. Det förstör lite.”  
+> **Alve:** “Oj.”  
+> **Barnet:** “Vad?”  
+> **Alve:** “Den ser större ut utan allt skräp.”  
+> **Barnet:** “Den ser färdig ut.”  
+> **Alve:** “Nästan.”  
+> **Barnet:** “Vad är kvar nu?”  
+> **Alve:** “Jag vet faktiskt inte.”
+
+**15/16 — Är vi faktiskt klara?**  
+Image: `09-jetty-complete.png`. This is the quiet pre-completion beat; contribution 16 still remains.
+
+> **Alve:** “Det känns konstigt.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Att det inte finns något mer som är trasigt.”  
+> **Barnet:** “Vi kan säkert hitta något om vi letar riktigt noga.”  
+> **Alve:** “Nej tack.”  
+> **Alve:** “Tror du folk kommer hit nu?”  
+> **Barnet:** “Henning gjorde ju det.”  
+> **Alve:** “Ja, men fler.”  
+> **Barnet:** “Sol kanske kommer. Mira också.”  
+> **Alve:** “Linus då?”  
+> **Barnet:** “Han sa ju att alla brukade vara här förr.”  
+> **Alve:** “Då kanske han kommer tillbaka också.”  
+> **Barnet:** “Det tror jag.”  
+> **Alve:** “Tänk om det blir fullt här.”  
+> **Barnet:** “Då får vi väl dela med oss.”  
+> **Alve:** “Mm.”  
+> **Alve:** “Fast vår plats är fortfarande vår plats.”  
+> **Barnet:** “Klart den är.”
+
+**16/16 — Bryggan är klar**  
+Reuse: `09-jetty-complete.png`. After this scene, Bryggan is officially complete and the normal completed-jetty ambient pool becomes eligible on later visits.
+
+> **Barnet:** “Inga lösa plankor.”  
+> **Alve:** “Japp.”  
+> **Barnet:** “Badkanten är röjd.”  
+> **Alve:** “Japp.”  
+> **Barnet:** “Livbojen sitter där den ska.”  
+> **Alve:** “Ordentligt-japp.”  
+> **Barnet:** “Då är den klar.”  
+> **Barnet:** “Alve?”  
+> **Alve:** “Jag vet.”  
+> **Barnet:** “Du ser inte så glad ut.”  
+> **Alve:** “Jo. Jag bara…”  
+> **Alve:** “När vi började var det bara jag här.”  
+> **Alve:** “Nu är du här. Linus har varit här. Sol. Henning.”  
+> **Barnet:** “Och Mira hjälpte till.”  
+> **Alve:** “Precis.”  
+> **Alve:** “Vi gjorde faktiskt det.”  
+> **Barnet:** “Vi gjorde det.”  
+> **Alve:** “Bryggan är klar.”  
+> **Barnet:** “Bryggan är klar.”
+
+**Post-completion finisher — Nästa dag**  
+Image: `10-everyone-swimming.png`. One-time authored Story Moment after completion, not contribution 17 and not part of the repeat ambient pool.
+
+Nästa dag går ni ner mot sjön igen. Redan innan ni ser bryggan hör ni röster och plask från vattnet. Barnen syns inte i payoff-bilden; bilden visar resultatet av deras arbete genom att byborna använder platsen.
+
+Den låsta payoff-bilden visar **Linus, Henning, Sol och Mira i vattnet** och **Valpen kvar på bryggan bredvid fikakorg och handdukar**. Den restaurerade stage-4-bryggan och den permanenta livbojen ska vara kvar. Inga extra bybor läggs till.
+
+> **Alve:** “Hör du?”  
+> **Barnet:** “Japp.”  
+> **Alve:** “Oj.”  
+> **Barnet:** “Du sa ju att det kanske skulle bli fullt.”  
+> **Alve:** “Jag trodde inte det skulle hända direkt.”  
+> **Henning:** “Där är byggarna!”  
+> **Linus:** “Nu får ni skylla er själva. Ni gjorde platsen för bra.”  
+> **Sol:** “Och badplatsen är fortfarande säker.”  
+> **Mira:** “Det var den dyraste livbojen jag sålt den här veckan.”  
+> **Alve:** “Du har sålt fler?”  
+> **Mira:** “Nej.”  
+> **Alve:** “De kom tillbaka.”  
+> **Barnet:** “Japp.”  
+> **Alve:** “Alla?”  
+> **Barnet:** “Nästan.”  
+> **Alve:** “Bra.”  
+> **Alve:** “Nu badar vi.”  
+> **Barnet:** “Nu badar vi.”
+
+
 
 ## Båthuset restoration arc — LOCKED 2026-09-28
 
