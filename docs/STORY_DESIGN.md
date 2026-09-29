@@ -3279,6 +3279,274 @@ Locked comic payoff:
 
 This advances **2/4→3/4** and shifts the mystery from Alve's past toward Adam and Alve's future: they now know the old boat can plausibly live again.
 
+### Motorbåten dialogue lock — beats 7–9
+
+**7/16 — Paketet kommer**
+
+Nästa gång ni kommer till båthuset ligger ett paket på arbetsbänken.
+
+Alve stannar mitt i steget.
+
+> **Alve:** “Är det där…”  
+> **Barnet:** “Japp.”  
+> **Alve:** “Redan?”  
+> **Barnet:** “Mira sa att det skulle komma.”  
+> **Alve:** “Jag trodde vuxna sa så för att få barn att gå hem.”
+
+Du går fram till paketet. Alve är redan bredvid dig.
+
+> **Barnet:** “Du tänker öppna det innan Linus kommer.”  
+> **Alve:** “Nej.”
+
+Paus.
+
+> **Alve:** “Jag tänkte öppna det väldigt försiktigt innan Linus kommer.”  
+> **Barnet:** “Det är samma sak.”  
+> **Alve:** “Inte alls.”
+
+Linus kommer in genom dörren. Han tittar på Alve. Sedan på paketet. Sedan på Alve igen.
+
+> **Linus:** “Nej.”  
+> **Alve:** “Jag har inte gjort något.”  
+> **Linus:** “Bra.”  
+> **Alve:** “Du kan inte säga nej i förväg.”  
+> **Linus:** “Jag börjar lära mig.”
+
+Linus öppnar paketet tillsammans med er.
+
+Alve tittar ner i lådan.
+
+> **Alve:** “Det där ser mindre spännande ut än jag hade tänkt mig.”  
+> **Barnet:** “Vad hade du tänkt dig?”  
+> **Alve:** “Något mer… båtmotorigt.”  
+> **Linus:** “Det här är båtmotorigt.”  
+> **Alve:** “Det ser ut som en låda med saker.”  
+> **Linus:** “Det är ungefär vad reservdelar är.”
+
+Ni börjar jobba. Linus visar vad som ska användas, men låter er göra så mycket som möjligt själva.
+
+Efter en stund lutar sig Alve tillbaka.
+
+> **Alve:** “Nu.”  
+> **Linus:** “Nej.”  
+> **Alve:** “Du vet inte ens vad jag skulle säga.”  
+> **Linus:** “Jo.”  
+> **Alve:** “Vad då?”  
+> **Linus:** “Att ni ska prova att starta den.”
+
+Alve blir tyst.
+
+> **Barnet:** “Han börjar bli läskigt bra på dig.”  
+> **Alve:** “Det här är ett problem.”  
+> **Linus:** “Ni är inte klara.”  
+> **Alve:** “Men vi har satt dit de nya sakerna.”  
+> **Linus:** “Ja.”  
+> **Alve:** “Och den ser redo ut.”  
+> **Linus:** “Den ser mindre trasig ut.”  
+> **Alve:** “Det är nästan samma sak.”  
+> **Linus:** “Nej.”
+
+Alve suckar.
+
+> **Alve:** “Vad ska vi göra då?”
+
+Linus pekar mot resten av båten.
+
+> **Linus:** “Fortsätta.”
+
+Alve tittar på dig.
+
+> **Alve:** “Det här projektet innehåller väldigt mycket fortsätta.”  
+> **Barnet:** “Det brukar projekt göra.”  
+> **Alve:** “Jag saknar delen där man är klar.”
+
+**8/16 — Den lever**
+
+Ni har gjort klart det Linus ville att ni skulle göra. Båten står fortfarande säkert i båthuset.
+
+Alve har varit ovanligt tyst de senaste minuterna.
+
+> **Barnet:** “Nu tänker du väldigt högt utan att säga något.”  
+> **Alve:** “Jag väntar.”  
+> **Barnet:** “På vad?”
+
+Alve tittar på Linus. Linus fortsätter kontrollera båten.
+
+> **Alve:** “På ett ord.”
+
+Linus tittar upp.
+
+> **Linus:** “Okej.”
+
+Alve stirrar på honom.
+
+> **Alve:** “Var det ordet?”  
+> **Linus:** “Ja.”  
+> **Alve:** “Får vi prova?”  
+> **Linus:** “Ja.”
+
+Alve ser på dig.
+
+> **Alve:** “Han sa ja.”  
+> **Barnet:** “Jag hörde.”  
+> **Alve:** “Det händer aldrig.”  
+> **Linus:** “Vill ni prova eller vill ni prata om att ni får prova?”  
+> **Alve:** “Prova.”
+
+Ni gör ett första försök.
+
+Ingenting händer.
+
+Alve stirrar på båten.
+
+> **Alve:** “Okej.”  
+> **Barnet:** “Okej?”  
+> **Alve:** “Den kanske behöver tänka.”  
+> **Linus:** “Båtar tänker inte.”  
+> **Alve:** “Det vet du inte.”
+
+Ni provar igen.
+
+Fortfarande ingenting.
+
+Alve sjunker ihop lite.
+
+> **Alve:** “Det här var mindre dramatiskt än jag hade planerat.”  
+> **Barnet:** “Du hade planerat dramatik?”  
+> **Alve:** “Lite.”
+
+Linus tittar lugnt på båten.
+
+> **Linus:** “En gång till.”
+
+Ni försöker igen.
+
+Ett kort ljud hörs från motorn.
+
+Sedan tystnar den.
+
+Alve fryser till.
+
+> **Alve:** “Hörde du?!”  
+> **Barnet:** “Ja.”  
+> **Alve:** “DEN LEVER.”  
+> **Linus:** “Lugn.”  
+> **Alve:** “DEN LEVER LUGNT.”
+
+Du börjar skratta.
+
+> **Linus:** “Den startade i ungefär en sekund.”  
+> **Alve:** “Det var en väldigt bra sekund.”  
+> **Barnet:** “En historisk sekund.”  
+> **Alve:** “Exakt.”
+
+Linus försöker se sträng ut, men ler lite.
+
+> **Linus:** “Det är framsteg.”
+
+Alve tittar på båten.
+
+> **Alve:** “Hörde du?”  
+> **Barnet:** “Nu pratar du med båten igen.”  
+> **Alve:** “Den förtjänar beröm.”
+
+Alve klappar försiktigt på sidan.
+
+> **Alve:** “Bra jobbat.”  
+> **Barnet:** “Det var vi som jobbade.”  
+> **Alve:** “Vi kan också få beröm.”
+
+Han håller upp handen. Du slår till den.
+
+> **Alve:** “Bra jobbat.”
+
+**9/16 — Ner i vattnet**
+
+För första gången sedan ni började med motorbåten ska den lämna båthuset.
+
+Ni står vid slipen och tittar på den.
+
+> **Alve:** “Den ser nervös ut.”  
+> **Barnet:** “Det är en båt.”  
+> **Alve:** “Man kan se det på den.”  
+> **Barnet:** “Var?”
+
+Alve pekar vagt.
+
+> **Alve:** “Där.”  
+> **Barnet:** “Övertygande.”
+
+Linus står bredvid och håller upp en hand.
+
+> **Linus:** “Lugnt nu.”  
+> **Alve:** “Jag är lugn.”  
+> **Barnet:** “Du har sagt det ungefär fyra gånger.”  
+> **Alve:** “Det är för att jag är väldigt lugn.”
+
+Ni hjälper till att få båten ner mot vattnet.
+
+När den till slut ligger i sjön blir Alve helt tyst.
+
+Du tittar på honom.
+
+> **Barnet:** “Vad?”  
+> **Alve:** “Den flyter.”  
+> **Barnet:** “Det är bra för en båt.”  
+> **Alve:** “Jag vet.”
+
+Han går närmare kanten.
+
+> **Alve:** “Men den flyter faktiskt.”
+
+Linus kontrollerar att allt ser bra ut.
+
+> **Linus:** “Det här är bara första testet.”  
+> **Alve:** “Ja.”  
+> **Linus:** “Ni åker inte långt.”  
+> **Alve:** “Nej.”  
+> **Linus:** “Ni gör inget dumt.”
+
+Alve tittar på dig.
+
+> **Barnet:** “Titta inte på mig.”  
+> **Alve:** “Jag sa inget.”  
+> **Linus:** “Jag såg.”
+
+Alve kliver försiktigt ner i båten. Du kliver efter.
+
+För ett ögonblick händer ingenting. Vattnet rör sig mjukt runt skrovet.
+
+Alve tittar tillbaka mot båthuset.
+
+> **Alve:** “Den har stått där inne jättelänge.”  
+> **Barnet:** “Mm.”  
+> **Alve:** “Och nu är den här.”  
+> **Barnet:** “I sjön.”  
+> **Alve:** “I sjön.”
+
+Han ler.
+
+> **Alve:** “Det känns som att det borde vara musik.”  
+> **Barnet:** “Vill du sjunga?”  
+> **Alve:** “Absolut inte.”
+
+Linus ropar från land.
+
+> **Linus:** “Redo?”
+
+Alve tittar på dig.
+
+> **Alve:** “Redo?”  
+> **Barnet:** “Japp.”
+
+Alve tar ett djupt andetag.
+
+> **Alve:** “Okej.”
+
+Han tittar på båten.
+
+> **Alve:** “Nu får du visa vad du kan.”
+
 ### Contributions 9–12: onto the lake / from repaired object to their boat
 The restored boathouse slip finally pays off as Adam and Alve move the boat into the water. It floats. The first true water test briefly succeeds: the motor runs, they leave the jetty under their own power, travel only a short distance, then it stops and they need help back. This is progress, not a reset.
 
