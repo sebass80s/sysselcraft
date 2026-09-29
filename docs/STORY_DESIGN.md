@@ -730,6 +730,149 @@ Canonical rule: **the mystery exists; the answer is not canon yet.**
 
 Bryggan uses the canonical **4 + 4 + 4 + 4 = 16 authoritative real-world contributions**. Its identity is bad, vila, kompisar och sommarliv. The arc moves from repairing unsafe timber to making a place people actually want to use. The life-buoy purchase is an intermediate economy/story beat and never substitutes for a contribution.
 
+### Stugan dialogue lock — beats 1–3
+
+These scenes are project-order independent and must not refer to Bryggan or Båthuset as already completed.
+
+**1/16 — Vi börjar här**
+
+Ni öppnar stugan ordentligt. Luften står stilla och det luktar damm, trä och gammal sommar.
+
+> **Barnet:** “Det luktar konstigt här inne.”  
+> **Alve:** “Det luktar stuga.”  
+> **Barnet:** “Är stuglukt mest damm?”  
+> **Alve:** “Damm, trä… gamla filtar. Och lite så där instängt.”  
+> **Barnet:** “Det låter inte som en särskilt bra reklam.”  
+> **Alve:** “Du skulle fattat om du varit här förut.”
+
+Alve går in som om kroppen minns vägen. Han flyttar en stol, kliver över en låda och tittar mot ett tomt hörn.
+
+> **Barnet:** “Du hittar rätt bra här.”  
+> **Alve:** “Jag har varit här typ en miljard gånger.”  
+> **Alve:** “Eller… var.”  
+> **Barnet:** “När då?”  
+> **Alve:** “Varje sommar nästan. Vi kom hit tidigt och åkte hem sent. Ibland sov vi här hur länge som helst.”  
+> **Barnet:** “Så du kan hela huset utantill?”  
+> **Alve:** “Nästan.”  
+> **Alve:** “Soffan stod där.”  
+> **Barnet:** “Det finns ingen soffa.”  
+> **Alve:** “Nej, men det gjorde.”  
+> **Alve:** “Bordet stod där. Och där brukade vi lägga handdukar.”  
+> **Barnet:** “Varför?”  
+> **Alve:** “För att vi kom direkt från sjön.”  
+> **Barnet:** “Och vuxna tyckte det var en bra idé?”  
+> **Alve:** “Absolut inte.”  
+> **Barnet:** “Gjorde ni det ändå?”  
+> **Alve:** “Varje gång.”
+
+Ni börjar bära ut gamla saker och öppna fönstren.
+
+> **Barnet:** “Det här är mer jobb än jag trodde.”  
+> **Alve:** “Det ser värre ut än det är.”  
+> **Barnet:** “Det där låter som något man säger precis innan man hittar ännu mer jobb.”  
+> **Alve:** “Eller precis innan allt går jättebra.”  
+> **Barnet:** “Vilket tror du på?”  
+> **Alve:** “Det andra.”  
+> **Alve:** “Kom igen. Vi börjar här.”
+
+**2/16 — Märkena på väggen**
+
+När ni flyttar undan en gammal möbel syns flera bleka streck och små namn på dörrkarmen.
+
+> **Barnet:** “Vänta.”  
+> **Alve:** “Vad?”  
+> **Barnet:** “Det är något på väggen.”  
+> **Alve:** “De är kvar.”  
+> **Barnet:** “Vad är det?”  
+> **Alve:** “Märkena.”  
+> **Alve:** “Den där är jag.”  
+> **Barnet:** “Du var jätteliten.”  
+> **Alve:** “Jag var jätteliten.”  
+> **Barnet:** “Du är fortfarande ganska liten.”  
+> **Alve:** “Tyst.”
+
+Barnet följer strecken uppåt.
+
+> **Barnet:** “Är alla dina?”  
+> **Alve:** “Nej. Några är mina. Några är familjens.”  
+> **Barnet:** “Gjorde ni nya varje sommar?”  
+> **Alve:** “När någon kom ihåg.”  
+> **Alve:** “Den där sommaren trodde jag att jag hade blivit jättelång.”  
+> **Barnet:** “Hade du det?”  
+> **Alve:** “Tre centimeter.”  
+> **Barnet:** “Imponerande.”  
+> **Alve:** “Jag var väldigt stolt.”  
+> **Barnet:** “Så hela familjen finns typ kvar här.”  
+> **Alve:** “Lite.”
+
+Alve stryker försiktigt med fingret över ett av märkena.
+
+> **Alve:** “Vi målar inte över dem.”  
+> **Barnet:** “Nej.”  
+> **Alve:** “Inte ens om resten av väggen ser konstig ut.”  
+> **Barnet:** “Då får den vara konstig.”  
+> **Alve:** “Bra.”  
+> **Barnet:** “Vi kan fixa runtomkring.”  
+> **Alve:** “Exakt.”  
+> **Alve:** “De får vara kvar.”
+
+**3/16 — Fotot**
+
+När ni fortsätter röja lossnar en gammal kartong från väggen. Bakom den ligger ett blekt fotografi.
+
+> **Barnet:** “Jag hittade något.”  
+> **Alve:** “Om det är en spindel så är den din.”  
+> **Barnet:** “Det är ett foto.”  
+> **Alve:** “Får jag se?”  
+> **Barnet:** “Är det din familj?”  
+> **Alve:** “Mm.”  
+> **Barnet:** “Är det här nere vid sjön?”  
+> **Alve:** “Ja. Där borta vid vattnet.”  
+> **Barnet:** “Och det där är du?”  
+> **Alve:** “Japp.”  
+> **Barnet:** “Du hade väldigt konstiga badbyxor.”  
+> **Alve:** “Det där var inte mitt beslut.”  
+> **Barnet:** “Säkert.”  
+> **Alve:** “Jag var ett barn. Jag hade ingen kontroll.”  
+> **Barnet:** “Du är ett barn nu också.”  
+> **Alve:** “Nu har jag bättre badbyxor.”
+
+Barnet tittar på fotot igen.
+
+> **Barnet:** “Ni ser glada ut.”  
+> **Alve:** “Vi var här hela tiden då.”  
+> **Barnet:** “Varje sommar?”  
+> **Alve:** “Nästan.”  
+> **Barnet:** “Vad gjorde ni?”  
+> **Alve:** “Badade. Åt frukost ute. Grillade. Spelade kort.”  
+> **Alve:** “Någon brukade alltid bränna korven.”  
+> **Barnet:** “Vem?”  
+> **Alve:** “Jag tänker inte skvallra.”  
+> **Barnet:** “Det var du.”  
+> **Alve:** “Jag fick inte ens grilla.”  
+> **Barnet:** “Det låter rätt bra.”  
+> **Alve:** “Det var det.”  
+> **Barnet:** “Vad hände sen?”  
+> **Alve:** “Jag vet inte riktigt.”  
+> **Barnet:** “Slutade ni komma?”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Varför?”  
+> **Alve:** “Jag vet inte allt.”  
+> **Alve:** “Det bara blev så.”  
+> **Alve:** “Sen slutade vi komma.”
+
+Barnet låter bilden vila i handen en stund.
+
+> **Barnet:** “Vi kan sätta upp fotot igen.”  
+> **Alve:** “Här?”  
+> **Barnet:** “Ja. När vi har fixat väggen.”  
+> **Alve:** “Så man kan se det?”  
+> **Barnet:** “Precis.”  
+> **Alve:** “Bra.”  
+> **Barnet:** “Bredvid märkena kanske.”  
+> **Alve:** “Ja.”
+
+
 ### Contributions 1–4: the real problem / Linus and Recycling
 
 **1 — Start clearing.** Adam and Alve clear loose debris and damaged boards. Alve initially treats it as an easy plank-replacement job.
