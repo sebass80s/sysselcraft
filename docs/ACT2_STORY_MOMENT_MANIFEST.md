@@ -747,6 +747,35 @@ Everything else is frozen. Do not creatively paraphrase, embellish, shorten, sub
 >
 > Do not add story events, props, purchases, injuries, residents, construction progress or environmental features not authorized by the image contract.
 
+### Visual-anchor production law — EDIT FIRST
+
+Once an Act 2 Story Moment series has an accepted production image, **fresh text-to-image is no longer the default path for subsequent images in that series**.
+
+The default continuation path is:
+
+1. use the latest accepted production image as the visual anchor;
+2. use the correct accepted stage image as geometry/state authority;
+3. use canonical character sheets only to preserve/resolve character identity details;
+4. edit the anchored image toward the next locked story state;
+5. describe in text only the required change in action/cast/stage/continuity;
+6. preserve all unmentioned rendering, character, camera and material decisions from the accepted anchor.
+
+Fresh text-to-image is allowed only when:
+- no accepted production anchor exists yet for that series; or
+- a deliberate production reset has been explicitly chosen because the anchor itself is unsuitable.
+
+For Bryggan, once an image has been accepted and the user advances with `next` / `nästa` / the next production ID, that image becomes the continuity anchor for the following edit unless a later accepted frame supersedes it.
+
+Hard prohibitions:
+- do not redescribe an established recurring character from scratch when that character exists in the accepted anchor;
+- do not ask the image model to reinterpret the overall SysselCraft style after an anchor exists;
+- do not replace visual continuity with prose continuity;
+- do not introduce new style language in edit mode;
+- do not use a rejected generation as an anchor;
+- do not perform a fresh generation for a continuation ID when the compiler requires `--anchor`.
+
+The repository prompt compiler must fail closed when a continuation image lacks an explicit accepted anchor declaration.
+
 ### Mandatory execution path — FAIL CLOSED
 
 **Direct freehand image prompting is forbidden for Act 2 production images.**
