@@ -779,6 +779,15 @@ The completed jetty therefore carries three persistent consequences:
 
 Canonical arc: **1–4 discover real damage/reuse Linus material → 5–8 make bathing safe and install life buoy → 9–12 people begin returning before completion → 13–16 finish and hand the place back to summer life.**
 
+### Bryggan post-completion finisher — LOCKED CONCEPT
+
+After JETTY-16 is completed, the next visit/day should pay off the entire social arc with a dedicated illustrated Story Moment: **the restored jetty is now full of village life.** This is not another contribution and does not delay completion. It is the emotional/social finisher showing that Adam and Alve really succeeded in bringing people back to the lake.
+
+The scene should take place the **next day**, not immediately in the same completion moment. The restored stage-4 jetty and permanent life buoy remain authoritative. Several established Act 1 residents are swimming, sitting, talking or relaxing around the jetty, with Adam and Alve seeing the result of their work. Keep the ensemble natural rather than posed like a group portrait. The image should feel like an ordinary summer day that would not have happened before the restoration.
+
+This finisher is **separate from the later controlled-random ambient pool**. It is a one-time authored payoff image. Afterward, normal repeat visits may use the controlled-random empty/resident combinations already defined for the completed jetty.
+
+
 ### Bryggan dialogue lock — beats 1–8
 
 Scene descriptions address the player as **ni**. Barnet is the Act 1 continuity bridge to village residents Alve may not yet know.
@@ -984,6 +993,80 @@ Reuse: `05-bathing-edge-cleanup.png`; runtime stage 2/4→3/4 and life buoy beco
 > **Alve:** “Precis.”  
 > **Alve:** “Och då får vi bada.”  
 > **Barnet:** “Där kom det.”
+
+
+**9/16 — Plats för sommaren**  
+LIVE over runtime jetty stage 3.
+
+> **Alve:** “Okej, nu börjar den se ut som en plats man faktiskt vill vara på.”  
+> **Barnet:** “Det hjälper att det inte ligger plankor och verktyg överallt.”  
+> **Alve:** “Jag tyckte det såg rätt hemtrevligt ut med verktygen.”  
+> **Barnet:** “Du tycker verktyg är inredning.”  
+> **Alve:** “Bra verktyg är inredning.”  
+> **Barnet:** “Här skulle man kunna lägga handdukar.”  
+> **Alve:** “Och sitta.”  
+> **Barnet:** “Och komma ner i vattnet utan att klättra över något.”  
+> **Alve:** “Och hoppa.”  
+> **Barnet:** “Du har verkligen fastnat för det där.”  
+> **Alve:** “Det är en väldigt hoppvänlig brygga.”  
+> **Alve:** “Vet du vad som är konstigt?”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Förut såg jag bara allt som var trasigt.”  
+> **Barnet:** “Och nu?”  
+> **Alve:** “Nu ser jag mest vad man kan göra här när vi är klara.”  
+> **Barnet:** “Det är nog ett bra tecken.”  
+> **Alve:** “Eller så tänker jag bara väldigt mycket på att bada.”  
+> **Barnet:** “Också möjligt.”
+
+**10/16 — Henning kommer ner**  
+Image: `07-henning-first-visitor.png`.
+
+> **Henning:** “Jaha. Så det är här ni har gömt er.”  
+> **Barnet:** “Hej Henning.”  
+> **Alve:** “Vem är det?”  
+> **Barnet:** “Henning. Han har bageriet i byn.”  
+> **Henning:** “Och tydligen följer jag numera efter intressanta rykten.”  
+> **Alve:** “Vilka rykten?”  
+> **Henning:** “Att det faktiskt händer något nere vid sjön igen.”  
+> **Henning:** “Det här var inte dåligt.”  
+> **Alve:** “Det är inte klart.”  
+> **Henning:** “Det är därför jag sa ‘inte dåligt’ och inte ‘klart’.”  
+> **Barnet:** “Kom du ner bara för att titta?”  
+> **Henning:** “Ja.”  
+> **Alve:** “Bara för att titta?”  
+> **Henning:** “Man får faktiskt göra saker utan att de är ett uppdrag.”  
+> **Henning:** “Det börjar kännas som en plats igen.”  
+> **Barnet:** “Vad menar du?”  
+> **Henning:** “En brygga som ingen använder är mest bara trä över vatten.”  
+> **Henning:** “Men när folk börjar komma hit igen, då är det en brygga på riktigt.”  
+> **Alve:** “Han sitter ju här nu.”  
+> **Barnet:** “Mm.”  
+> **Alve:** “Då fungerar planen.”  
+> **Henning:** “Vilken plan?”  
+> **Alve:** “Att få folk att komma tillbaka.”  
+> **Henning:** “Då kan ni räkna en.”
+
+**11/16 — Första riktiga vattenpausen**  
+Image: `08-first-water-break.png`.
+
+> **Alve:** “Äntligen.”  
+> **Barnet:** “Äntligen vad?”  
+> **Alve:** “Vi använder bryggan.”  
+> **Barnet:** “Vi sitter på den.”  
+> **Alve:** “Exakt. Det räknas.”  
+> **Barnet:** “Du är ovanligt nöjd för någon som inte fått hoppa i ännu.”  
+> **Alve:** “Jag väntar bara på rätt tillfälle.”  
+> **Alve:** “Henning hade rätt.”  
+> **Barnet:** “Om vad?”  
+> **Alve:** “Att det börjar kännas som en riktig plats.”  
+> **Barnet:** “Jag trodde det var det hela tiden.”  
+> **Alve:** “Nej. Förut var det bara den gamla trasiga bryggan.”  
+> **Alve:** “Nu känns den annorlunda.”  
+> **Barnet:** “Hur då?”  
+> **Alve:** “Som vår plats.”  
+> **Barnet:** “Ja.”  
+> **Barnet:** “Vår plats.”  
+> **Alve:** “Vår plats.”
 
 
 
