@@ -2076,6 +2076,181 @@ Contribution 13 addresses the remaining substantial damage. Contribution 14 incr
 > **Alve:** “Och vi kan ha spelet här.”  
 > **Alve:** “Och om det regnar…”
 
+### Stugan dialogue lock — beats 13–15
+
+**13/16 — Det sista riktiga jobbet**
+
+Ni går igenom stugan en gång till och letar efter det som fortfarande faktiskt behöver lagas.
+
+> **Barnet:** “Det börjar bli svårt att hitta trasiga saker.”  
+> **Alve:** “Bra.”  
+> **Barnet:** “Du låter nästan besviken.”  
+> **Alve:** “Jag har blivit väldigt bra på att laga saker.”  
+> **Barnet:** “Du kan fortsätta någon annanstans sen.”  
+> **Alve:** “Jag tänkte mer att folk kunde börja sluta ha sönder saker.”
+
+Barnet pekar mot en del av väggen.
+
+> **Barnet:** “Där då?”  
+> **Alve:** “Den räknas knappt.”  
+> **Barnet:** “Den är sprucken.”  
+> **Alve:** “Lite.”  
+> **Barnet:** “Och lös.”  
+> **Alve:** “Lite mer.”  
+> **Barnet:** “Och du kan se ut genom den.”
+
+Alve lutar sig fram och tittar genom springan.
+
+> **Alve:** “Fin utsikt.”  
+> **Barnet:** “Vi lagar den.”  
+> **Alve:** “Ja.”
+
+Ni börjar plocka fram det ni behöver.
+
+> **Alve:** “Det här kanske är sista riktiga lagningen.”  
+> **Barnet:** “Säg inte så.”  
+> **Alve:** “Varför?”  
+> **Barnet:** “Då hittar vi säkert något jättestort bakom väggen.”
+
+Alve stannar.
+
+> **Alve:** “Nu gjorde du mig nervös.”  
+> **Barnet:** “Bra. Då är vi två.”
+
+Ni arbetar vidare tills den sista skadan är borta. Alve känner försiktigt på väggen.
+
+> **Alve:** “Stadig.”  
+> **Barnet:** “Ordentligt-stadig?”  
+> **Alve:** “Har du också börjat med sånt nu?”  
+> **Barnet:** “Jag lär mig.”  
+> **Alve:** “Ordentligt-stadig.”
+
+**14/16 — Gör plats för människor**
+
+Nu är det inte längre särskilt mycket som behöver repareras. I stället börjar ni ställa i ordning.
+
+> **Alve:** “Vad gör vi nu?”  
+> **Barnet:** “Gör den redo.”  
+> **Alve:** “Den är ju nästan klar.”  
+> **Barnet:** “Redo för människor.”
+
+Alve tittar runt.
+
+> **Alve:** “Det är människor här.”  
+> **Barnet:** “Fler människor.”  
+> **Alve:** “Jaha.”
+
+Ni flyttar ett bord och börjar ställa fram stolar.
+
+> **Alve:** “Den där stod nog där förut.”  
+> **Barnet:** “Vill du ha den där nu?”
+
+Alve tänker efter.
+
+> **Alve:** “Nej.”  
+> **Barnet:** “Bra.”  
+> **Alve:** “Varför?”  
+> **Barnet:** “För den stod jättedumt.”  
+> **Alve:** “Det gjorde den faktiskt.”
+
+Ni flyttar den till ett annat ställe.
+
+> **Alve:** “Så här är bättre.”  
+> **Barnet:** “Annorlunda bättre?”  
+> **Alve:** “Exakt.”
+
+Ni fortsätter ordna plats att sitta och sova.
+
+> **Barnet:** “Om någon kommer hit nu kan de faktiskt stanna.”
+
+Alve saktar ner lite.
+
+> **Alve:** “Mm.”  
+> **Barnet:** “Vi kan lägga filtar där.”  
+> **Alve:** “Och göra plats här.”
+
+Han flyttar undan några saker.
+
+> **Alve:** “Så man slipper ha väskor mitt på golvet.”  
+> **Barnet:** “Du tänker väldigt mycket på var folk ska ha sina saker.”  
+> **Alve:** “Man vill ju inte att någon ska komma hit och känna att de är i vägen.”
+
+Barnet tittar på honom.
+
+> **Barnet:** “Det kommer de nog inte göra.”
+
+Alve nickar och fortsätter.
+
+> **Alve:** “Bra.”
+
+**15/16 — Om de kommer**
+
+Stugan är i princip färdig. Ni går runt och tittar på alla små platser som nu går att använda igen.
+
+Alve stannar vid sovplatserna.
+
+> **Alve:** “De kan sova där.”  
+> **Barnet:** “Mm.”
+
+Alve går vidare.
+
+> **Alve:** “Och vi kan ha spelet här.”  
+> **Barnet:** “Med riktiga regler.”  
+> **Alve:** “Vi får se.”
+
+Han tittar ut genom fönstret.
+
+> **Alve:** “Och om det regnar…”  
+> **Barnet:** “Då kan vi fuska inomhus.”  
+> **Alve:** “Exakt.”
+
+Barnet tittar runt.
+
+> **Barnet:** “Du har tänkt ganska mycket på det här.”  
+> **Alve:** “Lite.”  
+> **Barnet:** “Lite?”  
+> **Alve:** “Okej. Ganska mycket.”
+
+Han går bort till fotot.
+
+> **Alve:** “Jag undrar vad de skulle säga.”  
+> **Barnet:** “Om stugan?”  
+> **Alve:** “Om allt.”  
+> **Barnet:** “De skulle nog märka att du jobbat mycket.”  
+> **Alve:** “Vi.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Att vi jobbat mycket.”
+
+Barnet ler.
+
+> **Barnet:** “Ja.”
+
+Alve tittar runt igen.
+
+> **Alve:** “Tänk om de inte vill komma ändå.”
+
+Barnet svarar inte direkt.
+
+> **Barnet:** “Då är stugan fortfarande här.”
+
+Alve tittar på honom.
+
+> **Barnet:** “Och vi är här.”
+
+Paus.
+
+> **Alve:** “Ja.”  
+> **Barnet:** “Och spelet.”  
+> **Alve:** “Spelet är viktigt.”  
+> **Barnet:** “Trots reglerna.”  
+> **Alve:** “Speciellt reglerna.”
+
+Alve tittar runt en sista gång.
+
+> **Alve:** “Det känns som att någon skulle kunna komma hit nu.”  
+> **Barnet:** “Det gör det.”
+
+
 Contribution 16 completes Stugan. The completion Story Moment should show the transformation from the abandoned cottage at Alve's introduction into a warm, intact place containing its accumulated history: **height marks, family photograph, childhood drawing, old game and evidence of Adam and Alve's new memories together**.
 
 The family does **not** arrive at cottage completion. Adam and Alve wait briefly, but nobody comes.
