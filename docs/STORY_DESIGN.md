@@ -558,14 +558,39 @@ Exact quest counts, construction-stage thresholds and individual subquests remai
 
 ### Act 2 path selector after project completion — LOCKED
 
-The same in-Story-Moment project-selection grammar used for the first restoration choice is reused after project completion. Do not switch to a detached menu.
+The project selector remains an in-Story-Moment choice, never a detached menu. It is also revised so the **Motorbåten is always visible as a fourth hotspot**, even before it is available. This keeps the boat present as the long-term goal instead of making it suddenly appear only after 3/3.
 
-**After 1/3 projects are complete:**
+Selectable restoration hotspots derive from completion state:
+- **Stugan**
+- **Bryggan**
+- **Båthuset**
+- **Motorbåten** — always visible, but locked until Stugan, Bryggan and Båthuset are all complete.
+
+The three building tracks remain order-independent. The selector must never assume a canonical restoration order.
+
+**Initial / 0 of 3 complete**
+The player may choose freely between Stugan, Bryggan and Båthuset. Motorbåten is visible but locked.
+
+The existing first-choice preview intent remains:
+- **Bryggan:** “Bryggan är bra. Då kan vi knyta fast båten här sen. Och bada!”
+- **Båthuset:** “Båthuset måste vi fixa om vi ska kunna laga båten.”
+- **Stugan:** “Stugan... Jag hoppas min familj vill komma hit igen om vi får ordning på den.”
+
+Confirmation button:
+- **“Laga [objekt]”**
+
+After confirmation:
+
+> **Alve:** “Bra val! Vi fixar [objektet] först!”
+
+“Först” refers only to the player's chosen current project and does not establish canonical project order.
+
+**After 1 of 3 projects is complete**
 Alve and Barnet briefly acknowledge the milestone at the completed location.
 
 > **Alve:** “En klar.”
 
-He looks toward the two restoration sites that remain.
+He looks toward what remains.
 
 > **Alve:** “Det känns lite konstigt.”  
 > **Barnet:** “Vadå?”  
@@ -575,7 +600,9 @@ Alve smiles.
 
 > **Alve:** “Så. Vad tar vi nu?”
 
-The Story Moment then exposes **only the two remaining projects as clickable hotspots**. Their preview dialogue reuses the already locked project motivations, but must not use wording that implies canonical order such as “först”.
+The selector then shows the two unfinished building projects plus the always-visible Motorbåten hotspot.
+
+The two remaining building previews should use short, timeless project motivations that remain valid regardless of which project was completed first. Do not use wording that assumes this is the player's first visit to the selector.
 
 Confirmation button:
 - **“Laga [objekt]”**
@@ -584,16 +611,15 @@ After confirmation:
 
 > **Alve:** “Bra. Då kör vi på [objektet].”
 
-**After 2/3 projects are complete:**
-There is no meaningful branching choice because only one project remains, but the transition should still be authored as a short Story Moment rather than silently auto-advancing.
+**After 2 of 3 projects are complete**
+The selector still appears. Only the final unfinished building project is actionable, while Motorbåten remains visible but locked.
 
-> **Alve:** “Två klara.”
+Short transition:
 
-He looks over the restored area.
-
+> **Alve:** “Två klara.”  
 > **Barnet:** “Då är det bara en kvar.”
 
-Alve looks toward the final project.
+Alve looks toward the final unfinished building.
 
 > **Alve:** “Japp.”
 
@@ -601,7 +627,7 @@ Short pause.
 
 > **Alve:** “Den har väntat länge nog.”
 
-The final remaining project is highlighted and the player confirms it with:
+The player confirms the remaining building with:
 
 - **“Laga [sista projektet]”**
 
@@ -609,16 +635,88 @@ After confirmation:
 
 > **Alve:** “Då gör vi klart hela stället.”
 
-**After 3/3 projects are complete:**
-Do **not** show the path selector. The three independent restoration tracks have converged. Instead, transition into a dedicated convergence Story Moment that acknowledges that Stugan, Bryggan and Båthuset are all complete and unlocks the motorboat restoration project.
+**Motorbåten locked-state dialogue**
+Clicking the Motorbåten hotspot before all three buildings are complete must produce an in-fiction explanation rather than only a grey lock.
+
+If **Båthuset is not complete**, this reason takes priority:
+
+> **Alve:** “Jag vill också börja med båten. Men först måste vi laga båthuset. Vi behöver verkstaden och slipen om vi ska kunna göra det ordentligt.”
+
+If **Båthuset is complete but Stugan and/or Bryggan remain unfinished**:
+
+> **Alve:** “Snart. Men de andra byggena är viktigare först. Om vi ska få hela platsen att fungera igen kan vi inte bara fixa båten och lämna resten.”
+
+If **exactly one non-boathouse building remains unfinished**, the line may become specific:
+
+> **Alve:** “Båten är nästan nästa grej. Men vi gör klart [Stugan/Bryggan] först, sen kan vi lägga allt på båten.”
+
+These locked-state responses do not create branching story canon. They only explain the current lock from authoritative completion state.
+
+**After 3 of 3 projects are complete**
+Do not show a separate path selector transition that hides or replaces the boat. Instead, the same Motorbåten hotspot becomes unlocked.
+
+The convergence Story Moment acknowledges that the whole lake place is ready:
+
+Ni står en stund och ser ut över området.
+
+Stugan är klar. Bryggan är klar. Båthuset är klart.
+
+För första gången finns inget av de tre stora projekten kvar att reparera.
+
+Alve är ovanligt tyst.
+
+> **Barnet:** “Vad tänker du på?”
+
+Alve tittar först mot stugan, sedan bryggan och sedan båthuset.
+
+> **Alve:** “När vi började här kändes det som att allt behövde lagas samtidigt.”
+
+Han ler lite.
+
+> **Alve:** “Nu är allt det där faktiskt klart.”
+
+Du följer hans blick.
+
+> **Barnet:** “Inte riktigt allt.”
+
+Alve tittar på dig.
+
+Sedan mot motorbåten.
+
+Han börjar le på riktigt.
+
+> **Alve:** “Nej.”
+
+Paus.
+
+> **Alve:** “Inte allt.”
+
+Han går några steg mot båthuset.
+
+> **Alve:** “Vi har platsen. Verkstaden. Bryggan.”
+
+Han tittar på båten.
+
+> **Alve:** “Det är dags.”  
+> **Barnet:** “För vad?”
+
+Alve vänder sig om mot dig.
+
+> **Alve:** “För att äntligen fixa båten.”
+
+The Motorbåten hotspot is now actionable. Its newly unlocked selection confirmation may use:
+
+> **Alve:** “Nu.”  
+> **Barnet:** “Nu?”  
+> **Alve:** “Nu fixar vi den.”
 
 Canonical progression:
-**0/3 → choose 1 of 3**
-**1/3 → choose 1 of 2**
-**2/3 → confirm the final remaining project**
-**3/3 → no selector; motorboat unlock/convergence scene**
+**0/3 → choose 1 of 3 buildings; Motorbåten visible/locked**
+**1/3 → choose 1 of 2 buildings; Motorbåten visible/locked**
+**2/3 → confirm final building; Motorbåten visible/locked**
+**3/3 → Motorbåten unlocks in the same selector grammar**
 
-This selector must remain order-independent and must derive available hotspots from project completion state rather than hard-coded restoration order.
+Implementation must derive available/locked hotspot states from authoritative project completion flags, never from hard-coded restoration order.
 
 
 ### Lake-life world response — LOCKED 2026-09-28
