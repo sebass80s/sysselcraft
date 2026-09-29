@@ -2681,6 +2681,243 @@ Locked closing exchange:
 
 Alve wants to start immediately, but the motorboat remains the later locked project until the three main lake restorations are complete.
 
+### Båthuset dialogue lock — beats 7–9
+
+**7/16 — Verkstaden tar form**
+
+Nästa gång ni kommer tillbaka har Mira ordnat det ni behöver.
+
+Lådor, förvaring, krokar och bättre belysning ligger samlat vid arbetsbordet.
+
+Alve tittar på allt.
+
+> **Alve:** “Det här är väldigt många saker för att kunna hitta andra saker.”  
+> **Barnet:** “Det är ungefär hela poängen med förvaring.”
+
+Ni sätter igång.
+
+Det gamla arbetsbordet blir stadigt igen. Verktyg får egna platser. Smådelarna från kistan hamnar i lådor istället för i Alves tre högar.
+
+Efter en stund står Alve mitt i rummet och ser sig omkring.
+
+> **Alve:** “Jag hatar att erkänna det här.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Mira hade rätt. Det är faktiskt lättare när man inte behöver leta efter hammaren varje gång.”
+
+Du pekar på väggen.
+
+> **Barnet:** “Fotot då?”
+
+Alve tar försiktigt upp det gamla fotografiet.
+
+Han funderar en stund och hänger det ovanför arbetsbordet.
+
+> **Alve:** “Där.”  
+> **Barnet:** “Bra plats.”
+
+Alve tittar på bilden.
+
+På båten ute på sjön.
+
+Sedan på den gamla motorbåten som står i båthuset.
+
+> **Alve:** “Nu känns det nästan som att den väntar på oss.”  
+> **Barnet:** “Båten?”  
+> **Alve:** “Ja.”
+
+Han vänder tillbaka mot arbetsbordet.
+
+> **Alve:** “Men först verkstaden.”
+
+Du tittar på honom.
+
+> **Barnet:** “Du sa det själv.”  
+> **Alve:** “Skriv upp datumet.”
+
+**8/16 — Vår verkstad**
+
+När ni kommer tillbaka är båthuset förändrat.
+
+Det är fortfarande gammalt. Fortfarande lite snett här och där.
+
+Men det fungerar.
+
+Arbetsbordet är helt. Verktygen hänger där de ska. Lådorna är märkta. Fotografiet sitter kvar på väggen.
+
+Alve lägger ifrån sig ett verktyg på rätt plats.
+
+Du ser det.
+
+> **Barnet:** “Du la tillbaka den.”  
+> **Alve:** “Jag gör det nu.”  
+> **Barnet:** “Frivilligt?”  
+> **Alve:** “Jag vill inte prata om det.”
+
+Ni sätter er en stund på arbetsbänken och tittar ut över sjön.
+
+> **Barnet:** “Det blev faktiskt bra.”
+
+Alve nickar.
+
+> **Alve:** “Det känns inte som ett gammalt båthus längre.”
+
+Han tittar runt.
+
+> **Alve:** “Det känns som vår verkstad.”
+
+Det blir tyst en stund.
+
+Sedan reser han sig igen.
+
+> **Alve:** “Vad ska vi bygga?”  
+> **Barnet:** “Vi har precis blivit klara.”  
+> **Alve:** “Exakt. Då behöver vi något att använda verkstaden till.”
+
+Han ser sig omkring bland lådorna, hyllorna och delarna ni sparat.
+
+> **Barnet:** “Vad tänker du bygga?”
+
+Alve ler.
+
+> **Alve:** “Allt.”
+
+Sedan tittar han mot den gamla motorbåten.
+
+> **Alve:** “Men först ska vi fixa den gamla båten.”
+
+Du skakar på huvudet.
+
+> **Barnet:** “Inte än.”
+
+Alve tittar på dig.
+
+> **Alve:** “Jag vet.”
+
+Paus.
+
+> **Alve:** “Men jag kan tänka på den.”
+
+**9/16 — En gammal ritning**
+
+Ni går igenom det sista som fortfarande ligger kvar i ett hörn av båthuset.
+
+Gamla papper. Några brädor. En burk med skruvar som kanske är äldre än både dig och Alve tillsammans.
+
+Du drar fram en hopvikt pappersbit.
+
+> **Barnet:** “Vad är det här?”
+
+Alve kommer fram.
+
+Ni vecklar ut den på arbetsbordet.
+
+Det är en handritad plan.
+
+Fyra hjul. En enkel ram. Ett säte.
+
+Alve lutar sig närmare.
+
+> **Alve:** “Det där är en lådbil.”  
+> **Barnet:** “Ser ut så.”
+
+Alve tittar från ritningen till verkstaden.
+
+Sedan tillbaka på ritningen.
+
+Du känner igen blicken direkt.
+
+> **Barnet:** “Nej.”  
+> **Alve:** “Du vet inte ens vad jag tänkte säga.”  
+> **Barnet:** “Jo.”  
+> **Alve:** “Okej, vad då?”  
+> **Barnet:** “Att vi ska bygga den.”
+
+Alve ler stort.
+
+> **Alve:** “Bra. Då är vi överens.”
+
+Du tittar på ritningen igen.
+
+Den är gammal och lite sliten, men fortfarande tydlig nog.
+
+> **Barnet:** “Tror du den här faktiskt har blivit byggd någon gång?”  
+> **Alve:** “Kanske. Eller så hann någon aldrig.”
+
+Han skjuter ritningen mot mitten av arbetsbordet.
+
+> **Alve:** “Då är det väl dags.”
+
+Du tittar på verkstaden ni precis gjort klar.
+
+Verktygen.
+
+Delarna.
+
+Allt har plötsligt ett syfte.
+
+> **Barnet:** “Okej. Vi bygger en lådbil.”
+
+Alve slår händerna mot bordet.
+
+> **Alve:** “Äntligen.”
+
+### Båthuset economy beat — ratt till lådbilen
+
+This is an **intermediate story/economy beat between 9/16 and 10/16** and does not replace a real-world quest contribution.
+
+Ni har börjat plocka fram delar till lådbilen.
+
+Alve lägger ut allt på arbetsbordet.
+
+> **Alve:** “Fyra hjul, trä, skruvar, ett säte… vi har nästan allt.”
+
+Du tittar på ritningen.
+
+> **Barnet:** “Inte allt.”
+
+Alve följer ditt finger.
+
+Där framme på ritningen sitter en ratt.
+
+Han tittar på delarna igen.
+
+> **Alve:** “Okej. Vi har ingen ratt.”  
+> **Barnet:** “Det känns som en ganska viktig del.”  
+> **Alve:** “Man kan säkert styra på något annat sätt.”
+
+Du tittar på honom.
+
+> **Barnet:** “Vi köper en ratt.”
+
+Alve suckar.
+
+> **Alve:** “Du har blivit väldigt tråkigt klok sedan du började umgås med Linus.”
+
+Hos Mira lägger hon fram en liten enkel ratt som passar projektet.
+
+> **Mira:** “Till en lådbil?”  
+> **Barnet:** “Japp.”
+
+Mira tittar på Alve.
+
+> **Mira:** “Ska du köra den?”  
+> **Alve:** “Japp.”
+
+Mira skjuter ratten lite närmare dig.
+
+> **Mira:** “Hundra SysselBux.”
+
+**KÖP: 100 SysselBux**
+
+Efter köpet tar Alve upp ratten.
+
+> **Alve:** “Nu har vi allt.”  
+> **Mira:** “Det där är exakt den sortens mening som brukar göra mig nervös.”  
+> **Alve:** “Du kommer ändra dig när du ser den.”  
+> **Mira:** “Det är också en mening som gör mig nervös.”
+
+**Balance note:** 100 SysselBux is provisional and may be tuned later during economy balancing.
+
 ### Contributions 9–12: the soapbox car / friendship
 Once the workshop exists, the boathouse should demonstrate its own value rather than functioning only as motorboat preparation. Adam and Alve find an **old hand-drawn plan for a small soapbox car / lådbil** among the remaining material. Alve immediately decides they should build one.
 
