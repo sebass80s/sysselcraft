@@ -1058,6 +1058,194 @@ This unlocks the intermediate story/economy chain: **life buoy appears at Mira �
 
 **8 — Ready for people.** The life buoy is mounted permanently and the next substantial restoration step is completed. **Bryggan 2/4→3/4.** Alve's focus shifts from “we are fixing a broken dock” to “people can actually be here soon.”
 
+### Stugan dialogue lock — beats 7–9
+
+**7/16 — Regnet**
+
+Ni har hunnit jobba en stund när regnet börjar slå mot rutorna. Först försiktigt, sedan ordentligt.
+
+> **Barnet:** “Det där låter inte som ett litet regn.”  
+> **Alve:** “Nej.”
+
+Alve tittar ut genom fönstret.
+
+> **Alve:** “Vi kommer ingenstans på ett tag.”  
+> **Barnet:** “Vi kan fortsätta här inne.”  
+> **Alve:** “Vi har flyttat nästan allt som går att flytta utan att något rasar.”  
+> **Barnet:** “Så vad gör man i en stuga när det regnar?”
+
+Alve tittar mot det gamla spelet.
+
+> **Alve:** “Jag har en idé.”  
+> **Barnet:** “Det där brukar vara farliga ord.”  
+> **Alve:** “Inte den här gången.”  
+> **Barnet:** “Det sa du säkert när du hittade på reglerna också.”  
+> **Alve:** “Jag hittade inte på regler.”
+
+Ni sätter er på golvet med spelet mellan er. Valpen kryper ihop bredvid.
+
+Efter en stund flyttar Alve en pjäs.
+
+> **Barnet:** “Du fuskar.”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Du flyttade den där.”  
+> **Alve:** “Det gjorde vinden.”
+
+Barnet tittar mot de stängda fönstren.
+
+> **Barnet:** “Vi är inomhus.”  
+> **Alve:** “Jättekonstig vind.”  
+> **Barnet:** “Flytta tillbaka den.”  
+> **Alve:** “Då förstör du naturens gång.”  
+> **Barnet:** “Alve.”  
+> **Alve:** “Okej då.”
+
+Ni fortsätter spela. Efter en stund blir Alve tyst och lyssnar.
+
+> **Barnet:** “Vad?”  
+> **Alve:** “Inget.”  
+> **Barnet:** “Du slutade fuska. Något är fel.”  
+> **Alve:** “Jag fuskar fortfarande inte.”  
+> **Alve:** “Det låter likadant.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Regnet.”  
+> **Barnet:** “Som när ni brukade vara här?”  
+> **Alve:** “Mm.”  
+> **Barnet:** “Var ni också fast inne då?”  
+> **Alve:** “Hela tiden.”  
+> **Barnet:** “Och då spelade ni det här?”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Och fuskade?”  
+> **Alve:** “Vi har redan pratat om det här.”
+
+Barnet ler. Regnet fortsätter mot rutorna.
+
+**8/16 — Det ser bättre ut**
+
+Regnet har slutat. Ni står mitt i rummet och tittar på hur mycket som redan förändrats. Spelet ligger kvar framme.
+
+> **Barnet:** “Det känns annorlunda här nu.”  
+> **Alve:** “Ja.”  
+> **Barnet:** “För att vi har fixat mer?”
+
+Alve tittar runt.
+
+> **Alve:** “Inte bara.”  
+> **Barnet:** “Vad då?”  
+> **Alve:** “Jag vet inte.”  
+> **Alve:** “När vi började tänkte jag mest på hur det såg ut förut.”  
+> **Barnet:** “Och nu?”  
+> **Alve:** “Nu tänker jag på idag också.”
+
+Barnet tittar mot spelet.
+
+> **Barnet:** “När du fuskade?”  
+> **Alve:** “När vinden flyttade min pjäs.”  
+> **Barnet:** “Just det.”
+
+Ni börjar ställa tillbaka några saker på sina platser.
+
+> **Barnet:** “Ser det ut som förr nu?”
+
+Alve stannar upp och tittar runt ordentligt.
+
+> **Alve:** “Nej.”
+
+Barnet väntar. Alve ler lite.
+
+> **Alve:** “Det ser bättre ut.”  
+> **Barnet:** “Bättre än förr?”  
+> **Alve:** “Annorlunda bättre.”  
+> **Barnet:** “Det låter väldigt praktiskt.”  
+> **Alve:** “Det är en riktig sorts bättre.”  
+> **Barnet:** “Bra.”
+
+Alve flyttar försiktigt spelet till en hylla där det får stå kvar.
+
+> **Alve:** “Vi ställer det här.”  
+> **Barnet:** “Så vi hittar det nästa gång det regnar?”  
+> **Alve:** “Precis.”  
+> **Barnet:** “Och nästa gång spelar vi med riktiga regler.”  
+> **Alve:** “Vi får se.”
+
+**9/16 — VÅR STUGA**
+
+När ni går igenom en gammal låda hittar Barnet ett vikt papper längst ner.
+
+> **Barnet:** “Vad är det här?”  
+> **Alve:** “Ingen aning.”
+
+Barnet vecklar försiktigt ut pappret. Det är en gammal barnteckning av stugan, sjön, familjen och en alldeles för stor båt. Överst står det med stora bokstäver: **VÅR STUGA**.
+
+> **Barnet:** “Den här är fantastisk.”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Jo.”  
+> **Alve:** “Lägg tillbaka den.”  
+> **Barnet:** “Är det där du?”  
+> **Alve:** “Nej.”
+
+Barnet pekar.
+
+> **Barnet:** “Det står Alve bredvid.”  
+> **Alve:** “…någon annan Alve.”  
+> **Barnet:** “Som också bodde här?”  
+> **Alve:** “Tydligen.”  
+> **Barnet:** “Och hade exakt din familj?”  
+> **Alve:** “Väldigt vanligt namn.”
+
+Barnet studerar bilden.
+
+> **Barnet:** “Varför är båten nästan lika stor som stugan?”  
+> **Alve:** “Perspektiv.”  
+> **Barnet:** “Den ligger på gräset.”  
+> **Alve:** “Konst behöver inte förklara sig.”
+
+Barnet pekar på figurerna framför huset.
+
+> **Barnet:** “Är ni här ute?”
+
+Alve tittar.
+
+> **Alve:** “På verandan.”  
+> **Barnet:** “Den ser större ut på bilden.”  
+> **Alve:** “Jag ritade den så som den borde vara.”  
+> **Barnet:** “Smart.”
+
+Alve tar teckningen och granskar den längre.
+
+> **Alve:** “Vi brukade äta frukost där.”  
+> **Barnet:** “På verandan?”  
+> **Alve:** “Mm. Och fika. Och ibland middag.”  
+> **Barnet:** “Ni gjorde mycket ätande.”  
+> **Alve:** “Det var en viktig del av semestern.”
+
+Han pekar på dörren på teckningen.
+
+> **Alve:** “Jag sprang alltid ut härifrån ner mot sjön.”  
+> **Barnet:** “Med skor?”  
+> **Alve:** “Aldrig.”  
+> **Barnet:** “Varför inte?”  
+> **Alve:** “Det tog för lång tid.”  
+> **Barnet:** “Hur lång tid tar det att ta på skor?”  
+> **Alve:** “Exakt. För lång tid.”
+
+Barnet tittar från teckningen mot den slitna verandan utanför.
+
+> **Barnet:** “Vi borde fixa den.”  
+> **Alve:** “Verandan?”  
+> **Barnet:** “Ja.”  
+> **Alve:** “Som på bilden?”  
+> **Barnet:** “Kanske inte exakt.”
+
+Barnet tittar på den gigantiska båten.
+
+> **Barnet:** “Jag vet inte om vi har plats.”
+
+Alve skrattar.
+
+> **Alve:** “Verandan först.”
+
+
 ### Contributions 9–12: the lake starts attracting people again
 
 **9 — Prepare the summer end of the dock.** Adam and Alve improve the usable/social part of the jetty: clear remaining clutter and make space to sit, leave towels or climb out after swimming. Keep this as ordinary restoration rather than inventing a new purchased furniture system.
