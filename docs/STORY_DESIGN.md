@@ -746,7 +746,7 @@ Bryggan uses the canonical **4 + 4 + 4 + 4 = 16 authoritative real-world contrib
 
 **6 — Sol inspects.** Sol hears that the children intend to swim and visits in her professional role. She performs a simple, age-appropriate safety check: access into/out of the water and old sharp/rubbish debris around the bathing edge. No injury or manufactured emergency occurs. Sol identifies two jobs: clear the bathing area and add a proper life buoy.
 
-This unlocks the intermediate story/economy chain: **life buoy appears at Mira → Adam buys it with authoritative SysselBux → returns to lake.** Exact price remains open. The purchase is not contribution 7.
+This unlocks the intermediate story/economy chain: **life buoy appears at Mira → Adam buys it with authoritative SysselBux → returns to lake.** The locked provisional price is **300 SysselBux** and may be rebalanced later. The purchase is not contribution 7.
 
 **7 — Make Sol's checklist real.** Adam and Alve clear the bathing edge/shoreline and finish the practical safety cleanup. The purchased life buoy is brought to the site and can be staged ready for mounting. Sol need not supervise the work.
 
@@ -778,6 +778,213 @@ The completed jetty therefore carries three persistent consequences:
 3. controlled-random swimming/hanging scenes can appear on later lake visits.
 
 Canonical arc: **1–4 discover real damage/reuse Linus material → 5–8 make bathing safe and install life buoy → 9–12 people begin returning before completion → 13–16 finish and hand the place back to summer life.**
+
+### Bryggan dialogue lock — beats 1–8
+
+Scene descriptions address the player as **ni**. Barnet is the Act 1 continuity bridge to village residents Alve may not yet know.
+
+**1/16 — Vi börjar röja**  
+Image: `01-early-restoration.png`.
+
+> **Alve:** “Det här ser faktiskt ganska enkelt ut. Vi river bort de dåliga plankorna, sätter dit nya och sen är det klart.”  
+> **Barnet:** “Du låter väldigt säker.”  
+> **Alve:** “Jag har tittat på bryggan typ hundra gånger. Det är bara trä.”  
+> **Barnet:** “Det brukar vara då saker går fel.”  
+> **Alve:** “Inte den här gången. Den här gången har jag en plan.”  
+> **Barnet:** “Vad är planen?”  
+> **Alve:** “Att börja där.”  
+> **Barnet:** “Det där är inte en plan.”  
+> **Alve:** “Det är början på en plan.”  
+>  
+> Ni sätter igång och börjar dra bort lösa plankor och skräp.  
+>  
+> **Alve:** “Ser du? Det går ju bra.”  
+> **Barnet:** “Vi har jobbat i två minuter.”  
+> **Alve:** “Exakt. Och inget har gått sönder ännu.”
+
+**2/16 — Det är värre under**  
+Reuse: `01-early-restoration.png`.
+
+När ni fått bort mer av ytan syns de ruttna stöden undertill.
+
+> **Barnet:** “Alve, kom och titta på det här.”  
+> **Alve:** “Vad är det?”  
+> **Barnet:** “Jag tror inte det bara är plankorna.”  
+> **Alve:** “Den där är rutten.”  
+> **Barnet:** “Mm.”  
+> **Alve:** “Och den där också.”  
+> **Barnet:** “Mm.”  
+> **Alve:** “Okej. Den där med.”  
+> **Barnet:** “Fortfarande bara trä?”  
+> **Alve:** “Det är väldigt mycket trä.”  
+> **Barnet:** “Och ganska lite av det verkar vilja vara en brygga längre.”  
+> **Alve:** “Vi kan inte bara lägga nya plankor ovanpå det här.”  
+> **Barnet:** “Nej. Vi behöver nytt virke. Bra virke.”  
+> **Alve:** “Har du något sånt?”  
+> **Barnet:** “Inte jag. Men jag känner någon som brukar kunna hitta användbara grejer bland gammalt material.”  
+> **Alve:** “Vem då?”  
+> **Barnet:** “Linus. Han håller till vid Återvinningen.”  
+> **Alve:** “Tror du han har virke?”  
+> **Barnet:** “Om någon har det, så är det nog Linus.”  
+> **Alve:** “Okej. Då frågar vi honom.”
+
+**3/16 — Linus och återbruket**  
+Image: `02-linus-salvaged-timber.png`.
+
+Linus kommer ner med användbart virke från Återvinningen. Alve behöver inte ha träffat honom tidigare.
+
+> **Linus:** “Jag började misstänka att ni inte menade två plankor när ni bad om hjälp.”  
+> **Barnet:** “Vi trodde att det var två plankor.”  
+> **Alve:** “Jag trodde det.”  
+> **Linus:** “Det förklarar saken.”  
+> **Linus:** “Det här har stått blött alldeles för länge. Ni hade kunnat lägga nytt ovanpå, men då hade ni fått göra om allt igen ganska snart.”  
+> **Alve:** “Så du har något bättre?”  
+> **Linus:** “Jag har sådant som redan haft ett liv och fortfarande har ett kvar.”  
+> **Barnet:** “Återbruk.”  
+> **Linus:** “Precis. Det fina med gammalt material är att man redan vet vad det klarar.”  
+> **Barnet:** “Har du varit här mycket?”  
+> **Linus:** “Förr.”  
+> **Alve:** “Hur mycket är ‘förr’?”  
+> **Linus:** “När den där bryggan fortfarande höll och Henning hade mer hår.”  
+> **Barnet:** “Var alla här nere då?”  
+> **Linus:** “Ganska ofta. Bad, fika, fiske. Sånt som händer när en plats faktiskt används.”  
+> **Linus:** “Sen slutade folk komma. Och när folk slutar komma märker ingen när saker börjar gå sönder.”  
+> **Alve:** “Då får vi väl få folk att börja komma igen.”  
+> **Linus:** “Börja med att få bryggan att stå kvar.”  
+> **Alve:** “Detaljer.”
+
+**4/16 — Första riktiga lagningen**  
+Reuse: `02-linus-salvaged-timber.png`; runtime stage 1/4→2/4 after the scene.
+
+> **Alve:** “Det här känns redan mycket bättre.”  
+> **Barnet:** “Vi har inte ens satt dit allt än.”  
+> **Alve:** “Nej, men nu har vi plankor som inte går sönder när man tittar på dem.”  
+> **Linus:** “Det där kommer hålla.”  
+> **Alve:** “Hörde du?”  
+> **Barnet:** “Ja.”  
+> **Alve:** “Han sa att det kommer hålla.”  
+> **Linus:** “Jag sa inte att ni var klara.”  
+> **Alve:** “Du måste lära dig att fira små segrar, Linus.”  
+> **Linus:** “Och du måste lära dig skillnaden på en liten seger och en färdig brygga.”  
+> **Alve:** “Den rör sig nästan inte alls.”  
+> **Barnet:** “Nästan?”  
+> **Alve:** “Okej. Då fortsätter vi lite till.”  
+> **Linus:** “Nu har ni i alla fall något att bygga vidare på.”  
+> **Alve:** “Det var exakt det jag tänkte säga.”  
+> **Linus:** “Naturligtvis.”
+
+**5/16 — Det börjar se badbart ut**  
+LIVE over runtime jetty stage 2.
+
+> **Alve:** “Vet du vad som är det bästa med en brygga?”  
+> **Barnet:** “Att den inte ramlar ihop?”  
+> **Alve:** “Det är ganska bra. Men nej.”  
+> **Barnet:** “Vad då?”  
+> **Alve:** “Man kan hoppa från den.”  
+> **Barnet:** “Vi har precis fått den att sluta gå sönder.”  
+> **Alve:** “Exakt. Perfekt timing.”  
+> **Alve:** “Vattnet ser faktiskt rätt skönt ut.”  
+> **Barnet:** “Badkanten ser inte lika skön ut.”  
+> **Alve:** “Det där kan vi väl bara flytta på?”  
+> **Barnet:** “Kanske. Men vi borde nog kolla så att det faktiskt är säkert först.”  
+> **Alve:** “Du låter väldigt vuxen nu.”  
+> **Barnet:** “Jag känner Sol.”  
+> **Alve:** “Vem är Sol?”  
+> **Barnet:** “Hon driver sjukhuset i byn. Hon brukar ha koll på sånt här.”  
+> **Alve:** “Måste hon komma hit innan vi badar?”  
+> **Barnet:** “Jag tänker inte förklara för henne varför vi inte frågade.”  
+> **Alve:** “Bra argument.”
+
+**6/16 — Sol kollar badplatsen**  
+Image: `03-sol-safety-check.png`.
+
+> **Sol:** “Så det är här ni tänker bada?”  
+> **Alve:** “När vi är klara.”  
+> **Alve:** “Okej. Jag tänkte kanske lite tidigare.”  
+> **Sol:** “Det är bra att du sa det.”  
+> **Sol:** “Bryggan börjar se fin ut. Men en bra brygga och en bra badplats är inte riktigt samma sak.”  
+> **Alve:** “Vad är det som saknas?”  
+> **Sol:** “Först behöver ni få bort allt gammalt skräp här nere. Det räcker med en vass metallbit eller en trasig flaska för att en väldigt bra baddag ska bli väldigt dålig.”  
+> **Barnet:** “Det kan vi rensa.”  
+> **Sol:** “Bra. Och ni behöver göra det lätt att komma upp ur vattnet också.”  
+> **Alve:** “Sen kan vi bada?”  
+> **Sol:** “En sak till.”  
+> **Alve:** “Jag visste att det skulle komma en sak till.”  
+> **Sol:** “En riktig livboj.”  
+> **Alve:** “Behöver vi verkligen det om vi kan simma?”  
+> **Sol:** “Förhoppningen är att ni aldrig behöver använda den. Men om någon behöver den vill man inte börja leta efter en då.”  
+> **Barnet:** “Var hittar vi en?”  
+> **Sol:** “Fråga Mira. Om hon inte har en inne kan hon säkert ordna en.”  
+> **Alve:** “Okej. Rensa stranden. Livboj. Sen bada.”  
+> **Sol:** “När platsen är klar.”  
+> **Alve:** “Alla här gillar verkligen ordet ‘sen’.”  
+> **Sol:** “Det brukar betyda att man får göra roliga saker fler gånger.”
+
+**Intermediate economy beat — Livbojen hos Mira**  
+Image: `04-mira-lifebuoy-purchase.png`. Not a contribution. Price: **300 SysselBux**.
+
+> **Mira:** “En livboj?”  
+> **Barnet:** “Sol säger att vi behöver en till bryggan.”  
+> **Mira:** “Då behöver ni en livboj.”  
+> **Alve:** “Jag tycker fortfarande att bryggan känns ganska säker.”  
+> **Mira:** “Tycker Sol det?”  
+> **Alve:** “…inte riktigt.”  
+> **Mira:** “Då lyssnar vi på Sol.”  
+> **Alve:** “Den där ser väldigt officiell ut.”  
+> **Mira:** “Det är ofta bra när säkerhetsgrejer ser ut som säkerhetsgrejer.”  
+> **Barnet:** “Hur mycket kostar den?”  
+>  
+> UI purchase: **300 SysselBux**.  
+>  
+> **Mira:** “Bra. Då är den er.”  
+> **Alve:** “Kan man provkasta den?”  
+> **Mira:** “Inte inne i butiken.”  
+> **Alve:** “Jag frågade bara.”  
+> **Mira:** “Och jag svarade väldigt snabbt.”  
+> **Mira:** “Försök helst att aldrig behöva använda den.”  
+> **Barnet:** “Det är planen.”  
+> **Alve:** “Min plan är att bada.”  
+> **Alve:** “Säkert.”
+
+**7/16 — Röj badkanten**  
+Image: `05-bathing-edge-cleanup.png`.
+
+> **Alve:** “Okej. Jag trodde vi skulle laga en brygga.”  
+> **Barnet:** “Det gör vi.”  
+> **Alve:** “Just nu plockar jag upp en gammal burk ur leran.”  
+> **Barnet:** “En viktig del av bryggbygge.”  
+> **Alve:** “Jag börjar förstå varför vuxna alltid säger att saker tar längre tid än man tror.”  
+> **Barnet:** “Här är mer.”  
+> **Alve:** “Hur hamnar allt det här ens här?”  
+> **Barnet:** “Folk har väl lämnat det.”  
+> **Alve:** “Då är folk dåliga på sjöar.”  
+> **Barnet:** “Nej, Valpen.”  
+> **Alve:** “Han hjälper till.”  
+> **Barnet:** “Han försöker äta det vi ska slänga.”  
+> **Alve:** “Han har en annan arbetsmetod.”  
+> **Alve:** “När vi hängt upp den där är vi nästan klara, va?”  
+> **Barnet:** “Med den här delen.”  
+> **Alve:** “Jag hörde bara ‘nästan klara’.”
+
+**8/16 — Redo för människor**  
+Reuse: `05-bathing-edge-cleanup.png`; runtime stage 2/4→3/4 and life buoy becomes persistent.
+
+> **Barnet:** “Sitter den ordentligt?”  
+> **Alve:** “Japp.”  
+> **Barnet:** “Ordentligt-japp eller Alve-japp?”  
+> **Alve:** “Ordentligt-japp.”  
+> **Barnet:** “Det börjar faktiskt se ut som en riktig badplats.”  
+> **Alve:** “Det är en riktig badplats.”  
+> **Barnet:** “Den är fortfarande inte klar.”  
+> **Alve:** “Du förstör väldigt många fina ögonblick med fakta.”  
+> **Alve:** “Men tänk sen. När allt är klart.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Folk kan komma hit. Bada. Sitta här. Vara vid sjön.”  
+> **Barnet:** “Det hade varit fint.”  
+> **Alve:** “Precis.”  
+> **Alve:** “Och då får vi bada.”  
+> **Barnet:** “Där kom det.”
+
 
 
 ## Båthuset restoration arc — LOCKED 2026-09-28
