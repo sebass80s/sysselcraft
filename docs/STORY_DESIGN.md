@@ -2461,6 +2461,207 @@ Henning's incident also establishes the intended Adam/Alve/village tone:
 > **Adam:** “Typ.”  
 > **Alve:** “…jag gillar den här byn.”
 
+### Båthuset dialogue lock — beats 4–6
+
+**4/16 — BOOM**
+
+Vi lämnar båthuset.
+
+Henning gör det Henning tänker göra, helt utanför bild.
+
+Sedan:
+
+**BOOM.**
+
+När ni kommer tillbaka står Henning framför båthuset med sot i ansiktet och ett väldigt nöjt uttryck.
+
+Kistan är öppen.
+
+Alve stannar.
+
+> **Alve:** “Är alla i din by så här?”
+
+Du tittar på Henning.
+
+Sedan på Alve.
+
+> **Barnet:** “Typ.”
+
+Alve nickar långsamt.
+
+> **Alve:** “…jag gillar den här byn.”
+
+Henning borstar lite sot från ärmen.
+
+> **Henning:** “Det gick ju bra.”  
+> **Barnet:** “Det beror lite på hur man räknar.”  
+> **Henning:** “Kistan är öppen.”
+
+Alve går redan mot den.
+
+> **Alve:** “Det är det viktiga.”
+
+Ni sätter er bredvid kistan och börjar gå igenom innehållet.
+
+Där finns gamla verktyg, beslag, repstumpar och delar som ser ut att ha hört till båtar.
+
+Alve plockar upp en metallbit.
+
+> **Alve:** “Den här ser viktig ut.”  
+> **Barnet:** “Vet du vad det är?”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Då vet vi att den är viktig.”
+
+Längre ner hittar du ett gammalt fotografi.
+
+Du blåser bort dammet.
+
+Bilden visar sjön för många år sedan. Bryggan är hel. Båthuset ser nytt ut. Folk är ute på vattnet.
+
+Och mitt i bilden syns en motorbåt.
+
+Alve lutar sig närmare.
+
+> **Alve:** “Den där båten…”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Det är ju den.”
+
+Du tittar från bilden mot den gamla båten.
+
+> **Barnet:** “Den på bilden?”  
+> **Alve:** “Mm.”
+
+På baksidan av fotografiet står det:
+
+**“Sista turen över sjön innan hösten.”**
+
+Alve läser texten en gång till.
+
+Sedan tittar han ut genom båthusets öppning, över sjön.
+
+> **Alve:** “Jag undrar vart de brukade åka.”
+
+**5/16 — Fynden**
+
+Nästa gång ni kommer tillbaka ligger allt från kistan utspritt över golvet.
+
+Verktyg på ett ställe. Båtdelar på ett annat. Några saker ni fortfarande inte har en aning om vad de är till för.
+
+Alve står mitt bland högarna.
+
+> **Alve:** “Jag har gjort ett system.”
+
+Du tittar omkring.
+
+> **Barnet:** “Vilket system?”
+
+Alve pekar.
+
+> **Alve:** “Saker jag förstår. Saker jag nästan förstår. Och saker som antagligen är väldigt viktiga.”
+
+Den sista högen är störst.
+
+> **Barnet:** “Du förstår alltså nästan ingenting.”  
+> **Alve:** “Jag förstår att vi behöver spara allt.”
+
+Du plockar upp fotografiet igen.
+
+Alve märker det direkt.
+
+> **Alve:** “Jag har tänkt på den där.”  
+> **Barnet:** “Båten?”  
+> **Alve:** “Ja. Den ser inte gammal ut där.”
+
+Han tittar bort mot motorbåten.
+
+> **Alve:** “Och nu står den bara där.”  
+> **Barnet:** “Den har nog stått där länge.”
+
+Alve går fram till båten och lägger handen på sidan.
+
+> **Alve:** “Tänk om några av delarna i kistan hör till den.”  
+> **Barnet:** “Då kanske vi kan använda dem senare.”
+
+Alve vänder sig om.
+
+> **Alve:** “Senare?”  
+> **Barnet:** “Vi håller fortfarande på med båthuset.”
+
+Alve ser sig omkring.
+
+Trasigt arbetsbord. Verktyg på golvet. Bråte i hörnen.
+
+Han suckar.
+
+> **Alve:** “Okej. Jag erkänner att det här inte är världens bästa verkstad.”  
+> **Barnet:** “Det är knappt en verkstad.”  
+> **Alve:** “Än.”
+
+Han plockar upp fotografiet och sätter det försiktigt mot väggen.
+
+> **Alve:** “Men den där stannar här.”
+
+**6/16 — Mira ser problemet**
+
+Mira kommer ner till båthuset och stannar i dörröppningen.
+
+Hon tittar på golvet.
+
+Sedan på arbetsbordet.
+
+Sedan på Alves tre högar.
+
+> **Mira:** “Vad har hänt här?”  
+> **Alve:** “Vi organiserar.”
+
+Mira tittar på dig.
+
+> **Barnet:** “Han organiserar.”  
+> **Mira:** “Det förklarar en del.”
+
+Hon går fram till verktygen.
+
+> **Mira:** “Ni har faktiskt hittat en hel del användbart. Problemet är att allt ligger överallt.”
+
+Alve pekar på sina högar.
+
+> **Alve:** “Inte överallt. På tre väldigt tydliga ställen.”
+
+Mira tittar på den sista högen.
+
+> **Mira:** “Ni behöver inte fler verktyg. Ni behöver kunna hitta de ni redan har.”
+
+Hon pekar på den gamla arbetsplatsen.
+
+> **Mira:** “Fixa arbetsbordet först. Sedan behöver ni någonstans att hänga verktygen, lådor till smådelarna och bättre ljus här inne. Annars kommer ni lägga halva tiden på att leta efter saker.”
+
+Alve tittar runt.
+
+> **Alve:** “Det låter mindre roligt än att bygga något.”  
+> **Mira:** “Det är därför man gör det först.”
+
+Du tittar på Alve.
+
+> **Barnet:** “Hon låter lite som Linus.”  
+> **Alve:** “Alla vuxna verkar dela en hemlig bok.”
+
+Mira ler.
+
+> **Mira:** “Vi får den när vi fyller arton.”
+
+Alve tittar mot motorbåten.
+
+> **Alve:** “När verkstaden är klar kan vi börja med den.”  
+> **Barnet:** “När de andra projekten är klara.”
+
+Alve suckar, men inte särskilt hårt.
+
+> **Alve:** “Jag vet.”
+
+Han tittar tillbaka på arbetsbordet.
+
+> **Alve:** “Okej. Då bygger vi en riktig verkstad först.”
+
 ### Contributions 5–8: the workshop is born / Mira
 The second block is a consequence of the chest rather than a new unrelated mystery. Adam and Alve inventory the surviving tools and boat parts and discover that the old work area is too ruined/disorganized to use properly. Their restoration focus shifts toward turning the boathouse into a **real working workshop**.
 
