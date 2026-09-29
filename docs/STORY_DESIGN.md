@@ -2940,6 +2940,191 @@ Locked closing exchange:
 > **Adam:** “För vad?”  
 > **Alve:** “Båten.”
 
+### Båthuset dialogue lock — beats 10–12
+
+**10/16 — Lådbilen byggs**
+
+Ni lägger ritningen mitt på arbetsbordet och börjar bygga.
+
+Ratten från Mira ligger bredvid.
+
+Alve håller upp den.
+
+> **Alve:** “Det här är definitivt den viktigaste delen.”  
+> **Barnet:** “Viktigare än hjulen?”  
+> **Alve:** “Man måste kunna känna att man kör något.”
+
+Ni återanvänder trä, beslag och delar ni hittat i båthuset.
+
+Arbetet tar längre tid än Alve först tänkt, men den här gången klagar han inte särskilt mycket.
+
+Efter ett tag börjar något faktiskt likna en lådbil.
+
+Alve backar några steg.
+
+> **Alve:** “Okej. Den ser snabb ut.”  
+> **Barnet:** “Den står still.”  
+> **Alve:** “Den ser snabbt stillastående ut.”
+
+Du testar ratten.
+
+Den sitter fast.
+
+Alve trycker försiktigt på ett hjul.
+
+> **Alve:** “Det där sitter också.”  
+> **Barnet:** “Säger du det som ett faktum eller ett hopp?”  
+> **Alve:** “Lite av båda.”
+
+Ni gör klart de sista detaljerna.
+
+När ni till slut rullar ut lådbilen framför båthuset stannar Alve bredvid den.
+
+> **Alve:** “Det här är det första vi byggt här som inte fanns innan.”
+
+Du tittar tillbaka mot verkstaden.
+
+> **Barnet:** “Inte illa för ett gammalt båthus.”
+
+Alve tittar på lådbilen igen.
+
+> **Alve:** “Vi borde testa den.”  
+> **Barnet:** “Jag visste att du skulle säga det.”
+
+**11/16 — Första provturen**
+
+Ni hittar en kort, lugn sträcka där lådbilen kan testas.
+
+Alve sätter sig bakom ratten.
+
+> **Barnet:** “Du behöver inte försöka slå något rekord.”  
+> **Alve:** “Jag tänkte mest försöka komma framåt.”  
+> **Barnet:** “Bra början.”
+
+Alve skjuter ifrån.
+
+Lådbilen börjar rulla.
+
+Först försiktigt.
+
+Sedan lite snabbare.
+
+Alve skrattar.
+
+> **Alve:** “Den funkar!”
+
+Du följer efter.
+
+Sedan hörs ett ljud.
+
+Ett hjul lossnar och rullar åt sidan.
+
+Lådbilen stannar snabbt och odramatiskt.
+
+Du kommer fram.
+
+Alve sitter kvar och tittar efter hjulet.
+
+> **Barnet:** “Gick det bra?”  
+> **Alve:** “Japp.”
+
+Du tittar på bilen.
+
+> **Barnet:** “Hjulet lossnade.”
+
+Alve följer din blick.
+
+> **Alve:** “Då vet vi vad vi ska fixa.”
+
+Du börjar skratta.
+
+Alve kliver ur och hämtar hjulet.
+
+> **Alve:** “Det här var ett test.”  
+> **Barnet:** “Som gick sönder.”  
+> **Alve:** “Som visade exakt vad som behövde bli bättre.”
+
+Han håller upp hjulet.
+
+> **Alve:** “Det är nästan mer användbart.”  
+> **Barnet:** “Nästan.”
+
+Ni tar tillbaka lådbilen till verkstaden.
+
+För första gången ser misslyckandet inte ut att irritera Alve särskilt mycket.
+
+Han lägger hjulet på arbetsbordet.
+
+> **Alve:** “Version två.”
+
+**12/16 — Version två**
+
+Ni går igenom lådbilen tillsammans.
+
+Inte bara hjulet som lossnade.
+
+Allt.
+
+Den här gången försöker Alve inte skynda.
+
+När du märker det säger du inget först.
+
+Efter en stund tittar han upp.
+
+> **Alve:** “Vad?”  
+> **Barnet:** “Inget.”  
+> **Alve:** “Du gjorde den där blicken.”  
+> **Barnet:** “Vilken blick?”  
+> **Alve:** “Den där ‘Alve gör något oväntat vettigt’-blicken.”
+
+Du ler.
+
+> **Barnet:** “Jag tänkte bara att du inte verkar ha bråttom.”
+
+Alve fortsätter arbeta.
+
+> **Alve:** “Det gick ju fort förra gången.”
+
+Han tittar mot hjulet.
+
+> **Alve:** “Det hjälpte inte så mycket.”
+
+Ni gör klart version två.
+
+När den rullas ut ser den nästan likadan ut.
+
+Men den är bättre byggd.
+
+Alve sätter sig bakom ratten igen.
+
+> **Alve:** “Redo?”  
+> **Barnet:** “Jag står bredvid. Du är den som ska köra.”  
+> **Alve:** “Bra poäng.”
+
+Han rullar iväg.
+
+Den här gången håller alla fyra hjulen sig där de ska.
+
+Alve kommer tillbaka med ett stort leende.
+
+> **Alve:** “Nu fungerade den på riktigt.”
+
+Du går runt bilen och tittar.
+
+> **Barnet:** “Och alla hjulen är kvar.”  
+> **Alve:** “Överdrivet lyxigt.”
+
+Ni rullar tillbaka lådbilen till båthuset och ställer den bredvid arbetsbänken.
+
+Alve ser på den en stund.
+
+> **Alve:** “Okej. Den där var övning.”  
+> **Barnet:** “För vad?”
+
+Alve tittar mot den gamla motorbåten.
+
+> **Alve:** “Båten.”
+
 ### Contributions 13–16: prepare the boathouse for the motorboat / completion
 The final block pays off the boathouse arc rather than introducing another major side story. Its purpose is to make the restored workshop physically ready for the later motorboat project and to turn it into a persistent part of lake life.
 
