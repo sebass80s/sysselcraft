@@ -3802,6 +3802,204 @@ Alve tittar på dig.
 
 **Naming interaction lock:** after this dialogue, the player names the motorboat. The chosen name becomes persistent and may be reused in later dialogue/UI where technically practical. The boat is now emotionally framed as **Barnet and Alve's shared adventure boat**, not merely Alve's family's old motorboat.
 
+### Motorbåten dialogue lock — beats 13–15
+
+**13/16 — Det riktiga testet**
+
+Nästa gång ni kommer ner till bryggan står båten redo. Alve går igenom sakerna ombord en efter en.
+
+> **Barnet:** “Vad gör du egentligen?”  
+> **Alve:** “Kontrollerar allt. Jag har lärt mig att om man missar något så dyker Linus upp och kontrollerar det åt en ändå, så jag försöker ligga före.”
+
+Linus kommer gående bakom er.
+
+> **Linus:** “Bra tänkt.”
+
+Alve suckar.
+
+> **Alve:** “Där är han.”
+
+Sol lämnar säkerhetsutrustningen i båten.
+
+> **Sol:** “Det här ska med. Ni har kommit långt, men en fungerande båt betyder också att man måste vara lite smartare än när den bara står på land.”  
+> **Alve:** “Vi har redan grejer.”  
+> **Sol:** “Nu har ni rätt grejer.”
+
+Mira räcker över en liten påse.
+
+> **Mira:** “Och det här är sådant ni kommer önska att ni tog med om något litet strular. Inte spännande, men väldigt bra att ha.”  
+> **Alve:** “Det där lät misstänkt genomtänkt.”  
+> **Mira:** “Därför får du inte packa upp det och börja använda saker på måfå.”
+
+Henning kommer med en betydligt större påse.
+
+> **Barnet:** “Det där är inte säkerhetsutrustning.”  
+> **Henning:** “Nej, det är viktigare. Färdkost.”  
+> **Barnet:** “Vi ska testa båten, inte korsa Atlanten.”  
+> **Henning:** “Man vet aldrig hur hungrig man blir av att nästan korsa Atlanten.”
+
+Alve nickar uppskattande.
+
+> **Alve:** “Äntligen någon som planerar ordentligt.”
+
+Linus går ett sista varv runt båten.
+
+> **Linus:** “Ni har det ni behöver. Ni har gått igenom båten. Ni vet hur långt ni ska köra och när ni ska vända. Så, redo?”  
+> **Alve:** “Japp.”  
+> **Barnet:** “Japp.”
+
+Linus nickar.
+
+> **Linus:** “Bra. Då behöver ni inte mig.”
+
+Alve tittar på honom.
+
+> **Alve:** “Vänta. Ska du inte följa med?”  
+> **Linus:** “Nej. Hela poängen med testet är att ni ska visa att ni kan använda båten själva. Jag finns kvar här om något händer, men ni behöver inte ha en vuxen bredvid er för varje steg.”
+
+Alve tittar på båten igen.
+
+> **Alve:** “Det här känns mycket större än det gjorde för fem minuter sen.”  
+> **Barnet:** “Du ville ju köra.”  
+> **Alve:** “Jag vill fortfarande köra. Jag vill bara att du också ska vilja det.”  
+> **Barnet:** “Jag sitter redan i båten.”
+
+Alve ler.
+
+> **Alve:** “Bra svar.”
+
+**14/16 — Vi åker båt**
+
+Motorn startar utan att tveka. Ni lämnar bryggan och glider ut över sjön.
+
+En stund säger ingen någonting.
+
+Du tittar tillbaka på stugan, bryggan och båthuset.
+
+> **Alve:** “Det ser nästan konstigt ut härifrån. När vi började var allt trasigt eller tomt, och nu ser det ut som om det alltid har varit så här.”  
+> **Barnet:** “Fast vi vet hur det såg ut.”  
+> **Alve:** “Ja. Det är nog därför det känns så konstigt.”
+
+Han pekar tillbaka mot land.
+
+> **Alve:** “Bryggan höll nästan på att falla sönder. Båthuset gick knappt att använda. Stugan var tom. Och båten stod bara där inne och blev äldre.”  
+> **Barnet:** “Nu används allt.”  
+> **Alve:** “Ja.”
+
+Han blir tyst och tittar framåt.
+
+> **Alve:** “Barnet.”  
+> **Barnet:** “Mm?”  
+> **Alve:** “Vi åker faktiskt båt.”  
+> **Barnet:** “Det var ju planen.”  
+> **Alve:** “Jag vet. Men det är skillnad på att planera något och att plötsligt vara mitt ute på sjön i båten man har lagat själv.”
+
+Du ler.
+
+> **Barnet:** “Vår båt.”  
+> **Alve:** “Ja. Vår båt.”
+
+Ni fortsätter längs er sida av sjön.
+
+> **Alve:** “Jag undrar hur långt den klarar egentligen.”  
+> **Barnet:** “Vi ska inte ta reda på allt idag.”
+
+Alve tittar mot andra sidan. Du märker det direkt.
+
+> **Barnet:** “Jag såg den där blicken.”  
+> **Alve:** “Vilken blick?”  
+> **Barnet:** “Den som betyder att du funderar på att bara fortsätta tills någon stoppar dig.”
+
+Alve skrattar.
+
+> **Alve:** “Okej. Jag tänkte lite så.”
+
+Sedan tittar han framåt igen.
+
+> **Alve:** “Men inte idag.”
+
+Du tittar på honom.
+
+> **Barnet:** “Det där var oväntat.”  
+> **Alve:** “Jag lär mig faktiskt saker ibland.”  
+> **Barnet:** “Säg inte det högt. Linus kanske hör dig från land.”
+
+**15/16 — Inte idag**
+
+Ni har kommit längre bort än under något tidigare test. Motorn går jämnt.
+
+Sedan hörs ett klonk bakom er.
+
+Alve börjar resa sig direkt.
+
+> **Barnet:** “Vänta. Båten först.”
+
+Han stannar och sätter sig igen.
+
+> **Alve:** “Just det. Först ser vi till att inget händer, sen fixar vi grejen.”
+
+Tillsammans ordnar ni det som lossnat utan dramatik.
+
+Efteråt lutar sig Alve tillbaka.
+
+> **Alve:** “Det där gick faktiskt ganska bra.”  
+> **Barnet:** “Ja. Du kastade dig inte på problemet direkt.”  
+> **Alve:** “Jag tänkte göra det.”  
+> **Barnet:** “Det märktes.”  
+> **Alve:** “Men jag gjorde det inte.”  
+> **Barnet:** “Det är framsteg.”
+
+Alve ser misstänksam ut.
+
+> **Alve:** “Du börjar låta som Linus.”
+
+Ni fortsätter till platsen där ni bestämt att ni ska vända.
+
+Den andra sidan av sjön ligger framför er.
+
+Alve blir tyst.
+
+> **Barnet:** “Du tänker på den.”  
+> **Alve:** “Ja.”
+
+Han tittar över vattnet.
+
+> **Alve:** “Vi skulle kunna fortsätta. Båten fungerar, vi har allt med oss och vi har till och med Hennings katastrofmängd mat.”  
+> **Barnet:** “Det skulle vi.”
+
+Alve tittar på dig.
+
+> **Barnet:** “Men inte idag.”
+
+Alve säger inget först. Sedan nickar han.
+
+> **Alve:** “Inte idag.”
+
+Paus.
+
+> **Barnet:** “Du brukar hata de orden.”
+
+Alve tittar mot andra sidan.
+
+> **Alve:** “Ja. Men jag tror jag fattar dem bättre nu. ‘Inte idag’ betyder ju inte att man aldrig kommer dit.”  
+> **Barnet:** “Precis.”
+
+Alve vänder båten tillbaka.
+
+Efter en stund syns stugan igen långt borta.
+
+> **Alve:** “Då åker vi hem.”
+
+Du tittar på honom.
+
+> **Barnet:** “Hem?”
+
+Alve följer din blick mot stugan.
+
+Sedan svarar han mycket enklare.
+
+> **Alve:** “Ja.”
+
 ### Contributions 13–16: the proper test / Act 2 climax
 The final block adds no new purchase or major repair. It proves that Adam and Alve can use what they restored.
 
