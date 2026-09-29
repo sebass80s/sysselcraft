@@ -4000,6 +4000,80 @@ Sedan svarar han mycket enklare.
 
 > **Alve:** “Ja.”
 
+### Motorbåten dialogue lock — beat 16
+
+**16/16 — Hem igen**
+
+Båten glider tillbaka mot bryggan.
+
+Den här gången stannar den inte. Inget hostar, inget lossnar och ingen behöver komma och hämta er.
+
+Alve sitter tyst en stund och tittar mot land.
+
+> **Alve:** “Det känns nästan konstigt att allt bara fungerar nu. Förut hann man knappt bli glad innan något gick sönder igen.”  
+> **Barnet:** “Vi har väl blivit bättre på att laga saker.”  
+> **Alve:** “Eller bättre på att inte förstöra dem direkt.”
+
+När ni närmar er bryggan står de andra där och väntar.
+
+> **Alve:** “Jag tänker säga att hela turen gick perfekt.”  
+> **Barnet:** “Även delen där grejerna lossnade?”  
+> **Alve:** “Den delen var en övning i problemlösning.”
+
+Ni lägger till.
+
+Linus tittar först på båten och sedan på er.
+
+> **Linus:** “Ni kom tillbaka själva, båten är hel och motorn går fortfarande. Det får räknas som ett godkänt test.”
+
+Alve tittar misstänksamt på honom.
+
+> **Alve:** “Det kommer inget ‘men’?”  
+> **Linus:** “Nej.”
+
+Alve väntar lite.
+
+> **Alve:** “Det där kändes nästan läskigare.”
+
+Linus ler.
+
+> **Linus:** “Bra jobbat.”
+
+Valpen springer fram och nosar direkt på Hennings matsäck.
+
+> **Alve:** “Vi har varit ute på sjön och bevisat att båten fungerar, och han bryr sig om mackor.”  
+> **Henning:** “Han förstår vad som är viktigt.”
+
+Sol tittar på båten.
+
+> **Sol:** “Hur kändes den?”
+
+Alve ser tillbaka över sjön.
+
+> **Alve:** “Som att den inte längre är den gamla båten vi hittade i båthuset.”
+
+Han lägger handen på relingen.
+
+> **Alve:** “Nu är den vår.”
+
+Du tittar på båten.
+
+> **Barnet:** “Det är den.”
+
+Alve ler.
+
+> **Alve:** “Så då är vi klara?”
+
+Linus nickar.
+
+> **Linus:** “Med båten, ja.”
+
+Alve tittar på dig.
+
+> **Alve:** “Jag tar det.”
+
+**Boundary lock:** beat 16 ends the motorboat project itself. It must **not** begin the cottage/family discovery. The already locked Act 2 finale remains a separate post-project Story Moment: quiet aftermath → open cottage / suspected intruders → family return → first departure in the restored boat → **SLUT PÅ ANDRA KAPITLET**.
+
 ### Contributions 13–16: the proper test / Act 2 climax
 The final block adds no new purchase or major repair. It proves that Adam and Alve can use what they restored.
 
