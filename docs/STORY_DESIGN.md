@@ -1185,16 +1185,23 @@ Den låsta payoff-bilden visar **Linus, Henning, Sol och Mira i vattnet** och **
 > **Barnet:** “Du sa ju att det kanske skulle bli fullt.”  
 > **Alve:** “Jag trodde inte det skulle hända direkt.”  
 > **Henning:** “Där är byggarna!”  
-> **Linus:** “Nu får ni skylla er själva. Ni gjorde platsen för bra.”  
-> **Sol:** “Och badplatsen är fortfarande säker.”  
-> **Mira:** “Det var den dyraste livbojen jag sålt den här veckan.”  
-> **Alve:** “Du har sålt fler?”  
-> **Mira:** “Nej.”  
+> **Linus:** “Ni har gjort ett riktigt bra jobb här.”  
+> **Sol:** “Verkligen. Det är tryggt, fint och folk vill faktiskt vara här.”  
+> **Mira:** “Ni fick hela platsen att kännas levande igen.”  
+> **Henning:** “Och jag tänker ta åt mig lite av äran bara för att jag dök upp tidigt.”  
+> **Linus:** “Nej.”  
+> **Henning:** “Värt ett försök.”  
 > **Alve:** “De kom tillbaka.”  
 > **Barnet:** “Japp.”  
 > **Alve:** “Alla?”  
 > **Barnet:** “Nästan.”  
-> **Alve:** “Bra.”  
+> **Mira:** “Det här är er förtjänst.”  
+> **Sol:** “Ni gav byn tillbaka sjön.”  
+> **Alve:** “Det blev ganska bra.”  
+> **Barnet:** “Ganska?”  
+> **Alve:** “Okej då. Jättebra.”  
+> **Henning:** “Nu tänker ni väl inte stå där hela dagen?”  
+> **Alve:** “Nej.”  
 > **Alve:** “Nu badar vi.”  
 > **Barnet:** “Nu badar vi.”
 
