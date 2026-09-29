@@ -3125,6 +3125,196 @@ Alve tittar mot den gamla motorbåten.
 
 > **Alve:** “Båten.”
 
+### Båthuset dialogue lock — beats 13–15
+
+**13/16 — Gör plats för båten**
+
+Efter lådbilen står ni kvar i verkstaden och tittar runt.
+
+Det har blivit mycket bättre här inne.
+
+Men längst in där motorbåten ska kunna tas in ligger fortfarande gammalt bråte, plankor och delar i vägen.
+
+Alve följer din blick.
+
+> **Alve:** “Okej. Jag ser problemet.”  
+> **Barnet:** “Vilket av dem?”  
+> **Alve:** “Det stora problemet som är ungefär lika brett som en båt.”
+
+Ni går fram till den gamla båtplatsen.
+
+Alve försöker uppskatta utrymmet.
+
+> **Alve:** “Om vi ska laga båten här inne så måste den faktiskt få plats här inne.”  
+> **Barnet:** “Bra början.”
+
+Alve nickar mot lådbilen.
+
+> **Alve:** “Vi kanske måste flytta den.”  
+> **Barnet:** “Du säger det som att det gör ont.”  
+> **Alve:** “Lite.”
+
+Ni börjar röja.
+
+Det går snabbare än förr, mest för att ni faktiskt vet var saker ska hamna nu.
+
+Efter ett tag börjar den gamla båtplatsen synas igen.
+
+På golvet finns spår efter något tungt som en gång rullats in och ut.
+
+Alve böjer sig ner.
+
+> **Alve:** “Vad är det här?”  
+> **Barnet:** “Ser ut som att något har gått här.”
+
+Alve följer spåren med blicken.
+
+De går hela vägen mot vattnet.
+
+> **Alve:** “Båten.”
+
+Han tittar upp.
+
+> **Alve:** “Det måste ha funnits något som drog in den.”
+
+**14/16 — Den gamla slipen**
+
+Linus kommer ner och tittar på det ni hittat.
+
+Han går längs spåren och stannar vid resterna av den gamla mekanismen.
+
+> **Linus:** “Det här är inte bara spår. Här har suttit en slipvagn.”
+
+Alve tittar på honom.
+
+> **Alve:** “En vadå?”
+
+Linus pekar mot spåren som går ner mot vattnet.
+
+> **Linus:** “En slipvagn. Tänk dig en låg vagn som båten står på. Den går på de här spåren så man kan dra båten upp ur vattnet och in i båthuset utan att behöva lyfta hela båten.”
+
+Alve följer spåren med blicken.
+
+> **Alve:** “Så båten åkte på en liten vagn?”  
+> **Linus:** “Ungefär. Vagnen går i vattnet, båten hamnar ovanpå och sedan drar man in allt tillsammans.”  
+> **Barnet:** “Det låter mycket enklare än att bära båten.”  
+> **Linus:** “Det är själva poängen.”
+
+Alve ser genast intresserad ut.
+
+> **Alve:** “Kan vi laga den?”
+
+Linus undersöker delarna.
+
+> **Linus:** “Kanske. Mycket är rostigt, men själva konstruktionen ser ut att gå att rädda.”
+
+Ni hämtar fram delarna från kistan igen.
+
+Alve börjar jämföra dem med mekanismen.
+
+Plötsligt håller han upp en av de gamla metallbitarna.
+
+> **Alve:** “Den här passar ju.”
+
+Linus tar emot den och provar.
+
+Den passar faktiskt.
+
+> **Barnet:** “Så den viktiga saken var viktig?”
+
+Alve tittar triumferande på dig.
+
+> **Alve:** “Jag sa ju det.”  
+> **Barnet:** “Du visste inte ens vad den var.”  
+> **Alve:** “Detaljer.”
+
+Linus fortsätter gå igenom delarna.
+
+> **Linus:** “Det här är bra. Några av sakerna ni hittade i kistan hör faktiskt hit.”
+
+Alve tittar bort mot det gamla fotografiet på väggen.
+
+> **Alve:** “Så de sparade delar till allt.”  
+> **Linus:** “Förmodligen. Förr lagade man ofta sådant här istället för att kasta det.”  
+> **Barnet:** “Det låter som du.”  
+> **Linus:** “Då var de kloka.”
+
+Alve ler.
+
+> **Alve:** “Där kom det.”
+
+Ni börjar återställa mekanismen tillsammans.
+
+**15/16 — Den fungerar**
+
+Den gamla slipvagnen är på plats igen.
+
+Inte blank och ny.
+
+Men hel.
+
+Alve står bredvid den och försöker inte se alltför förväntansfull ut.
+
+Det går sådär.
+
+> **Alve:** “Vi måste testa den.”  
+> **Barnet:** “Ja.”
+
+Alve tittar på dig.
+
+> **Alve:** “Du sa ja väldigt snabbt.”  
+> **Barnet:** “Det är nästan som att test är en del av att laga saker.”  
+> **Alve:** “Jag känner att du och Linus har pratat för mycket.”
+
+Ni testar mekanismen utan motorbåten först.
+
+Vagnen rör sig långsamt längs spåret.
+
+In.
+
+Ut.
+
+In igen.
+
+Allt håller.
+
+Alve går bredvid och tittar på varje del.
+
+När vagnen stannar på sin plats står han kvar en stund.
+
+> **Alve:** “Den fungerar.”  
+> **Barnet:** “Japp.”
+
+Alve tittar mot motorbåten.
+
+> **Alve:** “Då kan vi få in båten.”  
+> **Barnet:** “När vi får laga den.”
+
+Alve nickar.
+
+Den här gången utan protest.
+
+> **Alve:** “När vi får laga den.”
+
+Han ser sig omkring i båthuset.
+
+Verkstaden. Fotografiet. Lådbilen. Slipen.
+
+Allt är redo.
+
+> **Alve:** “Det känns faktiskt som att vi byggt hela platsen för den.”  
+> **Barnet:** “Inte bara för den.”
+
+Alve tittar på lådbilen.
+
+Sedan på arbetsbordet.
+
+> **Alve:** “Nej.”
+
+Han ler.
+
+> **Alve:** “Men ganska mycket för den.”
+
 ### Contributions 13–16: prepare the boathouse for the motorboat / completion
 The final block pays off the boathouse arc rather than introducing another major side story. Its purpose is to make the restored workshop physically ready for the later motorboat project and to turn it into a persistent part of lake life.
 
