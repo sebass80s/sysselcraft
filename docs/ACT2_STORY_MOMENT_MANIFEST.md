@@ -881,7 +881,7 @@ Bryggan image production is complete in the repository. The earlier seven-still 
 
 The story still uses **16 authoritative real-world contributions**. Image count, contribution count and visual stage count remain separate concepts.
 
-**Economy lock:** the life-buoy purchase is story-canonical, but its SysselBux price remains deliberately **TBD**. No price is baked into art or runtime.
+**Economy lock:** the life-buoy purchase is story-canonical. Its current locked provisional price is **300 SysselBux** and may be rebalanced later. No price is baked into the artwork.
 
 ### Authoritative Bryggan asset set
 
@@ -909,7 +909,7 @@ All nine files have been verified on branch `nova/local-construction-snapshot`.
 | JETTY-04 | REUSE | `02-linus-salvaged-timber.png` carries the first substantial repair sequence; runtime stage swap 1/4→2/4. |
 | JETTY-05 | LIVE | Alve talks swimming; attention shifts to the bathing edge. |
 | JETTY-06 | IMAGE | `03-sol-safety-check.png` — Sol inspects bathing access and identifies cleanup + life-buoy needs. |
-| INTERMEDIATE ECONOMY BEAT | IMAGE | `04-mira-lifebuoy-purchase.png` — Adam buys the proper life buoy from Mira. **This is not a real-world contribution.** Price remains TBD. |
+| INTERMEDIATE ECONOMY BEAT | IMAGE | `04-mira-lifebuoy-purchase.png` — Adam buys the proper life buoy from Mira. **This is not a real-world contribution.** Price is **300 SysselBux** (provisional; may be rebalanced later). |
 | JETTY-07 | IMAGE | `05-bathing-edge-cleanup.png` — Adam + Alve clear the bathing edge; new life buoy is present for mounting. |
 | JETTY-08 | REUSE | `05-bathing-edge-cleanup.png` carries the mounting transition; runtime stage swap 2/4→3/4 makes the life buoy permanent. |
 | JETTY-09 | LIVE | Social/summer-use portion is improved in runtime. |
@@ -955,7 +955,7 @@ Serves JETTY-06. Sol performs a calm prevention/safety inspection because Adam a
 
 #### 04 — Mira life-buoy purchase
 Asset: `04-mira-lifebuoy-purchase.png`  
-Intermediate economy/story beat between JETTY-06 and JETTY-07. Adam buys the proper life buoy from Mira in her village shop; Alve may accompany him. This image is **not** contribution 7 and does not increase restoration contribution count. Exact SysselBux price remains TBD.
+Intermediate economy/story beat between JETTY-06 and JETTY-07. Adam buys the proper life buoy from Mira in her village shop; Alve may accompany him. This image is **not** contribution 7 and does not increase restoration contribution count. The current locked provisional price is **300 SysselBux** and may be rebalanced later.
 
 #### 05 — Bathing-edge cleanup
 Asset: `05-bathing-edge-cleanup.png`  
