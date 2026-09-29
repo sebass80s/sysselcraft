@@ -59,13 +59,15 @@ const SPECS = {
   }
 };
 
-const FROZEN = ({id,spec}) => `Create ONE finished landscape/iPhone SysselCraft Story Moment for ${id}.
+const FRESH_ALLOWED = new Set(["IMG-A2-JET-005", "IMG-A2-JET-001"]);
+
+const FROZEN = ({id,spec,anchor}) => `${anchor ? `EDIT MODE REQUIRED. Start from the supplied accepted anchor image ${anchor}. Preserve its established SysselCraft rendering, camera language, human proportions, material realism, character identities and overall visual world unless the locked action/stage below explicitly requires a change. Do NOT reinterpret the scene from scratch.\n\n` : ""}Create ONE finished landscape/iPhone SysselCraft Story Moment for ${id}.
 
 Use the supplied accepted ${spec.stage} reference as the visual authority for the restoration project's geometry, construction state and lake environment. Do not redesign the accepted project stage.
 
 Use the supplied canonical character sheets ONLY for the identities, clothing, proportions and silhouettes of ${spec.cast}. Ignore every background/environment visible in character reference sheets.
 
-STYLE LOCK: warm cinematic semi-realistic CGI / photographic storybook. Natural human anatomy and proportions. Natural small eyes. Realistic skin, hair, fabric, wood, water and vegetation. Subtle believable facial expressions. Cinematic natural daylight and physically believable materials. Preserve the established SysselCraft character identities without converting them into an animated-film aesthetic.
+${anchor ? "VISUAL-ANCHOR LAW: copy established character rendering from the accepted anchor wherever the same character persists. Character sheets resolve identity details; they do not authorize a fresh redesign. Text describes only the required scene change.\n\n" : ""}STYLE LOCK: warm cinematic semi-realistic CGI / photographic storybook. Natural human anatomy and proportions. Natural small eyes. Realistic skin, hair, fabric, wood, water and vegetation. Subtle believable facial expressions. Cinematic natural daylight and physically believable materials. Preserve the established SysselCraft character identities without converting them into an animated-film aesthetic.
 
 ABSOLUTELY FORBIDDEN STYLE DRIFT: cartoon, glossy cartoon, animated-film aesthetic, Pixar-like rendering, Disney-like rendering, anime, chibi, giant or exaggerated eyes, oversized heads, plastic toy-like skin/materials, caricatured faces, flat vector/clipart styling.
 
@@ -109,5 +111,14 @@ if (missing.length) {
   fail(`Missing required active references for ${id}: ${missing.join(", ")}`);
 }
 
-console.error(`ACT2 IMAGE PREFLIGHT PASSED: ${id}\nRequired refs declared: ${spec.requiredRefs.join(", ")}\n`);
-console.log(FROZEN({id, spec}));
+const anchorArg = args.find(a => a.startsWith("--anchor="));
+const anchor = anchorArg ? anchorArg.slice("--anchor=".length).trim() : "";
+if (!FRESH_ALLOWED.has(id) && !anchor) {
+  fail(`EDIT MODE REQUIRED for ${id}. Supply --anchor=<accepted prior production image id>. Fresh text-to-image is forbidden once the Bryggan series has an accepted visual anchor.`);
+}
+if (anchor && !/^IMG-A2-JET-00[1-7]$/.test(anchor)) {
+  fail("Invalid --anchor=. Use an accepted Bryggan production image id such as IMG-A2-JET-001.");
+}
+
+console.error(`ACT2 IMAGE PREFLIGHT PASSED: ${id}\nRequired refs declared: ${spec.requiredRefs.join(", ")}${anchor ? `\nEDIT anchor: ${anchor}` : "\nFresh generation explicitly allowed for this anchor-producing ID."}\n`);
+console.log(FROZEN({id, spec, anchor}));
