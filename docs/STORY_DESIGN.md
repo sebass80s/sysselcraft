@@ -555,6 +555,72 @@ The **motorboat is visible from the beginning but locked as a restoration projec
 
 Exact quest counts, construction-stage thresholds and individual subquests remain deliberately unlocked until Act 2 production design. Each project should have visible progression so repeated household quests create several meaningful transformation milestones rather than feeling like repeated work on one object.
 
+
+### Act 2 path selector after project completion — LOCKED
+
+The same in-Story-Moment project-selection grammar used for the first restoration choice is reused after project completion. Do not switch to a detached menu.
+
+**After 1/3 projects are complete:**
+Alve and Barnet briefly acknowledge the milestone at the completed location.
+
+> **Alve:** “En klar.”
+
+He looks toward the two restoration sites that remain.
+
+> **Alve:** “Det känns lite konstigt.”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Förut var allt trasigt. Nu är det en sak mindre.”
+
+Alve smiles.
+
+> **Alve:** “Så. Vad tar vi nu?”
+
+The Story Moment then exposes **only the two remaining projects as clickable hotspots**. Their preview dialogue reuses the already locked project motivations, but must not use wording that implies canonical order such as “först”.
+
+Confirmation button:
+- **“Laga [objekt]”**
+
+After confirmation:
+
+> **Alve:** “Bra. Då kör vi på [objektet].”
+
+**After 2/3 projects are complete:**
+There is no meaningful branching choice because only one project remains, but the transition should still be authored as a short Story Moment rather than silently auto-advancing.
+
+> **Alve:** “Två klara.”
+
+He looks over the restored area.
+
+> **Barnet:** “Då är det bara en kvar.”
+
+Alve looks toward the final project.
+
+> **Alve:** “Japp.”
+
+Short pause.
+
+> **Alve:** “Den har väntat länge nog.”
+
+The final remaining project is highlighted and the player confirms it with:
+
+- **“Laga [sista projektet]”**
+
+After confirmation:
+
+> **Alve:** “Då gör vi klart hela stället.”
+
+**After 3/3 projects are complete:**
+Do **not** show the path selector. The three independent restoration tracks have converged. Instead, transition into a dedicated convergence Story Moment that acknowledges that Stugan, Bryggan and Båthuset are all complete and unlocks the motorboat restoration project.
+
+Canonical progression:
+**0/3 → choose 1 of 3**
+**1/3 → choose 1 of 2**
+**2/3 → confirm the final remaining project**
+**3/3 → no selector; motorboat unlock/convergence scene**
+
+This selector must remain order-independent and must derive available hotspots from project completion state rather than hard-coded restoration order.
+
+
 ### Lake-life world response — LOCKED 2026-09-28
 
 Completing a lake project must do more than replace its construction sprite. Each completed project may independently unlock persistent, non-branching changes elsewhere in SysselCraft. These reactions key off the completed project's world state and must not depend on restoration order.
