@@ -750,16 +750,41 @@ Everything else is frozen. Do not creatively paraphrase, embellish, shorten, sub
 ### Mandatory execution path — FAIL CLOSED
 
 **Direct freehand image prompting is forbidden for Act 2 production images.**
+**Knowing, remembering, paraphrasing or merely checking that an IMAGE_ID exists in the compiler is NOT execution of the protocol.**
 
 Before ANY Act 2 production image generation:
 
 1. Identify the exact locked `IMAGE_ID`.
 2. Confirm the required character + stage references are actually present in the active image conversation.
-3. Run the repository prompt compiler:
+3. Execute or mechanically render the repository prompt compiler for that exact ID and those exact refs:
    `npm run image:act2:prompt -- <IMAGE_ID> --refs=<comma-separated refs actually present>`
-4. If the compiler exits non-zero: **STOP. Do not call image generation.**
-5. If it passes: use the compiler output as the generation instruction. **Do not rewrite, summarize, beautify, shorten or add to it.**
-6. After generation, perform the acceptance check below before advancing the queue.
+4. Capture the COMPLETE compiler output for this exact generation attempt.
+5. Perform a literal pre-call audit of that captured packet:
+   - packet IMAGE_ID equals the intended next production ID;
+   - packet CAST contains exactly the allowed cast;
+   - packet references the correct stage;
+   - packet contains the frozen STYLE LOCK and ABSOLUTELY FORBIDDEN STYLE DRIFT blocks;
+   - packet ACTION/CONTINUITY/MUST-NOT-SHOW are the compiler-owned values for this ID;
+   - no extra person, prop, building, vehicle, animal action or story event has been manually added.
+6. If the compiler cannot be executed/rendered, any required ref is absent, or any audit item fails: **STOP. Do not call image generation.**
+7. Only after steps 1–6 pass may image generation be invoked.
+8. The generation instruction must be the captured compiler packet **verbatim**. Do not rewrite, summarize, beautify, shorten, translate, reinterpret or append to it.
+9. If the image tool requires instructions to be supplied through conversation context rather than a prompt field, place the COMPLETE captured compiler packet immediately before the image-tool call and invoke the tool without inventing a substitute prompt.
+10. After generation, perform the acceptance check below before advancing the queue.
+
+#### Anti-bypass law — added after failed JET-002 attempt 2026-09-29
+
+The following are explicitly INVALID and must abort generation:
+
+- checking only that the IMAGE_ID exists in `scripts/act2-image-prompt.mjs`;
+- reading the manifest and then writing a fresh prompt from memory;
+- writing a shorter or more "natural" prompt for the image tool;
+- adding aesthetic terms such as `painterly`, `animated`, `3D storybook`, `Pixar-like` or other unsanctioned style language;
+- adding any cast member not emitted by the compiler;
+- adding a building, vehicle, boat, motor, prop or action not emitted by the compiler;
+- calling image generation without having the complete current compiler packet in the same execution step.
+
+**Protocol success is proven by execution, not by intent. A generated image produced without the exact current compiler packet is automatically rejected even if it happens to look correct.**
 
 Bryggan reference declarations:
 - `IMG-A2-JET-005`: `--refs=barnet,alve,valpen,bryggan-stage-1`
