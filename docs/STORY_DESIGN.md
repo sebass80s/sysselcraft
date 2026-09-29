@@ -2213,6 +2213,230 @@ Previously locked exact dialogue that must be preserved when the full script is 
 
 Båthuset keeps its locked identity as **verktyg, fynd, projekt och upptåg**. It is Adam and Alve's workshop/discovery space, not another generic social hangout. The baseline is the same **4 + 4 + 4 + 4 authoritative real-world quest contributions** as the other main Act 2 restoration tracks.
 
+### Båthuset dialogue lock — beats 1–3
+
+**1/16 — Under bråten**
+
+Ni börjar röja det gamla båthuset.
+
+Det luktar trä, sjö och gammalt damm. Överallt ligger trasiga plankor, lådor, rep och saker som ingen verkar ha rört på väldigt länge.
+
+Alve står mitt i röran och ser nästan nöjd ut.
+
+> **Barnet:** “Du ser väldigt glad ut för någon som står mitt i ett jättestök.”  
+> **Alve:** “Det är bra stök. Man vet aldrig vad som finns under.”
+
+Du lyfter undan en gammal låda.
+
+> **Barnet:** “Jag hoppas på något som inte har åtta ben.”  
+> **Alve:** “Jag hoppas på verktyg. Eller en hemlig lucka.”  
+> **Barnet:** “Varför skulle det finnas en hemlig lucka i ett båthus?”  
+> **Alve:** “För att det hade varit bättre om det gjorde det.”
+
+Ni fortsätter röja.
+
+En stor hög med gammalt bråte längst in verkar sitta ovanligt hårt.
+
+Alve försöker dra undan en planka men den rör sig knappt.
+
+> **Alve:** “Det är något under.”  
+> **Barnet:** “Hur vet du det?”  
+> **Alve:** “För att allt annat flyttar på sig och det här vägrar.”
+
+Ni börjar försiktigt ta bort saker ovanifrån.
+
+Efter en stund syns kanten på något mörkt och tungt.
+
+> **Barnet:** “Det där är inte golvet.”
+
+Alve sätter sig på huk och försöker se bättre.
+
+> **Alve:** “Det är en låda.”  
+> **Barnet:** “Det är en väldigt stor låda.”  
+> **Alve:** “Ännu bättre.”  
+> **Barnet:** “Varför?”  
+> **Alve:** “För att stora lådor innehåller bättre saker än små lådor.”  
+> **Barnet:** “Det där har du hittat på.”  
+> **Alve:** “Det känns sant.”
+
+Ni får undan tillräckligt mycket för att se att det är en gammal tung kista.
+
+Alve tittar på den med ett stort leende.
+
+> **Alve:** “Okej. Nu blev det här projektet mycket bättre.”  
+> **Barnet:** “Vi skulle laga båthuset.”  
+> **Alve:** “Det gör vi.”
+
+Han pekar på kistan.
+
+> **Alve:** “Fast först tar vi reda på vad det där är.”
+
+**2/16 — Den låsta kistan**
+
+Ni har fått fram hela kistan.
+
+Den är tung, smutsig och har ett gammalt lås som ser ut att ha suttit där ungefär lika länge som båthuset.
+
+Alve drar i locket.
+
+Det rör sig inte.
+
+Han drar hårdare.
+
+Fortfarande ingenting.
+
+> **Barnet:** “Jag tror den är låst.”
+
+Alve släpper taget och tittar på dig.
+
+> **Alve:** “Jag märkte det.”  
+> **Barnet:** “Ville bara hjälpa.”
+
+Alve börjar undersöka låset.
+
+> **Alve:** “Det här borde gå.”  
+> **Barnet:** “Med vad?”  
+> **Alve:** “Något.”
+
+Du tittar runt på alla gamla saker omkring er.
+
+> **Barnet:** “Bra plan.”
+
+Alve provar först försiktigt.
+
+Sedan lite mindre försiktigt.
+
+Till slut sätter han sig bredvid kistan.
+
+> **Alve:** “Den hatar mig.”  
+> **Barnet:** “Det är ett lås.”  
+> **Alve:** “Det är personligt nu.”
+
+Ni provar flera rimliga sätt att få upp den, men låset sitter fast.
+
+Efter en stund lutar du dig mot väggen.
+
+> **Barnet:** “Vi kanske behöver hjälp.”
+
+Alve tittar fortfarande på kistan.
+
+> **Alve:** “Jag vill inte ge upp mot en låda.”  
+> **Barnet:** “Vi ger inte upp. Vi hittar bara någon som är bättre på gamla lås.”
+
+Alve funderar.
+
+> **Alve:** “Linus?”  
+> **Barnet:** “Kanske.”
+
+Paus.
+
+> **Alve:** “Eller Henning.”
+
+Du tittar på honom.
+
+> **Barnet:** “Varför Henning?”  
+> **Alve:** “Jag vet inte. Han känns som någon som har idéer.”
+
+Du tänker på Henning.
+
+> **Barnet:** “Det där är både sant och lite oroande.”
+
+Alve reser sig.
+
+> **Alve:** “Perfekt. Då frågar vi honom.”
+
+**3/16 — Henning har en idé**
+
+Henning kommer ner till båthuset och tittar på kistan.
+
+Han går ett långsamt varv runt den.
+
+Alve väntar.
+
+Du väntar.
+
+Henning fortsätter titta.
+
+Till slut får Alve nog.
+
+> **Alve:** “Har du någon idé?”
+
+Henning nickar långsamt.
+
+> **Henning:** “Japp.”  
+> **Barnet:** “En normal idé?”
+
+Henning tittar på dig.
+
+> **Henning:** “Vad menar du med normal?”
+
+Du tittar på Alve.
+
+Alve tittar tillbaka.
+
+> **Alve:** “Det där var inte ett bra svar.”
+
+Henning böjer sig ner och granskar låset.
+
+> **Henning:** “Det är gammalt. Rostigt. Och sitter ordentligt.”  
+> **Alve:** “Det vet vi.”  
+> **Henning:** “Ni har försökt få upp det?”  
+> **Barnet:** “Ja. Försiktigt.”
+
+Alve hostar lite.
+
+> **Barnet:** “Mestadels försiktigt.”
+
+Henning reser sig.
+
+> **Henning:** “Då behöver vi något som är mindre försiktigt.”
+
+Alve lyser upp.
+
+> **Alve:** “Jag gillar redan den här planen.”
+
+Du tittar misstänksamt på Henning.
+
+> **Barnet:** “Hur mycket mindre försiktigt?”
+
+Henning ler.
+
+> **Henning:** “Tillräckligt.”
+
+Paus.
+
+> **Barnet:** “Henning.”  
+> **Henning:** “Jag har dynamit.”
+
+Alve vänder sig mot dig med ett ansiktsuttryck som säger att detta är den bästa dagen hittills.
+
+> **Alve:** “Han har dynamit.”  
+> **Barnet:** “Jag hörde.”  
+> **Alve:** “Varför har bagaren dynamit?”
+
+Henning rycker på axlarna.
+
+> **Henning:** “Det är en lång historia.”
+
+Du tittar på Alve.
+
+> **Barnet:** “Vi ska inte fråga.”  
+> **Alve:** “Jag vill väldigt gärna fråga.”
+
+Henning börjar ordna med sin plan.
+
+Vi klipper bort långt innan något praktiskt visas.
+
+Alve lutar sig lite mot dig.
+
+> **Alve:** “Är det här normalt här?”
+
+Du tittar på Henning.
+
+Sedan tillbaka på Alve.
+
+> **Barnet:** “Tyvärr börjar det kännas så.”
+
 ### Contributions 1–4: the locked chest / Henning / first clue across the lake
 Adam and Alve begin by clearing the neglected boathouse and discovering old objects. During the work they uncover a **heavy old locked chest/box** buried or wedged among the clutter. The missing/stubborn lock resists their reasonable attempts to open it.
 
