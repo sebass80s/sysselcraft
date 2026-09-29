@@ -1256,6 +1256,164 @@ Alve skrattar.
 
 **12 — From worksite toward summer place.** They finish the remaining major mid-stage repair and tidy the social/bathing area. **Bryggan 3/4→4/4 visually**, while final completion still requires the last four contributions. The dock now looks nearly finished and residents can plausibly talk about using it, but the permanent ambient pool remains locked.
 
+### Stugan dialogue lock — beats 10–12
+
+**10/16 — Verandan**
+
+Ni börjar plocka undan runt verandan. Teckningen ligger framme som en liten ritning, trots att proportionerna är helt hopplösa.
+
+> **Barnet:** “Så här såg den ut?”  
+> **Alve:** “Ungefär.”  
+> **Barnet:** “På teckningen är den dubbelt så stor.”  
+> **Alve:** “Jag ritade efter känsla.”  
+> **Barnet:** “Du hade mycket känsla.”  
+> **Alve:** “Jag hade stora planer.”
+
+Ni börjar flytta bort gammalt bråte och lösa plankor.
+
+> **Barnet:** “Vad gjorde ni här ute?”  
+> **Alve:** “Åt frukost.”  
+> **Barnet:** “Det vet jag.”  
+> **Alve:** “Fikade.”  
+> **Barnet:** “Det vet jag också.”  
+> **Alve:** “Ibland satt vi bara här.”  
+> **Barnet:** “Och gjorde vad?”  
+> **Alve:** “Inget särskilt.”
+
+Barnet tittar på honom.
+
+> **Barnet:** “Det låter ganska tråkigt.”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Vad gjorde man när man gjorde inget särskilt?”  
+> **Alve:** “Pratade. Tittade på sjön. Någon drack kaffe. Någon sa åt mig att inte springa med blöta fötter.”  
+> **Barnet:** “Gjorde du det ändå?”  
+> **Alve:** “Självklart.”  
+> **Barnet:** “Det börjar finnas ett mönster här.”  
+> **Alve:** “Jag var konsekvent.”
+
+Ni får loss en gammal bräda och hittar mer av verandans ursprungliga kant.
+
+> **Barnet:** “Här fortsätter den.”  
+> **Alve:** “Jag visste det.”  
+> **Barnet:** “Nej, det gjorde du inte.”  
+> **Alve:** “Jag hoppades väldigt självsäkert.”
+
+Barnet skrattar.
+
+> **Barnet:** “Vi kan göra plats för bord här igen.”  
+> **Alve:** “Och stolar.”  
+> **Barnet:** “Och frukost.”  
+> **Alve:** “Och fika.”  
+> **Barnet:** “Du har prioriteringar.”  
+> **Alve:** “Bra prioriteringar.”
+
+**11/16 — Vet de om det här?**
+
+Ni fortsätter arbeta ute på verandan. För första gången börjar den faktiskt kännas som en plats där någon skulle kunna sitta igen.
+
+> **Barnet:** “Alve?”  
+> **Alve:** “Mm?”  
+> **Barnet:** “Vet din familj att du gör det här?”
+
+Alve fortsätter med det han håller på med.
+
+> **Alve:** “Inte riktigt.”  
+> **Barnet:** “Inte riktigt?”  
+> **Alve:** “De vet att stugan finns.”  
+> **Barnet:** “Det hoppas jag.”  
+> **Alve:** “Jag menar att de inte vet att jag håller på och fixar den.”  
+> **Barnet:** “Så det är en överraskning?”
+
+Alve tvekar.
+
+> **Alve:** “Typ.”  
+> **Barnet:** “En väldigt stor överraskning.”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Tänk om de kommer hit innan vi är klara.”
+
+Alve stannar upp.
+
+> **Alve:** “Det gör de nog inte.”  
+> **Barnet:** “Hur vet du det?”  
+> **Alve:** “Det bara känns så.”  
+> **Barnet:** “Och när vi är klara?”  
+> **Alve:** “Då kanske.”  
+> **Barnet:** “Har du tänkt säga till dem?”  
+> **Alve:** “Jag vet inte.”  
+> **Barnet:** “Hur ska de veta att den är klar annars?”  
+> **Alve:** “Jag har inte kommit så långt i planen.”  
+> **Barnet:** “Du och dina planer.”  
+> **Alve:** “De blir bättre.”  
+> **Barnet:** “Gör de?”  
+> **Alve:** “Den här har ju dig nu.”
+
+Barnet tystnar lite.
+
+> **Barnet:** “Det var faktiskt ett ganska bra svar.”  
+> **Alve:** “Jag vet.”
+
+Ni fortsätter arbeta.
+
+**12/16 — Någon har varit här**
+
+När ni kommer tillbaka till stugan nästa gång står något inte riktigt som ni lämnade det.
+
+> **Barnet:** “Var den där lådan där förut?”  
+> **Alve:** “Nej.”
+
+Ni går in. Det är inget stort. Ingen dörr står öppen, inget är förstört. Men något känns annorlunda.
+
+Barnet ser något på golvet.
+
+> **Barnet:** “Vad är det?”
+
+Alve böjer sig ner och plockar upp en liten nyckelring. Han stannar.
+
+> **Alve:** “Den här är inte härifrån.”  
+> **Barnet:** “Varifrån är den då?”  
+> **Alve:** “Hemma.”  
+> **Barnet:** “Hemma hos dig?”  
+> **Alve:** “Ja.”
+
+Barnet tittar mot dörren.
+
+> **Barnet:** “Så någon har varit här.”
+
+Alve säger inget först. Sedan tittar han runt i stugan.
+
+> **Alve:** “De har varit här.”  
+> **Barnet:** “Det verkar så.”  
+> **Alve:** “Då såg de den.”  
+> **Barnet:** “Stugan?”  
+> **Alve:** “Ja.”  
+> **Alve:** “Och allt vi har gjort.”  
+> **Barnet:** “Ja.”
+
+Alve tittar ut mot verandan.
+
+> **Alve:** “Då måste vi hinna klart.”  
+> **Barnet:** “Innan vad?”
+
+Alve svarar inte direkt.
+
+> **Alve:** “Bara… innan.”  
+> **Barnet:** “Tror du de kommer tillbaka?”
+
+Alve tittar på nyckelringen.
+
+> **Alve:** “Jag vet inte.”  
+> **Barnet:** “Men du tror det.”  
+> **Alve:** “Jag hoppas.”
+
+Han stoppar nyckelringen försiktigt i fickan.
+
+> **Alve:** “Kom igen.”  
+> **Barnet:** “Nu igen?”  
+> **Alve:** “Nu på riktigt.”  
+> **Barnet:** “Vad gjorde vi innan?”  
+> **Alve:** “Övade.”
+
+
 ### Contributions 13–16: finish it and give it back to the village
 
 **13 — Final weak spot.** Adam and Alve find/finish the last substantial piece that still makes the nearly restored dock read as a worksite. No new mystery or shopping chain is introduced.
