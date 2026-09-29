@@ -2159,6 +2159,58 @@ Den låsta payoff-bilden visar **Linus, Henning, Sol och Mira i vattnet** och **
 
 ## Båthuset restoration arc — LOCKED 2026-09-28
 
+### Båthuset dialogue recovery audit — 2026-09-29
+
+Historical repo review confirms that Båthuset **was designed and implemented as a complete 1–16 story flow**, but unlike Bryggan, Stugan and Motorbåten it was never expanded into a full line-by-line dialogue script.
+
+Canonical historical implementation commit:
+- `edbe647bf20f6756fc7d6fc53020c9a28f613d5e` — **Add boathouse story flow to Act 2 test**
+
+That implementation contains the complete beat structure and Story Moment mapping:
+- **1–4:** buried/locked chest → Henning + dynamite → BOOM aftermath → old tools/boat parts + lake photograph
+- **5–8:** turn the ruined work area into a usable workshop with Mira support
+- **9–12:** discover, build, fail-test and improve the lådbil
+- **13–16:** clear the boat bay, restore/test the old slip/trolley mechanism, finish the boathouse and point toward the later motorboat project
+
+Previously locked exact dialogue that must be preserved when the full script is authored:
+
+> **Alve:** “Är alla i din by så här?”  
+> **Barnet:** “Typ.”  
+> **Alve:** “…jag gillar den här byn.”
+
+> **Alve:** “Den där båten…”  
+> **Barnet:** “Vadå?”  
+> **Alve:** “Det är ju den.”  
+> **Barnet:** “Den på bilden?”  
+> **Alve:** “Mm.”  
+> **Alve:** “Jag undrar vart de brukade åka.”
+
+> **Mira:** “Ni behöver inte fler verktyg. Ni behöver kunna hitta de ni redan har.”
+
+> **Alve:** “Men först ska vi fixa den gamla båten.”
+
+> **Barnet:** “Gick det bra?”  
+> **Alve:** “Japp.”  
+> **Barnet:** “Hjulet lossnade.”  
+> **Alve:** “Då vet vi vad vi ska fixa.”
+
+> **Alve:** “Okej. Den där var övning.”  
+> **Barnet:** “För vad?”  
+> **Alve:** “Båten.”
+
+> **Alve:** “Då kan vi få in båten.”  
+> **Barnet:** “När vi får laga den.”  
+> **Alve:** “När vi får laga den.”
+
+> **Barnet:** “Klart.”  
+> **Alve:** “Nästan.”  
+> **Barnet:** “Vad är det som är kvar?”  
+> **Alve:** “Den.”
+
+**Important status:** do not claim that a full Båthuset 1–16 dialogue script already exists. The **story flow, visuals and key exchanges are canonical**, but the longer dialogue still needs to be authored if Båthuset is to reach the same dialogue-completeness level as Bryggan, Stugan and Motorbåten.
+
+
+
 Båthuset keeps its locked identity as **verktyg, fynd, projekt och upptåg**. It is Adam and Alve's workshop/discovery space, not another generic social hangout. The baseline is the same **4 + 4 + 4 + 4 authoritative real-world quest contributions** as the other main Act 2 restoration tracks.
 
 ### Contributions 1–4: the locked chest / Henning / first clue across the lake
