@@ -747,6 +747,34 @@ Everything else is frozen. Do not creatively paraphrase, embellish, shorten, sub
 >
 > Do not add story events, props, purchases, injuries, residents, construction progress or environmental features not authorized by the image contract.
 
+### Mandatory execution path — FAIL CLOSED
+
+**Direct freehand image prompting is forbidden for Act 2 production images.**
+
+Before ANY Act 2 production image generation:
+
+1. Identify the exact locked `IMAGE_ID`.
+2. Confirm the required character + stage references are actually present in the active image conversation.
+3. Run the repository prompt compiler:
+   `npm run image:act2:prompt -- <IMAGE_ID> --refs=<comma-separated refs actually present>`
+4. If the compiler exits non-zero: **STOP. Do not call image generation.**
+5. If it passes: use the compiler output as the generation instruction. **Do not rewrite, summarize, beautify, shorten or add to it.**
+6. After generation, perform the acceptance check below before advancing the queue.
+
+Bryggan reference declarations:
+- `IMG-A2-JET-005`: `--refs=barnet,alve,valpen,bryggan-stage-1`
+- `IMG-A2-JET-001`: `--refs=barnet,alve,linus,valpen,bryggan-stage-1`
+- `IMG-A2-JET-002`: `--refs=barnet,alve,sol,valpen,bryggan-stage-2`
+- `IMG-A2-JET-006`: `--refs=barnet,alve,valpen,bryggan-stage-2`
+- `IMG-A2-JET-007`: `--refs=barnet,alve,valpen,bryggan-stage-3`
+- `IMG-A2-JET-003`: `--refs=barnet,alve,henning,valpen,bryggan-stage-3`
+- `IMG-A2-JET-004`: `--refs=barnet,alve,valpen,bryggan-stage-4`
+
+The compiler owns the exact cast/action/continuity/must-not-show payload for these IDs. If story canon changes, update the manifest and compiler together before generating again.
+
+**Important:** declaring a ref on the command line is an assertion that the corresponding canonical image is visibly present in the active conversation. Never fake a declaration to make preflight pass.
+
+
 ### Mandatory preflight before EVERY generation
 
 Before invoking image generation, resolve all of these from repo + active conversation:
