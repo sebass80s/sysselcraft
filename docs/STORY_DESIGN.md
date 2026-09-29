@@ -3566,6 +3566,242 @@ Locked setup for the final block:
 > **Alve:** “VA?”  
 > **Linus:** “Ni har inte provat om den håller hela vägen.”
 
+### Motorbåten dialogue lock — beats 10–12
+
+**10/16 — Första turen**
+
+Motorn går. Inte bara ett hostande ljud den här gången. Den går faktiskt.
+
+Alve stirrar på den som om han inte riktigt litar på vad han hör.
+
+> **Alve:** “Den går.”  
+> **Barnet:** “Japp.”  
+> **Alve:** “Den går fortfarande.”  
+> **Barnet:** “Japp.”  
+> **Alve:** “Vi borde kanske säga något mer.”  
+> **Barnet:** “Kör?”
+
+Alve tittar upp.
+
+> **Alve:** “Kör.”
+
+Ni lämnar bryggan långsamt.
+
+Linus står kvar på land med armarna i kors.
+
+Alve tittar bakåt.
+
+> **Alve:** “Vi åker.”  
+> **Barnet:** “Det brukar hända när man kör båt.”  
+> **Alve:** “Nej, men vi åker.”
+
+Du tittar tillbaka mot bryggan. Den blir sakta mindre.
+
+> **Barnet:** “Vi har faktiskt lämnat land.”  
+> **Alve:** “Jag vet.”
+
+Paus.
+
+> **Alve:** “Det här är fantastiskt.”
+
+Ni kommer en liten bit ut.
+
+Alve håller blicken framåt.
+
+> **Alve:** “Tror du vi kan åka längre?”  
+> **Barnet:** “Linus sa inte långt.”  
+> **Alve:** “Det här är inte långt.”  
+> **Barnet:** “Än.”
+
+Alve ler.
+
+Sedan hostar motorn.
+
+Alve slutar le.
+
+> **Alve:** “Nej.”
+
+Motorn hostar igen.
+
+> **Alve:** “Nej nej nej.”
+
+Den stannar.
+
+Tystnad.
+
+Båten glider sakta vidare en liten bit.
+
+> **Barnet:** “Den stannade.”  
+> **Alve:** “Jag märkte det.”  
+> **Barnet:** “Vill du att jag säger att det gick ganska bra?”  
+> **Alve:** “Inte än.”
+
+Från bryggan hörs Henning ropa.
+
+> **Henning:** “GÅR DET BRA?”  
+> **Alve:** “JAPP!”
+
+Du tittar på honom.
+
+> **Barnet:** “Det gör det inte.”  
+> **Alve:** “DET GÅR GANSKA BRA!”
+
+Henning vinkar glatt.
+
+> **Barnet:** “Varför sa du så?”  
+> **Alve:** “För att det gick väldigt bra precis innan det slutade gå bra.”
+
+Du börjar skratta. Alve gör det också.
+
+> **Alve:** “Vi kom i alla fall ut.”  
+> **Barnet:** “Och nu ska vi tillbaka.”  
+> **Alve:** “Detaljer.”
+
+**11/16 — Tillbaka igen**
+
+Efter en stund får ni hjälp tillbaka till bryggan.
+
+Alve hoppar iland.
+
+> **Henning:** “Det såg väldigt bra ut.”  
+> **Barnet:** “Tills det inte gjorde det.”  
+> **Henning:** “Jag tittade mest i början.”  
+> **Alve:** “Bra val.”
+
+Linus kommer fram.
+
+> **Linus:** “Hur gick det?”  
+> **Alve:** “Perfekt.”
+
+Du tittar på honom.
+
+> **Alve:** “Nästan perfekt.”
+
+Linus tittar på dig.
+
+> **Barnet:** “Vi kom ungefär dit.”
+
+Du pekar ut över vattnet.
+
+> **Linus:** “Och sen?”  
+> **Barnet:** “Sen slutade den gå.”  
+> **Alve:** “Men innan dess gick den.”  
+> **Linus:** “Det är därför man testar.”  
+> **Alve:** “Jag trodde test betydde att man skulle se om den fungerade.”  
+> **Linus:** “Det gjorde ni.”  
+> **Alve:** “Och?”
+
+Linus tittar på båten.
+
+> **Linus:** “Den fungerar.”
+
+Alve lyser upp.
+
+> **Linus:** “Inte tillräckligt bra än.”
+
+Alve sjunker ihop igen.
+
+> **Alve:** “Du borde verkligen lägga till hela meningen direkt.”
+
+Henning tittar ner i båten.
+
+> **Henning:** “Behöver ni hjälp?”  
+> **Alve:** “Kan du laga båtmotorer?”  
+> **Henning:** “Nej.”  
+> **Alve:** “Då är svaret lite oklart.”  
+> **Henning:** “Jag kan ta med fika.”
+
+Alve tänker.
+
+> **Alve:** “Okej. Du är med.”
+
+Linus skakar på huvudet.
+
+Ni börjar gå igenom vad som återstår.
+
+Den här gången låter Alve inte lika otålig.
+
+> **Barnet:** “Du försöker inte starta den igen.”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Är du sjuk?”  
+> **Alve:** “Jag tänkte vänta tills vi vet varför den stannade.”
+
+Linus tittar upp.
+
+> **Linus:** “Bra.”
+
+Alve ser genast irriterad ut.
+
+> **Alve:** “Säg inte det så där.”  
+> **Linus:** “Hur då?”  
+> **Alve:** “Som att jag lär mig saker.”
+
+**12/16 — Vår båt**
+
+Efter ännu mer arbete står motorbåten vid bryggan igen.
+
+Den ser färdig ut nu. Inte ny, men hel. Användbar. Er.
+
+Sol har lämnat säkerhetsutrustning. Mira har fixat det praktiska ni saknade. Henning har lyckats ställa en alldeles för stor påse fika i båten.
+
+Alve tittar ner i den.
+
+> **Alve:** “Varför är det så mycket mat?”  
+> **Barnet:** “Henning.”  
+> **Alve:** “Det svarade faktiskt på frågan.”
+
+Linus går ett sista varv runt båten.
+
+> **Alve:** “Nu är den klar.”  
+> **Linus:** “Nej.”
+
+Alve snurrar runt.
+
+> **Alve:** “VA?”  
+> **Linus:** “Ni har inte provat om den håller hela vägen.”  
+> **Alve:** “Vi har ju kört den.”  
+> **Linus:** “En liten bit.”  
+> **Barnet:** “Och blivit hämtade.”  
+> **Alve:** “Det behöver vi inte ta upp varje gång.”
+
+Linus klappar på relingen.
+
+> **Linus:** “Den ser klar ut.”  
+> **Alve:** “Bra.”  
+> **Linus:** “Nu ska ni bevisa att den är det.”
+
+Alve suckar, men ler samtidigt.
+
+> **Alve:** “Okej.”
+
+Han går runt båten och stannar vid sidan.
+
+> **Alve:** “Den behöver ett namn.”  
+> **Barnet:** “Gör den?”  
+> **Alve:** “Alla bra båtar har namn.”  
+> **Barnet:** “Hur många båtar känner du?”  
+> **Alve:** “Det är inte viktigt.”
+
+Du tittar på båten.
+
+> **Barnet:** “Vad ska den heta då?”
+
+Alve tänker länge.
+
+> **Alve:** “Jag vet inte.”  
+> **Barnet:** “Starkt.”  
+> **Alve:** “Det måste vara bra.”  
+> **Barnet:** “Jag kan döpa den.”
+
+Alve tittar på dig.
+
+> **Alve:** “Okej.”  
+> **Alve:** “Men välj något bra.”  
+> **Barnet:** “Ingen press.”  
+> **Alve:** “Jättemycket press.”
+
+**Naming interaction lock:** after this dialogue, the player names the motorboat. The chosen name becomes persistent and may be reused in later dialogue/UI where technically practical. The boat is now emotionally framed as **Barnet and Alve's shared adventure boat**, not merely Alve's family's old motorboat.
+
 ### Contributions 13–16: the proper test / Act 2 climax
 The final block adds no new purchase or major repair. It proves that Adam and Alve can use what they restored.
 
