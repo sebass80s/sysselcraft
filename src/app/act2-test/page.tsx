@@ -26,6 +26,12 @@ const STORY_BEATS: StoryBeat[] = [
     body: ["Alve försöker laga stugan själv.", "Han ser först lite misstänksam ut när Barnet kommer fram."],
   },
   {
+    id: "meet-reality-check",
+    title: "Det är mer jobb än det ser ut",
+    image: "/assets/village/story-moments/act2/meeting-alve/a-lot-of-work.png",
+    body: ["Alve har verkligen försökt själv, men börjar inse hur mycket som behöver göras.", "Barnet ser att det här är större än ett litet fix."],
+  },
+  {
     id: "meet-pick",
     title: "Vad ska vi börja med?",
     image: "/assets/village/story-moments/act2/meeting-alve/pick.png",
