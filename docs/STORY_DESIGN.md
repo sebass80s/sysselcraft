@@ -2352,6 +2352,81 @@ Han kastar en sista blick mot vägen.
 
 Contribution 16 completes Stugan. The completion Story Moment should show the transformation from the abandoned cottage at Alve's introduction into a warm, intact place containing its accumulated history: **height marks, family photograph, childhood drawing, old game and evidence of Adam and Alve's new memories together**.
 
+### Stugan dialogue lock — beat 16
+
+**16/16 — Stugan är klar**
+
+Ni står utanför stugan och tittar på den. För första gången finns det inget kvar som måste lagas.
+
+> **Barnet:** “Så.”  
+> **Alve:** “Så?”  
+> **Barnet:** “Nu är den klar.”
+
+Alve tittar på stugan en lång stund.
+
+> **Alve:** “Ja.”  
+> **Barnet:** “Det där lät inte särskilt övertygande.”  
+> **Alve:** “Jag försöker bara vänja mig vid det.”  
+> **Barnet:** “Vid vad?”  
+> **Alve:** “Att det inte finns något mer att fixa.”
+
+Barnet tittar mot verandan.
+
+> **Barnet:** “Vi kan alltid hitta något om du blir desperat.”  
+> **Alve:** “Nej tack.”
+
+Ni går in en sista gång. Märkena finns kvar på väggen. Fotot sitter uppe. Spelet står på sin plats. Teckningen **VÅR STUGA** finns kvar.
+
+Alve går långsamt genom rummet.
+
+> **Alve:** “Det ser inte ut som förr.”  
+> **Barnet:** “Nej.”  
+> **Alve:** “Bra.”  
+> **Barnet:** “Bra?”  
+> **Alve:** “Det är vårt nu också.”
+
+Paus.
+
+> **Barnet:** “Tror du de kommer?”
+
+Alve tittar mot dörren.
+
+> **Alve:** “Inte idag.”  
+> **Barnet:** “Hur vet du det?”  
+> **Alve:** “Det bara känns så.”
+
+Barnet väntar.
+
+> **Alve:** “Men den är klar.”  
+> **Barnet:** “Det är den.”
+
+Alve ser på fotot igen.
+
+> **Alve:** “Jag hoppas de får se den.”  
+> **Barnet:** “Det tror jag.”  
+> **Alve:** “Du vet inte det.”  
+> **Barnet:** “Nej.”  
+> **Barnet:** “Men jag hoppas också.”
+
+Alve nickar. Sedan tittar han ut mot sjön.
+
+> **Barnet:** “Vi kommer ju tillbaka imorgon.”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Och då?”  
+> **Alve:** “Vi har ju en båt att laga.”  
+> **Barnet:** “Du har redan börjat tänka på nästa grej?”  
+> **Alve:** “Någon måste.”  
+> **Barnet:** “Det är tydligen vi.”
+
+Alve går mot dörren.
+
+> **Alve:** “Bra.”
+
+Han tittar tillbaka på stugan en sista gång.
+
+> **Alve:** “Då går vi.”
+
+
 The family does **not** arrive at cottage completion. Adam and Alve wait briefly, but nobody comes.
 
 Locked completion beat:
