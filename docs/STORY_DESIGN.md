@@ -2747,6 +2747,247 @@ Canonical emotional progression:
 
 Motorbåten unlocks only after Stugan, Bryggan and Båthuset are complete. It uses the same **4+4+4+4 = 16 authoritative real-world contributions**. Unlike the first three projects, its arc is not primarily about saving another place: it gathers the restored lake, village support network, Alve's family history and Adam/Alve friendship into the vehicle that will eventually carry them toward Act 3. The Act 3 destination remains deliberately undefined.
 
+### Motorbåten dialogue lock — beats 1–3
+
+**1/16 — Äntligen båten**
+
+Ni står i det färdiga båthuset och tittar på motorbåten.
+
+Alve står helt stilla ovanligt länge.
+
+> **Barnet:** “Du tänker säga det, eller hur?”  
+> **Alve:** “Vadå?”  
+> **Barnet:** “Att vi äntligen får börja med båten.”
+
+Alve försöker låta lugn.
+
+> **Alve:** “Jag tänkte faktiskt inte säga det.”
+
+Paus.
+
+> **Alve:** “ÄNTLIGEN.”  
+> **Barnet:** “Där var det.”
+
+Alve går runt båten och tittar på den från alla håll.
+
+> **Alve:** “Vi har lagat stugan.”  
+> **Barnet:** “Japp.”  
+> **Alve:** “Bryggan.”  
+> **Barnet:** “Japp.”  
+> **Alve:** “Båthuset.”  
+> **Barnet:** “Jag ser vart det här är på väg.”
+
+Alve lägger handen på båten.
+
+> **Alve:** “Nu är det din tur.”  
+> **Barnet:** “Pratar du med båten?”  
+> **Alve:** “Den har väntat länge.”  
+> **Barnet:** “Det har du också.”  
+> **Alve:** “Exakt.”
+
+Ni börjar dra undan det som legat över båten och göra plats runt den.
+
+> **Barnet:** “Den ser ganska ledsen ut.”  
+> **Alve:** “Den ser gammal ut.”  
+> **Barnet:** “Den kan vara båda.”
+
+Alve torkar bort smuts från sidan.
+
+> **Alve:** “Jag minns den nästan så här.”  
+> **Barnet:** “Trasig?”  
+> **Alve:** “Nej.”
+
+Han tittar på den en stund.
+
+> **Alve:** “Större.”  
+> **Barnet:** “Du var mindre.”
+
+Alve tittar på Barnet.
+
+> **Alve:** “Det behöver inte vara förklaringen till allt.”  
+> **Barnet:** “Det förklarar ganska mycket.”
+
+Ni fortsätter röja fram båten.
+
+> **Alve:** “Tänk om den faktiskt går att få igång.”  
+> **Barnet:** “Det är väl därför vi är här.”  
+> **Alve:** “Ja.”
+
+Paus.
+
+> **Alve:** “Men tänk om den gör det.”
+
+Den här gången svarar Barnet inte med ett skämt.
+
+> **Barnet:** “Då åker vi.”
+
+Alve ler.
+
+> **Alve:** “Då åker vi.”
+
+**2/16 — Samma båt**
+
+När ni går igenom båten upptäcker Barnet en detalj på sidan.
+
+> **Barnet:** “Vänta.”  
+> **Alve:** “Vad?”  
+> **Barnet:** “Har inte jag sett den där förut?”  
+> **Alve:** “Båten?”  
+> **Barnet:** “Nej, den där.”
+
+Barnet pekar på ett gammalt märke i sidan.
+
+Alve böjer sig ner.
+
+> **Alve:** “Jag vet inte.”  
+> **Barnet:** “Fotot.”  
+> **Alve:** “Vilket foto?”
+
+Barnet tittar på honom.
+
+> **Barnet:** “Det vi hittade i båthuset.”  
+> **Alve:** “Just det.”  
+> **Barnet:** “Det som du tittade på jättelänge.”  
+> **Alve:** “Jag tittade normalt länge.”
+
+Ni tar fram det gamla fotografiet och jämför.
+
+Alve blir tyst.
+
+> **Barnet:** “Det är samma märke.”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Så det är samma båt.”
+
+Alve håller fotot bredvid båten.
+
+> **Alve:** “Det är den.”  
+> **Barnet:** “Din familjs båt.”  
+> **Alve:** “Mm.”
+
+Han tittar på människorna på fotografiet och sedan på båten framför sig.
+
+> **Barnet:** “Kommer du ihåg när ni åkte med den?”  
+> **Alve:** “Lite.”  
+> **Barnet:** “Vart åkte ni?”
+
+Alve tänker.
+
+> **Alve:** “Ut på sjön.”  
+> **Barnet:** “Det förstod jag.”  
+> **Alve:** “Jag var liten.”  
+> **Barnet:** “Det har vi också förstått.”  
+> **Alve:** “Jag minns mest ljudet.”  
+> **Barnet:** “Motorn?”  
+> **Alve:** “Mm. Och vinden.”
+
+Han kisar mot fotot.
+
+> **Alve:** “Och att man inte fick stå upp.”  
+> **Barnet:** “Gjorde du det ändå?”
+
+Alve tittar på honom.
+
+> **Alve:** “Jag börjar ångra att jag berättat saker för dig.”  
+> **Barnet:** “Så ja.”  
+> **Alve:** “Kanske.”
+
+Barnet tittar på fotografiet igen.
+
+> **Barnet:** “Det är lite konstigt.”  
+> **Alve:** “Vadå?”  
+> **Barnet:** “Först var den bara en gammal båt.”  
+> **Alve:** “Och nu?”  
+> **Barnet:** “Nu vet vi att den varit någonstans.”
+
+Alve tittar ut genom båthusöppningen över sjön.
+
+> **Alve:** “Ja.”  
+> **Barnet:** “Och du vet inte vart.”  
+> **Alve:** “Nej.”
+
+Paus.
+
+> **Alve:** “Än.”
+
+**3/16 — Linus känner igen den**
+
+Linus kommer ner till båthuset för att titta på projektet.
+
+Han går ett varv runt båten utan att säga något.
+
+> **Alve:** “Nå?”  
+> **Linus:** “Den är gammal.”  
+> **Alve:** “Det visste vi.”  
+> **Linus:** “Den har stått länge.”  
+> **Alve:** “Det visste vi också.”  
+> **Linus:** “Den är i sämre skick än du hoppas.”
+
+Alve tittar på Barnet.
+
+> **Alve:** “Han gör så här med flit.”  
+> **Barnet:** “Jag tror det.”
+
+Linus böjer sig ner och tittar på några av de gamla delarna ni hittade i båthuset.
+
+> **Linus:** “Men allt är inte skräp.”
+
+Alve lyser upp.
+
+> **Alve:** “Så den går att laga?”  
+> **Linus:** “Jag sa inte det.”  
+> **Alve:** “Linus.”
+
+Linus ler lite.
+
+> **Linus:** “Ja. Jag tror det.”
+
+Alve vänder sig direkt mot Barnet.
+
+> **Alve:** “Hörde du?”  
+> **Barnet:** “Jag står här.”  
+> **Alve:** “Han tror den går att laga.”  
+> **Linus:** “Om ni gör jobbet ordentligt.”  
+> **Alve:** “Den delen hörde jag mindre tydligt.”
+
+Linus tittar på fotografiet.
+
+> **Linus:** “Var hittade ni den här?”  
+> **Barnet:** “I kistan.”
+
+Linus granskar bilden.
+
+> **Alve:** “Känner du igen båten?”  
+> **Linus:** “Ja.”
+
+Alve blir genast allvarligare.
+
+> **Alve:** “Vet du vart den åkte?”  
+> **Linus:** “Över sjön.”  
+> **Alve:** “Ja, men vart?”
+
+Linus räcker tillbaka fotografiet.
+
+> **Linus:** “Det får ni väl ta reda på.”  
+> **Alve:** “Du vet.”  
+> **Linus:** “Jag vet att en sjö har två sidor.”  
+> **Alve:** “Det där är inte ett svar.”  
+> **Linus:** “Det var inte meningen heller.”
+
+Barnet tittar på Alve.
+
+> **Barnet:** “Han är ganska bra på det här.”  
+> **Alve:** “Fruktansvärt bra.”
+
+Linus pekar mot båten.
+
+> **Linus:** “Börja med båten framför er. Andra sidan finns kvar senare.”
+
+Alve tittar ut över vattnet igen.
+
+> **Alve:** “Sen.”  
+> **Linus:** “Precis.”  
+> **Alve:** “Jag börjar verkligen ogilla det ordet.”
+
 ### Contributions 1–4: the old boat becomes a real project
 Adam and Alve use the restored boathouse slip to bring the motorboat inside. Alve has been waiting for this throughout the act. They uncover/clean it and compare it with the old boathouse photograph, confirming through a distinctive visual detail that it is the same boat shown on the old trip across the lake. The boat is therefore a physical piece of Alve's family history, not a random wreck.
 
