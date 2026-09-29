@@ -883,6 +883,169 @@ Barnet låter bilden vila i handen en stund.
 
 **4 — First real repair.** Adam and Alve use the salvaged material for the first substantial structural repair. **Bryggan 1/4→2/4.** Salvage can remain visible at the worksite as intermediate feedback.
 
+### Stugan dialogue lock — beats 4–6
+
+**4/16 — Som förr**
+
+Ni har fått undan mycket av skräpet. För första gången går det att se hur stugan faktiskt skulle kunna bli igen.
+
+> **Barnet:** “Det börjar ju faktiskt se bra ut.”
+
+Alve tittar runt, men ser inte riktigt nöjd ut.
+
+> **Alve:** “Inte tillräckligt.”  
+> **Barnet:** “Inte tillräckligt för vad?”
+
+Alve svarar inte direkt.
+
+> **Barnet:** “Alve?”  
+> **Alve:** “Jag tänkte att om det såg ut som förr…”  
+> **Alve:** “…så kanske de skulle vilja komma hit igen.”  
+> **Barnet:** “Din familj?”  
+> **Alve:** “Mm.”  
+> **Barnet:** “Är det därför du försökte fixa allt själv?”  
+> **Alve:** “Jag tänkte att det kanske skulle gå.”  
+> **Barnet:** “Allt det här?”  
+> **Alve:** “Jag hade inte riktigt tittat på allt samtidigt.”  
+> **Barnet:** “Det var kanske smart.”  
+> **Alve:** “Det var väldigt smart tills du kom och började peka på saker.”
+
+Barnet ler lite.
+
+> **Barnet:** “Tror du det räcker om det blir som förr?”
+
+Alve tittar runt igen.
+
+> **Alve:** “Jag vet inte.”  
+> **Barnet:** “Men du hoppas.”  
+> **Alve:** “Ja.”  
+> **Alve:** “Det var bra här då.”  
+> **Barnet:** “Då gör vi det bra här igen.”  
+> **Alve:** “Som förr?”
+
+Barnet tittar på märkena, fotot och allt ni redan hunnit fixa.
+
+> **Barnet:** “Kanske.”  
+> **Barnet:** “Eller bra på något annat sätt.”
+
+Alve funderar på det.
+
+> **Alve:** “Vi kan börja med att få dörren att gå att stänga.”  
+> **Barnet:** “Det känns rimligt.”
+
+**5/16 — Det gamla spelet**
+
+När ni går igenom ett skåp hittar Alve en sliten låda längst in.
+
+> **Alve:** “Nej.”  
+> **Barnet:** “Vad?”
+
+Alve drar fram lådan.
+
+> **Alve:** “Den här finns kvar.”  
+> **Barnet:** “Vad är det?”  
+> **Alve:** “Ett spel.”  
+> **Barnet:** “Det ser väldigt gammalt ut.”  
+> **Alve:** “Tack.”  
+> **Barnet:** “Jag menade spelet.”  
+> **Alve:** “Bra.”
+
+Han öppnar lådan. Några delar ligger huller om buller.
+
+> **Barnet:** “Är allt med?”  
+> **Alve:** “Ingen aning.”  
+> **Barnet:** “Bra början.”  
+> **Alve:** “Vi spelade det här hela tiden när det regnade.”  
+> **Barnet:** “Var det kul?”  
+> **Alve:** “Ibland.”  
+> **Barnet:** “Det låter inte så övertygande.”  
+> **Alve:** “Det blev mest bråk.”  
+> **Barnet:** “Om spelet?”  
+> **Alve:** “Om reglerna.”  
+> **Barnet:** “Vilka regler?”  
+> **Alve:** “Exakt.”
+
+Barnet tittar misstänksamt på honom.
+
+> **Barnet:** “Du hittade på regler.”  
+> **Alve:** “Nej.”  
+> **Barnet:** “Du ser ut som någon som hittar på regler när du håller på att förlora.”  
+> **Alve:** “Det där är en väldigt allvarlig anklagelse.”  
+> **Barnet:** “Är den fel?”
+
+Alve börjar lägga tillbaka delarna i lådan.
+
+> **Alve:** “Det viktiga är att spelet fortfarande finns.”  
+> **Barnet:** “Det där var inte ett svar.”  
+> **Alve:** “Det var ett mycket bättre ämne.”  
+> **Barnet:** “Ska vi behålla det?”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Även om delar saknas?”  
+> **Alve:** “Vi kan fixa det.”  
+> **Barnet:** “Du säger det om väldigt många saker.”  
+> **Alve:** “Och nu är vi två.”
+
+**6/16 — Golvet är lava**
+
+När ni fortsätter flytta möbler börjar Alve plötsligt undvika en del av golvet.
+
+> **Barnet:** “Vad gör du?”  
+> **Alve:** “Inget.”
+
+Alve kliver från en stol till en gammal låda.
+
+> **Barnet:** “Du går inte på golvet.”  
+> **Alve:** “Jag går på vissa delar av golvet.”  
+> **Barnet:** “Varför?”  
+> **Alve:** “För att de andra är lava.”  
+> **Barnet:** “Är du seriös?”  
+> **Alve:** “Extremt.”  
+> **Barnet:** “Vi håller på att renovera en stuga.”  
+> **Alve:** “Ja.”  
+> **Barnet:** “Och nu är golvet lava.”  
+> **Alve:** “Det brukade vara det.”  
+> **Barnet:** “Hur visste man vilka delar som var lava?”  
+> **Alve:** “Man bara visste.”  
+> **Barnet:** “Det låter väldigt rättvist.”  
+> **Alve:** “Det var det inte.”
+
+Alve tar sig över till andra sidan.
+
+> **Barnet:** “Lekte ni så här när du var liten?”  
+> **Alve:** “Japp. Från soffan till stolen, sen till mattan och upp på trappsteget.”  
+> **Barnet:** “Och om man trampade fel?”  
+> **Alve:** “Då dog man.”  
+> **Barnet:** “Hårt.”  
+> **Alve:** “Man fick börja om efter ungefär fem sekunder.”  
+> **Barnet:** “Mindre hårt.”
+
+Alve tittar tillbaka på Barnet.
+
+> **Alve:** “Kommer du eller?”  
+> **Barnet:** “Jag tänker använda golvet.”  
+> **Alve:** “Fegt.”
+
+Barnet tar ett steg mot honom och stannar.
+
+> **Barnet:** “Vilken del var säker?”
+
+Alve ler.
+
+> **Alve:** “Jag visste det.”
+
+Barnet kliver upp på en låda.
+
+> **Barnet:** “Om jag ramlar är det ditt fel.”  
+> **Alve:** “Om du ramlar i lava har vi större problem.”
+
+Ni tar er genom rummet mellan möbler och lådor.
+
+> **Barnet:** “Det här var faktiskt ganska kul.”  
+> **Alve:** “Jag vet.”  
+> **Barnet:** “Säg inget.”  
+> **Alve:** “För sent.”
+
+
 ### Contributions 5–8: make it a bathing place / Sol / life buoy
 
 **5 — The water becomes tempting.** With the worst first section repaired, Alve immediately starts talking about swimming. Adam and Alve clear the approach/edge and discover that making a dock physically stronger is not the same as making the bathing area ready for people.
