@@ -9,6 +9,7 @@ type StoryBeat = {
   title: string;
   image: string;
   body: string[];
+  stage?: Act2VisualStage;
 };
 
 const STORY_BEATS: StoryBeat[] = [
@@ -166,6 +167,125 @@ const STORY_BEATS: StoryBeat[] = [
     id: "cottage-16", title: "16/16 · Stugan är klar", image: "/assets/village/story-moments/act2/cabin/6.png",
     body: ["Längdmarkeringarna, fotot, spelet och VÅR STUGA finns kvar.", "Barnet: Tror du de kommer?", "Alve: Inte idag.", "Alve: Men den är klar.", "Barnet: Vi kommer ju tillbaka imorgon.", "Alve: Ja. Vi har ju en båt att laga."],
   },
+  {
+    id: "jetty-01",
+    title: "1/16 · Vi börjar röja",
+    image: "/assets/village/story-moments/act2/jetty/01-early-restoration.png",
+    body: ["Barnet och Alve börjar riva bort lösa och skadade plankor.", "Alve tror först att det här kommer gå snabbt."],
+    stage: 1,
+  },
+  {
+    id: "jetty-02",
+    title: "2/16 · Det är värre under",
+    image: "/assets/village/story-moments/act2/jetty/01-early-restoration.png",
+    body: ["När de får bort de översta plankorna syns problemet tydligare.", "Flera stöd under bryggan är också ruttna."],
+    stage: 1,
+  },
+  {
+    id: "jetty-03",
+    title: "3/16 · Linus och återbruket",
+    image: "/assets/village/story-moments/act2/jetty/02-linus-salvaged-timber.png",
+    body: ["Linus hjälper dem hitta friskt virke som går att återanvända.", "Nu har de material som faktiskt kan bära en riktig reparation."],
+    stage: 1,
+  },
+  {
+    id: "jetty-04",
+    title: "4/16 · Första riktiga lagningen",
+    image: "/assets/village/story-moments/act2/jetty/02-linus-salvaged-timber.png",
+    body: ["Det återbrukade virket blir den första stora strukturella lagningen.", "Bryggan börjar kännas stadig på riktigt."],
+    stage: 2,
+  },
+  {
+    id: "jetty-05",
+    title: "5/16 · Det börjar se badbart ut",
+    image: "/assets/village/buildings/act 2/runtime/dock-stage-2.png",
+    body: ["Alve tittar ut över vattnet och börjar prata om att bada.", "Men en starkare brygga betyder inte automatiskt en säker badplats."],
+    stage: 2,
+  },
+  {
+    id: "jetty-06",
+    title: "6/16 · Sol kollar badplatsen",
+    image: "/assets/village/story-moments/act2/jetty/03-sol-safety-check.png",
+    body: ["Sol gör en lugn säkerhetskontroll innan någon börjar bada.", "Badkanten behöver rensas och det ska finnas en riktig livboj."],
+    stage: 2,
+  },
+  {
+    id: "jetty-lifebuoy",
+    title: "Mellan 6 och 7 · Livbojen",
+    image: "/assets/village/story-moments/act2/jetty/04-mira-lifebuoy-purchase.png",
+    body: ["Barnet och Alve går tillbaka till byn och köper en riktig livboj av Mira.", "Det här är ett story- och economy-beat, inte en extra contribution."],
+    stage: 2,
+  },
+  {
+    id: "jetty-07",
+    title: "7/16 · Gör Sols lista verklig",
+    image: "/assets/village/story-moments/act2/jetty/05-bathing-edge-cleanup.png",
+    body: ["Barnet och Alve röjer badkanten och plockar bort gammalt skräp.", "Den nya livbojen är med tillbaka till sjön."],
+    stage: 2,
+  },
+  {
+    id: "jetty-08",
+    title: "8/16 · Redo för människor",
+    image: "/assets/village/story-moments/act2/jetty/05-bathing-edge-cleanup.png",
+    body: ["Livbojen monteras permanent och nästa stora restaureringssteg blir klart.", "Nu känns platsen för första gången som en riktig badplats."],
+    stage: 3,
+  },
+  {
+    id: "jetty-09",
+    title: "9/16 · Plats för sommaren",
+    image: "/assets/village/buildings/act 2/runtime/dock-stage-3.png",
+    body: ["De gör den användbara delen av bryggan trevligare och lättare att använda.", "Nu finns plats att sitta, lägga handdukar och komma ner i vattnet."],
+    stage: 3,
+  },
+  {
+    id: "jetty-10",
+    title: "10/16 · Henning kommer ner",
+    image: "/assets/village/story-moments/act2/jetty/07-henning-first-visitor.png",
+    body: ["Henning blir den första som kommer ner bara för att bryggan börjar kännas levande igen.", "Det är första beviset på att arbetet förändrar hur byborna använder sjön."],
+    stage: 3,
+  },
+  {
+    id: "jetty-11",
+    title: "11/16 · Första riktiga vattenpausen",
+    image: "/assets/village/story-moments/act2/jetty/08-first-water-break.png",
+    body: ["Barnet och Alve tar äntligen en riktig paus vid vattnet.", "För en stund är bryggan inte ett projekt, utan deras plats."],
+    stage: 3,
+  },
+  {
+    id: "jetty-12",
+    title: "12/16 · Från arbetsplats till sommarplats",
+    image: "/assets/village/story-moments/act2/jetty/06-late-restoration.png",
+    body: ["De gör den sista stora mittfasreparationen och städar upp den sociala delen.", "Bryggan är nästan klar, men arbetet är inte riktigt över ännu."],
+    stage: 4,
+  },
+  {
+    id: "jetty-13",
+    title: "13/16 · Sista svaga punkten",
+    image: "/assets/village/buildings/act 2/runtime/dock-stage-4.png",
+    body: ["Den sista delen som fortfarande känns som en arbetsplats fixas.", "Inga nya mysterier behövs. Bara det sista riktiga jobbet."],
+    stage: 4,
+  },
+  {
+    id: "jetty-14",
+    title: "14/16 · Gör klart för att använda",
+    image: "/assets/village/buildings/act 2/runtime/dock-stage-4.png",
+    body: ["Överblivet material och arbetsstök försvinner.", "Platsen börjar handla mer om sommarliv än byggarbete."],
+    stage: 4,
+  },
+  {
+    id: "jetty-15",
+    title: "15/16 · Är vi klara nu?",
+    image: "/assets/village/story-moments/act2/jetty/09-jetty-complete.png",
+    body: ["Barnet och Alve stannar upp och tittar ut över sjön.", "För första gången pratar de mer om vilka som kan komma hit än om vad som måste lagas."],
+    stage: 4,
+  },
+  {
+    id: "jetty-16",
+    title: "16/16 · Bryggan är klar",
+    image: "/assets/village/story-moments/act2/jetty/09-jetty-complete.png",
+    body: ["Bryggan är färdig och livbojen sitter kvar.", "Arbetsplatsen har blivit en riktig sommarplats som byborna kan använda igen."],
+    stage: 4,
+  },
 ];
 
 export default function Act2TestPage() {
@@ -202,14 +322,17 @@ export default function Act2TestPage() {
       chooseStage(4);
       return;
     }
-    setStoryIndex(storyIndex + 1);
     const nextIndex = storyIndex + 1;
-    if (nextIndex >= 5 && nextIndex < 19) {
+    setStoryIndex(nextIndex);
+    const nextBeat = STORY_BEATS[nextIndex];
+    if (nextBeat.stage) {
+      chooseStage(nextBeat.stage);
+    } else if (nextIndex >= 5 && nextIndex < 19) {
       const boathouseProgress = nextIndex - 5;
       if (boathouseProgress >= 14) chooseStage(4);
       else if (boathouseProgress >= 10) chooseStage(3);
       else if (boathouseProgress >= 5) chooseStage(2);
-    } else if (nextIndex >= 19) {
+    } else if (nextIndex >= 19 && nextIndex < 29) {
       const cottageProgress = nextIndex - 19;
       if (cottageProgress >= 9) chooseStage(4);
       else if (cottageProgress >= 7) chooseStage(3);
@@ -219,7 +342,10 @@ export default function Act2TestPage() {
   };
   const previousStory = () => {
     if (storyIndex === null || storyIndex <= 0) return;
-    setStoryIndex(storyIndex - 1);
+    const previousIndex = storyIndex - 1;
+    setStoryIndex(previousIndex);
+    const previousBeat = STORY_BEATS[previousIndex];
+    if (previousBeat.stage) chooseStage(previousBeat.stage);
   };
 
   return (
@@ -240,7 +366,7 @@ export default function Act2TestPage() {
           minHeight: 38, border: 0, borderRadius: 9, padding: "0 13px",
           fontWeight: 800, cursor: "pointer", background: "#f4d780", color: "#283326",
         }}>
-          Spela Alve + Båthuset + Stugan
+          Spela Alve + Båthuset + Stugan + Bryggan
         </button>
       </div>
 
