@@ -787,7 +787,7 @@ export default function Act2TestPage() {
               <div style={{ minWidth: 0, maxHeight: "34dvh", overflowY: "auto", paddingRight: 6 }}>
                 <div style={{ fontSize: 18, fontWeight: 900, marginBottom: 5 }}>{activeBeat.title}</div>
                 <div style={{ fontSize: 15, lineHeight: 1.35 }}>
-                  {activeBeat.body.map((line) => <div key={line}>{line}</div>)}
+                  {activeBeat.body.map((line, index) => <div key={`${activeBeat.id}-${index}`}>{line}</div>)}
                 </div>
                 <div style={{ marginTop: 7, fontSize: 12, opacity: .65 }}>
                   {storyIndex! + 1} / {STORY_BEATS.length}
