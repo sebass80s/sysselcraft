@@ -875,7 +875,7 @@ The three independent projects must feel different after restoration:
 
 The cottage was one of the family's happiest places before the illness. Afterward Alve's father could not bring himself to return, while Alve reacted in the opposite direction and kept coming back, trying to repair the place himself. This explains why Alve is often at the lake during the day and why his project is emotionally urgent rather than evidence that the family simply neglected the property. Alve initially believes that making the cottage “som förr” might make the family return; his Act 2 growth is accepting that neither the cottage nor the family can literally become what they were, but that they can make a good new life there.
 
-At the Act 2 finale the returning household consists of **Alve's father, teenage older sister and 3–4-year-old younger brother**. His mother is absent. She may remain present only through old photographs, remembered habits and preserved objects. The old family photograph should include her, making the later absence readable without dialogue for players who notice it.
+At the Act 2 finale the returning household consists of **Alve's father and his older sister in her early teens**. His mother is absent. She may remain present only through old photographs, remembered habits and preserved objects. The old family photograph should include her, making the later absence readable without dialogue for players who notice it.
 
 Completing the cottage does **not** immediately bring Alve's family back. Alve has completed the thing he originally hoped might make them return, but must live with uncertainty while the rest of Act 2 continues.
 
@@ -988,7 +988,7 @@ Alve öppnar dörren försiktigt.
 
 Han stannar.
 
-Inne i stugan håller hans pappa på att ställa ner en väska. Alves tonåriga storasyster står bredvid en flyttlåda och lillebrodern, tre eller fyra år gammal, sitter på golvet med något han hittat bland de gamla sakerna.
+Inne i stugan håller hans pappa på att ställa ner en väska. Alves storasyster, i tidiga tonåren, står bredvid en flyttlåda med några saker hemifrån i famnen.
 
 **Mamman är inte där.** Ingen kommenterar hennes frånvaro. Det gamla familjefotot, där hon finns med, är fortfarande synligt i stugan.
 
@@ -1065,8 +1065,9 @@ Pappan nickar.
 
 > **Pappan:** “Bra.”
 
-Lillebrodern har redan hittat det gamla spelet.
+Storasystern får syn på det gamla spelet på bordet och lyfter kartongen.
 
+> **Storasystern:** “Den här finns kvar också.”  
 > **Alve:** “Ingen får ändra reglerna.”  
 > **Storasystern:** “Du menar dina regler?”  
 > **Alve:** “Det finns bara regler.”
@@ -1103,7 +1104,7 @@ Paus.
 > **Alve:** “Jag försöker bara att inte vara konstig.”  
 > **Barnet:** “Det går sådär.”
 
-Alve skrattar till. Lillebrodern hinner först fram och kastar armarna om honom. Sedan kommer storasystern och pappan. Alve försvinner nästan in i familjekramen.
+Alve skrattar till. Storasystern går fram först och kastar armarna om honom. Pappan följer efter och drar in dem båda. Alve försvinner nästan in i familjekramen.
 
 Låt återföreningen landa visuellt innan nästa replik.
 
@@ -1114,6 +1115,43 @@ Storasystern tittar förbi Alve mot Barnet.
 Alve tittar tillbaka.
 
 > **Alve:** “Det är min kompis.”
+
+#### Scene 3b — Verandan
+
+En stund senare har väskorna börjat hitta sina platser. Dörren står öppen bakom er och pappan och storasystern rör sig inne i stugan som om de försiktigt lär känna den igen.
+
+Barnet och Alve sitter på verandan. För en gångs skull verkar Alve inte ha bråttom någonstans.
+
+> **Alve:** “Jag trodde att om jag lagade stugan så skulle allt bli som förr.”  
+> **Barnet:** “Blev det det?”
+
+Alve tittar in genom den öppna dörren.
+
+> **Alve:** “Nej.”
+
+Paus.
+
+> **Alve:** “Jag kunde inte laga det som hände.”  
+> **Alve:** “Men jag kunde laga stugan.”
+
+Barnet tittar på honom.
+
+> **Barnet:** “Du lagade mer än stugan.”
+
+Alve säger inget först. Han ser på pappan och storasystern därinne, på fotot som sitter kvar och på det gamla spelet som står framme igen.
+
+> **Alve:** “Kanske.”
+
+Han lutar sig tillbaka.
+
+> **Alve:** “Det är inte riktigt som förr.”  
+> **Barnet:** “Nej.”
+
+Alve ler lite.
+
+> **Alve:** “Det är bättre.”
+
+Låt scenen vila här. Raden betyder inte att förlusten var bra eller att någon blivit ersatt; den betyder att Alve slutat försöka återskapa det förflutna och kan acceptera ett nytt liv som också får vara bra.
 
 #### Scene 4 — Första turen
 
@@ -1186,9 +1224,9 @@ Han pekar ut över sjön.
 
 Barnet kliver ner i båten.
 
-Från stugan hörs någon ropa:
+Från stugan hörs pappan ropa:
 
-> **Familjen:** “Inte för långt!”
+> **Pappan:** “Inte för långt!”
 
 Alve tittar på Barnet.
 
@@ -4137,7 +4175,7 @@ The previously locked Act 2 family-return payoff remains unchanged: only after t
 Canonical emotional progression:
 **1–4: “Jag vill att det ska bli som förr.” → 5–8: “Det kan bli bra på ett nytt sätt.” → 9–12: “Pappa har svårt att återvända, men någon har varit här.” → 13–16: “Stugan är klar, men Alve behöver inte vänta ensam.” → Act 2 finale: “Familjen kan återvända utan att låtsas att allt är som förr.”**
 
-Adult-readable subtext: **mamma blev sjuk → familjen slutade komma → mamman dog off-screen before Act 2 → pappan undvek stugan because it hurt → Alve kept returning and repairing → the restored place, preserved memories and new life finally make it possible for pappan, storasystern and lillebrodern to come back.** The death itself remains unspoken in child-facing dialogue.
+Adult-readable subtext: **mamma blev sjuk → familjen slutade komma → mamman dog off-screen before Act 2 → pappan undvek stugan because it hurt → Alve kept returning and repairing → the restored place, preserved memories and new life finally make it possible for pappan och storasystern to come back.** The death itself remains unspoken in child-facing dialogue.
 
 
 ## Motorbåten restoration arc — LOCKED 2026-09-28
@@ -5499,10 +5537,10 @@ The authoritative dialogue is **Act 2 finale dialogue — family return and firs
 
 Locked family facts:
 - Alve's mother became ill and later died before Act 2; her death is never stated outright in child-facing dialogue.
-- The returning household is **Pappan + tonårig storasyster + 3–4-årig lillebror**.
+- The returning household is **Pappan + storasyster i tidiga tonåren**.
 - The mother remains visible only through memories and the old family photograph.
 - The father has avoided the cottage because returning there is emotionally difficult. His line **“Jag har åkt hitåt flera gånger. …Jag kom inte hela vägen.”** is the strongest adult-facing clue.
-- The reveal still pays off **“Vi gjorde det”**, the preserved memories, the family embrace and **“Det är min kompis.”**
+- The reveal still pays off **“Vi gjorde det”**, the preserved memories, the father-and-sister embrace, **“Det är min kompis.”**, and the quiet veranda thesis **“Jag kunde inte laga det som hände. Men jag kunde laga stugan.”**
 - The thematic resolution remains: the family does not recreate the past; they become able to live at the place again in a new form.
 
 Canonical Motorbåten arc: **1–4 history/diagnosis → 5–8 village support/first life → 9–12 water test/their boat → 13–16 independent proper test/homecoming → family return payoff.**
