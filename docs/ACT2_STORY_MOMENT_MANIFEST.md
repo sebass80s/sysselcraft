@@ -111,75 +111,171 @@ Emotional progression: **impulse → pursuit → anticipation → discovery → 
 | OPEN-004 | `/assets/village/story-moments/act2/opening/04-first-view-of-the-lake.png` | Major Act 2 world reveal | Barnet exits the trees and sees the lake for the first time. Barnet remains small/back-facing; Valpen is nearer the shore. Nature, scale and openness dominate. No civilization. |
 | OPEN-005 | `/assets/village/story-moments/act2/opening/05-the-bicycle.png` | First human trace / bridge to Alve | The bicycle is visible **from a clear distance**. Barnet and Valpen have not reached it yet. This must not duplicate the following close bicycle beat. |
 
-### Locked opening dialogue/runtime copy
+### Locked opening dialogue/runtime copy — REVISED 2026-09-30
+
+The following is the exact canonical runtime dialogue for OPEN-001…OPEN-005. It supersedes the earlier shorter/ping-pong version. The sequence remains a non-contribution cinematic bridge and ends with the distant bicycle discovery before the separate close bicycle beat.
 
 **OPEN-001 — Valpen sticker**
 
-Du hinner knappt reagera innan valpen plötsligt spetsar öronen och springer iväg.
+Du och Valpen är nästan framme vid skogsbrynet när han plötsligt stannar.
 
-> **Barnet:** “Hallå?”  
-> **Barnet:** “Vart ska du?”
+Öronen åker upp.
 
-Valpen vänder sig inte ens om. Den bara fortsätter, rakt bort från byn och in mot skogen.
+Han står helt stilla och tittar in mellan träden.
 
-> **Barnet:** “Men vänta!”  
+> **Barnet:** “Vad är det?”
+
+Valpen tar några steg framåt, nosar i luften och sedan far han iväg.
+
+> **Barnet:** “Hallå!”
+
+Han springer rakt över den sista öppna marken och in bland träden.
+
+> **Barnet:** “Valpen! Vänta!”
+
+Du hinner bara se svansen försvinna bakom en gran.
+
+Du tittar tillbaka mot byn.
+
+Sedan mot skogen.
+
 > **Barnet:** “Du får inte bara dra sådär.”
 
-Valpen försvinner mellan träden. Du tvekar en sekund. Sedan springer du efter.
+Inget svar. Bara något som prasslar längre in.
+
+Du springer efter.
 
 **OPEN-002 — In i skogen**
 
-Stigen blir smalare ju längre in du kommer. Valpen syns långt framför dig mellan träden, som om den redan vet exakt vart den ska.
+Stigen är tydlig i början, men blir snabbt smalare.
 
-> **Barnet:** “Sakta ner!”  
-> **Barnet:** “Jag kommer ju!”
+Grenar hänger ut över den och marken är full av rötter, mossa och gamla löv.
 
-Skogen blir tätare omkring dig. Det är inte läskigt. Bara längre bort än du brukar gå.
+Valpen syns långt framför dig mellan träden.
 
-> **Barnet:** “Om du springer vilse får du faktiskt skylla dig själv.”
+> **Barnet:** “Sakta ner! Jag kommer ju!”
 
-Valpen fortsätter glatt framåt.
+Han stannar ett ögonblick och tittar tillbaka.
+
+Sedan springer han vidare.
+
+> **Barnet:** “Jaha. Tack.”
+
+Ju längre du kommer desto tätare blir skogen. Bakom dig går det nästan inte längre att se var du kom ifrån.
+
+Du kliver över en rot och duckar under en låg gren.
+
+> **Barnet:** “Du vet väl vart du ska?”
+
+Valpen fortsätter utan att tveka.
+
+> **Barnet:** “Bra. För det gör inte jag.”
 
 **OPEN-003 — Något där framme**
 
-Efter en stund förändras ljuset mellan träden. Det blir ljusare längre fram, och mellan stammarna skymtar något blått.
+Efter en stund märker du att skogen förändras.
 
-> **Barnet:** “Vad är det där?”
+Det blåser lite mer mellan träden.
 
-Det glittrar till mellan grenarna igen. Vatten. Eller något som ser ut som vatten.
+Ljuset framför dig är starkare.
 
-> **Barnet:** “Har du sprungit hit hela tiden bara för att visa något?”
+Valpen saktar äntligen ner.
 
-Valpen väntar ett ögonblick, sedan fortsätter den.
+> **Barnet:** “Vad har du hittat?”
+
+Du går ikapp honom.
+
+Mellan två stammar glittrar något blått till långt där framme.
+
+Du tar några steg åt sidan för att se bättre.
+
+Det glittrar igen.
+
+> **Barnet:** “Är det vatten?”
+
+Valpen börjar gå mot ljuset.
+
+Inte springa längre.
+
+Nästan som om han väntar på dig.
+
+> **Barnet:** “Var det hit du skulle?”
+
+Han fortsätter framåt.
+
+Du följer efter.
 
 **OPEN-004 — Sjön**
 
-Du kommer ut ur skogen och stannar. Framför dig breder sjön ut sig, blank och stor i ljuset. Valpen har redan hunnit ner mot stranden och nosar omkring som om platsen vore världens mest självklara sak.
+Träden tar plötsligt slut.
 
-För dig är allt nytt: skogen, vattnet, stranden. Det känns som att du hittat ett helt nytt ställe som ingen berättat om.
+Du kommer ut ur skogen och stannar.
+
+Framför dig ligger en stor sjö.
+
+Vattnet sträcker sig långt bort mellan skogsklädda stränder och klippor. Efter den täta skogen känns platsen nästan enorm.
+
+Valpen springer ner mot vattnet och börjar nosa längs strandkanten.
+
+Du blir stående kvar en stund.
 
 > **Barnet:** “Oj.”
 
-Du tar några steg fram och ser dig omkring. Någonstans här finns det mer än bara sjön. Det känns direkt.
+Du går långsamt ner mot stranden.
 
-**OPEN-005 — Där borta**
+Det finns inga hus omkring dig. Ingen väg. Ingen butik. Ingen som ropar från byn.
 
-När du kommer lite längre fram får du syn på något mellan träden. Du stannar.
+Bara sjön, skogen och den gamla stigen bakom dig.
 
-Lutad mot en stam, en bit bort, står en cykel. Valpen har också fått syn på den och saktar ner.
+> **Barnet:** “Hur har jag aldrig sett det här?”
 
-> **Barnet:** “Va?”  
+Valpen är redan på väg vidare längs stranden.
+
+> **Barnet:** “Du tänker inte börja springa igen va?”
+
+Han fortsätter.
+
+> **Barnet:** “Såklart.”
+
+Du följer efter.
+
+**OPEN-005 — Cykeln**
+
+Efter en bit lämnar ni stranden och går in bland träden igen.
+
+Inte långt.
+
+Valpen stannar.
+
+Den här gången ser du direkt vad han tittar på.
+
+Längre fram står en cykel lutad mot ett träd.
+
+Du stannar också.
+
+> **Barnet:** “Va?”
+
+Cykeln är långt bort, men den är alldeles för ren och hel för att ha stått där övergiven särskilt länge.
+
+Valpen börjar gå mot den.
+
 > **Barnet:** “Vems är den där?”
 
-Du kisar mot platsen längre fram. Cykeln står inte mitt i skogen av sig själv. Någon måste ha lämnat den där.
+Du tittar runt mellan träden.
+
+För första gången känns platsen inte tom längre.
+
+Någon har cyklat hit.
+
+Och om cykeln är kvar så borde personen också vara det.
 
 > **Barnet:** “Okej…”
 
-Du tar några försiktiga steg framåt.
+Du börjar gå mot cykeln.
 
-> **Barnet:** “Då är det nog någon här.”
+> **Barnet:** “Då är det någon här.”
 
-After OPEN-005, continue directly into the existing **close bicycle beat** (`meeting-alve/bike.png`) and then the established Alve meeting sequence. OPEN-005 must remain the distant discovery; the next beat earns the close inspection.
+After OPEN-005, continue directly into the existing close bicycle beat (meeting-alve/bike.png) and then the revised canonical Alve meeting sequence in STORY_DESIGN.md. OPEN-005 must remain the distant discovery; the next beat earns the close inspection.
 
 ## Locked cross-project finale beats
 
