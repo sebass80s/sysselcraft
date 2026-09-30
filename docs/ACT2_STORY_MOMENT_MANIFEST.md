@@ -1096,3 +1096,69 @@ Serves JETTY-15 + JETTY-16. Definitive completion image using the accepted stage
 - [x] Bryggan Story Moment image production complete.
 
 The old seven-image Bryggan production queue is superseded by this nine-asset final manifest.
+
+## 2026-09-30 production status + epilogue bridge
+
+This section supersedes older pre-generation gate language that still says Act 2 image generation is unauthorized. Image production has already proceeded under the later locked production contracts. Do not reopen accepted asset families merely because historical checklist items remain above.
+
+### Opening status
+OPEN-001…OPEN-005 are complete and present under:
+
+`public/assets/village/story-moments/act2/opening/`
+
+Canonical files:
+- `01-dog-runs-off.png`
+- `02-into-the-forest.png`
+- `03-through-the-trees.png`
+- `04-first-view-of-the-lake.png`
+- `05-the-bicycle.png`
+
+They are wired into the isolated `/act2-test` story flow before the existing close bicycle beat. This is story-lab integration only, not production Act 1→Act 2 progression.
+
+### Finale status
+The family-return finale uses father + early-teen older sister only. No little brother. The mother is absent physically and remains only in historical memory/photo continuity.
+
+Canonical finale files remain:
+- `finale/01-something-is-different.png`
+- `finale/02-family-return.png`
+- `finale/03-family-embrace.png`
+- `finale/04-home-again.png`
+
+The emotional thesis remains:
+> **Alve:** “Jag kunde inte laga det som hände.”  
+> **Alve:** “Men jag kunde laga stugan.”  
+> **Barnet:** “Du lagade mer än stugan.”
+
+### New locked gratitude beat
+Scene 4 / departure now includes an explicit friendship payoff before the other-side conversation. Alve drops his usual deflection and says:
+- this would never have happened without Barnet;
+- on the day Barnet found him he was **“helt lost”**;
+- he thought fixing enough things would make everything solve itself;
+- he did not know where to begin;
+- he could not have repaired the cottage, jetty and boat alone;
+- he thanks Barnet directly;
+- after Barnet says that is what friends do, Alve says he is glad Barnet is his friend.
+
+Exact dialogue lives in `STORY_DESIGN.md` and is authoritative.
+
+### Epilogue Story Moment queue — LOCKED TARGET, ART INCOMPLETE
+
+The final departure/Act 3 bridge uses four target images. These are outside the 64 contribution count and after the family payoff:
+
+| ID | Working filename | Function |
+|---|---|---|
+| EPI-001 | `01-leaving-the-jetty.png` | Leaving the restored lake; carries the gratitude/friendship payoff. Family may appear only far in the background. |
+| EPI-002 | `02-across-the-lake.png` | Freedom/motion on open water; transitions from closure toward curiosity. |
+| EPI-003 | `03-the-other-side.png` | Distant undefined opposite shore; mystery only, no Act 3 destination reveal. |
+| EPI-004 | `04-into-the-unknown.png` | Wide final chapter image; boat continues toward the unknown before black/end card. |
+
+Target folder when accepted/uploaded:
+`public/assets/village/story-moments/act2/epilogue/`
+
+**Do not claim this folder/assets are complete until repo verification proves it.** Image work was intentionally paused for the night on 2026-09-30.
+
+EPI-001 composition rule from the latest accepted direction: if the motor geometry is hard to preserve, crop/zoom so the whole boat is not shown rather than inventing an incorrect motor placement. Canonical boat reference has the outboard at the stern. Barnet remains rear-facing.
+
+### Implementation boundary
+Story/art production and production gameplay integration are now separate workstreams. The runtime/state execution order is canonical in `docs/ACT2_IMPLEMENTATION_PLAN.md`. `/act2-test` remains an acceptance lab and must not become production save authority.
+
