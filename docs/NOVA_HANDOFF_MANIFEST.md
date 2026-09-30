@@ -511,3 +511,36 @@ Creative image production being complete does not equal runtime integration. Nex
 - `/act2-test` now contains the Alve intro, Båthuset sequence and Stugan sequence. This is an acceptance harness, not production progression.
 - **Do not connect Act 2 to production map/save/progression merely because the browser slice is accepted.** Adam's physical iPhone save remains untouched. Production integration is a separate explicit gate.
 - Next Nova must begin by verifying branch/HEAD and canonical docs against repo reality. The next content track should start from the existing locked Act 2 design rather than reopening accepted Stugan visuals.
+
+## Act 2 implementation handoff — 2026-09-30
+
+Act 2 has moved from story/art pre-production into implementation planning. The canonical execution plan is now `docs/ACT2_IMPLEMENTATION_PLAN.md`. Read that document before wiring production progression.
+
+Current locked implementation order:
+1. real Act 2 runtime foundation + OPEN-001…005 + Alve/project chooser;
+2. one explicit persisted Act 2 state family;
+3. authoritative Quest v2 → active-project contribution bridge;
+4. implement project tracks development-order Bryggan → Stugan → Båthuset → Motorbåten while preserving free player order among the first three;
+5. family finale + epilogue;
+6. fresh-save/existing-save/order-matrix/restart/economy acceptance before release progression is considered complete.
+
+Important current boundary:
+- `/act2-test` remains the story/visual acceptance lab, not production save authority.
+- Do not implement all 64 contribution beats before the runtime/state spine exists.
+- First production vertical slice is: **Act 1 → Act 2 trigger → OPEN-001…005 → bicycle → Alve → project chooser → chosen project begins and survives restart.**
+- Stugan/Bryggan/Båthuset remain order-independent. Motorbåten unlocks only at 3/3.
+- Family finale is outside the 64 contribution count.
+- Act 3 destination remains undefined.
+
+The Act 2 opening five-image sequence is already present in the repository and wired into `/act2-test`. Family-finale production art is substantially complete. Epilogue image production is still unfinished; do not invent repository assets or claim that final visual bridge is integrated.
+
+Alve's departure-scene gratitude beat is now locked in `STORY_DESIGN.md`: he explicitly says the outcome would never have happened without Barnet, admits he was **“helt lost”** on the day Barnet found him, explains that he thought fixing enough things would make everything solve itself, thanks Barnet and says he is glad Barnet is his friend.
+
+### Clinic bug fix checkpoint — 2026-09-30
+
+A stale-local-save Clinic recovery bug was patched without mutating Adam's live backend data. `ChildBackendQuestInbox` now repairs local Sol/Clinic state from authoritative backend story flags and baseline before deriving Clinic contribution progress. Commits:
+- `84ba5018dd3b2c608956dde41aaea1cad1f16314` — backend-authoritative Clinic recovery.
+- `e02d77aa3334c946dc1da62bf2cdc0ce975ca4f9` — regression coverage.
+
+Desired behavior: the next legitimate quest-claim refresh can wake the Clinic progression on a stale device save; later Clinic beats still reveal in authored order rather than jumping directly to completion.
+
