@@ -139,7 +139,7 @@ const STORY_BEATS: StoryBeat[] = [
   },
   {
     id: "cottage-02-03", title: "2–3/16 · Spåren från förr", image: "/assets/village/story-moments/act2/cabin/1.png",
-    body: ["De hittar Alves gamla längdmarkeringar och ett familjefoto från en tidigare sommar.", "Alve: Vi var här hela tiden då.", "Alve: Sen slutade vi komma."],
+    body: ["De hittar Alves gamla längdmarkeringar och ett familjefoto från en tidigare sommar.", "Alve: Vi var här hela tiden då.", "Alve: Mamma blev sjuk.", "Alve: Efter det kom vi nästan aldrig hit."],
   },
   {
     id: "cottage-04", title: "4/16 · Som förr", image: "/assets/village/story-moments/act2/cabin/2.png",
@@ -155,11 +155,11 @@ const STORY_BEATS: StoryBeat[] = [
   },
   {
     id: "cottage-09", title: "9/16 · VÅR STUGA", image: "/assets/village/story-moments/act2/cabin/4.png",
-    body: ["Barnet hittar Alves gamla teckning av stugan, sjön och familjen.", "Teckningen visar verandan och ger dem nästa idé."],
+    body: ["Barnet hittar Alves gamla teckning av stugan, sjön och familjen.", "Alve: Mamma sparade allt.", "Teckningen visar verandan och ger dem nästa idé."],
   },
   {
     id: "cottage-10-11", title: "10–11/16 · Verandan", image: "/assets/village/story-moments/act2/cabin/renovating-cabin3.png",
-    body: ["De börjar återställa verandan från teckningen.", "Barnet: Vet de att du är här?", "Alve: Inte riktigt."],
+    body: ["De börjar återställa verandan från teckningen.", "Barnet: Vet de att du är här?", "Alve: Inte riktigt.", "Alve: Pappa kommer inte hit längre.", "Barnet: Sen din mamma blev sjuk?", "Alve: Mm."],
   },
   {
     id: "cottage-12", title: "12/16 · Någon har varit här", image: "/assets/village/story-moments/act2/cabin/5.png",
