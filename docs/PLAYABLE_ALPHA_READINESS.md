@@ -409,3 +409,33 @@ Regression coverage now locks the final Clinic story checkpoint in both directio
 - Removed visible Sol test/spoiler launchers from normal Vuxenläge while preserving the hidden regression harness required by `test:sol-story`.
 - Final code checkpoint `7c001107cff16e8cae65650eb175af1134187bc7`; GitHub Actions CI #949 SUCCESS.
 - Physical iPhone acceptance remains required for this new onboarding delta: finish Linus intro unpaired -> pairing panel appears -> pair Adam -> Home receives the existing household/school quest attention. Until that passes, this delta is CI-green but not physically accepted.
+
+## Act 2 production readiness gates — 2026-09-30
+
+Act 2 story/art acceptance is not equivalent to production readiness. The following gates must pass before Act 2 can be called integrated:
+
+- [ ] Production Act 1 → Act 2 transition exists and is gated correctly.
+- [ ] OPEN-001…005 plays once and restart-safe before the close bicycle/Alve sequence.
+- [ ] Act 2 discrete-area navigation/collision/camera works on physical iPhone.
+- [ ] Canonical Act 2 state survives force-quit/relaunch.
+- [ ] Project chooser allows Stugan/Bryggan/Båthuset in any order.
+- [ ] Motorbåten remains locked until all three are complete.
+- [ ] Quest v2 authoritative contribution bridge advances exactly one authored beat per contribution.
+- [ ] Accumulated backend progress cannot skip a pending Story Moment/reveal.
+- [ ] Duplicate refresh/retry cannot replay a contribution or reward.
+- [ ] Bryggan 1–16 accepted end to end.
+- [ ] Stugan 1–16 accepted end to end.
+- [ ] Båthuset 1–16 accepted end to end.
+- [ ] Motorbåten 1–16 accepted end to end.
+- [ ] All six prerequisite-project orders accepted.
+- [ ] All story-bound SysselBux purchases are exactly-once, restart-safe and contribution-neutral.
+- [ ] Family finale plays once after Motorbåten 16 and never as contribution 17.
+- [ ] Epilogue ends with physical departure and `SLUT PÅ ANDRA KAPITLET`.
+- [ ] Fresh-save path passes.
+- [ ] Existing progressed Act 1 save path passes without wallet/history/world regression.
+- [ ] Restart matrix passes at contribution, Story Moment, stage, purchase, project completion, 3/3 unlock, finale and post-Act-2 boundaries.
+
+Canonical implementation order and detailed regression matrix: `docs/ACT2_IMPLEMENTATION_PLAN.md`.
+
+Current status: **pre-production implementation planning is locked; production runtime integration has not yet passed these gates.**
+
