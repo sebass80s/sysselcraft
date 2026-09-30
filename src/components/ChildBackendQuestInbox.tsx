@@ -21,7 +21,7 @@ import { publishBackendWallet } from "@/game/backendWalletBridge";
 import { deriveDogHomeStageFromWorldFlags } from "@/game/dogHome";
 import { createQuestRequestGuard } from "@/game/questRequestGuard";
 import { loadSaveState, saveSaveState, withConstructionState } from "@/game/saveState";
-import { syncBakeryContributionProgress, syncClinicContributionProgress, syncRecyclingContributionProgress } from "@/game/construction";
+import { startClinicConstruction, syncBakeryContributionProgress, syncClinicContributionProgress, syncRecyclingContributionProgress } from "@/game/construction";
 import {
   claimQuestTurnIn,
   loadPendingQuestTurnIns,
@@ -207,9 +207,46 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
             window.dispatchEvent(new CustomEvent("sysselcraft:construction-save-changed"));
           }
         }
-        const clinicBaseline = snapshot.worldFlags.clinicProgressionBaseline;
-        if (snapshot.worldFlags.solChoseToStay && clinicBaseline !== undefined) {
-          const nextConstruction = syncClinicContributionProgress(snapshot.construction, nextGameState.progression.worldProgression, clinicBaseline);
+        // Sol's choice and the Clinic baseline are authoritative backend story state.
+        // Repair older/stale device saves before deriving Clinic progress. Without this,
+        // a valid backend baseline can exist while the local save still says Sol never
+        // chose to stay, causing every later quest claim to silently skip Clinic sync.
+        const backendSolChoseToStay = backendStoryFlags.solChoseToStay === true;
+        const backendClinicBaseline = typeof backendStoryFlags.clinicProgressionBaseline === "number"
+          && Number.isInteger(backendStoryFlags.clinicProgressionBaseline)
+          && backendStoryFlags.clinicProgressionBaseline >= 0
+          ? backendStoryFlags.clinicProgressionBaseline
+          : undefined;
+
+        if (backendSolChoseToStay && (
+          snapshot.worldFlags.solChoseToStay !== true
+          || (backendClinicBaseline !== undefined && snapshot.worldFlags.clinicProgressionBaseline !== backendClinicBaseline)
+        )) {
+          snapshot = {
+            ...snapshot,
+            worldFlags: {
+              ...snapshot.worldFlags,
+              solChoseToStay: true,
+              ...(backendClinicBaseline !== undefined ? { clinicProgressionBaseline: backendClinicBaseline } : {}),
+            },
+          };
+          await saveSaveState(snapshot, true);
+        }
+
+        if (backendSolChoseToStay && snapshot.construction.revealed.clinic === 0 && snapshot.construction.earned.clinic === 0) {
+          const startedClinic = startClinicConstruction(snapshot.construction);
+          snapshot = withConstructionState(snapshot, startedClinic);
+          await saveSaveState(snapshot, true);
+          window.dispatchEvent(new CustomEvent("sysselcraft:construction-save-changed"));
+        }
+
+        const clinicBaseline = backendClinicBaseline ?? snapshot.worldFlags.clinicProgressionBaseline;
+        if ((backendSolChoseToStay || snapshot.worldFlags.solChoseToStay) && clinicBaseline !== undefined) {
+          const nextConstruction = syncClinicContributionProgress(
+            snapshot.construction,
+            nextGameState.progression.worldProgression,
+            clinicBaseline,
+          );
           if (nextConstruction !== snapshot.construction) {
             snapshot = withConstructionState(snapshot, nextConstruction);
             await saveSaveState(snapshot, true);
