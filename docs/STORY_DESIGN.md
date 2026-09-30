@@ -1179,7 +1179,31 @@ Barnet följer hans blick.
 
 Paus.
 
-> **Alve:** “De kom faktiskt.”  
+> **Alve:** “De kom faktiskt.”
+
+Alve blir tyst en stund.
+
+> **Alve:** “Du vet…”  
+> **Alve:** “Det här hade aldrig hänt utan dig.”  
+> **Barnet:** “Jo då. Du gjorde ju också allt.”  
+> **Alve:** “Nej, jag menar det.”  
+> **Alve:** “Den dagen du kom var jag helt lost.”  
+> **Alve:** “Jag bara gick runt här och trodde att om jag lagade tillräckligt mycket så skulle allting lösa sig.”  
+> **Alve:** “Men jag visste inte ens var jag skulle börja längre.”  
+> **Barnet:** “Du började ju ändå.”  
+> **Alve:** “Ja.”  
+> **Alve:** “Men jag hade aldrig klarat det själv.”  
+> **Alve:** “Inte stugan. Inte bryggan. Inte båten. Inget av det.”  
+> **Barnet:** “Tur att jag kom då.”  
+> **Alve:** “Ja.”  
+> **Alve:** “Väldigt tur.”  
+> **Alve:** “Tack.”  
+> **Barnet:** “Det är ju det kompisar gör.”  
+> **Alve:** “Mm.”  
+> **Alve:** “Då är jag glad att du är min kompis.”
+
+Barnet ler.
+
 > **Barnet:** “Jag sa ju att de kanske skulle göra det.”  
 > **Alve:** “Du sa att du hoppades.”  
 > **Barnet:** “Nästan samma sak.”
