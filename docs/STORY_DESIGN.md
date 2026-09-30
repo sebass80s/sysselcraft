@@ -778,72 +778,142 @@ Adam is the one who offers that they might fix the place together. Alve then ask
 
 ### First Alve meeting dialogue — LOCKED
 
-This is the exact canonical first-meeting dialogue after the distant bicycle/opening sequence and the close bicycle beat. The unknown boy's nameplate reads **Barnet** until he introduces himself; at **“…Alve.”** it changes permanently to **Alve**. Dialogue speaker label **Barnet** below is the player character.
+This is the exact canonical first-meeting dialogue after OPEN-001…005 and the close bicycle beat. The unknown boy's nameplate reads **Barnet** until he introduces himself; at **“Alve.”** it changes permanently to **Alve**. The scene should feel concrete and grounded in what the children can actually see and do, with fewer one-line ping-pong exchanges than the superseded version.
 
-> **Barnet:** “Hej.”  
-> **Barnet:** “Vad gör du här?”  
-> **Barnet:** “Hunden sprang hit.”  
-> **Barnet:** “Från byn?”  
-> **Barnet:** “Ja.”  
-> **Barnet:** “Brukar folk gå hit från byn?”  
-> **Barnet:** “Jag vet inte. Jag har aldrig varit här förut.”  
-> **Barnet:** “Bra.”  
-> **Barnet:** “Varför är det bra?”  
-> **Barnet:** “För att det här är vårt ställe.”  
-> **Barnet:** “Ditt?”  
-> **Barnet:** “Min familjs.”  
-> **Barnet:** “Vad gör du?”  
-> **Barnet:** “Lagar den.”  
-> **Barnet:** “Hela?”  
-> **Barnet:** “Det var planen.”  
-> **Barnet:** “Hur går det?”  
-> **Barnet:** “Jättebra.”  
-> **Barnet:** “Det såg bra ut.”  
-> **Barnet:** “Tyst.”  
-> **Barnet:** “Jag kan hjälpa dig.”  
-> **Barnet:** “Varför?”  
-> **Barnet:** “För att det ser kul ut.”  
-> **Barnet:** “Det är inte kul.”  
-> **Barnet:** “Du log nyss.”  
-> **Barnet:** “Det gjorde jag inte.”  
-> **Barnet:** “Jag heter Adam.”  
-> **Barnet:** “…Alve.”
+> **Barnet:** “Hej.”
+
+Pojken vid stugan rycker till och vänder sig om. Han håller fortfarande en lös bräda i handen.
+
+> **Barnet:** “Är det din cykel där borta?”
+
+> **Barnet:** “Ja.”
+
+Han tittar förbi dig mot Valpen.
+
+> **Barnet:** “Kom du från byn?”
+
+> **Barnet:** “Hunden sprang hit. Jag sprang efter.”
+
+Pojken nickar mot Valpen.
+
+> **Barnet:** “Han hittade rätt väg i alla fall.”
+
+Du tittar på stugan. En del plankor har flyttats, några verktyg ligger utspridda på marken och det syns tydligt att någon har försökt börja laga den.
+
+> **Barnet:** “Försöker du fixa den här själv?”
+
+> **Barnet:** “Ja. Jag tänkte börja med väggen, sedan taket och sedan resten.”
+
+Du tittar på det trasiga räcket, den sneda dörren och brädorna som ligger bredvid.
+
+> **Barnet:** “Det är ganska mycket ‘resten’.”
+
+Pojken tittar på stugan igen.
+
+> **Barnet:** “Jag har märkt det.”
+
+Han lägger ifrån sig brädan.
+
+> **Barnet:** “Det här är min familjs ställe. Vi brukade vara här på somrarna.”
+
+> **Barnet:** “Brukar ni inte vara här längre?”
+
+> **Barnet:** “Nej.”
+
+Han säger det kort och börjar samla ihop verktygen.
+
+> **Barnet:** “Så jag tänkte laga det.”
+
+> **Barnet:** “Hela stället?”
+
+> **Barnet:** “Det var planen.”
+
+Du ser bort mot sjön. Bryggan är trasig. Båthuset lutar och längre bort står den gamla motorbåten.
+
+> **Barnet:** “Det är inte bara stugan som är trasig.”
+
+> **Barnet:** “Jag vet.”
+
+För första gången ser han lite mindre säker ut.
+
+> **Barnet:** “Jag trodde faktiskt inte att det var så här mycket.”
+
+> **Barnet:** “Jag kan hjälpa dig.”
+
+Han tittar på dig som om du sagt något oväntat.
+
+> **Barnet:** “Varför?”
+
+> **Barnet:** “För att du aldrig kommer bli klar själv.”
+
+Pojken höjer ögonbrynen.
+
+> **Barnet:** “Det där var väldigt snällt sagt.”
+
+> **Barnet:** “Jag menade det snällt.”
+
+Han försöker hålla sig allvarlig, men börjar le.
+
+> **Barnet:** “Jag heter Adam.”
+
+Pojken tvekar ett ögonblick.
+
+> **Barnet:** “Alve.”
 
 **Nameplate changes: Barnet → Alve.**
 
-> **Alve:** “Du sa redan hej.”  
-> **Barnet:** “Det var innan jag visste vad du hette.”  
-> **Alve:** “Du pratar mycket.”  
-> **Barnet:** “Du lagar stugor dåligt.”  
-> **Alve:** “Vill du fortfarande hjälpa till?”  
-> **Barnet:** “Japp.”  
-> **Alve:** “Du vet inte ens vad jag försöker göra.”  
-> **Barnet:** “Laga stugan.”  
-> **Alve:** “Inte bara stugan.”  
-> **Alve:** “Kom.”
+> **Alve:** “Okej, Adam. Om du verkligen tänker hjälpa till så behöver du se resten.”
 
-Alve visar området.
+Alve börjar gå mot sjön och du följer efter.
 
-> **Alve:** “Stugan.”  
-> **Alve:** “Bryggan.”  
-> **Alve:** “Båthuset.”  
-> **Barnet:** “Allt är trasigt.”  
-> **Alve:** “Jag vet.”  
-> **Barnet:** “Tänkte du laga allt själv?”  
-> **Alve:** “Japp.”  
-> **Barnet:** “Det hade tagit hundra år.”  
-> **Alve:** “Femtio.”  
-> **Barnet:** “Minst hundra.”  
-> **Alve:** “Okej. Åttio.”  
-> **Barnet:** “Och båten?”  
-> **Alve:** “Den får vänta.”  
-> **Barnet:** “Varför?”  
-> **Alve:** “Först måste vi få ordning på resten.”  
-> **Alve:** “Du kan fortfarande gå tillbaka till byn.”  
-> **Barnet:** “Nä.”  
-> **Alve:** “Nä?”  
-> **Barnet:** “Vi skulle ju laga det här.”  
-> **Alve:** “Okej då.”  
+Han pekar först mot stugan.
+
+> **Alve:** “Stugan är värst inuti. Jag har knappt börjat där.”
+
+Sedan mot bryggan.
+
+> **Alve:** “Bryggan går nästan inte att använda längre.”
+
+Och sist mot båthuset.
+
+> **Alve:** “Och båthuset är fullt med gammalt skräp.”
+
+Du tittar mot motorbåten.
+
+> **Barnet:** “Och den?”
+
+Alve stannar.
+
+> **Alve:** “Den får vänta.”
+
+> **Barnet:** “Varför?”
+
+> **Alve:** “För att vi inte ens har någonstans att laga den än. Båthuset måste fungera. Bryggan måste gå att använda. Och jag vill få ordning på stugan.”
+
+Han ser över platsen en gång till.
+
+> **Alve:** “Jag tänkte göra allt själv.”
+
+> **Barnet:** “Det hade tagit hundra år.”
+
+> **Alve:** “Femtio.”
+
+> **Barnet:** “Minst hundra.”
+
+Alve funderar.
+
+> **Alve:** “Okej. Åttio.”
+
+Du skrattar.
+
+Alve pekar ut de tre platserna igen.
+
+> **Alve:** “Stugan. Bryggan. Båthuset.”
+
+Han tittar på dig.
+
+> **Alve:** “Om vi ska göra det här tillsammans så börjar vi med en av dem.”
+
 > **Alve:** “Vad börjar vi med?”
 
 ### Project-selection Story Moment — LOCKED
