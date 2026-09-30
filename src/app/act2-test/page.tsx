@@ -14,6 +14,73 @@ type StoryBeat = {
 
 const STORY_BEATS: StoryBeat[] = [
   {
+    id: "opening-01",
+    title: "Valpen sticker",
+    image: "/assets/village/story-moments/act2/opening/01-dog-runs-off.png",
+    body: [
+      "Du hinner knappt reagera innan valpen plötsligt spetsar öronen och springer iväg.",
+      "Barnet: Hallå?",
+      "Barnet: Vart ska du?",
+      "Valpen vänder sig inte ens om. Den bara fortsätter, rakt bort från byn och in mot skogen.",
+      "Barnet: Men vänta!",
+      "Barnet: Du får inte bara dra sådär.",
+      "Valpen försvinner mellan träden. Du tvekar en sekund. Sedan springer du efter.",
+    ],
+  },
+  {
+    id: "opening-02",
+    title: "In i skogen",
+    image: "/assets/village/story-moments/act2/opening/02-into-the-forest.png",
+    body: [
+      "Stigen blir smalare ju längre in du kommer. Valpen syns långt framför dig mellan träden, som om den redan vet exakt vart den ska.",
+      "Barnet: Sakta ner!",
+      "Barnet: Jag kommer ju!",
+      "Skogen blir tätare omkring dig. Det är inte läskigt. Bara längre bort än du brukar gå.",
+      "Barnet: Om du springer vilse får du faktiskt skylla dig själv.",
+      "Valpen fortsätter glatt framåt.",
+    ],
+  },
+  {
+    id: "opening-03",
+    title: "Något där framme",
+    image: "/assets/village/story-moments/act2/opening/03-through-the-trees.png",
+    body: [
+      "Efter en stund förändras ljuset mellan träden. Det blir ljusare längre fram, och mellan stammarna skymtar något blått.",
+      "Barnet: Vad är det där?",
+      "Det glittrar till mellan grenarna igen. Vatten. Eller något som ser ut som vatten.",
+      "Barnet: Har du sprungit hit hela tiden bara för att visa något?",
+      "Valpen väntar ett ögonblick, sedan fortsätter den.",
+    ],
+  },
+  {
+    id: "opening-04",
+    title: "Sjön",
+    image: "/assets/village/story-moments/act2/opening/04-first-view-of-the-lake.png",
+    body: [
+      "Du kommer ut ur skogen och stannar.",
+      "Framför dig breder sjön ut sig, blank och stor i ljuset. Valpen har redan hunnit ner mot stranden och nosar omkring som om platsen vore världens mest självklara sak.",
+      "För dig är allt nytt: skogen, vattnet, stranden.",
+      "Det känns som att du hittat ett helt nytt ställe som ingen berättat om.",
+      "Barnet: Oj.",
+      "Du tar några steg fram och ser dig omkring. Någonstans här finns det mer än bara sjön. Det känns direkt.",
+    ],
+  },
+  {
+    id: "opening-05",
+    title: "Där borta",
+    image: "/assets/village/story-moments/act2/opening/05-the-bicycle.png",
+    body: [
+      "När du kommer lite längre fram får du syn på något mellan träden. Du stannar.",
+      "Lutad mot en stam, en bit bort, står en cykel. Valpen har också fått syn på den och saktar ner.",
+      "Barnet: Va?",
+      "Barnet: Vems är den där?",
+      "Du kisar mot platsen längre fram. Cykeln står inte mitt i skogen av sig själv. Någon måste ha lämnat den där.",
+      "Barnet: Okej…",
+      "Du tar några försiktiga steg framåt.",
+      "Barnet: Då är det nog någon här.",
+    ],
+  },
+  {
     id: "meet-bike",
     title: "Någon är redan här",
     image: "/assets/village/story-moments/act2/meeting-alve/bike.png",
