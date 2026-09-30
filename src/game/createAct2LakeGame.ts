@@ -33,6 +33,8 @@ export async function createAct2LakeGame(
   class Act2LakeScene extends Phaser.Scene {
     private projectImages = new Map<Act2RestorationProject, GameObjects.Image>();
     private player?: GameObjects.Image;
+    private dog?: GameObjects.Image;
+    private moveTarget: { x: number; y: number } | null = null;
     private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
 
@@ -43,6 +45,7 @@ export async function createAct2LakeGame(
     preload() {
       this.load.image("act2-lake-master", ACT2_WORLD.master);
       this.load.image("act2-child", "/assets/village/reboot/child.webp");
+      this.load.image("act2-dog", "/assets/village/reboot/puppy-painted.png");
       for (const project of PROJECTS) {
         ACT2_VISUAL_ASSETS[project].forEach((asset, index) => {
           this.load.image(this.textureKey(project, (index + 1) as Act2VisualStage), asset);
@@ -80,10 +83,21 @@ export async function createAct2LakeGame(
         .setOrigin(0.5, 0.94)
         .setDisplaySize(74, 118)
         .setDepth(1585);
+      this.dog = this.add.image(865, 600, "act2-dog")
+        .setOrigin(0.5, 0.88)
+        .setDisplaySize(66, 55)
+        .setDepth(1600);
 
       camera.centerOn(this.player.x, this.player.y);
       camera.startFollow(this.player, true, 0.08, 0.08);
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
+
+      this.input.on("pointerdown", (pointer: Input.Pointer) => {
+        if (!this.player) return;
+        const target = { x: pointer.worldX, y: pointer.worldY };
+        if (!this.isWalkable(target.x, target.y)) return;
+        this.moveTarget = target;
+      });
 
       if (this.input.keyboard) {
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -94,23 +108,57 @@ export async function createAct2LakeGame(
     }
 
     update(_time: number, delta: number) {
-      if (!this.player || !this.cursors || !this.wasd) return;
-      const left = this.cursors.left.isDown || this.wasd.left.isDown;
-      const right = this.cursors.right.isDown || this.wasd.right.isDown;
-      const up = this.cursors.up.isDown || this.wasd.up.isDown;
-      const down = this.cursors.down.isDown || this.wasd.down.isDown;
+      if (!this.player) return;
+      const left = Boolean(this.cursors?.left.isDown || this.wasd?.left.isDown);
+      const right = Boolean(this.cursors?.right.isDown || this.wasd?.right.isDown);
+      const up = Boolean(this.cursors?.up.isDown || this.wasd?.up.isDown);
+      const down = Boolean(this.cursors?.down.isDown || this.wasd?.down.isDown);
       let dx = Number(right) - Number(left);
       let dy = Number(down) - Number(up);
-      if (!dx && !dy) return;
-      const length = Math.hypot(dx, dy);
-      dx /= length;
-      dy /= length;
-      const speed = 180 * delta / 1000;
-      const nextX = Phaser.Math.Clamp(this.player.x + dx * speed, 37, ACT2_WORLD.width - 37);
-      const nextY = Phaser.Math.Clamp(this.player.y + dy * speed, 59, ACT2_WORLD.height - 8);
-      this.player.setPosition(nextX, nextY);
-      this.player.setFlipX(dx < 0);
-      this.player.setDepth(1000 + Math.round(nextY));
+
+      if (dx || dy) {
+        this.moveTarget = null;
+      } else if (this.moveTarget) {
+        dx = this.moveTarget.x - this.player.x;
+        dy = this.moveTarget.y - this.player.y;
+        if (Math.hypot(dx, dy) < 8) {
+          this.moveTarget = null;
+          dx = 0;
+          dy = 0;
+        }
+      }
+
+      if (dx || dy) {
+        const length = Math.hypot(dx, dy);
+        dx /= length;
+        dy /= length;
+        const speed = 180 * delta / 1000;
+        const nextX = Phaser.Math.Clamp(this.player.x + dx * speed, 37, ACT2_WORLD.width - 37);
+        const nextY = Phaser.Math.Clamp(this.player.y + dy * speed, 300, ACT2_WORLD.height - 8);
+        if (this.isWalkable(nextX, this.player.y)) this.player.x = nextX;
+        if (this.isWalkable(this.player.x, nextY)) this.player.y = nextY;
+        this.player.setFlipX(dx < 0);
+        this.player.setDepth(1000 + Math.round(this.player.y));
+      }
+
+      if (this.dog) {
+        const desiredX = this.player.x - (this.player.flipX ? -54 : 54);
+        const desiredY = this.player.y + 18;
+        this.dog.x += (desiredX - this.dog.x) * Math.min(1, delta / 220);
+        this.dog.y += (desiredY - this.dog.y) * Math.min(1, delta / 220);
+        this.dog.setDepth(1000 + Math.round(this.dog.y));
+      }
+    }
+
+    private isWalkable(x: number, y: number) {
+      if (x < 37 || x > ACT2_WORLD.width - 37 || y < 300 || y > ACT2_WORLD.height - 8) return false;
+      return !PROJECTS.some((project) => {
+        const p = ACT2_VISUAL_PLACEMENTS[project];
+        const halfW = p.footprint.width / 2 + 24;
+        const halfH = p.footprint.height / 2 + 18;
+        return x >= p.x - halfW && x <= p.x + halfW &&
+          y >= p.baseY - halfH && y <= p.baseY + halfH;
+      });
     }
 
     setStage(stage: Act2VisualStage) {
