@@ -118,3 +118,43 @@ Local save normalization and autosave must explicitly preserve:
 - `roomAquariumOwned`
 
 The room's visible stage is derived from the sequential owned flags. Backend wallet snapshots are authoritative for displayed SysselBux after connected purchases. Never manually alter a child's authoritative balance to repair a presentation mismatch without first proving a backend transaction error.
+
+## Act 2 state ownership — LOCKED 2026-09-30
+
+Act 2 must preserve the existing authority split rather than inventing a second reward/progression ledger.
+
+### Backend-authoritative
+- real-world quest lifecycle;
+- parent review/approval;
+- reward payout;
+- wallet balances;
+- authoritative claimed/contribution evidence used to determine that new real-world work exists;
+- story-bound purchases when implemented through backend economy RPC/state.
+
+### Act 2 world/story authoritative
+A dedicated persisted Act 2 state family owns what the child has already **seen/consumed in the game world**:
+- Act 2 entered/opening consumed;
+- Alve intro consumed;
+- selected/current project;
+- per-project authored contribution index / consumed beat IDs;
+- visible project stage;
+- prerequisite project completion;
+- motorboat lock/completion;
+- finale consumed;
+- epilogue consumed;
+- Act 2 completion/transport unlock.
+
+### Reconciliation law
+Backend evidence may say the child has earned more Act 2 contributions than the local/world presentation has consumed. In that case:
+1. never discard the backend evidence;
+2. never jump visible/story state directly to the backend total;
+3. surface the next unconsumed authored beat;
+4. commit it idempotently;
+5. only then derive whether another beat is eligible.
+
+This is intentional backlog/catch-up, not an error. It protects story order while preserving real-world work.
+
+Do not use wallet balances or category totals as proxies for consumed Act 2 story state. Do not replay rewards to repair local story state. Do not mutate historical quest instances to match the world.
+
+The detailed implementation and restart/order test matrix lives in `docs/ACT2_IMPLEMENTATION_PLAN.md`.
+
