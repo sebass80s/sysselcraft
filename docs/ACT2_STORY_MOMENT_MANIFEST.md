@@ -97,6 +97,90 @@ Generated assets use stable IDs independent of filenames, for example:
 
 One image may intentionally serve multiple beats only after continuity audit proves that reuse is valid.
 
+## Locked Act 2 opening sequence — 2026-09-30
+
+The Act 2 opening is a **five-image non-contribution cinematic bridge** from the Act 1 village into the lake area. It occurs before the existing close bicycle beat and first Alve meeting. It is not part of the 64 contribution count.
+
+Emotional progression: **impulse → pursuit → anticipation → discovery → human trace**.
+
+| ID | Canonical asset | Story function | Locked staging |
+|---|---|---|---|
+| OPEN-001 | `/assets/village/story-moments/act2/opening/01-dog-runs-off.png` | Valpen triggers Act 2 | At the **forest edge**, the boundary between the familiar village/outskirts and the woods must read clearly. Valpen is actively running into the forest; Barnet follows, back-facing. Not already deep in the woods. |
+| OPEN-002 | `/assets/village/story-moments/act2/opening/02-into-the-forest.png` | Pursuit leaves the known world behind | Forest is now **very dense**. Barnet runs along the path, back-facing. Valpen is **far ahead**, small in frame. No lake reveal yet. |
+| OPEN-003 | `/assets/village/story-moments/act2/opening/03-through-the-trees.png` | Anticipation before reveal | Light changes ahead; only a restrained hint of blue/water through trees. Valpen leads. The full lake must not yet be revealed. |
+| OPEN-004 | `/assets/village/story-moments/act2/opening/04-first-view-of-the-lake.png` | Major Act 2 world reveal | Barnet exits the trees and sees the lake for the first time. Barnet remains small/back-facing; Valpen is nearer the shore. Nature, scale and openness dominate. No civilization. |
+| OPEN-005 | `/assets/village/story-moments/act2/opening/05-the-bicycle.png` | First human trace / bridge to Alve | The bicycle is visible **from a clear distance**. Barnet and Valpen have not reached it yet. This must not duplicate the following close bicycle beat. |
+
+### Locked opening dialogue/runtime copy
+
+**OPEN-001 — Valpen sticker**
+
+Du hinner knappt reagera innan valpen plötsligt spetsar öronen och springer iväg.
+
+> **Barnet:** “Hallå?”  
+> **Barnet:** “Vart ska du?”
+
+Valpen vänder sig inte ens om. Den bara fortsätter, rakt bort från byn och in mot skogen.
+
+> **Barnet:** “Men vänta!”  
+> **Barnet:** “Du får inte bara dra sådär.”
+
+Valpen försvinner mellan träden. Du tvekar en sekund. Sedan springer du efter.
+
+**OPEN-002 — In i skogen**
+
+Stigen blir smalare ju längre in du kommer. Valpen syns långt framför dig mellan träden, som om den redan vet exakt vart den ska.
+
+> **Barnet:** “Sakta ner!”  
+> **Barnet:** “Jag kommer ju!”
+
+Skogen blir tätare omkring dig. Det är inte läskigt. Bara längre bort än du brukar gå.
+
+> **Barnet:** “Om du springer vilse får du faktiskt skylla dig själv.”
+
+Valpen fortsätter glatt framåt.
+
+**OPEN-003 — Något där framme**
+
+Efter en stund förändras ljuset mellan träden. Det blir ljusare längre fram, och mellan stammarna skymtar något blått.
+
+> **Barnet:** “Vad är det där?”
+
+Det glittrar till mellan grenarna igen. Vatten. Eller något som ser ut som vatten.
+
+> **Barnet:** “Har du sprungit hit hela tiden bara för att visa något?”
+
+Valpen väntar ett ögonblick, sedan fortsätter den.
+
+**OPEN-004 — Sjön**
+
+Du kommer ut ur skogen och stannar. Framför dig breder sjön ut sig, blank och stor i ljuset. Valpen har redan hunnit ner mot stranden och nosar omkring som om platsen vore världens mest självklara sak.
+
+För dig är allt nytt: skogen, vattnet, stranden. Det känns som att du hittat ett helt nytt ställe som ingen berättat om.
+
+> **Barnet:** “Oj.”
+
+Du tar några steg fram och ser dig omkring. Någonstans här finns det mer än bara sjön. Det känns direkt.
+
+**OPEN-005 — Där borta**
+
+När du kommer lite längre fram får du syn på något mellan träden. Du stannar.
+
+Lutad mot en stam, en bit bort, står en cykel. Valpen har också fått syn på den och saktar ner.
+
+> **Barnet:** “Va?”  
+> **Barnet:** “Vems är den där?”
+
+Du kisar mot platsen längre fram. Cykeln står inte mitt i skogen av sig själv. Någon måste ha lämnat den där.
+
+> **Barnet:** “Okej…”
+
+Du tar några försiktiga steg framåt.
+
+> **Barnet:** “Då är det nog någon här.”
+
+After OPEN-005, continue directly into the existing **close bicycle beat** (`meeting-alve/bike.png`) and then the established Alve meeting sequence. OPEN-005 must remain the distant discovery; the next beat earns the close inspection.
+
 ## Locked cross-project finale beats
 
 The family return follows `MOTORBOAT-16` but is **not contribution 17**. It receives finale image IDs and narrative/generation contracts while remaining outside the 64 contribution count.
