@@ -99,6 +99,12 @@ assert.match(component, /saved\.construction\.revealed\.clinic >= 4 && saved\.wo
 assert.match(component, /worldFlags: \{ \.\.\.latestSaveRef\.current\.worldFlags, clinicCompletionSeen: true \}/, "Clinic completion must persist before closing the finale");
 assert.match(component, /await saveSaveState\(snapshot, true\); latestSaveRef\.current = snapshot; setClinicCompletionSeen\(true\); setClinicStoryIndex\(null\)/, "Clinic finale must close only after the completion flag is saved");
 assert.match(component, /setClinicCompletionSeen\(saved\.worldFlags\.clinicCompletionSeen === true\)/, "Clinic completion must restore from save");
+const questInbox = fs.readFileSync(new URL("../src/components/ChildBackendQuestInbox.tsx", import.meta.url), "utf8");
+assert.match(questInbox, /backendStoryFlags\.solChoseToStay === true/, "Clinic sync must trust authoritative backend Sol state");
+assert.match(questInbox, /backendStoryFlags\.clinicProgressionBaseline/, "Clinic sync must recover the authoritative backend baseline");
+assert.match(questInbox, /startClinicConstruction\(snapshot\.construction\)/, "stale local saves must be able to restore Clinic stage 1");
+assert.match(questInbox, /backendClinicBaseline \?\? snapshot\.worldFlags\.clinicProgressionBaseline/, "Clinic progression must prefer the backend baseline when available");
+assert.match(questInbox, /syncClinicContributionProgress\([\s\S]*nextGameState\.progression\.worldProgression[\s\S]*clinicBaseline/, "quest refresh must drive Clinic progression from authoritative claimed-task progress");
 
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.match(storyShop, /BOTTLE_MESSAGE_PRICE = 100/, "Flaskpost should remain the 100 SysselBux Act 1 saving goal");
