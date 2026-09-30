@@ -361,14 +361,22 @@ The raw triage intentionally over-counted visual candidates. This pass asks a st
 ### Family finale protected queue
 These are outside the 64 contribution count and are not aggressively collapsed because they carry the Act 2 emotional climax.
 
-**Family continuity lock:** finale art shows **Alve's father + teenage older sister + 3–4-year-old younger brother** returning to the cottage. Alve's mother does not physically return in Act 2. Child-facing dialogue only establishes that **mamma blev sjuk** and that the family stopped coming afterward; adult players can infer the deeper loss from her absence and the old family photograph. The mother may appear only in clearly historical material such as that photograph.
+**Family continuity lock:** finale art shows **Alve's father + older sister in her early teens** returning to the cottage. Alve's mother does not physically return in Act 2. Child-facing dialogue only establishes that **mamma blev sjuk** and that the family stopped coming afterward; adult players can infer the deeper loss from her absence and the old family photograph. The mother may appear only in clearly historical material such as that photograph.
 - **IMG-A2-FIN-001 — Something is wrong at the cottage.** Alve + Adam approach; jacket/bag/open door/light; suspense, no family reveal yet.
-- **IMG-A2-FIN-002 — Familiar laughter / family reveal.** Alve recognizes what he hears/sees; father + teenage sister + young brother visibly unpacking/using cottage. The mother is absent except in the old historical family photograph.
-- **IMG-A2-FIN-003 — Family embrace.** MAJOR. Alve is embraced by father + teenage sister + young brother; Adam slightly behind and strictly back-facing. The mother must not appear physically. Dialogue continues into the friendship payoff: “Det är min kompis.”
+- **IMG-A2-FIN-002 — Familiar laughter / family reveal.** Alve recognizes what he hears/sees; father + early-teen older sister visibly unpacking/using cottage. The mother is absent except in the old historical family photograph.
+- **IMG-A2-FIN-003 — Family embrace.** MAJOR. Alve is embraced by father + early-teen older sister; Adam slightly behind and strictly back-facing. The mother must not appear physically. Dialogue continues into the friendship payoff: “Det är min kompis.”
 - **IMG-A2-FIN-004 — Preserved memories.** Height marks / game / VÅR STUGA discovery by family. Candidate REUSE of FIN-002 if composition can honestly show these details; do not force.
-- **IMG-A2-FIN-005 — Veranda / living lake / “Det är bättre.”** MAJOR final Act 2 emotional image. Must show restored lake without revealing Act 3 destination.
+- **IMG-A2-FIN-005 — Veranda / living lake / “Det är bättre.”** MAJOR final Act 2 emotional image. Must show restored lake without revealing Act 3 destination. The dialogue thesis is **“Jag kunde inte laga det som hände. Men jag kunde laga stugan.”** followed by **“Du lagade mer än stugan.”**
 
 **Finale protected queue: 5 images, with FIN-004 a consolidation candidate.**
+
+**Canonical finale asset filenames on disk — LOCKED:**
+- FIN-001 → `public/assets/village/story-moments/act2/finale/01-something-is-different.png`
+- FIN-002 → `public/assets/village/story-moments/act2/finale/02-family-return.png`
+- FIN-003 → `public/assets/village/story-moments/act2/finale/03-family-embrace.png`
+- FIN-005 → `public/assets/village/story-moments/act2/finale/04-home-again.png`
+
+The sequence is intentionally numbered **01–04 on disk** even though the protected manifest IDs retain FIN-001/002/003/005 for historical stability. FIN-004 remains merged into FIN-002 and must not receive a separate file unless the manifest is explicitly reopened.
 
 ### Consolidated count v1
 - Stugan: 7
