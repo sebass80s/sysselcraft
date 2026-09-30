@@ -236,3 +236,28 @@ The first shippable vertical slice is:
 **Act 1 → Act 2 trigger → OPEN-001…005 → bicycle → Alve → project chooser → choose one of Stugan/Bryggan/Båthuset → chosen project begins and survives restart.**
 
 Do not start by implementing all 64 contribution beats at once. Establish the state/runtime spine first, then add one complete project track at a time.
+
+
+## Phase 1 implementation checkpoint — 2026-09-30
+
+First production vertical-slice code has landed on `nova/local-construction-snapshot`.
+
+Implemented:
+- production `/act2/` route, separate from `/act2-test`;
+- post-Clinic Act 1 entry control into Act 2;
+- persisted dedicated `sysselcraft.act2.runtime.v1` state family, separate from Act 1 `SaveStateV1` and Quest v2 authority;
+- restart-safe OPEN-001…OPEN-005 progress;
+- close bicycle beat;
+- revised canonical first Alve meeting dialogue;
+- in-Story-Moment Stugan/Bryggan/Båthuset chooser with preview before commit;
+- selected project persists across restart and begins at 0/16 without consuming backend progression;
+- production lake runtime reused from the accepted lake harness;
+- touch-to-move, keyboard movement, simple authored building-footprint collision and Valpen follow presence in the lake runtime;
+- deterministic source/state regression added as `test:act2-runtime` and included in `npm run verify`.
+
+Still open inside Phase 1:
+- canonical runtime Alve sprite/cutout presence at the active project. Existing accepted Alve assets are Story Moments/reference material, not a verified standalone runtime cutout, so no filename was invented.
+- physical iPhone navigation/camera acceptance.
+- GitHub Actions green evidence for this checkpoint. The connector-visible commit status currently only reports Vercel's external build-rate-limit failure, which is not a source/build failure and does not constitute CI acceptance.
+
+Do not start Quest→Act 2 contribution consumption until this runtime/state spine has passed build/CI and physical restart acceptance.
