@@ -776,6 +776,76 @@ Alve is a little wild but kind: energetic, impulsive, practical, warm-hearted an
 
 Adam is the one who offers that they might fix the place together. Alve then asks what they should begin with.
 
+### First Alve meeting dialogue — LOCKED
+
+This is the exact canonical first-meeting dialogue after the distant bicycle/opening sequence and the close bicycle beat. The unknown boy's nameplate reads **Barnet** until he introduces himself; at **“…Alve.”** it changes permanently to **Alve**. Dialogue speaker label **Barnet** below is the player character.
+
+> **Barnet:** “Hej.”  
+> **Barnet:** “Vad gör du här?”  
+> **Barnet:** “Hunden sprang hit.”  
+> **Barnet:** “Från byn?”  
+> **Barnet:** “Ja.”  
+> **Barnet:** “Brukar folk gå hit från byn?”  
+> **Barnet:** “Jag vet inte. Jag har aldrig varit här förut.”  
+> **Barnet:** “Bra.”  
+> **Barnet:** “Varför är det bra?”  
+> **Barnet:** “För att det här är vårt ställe.”  
+> **Barnet:** “Ditt?”  
+> **Barnet:** “Min familjs.”  
+> **Barnet:** “Vad gör du?”  
+> **Barnet:** “Lagar den.”  
+> **Barnet:** “Hela?”  
+> **Barnet:** “Det var planen.”  
+> **Barnet:** “Hur går det?”  
+> **Barnet:** “Jättebra.”  
+> **Barnet:** “Det såg bra ut.”  
+> **Barnet:** “Tyst.”  
+> **Barnet:** “Jag kan hjälpa dig.”  
+> **Barnet:** “Varför?”  
+> **Barnet:** “För att det ser kul ut.”  
+> **Barnet:** “Det är inte kul.”  
+> **Barnet:** “Du log nyss.”  
+> **Barnet:** “Det gjorde jag inte.”  
+> **Barnet:** “Jag heter Adam.”  
+> **Barnet:** “…Alve.”
+
+**Nameplate changes: Barnet → Alve.**
+
+> **Alve:** “Du sa redan hej.”  
+> **Barnet:** “Det var innan jag visste vad du hette.”  
+> **Alve:** “Du pratar mycket.”  
+> **Barnet:** “Du lagar stugor dåligt.”  
+> **Alve:** “Vill du fortfarande hjälpa till?”  
+> **Barnet:** “Japp.”  
+> **Alve:** “Du vet inte ens vad jag försöker göra.”  
+> **Barnet:** “Laga stugan.”  
+> **Alve:** “Inte bara stugan.”  
+> **Alve:** “Kom.”
+
+Alve visar området.
+
+> **Alve:** “Stugan.”  
+> **Alve:** “Bryggan.”  
+> **Alve:** “Båthuset.”  
+> **Barnet:** “Allt är trasigt.”  
+> **Alve:** “Jag vet.”  
+> **Barnet:** “Tänkte du laga allt själv?”  
+> **Alve:** “Japp.”  
+> **Barnet:** “Det hade tagit hundra år.”  
+> **Alve:** “Femtio.”  
+> **Barnet:** “Minst hundra.”  
+> **Alve:** “Okej. Åttio.”  
+> **Barnet:** “Och båten?”  
+> **Alve:** “Den får vänta.”  
+> **Barnet:** “Varför?”  
+> **Alve:** “Först måste vi få ordning på resten.”  
+> **Alve:** “Du kan fortfarande gå tillbaka till byn.”  
+> **Barnet:** “Nä.”  
+> **Alve:** “Nä?”  
+> **Barnet:** “Vi skulle ju laga det här.”  
+> **Alve:** “Okej då.”  
+> **Alve:** “Vad börjar vi med?”
+
 ### Project-selection Story Moment — LOCKED
 The first restoration choice is presented **inside the cinematic/Story Moment**, not as a detached menu. Three clickable hotspots are active: **Stugan, Bryggan and Båthuset**. Selecting a hotspot only marks/previews that choice; it does not start the project yet. Alve gives a short motivation for the selected object and a confirmation button appears: **“Laga [objekt]”**.
 
