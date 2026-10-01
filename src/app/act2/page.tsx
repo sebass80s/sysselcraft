@@ -5,8 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import type { Act2LakeGameHandle } from "../../game/createAct2LakeGame";
 import {
   createDefaultAct2RuntimeState,
+  isMotorboatUnlocked,
   loadAct2RuntimeState,
+  prerequisiteCompletionCount,
   saveAct2RuntimeState,
+  withSelectedProject,
   type Act2Project,
   type Act2RuntimeState,
 } from "../../game/act2RuntimeState";
@@ -157,7 +160,7 @@ export default function Act2Page() {
   const [state, setState] = useState<Act2RuntimeState>(createDefaultAct2RuntimeState);
   const [ready, setReady] = useState(false);
   const [childName, setChildName] = useState("Barnet");
-  const [previewProject, setPreviewProject] = useState<Exclude<Act2Project, "motorboat"> | null>(null);
+  const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -179,6 +182,12 @@ export default function Act2Page() {
     import("../../game/createAct2LakeGame").then(async ({ createAct2LakeGame }) => {
       if (disposed || !hostRef.current) return;
       gameRef.current = await createAct2LakeGame(hostRef.current, 1);
+      gameRef.current.setProjectStages({
+        cabin: state.projects.cabin.visibleStage,
+        dock: state.projects.dock.visibleStage,
+        boathouse: state.projects.boathouse.visibleStage,
+        motorboat: state.projects.motorboat.visibleStage,
+      });
     });
     return () => {
       disposed = true;
@@ -186,6 +195,20 @@ export default function Act2Page() {
       gameRef.current = null;
     };
   }, [ready, state.openingComplete]);
+
+  useEffect(() => {
+    gameRef.current?.setProjectStages({
+      cabin: state.projects.cabin.visibleStage,
+      dock: state.projects.dock.visibleStage,
+      boathouse: state.projects.boathouse.visibleStage,
+      motorboat: state.projects.motorboat.visibleStage,
+    });
+  }, [
+    state.projects.cabin.visibleStage,
+    state.projects.dock.visibleStage,
+    state.projects.boathouse.visibleStage,
+    state.projects.motorboat.visibleStage,
+  ]);
 
   async function commit(next: Act2RuntimeState) {
     await saveAct2RuntimeState(next);
@@ -213,8 +236,10 @@ export default function Act2Page() {
     }
   }
 
-  async function chooseProject(project: Exclude<Act2Project, "motorboat">) {
-    await commit({ ...state, selectedProject: project });
+  async function chooseProject(project: Act2Project) {
+    const next = withSelectedProject(state, project);
+    if (next.selectedProject !== project) return;
+    await commit(next);
     setPreviewProject(null);
   }
 
@@ -224,6 +249,22 @@ export default function Act2Page() {
   const alveBeat = ALVE_DIALOGUE[state.alveIntroIndex];
   const alveKnown = state.alveIntroIndex > ALVE_DIALOGUE.findIndex((beat) => beat.nameReveal);
   const displayText = alveBeat?.text.replaceAll("{childName}", childName);
+  const prerequisiteDone = prerequisiteCompletionCount(state);
+  const motorboatUnlocked = isMotorboatUnlocked(state);
+  const availablePrerequisites = (["cabin", "dock", "boathouse"] as const)
+    .filter((project) => !state.projects[project].complete);
+  const motorboatPreview = !state.projects.boathouse.complete
+    ? "Jag vill också börja med båten. Men först måste vi laga båthuset. Vi behöver verkstaden och slipen om vi ska kunna göra det ordentligt."
+    : prerequisiteDone < 3
+      ? "Snart. Men de andra byggena är viktigare först. Om vi ska få hela platsen att fungera igen kan vi inte bara fixa båten och lämna resten."
+      : "Nu. Nu fixar vi den.";
+  const selectionPrompt = prerequisiteDone === 0
+    ? "Vad börjar vi med?"
+    : prerequisiteDone === 1
+      ? "En klar. Förut var allt trasigt. Nu är det en sak mindre. Så. Vad tar vi nu?"
+      : prerequisiteDone === 2
+        ? "Två klara. Då är det bara en kvar. Den har väntat länge nog."
+        : "Stugan är klar. Bryggan är klar. Båthuset är klart. Det är dags.";
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
     {state.openingComplete && <div ref={hostRef} style={{ position: "absolute", inset: 0 }} aria-label="Sjön i Act 2" />}
@@ -261,25 +302,28 @@ export default function Act2Page() {
       </div>
     </section>}
 
-    {state.alveIntroComplete && !state.selectedProject && <section className="story-moment" role="presentation">
+    {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && <section className="story-moment" role="presentation">
       <Image src="/assets/village/story-moments/act2/meeting-alve/pick.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">Alve</span>
-        <p>{previewProject ? PROJECT_COPY[previewProject].preview : "Vad börjar vi med?"}</p>
+        <p>{previewProject === "motorboat" ? motorboatPreview : previewProject ? PROJECT_COPY[previewProject].preview : selectionPrompt}</p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
-          {(Object.keys(PROJECT_COPY) as Exclude<Act2Project, "motorboat">[]).map((project) =>
+          {availablePrerequisites.map((project) =>
             <button key={project} className="secondary-button" onClick={() => setPreviewProject(project)}>{PROJECT_COPY[project].label}</button>
           )}
+          <button className="secondary-button" onClick={() => setPreviewProject("motorboat")}>
+            {motorboatUnlocked ? "Motorbåten" : "🔒 Motorbåten"}
+          </button>
         </div>
-        {previewProject && <button className="primary-button dialogue-next" onClick={() => void chooseProject(previewProject)}>
+        {previewProject && (previewProject !== "motorboat" || motorboatUnlocked) && <button className="primary-button dialogue-next" onClick={() => void chooseProject(previewProject)}>
           Laga {PROJECT_COPY[previewProject].object}
         </button>}
       </div>
     </section>}
 
     {state.selectedProject && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
-      <strong>Alve: Bra val! Vi fixar {PROJECT_COPY[state.selectedProject].object} först!</strong>
-      <div style={{ marginTop: 6, opacity: .82 }}>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · 0/16</div>
+      <strong>Alve: {prerequisiteDone === 0 ? `Bra val! Vi fixar ${PROJECT_COPY[state.selectedProject].object} först!` : state.selectedProject === "motorboat" ? "Nu fixar vi den." : `Bra. Då kör vi på ${PROJECT_COPY[state.selectedProject].object}.`}</strong>
+      <div style={{ marginTop: 6, opacity: .82 }}>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · {state.projects[state.selectedProject].contributions}/16</div>
       <a href="/" style={{ display: "inline-block", marginTop: 10, color: "white", textDecoration: "underline" }}>← Till byn</a>
     </div>}
   </main>;
