@@ -37,24 +37,10 @@ import { ACT2_FINALE_BEATS } from "../game/act2FinaleStory";
 import { StoryMoment } from "./story/StoryMoment";
 import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
-import { StoryTranscript } from "./story/StoryTranscript";
 import { ACT2_OPENING_BEATS } from "../game/act2OpeningStory";
 import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../game/act2AlveStory";
 
 
-
-function storyCardChunk(lines: readonly string[], start: number) {
-  const chunk: string[] = [];
-  let chars = 0;
-  for (let index = start; index < lines.length && chunk.length < 3; index += 1) {
-    const line = lines[index];
-    const nextChars = chars + line.length;
-    if (chunk.length > 0 && nextChars > 260) break;
-    chunk.push(line);
-    chars = nextChars;
-  }
-  return chunk;
-}
 
 const PROJECT_COPY: Record<Act2Project, { label: string; preview: string; object: string }> = {
   cabin: { label: "Stugan", object: "stugan", preview: "Stugan... Jag hoppas min familj vill komma hit igen om vi får ordning på den." },
@@ -361,10 +347,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         : contributionCandidate?.project === "motorboat"
           ? MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
           : null;
-  const activeContributionLines = contributionTurnInOpen && activeContributionBeat
-    ? storyCardChunk(activeContributionBeat.body, state.contributionLineIndex)
-    : [];
-  const activeContributionLine = activeContributionLines[0] ?? null;
+  const activeContributionLine = contributionTurnInOpen
+    ? activeContributionBeat?.body[state.contributionLineIndex] ?? null
+    : null;
+  const activeContributionPresentation = activeContributionLine
+    ? parseStoryLine(activeContributionLine, childName)
+    : null;
   const finalePending = act2FinalePending(state);
   const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
   const activeFinaleLine = activeFinaleBeat?.body[state.finaleLineIndex] ?? null;
@@ -380,10 +368,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeCompletionPresentation = activeCompletionLine
     ? parseStoryLine(activeCompletionLine, childName)
     : null;
-  const activeCabinRevisitLines = cabinRevisitOpen
-    ? storyCardChunk(CABIN_WAITING_REACTION.body, cabinRevisitLineIndex)
-    : [];
-  const activeCabinRevisitLine = activeCabinRevisitLines[0] ?? null;
+  const activeCabinRevisitLine = cabinRevisitOpen
+    ? CABIN_WAITING_REACTION.body[cabinRevisitLineIndex] ?? null
+    : null;
+  const activeCabinRevisitPresentation = activeCabinRevisitLine
+    ? parseStoryLine(activeCabinRevisitLine, childName)
+    : null;
 
   async function advanceFinaleStory() {
     if (!activeFinaleBeat) return;
@@ -404,9 +394,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }
 
   function advanceCabinRevisit() {
-    const nextLineIndex = cabinRevisitLineIndex + Math.max(1, activeCabinRevisitLines.length);
-    if (nextLineIndex < CABIN_WAITING_REACTION.body.length) {
-      setCabinRevisitLineIndex(nextLineIndex);
+    if (cabinRevisitLineIndex + 1 < CABIN_WAITING_REACTION.body.length) {
+      setCabinRevisitLineIndex((index) => index + 1);
       return;
     }
     setCabinRevisitOpen(false);
@@ -415,9 +404,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
 
   async function advanceContributionStory() {
     if (!contributionCandidate || !activeContributionBeat) return;
-    const nextLineIndex = state.contributionLineIndex + Math.max(1, activeContributionLines.length);
-    if (nextLineIndex < activeContributionBeat.body.length) {
-      await commit({ ...state, contributionLineIndex: nextLineIndex });
+    if (state.contributionLineIndex + 1 < activeContributionBeat.body.length) {
+      await commit({ ...state, contributionLineIndex: state.contributionLineIndex + 1 });
       return;
     }
     const next = withPresentedContribution(
@@ -607,8 +595,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         image: CABIN_WAITING_REACTION.image,
         imageFit: "contain",
         heading: CABIN_WAITING_REACTION.title,
-        lines: activeCabinRevisitLines,
-        nextLabel: cabinRevisitLineIndex + activeCabinRevisitLines.length < CABIN_WAITING_REACTION.body.length ? "Fortsätt" : "Tillbaka",
+        speaker: activeCabinRevisitPresentation?.speaker,
+        speakerTone: activeCabinRevisitPresentation?.speakerTone,
+        lines: activeCabinRevisitPresentation ? [activeCabinRevisitPresentation.text] : [],
+        nextLabel: cabinRevisitLineIndex + 1 < CABIN_WAITING_REACTION.body.length ? "Fortsätt" : "Tillbaka",
       }}
       onNext={advanceCabinRevisit}
       dialogueClassName="act2-dialogue-card"
@@ -664,13 +654,15 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     {contributionTurnInOpen && contributionCandidate && activeContributionBeat && activeContributionLine && <StoryMoment
       image={activeContributionBeat.image}
       imageFit="contain"
-      nextLabel={state.contributionLineIndex + activeContributionLines.length < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
+      speaker={activeContributionPresentation?.speaker}
+      speakerTone={activeContributionPresentation?.speakerTone}
+      nextLabel={state.contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
       onNext={() => void advanceContributionStory()}
       zIndex={80}
       background="rgba(9,14,10,.94)"
       dialogueClassName="act2-dialogue-card"
     >
-      <StoryTranscript lines={activeContributionLines} childName={childName} />
+      <p>{activeContributionPresentation?.text}</p>
     </StoryMoment>}
     {backendSyncError && <div role="status" style={{ position:"absolute", right:16, top:16, zIndex:30, background:"rgba(0,0,0,.65)", color:"white", padding:"8px 12px", borderRadius:10 }}>{backendSyncError}</div>}
     {state.selectedProject && !finalePending && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
