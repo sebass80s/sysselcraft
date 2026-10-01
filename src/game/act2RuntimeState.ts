@@ -77,7 +77,7 @@ function normalizeProject(value: unknown): Act2ProjectState {
     contributions,
     visibleStage,
     consumedBeatIds: normalizeBeatIds(candidate.consumedBeatIds),
-    complete: contributions >= 16 || candidate.complete === true,
+    complete: contributions >= 16,
   };
 }
 
