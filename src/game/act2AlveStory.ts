@@ -4,7 +4,7 @@ export type Act2AlveDialogueBeat = {
   nameReveal?: boolean;
 };
 
-export const ACT2_ALVE_DIALOGUE: Act2AlveDialogueBeat[] = [] = [
+export const ACT2_ALVE_DIALOGUE: Act2AlveDialogueBeat[] = [
   { speaker: "child", text: "Hej." },
   { text: "Pojken vid stugan rycker till och vänder sig om. Han håller fortfarande en lös bräda i handen." },
   { speaker: "child", text: "Är det din cykel där borta?" },
@@ -66,4 +66,4 @@ export const ACT2_ALVE_DIALOGUE: Act2AlveDialogueBeat[] = [] = [
   { speaker: "alve", text: "Stugan. Bryggan. Båthuset." },
   { speaker: "alve", text: "Om vi ska göra det här tillsammans så börjar vi med en av dem." },
   { speaker: "alve", text: "Vad börjar vi med?" },
-;
+];
