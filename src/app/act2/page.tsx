@@ -183,7 +183,7 @@ export default function Act2Page() {
         getPairedChildId(),
       ]);
       if (cancelled) return;
-      let entered = act2.entered ? act2 : { ...act2, entered: true };
+      let entered: Act2RuntimeState = act2.entered ? act2 : { ...act2, entered: true };
       if (childId) {
         try {
           const backend = await getChildGameState(childId);
