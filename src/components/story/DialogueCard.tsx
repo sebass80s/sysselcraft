@@ -1,0 +1,52 @@
+"use client";
+
+import type { ReactNode } from "react";
+import type { StorySpeakerTone } from "../../game/storyEngine";
+
+type DialogueCardProps = {
+  speaker?: string;
+  speakerTone?: StorySpeakerTone;
+  children: ReactNode;
+  nextLabel?: string;
+  onNext?: () => void;
+  nextDisabled?: boolean;
+  footer?: ReactNode;
+  className?: string;
+  scrollable?: boolean;
+};
+
+export function DialogueCard({
+  speaker,
+  speakerTone = "default",
+  children,
+  nextLabel,
+  onNext,
+  nextDisabled = false,
+  footer,
+  className = "",
+  scrollable = false,
+}: DialogueCardProps) {
+  const speakerClass = speakerTone === "default" ? "" : ` ${speakerTone}`;
+  return (
+    <div
+      className={`dialogue-card story-moment-dialogue shared-story-dialogue ${className}`.trim()}
+      role="dialog"
+      aria-modal="true"
+      style={scrollable ? { maxHeight: "44vh", overflowY: "auto" } : undefined}
+    >
+      {speaker && <span className={`dialogue-speaker${speakerClass}`}>{speaker}</span>}
+      <div className="shared-story-body">{children}</div>
+      {nextLabel && onNext && (
+        <button
+          type="button"
+          className="primary-button dialogue-next"
+          disabled={nextDisabled}
+          onClick={onNext}
+        >
+          {nextLabel}
+        </button>
+      )}
+      {footer}
+    </div>
+  );
+}
