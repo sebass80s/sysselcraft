@@ -37,117 +37,11 @@ import { ACT2_FINALE_BEATS } from "../../game/act2FinaleStory";
 import { StoryMoment } from "../../components/story/StoryMoment";
 import { parseStoryLine } from "../../game/storyEngine";
 import { StoryRunner } from "../../components/story/StoryRunner";
+import { ACT2_OPENING_BEATS } from "../../game/act2OpeningStory";
 
-type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
 
-const OPENING: OpeningBeat[] = [
-  {
-    image: "/assets/village/story-moments/act2/opening/01-dog-runs-off.png",
-    title: "Valpen sticker",
-    body: [
-      "Du och Valpen är nästan framme vid skogsbrynet när han plötsligt stannar.",
-      "Öronen åker upp.",
-      "Han står helt stilla och tittar in mellan träden.",
-      "Barnet: Vad är det?",
-      "Valpen tar några steg framåt, nosar i luften och sedan far han iväg.",
-      "Barnet: Hallå!",
-      "Han springer rakt över den sista öppna marken och in bland träden.",
-      "Barnet: Valpen! Vänta!",
-      "Du hinner bara se svansen försvinna bakom en gran.",
-      "Du tittar tillbaka mot byn.",
-      "Sedan mot skogen.",
-      "Barnet: Du får inte bara dra sådär.",
-      "Inget svar. Bara något som prasslar längre in.",
-      "Du springer efter.",
-    ],
-  },
-  {
-    image: "/assets/village/story-moments/act2/opening/02-into-the-forest.png",
-    title: "In i skogen",
-    body: [
-      "Stigen är tydlig i början, men blir snabbt smalare.",
-      "Grenar hänger ut över den och marken är full av rötter, mossa och gamla löv.",
-      "Valpen syns långt framför dig mellan träden.",
-      "Barnet: Sakta ner! Jag kommer ju!",
-      "Han stannar ett ögonblick och tittar tillbaka.",
-      "Sedan springer han vidare.",
-      "Barnet: Jaha. Tack.",
-      "Ju längre du kommer desto tätare blir skogen. Bakom dig går det nästan inte längre att se var du kom ifrån.",
-      "Du kliver över en rot och duckar under en låg gren.",
-      "Barnet: Du vet väl vart du ska?",
-      "Valpen fortsätter utan att tveka.",
-      "Barnet: Bra. För det gör inte jag.",
-    ],
-  },
-  {
-    image: "/assets/village/story-moments/act2/opening/03-through-the-trees.png",
-    title: "Något där framme",
-    body: [
-      "Efter en stund märker du att skogen förändras.",
-      "Det blåser lite mer mellan träden.",
-      "Ljuset framför dig är starkare.",
-      "Valpen saktar äntligen ner.",
-      "Barnet: Vad har du hittat?",
-      "Du går ikapp honom.",
-      "Mellan två stammar glittrar något blått till långt där framme.",
-      "Du tar några steg åt sidan för att se bättre.",
-      "Det glittrar igen.",
-      "Barnet: Är det vatten?",
-      "Valpen börjar gå mot ljuset.",
-      "Inte springa längre.",
-      "Nästan som om han väntar på dig.",
-      "Barnet: Var det hit du skulle?",
-      "Han fortsätter framåt.",
-      "Du följer efter.",
-    ],
-  },
-  {
-    image: "/assets/village/story-moments/act2/opening/04-first-view-of-the-lake.png",
-    title: "Sjön",
-    body: [
-      "Träden tar plötsligt slut.",
-      "Du kommer ut ur skogen och stannar.",
-      "Framför dig ligger en stor sjö.",
-      "Vattnet sträcker sig långt bort mellan skogsklädda stränder och klippor. Efter den täta skogen känns platsen nästan enorm.",
-      "Valpen springer ner mot vattnet och börjar nosa längs strandkanten.",
-      "Du blir stående kvar en stund.",
-      "Barnet: Oj.",
-      "Du går långsamt ner mot stranden.",
-      "Det finns inga hus omkring dig. Ingen väg. Ingen butik. Ingen som ropar från byn.",
-      "Bara sjön, skogen och den gamla stigen bakom dig.",
-      "Barnet: Hur har jag aldrig sett det här?",
-      "Valpen är redan på väg vidare längs stranden.",
-      "Barnet: Du tänker inte börja springa igen va?",
-      "Han fortsätter.",
-      "Barnet: Såklart.",
-      "Du följer efter.",
-    ],
-  },
-  {
-    image: "/assets/village/story-moments/act2/opening/05-the-bicycle.png",
-    title: "Cykeln",
-    body: [
-      "Efter en bit lämnar ni stranden och går in bland träden igen.",
-      "Inte långt.",
-      "Valpen stannar.",
-      "Den här gången ser du direkt vad han tittar på.",
-      "Längre fram står en cykel lutad mot ett träd.",
-      "Du stannar också.",
-      "Barnet: Va?",
-      "Cykeln är långt bort, men den är alldeles för ren och hel för att ha stått där övergiven särskilt länge.",
-      "Valpen börjar gå mot den.",
-      "Barnet: Vems är den där?",
-      "Du tittar runt mellan träden.",
-      "För första gången känns platsen inte tom längre.",
-      "Någon har cyklat hit.",
-      "Och om cykeln är kvar så borde personen också vara det.",
-      "Barnet: Okej…",
-      "Du börjar gå mot cykeln.",
-      "Barnet: Då är det någon här.",
-    ],
-  },
-];
+
 
 const ALVE_DIALOGUE: DialogueBeat[] = [
   { speaker: "child", text: "Hej." },
@@ -386,12 +280,12 @@ export default function Act2Page() {
   }
 
   async function advanceOpening() {
-    const current = OPENING[state.openingIndex];
+    const current = ACT2_OPENING_BEATS[state.openingIndex];
     if (state.openingLineIndex < current.body.length - 1) {
       await commit({ ...state, openingLineIndex: state.openingLineIndex + 1 });
       return;
     }
-    if (state.openingIndex < OPENING.length - 1) {
+    if (state.openingIndex < ACT2_OPENING_BEATS.length - 1) {
       await commit({ ...state, openingIndex: state.openingIndex + 1, openingLineIndex: 0 });
     } else {
       await commit({ ...state, openingLineIndex: 0, openingComplete: true, bicycleSeen: false });
@@ -427,7 +321,7 @@ export default function Act2Page() {
     </main>;
   }
 
-  const opening = OPENING[state.openingIndex];
+  const opening = ACT2_OPENING_BEATS[state.openingIndex];
   const alveBeat = ALVE_DIALOGUE[state.alveIntroIndex];
   const displayText = alveBeat?.text.replaceAll("{childName}", childName);
   const prerequisiteDone = prerequisiteCompletionCount(state);
@@ -601,7 +495,7 @@ export default function Act2Page() {
         image: opening.image,
         heading: opening.title,
         lines: [opening.body[state.openingLineIndex] ?? opening.body[0]],
-        nextLabel: state.openingIndex === OPENING.length - 1 && state.openingLineIndex === opening.body.length - 1 ? "Gå närmare" : "Fortsätt",
+        nextLabel: state.openingIndex === ACT2_OPENING_BEATS.length - 1 && state.openingLineIndex === opening.body.length - 1 ? "Gå närmare" : "Fortsätt",
       }}
       onNext={() => void advanceOpening()}
       childName={childName}
