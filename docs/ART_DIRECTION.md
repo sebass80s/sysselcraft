@@ -611,6 +611,12 @@ Then freeze the lake master and produce each restoration project's states agains
 The goal is that Act 2 art production becomes a controlled manufacturing pipeline, not a sequence of fresh illustration experiments.
 
 
+## Barnet runtime identity — RE-LOCKED 2026-10-01
+
+Barnet's canonical runtime identity is now defined in `docs/CHILD_RUNTIME_VISUAL_SPEC.md` from the approved 2026-10-01 turnaround/reference sheet. The locked read is **blue/beige cap + warm brown hair + dark red hoodie + large olive/brown backpack + blue cargo trousers + rugged blue/gray shoes**, with compact child proportions and a strong rear-view silhouette.
+
+This supersedes older references to a yellow-top child. The currently loaded `public/assets/village/reboot/child.webp` is a runtime implementation asset to be refined toward this canon, not a source of truth.
+
 ## Act 2 canonical character-reference workflow — LOCKED 2026-09-28
 
 Act 2 Story Moments must preserve established character identity. Do not regenerate an established character from prose or memory alone.
