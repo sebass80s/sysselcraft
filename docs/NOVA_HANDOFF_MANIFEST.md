@@ -577,3 +577,18 @@ Recent runtime changes that must survive handover:
 - Latest full `npm run verify` after the final hardening batch has not yet been reported as passing. Treat verification as OPEN and fix the first real error if one appears.
 
 Immediate browser QA should exercise Stugan/Bryggan/Båthuset/Motorbåten story rhythm, Cabin revisit behavior, water collision around the full beach/bay, purchase/naming gates and the Motorbåten→family finale transition. Physical iPhone acceptance remains the release gate.
+
+## 2026-10-01 — Act 2 autonomous bug-raid checkpoint
+
+The latest completed code verification checkpoint is GitHub Actions **#1461 SUCCESS** at `404be3fc40276257ff4d3b46fcb0386e55d9a2fb`.
+
+The audit closed several forms of drift that a future Nova must not reintroduce:
+- canonical visual-stage transitions happen at contributions 4/8/12;
+- Act 2 finale is five beats and ends on the veranda; first crossing is Act 3;
+- Motorbåten 6/16 is post-purchase copy and must not replay wallet/payment implementation text;
+- editorial markers such as `Paus.` are not runtime story cards;
+- Act 2 story-purchase behavior must be reproducible from checked-in Supabase migration SQL;
+- Valpen follows Act 2 walkability/collision;
+- working-branch Vercel Git deploy is paused; GitHub Actions is the routine verification surface.
+
+Do not infer physical acceptance from CI. Browser/iPhone acceptance remains required for shoreline feel, navigation/camera, purchase return journeys, restart boundaries and the final Motorbåten/family sequence.
