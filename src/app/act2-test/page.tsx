@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Act2LakeGameHandle } from "../../game/createAct2LakeGame";
 import type { Act2VisualStage } from "../../game/act2VisualAssets";
@@ -10,6 +9,8 @@ import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../../game/act2MotorboatStory";
 import { ACT2_FINALE_BEATS } from "../../game/act2FinaleStory";
 import { StoryDebugConsole } from "../../components/story/StoryDebugConsole";
+import { StoryMoment } from "../../components/story/StoryMoment";
+import { StoryTranscript } from "../../components/story/StoryTranscript";
 import type { StoryDebugAct } from "../../game/storyDebug";
 
 type StoryBeat = {
@@ -279,66 +280,31 @@ export default function Act2TestPage() {
       </div>
 
       {activeBeat && (
-        <div style={{
-          position: "fixed", inset: 0, zIndex: 100,
-          background: activeBeat.image ? "rgba(9, 14, 10, .94)" : "rgba(9, 14, 10, .28)",
-          display: "grid", placeItems: activeBeat.image ? "center" : "end center", padding: 16,
-        }}>
-          <div style={{
-            width: activeBeat.image ? "min(1180px, 100%)" : "min(920px, 100%)",
-            height: activeBeat.image ? "min(92dvh, 760px)" : "auto",
-            maxHeight: activeBeat.image ? undefined : "52dvh",
-            display: "grid", gridTemplateRows: activeBeat.image ? "1fr auto" : "auto",
-            borderRadius: 18, overflow: "hidden", background: activeBeat.image ? "#111711" : "transparent",
-            boxShadow: "0 18px 60px rgba(0,0,0,.45)",
-          }}>
-            {activeBeat.image && (
-              <div style={{ position: "relative", minHeight: 0, background: "#0b0f0c" }}>
-                <Image
-                  src={activeBeat.image}
-                  alt={activeBeat.title}
-                  fill
-                  sizes="100vw"
-                  style={{ objectFit: "contain" }}
-                />
-                <button type="button" onClick={closeStory} aria-label="Stäng" style={{
-                  position: "absolute", top: 12, right: 12, width: 42, height: 42,
-                  borderRadius: 21, border: 0, cursor: "pointer", fontSize: 22, fontWeight: 800,
-                  background: "rgba(255,255,255,.9)", color: "#283326",
-                }}>×</button>
-              </div>
-            )}
-
-            <div style={{
-              display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center",
-              gap: 14, padding: "14px 16px max(14px, env(safe-area-inset-bottom))",
-              background: "rgba(245,240,223,.98)", color: "#283326",
-            }}>
-              <button type="button" onClick={previousStory} disabled={storyIndex === 0} style={{
-                minWidth: 88, minHeight: 46, border: 0, borderRadius: 11, fontWeight: 800,
-                cursor: storyIndex === 0 ? "default" : "pointer", opacity: storyIndex === 0 ? .35 : 1,
-                background: "#d7d2bf", color: "#283326",
-              }}>
+        <StoryMoment
+          image={activeBeat.image}
+          imageFit="contain"
+          heading={activeBeat.title}
+          zIndex={100}
+          background={activeBeat.image ? "rgba(9,14,10,.94)" : "rgba(9,14,10,.28)"}
+          dialogueClassName="act2-dialogue-card"
+          scrollable
+          footer={
+            <div className="story-debug-story-nav">
+              <button type="button" className="secondary-button" onClick={previousStory} disabled={storyIndex === 0}>
                 ← Förra
               </button>
-              <div style={{ minWidth: 0, maxHeight: "34dvh", overflowY: "auto", paddingRight: 6 }}>
-                <div style={{ fontSize: 18, fontWeight: 900, marginBottom: 5 }}>{activeBeat.title}</div>
-                <div style={{ fontSize: 15, lineHeight: 1.35 }}>
-                  {activeBeat.body.map((line, index) => <div key={`${activeBeat.id}-${index}`}>{line}</div>)}
-                </div>
-                <div style={{ marginTop: 7, fontSize: 12, opacity: .65 }}>
-                  {storyIndex! + 1} / {STORY_BEATS.length}
-                </div>
-              </div>
-              <button type="button" onClick={nextStory} style={{
-                minWidth: 88, minHeight: 46, border: 0, borderRadius: 11, fontWeight: 900,
-                cursor: "pointer", background: "#f4d780", color: "#283326",
-              }}>
+              <span>{storyIndex! + 1} / {STORY_BEATS.length}</span>
+              <button type="button" className="secondary-button" onClick={closeStory}>
+                Stäng
+              </button>
+              <button type="button" className="primary-button" onClick={nextStory}>
                 {storyIndex === STORY_BEATS.length - 1 ? "Klar ✓" : "Nästa →"}
               </button>
             </div>
-          </div>
-        </div>
+          }
+        >
+          <StoryTranscript lines={activeBeat.body} />
+        </StoryMoment>
       )}
     </main>
   );
