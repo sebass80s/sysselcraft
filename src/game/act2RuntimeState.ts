@@ -21,6 +21,7 @@ export type Act2RuntimeState = {
   selectedProject: Act2Project | null;
   backendClaimBaseline: number | null;
   jettyLifebuoyOwned: boolean;
+  consumedProjectCompletionIds: string[];
   projects: Record<Act2Project, Act2ProjectState>;
   familyFinaleConsumed: boolean;
   epilogueConsumed: boolean;
@@ -46,6 +47,7 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     selectedProject: null,
     backendClaimBaseline: null,
     jettyLifebuoyOwned: false,
+    consumedProjectCompletionIds: [],
     projects: {
       cabin: emptyProject(),
       dock: emptyProject(),
@@ -130,6 +132,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       ? candidate.backendClaimBaseline
       : null,
     jettyLifebuoyOwned: candidate.jettyLifebuoyOwned === true,
+    consumedProjectCompletionIds: normalizeBeatIds(candidate.consumedProjectCompletionIds),
     projects,
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
     epilogueConsumed: candidate.epilogueConsumed === true,
@@ -215,6 +218,30 @@ export function jettyPurchaseRequired(state: Act2RuntimeState) {
   return normalized.projects.dock.contributions >= 6
     && normalized.projects.dock.contributions < 16
     && !normalized.jettyLifebuoyOwned;
+}
+
+export function projectCompletionReactionId(project: Act2Project) {
+  return `${project}:completion-reaction`;
+}
+
+export function projectCompletionReactionPending(state: Act2RuntimeState, project: Act2Project) {
+  const normalized = normalizeAct2RuntimeState(state);
+  const id = projectCompletionReactionId(project);
+  return normalized.projects[project].complete
+    && !normalized.consumedProjectCompletionIds.includes(id);
+}
+
+export function consumeProjectCompletionReaction(
+  state: Act2RuntimeState,
+  project: Act2Project,
+): Act2RuntimeState {
+  const normalized = normalizeAct2RuntimeState(state);
+  if (!projectCompletionReactionPending(normalized, project)) return normalized;
+  const id = projectCompletionReactionId(project);
+  return {
+    ...normalized,
+    consumedProjectCompletionIds: [...normalized.consumedProjectCompletionIds, id],
+  };
 }
 
 export function withSelectedProject(state: Act2RuntimeState, project: Act2Project): Act2RuntimeState {
