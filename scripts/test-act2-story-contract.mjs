@@ -83,7 +83,7 @@ const authoredStoryBodies = [
 ];
 
 for (const line of authoredStoryBodies) {
-  const parsed = parseStoryLine(line, "Adam");
+  const parsed = parseStoryLine(line, "Testbarn");
   assert.equal(parsed.text.includes("{childName}"), false, `child-name token must never leak into rendered dialogue: ${line}`);
   for (const prefix of STORY_SPEAKER_PREFIXES) {
     assert.equal(parsed.text.startsWith(`${prefix}:`), false, `speaker prefix must never remain in body text: ${line}`);
@@ -91,18 +91,18 @@ for (const line of authoredStoryBodies) {
 }
 
 assert.deepEqual(
-  parseStoryLine("Barnet: Hej.", "Adam"),
-  { text: "Hej.", speaker: "Adam", speakerTone: "child" },
+  parseStoryLine("Barnet: Hej.", "Testbarn"),
+  { text: "Hej.", speaker: "Testbarn", speakerTone: "child" },
   "player prefix must render as the child's real name",
 );
 assert.deepEqual(
-  parseStoryLine("Okänd: Ja.", "Adam"),
+  parseStoryLine("Okänd: Ja.", "Testbarn"),
   { text: "Ja.", speaker: "Barnet", speakerTone: "default" },
   "unknown Alve must remain Barnet until the name reveal",
 );
 assert.deepEqual(
-  parseStoryLine("Alve: Det är {childName}.", "Adam"),
-  { text: "Det är Adam.", speaker: "Alve", speakerTone: "default" },
+  parseStoryLine("Alve: Det är {childName}.", "Testbarn"),
+  { text: "Det är Testbarn.", speaker: "Alve", speakerTone: "default" },
   "child-name templates must render inside NPC dialogue",
 );
 
