@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import type { StorySpeakerTone } from "../../game/storyEngine";
 
 type DialogueCardProps = {
+  heading?: string;
   speaker?: string;
   speakerTone?: StorySpeakerTone;
   children: ReactNode;
@@ -16,6 +17,7 @@ type DialogueCardProps = {
 };
 
 export function DialogueCard({
+  heading,
   speaker,
   speakerTone = "default",
   children,
@@ -34,6 +36,7 @@ export function DialogueCard({
       aria-modal="true"
       style={scrollable ? { maxHeight: "44vh", overflowY: "auto" } : undefined}
     >
+      {heading && <h2 className="shared-story-heading">{heading}</h2>}
       {speaker && <span className={`dialogue-speaker${speakerClass}`}>{speaker}</span>}
       <div className="shared-story-body">{children}</div>
       {nextLabel && onNext && (
