@@ -518,24 +518,24 @@ export default function Act2Page() {
       dialogueClassName="act2-dialogue-card"
     />}
 
-    {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !completionProject && <section className="story-moment" role="presentation">
-      <Image src="/assets/village/story-moments/act2/meeting-alve/pick.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">Alve</span>
-        <p>{previewProject === "motorboat" ? motorboatPreview : previewProject ? PROJECT_COPY[previewProject].preview : selectionPrompt}</p>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
-          {availablePrerequisites.map((project) =>
-            <button key={project} className="secondary-button" onClick={() => setPreviewProject(project)}>{PROJECT_COPY[project].label}</button>
-          )}
-          <button className="secondary-button" onClick={() => setPreviewProject("motorboat")}>
-            {motorboatUnlocked ? "Motorbåten" : "🔒 Motorbåten"}
-          </button>
-        </div>
-        {previewProject && (previewProject !== "motorboat" || motorboatUnlocked) && <button className="primary-button dialogue-next" onClick={() => void chooseProject(previewProject)}>
-          Laga {PROJECT_COPY[previewProject].object}
-        </button>}
+    {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !completionProject && <StoryMoment
+      image="/assets/village/story-moments/act2/meeting-alve/pick.png"
+      speaker="Alve"
+      dialogueClassName="act2-dialogue-card"
+    >
+      <p>{previewProject === "motorboat" ? motorboatPreview : previewProject ? PROJECT_COPY[previewProject].preview : selectionPrompt}</p>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+        {availablePrerequisites.map((project) =>
+          <button key={project} className="secondary-button" onClick={() => setPreviewProject(project)}>{PROJECT_COPY[project].label}</button>
+        )}
+        <button className="secondary-button" onClick={() => setPreviewProject("motorboat")}>
+          {motorboatUnlocked ? "Motorbåten" : "🔒 Motorbåten"}
+        </button>
       </div>
-    </section>}
+      {previewProject && (previewProject !== "motorboat" || motorboatUnlocked) && <button className="primary-button dialogue-next" onClick={() => void chooseProject(previewProject)}>
+        Laga {PROJECT_COPY[previewProject].object}
+      </button>}
+    </StoryMoment>}
 
     {finalePending && activeFinaleBeat && activeFinaleLine && <StoryRunner
       beat={{
@@ -567,31 +567,36 @@ export default function Act2Page() {
       zIndex={90}
       background="rgba(9,14,10,.94)"
     />}
-    {purchaseRequired && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
-      {purchaseGateBeat?.image && <Image src={purchaseGateBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">{purchaseGateCopy.title}</span>
-        <p>{purchaseGateCopy.text}</p>
-        <p>{purchaseGateCopy.detail}</p>
-        <a className="primary-button dialogue-next" href="/">Till Mira i byn</a>
-      </div>
-    </section>}
-    {namingRequired && <section style={{ position:"absolute", inset:0, zIndex:85, background:"rgba(9,14,10,.94)", display:"grid", placeItems:"center" }} role="presentation">
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">Vår båt</span>
-        <p>Alve: Den behöver ett namn.</p>
-        <input
-          value={motorboatNameDraft}
-          onChange={(event) => setMotorboatNameDraft(event.target.value)}
-          maxLength={24}
-          placeholder="Skriv båtens namn"
-          aria-label="Båtens namn"
-        />
-        <button className="primary-button dialogue-next" disabled={!motorboatNameDraft.trim()} onClick={() => void commit(withMotorboatName(state, motorboatNameDraft))}>
-          Spara namnet
-        </button>
-      </div>
-    </section>}
+    {purchaseRequired && <StoryMoment
+      image={purchaseGateBeat?.image}
+      imageFit="contain"
+      speaker={purchaseGateCopy.title}
+      zIndex={78}
+      background="rgba(9,14,10,.94)"
+      dialogueClassName="act2-dialogue-card"
+    >
+      <p>{purchaseGateCopy.text}</p>
+      <p>{purchaseGateCopy.detail}</p>
+      <a className="primary-button dialogue-next" href="/">Till Mira i byn</a>
+    </StoryMoment>}
+    {namingRequired && <StoryMoment
+      speaker="Alve"
+      zIndex={85}
+      background="rgba(9,14,10,.94)"
+      dialogueClassName="act2-dialogue-card"
+    >
+      <p>Den behöver ett namn.</p>
+      <input
+        value={motorboatNameDraft}
+        onChange={(event) => setMotorboatNameDraft(event.target.value)}
+        maxLength={24}
+        placeholder="Skriv båtens namn"
+        aria-label="Båtens namn"
+      />
+      <button className="primary-button dialogue-next" disabled={!motorboatNameDraft.trim()} onClick={() => void commit(withMotorboatName(state, motorboatNameDraft))}>
+        Spara namnet
+      </button>
+    </StoryMoment>}
     {contributionTurnInOpen && contributionCandidate && activeContributionBeat && activeContributionLine && <StoryMoment
       image={activeContributionBeat.image}
       imageFit="contain"
