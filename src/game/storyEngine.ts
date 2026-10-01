@@ -4,6 +4,7 @@ export type StoryBeatPresentation = {
   id: string;
   image?: string;
   imageFit?: "cover" | "contain";
+  heading?: string;
   speaker?: string;
   speakerTone?: StorySpeakerTone;
   lines: readonly string[];
