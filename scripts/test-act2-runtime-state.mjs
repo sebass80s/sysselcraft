@@ -514,6 +514,7 @@ assert.ok(lakeGameSource.includes("ACT2_PLAYER_FOOT_RADIUS"), "Act 2 water colli
 assert.ok(lakeGameSource.includes("private isWaterAt"), "Act 2 runtime must centralize map-pixel water classification");
 assert.ok(lakeGameSource.includes("if (!this.isWalkable(target.x, target.y)) return;"), "touch movement must reject blocked water targets");
 assert.ok(lakeGameSource.includes("if (this.isWalkable(nextX, this.player.y))"), "keyboard movement must share the same world collision");
+assert.ok(lakeGameSource.includes("if (this.isWalkable(nextDogX, this.dog.y))"), "Valpen must use the same world collision instead of drifting into water or buildings");
 assert.ok(lakeGameSource.includes('this.add.image(815, 515, "act2-child")'), "Act 2 debug/runtime spawn must start on accepted land, not in the lake");
 
 
