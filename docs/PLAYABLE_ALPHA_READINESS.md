@@ -414,20 +414,20 @@ Regression coverage now locks the final Clinic story checkpoint in both directio
 
 Act 2 story/art acceptance is not equivalent to production readiness. The following gates must pass before Act 2 can be called integrated:
 
-- [ ] Production Act 1 → Act 2 transition exists and is gated correctly.
-- [ ] OPEN-001…005 plays once and restart-safe before the close bicycle/Alve sequence.
+- [x] Production Act 1 → Act 2 transition exists and is code-gated after Clinic completion. Physical acceptance remains open.
+- [x] OPEN-001…005, bicycle and Alve sequence are implemented with persisted indices and shared production/debug rendering. Physical restart acceptance remains open.
 - [ ] Act 2 discrete-area navigation/collision/camera works on physical iPhone.
 - [ ] Canonical Act 2 state survives force-quit/relaunch.
-- [ ] Project chooser allows Stugan/Bryggan/Båthuset in any order.
-- [ ] Motorbåten remains locked until all three are complete.
-- [ ] Quest v2 authoritative contribution bridge advances exactly one authored beat per contribution.
-- [ ] Accumulated backend progress cannot skip a pending Story Moment/reveal.
-- [ ] Duplicate refresh/retry cannot replay a contribution or reward.
+- [x] Project chooser/state model supports Stugan/Bryggan/Båthuset in any order; all six orders are automated-state covered. Physical acceptance remains open.
+- [x] Motorbåten lock is enforced in the state layer until 3/3 prerequisites. Physical acceptance remains open.
+- [x] Quest v2/worldProgression bridge exposes and consumes one authored beat at a time through Alve; physical backend-to-lake acceptance remains open.
+- [x] Backlog drains one authored beat at a time and cannot skip pending presentation in automated contracts.
+- [x] Duplicate refresh/retry/idempotency is covered in the Act 2 state tests; physical stress remains open.
 - [ ] Bryggan 1–16 accepted end to end.
 - [ ] Stugan 1–16 accepted end to end.
 - [ ] Båthuset 1–16 accepted end to end.
 - [ ] Motorbåten 1–16 accepted end to end.
-- [ ] All six prerequisite-project orders accepted.
+- [x] All six prerequisite-project orders pass the deterministic state-machine coverage; browser/physical acceptance remains open.
 - [ ] All story-bound SysselBux purchases are exactly-once, restart-safe and contribution-neutral.
 - [ ] Family finale plays once after Motorbåten 16 and never as contribution 17.
 - [ ] Epilogue ends with physical departure and `SLUT PÅ ANDRA KAPITLET`.
@@ -437,5 +437,10 @@ Act 2 story/art acceptance is not equivalent to production readiness. The follow
 
 Canonical implementation order and detailed regression matrix: `docs/ACT2_IMPLEMENTATION_PLAN.md`.
 
-Current status: **pre-production implementation planning is locked; production runtime integration has not yet passed these gates.**
+Current status: **production runtime integration is substantially implemented but not release-accepted.** Shared production/debug runtime, four 16-beat tracks, contribution state machine, purchase/naming gates, Cabin revisit semantics and map-derived water collision are in code. Production remains deliberately locked. Full latest verify evidence plus browser and physical-iPhone acceptance are still required.
 
+### 2026-10-01 evening acceptance notes
+- Browser evidence exposed the initial Act 2 spawn/water collision as incorrect. The guessed shoreline was removed in favor of lake-master pixel sampling; Kalle reported the result “funks better”, but full shoreline coverage remains OPEN.
+- Dialogue-card UI is now contractually fixed at one speaker/nameplate and one reply per click. Recent click-count work is manuscript-only; any multi-speaker card is a regression.
+- Stugan's “En stund till” is now a repeatable post-16/16 cabin interaction until Motorbåten completion, not an automatic completion reaction.
+- The latest full `npm run verify` after these changes has not yet been reported PASS. Do not upgrade readiness based on earlier green checkpoints.
