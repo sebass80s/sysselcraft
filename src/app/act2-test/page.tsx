@@ -13,7 +13,7 @@ import { StoryMoment } from "../../components/story/StoryMoment";
 import { StoryTranscript } from "../../components/story/StoryTranscript";
 import type { StoryDebugAct } from "../../game/storyDebug";
 import { ACT2_OPENING_BEATS } from "../../game/act2OpeningStory";
-import { ACT2_ALVE_DIALOGUE } from "../../game/act2AlveStory";
+import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../../game/act2AlveStory";
 
 type StoryBeat = {
   id: string;
@@ -41,7 +41,7 @@ const STORY_BEATS: StoryBeat[] = [
   ...ACT2_ALVE_DIALOGUE.map((beat, index) => ({
     id: `alve-intro-${String(index + 1).padStart(2, "0")}`,
     title: index === 0 ? "Första mötet med Alve" : "Alve-intro",
-    image: "/assets/village/story-moments/act2/meeting-alve/first-hello.png",
+    image: act2AlveImageForIndex(index),
     body: [beat.speaker === "child"
       ? `Barnet: ${beat.text}`
       : beat.speaker === "alve"
