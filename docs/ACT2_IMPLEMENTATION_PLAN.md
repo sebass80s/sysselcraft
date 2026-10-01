@@ -413,3 +413,14 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - The exported Motorbåt story-source price constant is aligned to 200 and regression-covered.
 - Act 1 Flaskpost at 100 SysselBux is intentionally unchanged.
 - Historical OneDrive notes, parked resident-idle TODOs and deliberate Alve placeholder references were retained because they are not stale runtime canon.
+
+
+### Act 2 old-save / corrupted-state hardening — 2026-10-01
+- Project contribution count is the canonical local progress signal. Visible stage is now derived from that count during normalization instead of trusting stale saved stage values.
+- Per-project consumed beat IDs are reconstructed deterministically from project + contribution count, removing duplicates, malformed IDs and old incompatible identifiers.
+- Project complete remains derived only from 16 contributions.
+- Illegal Motorbåt progress before 3/3 prerequisite completion is reset together with stale local motorboat name/parts state.
+- Completion-reaction IDs are retained only for authored reactions (Stugan/Bryggan) whose project is actually complete.
+- Orphan contribution/completion/finale line indices are cleared when their owning story context no longer exists.
+- Finale progress cannot survive without a completed Motorbåt. Contradictory finaleIndex/familyFinaleConsumed combinations conservatively rewind rather than skip story.
+- Story-item ownership is not inferred from project progress. Backend ownership remains authoritative, so normalization never fabricates a purchase.

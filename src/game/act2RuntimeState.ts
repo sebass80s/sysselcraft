@@ -79,18 +79,27 @@ function normalizeBeatIds(value: unknown) {
   return [...new Set(value.filter((id): id is string => typeof id === "string" && id.length > 0))];
 }
 
-function normalizeProject(value: unknown): Act2ProjectState {
+function visibleStageForContributions(contributions: number): 0 | 1 | 2 | 3 | 4 {
+  if (contributions <= 0) return 0;
+  return Math.min(4, 1 + Math.floor(contributions / 4)) as 1 | 2 | 3 | 4;
+}
+
+function canonicalConsumedBeatIds(project: Act2Project, contributions: number) {
+  return Array.from(
+    { length: contributions },
+    (_, index) => `${project}:${String(index + 1).padStart(2, "0")}`,
+  );
+}
+
+function normalizeProject(value: unknown, project: Act2Project): Act2ProjectState {
   const candidate = value && typeof value === "object" ? value as Partial<Act2ProjectState> : {};
   const contributions = Number.isInteger(candidate.contributions)
     ? Math.max(0, Math.min(16, candidate.contributions as number))
     : 0;
-  const visibleStage = [0, 1, 2, 3, 4].includes(candidate.visibleStage as number)
-    ? candidate.visibleStage as 0 | 1 | 2 | 3 | 4
-    : 0;
   return {
     contributions,
-    visibleStage,
-    consumedBeatIds: normalizeBeatIds(candidate.consumedBeatIds),
+    visibleStage: visibleStageForContributions(contributions),
+    consumedBeatIds: canonicalConsumedBeatIds(project, contributions),
     complete: contributions >= 16,
   };
 }
@@ -119,10 +128,10 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   };
 
   const projects = {
-    cabin: normalizeProject(candidate.projects?.cabin),
-    dock: normalizeProject(candidate.projects?.dock),
-    boathouse: normalizeProject(candidate.projects?.boathouse),
-    motorboat: normalizeProject(candidate.projects?.motorboat),
+    cabin: normalizeProject(candidate.projects?.cabin, "cabin"),
+    dock: normalizeProject(candidate.projects?.dock, "dock"),
+    boathouse: normalizeProject(candidate.projects?.boathouse, "boathouse"),
+    motorboat: normalizeProject(candidate.projects?.motorboat, "motorboat"),
   };
 
   const selected = PROJECTS.includes(candidate.selectedProject as Act2Project)
@@ -170,18 +179,48 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     act2Complete: candidate.act2Complete === true,
   };
 
+  if (normalized.projects.motorboat.contributions > 0 && !isMotorboatUnlocked(normalized)) {
+    normalized.projects.motorboat = emptyProject();
+    normalized.motorboatName = null;
+    normalized.motorboatPartsOwned = false;
+  }
+
   if (normalized.selectedProject && !canSelectProject(normalized, normalized.selectedProject)) {
     normalized.selectedProject = null;
   }
-  if (normalized.projects.motorboat.complete && !isMotorboatUnlocked(normalized)) {
-    normalized.projects.motorboat = emptyProject();
-  }
-  if (normalized.familyFinaleConsumed && !normalized.projects.motorboat.complete) {
+
+  const validCompletionIds = new Set<string>();
+  if (normalized.projects.cabin.complete) validCompletionIds.add(projectCompletionReactionId("cabin"));
+  if (normalized.projects.dock.complete) validCompletionIds.add(projectCompletionReactionId("dock"));
+  normalized.consumedProjectCompletionIds = normalized.consumedProjectCompletionIds
+    .filter((id) => validCompletionIds.has(id));
+
+  if (!normalized.selectedProject) normalized.contributionLineIndex = 0;
+
+  const pendingCompletionProject = (["cabin", "dock"] as const)
+    .find((project) => normalized.projects[project].complete
+      && !normalized.consumedProjectCompletionIds.includes(projectCompletionReactionId(project)));
+  if (!pendingCompletionProject) normalized.completionLineIndex = 0;
+
+  if (!normalized.projects.motorboat.complete) {
+    normalized.finaleIndex = 0;
+    normalized.finaleLineIndex = 0;
     normalized.familyFinaleConsumed = false;
-  }
-  if (normalized.epilogueConsumed && !normalized.familyFinaleConsumed) {
     normalized.epilogueConsumed = false;
+  } else {
+    if (normalized.finaleIndex === 5 && !normalized.familyFinaleConsumed) {
+      normalized.finaleIndex = 4;
+      normalized.finaleLineIndex = 0;
+    }
+    if (normalized.familyFinaleConsumed && normalized.finaleIndex < 5) {
+      normalized.finaleIndex = 5;
+      normalized.finaleLineIndex = 0;
+    }
+    if (normalized.epilogueConsumed && !normalized.familyFinaleConsumed) {
+      normalized.epilogueConsumed = false;
+    }
   }
+
   normalized.act2Complete = normalized.epilogueConsumed;
 
   return normalized;

@@ -176,6 +176,70 @@ const illegalBoatSnapshot = normalizeAct2RuntimeState({
 });
 assert.equal(illegalBoatSnapshot.projects.motorboat.complete, false);
 assert.equal(illegalBoatSnapshot.projects.motorboat.contributions, 0);
+assert.equal(illegalBoatSnapshot.motorboatName, null, "illegal locked-motorboat state must discard a stale boat name");
+assert.equal(illegalBoatSnapshot.motorboatPartsOwned, false, "illegal locked-motorboat state must discard stale local parts ownership");
+
+const corruptedProject = normalizeAct2RuntimeState({
+  version: 1,
+  selectedProject: "dock",
+  projects: {
+    dock: {
+      contributions: 5,
+      visibleStage: 4,
+      consumedBeatIds: ["garbage", "dock:99", "dock:01", "dock:01"],
+      complete: true,
+    },
+  },
+});
+assert.equal(corruptedProject.projects.dock.contributions, 5);
+assert.equal(corruptedProject.projects.dock.visibleStage, 2, "visual stage must self-heal from contribution count");
+assert.deepEqual(
+  corruptedProject.projects.dock.consumedBeatIds,
+  ["dock:01", "dock:02", "dock:03", "dock:04", "dock:05"],
+  "consumed beat IDs must self-heal to the canonical sequence implied by contribution count",
+);
+assert.equal(corruptedProject.projects.dock.complete, false, "complete must derive from 16 contributions, never a stale boolean");
+
+const corruptedCompletionIds = normalizeAct2RuntimeState({
+  version: 1,
+  consumedProjectCompletionIds: [
+    "garbage",
+    "boathouse:completion-reaction",
+    "cabin:completion-reaction",
+    "dock:completion-reaction",
+    "dock:completion-reaction",
+  ],
+  projects: {
+    cabin: { contributions: 16 },
+    dock: { contributions: 3 },
+  },
+});
+assert.deepEqual(
+  corruptedCompletionIds.consumedProjectCompletionIds,
+  ["cabin:completion-reaction"],
+  "completion reaction IDs must be known, deduplicated and backed by a completed authored project",
+);
+
+const impossibleFinaleIndex = normalizeAct2RuntimeState({
+  version: 1,
+  finaleIndex: 5,
+  finaleLineIndex: 12,
+  familyFinaleConsumed: false,
+});
+assert.equal(impossibleFinaleIndex.finaleIndex, 0, "finale progress must reset when Motorbåten is not complete");
+assert.equal(impossibleFinaleIndex.finaleLineIndex, 0);
+assert.equal(impossibleFinaleIndex.familyFinaleConsumed, false);
+
+const stalePresentationLines = normalizeAct2RuntimeState({
+  version: 1,
+  contributionLineIndex: 50,
+  completionLineIndex: 50,
+  finaleLineIndex: 50,
+});
+assert.equal(stalePresentationLines.contributionLineIndex, 0, "orphan contribution line state must clear without an active project");
+assert.equal(stalePresentationLines.completionLineIndex, 0, "orphan completion line state must clear without a pending reaction");
+assert.equal(stalePresentationLines.finaleLineIndex, 0, "orphan finale line state must clear without a completed motorboat");
+
 
 
 let bridge = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 12);
