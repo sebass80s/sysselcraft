@@ -338,3 +338,21 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 - Inside the 135px interaction radius the world entity also shows `Tryck på Alve`.
 - When the child reaches the Alve approach point, movement settles and Barnet turns toward Alve before the hand-in Story Moment opens.
 - This remains presentation-only polish; backend quest authority and contribution accounting are unchanged.
+
+
+## Remaining work after hardening — KEEP ACROSS HANDOVERS
+
+Do not lose this list when the implementation thread changes.
+
+1. **Physical iPhone acceptance** — deferred until Kalle has the Mac. Exercise the real loop: claimed quest → lake → Alve marker → approach/turn-in → Story Moment → visual stage update, plus restart boundaries and purchases. Never reset or manually mutate Adam's real save/backend for this test.
+2. **Replace Alve placeholder with final runtime art** — keep the existing single world entity, active-project positioning and interaction ownership. Search repo for a verified standalone Alve cutout first; do not invent an asset filename.
+3. **Act 2 dialogue polish** — audit child-facing pacing, repetition, configured child-name substitution and project-specific friend banter without changing locked emotional canon.
+4. **Epilogue image production/integration** — EPI-001…004 remain incomplete. Do not fake repository assets. Final crossing may continue over the live lake until canonical images exist.
+
+
+### Hardening checkpoint — 2026-10-01
+- Direct /act2 access is blocked unless Act 1 worldFlags.clinicCompletionSeen is true; direct URL access can no longer enter Act 2 early.
+- Backend story-ownership polling persists outside React state-updater callbacks.
+- Completion reactions are explicit: Stugan uses CABIN_WAITING_REACTION, Bryggan uses JETTY_COMPLETION_REACTION, Båthuset creates no phantom pending reaction and Motorbåten proceeds to the finale.
+- Motorbåt 5 runtime syntax was repaired. The required 150 SysselBux purchase still gates after 5/16; 6/16 is now a post-purchase Mira scene and no longer narrates a second payment.
+- Deterministic runtime-source checks reject known developer/internal language in child-facing Story sources.

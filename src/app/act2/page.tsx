@@ -30,7 +30,7 @@ import { loadSaveState } from "../../game/saveState";
 import { getPairedChildId } from "../../backend/childDeviceBinding";
 import { getChildGameState } from "../../backend/familyRepository";
 import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
-import { CABIN_CONTRIBUTION_BEATS } from "../../game/act2CabinStory";
+import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../../game/act2CabinStory";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../../game/act2BoathouseStory";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../../game/act2MotorboatStory";
 import { ACT2_FINALE_BEATS } from "../../game/act2FinaleStory";
@@ -188,6 +188,7 @@ export default function Act2Page() {
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
   const [finaleLineIndex, setFinaleLineIndex] = useState(0);
   const [contributionTurnInOpen, setContributionTurnInOpen] = useState(false);
+  const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
 
   function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
     if (worldProgression === null || !candidateState.selectedProject) return false;
@@ -213,6 +214,13 @@ export default function Act2Page() {
         getPairedChildId(),
       ]);
       if (cancelled) return;
+      setChildName(act1?.childName || "Barnet");
+      if (act1?.worldFlags?.clinicCompletionSeen !== true) {
+        setAct2AccessAllowed(false);
+        setReady(true);
+        return;
+      }
+      setAct2AccessAllowed(true);
       let entered: Act2RuntimeState = act2.entered ? act2 : { ...act2, entered: true };
       if (childId) {
         try {
@@ -230,7 +238,6 @@ export default function Act2Page() {
       await saveAct2RuntimeState(entered);
       if (cancelled) return;
       setState(entered);
-      setChildName(act1?.childName || "Barnet");
       setReady(true);
     })();
     return () => { cancelled = true; };
@@ -292,18 +299,16 @@ export default function Act2Page() {
         if (!cancelled && backend) {
           setBackendWorldProgression(backend.progression.worldProgression);
           setBackendSyncError("");
-          setState((current) => {
-            const next = withBackendStoryFlags(current, backend.worldFlags);
-            if (
-              next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
-              || next.boathouseSteeringWheelOwned !== current.boathouseSteeringWheelOwned
-              || next.motorboatPartsOwned !== current.motorboatPartsOwned
-            ) {
-              void saveAct2RuntimeState(next);
-              return next;
-            }
-            return current;
-          });
+          const current = await loadAct2RuntimeState();
+          const next = withBackendStoryFlags(current, backend.worldFlags);
+          const ownershipChanged =
+            next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
+            || next.boathouseSteeringWheelOwned !== current.boathouseSteeringWheelOwned
+            || next.motorboatPartsOwned !== current.motorboatPartsOwned;
+          if (ownershipChanged) {
+            await saveAct2RuntimeState(next);
+            if (!cancelled) setState(next);
+          }
         }
       } catch {
         if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
@@ -357,6 +362,13 @@ export default function Act2Page() {
   }
 
   if (!ready) return <main className="parent-page"><p>Laddar sjön…</p></main>;
+  if (!act2AccessAllowed) {
+    return <main className="parent-page">
+      <h1>Stigen är inte öppen än</h1>
+      <p>Det finns mer att göra i byn innan vägen mot sjön öppnas.</p>
+      <a className="primary-button" href="/">Tillbaka till byn</a>
+    </main>;
+  }
 
   const opening = OPENING[state.openingIndex];
   const alveBeat = ALVE_DIALOGUE[state.alveIntroIndex];
@@ -406,10 +418,14 @@ export default function Act2Page() {
   const finalePending = act2FinalePending(state);
   const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
   const activeFinaleLine = activeFinaleBeat?.body[finaleLineIndex] ?? null;
-    const jettyCompletionPending = projectCompletionReactionPending(state, "dock");
-  const activeCompletionLine = jettyCompletionPending
-    ? JETTY_COMPLETION_REACTION.body[completionLineIndex] ?? null
-    : null;
+  const completionProject = (["cabin", "dock"] as const)
+    .find((project) => projectCompletionReactionPending(state, project)) ?? null;
+  const activeCompletionBeat = completionProject === "cabin"
+    ? CABIN_WAITING_REACTION
+    : completionProject === "dock"
+      ? JETTY_COMPLETION_REACTION
+      : null;
+  const activeCompletionLine = activeCompletionBeat?.body[completionLineIndex] ?? null;
 
   async function advanceFinaleStory() {
     if (!activeFinaleBeat) return;
@@ -422,12 +438,12 @@ export default function Act2Page() {
   }
 
   async function advanceCompletionReaction() {
-    if (!jettyCompletionPending) return;
-    if (completionLineIndex + 1 < JETTY_COMPLETION_REACTION.body.length) {
+    if (!completionProject || !activeCompletionBeat) return;
+    if (completionLineIndex + 1 < activeCompletionBeat.body.length) {
       setCompletionLineIndex((index) => index + 1);
       return;
     }
-    await commit(consumeProjectCompletionReaction(state, "dock"));
+    await commit(consumeProjectCompletionReaction(state, completionProject));
     setCompletionLineIndex(0);
   }
 
@@ -484,7 +500,7 @@ export default function Act2Page() {
       </div>
     </section>}
 
-    {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !jettyCompletionPending && <section className="story-moment" role="presentation">
+    {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !completionProject && <section className="story-moment" role="presentation">
       <Image src="/assets/village/story-moments/act2/meeting-alve/pick.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">Alve</span>
@@ -513,13 +529,13 @@ export default function Act2Page() {
         </button>
       </div>
     </section>}
-    {jettyCompletionPending && activeCompletionLine && <section style={{ position:"absolute", inset:0, zIndex:90, background:"rgba(9,14,10,.94)" }} role="presentation">
-      {JETTY_COMPLETION_REACTION.image && <Image src={JETTY_COMPLETION_REACTION.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
+    {completionProject && activeCompletionBeat && activeCompletionLine && <section style={{ position:"absolute", inset:0, zIndex:90, background:"rgba(9,14,10,.94)" }} role="presentation">
+      {activeCompletionBeat.image && <Image src={activeCompletionBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">{JETTY_COMPLETION_REACTION.title}</span>
+        <span className="dialogue-speaker">{activeCompletionBeat.title}</span>
         <p>{activeCompletionLine.replace(/^Barnet:/, childName + ":")}</p>
         <button className="primary-button dialogue-next" onClick={() => void advanceCompletionReaction()}>
-          {completionLineIndex + 1 < JETTY_COMPLETION_REACTION.body.length ? "Fortsätt" : "Tillbaka till projekten"}
+          {completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten"}
         </button>
       </div>
     </section>}

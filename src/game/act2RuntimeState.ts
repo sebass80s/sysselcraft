@@ -270,8 +270,11 @@ export function projectCompletionReactionId(project: Act2Project) {
   return `${project}:completion-reaction`;
 }
 
+const PROJECTS_WITH_COMPLETION_REACTIONS: readonly Act2Project[] = ["cabin", "dock"];
+
 export function projectCompletionReactionPending(state: Act2RuntimeState, project: Act2Project) {
   const normalized = normalizeAct2RuntimeState(state);
+  if (!PROJECTS_WITH_COMPLETION_REACTIONS.includes(project)) return false;
   const id = projectCompletionReactionId(project);
   return normalized.projects[project].complete
     && !normalized.consumedProjectCompletionIds.includes(id);

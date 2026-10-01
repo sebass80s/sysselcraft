@@ -114,6 +114,7 @@ let jettyComplete = createDefaultAct2RuntimeState();
 jettyComplete = complete(jettyComplete, "dock");
 assert.equal(jettyComplete.projects.dock.contributions, 16);
 assert.equal(projectCompletionReactionPending(jettyComplete, "dock"), true, "16/16 must unlock a separate completion reaction");
+assert.equal(projectCompletionReactionPending(jettyComplete, "boathouse"), false, "projects without authored completion reactions must not leave pending ghosts");
 assert.equal(totalAct2Contributions(jettyComplete), 16, "completion reaction must not fabricate contribution 17");
 const beforeReactionCount = totalAct2Contributions(jettyComplete);
 jettyComplete = consumeProjectCompletionReaction(jettyComplete, "dock");
@@ -359,7 +360,8 @@ assert.ok(page.includes('{ speaker: "alve", text: "Okej, {childName}.'), "the li
 assert.ok(page.includes('{ speaker: "unknown", text: "Varför?" }'), "unknown Alve must own the pre-introduction Varför line");
 assert.ok(page.includes('🔒 Motorbåten'), "motorboat must remain visible while locked");
 assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector must derive 0/3→3/3 from canonical state");
-assert.ok(page.includes('projectCompletionReactionPending(state, "dock")'), "jetty completion reaction must be derived from persisted state");
+assert.ok(page.includes('(["cabin", "dock"] as const)'), "production route must derive completion reactions from the authored reaction set");
+assert.ok(page.includes("CABIN_WAITING_REACTION"), "production route must present the canonical Cabin waiting reaction");
 assert.ok(page.includes("JETTY_COMPLETION_REACTION"), "production route must present the canonical jetty completion reaction");
 assert.ok(page.includes("CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Cabin contribution track");
 assert.ok(page.includes("BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Båthuset contribution track");
@@ -386,6 +388,22 @@ assert.ok(village.includes("Ratt till lådbilen"), "Mira must expose the Båthus
 assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel stock must derive from Båthuset progress");
 assert.ok(village.includes("Reservdelspaket till motorbåten"), "Mira must expose the Motorbåten parts package");
 assert.ok(village.includes("motorboatPartsPurchaseRequired(act2)"), "parts stock must derive from Motorbåten progress");
+
+const childFacingStorySources = [
+  "../src/game/act2CabinStory.ts",
+  "../src/game/act2JettyStory.ts",
+  "../src/game/act2BoathouseStory.ts",
+  "../src/game/act2MotorboatStory.ts",
+  "../src/game/act2FinaleStory.ts",
+].map((path) => fs.readFileSync(new URL(path, import.meta.url), "utf8"));
+const childFacingForbidden = ["Adam:", "wallet-loopen", "authoritative", "Contribution 16 completes", "utan tekniska motorinstruktioner"];
+for (const forbidden of childFacingForbidden) {
+  assert.equal(childFacingStorySources.some((source) => source.includes(forbidden)), false, `runtime story source leaked internal text: ${forbidden}`);
+}
+assert.ok(page.includes("clinicCompletionSeen !== true"), "direct /act2 access must be hard-gated by the Act 1 Clinic completion flag");
+assert.equal(page.includes("void saveAct2RuntimeState(next);"), false, "backend polling must not persist asynchronously inside a React state setter");
+assert.ok(MOTORBOAT_CONTRIBUTION_BEATS[5].body[0].includes("redan betalt"), "Motorbåten 6/16 must be a post-purchase scene and must not charge the wallet twice");
+assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body.some((line) => line.includes("150 SysselBux")), false, "post-purchase Motorbåten beat must not repeat the wallet transaction");
 
 const cabinStorySource = fs.readFileSync(new URL("../src/game/act2CabinStory.ts", import.meta.url), "utf8");
 const motorboatStorySource = fs.readFileSync(new URL("../src/game/act2MotorboatStory.ts", import.meta.url), "utf8");
