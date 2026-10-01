@@ -4,6 +4,8 @@ import {
   ACT2_VISUAL_ASSETS,
   ACT2_VISUAL_PLACEMENTS,
   ACT2_WORLD,
+  ACT2_PLAYER_FOOT_RADIUS,
+  act2ShorelineYAt,
   getAct2DisplaySize,
   type Act2RestorationProject,
   type Act2VisualStage,
@@ -253,12 +255,24 @@ export async function createAct2LakeGame(
       this.player.setFlipX(this.alvePlaceholder.x < this.player.x);
     }
 
-        private isWalkable(x: number, y: number) {
-      if (x < 37 || x > ACT2_WORLD.width - 37 || y < 300 || y > ACT2_WORLD.height - 8) return false;
+    private isWalkable(x: number, y: number) {
+      const radiusX = ACT2_PLAYER_FOOT_RADIUS.x;
+      const radiusY = ACT2_PLAYER_FOOT_RADIUS.y;
+      if (
+        x < 37 + radiusX
+        || x > ACT2_WORLD.width - 37 - radiusX
+        || y < 300 + radiusY
+        || y > ACT2_WORLD.height - 8 - radiusY
+      ) return false;
+
+      // The player's feet may approach the beach edge, but never cross into
+      // the lake. The radius keeps the sprite from visually standing in water.
+      if (y + radiusY >= act2ShorelineYAt(x)) return false;
+
       return !PROJECTS.some((project) => {
         const p = ACT2_VISUAL_PLACEMENTS[project];
-        const halfW = p.footprint.width / 2 + 24;
-        const halfH = p.footprint.height / 2 + 18;
+        const halfW = p.footprint.width / 2 + radiusX;
+        const halfH = p.footprint.height / 2 + radiusY;
         return x >= p.x - halfW && x <= p.x + halfW &&
           y >= p.baseY - halfH && y <= p.baseY + halfH;
       });
