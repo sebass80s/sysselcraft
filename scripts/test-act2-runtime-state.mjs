@@ -3,7 +3,10 @@ import fs from "node:fs";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/act2CabinStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
+import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 import {
+  act2FinalePending,
+  advanceAct2Finale,
   canSelectProject,
   consumeProjectCompletionReaction,
   createDefaultAct2RuntimeState,
@@ -287,6 +290,29 @@ assert.equal(motorboatGate.motorboatName, "Sjöbusen");
 assert.equal(motorboatNamingRequired(motorboatGate), false);
 assert.equal(totalAct2Contributions(motorboatGate), beforeName, "boat naming must be contribution-neutral");
 
+assert.equal(ACT2_FINALE_BEATS.length, 6, "Act 2 finale must keep six restart-safe story beats");
+assert.equal(ACT2_FINALE_BEATS[1].title, "Någon är där");
+assert.equal(ACT2_FINALE_BEATS[2].title, "De kom");
+assert.ok(ACT2_FINALE_BEATS[3].body.includes("Alve: Det är min kompis."));
+assert.ok(ACT2_FINALE_BEATS[4].body.includes("Alve: Det är bättre."));
+assert.ok(ACT2_FINALE_BEATS[5].body.includes("Alve: Vi får se."));
+
+let finaleState = createDefaultAct2RuntimeState();
+finaleState = complete(finaleState, "cabin");
+finaleState = complete(finaleState, "dock");
+finaleState = complete(finaleState, "boathouse");
+finaleState = complete(finaleState, "motorboat");
+assert.equal(act2FinalePending(finaleState), true);
+assert.equal(finaleState.finaleIndex, 0);
+for (let i = 0; i < 5; i++) finaleState = advanceAct2Finale(finaleState);
+assert.equal(finaleState.finaleIndex, 5);
+assert.equal(finaleState.familyFinaleConsumed, true);
+assert.equal(finaleState.epilogueConsumed, false);
+finaleState = advanceAct2Finale(finaleState);
+assert.equal(finaleState.epilogueConsumed, true);
+assert.equal(finaleState.act2Complete, true);
+assert.equal(act2FinalePending(finaleState), false);
+
 const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
@@ -311,6 +337,7 @@ assert.ok(page.includes("CABIN_CONTRIBUTION_BEATS[contributionCandidate.number -
 assert.ok(page.includes("BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Båthuset contribution track");
 assert.ok(page.includes("MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Motorbåten contribution track");
 assert.ok(page.includes("motorboatNamingRequired(state)"), "Motorbåten naming gate must be persisted and contribution-neutral");
+assert.ok(page.includes("ACT2_FINALE_BEATS[state.finaleIndex]"), "production route must resume the persisted Act 2 finale");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");

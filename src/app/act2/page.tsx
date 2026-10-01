@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import type { Act2LakeGameHandle } from "../../game/createAct2LakeGame";
 import {
   createDefaultAct2RuntimeState,
+  act2FinalePending,
+  advanceAct2Finale,
   isMotorboatUnlocked,
   loadAct2RuntimeState,
   consumeProjectCompletionReaction,
@@ -31,6 +33,7 @@ import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEA
 import { CABIN_CONTRIBUTION_BEATS } from "../../game/act2CabinStory";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../../game/act2BoathouseStory";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../../game/act2MotorboatStory";
+import { ACT2_FINALE_BEATS } from "../../game/act2FinaleStory";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
@@ -183,6 +186,7 @@ export default function Act2Page() {
   const [completionLineIndex, setCompletionLineIndex] = useState(0);
   const [backendSyncError, setBackendSyncError] = useState("");
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
+  const [finaleLineIndex, setFinaleLineIndex] = useState(0);
 
 
   useEffect(() => {
@@ -366,10 +370,23 @@ export default function Act2Page() {
           ? MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
           : null;
   const activeContributionLine = activeContributionBeat?.body[contributionLineIndex] ?? null;
-  const jettyCompletionPending = projectCompletionReactionPending(state, "dock");
+  const finalePending = act2FinalePending(state);
+  const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
+  const activeFinaleLine = activeFinaleBeat?.body[finaleLineIndex] ?? null;
+    const jettyCompletionPending = projectCompletionReactionPending(state, "dock");
   const activeCompletionLine = jettyCompletionPending
     ? JETTY_COMPLETION_REACTION.body[completionLineIndex] ?? null
     : null;
+
+  async function advanceFinaleStory() {
+    if (!activeFinaleBeat) return;
+    if (finaleLineIndex + 1 < activeFinaleBeat.body.length) {
+      setFinaleLineIndex((index) => index + 1);
+      return;
+    }
+    await commit(advanceAct2Finale(state));
+    setFinaleLineIndex(0);
+  }
 
   async function advanceCompletionReaction() {
     if (!jettyCompletionPending) return;
@@ -452,6 +469,16 @@ export default function Act2Page() {
       </div>
     </section>}
 
+    {finalePending && activeFinaleBeat && activeFinaleLine && <section style={{ position:"absolute", inset:0, zIndex:100, background:"rgba(6,10,8,.96)" }} role="presentation">
+      {activeFinaleBeat.image && <Image src={activeFinaleBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
+      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+        <span className="dialogue-speaker">{activeFinaleBeat.title}</span>
+        <p>{activeFinaleLine.replace(/^Barnet:/, childName + ":")}</p>
+        <button className="primary-button dialogue-next" onClick={() => void advanceFinaleStory()}>
+          {finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa"}
+        </button>
+      </div>
+    </section>}
     {jettyCompletionPending && activeCompletionLine && <section style={{ position:"absolute", inset:0, zIndex:90, background:"rgba(9,14,10,.94)" }} role="presentation">
       {JETTY_COMPLETION_REACTION.image && <Image src={JETTY_COMPLETION_REACTION.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
@@ -499,7 +526,7 @@ export default function Act2Page() {
       </div>
     </section>}
     {backendSyncError && <div role="status" style={{ position:"absolute", right:16, top:16, zIndex:30, background:"rgba(0,0,0,.65)", color:"white", padding:"8px 12px", borderRadius:10 }}>{backendSyncError}</div>}
-    {state.selectedProject && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
+    {state.selectedProject && !finalePending && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
       <strong>Alve: {prerequisiteDone === 0 ? `Bra val! Vi fixar ${PROJECT_COPY[state.selectedProject].object} först!` : state.selectedProject === "motorboat" ? "Nu fixar vi den." : `Bra. Då kör vi på ${PROJECT_COPY[state.selectedProject].object}.`}</strong>
       <div style={{ marginTop: 6, opacity: .82 }}>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · {state.projects[state.selectedProject].contributions}/16</div>
       <a href="/" style={{ display: "inline-block", marginTop: 10, color: "white", textDecoration: "underline" }}>← Till byn</a>

@@ -303,3 +303,13 @@ Production integration has moved beyond the initial Phase 1 skeleton.
 - no standalone canonical Alve runtime cutout has been verified in repo; do not invent one.
 
 Do not call Phase 4A accepted until the final batched HEAD has a green build and the real-device Bryggan journey has been exercised across the documented restart boundaries.
+
+
+### Full Act 2 restoration runtime batch — 2026-10-01
+- Stugan, Bryggan, Båthuset and Motorbåten now each have 16 canonical contribution beats wired to the production Act 2 route.
+- Canonical story sources are shared with /act2-test instead of maintaining condensed duplicate dialogue tracks.
+- Story-bound economy gates are authoritative and contribution-neutral: Bryggan livboj 300 SysselBux, Båthuset ratt 100 SysselBux, Motorbåten reservdelspaket 150 SysselBux.
+- Motorboat naming after 12/16 is persisted locally and does not consume a contribution.
+- The family-return + first-crossing finale is a separate six-beat restart-safe sequence after Motorbåten 16/16; completion sets familyFinaleConsumed, epilogueConsumed and act2Complete without inventing contribution 65.
+- Finale assets 01–04 are used where present. The final departure intentionally runs over the live lake because no canonical departure still exists in repo.
+- Physical-device acceptance and a green build of the batched final HEAD remain required before calling the Act 2 implementation accepted.

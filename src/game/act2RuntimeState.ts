@@ -26,6 +26,7 @@ export type Act2RuntimeState = {
   motorboatName: string | null;
   consumedProjectCompletionIds: string[];
   projects: Record<Act2Project, Act2ProjectState>;
+  finaleIndex: number;
   familyFinaleConsumed: boolean;
   epilogueConsumed: boolean;
   act2Complete: boolean;
@@ -60,6 +61,7 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
       boathouse: emptyProject(),
       motorboat: emptyProject(),
     },
+    finaleIndex: 0,
     familyFinaleConsumed: false,
     epilogueConsumed: false,
     act2Complete: false,
@@ -145,6 +147,9 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       : null,
     consumedProjectCompletionIds: normalizeBeatIds(candidate.consumedProjectCompletionIds),
     projects,
+    finaleIndex: Number.isInteger(candidate.finaleIndex)
+      ? Math.max(0, Math.min(5, candidate.finaleIndex as number))
+      : 0,
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
     epilogueConsumed: candidate.epilogueConsumed === true,
     act2Complete: candidate.act2Complete === true,
@@ -283,6 +288,28 @@ export function consumeProjectCompletionReaction(
     ...normalized,
     consumedProjectCompletionIds: [...normalized.consumedProjectCompletionIds, id],
   };
+}
+
+export function act2FinalePending(state: Act2RuntimeState) {
+  const normalized = normalizeAct2RuntimeState(state);
+  return normalized.projects.motorboat.complete && !normalized.epilogueConsumed;
+}
+
+export function advanceAct2Finale(state: Act2RuntimeState): Act2RuntimeState {
+  const normalized = normalizeAct2RuntimeState(state);
+  if (!act2FinalePending(normalized)) return normalized;
+  if (normalized.finaleIndex < 4) {
+    return { ...normalized, finaleIndex: normalized.finaleIndex + 1 };
+  }
+  if (normalized.finaleIndex === 4) {
+    return { ...normalized, finaleIndex: 5, familyFinaleConsumed: true };
+  }
+  return normalizeAct2RuntimeState({
+    ...normalized,
+    familyFinaleConsumed: true,
+    epilogueConsumed: true,
+    act2Complete: true,
+  });
 }
 
 export function withSelectedProject(state: Act2RuntimeState, project: Act2Project): Act2RuntimeState {
