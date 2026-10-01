@@ -180,3 +180,40 @@ Act 3 should be able to add:
 - new contribution tracks through the common progression/gating model;
 
 without cloning Act 1 or Act 2 page/CSS/Phaser machinery.
+
+
+## Story Engine v1 checkpoint — 2026-10-01
+
+Story Engine v1 is now implemented as the shared presentation contract for Act 2.
+
+V1 components:
+- `src/game/storyEngine.ts` — typed presentation model + speaker parsing;
+- `src/components/story/DialogueCard.tsx` — shared dialogue card and nameplate surface;
+- `src/components/story/StoryMoment.tsx` — shared fullscreen shell, image/tint/input/z-index boundary;
+- `src/components/story/StoryRunner.tsx` — typed standard beat runner;
+- `src/components/story/StoryTranscript.tsx` — multi-line speaker-prefix parser/renderer;
+- `src/components/story/StoryDebugConsole.tsx` — reusable isolated debug navigation.
+
+Locked v1 rules:
+- scene `heading` and character `speaker` are separate concepts;
+- beat titles must never be used as character nameplates;
+- speaker prefixes such as `Barnet:`, `Alve:`, `Henning:` are parsed centrally;
+- fullscreen image, tint, pointer-events, safe dialogue shell and z-index are owned by Story Engine;
+- standard beats and special beats may differ in inner controls, but share the same StoryMoment shell;
+- project selection, purchase gates and naming are custom-content StoryMoments rather than parallel fullscreen implementations;
+- the isolated Act 2 test lab renders through the same Story Engine presentation path as production.
+
+Act 2 migration coverage now includes:
+- opening;
+- bicycle;
+- Alve intro;
+- project chooser;
+- contribution beats;
+- completion reactions;
+- purchase gates;
+- motorboat naming;
+- finale/epilogue presentation.
+
+Act 1 has not yet been migrated. Its existing story presentation remains valid until moved incrementally after Act 2 physical acceptance.
+
+Story Engine v1 is the required presentation API for Act 3+; do not introduce a new act-specific Story Moment CSS/JSX stack.
