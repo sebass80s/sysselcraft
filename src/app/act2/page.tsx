@@ -182,6 +182,7 @@ export default function Act2Page() {
   const [childName, setChildName] = useState("Barnet");
   const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
   const [backendWorldProgression, setBackendWorldProgression] = useState<number | null>(null);
+  const backendWorldProgressionRef = useRef<number | null>(null);
   const [backendSyncError, setBackendSyncError] = useState("");
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
   const [contributionTurnInOpen, setContributionTurnInOpen] = useState(false);
@@ -224,6 +225,7 @@ export default function Act2Page() {
           const backend = await getChildGameState(childId);
           if (cancelled) return;
           if (backend) {
+            backendWorldProgressionRef.current = backend.progression.worldProgression;
             setBackendWorldProgression(backend.progression.worldProgression);
             entered = withBackendClaimBaseline(entered, backend.progression.worldProgression);
             entered = withBackendStoryFlags(entered, backend.worldFlags);
@@ -257,7 +259,7 @@ export default function Act2Page() {
         motorboat: latest.projects.motorboat.visibleStage,
       });
       gameRef.current.setAlveTurnInAvailable(
-        hasPendingAlveTurnIn(latest, backendWorldProgression),
+        hasPendingAlveTurnIn(latest, backendWorldProgressionRef.current),
       );
     });
     return () => {
@@ -294,6 +296,7 @@ export default function Act2Page() {
         if (!childId) return;
         const backend = await getChildGameState(childId);
         if (!cancelled && backend) {
+          backendWorldProgressionRef.current = backend.progression.worldProgression;
           setBackendWorldProgression(backend.progression.worldProgression);
           setBackendSyncError("");
           const current = await loadAct2RuntimeState();
@@ -322,7 +325,6 @@ export default function Act2Page() {
   useEffect(() => {
     const pending = hasPendingAlveTurnIn(state, backendWorldProgression);
     gameRef.current?.setAlveTurnInAvailable(pending);
-    if (!pending) setContributionTurnInOpen(false);
   }, [state, backendWorldProgression]);
 
   async function commit(next: Act2RuntimeState) {

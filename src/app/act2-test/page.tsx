@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Act2LakeGameHandle } from "../../game/createAct2LakeGame";
 import type { Act2VisualStage } from "../../game/act2VisualAssets";
@@ -250,10 +251,12 @@ export default function Act2TestPage() {
           }}>
             {activeBeat.image && (
               <div style={{ position: "relative", minHeight: 0, background: "#0b0f0c" }}>
-                <img
+                <Image
                   src={activeBeat.image}
                   alt={activeBeat.title}
-                  style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                  fill
+                  sizes="100vw"
+                  style={{ objectFit: "contain" }}
                 />
                 <button type="button" onClick={closeStory} aria-label="Stäng" style={{
                   position: "absolute", top: 12, right: 12, width: 42, height: 42,

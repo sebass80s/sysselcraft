@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { ACT2_ALVE_WORK_POSITIONS, ACT2_VISUAL_PLACEMENTS } from "../src/game/act2VisualAssets.ts";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/act2CabinStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
-import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
+import { MOTORBOAT_CONTRIBUTION_BEATS, MOTORBOAT_PARTS_PRICE } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 import {
   act2FinalePending,
@@ -380,11 +380,10 @@ assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[11].stage, 4);
 assert.ok(MOTORBOAT_CONTRIBUTION_BEATS[14].body.includes("Alve: Inte idag."));
 assert.ok(MOTORBOAT_CONTRIBUTION_BEATS[15].body.includes("Alve: Nu är den vår."));
 
-let motorboatGate = createDefaultAct2RuntimeState();
+let motorboatGate = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 0);
 motorboatGate = complete(motorboatGate, "cabin");
 motorboatGate = complete(motorboatGate, "dock");
 motorboatGate = complete(motorboatGate, "boathouse");
-motorboatGate = withBackendClaimBaseline(motorboatGate, 48);
 motorboatGate = withSelectedProject(motorboatGate, "motorboat");
 for (let i = 1; i <= 5; i++) {
   const next = nextAct2Contribution(motorboatGate, 48 + i);
@@ -491,8 +490,9 @@ assert.ok(page.includes("motorboatNamingRequired(state)"), "Motorbåten naming g
 assert.ok(page.includes("ACT2_FINALE_BEATS[state.finaleIndex]"), "production route must resume the persisted Act 2 finale");
 assert.ok(page.includes("setActiveProject(state.selectedProject)"), "production route must move Alve when the active project changes");
 assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), "Alve interaction must explicitly arm the pending contribution Story Moment");
-assert.ok(page.includes("hasPendingAlveTurnIn(latest, backendWorldProgression)"), "restart must restore Alve turn-in marker immediately when a pending contribution already exists");
-assert.ok(page.includes('href="/">← Till byn</a>'), "Act 2 must keep an explicit route back to the village");
+assert.ok(page.includes("hasPendingAlveTurnIn(latest, backendWorldProgressionRef.current)"), "restart must restore Alve turn-in marker immediately from the latest authoritative progression without recreating the game");
+assert.ok(page.includes("backendWorldProgressionRef.current = backend.progression.worldProgression"), "authoritative progression refreshes must update the restart-safe game bootstrap ref");
+assert.match(page, /href="\/"[^>]*>← Till byn<\/a>/, "Act 2 must keep an explicit route back to the village");
 assert.ok(page.includes('href="/">Till Mira i byn</a>'), "story purchase gates must route back to Mira without mutating Act 2 state");
 assert.ok(page.includes("state.contributionLineIndex"), "contribution Story Moments must render from persisted line state");
 assert.ok(page.includes("state.completionLineIndex"), "completion reactions must render from persisted line state");
@@ -536,17 +536,17 @@ const childFacingForbidden = ["Adam:", "wallet-loopen", "authoritative", "Contri
 for (const forbidden of childFacingForbidden) {
   assert.equal(childFacingStorySources.some((source) => source.includes(forbidden)), false, `runtime story source leaked internal text: ${forbidden}`);
 }
-assert.ok(villageSource.includes("function act2StoryItemInsufficientFundsMessage(price: number)"), "Act 2 story purchases must share one insufficient-funds formatter");
-assert.ok(villageSource.includes("Du har ${current} SysselBux. Du behöver ${missing} till."), "insufficient-funds feedback must show current balance and exact shortfall");
-assert.ok(villageSource.includes("Gör några uppdrag och kom tillbaka"), "insufficient-funds feedback must explain the recovery path");
-assert.ok(villageSource.includes("act2StoryItemInsufficientFundsMessage(ACT2_JETTY_LIFEBUOY_PRICE)"), "jetty story item must use detailed insufficient-funds feedback");
-assert.ok(villageSource.includes("act2StoryItemInsufficientFundsMessage(ACT2_BOATHOUSE_STEERING_WHEEL_PRICE)"), "boathouse story item must use detailed insufficient-funds feedback");
-assert.ok(villageSource.includes("act2StoryItemInsufficientFundsMessage(ACT2_MOTORBOAT_PARTS_PRICE)"), "motorboat story item must use detailed insufficient-funds feedback");
+assert.ok(village.includes("function act2StoryItemInsufficientFundsMessage(price: number)"), "Act 2 story purchases must share one insufficient-funds formatter");
+assert.ok(village.includes("Du har ${current} SysselBux. Du behöver ${missing} till."), "insufficient-funds feedback must show current balance and exact shortfall");
+assert.ok(village.includes("Gör några uppdrag och kom tillbaka"), "insufficient-funds feedback must explain the recovery path");
+assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_JETTY_LIFEBUOY_PRICE)"), "jetty story item must use detailed insufficient-funds feedback");
+assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_BOATHOUSE_STEERING_WHEEL_PRICE)"), "boathouse story item must use detailed insufficient-funds feedback");
+assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_MOTORBOAT_PARTS_PRICE)"), "motorboat story item must use detailed insufficient-funds feedback");
 
 assert.ok(page.includes("clinicCompletionSeen !== true"), "direct /act2 access must be hard-gated by the Act 1 Clinic completion flag");
 assert.equal(page.includes("void saveAct2RuntimeState(next);"), false, "backend polling must not persist asynchronously inside a React state setter");
-assert.ok(MOTORBOAT_CONTRIBUTION_BEATS[5].body[0].includes("redan betalt"), "Motorbåten 6/16 must be a post-purchase scene and must not charge the wallet twice");
-assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body.some((line) => line.includes("150 SysselBux")), false, "post-purchase Motorbåten beat must not repeat the wallet transaction");
+assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body[0], "När ni kommer tillbaka till Mira håller hon redan på att göra beställningen klar.", "Motorbåten 6/16 must keep the locked post-purchase return scene");
+assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body.some((line) => /\b(?:150|200) SysselBux\b/.test(line)), false, "post-purchase Motorbåten beat must not repeat the wallet transaction");
 
 const cabinStorySource = fs.readFileSync(new URL("../src/game/act2CabinStory.ts", import.meta.url), "utf8");
 const motorboatStorySource = fs.readFileSync(new URL("../src/game/act2MotorboatStory.ts", import.meta.url), "utf8");

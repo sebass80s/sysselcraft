@@ -142,7 +142,7 @@ export async function createAct2LakeGame(
         .setSize(72, 150)
         .setInteractive({ useHandCursor: true })
         .setVisible(false);
-      this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: Input.EventData) => {
+      this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (!this.player || !this.alvePlaceholder || !requestedAlveTurnInAvailable) return;
         const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.alvePlaceholder.x, this.alvePlaceholder.y);
