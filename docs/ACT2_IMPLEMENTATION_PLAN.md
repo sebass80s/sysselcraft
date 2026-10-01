@@ -380,3 +380,12 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - Mira's shop now reports the child's current SysselBux balance and the exact amount still missing.
 - The message explicitly tells the child to complete more real-world quests and return after saving enough.
 - This is presentation-only; purchase price, wallet authority and story gating remain unchanged.
+
+
+### Act 2 progression edge-case hardening — 2026-10-01
+- Project hotspots may be preview-switched before confirmation, as locked in STORY_DESIGN. After confirmation, the active project cannot switch until that project is complete.
+- Pending authoritative quest backlog therefore remains attached to the confirmed active project instead of being reassigned by a later state call.
+- Story purchase gates and the motorboat naming gate are enforced inside the pure Act 2 state layer, not only by page rendering.
+- A blocked contribution cannot be forced through with a direct withPresentedContribution call.
+- Pending backend backlog remains queued across purchase gates and state normalization/restart; buying the required item releases the same queued work without consuming a contribution.
+- Duplicate presentation from the same state snapshot is explicitly regression-covered as idempotent.

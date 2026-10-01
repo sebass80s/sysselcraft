@@ -78,6 +78,9 @@ assert.deepEqual(state.projects.dock.consumedBeatIds, ["dock:01"]);
 const duplicate = withPresentedContribution(state, "dock", "dock:01", 2);
 assert.equal(duplicate.projects.dock.contributions, 1, "duplicate beat must not consume a second contribution");
 assert.equal(duplicate.projects.dock.visibleStage, 1, "duplicate beat must not mutate stage");
+const duplicateFromSameSnapshotA = withPresentedContribution(state, "dock", "dock:02", 1);
+const duplicateFromSameSnapshotB = withPresentedContribution(state, "dock", "dock:02", 1);
+assert.deepEqual(duplicateFromSameSnapshotA, duplicateFromSameSnapshotB, "two rapid taps from the same snapshot must resolve to the same idempotent next state");
 
 let lockedBoat = withPresentedContribution(empty, "motorboat", "motorboat:01", 1);
 assert.equal(lockedBoat.projects.motorboat.contributions, 0, "motorboat cannot advance before 3/3");
@@ -183,9 +186,10 @@ assert.equal(candidate?.backlog, 2);
 const repeatedRefresh = nextAct2Contribution(bridge, 15);
 assert.deepEqual(repeatedRefresh, candidate, "refresh/retry must not consume or skip a beat by itself");
 
-bridge = withSelectedProject(bridge, "cabin");
-candidate = nextAct2Contribution(bridge, 15);
-assert.equal(candidate?.beatId, "cabin:01", "unconsumed authoritative backlog follows the active project only after player switches");
+const attemptedSwitch = withSelectedProject(bridge, "cabin");
+assert.equal(attemptedSwitch.selectedProject, "dock", "confirmed active project must stay locked until completion");
+candidate = nextAct2Contribution(attemptedSwitch, 15);
+assert.equal(candidate?.beatId, "dock:02", "unconsumed authoritative backlog must stay with the confirmed active project");
 
 const baselineCannotMove = withBackendClaimBaseline(bridge, 999);
 assert.equal(baselineCannotMove.backendClaimBaseline, 12, "Act 2 claim baseline is establish-once");
@@ -208,7 +212,14 @@ for (let i = 1; i <= 6; i++) {
 }
 assert.equal(purchaseGate.projects.dock.contributions, 6);
 assert.equal(jettyPurchaseRequired(purchaseGate), true, "lifebuoy must gate jetty after contribution 6");
-purchaseGate = withBackendStoryFlags(purchaseGate, { act2JettyLifebuoyOwned: true });
+assert.equal(pendingBackendContributionCount(purchaseGate, 8), 2, "backend backlog must remain queued while a story purchase gate is active");
+assert.equal(nextAct2Contribution(purchaseGate, 8), null, "purchase gate must block contribution candidates in the state layer, not only in UI");
+const forcedJettyBeat7 = withPresentedContribution(purchaseGate, "dock", "dock:07", 2);
+assert.equal(forcedJettyBeat7.projects.dock.contributions, 6, "direct presentation must not bypass the lifebuoy purchase gate");
+const restartedPurchaseGate = normalizeAct2RuntimeState(JSON.parse(JSON.stringify(purchaseGate)));
+assert.equal(jettyPurchaseRequired(restartedPurchaseGate), true, "restart must preserve an unresolved story purchase gate");
+assert.equal(pendingBackendContributionCount(restartedPurchaseGate, 8), 2, "restart must preserve queued backend contribution backlog");
+purchaseGate = withBackendStoryFlags(restartedPurchaseGate, { act2JettyLifebuoyOwned: true });
 assert.equal(jettyPurchaseRequired(purchaseGate), false, "authoritative ownership must release jetty gate");
 assert.equal(nextAct2Contribution(purchaseGate, 7)?.beatId, "dock:07");
 
@@ -251,6 +262,8 @@ for (let i = 1; i <= 9; i++) {
 }
 assert.equal(boathouseGate.projects.boathouse.contributions, 9);
 assert.equal(boathousePurchaseRequired(boathouseGate), true, "steering wheel must gate Båthuset between 9 and 10");
+assert.equal(nextAct2Contribution(boathouseGate, 11), null, "steering-wheel gate must block the next boathouse contribution");
+assert.equal(withPresentedContribution(boathouseGate, "boathouse", "boathouse:10", 3).projects.boathouse.contributions, 9, "direct presentation must not bypass the steering-wheel gate");
 const countBeforeWheel = totalAct2Contributions(boathouseGate);
 boathouseGate = withBackendStoryFlags(boathouseGate, { act2BoathouseSteeringWheelOwned: true });
 assert.equal(boathousePurchaseRequired(boathouseGate), false);
@@ -279,6 +292,8 @@ for (let i = 1; i <= 5; i++) {
   motorboatGate = withPresentedContribution(motorboatGate, "motorboat", next.beatId, next.visibleStage);
 }
 assert.equal(motorboatPartsPurchaseRequired(motorboatGate), true);
+assert.equal(nextAct2Contribution(motorboatGate, 54), null, "motorboat parts gate must block the next contribution");
+assert.equal(withPresentedContribution(motorboatGate, "motorboat", "motorboat:06", 2).projects.motorboat.contributions, 5, "direct presentation must not bypass the motorboat parts gate");
 const beforeParts = totalAct2Contributions(motorboatGate);
 motorboatGate = withBackendStoryFlags(motorboatGate, { act2MotorboatPartsOwned: true });
 assert.equal(motorboatPartsPurchaseRequired(motorboatGate), false);
@@ -288,6 +303,8 @@ for (let i = 6; i <= 12; i++) {
   motorboatGate = withPresentedContribution(motorboatGate, "motorboat", next.beatId, next.visibleStage);
 }
 assert.equal(motorboatNamingRequired(motorboatGate), true);
+assert.equal(nextAct2Contribution(motorboatGate, 61), null, "boat naming gate must block contribution 13 until a name is saved");
+assert.equal(withPresentedContribution(motorboatGate, "motorboat", "motorboat:13", 4).projects.motorboat.contributions, 12, "direct presentation must not bypass the boat naming gate");
 const beforeName = totalAct2Contributions(motorboatGate);
 motorboatGate = withMotorboatName(motorboatGate, "  Sjöbusen  ");
 assert.equal(motorboatGate.motorboatName, "Sjöbusen");
@@ -378,9 +395,9 @@ assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should poin
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
-assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay aligned with locked provisional balance");
-assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay aligned with locked provisional balance");
-assert.ok(storyShop.includes('ACT2_MOTORBOAT_PARTS_PRICE = 200'), "Motorbåten parts price must stay at locked 150 SysselBux");
+assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay at locked 200 SysselBux");
+assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay at locked 200 SysselBux");
+assert.ok(storyShop.includes('ACT2_MOTORBOAT_PARTS_PRICE = 200'), "Motorbåten parts price must stay at locked 200 SysselBux");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_jetty_lifebuoy")'), "jetty lifebuoy must use the atomic story purchase RPC");
 assert.ok(village.includes("Livboj till bryggan"), "Mira must expose the Act 2 lifebuoy in her real shop");
 assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");

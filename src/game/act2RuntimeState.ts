@@ -205,6 +205,7 @@ export function nextAct2Contribution(
   const normalized = normalizeAct2RuntimeState(state);
   const project = normalized.selectedProject;
   if (!project || !canSelectProject(normalized, project)) return null;
+  if (act2ContributionBlockedByStoryGate(normalized, project)) return null;
   const backlog = pendingBackendContributionCount(normalized, worldProgression);
   if (backlog < 1) return null;
   const number = normalized.projects[project].contributions + 1;
@@ -257,6 +258,15 @@ export function motorboatNamingRequired(state: Act2RuntimeState) {
   return normalized.projects.motorboat.contributions >= 12
     && normalized.projects.motorboat.contributions < 16
     && normalized.motorboatName === null;
+}
+
+export function act2ContributionBlockedByStoryGate(state: Act2RuntimeState, project: Act2Project) {
+  if (project === "dock") return jettyPurchaseRequired(state);
+  if (project === "boathouse") return boathousePurchaseRequired(state);
+  if (project === "motorboat") {
+    return motorboatPartsPurchaseRequired(state) || motorboatNamingRequired(state);
+  }
+  return false;
 }
 
 export function withMotorboatName(state: Act2RuntimeState, name: string): Act2RuntimeState {
@@ -317,6 +327,7 @@ export function advanceAct2Finale(state: Act2RuntimeState): Act2RuntimeState {
 
 export function withSelectedProject(state: Act2RuntimeState, project: Act2Project): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
+  if (normalized.selectedProject && normalized.selectedProject !== project) return normalized;
   if (!canSelectProject(normalized, project)) return normalized;
   return { ...normalized, selectedProject: project };
 }
@@ -331,6 +342,7 @@ export function withPresentedContribution(
   if (!beatId || normalized.projects[project].complete) return normalized;
   if (normalized.selectedProject !== project) return normalized;
   if (project === "motorboat" && !isMotorboatUnlocked(normalized)) return normalized;
+  if (act2ContributionBlockedByStoryGate(normalized, project)) return normalized;
   const current = normalized.projects[project];
   if (current.consumedBeatIds.includes(beatId)) return normalized;
 
