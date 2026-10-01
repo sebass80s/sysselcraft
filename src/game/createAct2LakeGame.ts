@@ -5,7 +5,6 @@ import {
   ACT2_VISUAL_PLACEMENTS,
   ACT2_WORLD,
   ACT2_PLAYER_FOOT_RADIUS,
-  act2ShorelineYAt,
   getAct2DisplaySize,
   type Act2RestorationProject,
   type Act2VisualStage,
@@ -98,11 +97,11 @@ export async function createAct2LakeGame(
 
       // Acceptance spawn only. Story entry/exit points remain deliberately undefined
       // until the authored Act 2 transition is wired.
-      this.player = this.add.image(930, 585, "act2-child")
+      this.player = this.add.image(815, 515, "act2-child")
         .setOrigin(0.5, 0.94)
         .setDisplaySize(74, 118)
         .setDepth(1585);
-      this.dog = this.add.image(865, 600, "act2-dog")
+      this.dog = this.add.image(755, 532, "act2-dog")
         .setOrigin(0.5, 0.88)
         .setDisplaySize(66, 55)
         .setDepth(1600);
@@ -265,9 +264,12 @@ export async function createAct2LakeGame(
         || y > ACT2_WORLD.height - 8 - radiusY
       ) return false;
 
-      // The player's feet may approach the beach edge, but never cross into
-      // the lake. The radius keeps the sprite from visually standing in water.
-      if (y + radiusY >= act2ShorelineYAt(x)) return false;
+      // The accepted lake master is the collision authority for water.
+      // Sample around the player's feet so bays and curved shoreline follow the
+      // actual artwork instead of a second hand-maintained geometry map.
+      if (this.isWaterAt(x, y + radiusY)) return false;
+      if (this.isWaterAt(x - radiusX * 0.6, y + radiusY * 0.75)) return false;
+      if (this.isWaterAt(x + radiusX * 0.6, y + radiusY * 0.75)) return false;
 
       return !PROJECTS.some((project) => {
         const p = ACT2_VISUAL_PLACEMENTS[project];
@@ -276,6 +278,27 @@ export async function createAct2LakeGame(
         return x >= p.x - halfW && x <= p.x + halfW &&
           y >= p.baseY - halfH && y <= p.baseY + halfH;
       });
+    }
+
+    private isWaterAt(x: number, y: number) {
+      const pixel = this.textures.getPixel(
+        Math.round(Phaser.Math.Clamp(x, 0, ACT2_WORLD.width - 1)),
+        Math.round(Phaser.Math.Clamp(y, 0, ACT2_WORLD.height - 1)),
+        "act2-lake-master",
+      );
+      if (!pixel) return false;
+
+      const maxRB = Math.max(pixel.red, pixel.blue);
+      const blueLead = pixel.blue - pixel.red;
+      const blueOverGreen = pixel.blue - pixel.green;
+
+      // Lake pixels in the accepted master are blue/cyan. Requiring both a
+      // strong blue channel and a meaningful lead over red avoids treating
+      // neutral rocks, paths and dark forest shadows as water.
+      return pixel.blue >= 105
+        && maxRB >= 120
+        && blueLead >= 22
+        && blueOverGreen >= -12;
     }
 
     setStage(stage: Act2VisualStage) {
