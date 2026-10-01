@@ -182,11 +182,8 @@ export default function Act2Page() {
   const [childName, setChildName] = useState("Barnet");
   const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
   const [backendWorldProgression, setBackendWorldProgression] = useState<number | null>(null);
-  const [contributionLineIndex, setContributionLineIndex] = useState(0);
-  const [completionLineIndex, setCompletionLineIndex] = useState(0);
   const [backendSyncError, setBackendSyncError] = useState("");
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
-  const [finaleLineIndex, setFinaleLineIndex] = useState(0);
   const [contributionTurnInOpen, setContributionTurnInOpen] = useState(false);
   const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
 
@@ -413,11 +410,11 @@ export default function Act2Page() {
           ? MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
           : null;
   const activeContributionLine = contributionTurnInOpen
-    ? activeContributionBeat?.body[contributionLineIndex] ?? null
+    ? activeContributionBeat?.body[state.contributionLineIndex] ?? null
     : null;
   const finalePending = act2FinalePending(state);
   const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
-  const activeFinaleLine = activeFinaleBeat?.body[finaleLineIndex] ?? null;
+  const activeFinaleLine = activeFinaleBeat?.body[state.finaleLineIndex] ?? null;
   const completionProject = (["cabin", "dock"] as const)
     .find((project) => projectCompletionReactionPending(state, project)) ?? null;
   const activeCompletionBeat = completionProject === "cabin"
@@ -425,32 +422,30 @@ export default function Act2Page() {
     : completionProject === "dock"
       ? JETTY_COMPLETION_REACTION
       : null;
-  const activeCompletionLine = activeCompletionBeat?.body[completionLineIndex] ?? null;
+  const activeCompletionLine = activeCompletionBeat?.body[state.completionLineIndex] ?? null;
 
   async function advanceFinaleStory() {
     if (!activeFinaleBeat) return;
-    if (finaleLineIndex + 1 < activeFinaleBeat.body.length) {
-      setFinaleLineIndex((index) => index + 1);
+    if (state.finaleLineIndex + 1 < activeFinaleBeat.body.length) {
+      await commit({ ...state, finaleLineIndex: state.finaleLineIndex + 1 });
       return;
     }
     await commit(advanceAct2Finale(state));
-    setFinaleLineIndex(0);
   }
 
   async function advanceCompletionReaction() {
     if (!completionProject || !activeCompletionBeat) return;
-    if (completionLineIndex + 1 < activeCompletionBeat.body.length) {
-      setCompletionLineIndex((index) => index + 1);
+    if (state.completionLineIndex + 1 < activeCompletionBeat.body.length) {
+      await commit({ ...state, completionLineIndex: state.completionLineIndex + 1 });
       return;
     }
     await commit(consumeProjectCompletionReaction(state, completionProject));
-    setCompletionLineIndex(0);
   }
 
   async function advanceContributionStory() {
     if (!contributionCandidate || !activeContributionBeat) return;
-    if (contributionLineIndex + 1 < activeContributionBeat.body.length) {
-      setContributionLineIndex((index) => index + 1);
+    if (state.contributionLineIndex + 1 < activeContributionBeat.body.length) {
+      await commit({ ...state, contributionLineIndex: state.contributionLineIndex + 1 });
       return;
     }
     const next = withPresentedContribution(
@@ -460,7 +455,6 @@ export default function Act2Page() {
       contributionCandidate.visibleStage,
     );
     await commit(next);
-    setContributionLineIndex(0);
     setContributionTurnInOpen(false);
   }
 
@@ -525,7 +519,7 @@ export default function Act2Page() {
         <span className="dialogue-speaker">{activeFinaleBeat.title}</span>
         <p>{activeFinaleLine.replace(/^Barnet:/, childName + ":")}</p>
         <button className="primary-button dialogue-next" onClick={() => void advanceFinaleStory()}>
-          {finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa"}
+          {state.finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa"}
         </button>
       </div>
     </section>}
@@ -535,7 +529,7 @@ export default function Act2Page() {
         <span className="dialogue-speaker">{activeCompletionBeat.title}</span>
         <p>{activeCompletionLine.replace(/^Barnet:/, childName + ":")}</p>
         <button className="primary-button dialogue-next" onClick={() => void advanceCompletionReaction()}>
-          {completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten"}
+          {state.completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten"}
         </button>
       </div>
     </section>}
@@ -570,7 +564,7 @@ export default function Act2Page() {
         <span className="dialogue-speaker">{activeContributionBeat.title}</span>
         <p>{activeContributionLine.replace(/^Barnet:/, childName + ":")}</p>
         <button className="primary-button dialogue-next" onClick={() => void advanceContributionStory()}>
-          {contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
+          {state.contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
         </button>
         {contributionCandidate.backlog > 1 && <small>{contributionCandidate.backlog - 1} questframsteg väntar bakom detta beat.</small>}
       </div>

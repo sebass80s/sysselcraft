@@ -389,3 +389,20 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - A blocked contribution cannot be forced through with a direct withPresentedContribution call.
 - Pending backend backlog remains queued across purchase gates and state normalization/restart; buying the required item releases the same queued work without consuming a contribution.
 - Duplicate presentation from the same state snapshot is explicitly regression-covered as idempotent.
+
+
+### Act 2 restart and village-navigation hardening — 2026-10-01
+- Act 2 already exposes both a normal return-to-village link and purchase-gate navigation to Mira; these routes do not clear Act 2 state.
+- Contribution Story Moments, project completion reactions and finale beats now persist their current line index in the Act 2 state family.
+- Restart or a village round-trip therefore resumes the exact active dialogue line rather than replaying the current scene from line 1.
+- Completing a contribution/reaction/finale beat resets only that presentation line index; contribution counts and consumed IDs remain the authoritative replay guards.
+- The establish-once backend claim baseline is regression-covered across village round-trips and cannot move on re-entry.
+- Selected project, project contributions, pending purchase gates and Alve active-project ownership remain derived from the persisted Act 2 state after return.
+
+
+### Act 2 economy sanity check — 2026-10-01
+- The three mandatory Act 2 story-items remain locked at 200 SysselBux each, total 600.
+- Current parent-quest reward data is heavily concentrated at 10 SysselBux: p25=10, median=10, p75=10, p90=25.
+- 59 of 67 positive-reward parent quests are in the 1–20 SysselBux range; only one is 200+ and the raw average is distorted by a 10,000-SysselBux test/outlier reward.
+- At the current median reward, one mandatory story-item equals about 20 typical quests and all three equal about 60 typical quests.
+- No automatic rebalance is applied here because 200/story-item is a deliberate product decision. Flag this for physical pacing acceptance: if the intended child cadence is much shorter, quest rewards or story-item pricing will need a later balance decision rather than a hidden code-side adjustment.

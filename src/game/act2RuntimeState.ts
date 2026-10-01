@@ -26,6 +26,9 @@ export type Act2RuntimeState = {
   motorboatName: string | null;
   consumedProjectCompletionIds: string[];
   projects: Record<Act2Project, Act2ProjectState>;
+  contributionLineIndex: number;
+  completionLineIndex: number;
+  finaleLineIndex: number;
   finaleIndex: number;
   familyFinaleConsumed: boolean;
   epilogueConsumed: boolean;
@@ -55,6 +58,9 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     motorboatPartsOwned: false,
     motorboatName: null,
     consumedProjectCompletionIds: [],
+    contributionLineIndex: 0,
+    completionLineIndex: 0,
+    finaleLineIndex: 0,
     projects: {
       cabin: emptyProject(),
       dock: emptyProject(),
@@ -147,6 +153,15 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       : null,
     consumedProjectCompletionIds: normalizeBeatIds(candidate.consumedProjectCompletionIds),
     projects,
+    contributionLineIndex: Number.isInteger(candidate.contributionLineIndex)
+      ? Math.max(0, Math.min(200, candidate.contributionLineIndex as number))
+      : 0,
+    completionLineIndex: Number.isInteger(candidate.completionLineIndex)
+      ? Math.max(0, Math.min(200, candidate.completionLineIndex as number))
+      : 0,
+    finaleLineIndex: Number.isInteger(candidate.finaleLineIndex)
+      ? Math.max(0, Math.min(200, candidate.finaleLineIndex as number))
+      : 0,
     finaleIndex: Number.isInteger(candidate.finaleIndex)
       ? Math.max(0, Math.min(5, candidate.finaleIndex as number))
       : 0,
@@ -300,6 +315,7 @@ export function consumeProjectCompletionReaction(
   return {
     ...normalized,
     consumedProjectCompletionIds: [...normalized.consumedProjectCompletionIds, id],
+    completionLineIndex: 0,
   };
 }
 
@@ -312,14 +328,15 @@ export function advanceAct2Finale(state: Act2RuntimeState): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
   if (!act2FinalePending(normalized)) return normalized;
   if (normalized.finaleIndex < 4) {
-    return { ...normalized, finaleIndex: normalized.finaleIndex + 1 };
+    return { ...normalized, finaleIndex: normalized.finaleIndex + 1, finaleLineIndex: 0 };
   }
   if (normalized.finaleIndex === 4) {
-    return { ...normalized, finaleIndex: 5, familyFinaleConsumed: true };
+    return { ...normalized, finaleIndex: 5, finaleLineIndex: 0, familyFinaleConsumed: true };
   }
   return normalizeAct2RuntimeState({
     ...normalized,
     familyFinaleConsumed: true,
+    finaleLineIndex: 0,
     epilogueConsumed: true,
     act2Complete: true,
   });
@@ -357,6 +374,7 @@ export function withPresentedContribution(
   return normalizeAct2RuntimeState({
     ...normalized,
     selectedProject: nextProject.complete ? null : project,
+    contributionLineIndex: 0,
     projects: { ...normalized.projects, [project]: nextProject },
   });
 }

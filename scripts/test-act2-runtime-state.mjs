@@ -35,6 +35,9 @@ assert.equal(empty.openingComplete, false);
 assert.equal(empty.selectedProject, null);
 assert.equal(prerequisiteCompletionCount(empty), 0);
 assert.equal(isMotorboatUnlocked(empty), false);
+assert.equal(empty.contributionLineIndex, 0);
+assert.equal(empty.completionLineIndex, 0);
+assert.equal(empty.finaleLineIndex, 0);
 assert.equal(canSelectProject(empty, "motorboat"), false);
 
 const restored = normalizeAct2RuntimeState({
@@ -82,6 +85,11 @@ const duplicateFromSameSnapshotA = withPresentedContribution(state, "dock", "doc
 const duplicateFromSameSnapshotB = withPresentedContribution(state, "dock", "dock:02", 1);
 assert.deepEqual(duplicateFromSameSnapshotA, duplicateFromSameSnapshotB, "two rapid taps from the same snapshot must resolve to the same idempotent next state");
 
+const midContributionStory = normalizeAct2RuntimeState({ ...state, contributionLineIndex: 7 });
+assert.equal(midContributionStory.contributionLineIndex, 7, "restart must preserve the exact line inside a pending contribution Story Moment");
+const committedAfterResume = withPresentedContribution(midContributionStory, "dock", "dock:02", 1);
+assert.equal(committedAfterResume.contributionLineIndex, 0, "finishing the resumed contribution beat must reset its persisted line index");
+
 let lockedBoat = withPresentedContribution(empty, "motorboat", "motorboat:01", 1);
 assert.equal(lockedBoat.projects.motorboat.contributions, 0, "motorboat cannot advance before 3/3");
 
@@ -117,6 +125,10 @@ let jettyComplete = createDefaultAct2RuntimeState();
 jettyComplete = complete(jettyComplete, "dock");
 assert.equal(jettyComplete.projects.dock.contributions, 16);
 assert.equal(projectCompletionReactionPending(jettyComplete, "dock"), true, "16/16 must unlock a separate completion reaction");
+const midCompletionReaction = normalizeAct2RuntimeState({ ...jettyComplete, completionLineIndex: 3 });
+assert.equal(midCompletionReaction.completionLineIndex, 3, "restart must preserve the exact completion-reaction line");
+const consumedMidCompletion = consumeProjectCompletionReaction(midCompletionReaction, "dock");
+assert.equal(consumedMidCompletion.completionLineIndex, 0, "consuming the completion reaction must reset its line index");
 assert.equal(projectCompletionReactionPending(jettyComplete, "boathouse"), false, "projects without authored completion reactions must not leave pending ghosts");
 assert.equal(totalAct2Contributions(jettyComplete), 16, "completion reaction must not fabricate contribution 17");
 const beforeReactionCount = totalAct2Contributions(jettyComplete);
@@ -193,6 +205,15 @@ assert.equal(candidate?.beatId, "dock:02", "unconsumed authoritative backlog mus
 
 const baselineCannotMove = withBackendClaimBaseline(bridge, 999);
 assert.equal(baselineCannotMove.backendClaimBaseline, 12, "Act 2 claim baseline is establish-once");
+
+const villageRoundTrip = normalizeAct2RuntimeState(JSON.parse(JSON.stringify({
+  ...bridge,
+  contributionLineIndex: 2,
+})));
+assert.equal(villageRoundTrip.selectedProject, "dock", "leaving for the village and returning must preserve the active project");
+assert.equal(villageRoundTrip.projects.dock.contributions, bridge.projects.dock.contributions, "village round-trip must preserve project contributions");
+assert.equal(villageRoundTrip.backendClaimBaseline, 12, "village round-trip must not move the Act 2 backend baseline");
+assert.equal(villageRoundTrip.contributionLineIndex, 2, "village round-trip must preserve the active Story Moment line");
 
 const boundaryState = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 0);
 let boundary = withSelectedProject(boundaryState, "dock");
@@ -325,7 +346,12 @@ finaleState = complete(finaleState, "boathouse");
 finaleState = complete(finaleState, "motorboat");
 assert.equal(act2FinalePending(finaleState), true);
 assert.equal(finaleState.finaleIndex, 0);
-for (let i = 0; i < 5; i++) finaleState = advanceAct2Finale(finaleState);
+finaleState = normalizeAct2RuntimeState({ ...finaleState, finaleLineIndex: 4 });
+assert.equal(finaleState.finaleLineIndex, 4, "restart must preserve the exact line inside the active finale beat");
+finaleState = advanceAct2Finale(finaleState);
+assert.equal(finaleState.finaleIndex, 1);
+assert.equal(finaleState.finaleLineIndex, 0, "advancing a finale beat must reset the persisted line index");
+for (let i = 1; i < 5; i++) finaleState = advanceAct2Finale(finaleState);
 assert.equal(finaleState.finaleIndex, 5);
 assert.equal(finaleState.familyFinaleConsumed, true);
 assert.equal(finaleState.epilogueConsumed, false);
@@ -388,6 +414,11 @@ assert.ok(page.includes("ACT2_FINALE_BEATS[state.finaleIndex]"), "production rou
 assert.ok(page.includes("setActiveProject(state.selectedProject)"), "production route must move Alve when the active project changes");
 assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), "Alve interaction must explicitly arm the pending contribution Story Moment");
 assert.ok(page.includes("hasPendingAlveTurnIn(latest, backendWorldProgression)"), "restart must restore Alve turn-in marker immediately when a pending contribution already exists");
+assert.ok(page.includes('href="/">← Till byn</a>'), "Act 2 must keep an explicit route back to the village");
+assert.ok(page.includes('href="/">Till Mira i byn</a>'), "story purchase gates must route back to Mira without mutating Act 2 state");
+assert.ok(page.includes("state.contributionLineIndex"), "contribution Story Moments must render from persisted line state");
+assert.ok(page.includes("state.completionLineIndex"), "completion reactions must render from persisted line state");
+assert.ok(page.includes("state.finaleLineIndex"), "finale beats must render from persisted line state");
 assert.ok(page.includes("contributionTurnInOpen && contributionCandidate"), "backend polling must not auto-open contribution Story Moments");
 assert.ok(page.includes("setContributionTurnInOpen(false);"), "finishing one beat must close turn-in so backlog cannot auto-chain");
 assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should point the child toward Alve rather than bypassing world interaction");
