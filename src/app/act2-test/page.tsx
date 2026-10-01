@@ -25,12 +25,13 @@ type StoryBeat = {
 
 
 
-const STORY_BEATS: StoryBeat[] = ACT2_OPENING_BEATS.map((beat, index) => ({
-  id: `opening-${String(index + 1).padStart(2, "0")}`,
-  title: beat.title,
-  image: beat.image,
-  body: beat.body,
-})).concat([
+const STORY_BEATS: StoryBeat[] = [
+  ...ACT2_OPENING_BEATS.map((beat, index) => ({
+    id: `opening-${String(index + 1).padStart(2, "0")}`,
+    title: beat.title,
+    image: beat.image,
+    body: beat.body,
+  })),
   {
     id: "meet-bike",
     title: "Någon är redan här",
@@ -61,8 +62,7 @@ const STORY_BEATS: StoryBeat[] = ACT2_OPENING_BEATS.map((beat, index) => ({
   ...MOTORBOAT_CONTRIBUTION_BEATS,
   ...ACT2_FINALE_BEATS.map((beat) => ({ ...beat, stage: 4 as Act2VisualStage })),
 
-]);
-
+];
 
 const storyGroupForBeat = (beat: StoryBeat) => {
   if (beat.id.startsWith("opening-")) return "Opening";
