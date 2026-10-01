@@ -291,6 +291,7 @@ assert.equal(boathousePurchaseRequired(boathouseGate), false);
 assert.equal(totalAct2Contributions(boathouseGate), countBeforeWheel, "steering wheel purchase must be contribution-neutral");
 assert.equal(nextAct2Contribution(boathouseGate, 10)?.beatId, "boathouse:10");
 
+assert.equal(MOTORBOAT_PARTS_PRICE, 200, "Motorbåten story-source price must stay aligned with locked Act 2 pricing");
 assert.equal(MOTORBOAT_CONTRIBUTION_BEATS.length, 16, "Motorbåten must keep exactly 16 authoritative contribution beats");
 assert.deepEqual(
   MOTORBOAT_CONTRIBUTION_BEATS.map((beat) => beat.id),
