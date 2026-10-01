@@ -4,7 +4,11 @@ Status: **CANONICAL**
 
 SysselCraft is story-driven. Dialogue speaker identity, nameplates and dialogue body rendering are therefore runtime contracts, not decorative details.
 
-## 1. One speaker, one nameplate
+## 1. One speaker, one nameplate, one reply
+
+A dialogue card is atomic: **one nameplate + one authored reply/narration unit + one click to advance**.
+
+Never reduce click count by stacking several authored speakers or several dialogue turns inside the same rendered card. Click reduction belongs in the writing layer: remove redundant turns and rewrite the remaining replies so each carries more useful content while still fitting comfortably in one card.
 
 A rendered dialogue line may show the speaker name in exactly one nameplate.
 
