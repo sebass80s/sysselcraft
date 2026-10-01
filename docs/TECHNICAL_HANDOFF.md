@@ -657,3 +657,15 @@ Important invariants:
 - future Acts must reuse this engine rather than clone presentation logic.
 
 Act 1 migration is intentionally deferred until Act 2 v1 receives browser/iPhone acceptance.
+
+## Act 2 runtime hardening checkpoint — 2026-10-01 evening
+
+The current Act 2 implementation uses one production renderer, `src/components/Act2Runtime.tsx`, for both `/act2` and `/act2-test`. Debug is now a state-control mode over the real renderer, not a second implementation. It loads the persisted child name, creates isolated Act 2 state, bypasses shipping/access gates for testing, does not poll/persist authoritative Act 2 state, and may expose explicit state mutators such as reset/test purchases. Production keeps the temporary shipping gate disabled until physical acceptance.
+
+Lake navigation now treats the accepted `lake-master` artwork as the water-collision authority. Phaser samples pixels around the player-foot area to reject blue/cyan water rather than maintaining a guessed shoreline function. Building footprints and world bounds remain separate collision layers. This fixed the obvious browser case where Barnet/Valpen could stand in the lake, but full shoreline tuning still depends on visual/physical testing.
+
+Stugan's “En stund till” scene is a world revisit, not project completion. After Stugan reaches 16/16, clicking the completed cabin may replay `CABIN_WAITING_REACTION` while Motorbåten is incomplete. It does not auto-open, does not consume a contribution and disappears once Motorbåten completes.
+
+Story-card presentation is locked: **one nameplate + one reply/narration unit + one click**. Do not batch multiple speakers into one card to reduce clicks. Anti-popcorn work belongs in the authored dialogue. First rhythm passes have been made across Båthuset, Stugan, Bryggan and Motorbåten without changing story order, gates, images or progression.
+
+Automated contracts now explicitly protect shared production/debug rendering, non-persistent debug Act 2 state, single-speaker contribution cards and Cabin revisit semantics. A fresh positive `npm run verify` result is still required after the latest hardening batch.
