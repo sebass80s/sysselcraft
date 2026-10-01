@@ -195,8 +195,8 @@ main { min-height: 100dvh; }
 /* Act 2 uses denser cinematic dialogue than the village cards.
    Keep speaker labels/buttons unchanged and reduce only body copy. */
 .act2-dialogue-card p {
-  font-size: 0.9rem;
-  line-height: 1.35;
+  font-size: 0.82rem;
+  line-height: 1.32;
 }
 
 
