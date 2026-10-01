@@ -529,9 +529,12 @@ for (const required of [
   "05-the-bicycle.png",
 ]) assert.ok(act2OpeningStorySource.includes(required), `missing canonical Act 2 opening asset: ${required}`);
 for (const required of [
-  "meeting-alve/bike.png",
-  "meeting-alve/first-hello.png",
+  "first-hello.png",
+  "a-lot-of-work.png",
+  "new-friend.png",
+  "alve-shows.png",
 ]) assert.ok(act2AlveStorySource.includes(required), `missing canonical Alve meeting asset: ${required}`);
+assert.ok(page.includes("meeting-alve/bike.png"), "the close bicycle beat must remain in the shared runtime before Alve intro");
 for (const required of [
   "ACT2_OPENING_BEATS",
   "ACT2_ALVE_DIALOGUE",
