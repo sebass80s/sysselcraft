@@ -19,6 +19,7 @@ export type Act2RuntimeState = {
   alveIntroIndex: number;
   alveIntroComplete: boolean;
   selectedProject: Act2Project | null;
+  backendClaimBaseline: number | null;
   projects: Record<Act2Project, Act2ProjectState>;
   familyFinaleConsumed: boolean;
   epilogueConsumed: boolean;
@@ -42,6 +43,7 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     alveIntroIndex: 0,
     alveIntroComplete: false,
     selectedProject: null,
+    backendClaimBaseline: null,
     projects: {
       cabin: emptyProject(),
       dock: emptyProject(),
@@ -122,6 +124,9 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       : 0,
     alveIntroComplete: candidate.alveIntroComplete === true,
     selectedProject: selected,
+    backendClaimBaseline: typeof candidate.backendClaimBaseline === "number" && Number.isInteger(candidate.backendClaimBaseline) && candidate.backendClaimBaseline >= 0
+      ? candidate.backendClaimBaseline
+      : null,
     projects,
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
     epilogueConsumed: candidate.epilogueConsumed === true,
@@ -143,6 +148,52 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   normalized.act2Complete = normalized.epilogueConsumed;
 
   return normalized;
+}
+
+export function totalAct2Contributions(state: Act2RuntimeState) {
+  return PROJECTS.reduce((sum, project) => sum + state.projects[project].contributions, 0);
+}
+
+export function withBackendClaimBaseline(state: Act2RuntimeState, worldProgression: number): Act2RuntimeState {
+  const normalized = normalizeAct2RuntimeState(state);
+  if (normalized.backendClaimBaseline !== null) return normalized;
+  const baseline = Number.isFinite(worldProgression) ? Math.max(0, Math.floor(worldProgression)) : 0;
+  return { ...normalized, backendClaimBaseline: baseline };
+}
+
+export function pendingBackendContributionCount(state: Act2RuntimeState, worldProgression: number) {
+  const normalized = normalizeAct2RuntimeState(state);
+  if (normalized.backendClaimBaseline === null) return 0;
+  const authoritative = Number.isFinite(worldProgression) ? Math.max(0, Math.floor(worldProgression)) : 0;
+  return Math.max(0, authoritative - normalized.backendClaimBaseline - totalAct2Contributions(normalized));
+}
+
+export type Act2ContributionCandidate = {
+  project: Act2Project;
+  number: number;
+  beatId: string;
+  visibleStage: 1 | 2 | 3 | 4;
+  backlog: number;
+};
+
+export function nextAct2Contribution(
+  state: Act2RuntimeState,
+  worldProgression: number,
+): Act2ContributionCandidate | null {
+  const normalized = normalizeAct2RuntimeState(state);
+  const project = normalized.selectedProject;
+  if (!project || !canSelectProject(normalized, project)) return null;
+  const backlog = pendingBackendContributionCount(normalized, worldProgression);
+  if (backlog < 1) return null;
+  const number = normalized.projects[project].contributions + 1;
+  if (number > 16) return null;
+  return {
+    project,
+    number,
+    beatId: `${project}:${String(number).padStart(2, "0")}`,
+    visibleStage: Math.ceil(number / 4) as 1 | 2 | 3 | 4,
+    backlog,
+  };
 }
 
 export function withSelectedProject(state: Act2RuntimeState, project: Act2Project): Act2RuntimeState {
