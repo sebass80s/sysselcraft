@@ -310,7 +310,7 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 - Canonical story sources are shared with `/act2-test` instead of maintaining condensed duplicate dialogue tracks. This includes the first-Alve image progression; do not re-hardcode `first-hello.png` across the entire meeting.
 - Story-bound economy gates are authoritative and contribution-neutral: Bryggan livboj 200 SysselBux, Båthuset ratt 200 SysselBux, Motorbåten reservdelspaket 200 SysselBux.
 - Motorboat naming after 12/16 is persisted locally and does not consume a contribution.
-- The family-return + first-crossing finale is a separate six-beat restart-safe sequence after Motorbåten 16/16; completion sets familyFinaleConsumed, epilogueConsumed and act2Complete without inventing contribution 65.
+- The family-return finale is a separate restart-safe sequence after Motorbåten 16/16; completion sets familyFinaleConsumed, epilogueConsumed and act2Complete without inventing contribution 65. The first real crossing of the lake belongs to the Act 3 opening, not the Act 2 finale.
 - Finale assets 01–04 are used where present. The final departure intentionally runs over the live lake because no canonical departure still exists in repo.
 - Physical-device acceptance and a green build of the batched final HEAD remain required before calling the Act 2 implementation accepted.
 
@@ -353,7 +353,7 @@ Do not lose this list when the implementation thread changes.
 ### Hardening checkpoint — 2026-10-01
 - Direct /act2 access is blocked unless Act 1 worldFlags.clinicCompletionSeen is true; direct URL access can no longer enter Act 2 early.
 - Backend story-ownership polling persists outside React state-updater callbacks.
-- Completion reactions are explicit: Stugan uses CABIN_WAITING_REACTION, Bryggan uses JETTY_COMPLETION_REACTION, Båthuset creates no phantom pending reaction and Motorbåten proceeds to the finale.
+- Completion reactions are explicit: Bryggan uses JETTY_COMPLETION_REACTION; Båthuset creates no phantom pending reaction; Motorbåten proceeds to the finale. CABIN_WAITING_REACTION is not an automatic completion reaction: it is a repeatable revisit scene on the finished Stugan while Motorbåten is still incomplete.
 - Motorbåt 5 runtime syntax was repaired. The required 200 SysselBux purchase still gates after 5/16; 6/16 is now a post-purchase Mira scene and no longer narrates a second payment.
 - Deterministic runtime-source checks reject known developer/internal language in child-facing Story sources.
 
@@ -446,3 +446,13 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - Preserve locked plot beats, discoveries, jokes, project order-independence, images/stages and gameplay gates.
 - Goal for rewrite: fewer line-by-line volleys, more natural paragraph-length beats, clearer action→reaction→payoff structure, and stronger distinction between narration and spoken dialogue.
 - Do not perform this rewrite during the current Story Engine refactor unless a line is technically malformed or leaks authoring text into runtime.
+
+### Runtime/debug parity, lake collision and Cabin revisit hardening — 2026-10-01
+- Production `/act2` and debug `/act2-test` now render the same shared `Act2Runtime`. The route files are thin wrappers; debug may synthesize isolated state and expose test controls, but it must not own duplicate chooser/story/gate renderers.
+- Debug Act 2 state is intentionally non-persistent. It uses the saved child name but does not write Act 2 runtime progress.
+- The production shipping gate remains closed with `ACT2_PRODUCTION_ENABLED = false` until physical acceptance is complete.
+- Lake water collision no longer uses a guessed straight shoreline. `createAct2LakeGame.ts` samples the accepted `lake-master` texture beneath the player foot area and blocks blue/cyan water pixels while retaining building/world collision.
+- The initial lake spawn was moved back onto accepted land after browser evidence showed the previous spawn inside the lake. The pixel classifier still requires visual/physical acceptance around the full shoreline and is not considered pixel-perfect merely from automated tests.
+- Stugan `16/16` ends normally. `CABIN_WAITING_REACTION` (“En stund till”) is a separate repeatable world revisit: it becomes available by clicking the completed Stugan and remains available until Motorbåten is complete. It does not consume a contribution or auto-open after Stugan completion.
+- Story UI contract is now explicit: one dialogue card always owns one speaker/nameplate and one reply/narration unit. Click reduction belongs in manuscript editing, never multi-speaker card batching.
+- Latest local `npm run verify` result after the final story/runtime hardening has not yet been positively reported. Do not call the current HEAD verify-green until that evidence exists.
