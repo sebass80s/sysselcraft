@@ -617,3 +617,12 @@ assert.match(act2PageSource, /act2:finale:/, "Act 2 finale must use the shared S
 assert.match(act2PageSource, /act2:completion:/, "Act 2 completion reactions must use the shared Story Engine");
 assert.match(act2PageSource, /<StoryMoment[\s\S]*advanceContributionStory/, "Act 2 contribution dialogue must use the shared Story Engine shell");
 assert.match(act2PageSource, /dialogueClassName="act2-dialogue-card"/, "Act 2 Story Engine migration must preserve the accepted smaller dialogue typography");
+
+
+const storyEngineSource = fs.readFileSync(new URL("../src/game/storyEngine.ts", import.meta.url), "utf8");
+const boathouseStorySource = fs.readFileSync(new URL("../src/game/act2BoathouseStory.ts", import.meta.url), "utf8");
+assert.match(storyEngineSource, /parseStoryLine/, "shared Story Engine must parse speaker prefixes into nameplates");
+assert.match(storyEngineSource, /prefix === "Barnet"/, "Barnet prefix must map to the configured child nameplate");
+assert.match(act2PageSource, /activeContributionPresentation\?\.speaker/, "Act 2 contribution beats must use per-line speaker nameplates");
+assert.doesNotMatch(act2PageSource, /speaker=\{activeContributionBeat\.title\}/, "beat titles must never be used as contribution speaker nameplates");
+assert.doesNotMatch(boathouseStorySource, /Order-independence lock:/, "authoring notes must never leak into Båthuset runtime text");
