@@ -27,7 +27,7 @@ export function StoryRunner({ beat, onNext, zIndex, background, dialogueClassNam
       background={background}
       dialogueClassName={dialogueClassName}
     >
-      <StoryTranscript lines={beat.lines} childName={childName} />
+      <StoryTranscript lines={beat.lines} childName={childName} showSpeakers={!beat.speaker} />
     </StoryMoment>
   );
 }
