@@ -14,6 +14,7 @@ export type Act2RuntimeState = {
   version: 1;
   entered: boolean;
   openingIndex: number;
+  openingLineIndex: number;
   openingComplete: boolean;
   bicycleSeen: boolean;
   alveIntroIndex: number;
@@ -47,6 +48,7 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     version: 1,
     entered: false,
     openingIndex: 0,
+    openingLineIndex: 0,
     openingComplete: false,
     bicycleSeen: false,
     alveIntroIndex: 0,
