@@ -62,6 +62,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const debugTapResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gameRef = useRef<Act2LakeGameHandle | null>(null);
   const [state, setState] = useState<Act2RuntimeState>(createDefaultAct2RuntimeState);
+  const stateRef = useRef(state);
   const [ready, setReady] = useState(false);
   const [childName, setChildName] = useState("Barnet");
   const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
@@ -71,6 +72,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
   const [contributionTurnInOpen, setContributionTurnInOpen] = useState(false);
   const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
+
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
     if (worldProgression === null || !candidateState.selectedProject) return false;
@@ -154,7 +159,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       gameRef.current = await createAct2LakeGame(hostRef.current, 1, {
         onAlveTurnIn: () => setContributionTurnInOpen(true),
       });
-      const latest = debug ? state : await loadAct2RuntimeState();
+      const latest = debug ? stateRef.current : await loadAct2RuntimeState();
       gameRef.current.setActiveProject(latest.selectedProject);
       gameRef.current.setProjectStages({
         cabin: latest.projects.cabin.visibleStage,
