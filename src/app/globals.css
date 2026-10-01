@@ -318,3 +318,18 @@ main { min-height: 100dvh; }
 .shared-story-transcript-line p {
   margin-top: .15rem;
 }
+
+
+.story-debug-story-nav {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: .55rem;
+}
+.story-debug-story-nav span {
+  margin-right: auto;
+  font-size: .76rem;
+  opacity: .66;
+}
