@@ -144,10 +144,11 @@ const ALVE_DIALOGUE: DialogueBeat[] = [
   { speaker: "Alve", text: "Vad börjar vi med?" },
 ];
 
-const PROJECT_COPY: Record<Exclude<Act2Project, "motorboat">, { label: string; preview: string; object: string }> = {
+const PROJECT_COPY: Record<Act2Project, { label: string; preview: string; object: string }> = {
   cabin: { label: "Stugan", object: "stugan", preview: "Stugan... Jag hoppas min familj vill komma hit igen om vi får ordning på den." },
   dock: { label: "Bryggan", object: "bryggan", preview: "Bryggan är bra. Då kan vi knyta fast båten här sen. Och bada!" },
   boathouse: { label: "Båthuset", object: "båthuset", preview: "Båthuset måste vi fixa om vi ska kunna laga båten." },
+  motorboat: { label: "Motorbåten", object: "motorbåten", preview: "Den får vänta tills Stugan, Bryggan och Båthuset är klara." },
 };
 
 export default function Act2Page() {
