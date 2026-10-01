@@ -783,7 +783,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Barnet: Nu används allt.",
       "Alve: Ja.",
       "Han blir tyst och tittar framåt.",
-      "Alve: Barnet.",
+      "Alve: {childName}.",
       "Barnet: Mm?",
       "Alve: Vi åker faktiskt båt.",
       "Barnet: Det var ju planen.",
