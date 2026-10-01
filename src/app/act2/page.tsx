@@ -38,7 +38,7 @@ import { StoryMoment } from "../../components/story/StoryMoment";
 import { parseStoryLine } from "../../game/storyEngine";
 import { StoryRunner } from "../../components/story/StoryRunner";
 import { ACT2_OPENING_BEATS } from "../../game/act2OpeningStory";
-import { ACT2_ALVE_DIALOGUE } from "../../game/act2AlveStory";
+import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../../game/act2AlveStory";
 
 
 
@@ -454,7 +454,7 @@ export default function Act2Page() {
     {state.bicycleSeen && !state.alveIntroComplete && <StoryRunner
       beat={{
         id: `act2:alve-intro:${state.alveIntroIndex}`,
-        image: "/assets/village/story-moments/act2/meeting-alve/first-hello.png",
+        image: act2AlveImageForIndex(state.alveIntroIndex),
         speaker: alveBeat?.speaker ? (alveBeat.speaker === "child" ? childName : alveBeat.speaker === "alve" ? "Alve" : "Barnet") : undefined,
         speakerTone: alveBeat?.speaker === "child" ? "child" : "default",
         lines: displayText ? [displayText] : [],
