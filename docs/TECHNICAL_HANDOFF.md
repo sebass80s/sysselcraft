@@ -630,3 +630,16 @@ Only after this runtime/state spine is proven should the 16-beat project tracks 
 ### Test route
 `/act2-test` is a visual/dialogue oracle and acceptance harness. Production state must never depend on visiting the test route.
 
+
+
+## Cross-act runtime architecture priority — LOCKED 2026-10-01
+
+Future acts must not continue the current pattern of Act-specific Story Moment, Phaser-area, save-compatibility and progression implementations. The canonical migration roadmap is now `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`.
+
+Priority order:
+1. Story Engine.
+2. World / Area Engine.
+3. Save / Migration Engine.
+4. Progression / Gating Engine.
+
+Quest V2 and backend economy are explicitly not scheduled for wholesale rewrites. Refactor incrementally, preserve accepted behavior, and require regression plus physical acceptance before deleting old paths.
