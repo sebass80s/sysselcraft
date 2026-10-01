@@ -63,6 +63,7 @@ assert.equal(restored.bicycleSeen, true);
 assert.equal(restored.alveIntroComplete, true);
 assert.equal(restored.selectedProject, "dock");
 assert.equal(restored.projects.cabin.contributions, 4);
+assert.deepEqual(restored.projects.cabin.consumedBeatIds, ["cabin:01", "cabin:02", "cabin:03", "cabin:04"], "old/noncanonical beat IDs must normalize to canonical contribution history");
 
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: 99 }).openingIndex, 4);
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: -4 }).openingIndex, 0);
@@ -96,6 +97,18 @@ assert.equal(lockedBoat.projects.motorboat.contributions, 0, "motorboat cannot a
 function complete(projectState, project) {
   let current = withSelectedProject(projectState, project);
   for (let i = 1; i <= 16; i++) {
+    if (project === "dock" && jettyPurchaseRequired(current)) {
+      current = withBackendStoryFlags(current, { act2JettyLifebuoyOwned: true });
+    }
+    if (project === "boathouse" && boathousePurchaseRequired(current)) {
+      current = withBackendStoryFlags(current, { act2BoathouseSteeringWheelOwned: true });
+    }
+    if (project === "motorboat" && motorboatPartsPurchaseRequired(current)) {
+      current = withBackendStoryFlags(current, { act2MotorboatPartsOwned: true });
+    }
+    if (project === "motorboat" && motorboatNamingRequired(current)) {
+      current = withMotorboatName(current, "Testbåten");
+    }
     const stage = Math.min(4, Math.ceil(i / 4));
     current = withPresentedContribution(current, project, `${project}:${String(i).padStart(2, "0")}`, stage);
   }
