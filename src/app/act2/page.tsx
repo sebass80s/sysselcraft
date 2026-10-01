@@ -7,13 +7,19 @@ import {
   createDefaultAct2RuntimeState,
   isMotorboatUnlocked,
   loadAct2RuntimeState,
+  nextAct2Contribution,
   prerequisiteCompletionCount,
   saveAct2RuntimeState,
+  withBackendClaimBaseline,
+  withPresentedContribution,
   withSelectedProject,
   type Act2Project,
   type Act2RuntimeState,
 } from "../../game/act2RuntimeState";
 import { loadSaveState } from "../../game/saveState";
+import { getPairedChildId } from "../../backend/childDeviceBinding";
+import { getChildGameState } from "../../backend/familyRepository";
+import { JETTY_CONTRIBUTION_BEATS } from "../../game/act2JettyStory";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
@@ -161,14 +167,35 @@ export default function Act2Page() {
   const [ready, setReady] = useState(false);
   const [childName, setChildName] = useState("Barnet");
   const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
+  const [backendWorldProgression, setBackendWorldProgression] = useState<number | null>(null);
+  const [contributionLineIndex, setContributionLineIndex] = useState(0);
+  const [backendSyncError, setBackendSyncError] = useState("");
+
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const [act2, act1] = await Promise.all([loadAct2RuntimeState(), loadSaveState()]);
+      const [act2, act1, childId] = await Promise.all([
+        loadAct2RuntimeState(),
+        loadSaveState(),
+        getPairedChildId(),
+      ]);
       if (cancelled) return;
-      const entered = act2.entered ? act2 : { ...act2, entered: true };
-      if (!act2.entered) await saveAct2RuntimeState(entered);
+      let entered = act2.entered ? act2 : { ...act2, entered: true };
+      if (childId) {
+        try {
+          const backend = await getChildGameState(childId);
+          if (cancelled) return;
+          if (backend) {
+            setBackendWorldProgression(backend.progression.worldProgression);
+            entered = withBackendClaimBaseline(entered, backend.progression.worldProgression);
+          }
+        } catch {
+          if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
+        }
+      }
+      await saveAct2RuntimeState(entered);
+      if (cancelled) return;
       setState(entered);
       setChildName(act1?.childName || "Barnet");
       setReady(true);
@@ -210,6 +237,30 @@ export default function Act2Page() {
     state.projects.boathouse.visibleStage,
     state.projects.motorboat.visibleStage,
   ]);
+
+  useEffect(() => {
+    if (!ready) return;
+    let cancelled = false;
+    const sync = async () => {
+      try {
+        const childId = await getPairedChildId();
+        if (!childId) return;
+        const backend = await getChildGameState(childId);
+        if (!cancelled && backend) {
+          setBackendWorldProgression(backend.progression.worldProgression);
+          setBackendSyncError("");
+        }
+      } catch {
+        if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
+      }
+    };
+    void sync();
+    const timer = window.setInterval(() => void sync(), 15_000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [ready]);
 
   async function commit(next: Act2RuntimeState) {
     await saveAct2RuntimeState(next);
@@ -265,6 +316,29 @@ export default function Act2Page() {
       : prerequisiteDone === 2
         ? "Två klara. Då är det bara en kvar. Den har väntat länge nog."
         : "Stugan är klar. Bryggan är klar. Båthuset är klart. Det är dags.";
+  const contributionCandidate = backendWorldProgression === null
+    ? null
+    : nextAct2Contribution(state, backendWorldProgression);
+  const activeJettyBeat = contributionCandidate?.project === "dock"
+    ? JETTY_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
+    : null;
+  const activeContributionLine = activeJettyBeat?.body[contributionLineIndex] ?? null;
+
+  async function advanceContributionStory() {
+    if (!contributionCandidate || !activeJettyBeat) return;
+    if (contributionLineIndex + 1 < activeJettyBeat.body.length) {
+      setContributionLineIndex((index) => index + 1);
+      return;
+    }
+    const next = withPresentedContribution(
+      state,
+      contributionCandidate.project,
+      contributionCandidate.beatId,
+      contributionCandidate.visibleStage,
+    );
+    await commit(next);
+    setContributionLineIndex(0);
+  }
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
     {state.openingComplete && <div ref={hostRef} style={{ position: "absolute", inset: 0 }} aria-label="Sjön i Act 2" />}
@@ -321,6 +395,18 @@ export default function Act2Page() {
       </div>
     </section>}
 
+    {activeJettyBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
+      {activeJettyBeat.image && <Image src={activeJettyBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
+      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+        <span className="dialogue-speaker">{activeJettyBeat.title}</span>
+        <p>{activeContributionLine.replace(/^Barnet:/, childName + ":")}</p>
+        <button className="primary-button dialogue-next" onClick={() => void advanceContributionStory()}>
+          {contributionLineIndex + 1 < activeJettyBeat.body.length ? "Fortsätt" : "Klart"}
+        </button>
+        {contributionCandidate.backlog > 1 && <small>{contributionCandidate.backlog - 1} questframsteg väntar bakom detta beat.</small>}
+      </div>
+    </section>}
+    {backendSyncError && <div role="status" style={{ position:"absolute", right:16, top:16, zIndex:30, background:"rgba(0,0,0,.65)", color:"white", padding:"8px 12px", borderRadius:10 }}>{backendSyncError}</div>}
     {state.selectedProject && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
       <strong>Alve: {prerequisiteDone === 0 ? `Bra val! Vi fixar ${PROJECT_COPY[state.selectedProject].object} först!` : state.selectedProject === "motorboat" ? "Nu fixar vi den." : `Bra. Då kör vi på ${PROJECT_COPY[state.selectedProject].object}.`}</strong>
       <div style={{ marginTop: 6, opacity: .82 }}>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · {state.projects[state.selectedProject].contributions}/16</div>
