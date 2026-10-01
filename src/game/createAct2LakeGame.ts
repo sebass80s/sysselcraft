@@ -1,5 +1,6 @@
 import type { GameObjects, Input, Types } from "phaser";
 import {
+  ACT2_ALVE_WORK_POSITIONS,
   ACT2_VISUAL_ASSETS,
   ACT2_VISUAL_PLACEMENTS,
   ACT2_WORLD,
@@ -12,6 +13,7 @@ export type Act2LakeGameHandle = {
   destroy: () => void;
   setStage: (stage: Act2VisualStage) => void;
   setProjectStages: (stages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>>) => void;
+  setActiveProject: (project: Act2RestorationProject | null) => void;
 };
 
 const PROJECTS: Act2RestorationProject[] = ["cabin", "boathouse", "dock", "motorboat"];
@@ -24,6 +26,7 @@ export async function createAct2LakeGame(
   const Phaser = await import("phaser");
   let requestedStage = initialStage;
   let requestedProjectStages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>> = {};
+  let requestedActiveProject: Act2RestorationProject | null = null;
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -36,6 +39,7 @@ export async function createAct2LakeGame(
     private projectImages = new Map<Act2RestorationProject, GameObjects.Image>();
     private player?: GameObjects.Image;
     private dog?: GameObjects.Image;
+    private alvePlaceholder?: GameObjects.Container;
     private moveTarget: { x: number; y: number } | null = null;
     private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
@@ -90,6 +94,27 @@ export async function createAct2LakeGame(
         .setOrigin(0.5, 0.88)
         .setDisplaySize(66, 55)
         .setDepth(1600);
+
+      // Temporary Alve world entity. This deliberately uses Phaser primitives
+      // instead of inventing a non-canonical character asset. The container is
+      // the future interaction target for quest hand-in.
+      const alveBody = this.add.circle(0, -33, 18, 0x6c7352, 1)
+        .setStrokeStyle(3, 0xf2ead1, 1);
+      const alveHead = this.add.circle(0, -66, 13, 0xc88962, 1)
+        .setStrokeStyle(2, 0x55392c, 1);
+      const alveLabelBg = this.add.rectangle(0, -96, 64, 24, 0x355f3a, 0.94)
+        .setStrokeStyle(1, 0xf2ead1, 0.8);
+      const alveLabel = this.add.text(0, -96, "Alve", {
+        fontFamily: "Arial, sans-serif",
+        fontSize: "14px",
+        fontStyle: "bold",
+        color: "#ffffff",
+      }).setOrigin(0.5);
+      this.alvePlaceholder = this.add.container(0, 0, [alveBody, alveHead, alveLabelBg, alveLabel])
+        .setSize(56, 108)
+        .setInteractive({ useHandCursor: true })
+        .setVisible(false);
+      this.positionAlve(requestedActiveProject);
 
       camera.centerOn(this.player.x, this.player.y);
       camera.startFollow(this.player, true, 0.08, 0.08);
@@ -180,6 +205,24 @@ export async function createAct2LakeGame(
       }
     }
 
+    setActiveProject(project: Act2RestorationProject | null) {
+      requestedActiveProject = project;
+      this.positionAlve(project);
+    }
+
+    private positionAlve(project: Act2RestorationProject | null) {
+      if (!this.alvePlaceholder) return;
+      if (!project) {
+        this.alvePlaceholder.setVisible(false);
+        return;
+      }
+      const position = ACT2_ALVE_WORK_POSITIONS[project];
+      this.alvePlaceholder
+        .setPosition(position.x, position.y)
+        .setDepth(1000 + Math.round(position.y))
+        .setVisible(true);
+    }
+
     private renderStage(stage: 0 | Act2VisualStage): Act2VisualStage {
       // Act 2 stage 1 art is the accepted damaged/initial state.
       // Persisted stage 0 means "not yet advanced", so it intentionally renders as 1/4.
@@ -222,6 +265,12 @@ export async function createAct2LakeGame(
       requestedProjectStages = { ...stages };
       if (gameInstance.scene.isActive("Act2LakeScene")) {
         (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setProjectStages(stages);
+      }
+    },
+    setActiveProject: (project) => {
+      requestedActiveProject = project;
+      if (gameInstance.scene.isActive("Act2LakeScene")) {
+        (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setActiveProject(project);
       }
     },
   };

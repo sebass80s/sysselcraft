@@ -31,6 +31,18 @@ export const ACT2_VISUAL_PLACEMENTS = {
   },
 } as const;
 
+/**
+ * Temporary world positions for Alve while a restoration project is active.
+ * These are intentionally separate from building footprints so the child can
+ * later walk up to the same entity to hand in quests.
+ */
+export const ACT2_ALVE_WORK_POSITIONS: Record<Act2RestorationProject, { x: number; y: number }> = {
+  cabin: { x: 735, y: 445 },
+  boathouse: { x: 1270, y: 590 },
+  dock: { x: 1800, y: 590 },
+  motorboat: { x: 1530, y: 420 },
+};
+
 const ACT2_RUNTIME_ROOT = "/assets/village/buildings/act 2/runtime";
 
 export const ACT2_VISUAL_ASSETS: Record<Act2RestorationProject, readonly [string, string, string, string]> = {

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { ACT2_ALVE_WORK_POSITIONS, ACT2_VISUAL_PLACEMENTS } from "../src/game/act2VisualAssets.ts";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/act2CabinStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
@@ -315,6 +316,24 @@ assert.equal(finaleState.epilogueConsumed, true);
 assert.equal(finaleState.act2Complete, true);
 assert.equal(act2FinalePending(finaleState), false);
 
+for (const project of ["cabin", "dock", "boathouse", "motorboat"]) {
+  const position = ACT2_ALVE_WORK_POSITIONS[project];
+  const placement = ACT2_VISUAL_PLACEMENTS[project];
+  const halfW = placement.footprint.width / 2 + 24;
+  const halfH = placement.footprint.height / 2 + 18;
+  const insideBlockedFootprint =
+    position.x >= placement.x - halfW
+    && position.x <= placement.x + halfW
+    && position.y >= placement.baseY - halfH
+    && position.y <= placement.baseY + halfH;
+  assert.equal(insideBlockedFootprint, false, `Alve placeholder work positions must remain walkable for ${project}`);
+}
+
+const lakeGameSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
+assert.ok(lakeGameSource.includes('setActiveProject: (project: Act2RestorationProject | null) => void'), "lake runtime must expose active-project positioning for Alve");
+assert.ok(lakeGameSource.includes('setInteractive({ useHandCursor: true })'), "Alve placeholder must already be a future interaction target");
+assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
+
 const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
@@ -340,6 +359,7 @@ assert.ok(page.includes("BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.numb
 assert.ok(page.includes("MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Motorbåten contribution track");
 assert.ok(page.includes("motorboatNamingRequired(state)"), "Motorbåten naming gate must be persisted and contribution-neutral");
 assert.ok(page.includes("ACT2_FINALE_BEATS[state.finaleIndex]"), "production route must resume the persisted Act 2 finale");
+assert.ok(page.includes("setActiveProject(state.selectedProject)"), "production route must move Alve when the active project changes");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");

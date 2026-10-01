@@ -228,6 +228,7 @@ export default function Act2Page() {
       if (disposed || !hostRef.current) return;
       gameRef.current = await createAct2LakeGame(hostRef.current, 1);
       const latest = await loadAct2RuntimeState();
+      gameRef.current.setActiveProject(latest.selectedProject);
       gameRef.current.setProjectStages({
         cabin: latest.projects.cabin.visibleStage,
         dock: latest.projects.dock.visibleStage,
@@ -255,6 +256,10 @@ export default function Act2Page() {
     state.projects.boathouse.visibleStage,
     state.projects.motorboat.visibleStage,
   ]);
+
+  useEffect(() => {
+    gameRef.current?.setActiveProject(state.selectedProject);
+  }, [state.selectedProject]);
 
   useEffect(() => {
     if (!ready) return;

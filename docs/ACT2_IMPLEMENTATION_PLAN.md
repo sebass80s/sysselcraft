@@ -313,3 +313,11 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 - The family-return + first-crossing finale is a separate six-beat restart-safe sequence after Motorbåten 16/16; completion sets familyFinaleConsumed, epilogueConsumed and act2Complete without inventing contribution 65.
 - Finale assets 01–04 are used where present. The final departure intentionally runs over the live lake because no canonical departure still exists in repo.
 - Physical-device acceptance and a green build of the batched final HEAD remain required before calling the Act 2 implementation accepted.
+
+
+### Alve world placeholder — 2026-10-01
+- Production lake runtime now owns one temporary interactive Alve world entity built from Phaser primitives, not a fabricated character asset.
+- Alve is positioned beside the currently selected restoration project using ACT2_ALVE_WORK_POSITIONS.
+- When there is no selected active project, the placeholder is hidden.
+- The placeholder container is already interactive so the later quest hand-in flow can attach to this same entity instead of introducing a parallel NPC implementation.
+- Final Alve character art remains a separate asset replacement task; runtime positioning and interaction ownership should survive that swap.
