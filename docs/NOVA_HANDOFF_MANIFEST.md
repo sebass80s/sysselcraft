@@ -544,3 +544,19 @@ A stale-local-save Clinic recovery bug was patched without mutating Adam's live 
 
 Desired behavior: the next legitimate quest-claim refresh can wake the Clinic progression on a stale device save; later Clinic beats still reveal in authored order rather than jumping directly to completion.
 
+## 2026-10-01 evening — CURRENT ACT 2 HARDENING HANDOFF
+
+Repo/branch remains `sebass80s/sysselcraft` → `nova/local-construction-snapshot`. Canonical local workspace remains `/Users/karoaa/Developer/sysselcraft`.
+
+Recent runtime changes that must survive handover:
+- `/act2` and `/act2-test` share `src/components/Act2Runtime.tsx`. Never recreate parallel debug story UI.
+- Debug uses isolated, non-persisted Act 2 state while retaining the real saved child identity. The debug toolbar is a state-control surface only.
+- Production Act 2 remains deliberately shipping-locked until physical acceptance.
+- Lake water collision is map-derived from `lake-master` pixel sampling around the player's feet; the earlier guessed shoreline model was removed. Browser testing showed clear improvement, but full shoreline/obstacle acceptance remains open.
+- Stugan “En stund till” is a repeatable completed-cabin revisit until Motorbåten completion. It must not auto-play after 16/16.
+- Story UI invariant: **one card = one nameplate + one reply/narration unit + one click**. Never reduce click count by stacking speakers on a card.
+- First anti-popcorn manuscript pass has been applied across Båthuset, Stugan, Bryggan and Motorbåten. Continue polishing through fewer, more concrete authored replies, not UI batching.
+- The first-crossing scene belongs to Act 3. Act 2 finale ends before a true crossing.
+- Latest full `npm run verify` after the final hardening batch has not yet been reported as passing. Treat verification as OPEN and fix the first real error if one appears.
+
+Immediate browser QA should exercise Stugan/Bryggan/Båthuset/Motorbåten story rhythm, Cabin revisit behavior, water collision around the full beach/bay, purchase/naming gates and the Motorbåten→family finale transition. Physical iPhone acceptance remains the release gate.
