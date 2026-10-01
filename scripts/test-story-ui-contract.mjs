@@ -55,6 +55,11 @@ assert.match(runner, /showSpeakers=\{!beat\.speaker\}/, "StoryRunner must preven
 assert.match(debugPage, /loadSaveState/, "Story Debug must load the saved child identity");
 assert.match(debugPage, /<StoryTranscript childName=\{childName\}/, "Story Debug must pass the saved child name into the story parser");
 assert.doesNotMatch(debugPage, /replaceAll\("\{childName\}",\s*"[^"]+"\)/, "Story Debug must not bake a personal name into authored lines");
+assert.match(debugPage, /id: "project-choice"/, "Story Debug must preserve the canonical first-project choice");
+for (const project of ["cabin", "dock", "boathouse"]) {
+  assert.ok(debugPage.includes(`jumpToProject("${project}")`), `Story Debug chooser must expose ${project}`);
+}
+
 
 assert.match(act2Page, /parseStoryLine\(activeContributionLine, childName\)/, "Act 2 contribution cards must parse speaker and child name centrally");
 assert.match(act2Page, /parseStoryLine\(activeFinaleLine, childName\)/, "Act 2 finale cards must parse speaker and child name centrally");
