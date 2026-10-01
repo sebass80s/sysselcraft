@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/act2CabinStory.ts";
 import {
   canSelectProject,
   consumeProjectCompletionReaction,
@@ -200,6 +201,22 @@ purchaseGate = withBackendStoryFlags(purchaseGate, { act2JettyLifebuoyOwned: tru
 assert.equal(jettyPurchaseRequired(purchaseGate), false, "authoritative ownership must release jetty gate");
 assert.equal(nextAct2Contribution(purchaseGate, 7)?.beatId, "dock:07");
 
+assert.equal(CABIN_CONTRIBUTION_BEATS.length, 16, "Stugan must keep exactly 16 authoritative contribution beats");
+assert.deepEqual(
+  CABIN_CONTRIBUTION_BEATS.map((beat) => beat.id),
+  Array.from({ length: 16 }, (_, index) => `cabin:${String(index + 1).padStart(2, "0")}`),
+  "Stugan beat IDs must map one-to-one to contributions",
+);
+assert.equal(CABIN_CONTRIBUTION_BEATS[3].stage, 2, "Cabin contribution 4 must advance to visual stage 2");
+assert.equal(CABIN_CONTRIBUTION_BEATS[7].stage, 3, "Cabin contribution 8 must advance to visual stage 3");
+assert.equal(CABIN_CONTRIBUTION_BEATS[11].stage, 4, "Cabin contribution 12 must advance to visual stage 4");
+assert.equal(CABIN_CONTRIBUTION_BEATS[12].title, "13/16 · Det sista riktiga jobbet");
+assert.equal(CABIN_CONTRIBUTION_BEATS[13].title, "14/16 · Gör plats för människor");
+assert.equal(CABIN_CONTRIBUTION_BEATS[14].title, "15/16 · Om de kommer");
+assert.equal(CABIN_CONTRIBUTION_BEATS[15].title, "16/16 · Stugan är klar");
+assert.ok(CABIN_CONTRIBUTION_BEATS[15].body.includes("Alve: Det är vårt nu också."), "Cabin finale must keep the locked shared-home payoff");
+assert.ok(CABIN_WAITING_REACTION.body.includes("Alve: Du är ju här."), "Cabin waiting reaction must keep the locked friendship payoff");
+
 const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
@@ -220,6 +237,7 @@ assert.ok(page.includes('🔒 Motorbåten'), "motorboat must remain visible whil
 assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector must derive 0/3→3/3 from canonical state");
 assert.ok(page.includes('projectCompletionReactionPending(state, "dock")'), "jetty completion reaction must be derived from persisted state");
 assert.ok(page.includes("JETTY_COMPLETION_REACTION"), "production route must present the canonical jetty completion reaction");
+assert.ok(page.includes("CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Cabin contribution track");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");

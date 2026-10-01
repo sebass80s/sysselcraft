@@ -24,6 +24,7 @@ import { loadSaveState } from "../../game/saveState";
 import { getPairedChildId } from "../../backend/childDeviceBinding";
 import { getChildGameState } from "../../backend/familyRepository";
 import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
+import { CABIN_CONTRIBUTION_BEATS } from "../../game/act2CabinStory";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
@@ -334,10 +335,12 @@ export default function Act2Page() {
   const contributionCandidate = backendWorldProgression === null || purchaseRequired
     ? null
     : nextAct2Contribution(state, backendWorldProgression);
-  const activeJettyBeat = contributionCandidate?.project === "dock"
+  const activeContributionBeat = contributionCandidate?.project === "dock"
     ? JETTY_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
-    : null;
-  const activeContributionLine = activeJettyBeat?.body[contributionLineIndex] ?? null;
+    : contributionCandidate?.project === "cabin"
+      ? CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
+      : null;
+  const activeContributionLine = activeContributionBeat?.body[contributionLineIndex] ?? null;
   const jettyCompletionPending = projectCompletionReactionPending(state, "dock");
   const activeCompletionLine = jettyCompletionPending
     ? JETTY_COMPLETION_REACTION.body[completionLineIndex] ?? null
@@ -354,8 +357,8 @@ export default function Act2Page() {
   }
 
   async function advanceContributionStory() {
-    if (!contributionCandidate || !activeJettyBeat) return;
-    if (contributionLineIndex + 1 < activeJettyBeat.body.length) {
+    if (!contributionCandidate || !activeContributionBeat) return;
+    if (contributionLineIndex + 1 < activeContributionBeat.body.length) {
       setContributionLineIndex((index) => index + 1);
       return;
     }
@@ -443,13 +446,13 @@ export default function Act2Page() {
         <a className="primary-button dialogue-next" href="/">Till Mira i byn</a>
       </div>
     </section>}
-    {contributionCandidate && activeJettyBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
-      {activeJettyBeat.image && <Image src={activeJettyBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
+    {contributionCandidate && activeContributionBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
+      {activeContributionBeat.image && <Image src={activeContributionBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">{activeJettyBeat.title}</span>
+        <span className="dialogue-speaker">{activeContributionBeat.title}</span>
         <p>{activeContributionLine.replace(/^Barnet:/, childName + ":")}</p>
         <button className="primary-button dialogue-next" onClick={() => void advanceContributionStory()}>
-          {contributionLineIndex + 1 < activeJettyBeat.body.length ? "Fortsätt" : "Klart"}
+          {contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
         </button>
         {contributionCandidate.backlog > 1 && <small>{contributionCandidate.backlog - 1} questframsteg väntar bakom detta beat.</small>}
       </div>

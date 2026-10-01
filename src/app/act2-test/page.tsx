@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Act2LakeGameHandle } from "../../game/createAct2LakeGame";
 import type { Act2VisualStage } from "../../game/act2VisualAssets";
 import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
+import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../../game/act2CabinStory";
 
 type StoryBeat = {
   id: string;
@@ -201,46 +202,8 @@ const STORY_BEATS: StoryBeat[] = [
     image: "/assets/village/story-moments/act2/boathouse/16.png",
     body: ["Verkstaden, fotografiet, lådbilen och slipen finns kvar som spår av hela resan.", "Barnet: Klart.", "Alve: Nästan.", "Barnet: Vad är det som är kvar?", "Alve: Den."],
   },
-  {
-    id: "cottage-01", title: "1/16 · Vi börjar här", image: "/assets/village/story-moments/act2/cabin/renovating-cabin1.png",
-    body: ["Barnet och Alve börjar röja den försummade stugan.", "Alve hittar fortfarande runt som om han aldrig varit borta."],
-  },
-  {
-    id: "cottage-02-03", title: "2–3/16 · Spåren från förr", image: "/assets/village/story-moments/act2/cabin/1.png",
-    body: ["De hittar Alves gamla längdmarkeringar och ett familjefoto från en tidigare sommar.", "Alve: Vi var här hela tiden då.", "Alve: Mamma blev sjuk.", "Alve: Efter det kom vi nästan aldrig hit."],
-  },
-  {
-    id: "cottage-04", title: "4/16 · Som förr", image: "/assets/village/story-moments/act2/cabin/2.png",
-    body: ["Första stora renoveringssteget är klart.", "Alve: Jag tänkte att om det såg ut som förr…", "Alve: …så kanske de skulle vilja komma hit igen."],
-  },
-  {
-    id: "cottage-05-06", title: "5–6/16 · Stugan vaknar", image: "/assets/village/story-moments/act2/cabin/renovating-cabin2.png",
-    body: ["De hittar det gamla familjespelet och fortsätter göra rummet användbart.", "Gamla minnen blandas med nytt arbete tillsammans."],
-  },
-  {
-    id: "cottage-07-08", title: "7–8/16 · Regnet", image: "/assets/village/story-moments/act2/cabin/3.png",
-    body: ["Regnet håller dem inne och de spelar det gamla spelet.", "Alve: Det låter likadant.", "Barnet: Vadå?", "Alve: Regnet.", "Barnet: Ser det ut som förr nu?", "Alve: Nej. Det ser bättre ut."],
-  },
-  {
-    id: "cottage-09", title: "9/16 · VÅR STUGA", image: "/assets/village/story-moments/act2/cabin/4.png",
-    body: ["Barnet hittar Alves gamla teckning av stugan, sjön och familjen.", "Alve: Mamma sparade allt.", "Teckningen visar verandan och ger dem nästa idé."],
-  },
-  {
-    id: "cottage-10-11", title: "10–11/16 · Verandan", image: "/assets/village/story-moments/act2/cabin/renovating-cabin3.png",
-    body: ["De börjar återställa verandan från teckningen.", "Barnet: Vet de att du är här?", "Alve: Inte riktigt.", "Alve: Pappa kommer inte hit längre.", "Barnet: Sen din mamma blev sjuk?", "Alve: Mm."],
-  },
-  {
-    id: "cottage-12", title: "12/16 · Någon har varit här", image: "/assets/village/story-moments/act2/cabin/5.png",
-    body: ["De hittar Alves välbekanta nyckelring hemifrån.", "Barnet: Varifrån är den då?", "Alve: Hemma.", "Alve: De har varit här.", "Alve: Då måste vi hinna klart."],
-  },
-  {
-    id: "cottage-13-15", title: "13–15/16 · Gör plats för människor", image: "/assets/village/story-moments/act2/cabin/6.png",
-    body: ["De sista skadorna lagas och stugan görs redo för människor igen.", "Alve börjar föreställa sig familjen här.", "Men ingen kommer ännu."],
-  },
-  {
-    id: "cottage-16", title: "16/16 · Stugan är klar", image: "/assets/village/story-moments/act2/cabin/6.png",
-    body: ["Längdmarkeringarna, fotot, spelet och VÅR STUGA finns kvar.", "Barnet: Tror du de kommer?", "Alve: Inte idag.", "Alve: Men den är klar.", "Barnet: Vi kommer ju tillbaka imorgon.", "Alve: Ja. Vi har ju en båt att laga."],
-  },
+  ...CABIN_CONTRIBUTION_BEATS,
+  CABIN_WAITING_REACTION,
   ...JETTY_CONTRIBUTION_BEATS.slice(0, 6),
   JETTY_LIFEBUOY_BEAT,
   ...JETTY_CONTRIBUTION_BEATS.slice(6),
