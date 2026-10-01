@@ -452,3 +452,20 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - Stugan `16/16` ends normally. `CABIN_WAITING_REACTION` (“En stund till”) is a separate repeatable world revisit: it becomes available by clicking the completed Stugan and remains available until Motorbåten is complete. It does not consume a contribution or auto-open after Stugan completion.
 - Story UI contract is now explicit: one dialogue card always owns one speaker/nameplate and one reply/narration unit. Click reduction belongs in manuscript editing, never multi-speaker card batching.
 - Latest local `npm run verify` result after the final story/runtime hardening has not yet been positively reported. Do not call the current HEAD verify-green until that evidence exists.
+
+### Autonomous Act 2 bug raid — 2026-10-01
+
+A repo/CI/live-backend audit was run without Vercel. Important findings and fixes:
+
+- CI had been red behind stale Act 2 assertions even though lint/build and earlier test groups were passing. Stage-boundary tests were corrected to the canonical 4/8/12 transition model used by runtime and authored story data.
+- Finale tests were still based on the superseded six-beat crossing ending. They now match the five-beat family/veranda finale. The first true crossing remains Act 3.
+- The Motorbåten 6/16 story had regressed to replaying the Mira purchase and even exposed implementation prose about the authoritative story-item function. The earlier post-purchase version was recovered from Git history and restored; regression guards now reject purchase implementation prose.
+- Pure editorial runtime cards such as `Paus.` and `Låt återföreningen landa visuellt...` were removed from Act 2 story arrays. The story contract now rejects these as player-facing cards.
+- Repository migration history had drifted behind the live Supabase `purchase_story_item` function. A checked-in additive migration now reproduces the live 200-SysselBux Act 2 lifebuoy, steering-wheel and motorboat-parts support. No live database mutation was needed.
+- Valpen's Act 2 follow movement now respects the same walkability/water/building collision as Barnet instead of interpolating through blocked terrain.
+- `vercel.json` still had routine Git deployment enabled for `nova/local-construction-snapshot`; this was disabled to enforce the GitHub-first/Vercel-sparse policy.
+- Runtime tests were cleaned of stale hardcoded asset assumptions and now follow canonical opening/Alve story sources.
+
+Verification checkpoint: GitHub Actions CI **#1461 SUCCESS** on commit `404be3fc40276257ff4d3b46fcb0386e55d9a2fb`, including lint, Next production build, quest regressions, Act 2 visual/story/UI contracts and the full Act 2 runtime-state suite.
+
+Still requires human/physical evidence: full shoreline feel, touch/camera behavior, restart on device, story-item round trips, and complete Motorbåten → family/veranda playthrough.
