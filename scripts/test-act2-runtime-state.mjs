@@ -455,7 +455,7 @@ assert.equal(totalAct2Contributions(motorboatGate), beforeName, "boat naming mus
 assert.equal(ACT2_FINALE_BEATS.length, 5, "Act 2 finale must end on the five-beat family/veranda payoff");
 assert.equal(ACT2_FINALE_BEATS[1].title, "Någon är där");
 assert.equal(ACT2_FINALE_BEATS[2].title, "De kom");
-assert.ok(ACT2_FINALE_BEATS[3].body.includes("Alve: Det är min kompis."));
+assert.ok(ACT2_FINALE_BEATS[3].body.includes("Alve: Han är min kompis."));
 assert.ok(ACT2_FINALE_BEATS[4].body.includes("Alve: Det är bättre."));
 assert.equal(ACT2_FINALE_BEATS.at(-1)?.id, "finale:veranda", "Act 2 must end on the veranda; the first crossing belongs to Act 3");
 
