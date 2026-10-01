@@ -647,10 +647,8 @@ const storyEngineSource = fs.readFileSync(new URL("../src/game/storyEngine.ts", 
 const boathouseStorySource = fs.readFileSync(new URL("../src/game/act2BoathouseStory.ts", import.meta.url), "utf8");
 assert.match(storyEngineSource, /parseStoryLine/, "shared Story Engine must parse speaker prefixes into nameplates");
 assert.match(storyEngineSource, /prefix === "Barnet"/, "Barnet prefix must map to the configured child nameplate");
-assert.match(act2PageSource, /storyCardChunk\(activeContributionBeat\.body, state\.contributionLineIndex\)/, "Act 2 contribution dialogue must group short authored lines into bounded cards");
-assert.match(act2PageSource, /<StoryTranscript lines=\{activeContributionLines\} childName=\{childName\} \/>/, "grouped contribution cards must preserve per-line speaker nameplates through StoryTranscript");
-assert.match(act2PageSource, /chunk\.length < 3/, "grouped dialogue cards must never exceed three authored lines");
-assert.match(act2PageSource, /nextChars > 260/, "grouped dialogue cards must remain text-bounded");
+assert.match(act2PageSource, /activeContributionPresentation\?\.speaker/, "Act 2 contribution beats must keep one speaker-owned dialogue card at a time");
+assert.doesNotMatch(act2PageSource, /storyCardChunk/, "Act 2 contribution UI must not stack multiple authored speakers into one card");
 assert.doesNotMatch(act2PageSource, /speaker=\{activeContributionBeat\.title\}/, "beat titles must never be used as contribution speaker nameplates");
 assert.doesNotMatch(boathouseStorySource, /Order-independence lock:/, "authoring notes must never leak into Båthuset runtime text");
 
