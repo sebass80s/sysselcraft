@@ -4,10 +4,10 @@ This cable-free pass brings the currently playable characters closer to the orig
 
 ## Visual reference
 
-The original concept art in the private development diary remains the source of truth. The character read at gameplay scale is especially clear there:
+The original concept art remains useful historical context, but **Barnet's visual identity has been re-locked on 2026-10-01**. For Barnet, `docs/CHILD_RUNTIME_VISUAL_SPEC.md` and the approved 2026-10-01 canonical turnaround/reference sheet are now authoritative.
 
 - **Linus** is an older village craftsman with a blue cap and work clothes, a broad white beard, sturdy dark footwear and a cane. His silhouette should feel warm and grounded rather than like a generic NPC icon.
-- **The child avatar** has warm brown hair, a yellow top and dark blue trousers/shoes. The shape needs enough volume to remain readable against dense green vegetation while still belonging to the painted world.
+- **The child avatar / Barnet** now uses the locked 2026-10-01 identity: warm brown hair, blue/beige cap, dark red hoodie, large olive/brown adventure backpack, blue cargo trousers and rugged blue/gray shoes. The previous yellow-top description is superseded and must not be revived.
 - **The puppy** should read as a small warm-furred companion, not as a UI mascot sticker.
 
 ## Implemented
@@ -43,3 +43,10 @@ On the next physical iPhone run, specifically check that:
 5. no character feels visually oversized or undersized relative to the family house and props.
 
 Do not change interaction footprints in response to richer silhouettes unless a real playtest demonstrates a usability problem.
+
+
+## 2026-10-01 Barnet canon supersession
+
+The old child-visual paragraph in this file is historical implementation context only. Current Barnet runtime work must follow `docs/CHILD_RUNTIME_VISUAL_SPEC.md`.
+
+The current Act 2 runtime still loads `public/assets/village/reboot/child.webp`. That file is an implementation asset awaiting refinement, not the identity authority.
