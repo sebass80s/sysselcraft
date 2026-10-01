@@ -9,6 +9,7 @@ import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts"
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../src/game/act2AlveStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
+import { parseStoryLine, STORY_SPEAKER_PREFIXES } from "../src/game/storyEngine.ts";
 
 function assertAsset(image, label) {
   assert.ok(image, `${label} must have an image`);
@@ -67,6 +68,43 @@ assert.equal(ACT2_FINALE_BEATS.some((beat) => beat.id === "finale:first-crossing
 const friendshipBeat = ACT2_FINALE_BEATS.find((beat) => beat.id === "finale:family-embrace");
 assert.ok(friendshipBeat?.body.includes("Alve: Det är {childName}."), "family embrace must name the child before the friend payoff");
 assert.ok(friendshipBeat?.body.includes("Alve: Han är min kompis."), "family embrace must preserve the friend payoff");
+
+const authoredStoryBodies = [
+  ...ACT2_OPENING_BEATS.flatMap((beat) => beat.body),
+  ...CABIN_CONTRIBUTION_BEATS.flatMap((beat) => beat.body),
+  ...JETTY_CONTRIBUTION_BEATS.flatMap((beat) => beat.body),
+  ...BOATHOUSE_CONTRIBUTION_BEATS.flatMap((beat) => beat.body),
+  ...MOTORBOAT_CONTRIBUTION_BEATS.flatMap((beat) => beat.body),
+  ...ACT2_FINALE_BEATS.flatMap((beat) => beat.body),
+  ...CABIN_WAITING_REACTION.body,
+  ...JETTY_LIFEBUOY_BEAT.body,
+  ...JETTY_COMPLETION_REACTION.body,
+  ...BOATHOUSE_STEERING_WHEEL_BEAT.body,
+];
+
+for (const line of authoredStoryBodies) {
+  const parsed = parseStoryLine(line, "Adam");
+  assert.equal(parsed.text.includes("{childName}"), false, `child-name token must never leak into rendered dialogue: ${line}`);
+  for (const prefix of STORY_SPEAKER_PREFIXES) {
+    assert.equal(parsed.text.startsWith(`${prefix}:`), false, `speaker prefix must never remain in body text: ${line}`);
+  }
+}
+
+assert.deepEqual(
+  parseStoryLine("Barnet: Hej.", "Adam"),
+  { text: "Hej.", speaker: "Adam", speakerTone: "child" },
+  "player prefix must render as the child's real name",
+);
+assert.deepEqual(
+  parseStoryLine("Okänd: Ja.", "Adam"),
+  { text: "Ja.", speaker: "Barnet", speakerTone: "default" },
+  "unknown Alve must remain Barnet until the name reveal",
+);
+assert.deepEqual(
+  parseStoryLine("Alve: Det är {childName}.", "Adam"),
+  { text: "Det är Adam.", speaker: "Alve", speakerTone: "default" },
+  "child-name templates must render inside NPC dialogue",
+);
 
 ACT2_FINALE_BEATS.forEach((beat) => {
   assert.ok(beat.id && beat.title, "finale beats must have id and title");
