@@ -261,3 +261,45 @@ Still open inside Phase 1:
 - GitHub Actions green evidence for this checkpoint. The connector-visible commit status currently only reports Vercel's external build-rate-limit failure, which is not a source/build failure and does not constitute CI acceptance.
 
 Do not start Quest→Act 2 contribution consumption until this runtime/state spine has passed build/CI and physical restart acceptance.
+
+
+## Runtime implementation checkpoint — 2026-10-01
+
+Production integration has moved beyond the initial Phase 1 skeleton.
+
+### Phase 1/2 spine now implemented
+- production `/act2/` route remains separate from `/act2-test`;
+- post-Clinic Act 1 transition enters the Act 2 opening;
+- OPEN-001…005, close bicycle, revised Alve intro and first project chooser are persisted;
+- explicit Act 2 state family owns per-project 0–16 contributions, 0–4 visible stage, consumed beat IDs, selected project and separate completion-reaction consumption;
+- Stugan/Bryggan/Båthuset completion count is derived from project state; Motorbåten cannot normalize or advance before 3/3;
+- all six prerequisite completion orders are regression-covered;
+- lake runtime supports independent visual stages for each restoration project rather than one shared test stage.
+
+### Phase 3 bridge now implemented for the Bryggan vertical track
+- backend `worldProgression` is read only as authoritative claimed-quest evidence;
+- a local establish-once Act 2 claim baseline prevents historical Act 1 claims from replaying;
+- accumulated backend claims produce only the next authored contribution candidate;
+- refresh/retry does not itself consume a beat;
+- presentation commit happens only after the authored beat is completed;
+- backlog drains one authored beat at a time;
+- contribution is assigned only to the currently active project.
+
+### Bryggan 1–16 runtime track
+- the 16 canonical Bryggan contribution beats now live in `src/game/act2JettyStory.ts`;
+- `/act2-test` imports the same Bryggan source instead of maintaining a second dialogue copy;
+- visual transitions are locked at contributions 4, 8 and 12;
+- the Sol → Mira livboj gate sits between contributions 6 and 7 and is contribution-neutral;
+- the existing atomic backend `purchase_story_item` RPC now supports `act2_jetty_lifebuoy` for 300 SysselBux with backend flag `act2JettyLifebuoyOwned`;
+- Mira exposes the item only when the Bryggan gate is relevant; backend ownership releases the gate after restart;
+- Bryggan 16/16 unlocks a separate persisted completion reaction. That reaction never increments contribution count and cannot replay after it is consumed.
+
+### Verification status
+- deterministic Act 2 contract coverage is included in `npm run verify`;
+- Supabase migration `add_act2_jetty_lifebuoy_story_item` applied successfully; the existing bound-child authorization, row lock, idempotent ownership check and wallet debit semantics were preserved;
+- Vercel was green through the shared-canon checkpoint `0a0b3ece`;
+- the first Quest→Act 2 wiring introduced a TypeScript nullable-candidate rendering error. The explicit JSX narrowing fix landed later in `a23329f8`; subsequent commits also hardened completion/reaction state. A fresh build of the final batched HEAD still needs positive evidence before this checkpoint is called build-green.
+- physical iPhone navigation, restart and purchase acceptance remain OPEN.
+- no standalone canonical Alve runtime cutout has been verified in repo; do not invent one.
+
+Do not call Phase 4A accepted until the final batched HEAD has a green build and the real-device Bryggan journey has been exercised across the documented restart boundaries.
