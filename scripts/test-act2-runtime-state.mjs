@@ -452,12 +452,12 @@ assert.equal(motorboatGate.motorboatName, "Sjöbusen");
 assert.equal(motorboatNamingRequired(motorboatGate), false);
 assert.equal(totalAct2Contributions(motorboatGate), beforeName, "boat naming must be contribution-neutral");
 
-assert.equal(ACT2_FINALE_BEATS.length, 6, "Act 2 finale must keep six restart-safe story beats");
+assert.equal(ACT2_FINALE_BEATS.length, 5, "Act 2 finale must end on the five-beat family/veranda payoff");
 assert.equal(ACT2_FINALE_BEATS[1].title, "Någon är där");
 assert.equal(ACT2_FINALE_BEATS[2].title, "De kom");
 assert.ok(ACT2_FINALE_BEATS[3].body.includes("Alve: Det är min kompis."));
 assert.ok(ACT2_FINALE_BEATS[4].body.includes("Alve: Det är bättre."));
-assert.ok(ACT2_FINALE_BEATS[5].body.includes("Alve: Vi får se."));
+assert.equal(ACT2_FINALE_BEATS.at(-1)?.id, "finale:veranda", "Act 2 must end on the veranda; the first crossing belongs to Act 3");
 
 let finaleState = createDefaultAct2RuntimeState();
 finaleState = complete(finaleState, "cabin");
