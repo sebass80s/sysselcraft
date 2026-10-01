@@ -431,3 +431,10 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - Each scenario completes all three prerequisite projects, consumes only authored completion reactions, unlocks Motorbåten at 3/3, completes Motorbåten, then advances the separate family finale/epilogue to act2Complete.
 - Every full run asserts exactly 48 prerequisite contributions + 16 Motorbåt contributions = 64 total. Finale/epilogue are contribution-neutral, so no contribution 65 can be fabricated.
 - Completed Act 2 state is normalized through a restart round-trip and must remain act2Complete with all 64 contributions preserved.
+
+
+### Canonical Alve runtime art — 2026-10-01
+- The temporary Phaser primitive Alve placeholder has been replaced by the standalone runtime asset at `/assets/village/reboot/alve-runtime.png`.
+- Runtime display size is locked at 78×117 world pixels, keeping Alve clearly child-scale relative to adult Linus while matching the existing child-world scale.
+- Existing ACT2_ALVE_WORK_POSITIONS, active-project ownership, turn-in marker, 135px hand-in radius and nearby `Tryck på Alve` interaction are unchanged.
+- The outer Alve container remains the interaction owner so later art revisions do not require rewriting gameplay logic.

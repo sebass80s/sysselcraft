@@ -61,6 +61,7 @@ export async function createAct2LakeGame(
       this.load.image("act2-lake-master", ACT2_WORLD.master);
       this.load.image("act2-child", "/assets/village/reboot/child.webp");
       this.load.image("act2-dog", "/assets/village/reboot/puppy-painted.png");
+      this.load.image("act2-alve", "/assets/village/reboot/alve-runtime.png");
       for (const project of PROJECTS) {
         ACT2_VISUAL_ASSETS[project].forEach((asset, index) => {
           this.load.image(this.textureKey(project, (index + 1) as Act2VisualStage), asset);
@@ -104,24 +105,23 @@ export async function createAct2LakeGame(
         .setDisplaySize(66, 55)
         .setDepth(1600);
 
-      // Temporary Alve world entity. This deliberately uses Phaser primitives
-      // instead of inventing a non-canonical character asset. The container is
-      // the future interaction target for quest hand-in.
-      const alveBody = this.add.circle(0, -33, 18, 0x6c7352, 1)
-        .setStrokeStyle(3, 0xf2ead1, 1);
-      const alveHead = this.add.circle(0, -66, 13, 0xc88962, 1)
-        .setStrokeStyle(2, 0x55392c, 1);
-      const alveLabelBg = this.add.rectangle(0, -96, 64, 24, 0x355f3a, 0.94)
+      // Canonical Alve runtime art. Keep the existing container as the single
+      // interaction owner so active-project positioning, turn-in markers and
+      // nearby interaction behavior stay unchanged when replacing the placeholder.
+      const alveSprite = this.add.image(0, 0, "act2-alve")
+        .setOrigin(0.5, 0.94)
+        .setDisplaySize(78, 117);
+      const alveLabelBg = this.add.rectangle(0, -129, 64, 24, 0x355f3a, 0.94)
         .setStrokeStyle(1, 0xf2ead1, 0.8);
-      const alveLabel = this.add.text(0, -96, "Alve", {
+      const alveLabel = this.add.text(0, -129, "Alve", {
         fontFamily: "Arial, sans-serif",
         fontSize: "14px",
         fontStyle: "bold",
         color: "#ffffff",
       }).setOrigin(0.5);
-      const turnInBubble = this.add.circle(0, -132, 18, 0xf4d780, 1)
+      const turnInBubble = this.add.circle(0, -164, 18, 0xf4d780, 1)
         .setStrokeStyle(3, 0x3a402f, 1);
-      const turnInBang = this.add.text(0, -133, "!", {
+      const turnInBang = this.add.text(0, -165, "!", {
         fontFamily: "Arial, sans-serif",
         fontSize: "25px",
         fontStyle: "bold",
@@ -129,17 +129,17 @@ export async function createAct2LakeGame(
       }).setOrigin(0.5);
       this.alveTurnInMarker = this.add.container(0, 0, [turnInBubble, turnInBang])
         .setVisible(requestedAlveTurnInAvailable);
-      const nearbyBg = this.add.rectangle(0, -166, 92, 28, 0x1e2f22, 0.94)
+      const nearbyBg = this.add.rectangle(0, -198, 92, 28, 0x1e2f22, 0.94)
         .setStrokeStyle(2, 0xf4d780, 0.9);
-      const nearbyText = this.add.text(0, -166, "Tryck på Alve", {
+      const nearbyText = this.add.text(0, -198, "Tryck på Alve", {
         fontFamily: "Arial, sans-serif",
         fontSize: "13px",
         fontStyle: "bold",
         color: "#ffffff",
       }).setOrigin(0.5);
       this.alveNearbyPrompt = this.add.container(0, 0, [nearbyBg, nearbyText]).setVisible(false);
-      this.alvePlaceholder = this.add.container(0, 0, [alveBody, alveHead, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt])
-        .setSize(72, 150)
+      this.alvePlaceholder = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt])
+        .setSize(90, 210)
         .setInteractive({ useHandCursor: true })
         .setVisible(false);
       this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event) => {
