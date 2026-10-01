@@ -775,11 +775,6 @@ export const CABIN_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve: Bra.",
       "Han tittar tillbaka på stugan en sista gång.",
       "Alve: Då går vi.",
-      "The family does not arrive at cottage completion. Adam and Alve wait briefly, but nobody comes.",
-      "Alve does not collapse or treat the restoration as a failure. Adam has not “fixed” Alve's family by completing enough chores. The emotional payoff is that Alve no longer has to wait or work alone, and his life at the lake now contains new friendships and memories alongside the old ones.",
-      "Adult-readable subtext: mamma blev sjuk → familjen slutade komma → mamman dog off-screen before Act 2 → pappan undvek stugan because it hurt → Alve kept returning and repairing → the restored place, preserved memories and new life finally make it possible for pappan och storasystern to come back. The death itself remains unspoken in child-facing dialogue.",
-      "## Motorbåten restoration arc — LOCKED 2026-09-28",
-      "Motorbåten unlocks only after Stugan, Bryggan and Båthuset are complete. It uses the same 4+4+4+4 = 16 authoritative real-world contributions. Unlike the first three projects, its arc is not primarily about saving another place: it gathers the restored lake, village support network, Alve's family history and Adam/Alve friendship into the vehicle that will eventually carry them toward Act 3. The Act 3 destination remains deliberately undefined."
     ],
     "stage": 4
   }
@@ -850,8 +845,6 @@ export const CABIN_WAITING_REACTION: Act2ProjectStoryBeat = {
   "Alve ler lite.",
   "Alve: Nej.",
   "Han kastar en sista blick mot vägen.",
-  "Alve: Men kanske lite till.",
-  "Contribution 16 completes Stugan. The completion Story Moment should show the transformation from the abandoned cottage at Alve's introduction into a warm, intact place containing its accumulated history: height marks, family photograph, childhood drawing, old game and evidence of Adam and Alve's new memories together."
-],
+  "Alve: Men kanske lite till.",],
   stage: 4,
 };

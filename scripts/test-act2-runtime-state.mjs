@@ -224,7 +224,9 @@ assert.equal(CABIN_CONTRIBUTION_BEATS[13].title, "14/16 · Gör plats för männ
 assert.equal(CABIN_CONTRIBUTION_BEATS[14].title, "15/16 · Om de kommer");
 assert.equal(CABIN_CONTRIBUTION_BEATS[15].title, "16/16 · Stugan är klar");
 assert.ok(CABIN_CONTRIBUTION_BEATS[15].body.includes("Alve: Det är vårt nu också."), "Cabin finale must keep the locked shared-home payoff");
+assert.equal(CABIN_CONTRIBUTION_BEATS[15].body.at(-1), "Alve: Då går vi.", "Cabin 16 must stop at the last authored runtime line");
 assert.ok(CABIN_WAITING_REACTION.body.includes("Alve: Du är ju här."), "Cabin waiting reaction must keep the locked friendship payoff");
+assert.equal(CABIN_WAITING_REACTION.body.at(-1), "Alve: Men kanske lite till.", "Cabin waiting reaction must stop at the last authored runtime line");
 
 assert.equal(BOATHOUSE_CONTRIBUTION_BEATS.length, 16, "Båthuset must keep exactly 16 authoritative contribution beats");
 assert.deepEqual(
