@@ -19,6 +19,7 @@ type StoryBeat = {
   id: string;
   title: string;
   image?: string;
+  lineImages?: string[];
   body: string[];
   stage?: Act2VisualStage;
 };
@@ -38,18 +39,21 @@ const STORY_BEATS: StoryBeat[] = [
     image: "/assets/village/story-moments/act2/meeting-alve/bike.png",
     body: ["Vad är det för cykel? Den verkar inte höra hemma här."],
   },
-  ...ACT2_ALVE_DIALOGUE.map((beat, index) => ({
-    id: `alve-intro-${String(index + 1).padStart(2, "0")}`,
-    title: index === 0 ? "Första mötet med Alve" : "Alve-intro",
-    image: act2AlveImageForIndex(index),
-    body: [beat.speaker === "child"
-      ? `Barnet: ${beat.text}`
-      : beat.speaker === "alve"
-        ? `Alve: ${beat.text}`
-        : beat.speaker === "unknown"
-          ? `Barnet: ${beat.text}`
-          : beat.text],
-  })),
+  {
+    id: "alve-intro",
+    title: "Första mötet med Alve",
+    image: act2AlveImageForIndex(0),
+    lineImages: ACT2_ALVE_DIALOGUE.map((_, index) => act2AlveImageForIndex(index)),
+    body: ACT2_ALVE_DIALOGUE.map((beat) =>
+      beat.speaker === "child"
+        ? `Barnet: ${beat.text}`
+        : beat.speaker === "alve"
+          ? `Alve: ${beat.text}`
+          : beat.speaker === "unknown"
+            ? `Barnet: ${beat.text}`
+            : beat.text
+    ),
+  },
   ...BOATHOUSE_CONTRIBUTION_BEATS.slice(0, 9),
   BOATHOUSE_STEERING_WHEEL_BEAT,
   ...BOATHOUSE_CONTRIBUTION_BEATS.slice(9),
@@ -66,7 +70,7 @@ const STORY_BEATS: StoryBeat[] = [
 
 const storyGroupForBeat = (beat: StoryBeat) => {
   if (beat.id.startsWith("opening-")) return "Opening";
-  if (beat.id === "meet-bike" || beat.id.startsWith("alve-intro-")) return "Meeting Alve";
+  if (beat.id === "meet-bike" || beat.id === "alve-intro") return "Meeting Alve";
   if (beat.id.startsWith("boathouse:")) return "Båthuset";
   if (beat.id.startsWith("cabin:")) return "Stugan";
   if (beat.id.startsWith("dock:")) return "Bryggan";
@@ -112,6 +116,7 @@ export default function Act2TestPage() {
   };
 
   const activeBeat = storyIndex === null ? null : STORY_BEATS[storyIndex];
+  const activeImage = activeBeat?.lineImages?.[storyLineIndex] ?? activeBeat?.image;
 
   const jumpToDebugEntry = (_actId: string, entryId: string) => {
     const entry = STORY_DEBUG_ACTS[0].entries.find((candidate) => candidate.id === entryId);
@@ -206,11 +211,11 @@ export default function Act2TestPage() {
 
       {activeBeat && (
         <StoryMoment
-          image={activeBeat.image}
+          image={activeImage}
           imageFit="contain"
           heading={activeBeat.title}
           zIndex={100}
-          background={activeBeat.image ? "rgba(9,14,10,.94)" : "rgba(9,14,10,.28)"}
+          background={activeImage ? "rgba(9,14,10,.94)" : "rgba(9,14,10,.28)"}
           dialogueClassName="act2-dialogue-card"
           footer={
             <div className="story-debug-story-nav">
