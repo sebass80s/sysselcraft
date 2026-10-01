@@ -221,6 +221,7 @@ Verify every story-bound purchase:
 
 ## Implementation discipline
 
+- **Deployment rule:** GitHub Actions verifies every relevant code push. Vercel is used only for a meaningful acceptance checkpoint or release. Batch intermediate commits; docs-only/trivial commits must not consume Vercel deployment storage.
 - Repo truth beats this plan if code/docs have changed.
 - Verify branch/HEAD before writes.
 - Keep Act 1 regression coverage green during every phase.
