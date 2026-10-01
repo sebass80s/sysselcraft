@@ -341,10 +341,15 @@ export default function Act2Page() {
   }
 
   async function advanceOpening() {
+    const current = OPENING[state.openingIndex];
+    if (state.openingLineIndex < current.body.length - 1) {
+      await commit({ ...state, openingLineIndex: state.openingLineIndex + 1 });
+      return;
+    }
     if (state.openingIndex < OPENING.length - 1) {
-      await commit({ ...state, openingIndex: state.openingIndex + 1 });
+      await commit({ ...state, openingIndex: state.openingIndex + 1, openingLineIndex: 0 });
     } else {
-      await commit({ ...state, openingComplete: true, bicycleSeen: false });
+      await commit({ ...state, openingLineIndex: 0, openingComplete: true, bicycleSeen: false });
     }
   }
 
@@ -528,14 +533,13 @@ export default function Act2Page() {
         id: `act2:opening:${state.openingIndex}`,
         image: opening.image,
         heading: opening.title,
-        lines: opening.body,
-        nextLabel: state.openingIndex === OPENING.length - 1 ? "Gå närmare" : "Fortsätt",
+        lines: [opening.body[state.openingLineIndex] ?? opening.body[0]],
+        nextLabel: state.openingIndex === OPENING.length - 1 && state.openingLineIndex === opening.body.length - 1 ? "Gå närmare" : "Fortsätt",
       }}
       onNext={() => void advanceOpening()}
       childName={childName}
       dialogueClassName="act2-dialogue-card"
       background="#111"
-      scrollable
     />}
 
     {state.openingComplete && !state.bicycleSeen && <StoryRunner
