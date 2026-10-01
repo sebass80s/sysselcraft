@@ -106,7 +106,7 @@ const questInbox = fs.readFileSync(new URL("../src/components/ChildBackendQuestI
 assert.match(questInbox, /backendStoryFlags\.solChoseToStay === true/, "Clinic sync must trust authoritative backend Sol state");
 assert.match(questInbox, /backendStoryFlags\.clinicProgressionBaseline/, "Clinic sync must recover the authoritative backend baseline");
 assert.match(questInbox, /startClinicConstruction\(snapshot\.construction\)/, "stale local saves must be able to restore Clinic stage 1");
-assert.match(questInbox, /backendClinicBaseline \?\? snapshot\.worldFlags\.clinicProgressionBaseline/, "Clinic progression must prefer the backend baseline when available");
+assert.match(questInbox, /snapshot\.worldFlags\.clinicProgressionBaseline \?\? backendClinicBaseline/, "Clinic progression must preserve the rebased local continuity baseline before falling back to backend history");
 assert.match(questInbox, /syncClinicContributionProgress\([\s\S]*nextGameState\.progression\.worldProgression[\s\S]*clinicBaseline/, "quest refresh must drive Clinic progression from authoritative claimed-task progress");
 assert.doesNotMatch(questInbox, /sysselcraft:quest-progress-refresh/, "Clinic must not replay latent progress through a forced refresh loop");
 assert.doesNotMatch(component, /sysselcraft:quest-progress-refresh/, "revealing a Clinic stage must not force historical catch-up");
