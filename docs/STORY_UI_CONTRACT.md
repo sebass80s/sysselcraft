@@ -97,3 +97,23 @@ It must preserve:
 5. stable in-card placement;
 6. production/debug parity;
 7. regression tests.
+
+## 8. Production/debug parity
+
+Act 2 production and Story Debug must render the **same `Act2Runtime` component**.
+
+Routes are intentionally thin:
+- `/act2` supplies the production shipping gate and real persisted/backend state.
+- `/act2-test` supplies `debug` mode only.
+
+Debug mode may alter or synthesize state, expose reset/grant controls, and bypass the temporary shipping/access gate. It must not maintain its own copies of:
+- project chooser UI;
+- opening/Alve/finale renderers;
+- contribution cards;
+- purchase/naming gates;
+- nameplate logic;
+- story image selection.
+
+The debug route must not persist its Act 2 runtime state. Its purpose is to drive the real production renderer through isolated test state.
+
+**Rule:** if a story/UI bug can exist in production but not in debug because the two render different components, the debug architecture is wrong.
