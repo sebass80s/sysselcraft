@@ -11,37 +11,6 @@ export const ACT2_WORLD = {
 export const ACT2_PLAYER_FOOT_RADIUS = { x: 28, y: 18 } as const;
 
 /**
- * Canonical shoreline for the accepted lake master.
- * Points are ordered left-to-right in world coordinates. The playable land is
- * above this line; the lake is below it. Keep this separate from rendering so
- * every input method uses the same collision contract.
- */
-export const ACT2_SHORELINE = [
-  { x: 0, y: 682 },
-  { x: 250, y: 674 },
-  { x: 520, y: 665 },
-  { x: 780, y: 658 },
-  { x: 1030, y: 654 },
-  { x: 1260, y: 648 },
-  { x: 1480, y: 642 },
-  { x: 1690, y: 635 },
-  { x: 1983, y: 628 },
-] as const;
-
-export function act2ShorelineYAt(x: number) {
-  const clampedX = Math.max(0, Math.min(ACT2_WORLD.width, x));
-  for (let index = 1; index < ACT2_SHORELINE.length; index += 1) {
-    const left = ACT2_SHORELINE[index - 1];
-    const right = ACT2_SHORELINE[index];
-    if (clampedX > right.x) continue;
-    const span = Math.max(1, right.x - left.x);
-    const t = (clampedX - left.x) / span;
-    return left.y + (right.y - left.y) * t;
-  }
-  return ACT2_SHORELINE[ACT2_SHORELINE.length - 1].y;
-}
-
-/**
  * Locked from the 2026-09-27 Lake Master composite acceptance.
  * These values are the visual contract, not progression thresholds.
  * Runtime art must use normalized transparent canvases in the runtime/ folder.
