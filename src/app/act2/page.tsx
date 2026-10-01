@@ -7,9 +7,11 @@ import {
   createDefaultAct2RuntimeState,
   isMotorboatUnlocked,
   loadAct2RuntimeState,
+  consumeProjectCompletionReaction,
   jettyPurchaseRequired,
   nextAct2Contribution,
   prerequisiteCompletionCount,
+  projectCompletionReactionPending,
   saveAct2RuntimeState,
   withBackendClaimBaseline,
   withBackendStoryFlags,
@@ -21,7 +23,7 @@ import {
 import { loadSaveState } from "../../game/saveState";
 import { getPairedChildId } from "../../backend/childDeviceBinding";
 import { getChildGameState } from "../../backend/familyRepository";
-import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
+import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
@@ -171,6 +173,7 @@ export default function Act2Page() {
   const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
   const [backendWorldProgression, setBackendWorldProgression] = useState<number | null>(null);
   const [contributionLineIndex, setContributionLineIndex] = useState(0);
+  const [completionLineIndex, setCompletionLineIndex] = useState(0);
   const [backendSyncError, setBackendSyncError] = useState("");
 
 
@@ -335,6 +338,20 @@ export default function Act2Page() {
     ? JETTY_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
     : null;
   const activeContributionLine = activeJettyBeat?.body[contributionLineIndex] ?? null;
+  const jettyCompletionPending = projectCompletionReactionPending(state, "dock");
+  const activeCompletionLine = jettyCompletionPending
+    ? JETTY_COMPLETION_REACTION.body[completionLineIndex] ?? null
+    : null;
+
+  async function advanceCompletionReaction() {
+    if (!jettyCompletionPending) return;
+    if (completionLineIndex + 1 < JETTY_COMPLETION_REACTION.body.length) {
+      setCompletionLineIndex((index) => index + 1);
+      return;
+    }
+    await commit(consumeProjectCompletionReaction(state, "dock"));
+    setCompletionLineIndex(0);
+  }
 
   async function advanceContributionStory() {
     if (!contributionCandidate || !activeJettyBeat) return;
@@ -388,7 +405,7 @@ export default function Act2Page() {
       </div>
     </section>}
 
-    {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && <section className="story-moment" role="presentation">
+    {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !jettyCompletionPending && <section className="story-moment" role="presentation">
       <Image src="/assets/village/story-moments/act2/meeting-alve/pick.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">Alve</span>
@@ -407,6 +424,16 @@ export default function Act2Page() {
       </div>
     </section>}
 
+    {jettyCompletionPending && activeCompletionLine && <section style={{ position:"absolute", inset:0, zIndex:90, background:"rgba(9,14,10,.94)" }} role="presentation">
+      {JETTY_COMPLETION_REACTION.image && <Image src={JETTY_COMPLETION_REACTION.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
+      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+        <span className="dialogue-speaker">{JETTY_COMPLETION_REACTION.title}</span>
+        <p>{activeCompletionLine.replace(/^Barnet:/, childName + ":")}</p>
+        <button className="primary-button dialogue-next" onClick={() => void advanceCompletionReaction()}>
+          {completionLineIndex + 1 < JETTY_COMPLETION_REACTION.body.length ? "Fortsätt" : "Tillbaka till projekten"}
+        </button>
+      </div>
+    </section>}
     {purchaseRequired && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
       {JETTY_LIFEBUOY_BEAT.image && <Image src={JETTY_LIFEBUOY_BEAT.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
