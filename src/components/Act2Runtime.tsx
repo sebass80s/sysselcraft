@@ -263,7 +263,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     gameRef.current?.setCabinRevisitAvailable(
       state.projects.cabin.complete && !state.projects.motorboat.complete,
     );
-    if (state.projects.motorboat.complete) setCabinRevisitOpen(false);
   }, [state.projects.cabin.complete, state.projects.motorboat.complete]);
 
   async function commit(next: Act2RuntimeState) {
@@ -428,6 +427,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       contributionCandidate.visibleStage,
     );
     await commit(next);
+    if (next.projects.motorboat.complete) {
+      setCabinRevisitOpen(false);
+      setCabinRevisitLineIndex(0);
+    }
     setContributionTurnInOpen(false);
   }
 
