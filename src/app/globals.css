@@ -297,3 +297,24 @@ main { min-height: 100dvh; }
   gap: 8px;
   justify-content: flex-end;
 }
+
+
+.shared-story-heading {
+  margin: 0 0 .55rem;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: #3f3527;
+}
+.shared-story-transcript {
+  display: grid;
+  gap: .35rem;
+}
+.shared-story-transcript-line {
+  min-width: 0;
+}
+.shared-story-transcript-line .dialogue-speaker {
+  margin-bottom: .1rem;
+}
+.shared-story-transcript-line p {
+  margin-top: .15rem;
+}
