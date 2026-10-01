@@ -6,6 +6,10 @@ import {
   isMotorboatUnlocked,
   normalizeAct2RuntimeState,
   prerequisiteCompletionCount,
+  pendingBackendContributionCount,
+  nextAct2Contribution,
+  totalAct2Contributions,
+  withBackendClaimBaseline,
   withPresentedContribution,
   withSelectedProject,
 } from "../src/game/act2RuntimeState.ts";
@@ -128,6 +132,34 @@ const illegalBoatSnapshot = normalizeAct2RuntimeState({
 });
 assert.equal(illegalBoatSnapshot.projects.motorboat.complete, false);
 assert.equal(illegalBoatSnapshot.projects.motorboat.contributions, 0);
+
+
+let bridge = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 12);
+bridge = withSelectedProject(bridge, "dock");
+assert.equal(bridge.backendClaimBaseline, 12);
+assert.equal(pendingBackendContributionCount(bridge, 12), 0);
+assert.equal(nextAct2Contribution(bridge, 12), null);
+
+let candidate = nextAct2Contribution(bridge, 15);
+assert.equal(candidate?.beatId, "dock:01");
+assert.equal(candidate?.visibleStage, 1);
+assert.equal(candidate?.backlog, 3);
+
+bridge = withPresentedContribution(bridge, "dock", candidate.beatId, candidate.visibleStage);
+assert.equal(totalAct2Contributions(bridge), 1);
+candidate = nextAct2Contribution(bridge, 15);
+assert.equal(candidate?.beatId, "dock:02", "backlog must drain one authored beat at a time");
+assert.equal(candidate?.backlog, 2);
+
+const repeatedRefresh = nextAct2Contribution(bridge, 15);
+assert.deepEqual(repeatedRefresh, candidate, "refresh/retry must not consume or skip a beat by itself");
+
+bridge = withSelectedProject(bridge, "cabin");
+candidate = nextAct2Contribution(bridge, 15);
+assert.equal(candidate?.beatId, "cabin:01", "unconsumed authoritative backlog follows the active project only after player switches");
+
+const baselineCannotMove = withBackendClaimBaseline(bridge, 999);
+assert.equal(baselineCannotMove.backendClaimBaseline, 12, "Act 2 claim baseline is establish-once");
 
 const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 for (const required of [
