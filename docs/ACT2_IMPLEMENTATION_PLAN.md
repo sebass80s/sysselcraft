@@ -406,3 +406,10 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - 59 of 67 positive-reward parent quests are in the 1–20 SysselBux range; only one is 200+ and the raw average is distorted by a 10,000-SysselBux test/outlier reward.
 - At the current median reward, one mandatory story-item equals about 20 typical quests and all three equal about 60 typical quests.
 - No automatic rebalance is applied here because 200/story-item is a deliberate product decision. Flag this for physical pacing acceptance: if the intended child cadence is much shorter, quest rewards or story-item pricing will need a later balance decision rather than a hidden code-side adjustment.
+
+
+### Act 2 stale-reference cleanup — 2026-10-01
+- Removed stale Act 2 price canon from STORY_DESIGN: Bryggan, Båthuset and Motorbåten now all document the locked 200 SysselBux price.
+- The exported Motorbåt story-source price constant is aligned to 200 and regression-covered.
+- Act 1 Flaskpost at 100 SysselBux is intentionally unchanged.
+- Historical OneDrive notes, parked resident-idle TODOs and deliberate Alve placeholder references were retained because they are not stale runtime canon.

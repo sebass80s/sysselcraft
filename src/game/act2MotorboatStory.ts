@@ -878,4 +878,4 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   }
 ];
 
-export const MOTORBOAT_PARTS_PRICE = 150;
+export const MOTORBOAT_PARTS_PRICE = 200;

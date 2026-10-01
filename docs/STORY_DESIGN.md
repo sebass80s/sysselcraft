@@ -1763,7 +1763,7 @@ Ni tar er genom rummet mellan möbler och lådor.
 
 **6 — Sol inspects.** Sol hears that the children intend to swim and visits in her professional role. She performs a simple, age-appropriate safety check: access into/out of the water and old sharp/rubbish debris around the bathing edge. No injury or manufactured emergency occurs. Sol identifies two jobs: clear the bathing area and add a proper life buoy.
 
-This unlocks the intermediate story/economy chain: **life buoy appears at Mira → Adam buys it with authoritative SysselBux → returns to lake.** The locked provisional price is **300 SysselBux** and may be rebalanced later. The purchase is not contribution 7.
+This unlocks the intermediate story/economy chain: **life buoy appears at Mira → Adam buys it with authoritative SysselBux → returns to lake.** The locked price is **200 SysselBux**. The purchase is not contribution 7.
 
 **7 — Make Sol's checklist real.** Adam and Alve clear the bathing edge/shoreline and finish the practical safety cleanup. The purchased life buoy is brought to the site and can be staged ready for mounting. Sol need not supervise the work.
 
@@ -2314,7 +2314,7 @@ Image: `03-sol-safety-check.png`.
 > **Sol:** “Det brukar betyda att man får göra roliga saker fler gånger.”
 
 **Intermediate economy beat — Livbojen hos Mira**  
-Image: `04-mira-lifebuoy-purchase.png`. Not a contribution. Price: **300 SysselBux**.
+Image: `04-mira-lifebuoy-purchase.png`. Not a contribution. Price: **200 SysselBux**.
 
 > **Mira:** “En livboj?”  
 > **Barnet:** “Sol säger att vi behöver en till bryggan.”  
@@ -2327,7 +2327,7 @@ Image: `04-mira-lifebuoy-purchase.png`. Not a contribution. Price: **300 SysselB
 > **Mira:** “Det är ofta bra när säkerhetsgrejer ser ut som säkerhetsgrejer.”  
 > **Barnet:** “Hur mycket kostar den?”  
 >  
-> UI purchase: **300 SysselBux**.  
+> UI purchase: **200 SysselBux**.  
 >  
 > **Mira:** “Bra. Då är den er.”  
 > **Alve:** “Kan man provkasta den?”  
@@ -2600,7 +2600,7 @@ Historical repo review first suggested that only the 1–16 beat structure and k
 **The full line-by-line Båthuset dialogue does exist and is canonical in this document below.** It was authored and committed in successive dialogue-lock commits on 2026-09-29, covering the complete 1–16 arc:
 - 1–3: locked chest / Henning setup;
 - 4–6: BOOM / photograph / Mira sees the workshop problem;
-- 7–9: workshop takes form / “Vår verkstad” / lådbil drawing + the 100 SysselBux steering-wheel economy beat;
+- 7–9: workshop takes form / “Vår verkstad” / lådbil drawing + the 200 SysselBux steering-wheel economy beat;
 - 10–12: build / failed test / successful second version;
 - 13–15: clear boat bay / Linus explains the slipvagn / safe mechanism test;
 - 16: complete boathouse / “Den.” payoff.
@@ -3303,9 +3303,9 @@ Mira tittar på Alve.
 
 Mira skjuter ratten lite närmare dig.
 
-> **Mira:** “Hundra SysselBux.”
+> **Mira:** “Tvåhundra SysselBux.”
 
-**KÖP: 100 SysselBux**
+**KÖP: 200 SysselBux**
 
 Efter köpet tar Alve upp ratten.
 
@@ -3314,7 +3314,7 @@ Efter köpet tar Alve upp ratten.
 > **Alve:** “Du kommer ändra dig när du ser den.”  
 > **Mira:** “Det är också en mening som gör mig nervös.”
 
-**Balance note:** 100 SysselBux is provisional and may be tuned later during economy balancing.
+**Economy lock:** 200 SysselBux.
 
 ### Contributions 9–12: the soapbox car / friendship
 Once the workshop exists, the boathouse should demonstrate its own value rather than functioning only as motorboat preparation. Adam and Alve find an **old hand-drawn plan for a small soapbox car / lådbil** among the remaining material. Alve immediately decides they should build one.
@@ -4780,7 +4780,7 @@ Du börjar skratta.
 
 Mira lägger undan lappen.
 
-> **Mira:** “Det blir 150 SysselBux.”
+> **Mira:** “Det blir 200 SysselBux.”
 
 Alve tittar på dig.
 
@@ -4789,7 +4789,7 @@ Alve tittar på dig.
 > **Alve:** “Bra. För jag har redan bestämt mig.”  
 > **Mira:** “Det märktes.”
 
-Du betalar 150 SysselBux genom den vanliga auktoritativa wallet-loopen.
+Du betalar 200 SysselBux genom den auktoritativa story-item-köpsfunktionen.
 
 Mira gör klart beställningen.
 
@@ -4818,7 +4818,7 @@ Han tittar på dig.
 > **Barnet:** “Det där lät inte särskilt pålitligt.”  
 > **Mira:** “Därför beställde jag två.”
 
-**Economy lock:** the motorboat story purchase is a **reservdelspaket** costing **150 SysselBux**. It must use the authoritative backend wallet and is an intermediate story/economy beat, not a contribution.
+**Economy lock:** the motorboat story purchase is a **reservdelspaket** costing **200 SysselBux**. It must use the authoritative backend wallet and is an intermediate story/economy beat, not a contribution.
 
 ### Contributions 5–8: village support and the first sign of life
 Continued sorting/repair reveals one important missing/unsalvageable need. Keep it deliberately non-technical in child-facing dialogue. Linus cannot fabricate it. Mira can source the required replacement/support package, creating the motorboat's major **story-bound SysselBux purchase**. Exact item and price remain open for economy balancing; it must be affordable through normal play and use the authoritative backend wallet.
