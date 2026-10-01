@@ -114,7 +114,7 @@ const ALVE_DIALOGUE: DialogueBeat[] = [
   { speaker: "unknown", text: "Jag trodde faktiskt inte att det var så här mycket." },
   { speaker: "child", text: "Jag kan hjälpa dig." },
   { text: "Han tittar på dig som om du sagt något oväntat." },
-  { speaker: "child", text: "Varför?" },
+  { speaker: "unknown", text: "Varför?" },
   { speaker: "child", text: "För att du aldrig kommer bli klar själv." },
   { text: "Pojken höjer ögonbrynen." },
   { speaker: "unknown", text: "Det där var väldigt snällt sagt." },
