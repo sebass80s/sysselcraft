@@ -1,6 +1,7 @@
 "use client";
 
 import { StoryMoment } from "./StoryMoment";
+import { StoryTranscript } from "./StoryTranscript";
 import type { StoryBeatPresentation } from "../../game/storyEngine";
 
 type StoryRunnerProps = {
@@ -10,9 +11,10 @@ type StoryRunnerProps = {
   background?: string;
   scrollable?: boolean;
   dialogueClassName?: string;
+  childName?: string;
 };
 
-export function StoryRunner({ beat, onNext, zIndex, background, scrollable, dialogueClassName }: StoryRunnerProps) {
+export function StoryRunner({ beat, onNext, zIndex, background, scrollable, dialogueClassName, childName }: StoryRunnerProps) {
   return (
     <StoryMoment
       image={beat.image}
@@ -27,7 +29,7 @@ export function StoryRunner({ beat, onNext, zIndex, background, scrollable, dial
       scrollable={scrollable}
       dialogueClassName={dialogueClassName}
     >
-      {beat.lines.map((line, index) => <p key={index}>{line}</p>)}
+      <StoryTranscript lines={beat.lines} childName={childName} />
     </StoryMoment>
   );
 }
