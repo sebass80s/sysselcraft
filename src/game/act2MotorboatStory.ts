@@ -4,6 +4,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:01",
     "title": "1/16 · Äntligen båten",
+    "image": "/assets/village/story-moments/act2/motorboat/01-finally-the-boat.png",
     "body": [
       "Ni står i det färdiga båthuset och tittar på motorbåten.",
       "Alve står helt stilla ovanligt länge.",
@@ -58,6 +59,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:02",
     "title": "2/16 · Samma båt",
+    "image": "/assets/village/story-moments/act2/motorboat/01-finally-the-boat.png",
     "body": [
       "När ni går igenom båten upptäcker Barnet en detalj på sidan.",
       "Barnet: Vänta.",
@@ -121,6 +123,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:03",
     "title": "3/16 · Linus känner igen den",
+    "image": "/assets/village/story-moments/act2/motorboat/02-linus-inspects-the-boat.png",
     "body": [
       "Linus kommer ner till båthuset för att titta på projektet.",
       "Han går ett varv runt båten utan att säga något.",
@@ -178,6 +181,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:04",
     "title": "4/16 · Inte idag",
+    "image": "/assets/village/story-moments/act2/motorboat/02-linus-inspects-the-boat.png",
     "body": [
       "Ni har jobbat vidare med båten tillsammans med Linus. En del går att rädda, annat får bytas, och för första gången börjar den faktiskt se ut som något som skulle kunna bli en båt igen.",
       "Alve står med händerna i sidorna och granskar resultatet.",
@@ -248,6 +252,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:05",
     "title": "5/16 · Det som saknas",
+    "image": "/assets/village/story-moments/act2/motorboat/02-linus-inspects-the-boat.png",
     "body": [
       "Nästa gång ni fortsätter har Alve redan lagt ut delarna på golvet i små högar.",
       "Du stannar i dörren.",
@@ -308,6 +313,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:06",
     "title": "6/16 · Mira beställer två",
+    "image": "/assets/village/story-moments/act2/motorboat/03-mira-spare-parts-order.png",
     "body": [
       "När ni kommer tillbaka till Mira håller hon redan på att göra beställningen klar.",
       "Mira läser lappen från Linus en gång till.",
@@ -347,6 +353,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:07",
     "title": "7/16 · Paketet kommer",
+    "image": "/assets/village/story-moments/act2/motorboat/03-mira-spare-parts-order.png",
     "body": [
       "Nästa gång ni kommer till båthuset ligger ett paket på arbetsbänken.",
       "Alve stannar mitt i steget.",
@@ -408,6 +415,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:08",
     "title": "8/16 · Den lever",
+    "image": "/assets/village/story-moments/act2/motorboat/04-the-engine-lives.png",
     "body": [
       "Ni har gjort klart det Linus ville att ni skulle göra. Båten står fortfarande säkert i båthuset.",
       "Alve har varit ovanligt tyst de senaste minuterna.",
@@ -477,6 +485,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:09",
     "title": "9/16 · Ner i vattnet",
+    "image": "/assets/village/story-moments/act2/motorboat/05-launching-the-boat.png",
     "body": [
       "För första gången sedan ni började med motorbåten ska den lämna båthuset.",
       "Ni står vid slipen och tittar på den.",
@@ -538,6 +547,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:10",
     "title": "10/16 · Första turen",
+    "image": "/assets/village/story-moments/act2/motorboat/06-first-test-stall.png",
     "body": [
       "Motorn går. Inte bara ett hostande ljud den här gången. Den går faktiskt.",
       "Alve stirrar på den som om han inte riktigt litar på vad han hör.",
@@ -598,6 +608,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:11",
     "title": "11/16 · Tillbaka igen",
+    "image": "/assets/village/story-moments/act2/motorboat/06-first-test-stall.png",
     "body": [
       "Efter en stund får ni hjälp tillbaka till bryggan.",
       "Alve hoppar iland.",
@@ -653,6 +664,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:12",
     "title": "12/16 · Vår båt",
+    "image": "/assets/village/story-moments/act2/motorboat/07-our-boat.png",
     "body": [
       "Efter ännu mer arbete står motorbåten vid bryggan igen.",
       "Den ser färdig ut nu. Inte ny, men hel. Användbar. Er.",
@@ -701,6 +713,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:13",
     "title": "13/16 · Det riktiga testet",
+    "image": "/assets/village/story-moments/act2/motorboat/08-ready-for-the-real-test.png",
     "body": [
       "Nästa gång ni kommer ner till bryggan står båten redo. Alve går igenom sakerna ombord en efter en.",
       "Barnet: Vad gör du egentligen?",
@@ -746,6 +759,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:14",
     "title": "14/16 · Vi åker båt",
+    "image": "/assets/village/story-moments/act2/motorboat/09-we-ride-boat.png",
     "body": [
       "Motorn startar utan att tveka. Ni lämnar bryggan och glider ut över sjön.",
       "En stund säger ingen någonting.",
@@ -787,6 +801,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:15",
     "title": "15/16 · Inte idag",
+    "image": "/assets/village/story-moments/act2/motorboat/09-we-ride-boat.png",
     "body": [
       "Ni har kommit längre bort än under något tidigare test. Motorn går jämnt.",
       "Sedan hörs ett klonk bakom er.",
@@ -835,6 +850,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:16",
     "title": "16/16 · Hem igen",
+    "image": "/assets/village/story-moments/act2/motorboat/10-home-again.png",
     "body": [
       "Båten glider tillbaka mot bryggan.",
       "Den här gången stannar den inte. Inget hostar, inget lossnar och ingen behöver komma och hämta er.",
