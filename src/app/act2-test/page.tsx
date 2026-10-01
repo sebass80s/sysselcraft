@@ -56,6 +56,12 @@ const STORY_BEATS: StoryBeat[] = [
             : text;
     }),
   },
+  {
+    id: "project-choice",
+    title: "Vad börjar vi med?",
+    image: "/assets/village/story-moments/act2/meeting-alve/pick.png",
+    body: ["Alve: Du väljer. Stugan, bryggan eller båthuset?"],
+  },
   ...CABIN_CONTRIBUTION_BEATS,
   CABIN_WAITING_REACTION,
   ...JETTY_CONTRIBUTION_BEATS.slice(0, 6),
@@ -75,7 +81,7 @@ const STORY_BEATS: StoryBeat[] = [
 
 const storyGroupForBeat = (beat: StoryBeat) => {
   if (beat.id.startsWith("opening-")) return "Opening";
-  if (beat.id === "meet-bike" || beat.id === "alve-intro") return "Meeting Alve";
+  if (beat.id === "meet-bike" || beat.id === "alve-intro" || beat.id === "project-choice") return "Meeting Alve";
   if (beat.id.startsWith("boathouse:")) return "Båthuset";
   if (beat.id.startsWith("cabin:")) return "Stugan";
   if (beat.id.startsWith("dock:") || beat.id.startsWith("jetty-")) return "Bryggan";
@@ -137,6 +143,20 @@ export default function Act2TestPage() {
   };
 
   const closeStory = () => { setStoryIndex(null); setStoryLineIndex(0); };
+  const jumpToProject = (project: "cabin" | "dock" | "boathouse") => {
+    const firstIndex = STORY_BEATS.findIndex((beat) =>
+      project === "cabin"
+        ? beat.id.startsWith("cabin:")
+        : project === "dock"
+          ? beat.id.startsWith("jetty-") || beat.id.startsWith("dock:")
+          : beat.id.startsWith("boathouse:"),
+    );
+    if (firstIndex < 0) return;
+    setStoryIndex(firstIndex);
+    setStoryLineIndex(0);
+    const beat = STORY_BEATS[firstIndex];
+    if (beat.stage) chooseStage(beat.stage);
+  };
   const nextStory = () => {
     if (storyIndex === null) return;
     const currentBeat = STORY_BEATS[storyIndex];
@@ -227,18 +247,28 @@ export default function Act2TestPage() {
           background={activeImage ? "rgba(9,14,10,.94)" : "rgba(9,14,10,.28)"}
           dialogueClassName="act2-dialogue-card"
           footer={
-            <div className="story-debug-story-nav">
-              <button type="button" className="secondary-button" onClick={previousStory} disabled={storyIndex === 0 && storyLineIndex === 0}>
-                ← Förra
-              </button>
-              <span>{storyIndex! + 1} / {STORY_BEATS.length} · rad {storyLineIndex + 1}/{activeBeat.body.length}</span>
-              <button type="button" className="secondary-button" onClick={closeStory}>
-                Stäng
-              </button>
-              <button type="button" className="primary-button" onClick={nextStory}>
-                {storyIndex === STORY_BEATS.length - 1 && storyLineIndex === activeBeat.body.length - 1 ? "Klar ✓" : "Nästa →"}
-              </button>
-            </div>
+            activeBeat.id === "project-choice" ? (
+              <div className="story-debug-story-nav">
+                <button type="button" className="secondary-button" onClick={previousStory}>← Förra</button>
+                <button type="button" className="secondary-button" onClick={() => jumpToProject("cabin")}>Stugan</button>
+                <button type="button" className="secondary-button" onClick={() => jumpToProject("dock")}>Bryggan</button>
+                <button type="button" className="secondary-button" onClick={() => jumpToProject("boathouse")}>Båthuset</button>
+                <button type="button" className="secondary-button" onClick={closeStory}>Stäng</button>
+              </div>
+            ) : (
+              <div className="story-debug-story-nav">
+                <button type="button" className="secondary-button" onClick={previousStory} disabled={storyIndex === 0 && storyLineIndex === 0}>
+                  ← Förra
+                </button>
+                <span>{storyIndex! + 1} / {STORY_BEATS.length} · rad {storyLineIndex + 1}/{activeBeat.body.length}</span>
+                <button type="button" className="secondary-button" onClick={closeStory}>
+                  Stäng
+                </button>
+                <button type="button" className="primary-button" onClick={nextStory}>
+                  {storyIndex === STORY_BEATS.length - 1 && storyLineIndex === activeBeat.body.length - 1 ? "Klar ✓" : "Nästa →"}
+                </button>
+              </div>
+            )
           }
         >
           <StoryTranscript childName={childName} lines={[activeBeat.body[storyLineIndex] ?? activeBeat.body[0]]} />
