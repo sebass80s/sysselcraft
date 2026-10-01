@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { Act2LakeGameHandle } from "../../game/createAct2LakeGame";
 import {
   createDefaultAct2RuntimeState,
@@ -177,7 +178,9 @@ const PROJECT_COPY: Record<Act2Project, { label: string; preview: string; object
 };
 
 export default function Act2Page() {
+  const router = useRouter();
   const hostRef = useRef<HTMLDivElement>(null);
+  const debugHoldTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gameRef = useRef<Act2LakeGameHandle | null>(null);
   const [state, setState] = useState<Act2RuntimeState>(createDefaultAct2RuntimeState);
   const [ready, setReady] = useState(false);
@@ -474,7 +477,50 @@ export default function Act2Page() {
     setContributionTurnInOpen(false);
   }
 
+  const cancelDebugHold = () => {
+    if (debugHoldTimerRef.current) {
+      clearTimeout(debugHoldTimerRef.current);
+      debugHoldTimerRef.current = null;
+    }
+  };
+
+  const startDebugHold = () => {
+    cancelDebugHold();
+    debugHoldTimerRef.current = setTimeout(() => {
+      debugHoldTimerRef.current = null;
+      router.push("/act2-test");
+    }, 900);
+  };
+
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
+    <button
+      type="button"
+      aria-label="Akt 2 · Sjön"
+      title="Akt 2 · Sjön"
+      onPointerDown={startDebugHold}
+      onPointerUp={cancelDebugHold}
+      onPointerCancel={cancelDebugHold}
+      onPointerLeave={cancelDebugHold}
+      onContextMenu={(event) => event.preventDefault()}
+      style={{
+        position: "absolute",
+        top: "max(8px, env(safe-area-inset-top))",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 35,
+        border: 0,
+        borderRadius: 999,
+        padding: "6px 11px",
+        background: "rgba(22,28,22,.72)",
+        color: "rgba(255,255,255,.82)",
+        fontSize: 12,
+        fontWeight: 800,
+        touchAction: "none",
+      }}
+    >
+      Akt 2 · Sjön
+    </button>
+
     {state.openingComplete && <div ref={hostRef} style={{ position: "absolute", inset: 0 }} aria-label="Sjön i Act 2" />}
 
     {!state.openingComplete && <StoryRunner
