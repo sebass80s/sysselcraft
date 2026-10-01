@@ -244,7 +244,6 @@ export default function Act2TestPage() {
           zIndex={100}
           background={activeBeat.image ? "rgba(9,14,10,.94)" : "rgba(9,14,10,.28)"}
           dialogueClassName="act2-dialogue-card"
-          scrollable
           footer={
             <div className="story-debug-story-nav">
               <button type="button" className="secondary-button" onClick={previousStory} disabled={storyIndex === 0 && storyLineIndex === 0}>
