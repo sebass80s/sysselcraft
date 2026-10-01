@@ -720,7 +720,6 @@ export const BOATHOUSE_STEERING_WHEEL_BEAT: Act2ProjectStoryBeat = {
   "Alve: Japp.",
   "Mira skjuter ratten lite närmare dig.",
   "Mira: Tvåhundra SysselBux.",
-  "KÖP: 200 SysselBux",
   "Efter köpet tar Alve upp ratten.",
   "Alve: Nu har vi allt.",
   "Mira: Det där är exakt den sortens mening som brukar göra mig nervös.",

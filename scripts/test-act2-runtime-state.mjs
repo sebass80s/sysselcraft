@@ -389,6 +389,16 @@ assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel s
 assert.ok(village.includes("Reservdelspaket till motorbåten"), "Mira must expose the Motorbåten parts package");
 assert.ok(village.includes("motorboatPartsPurchaseRequired(act2)"), "parts stock must derive from Motorbåten progress");
 
+const dialoguePolishSources = [
+  fs.readFileSync(new URL("../src/game/act2CabinStory.ts", import.meta.url), "utf8"),
+  fs.readFileSync(new URL("../src/game/act2JettyStory.ts", import.meta.url), "utf8"),
+  fs.readFileSync(new URL("../src/game/act2BoathouseStory.ts", import.meta.url), "utf8"),
+  fs.readFileSync(new URL("../src/game/act2MotorboatStory.ts", import.meta.url), "utf8"),
+  fs.readFileSync(new URL("../src/game/act2FinaleStory.ts", import.meta.url), "utf8"),
+];
+assert.equal(dialoguePolishSources.some((source) => /"Barnet (?!:)/.test(source)), false, "runtime narration should stay in second person; Barnet is reserved for dialogue speaker prefixes");
+assert.equal(dialoguePolishSources.some((source) => source.includes("på Barnet.")), false, "runtime narration should address the player as du rather than Barnet");
+assert.equal(dialoguePolishSources.some((source) => source.includes("KÖP:")), false, "child-facing story sources must not leak authoring/UI purchase labels");
 const childFacingStorySources = [
   "../src/game/act2CabinStory.ts",
   "../src/game/act2JettyStory.ts",

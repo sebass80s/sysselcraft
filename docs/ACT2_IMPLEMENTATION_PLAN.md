@@ -346,7 +346,7 @@ Do not lose this list when the implementation thread changes.
 
 1. **Physical iPhone acceptance** — deferred until Kalle has the Mac. Exercise the real loop: claimed quest → lake → Alve marker → approach/turn-in → Story Moment → visual stage update, plus restart boundaries and purchases. Never reset or manually mutate Adam's real save/backend for this test.
 2. **Replace Alve placeholder with final runtime art** — keep the existing single world entity, active-project positioning and interaction ownership. Search repo for a verified standalone Alve cutout first; do not invent an asset filename.
-3. **Act 2 dialogue polish** — audit child-facing pacing, repetition, configured child-name substitution and project-specific friend banter without changing locked emotional canon.
+3. **Act 2 dialogue polish** — first runtime pass completed 2026-10-01. Keep further line-level polish available after physical playthrough; do not change locked emotional canon.
 4. **Epilogue image production/integration** — EPI-001…004 remain incomplete. Do not fake repository assets. Final crossing may continue over the live lake until canonical images exist.
 
 
@@ -365,3 +365,11 @@ The term **story-items** refers here only to the three required Act 2 restoratio
 - Motorbåten: reservdelspaket — 200 SysselBux.
 
 Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside this price lock and remain unchanged.
+
+
+### Act 2 dialogue polish checkpoint — 2026-10-01
+- Runtime narration is normalized to second person ("du") while "Barnet:" remains the dialogue-speaker prefix that the production route replaces with the configured child name.
+- Third-person leaks such as "Alve tittar på Barnet" were removed from runtime Story sources.
+- Authoring/UI labels such as "KÖP:" were removed from child-facing story arrays. Required purchase prices remain spoken naturally by Mira where the scene includes the transaction.
+- Alve's deliberate recurring voice patterns (short nej/japp, plans, teasing and repeated character callbacks) were preserved rather than mechanically deduplicated.
+- Locked emotional lines, mother-loss subtext, family payoff and finale friendship lines were not rewritten.

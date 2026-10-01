@@ -430,7 +430,7 @@ export const JETTY_LIFEBUOY_BEAT: Act2JettyBeat = {
     "Alve: Den där ser väldigt officiell ut.",
     "Mira: Det är ofta bra när säkerhetsgrejer ser ut som säkerhetsgrejer.",
     "Barnet: Hur mycket kostar den?",
-    "KÖP: 200 SysselBux",
+    "Mira: Tvåhundra SysselBux.",
     "Mira: Bra. Då är den er.",
     "Alve: Kan man provkasta den?",
     "Mira: Inte inne i butiken.",
