@@ -108,8 +108,11 @@ assert.match(questInbox, /backendStoryFlags\.clinicProgressionBaseline/, "Clinic
 assert.match(questInbox, /startClinicConstruction\(snapshot\.construction\)/, "stale local saves must be able to restore Clinic stage 1");
 assert.match(questInbox, /backendClinicBaseline \?\? snapshot\.worldFlags\.clinicProgressionBaseline/, "Clinic progression must prefer the backend baseline when available");
 assert.match(questInbox, /syncClinicContributionProgress\([\s\S]*nextGameState\.progression\.worldProgression[\s\S]*clinicBaseline/, "quest refresh must drive Clinic progression from authoritative claimed-task progress");
-assert.match(questInbox, /sysselcraft:quest-progress-refresh/, "Clinic reveal catch-up must have an explicit quest-progress refresh listener");
-assert.match(component, /revealId\?\.startsWith\("clinic:"\)[\s\S]*sysselcraft:quest-progress-refresh/, "each Clinic reveal must immediately request another authoritative catch-up pass");
+assert.doesNotMatch(questInbox, /sysselcraft:quest-progress-refresh/, "Clinic must not replay latent progress through a forced refresh loop");
+assert.doesNotMatch(component, /sysselcraft:quest-progress-refresh/, "revealing a Clinic stage must not force historical catch-up");
+assert.match(questInbox, /clinicContinuityBaselineLocked/, "stale Clinic saves must anchor progression to their currently visible stage");
+assert.match(questInbox, /clinicProgressionBaseline: continuityBaseline/, "Clinic continuity migration must persist the rebased local baseline");
+assert.match(act2Page, /const ACT2_PRODUCTION_ENABLED = false/, "Act 2 production must remain temporarily locked while development continues");
 
 const villageGame = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
 assert.match(villageGame, /movementStallFrames/, "village movement must track blocked path progress");
