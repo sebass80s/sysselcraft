@@ -443,7 +443,7 @@ export default function Act2Page() {
         <a className="primary-button dialogue-next" href="/">Till Mira i byn</a>
       </div>
     </section>}
-    {activeJettyBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
+    {contributionCandidate && activeJettyBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
       {activeJettyBeat.image && <Image src={activeJettyBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">{activeJettyBeat.title}</span>
