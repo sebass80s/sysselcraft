@@ -599,3 +599,21 @@ const globalCss = fs.readFileSync(new URL("../src/app/globals.css", import.meta.
 assert.match(globalCss, /\.story-moment \{[^}]*pointer-events:auto/, "Story Moment overlays must remain clickable");
 assert.match(globalCss, /\.story-moment img \{[^}]*pointer-events:none/, "Story Moment artwork must not steal dialogue clicks");
 assert.match(globalCss, /\.story-moment::after \{[^}]*pointer-events:none/, "Story Moment tint overlay must not steal dialogue clicks");
+
+
+const storyRunnerSource = fs.readFileSync(new URL("../src/components/story/StoryRunner.tsx", import.meta.url), "utf8");
+const storyMomentSource = fs.readFileSync(new URL("../src/components/story/StoryMoment.tsx", import.meta.url), "utf8");
+const dialogueCardSource = fs.readFileSync(new URL("../src/components/story/DialogueCard.tsx", import.meta.url), "utf8");
+const act2PageSource = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
+
+assert.match(storyMomentSource, /shared-story-moment/, "shared Story Engine must own the fullscreen Story Moment shell");
+assert.match(storyMomentSource, /shared-story-tint/, "shared Story Engine must own the non-interactive tint layer");
+assert.match(dialogueCardSource, /shared-story-dialogue/, "shared Story Engine must own dialogue presentation");
+assert.match(storyRunnerSource, /StoryBeatPresentation/, "StoryRunner must render typed Story Beat presentation data");
+assert.match(act2PageSource, /<StoryRunner[\s\S]*act2:opening:/, "Act 2 opening must use the shared Story Engine");
+assert.match(act2PageSource, /id: "act2:bicycle"/, "Act 2 bicycle beat must use the shared Story Engine");
+assert.match(act2PageSource, /act2:alve-intro:/, "Act 2 Alve intro must use the shared Story Engine");
+assert.match(act2PageSource, /act2:finale:/, "Act 2 finale must use the shared Story Engine");
+assert.match(act2PageSource, /act2:completion:/, "Act 2 completion reactions must use the shared Story Engine");
+assert.match(act2PageSource, /<StoryMoment[\s\S]*advanceContributionStory/, "Act 2 contribution dialogue must use the shared Story Engine shell");
+assert.match(act2PageSource, /dialogueClassName="act2-dialogue-card"/, "Act 2 Story Engine migration must preserve the accepted smaller dialogue typography");
