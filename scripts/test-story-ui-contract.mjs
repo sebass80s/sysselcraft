@@ -59,6 +59,10 @@ assert.doesNotMatch(debugPage, /StoryMoment|StoryTranscript|project-choice|jumpT
 assert.match(act2Runtime, /if \(debug\) \{[\s\S]*loadSaveState\(\)/, "Shared runtime debug mode must load the saved child identity");
 assert.match(act2Runtime, /if \(!debug\) await saveAct2RuntimeState\(next\)/, "Debug mode must not persist Act 2 runtime state");
 assert.match(act2Runtime, /parseStoryLine\(activeContributionLine, childName\)/, "Act 2 contribution cards must parse speaker and child name centrally");
+assert.doesNotMatch(act2Runtime, /storyCardChunk|activeContributionLines|<StoryTranscript lines=\{activeContributionLines\}/,
+  "Act 2 contribution UI must never batch several authored dialogue turns into one card");
+assert.match(act2Runtime, /<p>\{activeContributionPresentation\?\.text\}<\/p>/,
+  "Act 2 contribution cards must render exactly one parsed reply at a time");
 assert.match(act2Runtime, /parseStoryLine\(activeFinaleLine, childName\)/, "Act 2 finale cards must parse speaker and child name centrally");
 assert.match(act2Runtime, /parseStoryLine\(activeCompletionLine, childName\)/, "Act 2 completion cards must parse speaker and child name centrally");
 assert.match(act2Runtime, /meeting-alve\/pick\.png/, "Canonical production project chooser must live in the shared runtime");
