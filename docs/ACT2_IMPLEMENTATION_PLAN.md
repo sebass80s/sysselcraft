@@ -248,7 +248,7 @@ Implemented:
 - persisted dedicated `sysselcraft.act2.runtime.v1` state family, separate from Act 1 `SaveStateV1` and Quest v2 authority;
 - restart-safe OPEN-001…OPEN-005 progress;
 - close bicycle beat;
-- revised canonical first Alve meeting dialogue;
+- revised canonical first Alve meeting dialogue and shared visual progression from `src/game/act2AlveStory.ts`;
 - in-Story-Moment Stugan/Bryggan/Båthuset chooser with preview before commit;
 - selected project persists across restart and begins at 0/16 without consuming backend progression;
 - production lake runtime reused from the accepted lake harness;
@@ -307,7 +307,7 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 
 ### Full Act 2 restoration runtime batch — 2026-10-01
 - Stugan, Bryggan, Båthuset and Motorbåten now each have 16 canonical contribution beats wired to the production Act 2 route.
-- Canonical story sources are shared with /act2-test instead of maintaining condensed duplicate dialogue tracks.
+- Canonical story sources are shared with `/act2-test` instead of maintaining condensed duplicate dialogue tracks. This includes the first-Alve image progression; do not re-hardcode `first-hello.png` across the entire meeting.
 - Story-bound economy gates are authoritative and contribution-neutral: Bryggan livboj 200 SysselBux, Båthuset ratt 200 SysselBux, Motorbåten reservdelspaket 200 SysselBux.
 - Motorboat naming after 12/16 is persisted locally and does not consume a contribution.
 - The family-return + first-crossing finale is a separate six-beat restart-safe sequence after Motorbåten 16/16; completion sets familyFinaleConsumed, epilogueConsumed and act2Complete without inventing contribution 65.
