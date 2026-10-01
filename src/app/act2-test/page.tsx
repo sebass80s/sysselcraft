@@ -14,6 +14,7 @@ import { StoryTranscript } from "../../components/story/StoryTranscript";
 import type { StoryDebugAct } from "../../game/storyDebug";
 import { ACT2_OPENING_BEATS } from "../../game/act2OpeningStory";
 import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../../game/act2AlveStory";
+import { loadSaveState } from "../../game/saveState";
 
 type StoryBeat = {
   id: string;
@@ -45,7 +46,7 @@ const STORY_BEATS: StoryBeat[] = [
     image: act2AlveImageForIndex(0),
     lineImages: ACT2_ALVE_DIALOGUE.map((_, index) => act2AlveImageForIndex(index)),
     body: ACT2_ALVE_DIALOGUE.map((beat) => {
-      const text = beat.text.replaceAll("{childName}", "Adam");
+      const text = beat.text;
       return beat.speaker === "child"
         ? `Barnet: ${text}`
         : beat.speaker === "alve"
@@ -67,7 +68,6 @@ const STORY_BEATS: StoryBeat[] = [
   ...MOTORBOAT_CONTRIBUTION_BEATS,
   ...ACT2_FINALE_BEATS.map((beat) => ({
     ...beat,
-    body: beat.body.map((line) => line.replaceAll("{childName}", "Adam")),
     stage: 4 as Act2VisualStage,
   })),
 
@@ -101,9 +101,13 @@ export default function Act2TestPage() {
   const [stage, setStage] = useState<Act2VisualStage>(1);
   const [storyIndex, setStoryIndex] = useState<number | null>(null);
   const [storyLineIndex, setStoryLineIndex] = useState(0);
+  const [childName, setChildName] = useState("Barnet");
 
   useEffect(() => {
     let cancelled = false;
+    void loadSaveState().then((saved) => {
+      if (!cancelled && saved?.childName?.trim()) setChildName(saved.childName.trim());
+    });
     void import("../../game/createAct2LakeGame").then(async ({ createAct2LakeGame }) => {
       if (cancelled || !hostRef.current) return;
       gameRef.current = await createAct2LakeGame(hostRef.current, 1);
@@ -237,7 +241,7 @@ export default function Act2TestPage() {
             </div>
           }
         >
-          <StoryTranscript childName="Adam" lines={[activeBeat.body[storyLineIndex] ?? activeBeat.body[0]]} />
+          <StoryTranscript childName={childName} lines={[activeBeat.body[storyLineIndex] ?? activeBeat.body[0]]} />
         </StoryMoment>
       )}
     </main>
