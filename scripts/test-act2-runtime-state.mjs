@@ -171,6 +171,41 @@ for (const order of prerequisiteOrders) {
   assert.equal(isMotorboatUnlocked(ordered), true, `motorboat did not unlock at 3/3 in ${order.join("→")}`);
 }
 
+for (const order of prerequisiteOrders) {
+  let fullRun = createDefaultAct2RuntimeState();
+
+  for (const project of order) {
+    fullRun = complete(fullRun, project);
+    if (projectCompletionReactionPending(fullRun, project)) {
+      fullRun = consumeProjectCompletionReaction(fullRun, project);
+    }
+  }
+
+  assert.equal(prerequisiteCompletionCount(fullRun), 3, `full run must reach 3/3 prerequisites in ${order.join("→")}`);
+  assert.equal(isMotorboatUnlocked(fullRun), true, `full run must unlock Motorbåten in ${order.join("→")}`);
+  assert.equal(totalAct2Contributions(fullRun), 48, `prerequisite projects must total exactly 48 contributions in ${order.join("→")}`);
+
+  fullRun = complete(fullRun, "motorboat");
+  assert.equal(fullRun.projects.motorboat.complete, true, `Motorbåten must complete in ${order.join("→")}`);
+  assert.equal(totalAct2Contributions(fullRun), 64, `Act 2 must contain exactly 64 authoritative contributions in ${order.join("→")}`);
+  assert.equal(fullRun.selectedProject, null, `completed Act 2 projects must leave no active project in ${order.join("→")}`);
+  assert.equal(act2FinalePending(fullRun), true, `Motorbåten 16/16 must unlock the separate finale in ${order.join("→")}`);
+
+  const beforeFinaleContributions = totalAct2Contributions(fullRun);
+  while (act2FinalePending(fullRun)) {
+    fullRun = advanceAct2Finale(fullRun);
+  }
+
+  assert.equal(totalAct2Contributions(fullRun), beforeFinaleContributions, `finale must never fabricate contribution 65 in ${order.join("→")}`);
+  assert.equal(fullRun.familyFinaleConsumed, true, `family finale must complete exactly once in ${order.join("→")}`);
+  assert.equal(fullRun.epilogueConsumed, true, `epilogue must complete exactly once in ${order.join("→")}`);
+  assert.equal(fullRun.act2Complete, true, `full Act 2 must reach act2Complete in ${order.join("→")}`);
+
+  const normalizedComplete = normalizeAct2RuntimeState(JSON.parse(JSON.stringify(fullRun)));
+  assert.equal(normalizedComplete.act2Complete, true, `completed Act 2 must survive restart in ${order.join("→")}`);
+  assert.equal(totalAct2Contributions(normalizedComplete), 64, `completed Act 2 restart must preserve all 64 contributions in ${order.join("→")}`);
+}
+
 const invalidFinale = normalizeAct2RuntimeState({
   version: 1,
   familyFinaleConsumed: true,

@@ -424,3 +424,10 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - Orphan contribution/completion/finale line indices are cleared when their owning story context no longer exists.
 - Finale progress cannot survive without a completed Motorbåt. Contradictory finaleIndex/familyFinaleConsumed combinations conservatively rewind rather than skip story.
 - Story-item ownership is not inferred from project progress. Backend ownership remains authoritative, so normalization never fabricates a purchase.
+
+
+### Full Act 2 state-machine run coverage — 2026-10-01
+- Automated runtime-state coverage now executes the complete Act 2 loop for all six valid Stugan/Bryggan/Båthuset project orders.
+- Each scenario completes all three prerequisite projects, consumes only authored completion reactions, unlocks Motorbåten at 3/3, completes Motorbåten, then advances the separate family finale/epilogue to act2Complete.
+- Every full run asserts exactly 48 prerequisite contributions + 16 Motorbåt contributions = 64 total. Finale/epilogue are contribution-neutral, so no contribution 65 can be fabricated.
+- Completed Act 2 state is normalized through a restart round-trip and must remain act2Complete with all 64 contributions preserved.
