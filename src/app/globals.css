@@ -63,9 +63,9 @@ main { min-height: 100dvh; }
 .dialogue-card > .dialogue-speaker,
 .dialogue-card .shared-story-transcript-line > .dialogue-speaker {
   position: absolute;
-  top: -1.05rem;
+  top: -.45rem;
   left: .9rem;
-  transform: none;
+  transform: translateY(-100%);
   z-index: 30;
 }
 .dialogue-speaker.child { background: #b8772d; }
