@@ -555,7 +555,6 @@ export default function Act2Page() {
       zIndex={80}
       background="rgba(9,14,10,.94)"
       dialogueClassName="act2-dialogue-card"
-      footer={contributionCandidate.backlog > 1 ? <small>{contributionCandidate.backlog - 1} questframsteg väntar bakom detta beat.</small> : undefined}
     >
       <p>{activeContributionPresentation?.text}</p>
     </StoryMoment>}
