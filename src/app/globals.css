@@ -198,3 +198,41 @@ main { min-height: 100dvh; }
   font-size: 0.9rem;
   line-height: 1.35;
 }
+
+
+/* Shared Story Engine */
+.shared-story-moment {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: auto;
+  isolation: isolate;
+}
+.shared-story-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.shared-story-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+.shared-story-tint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(14,20,15,.04) 45%, rgba(14,20,15,.32) 100%);
+}
+.shared-story-dialogue {
+  z-index: 2;
+}
+.shared-story-body {
+  min-width: 0;
+}
+.shared-story-body p {
+  margin: .4rem 0 .55rem;
+}
