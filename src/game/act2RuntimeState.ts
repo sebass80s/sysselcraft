@@ -146,6 +146,9 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     openingIndex: Number.isInteger(candidate.openingIndex)
       ? Math.max(0, Math.min(4, candidate.openingIndex as number))
       : 0,
+    openingLineIndex: Number.isInteger(candidate.openingLineIndex)
+      ? Math.max(0, Math.min(200, candidate.openingLineIndex as number))
+      : 0,
     openingComplete: candidate.openingComplete === true,
     bicycleSeen: candidate.bicycleSeen === true,
     alveIntroIndex: Number.isInteger(candidate.alveIntroIndex)
