@@ -10,7 +10,7 @@ Ship Act 2 as a real playable continuation of Act 1 without destabilizing the ac
 
 Target player journey:
 
-**Act 1 village → Valpen runs into forest → OPEN-001…005 → bicycle → Alve → choose one of three lake projects → restore Stugan/Bryggan/Båthuset in any order → unlock Motorbåten → family return → epilogue departure → SLUT PÅ ANDRA KAPITLET**
+**Act 1 village → Valpen runs into forest → OPEN-001…005 → bicycle → Alve → choose one of three lake projects → restore Stugan/Bryggan/Båthuset in any order → unlock Motorbåten → family return → veranda payoff → SLUT PÅ ANDRA KAPITLET**
 
 The isolated `/act2-test` route remains the story/acceptance laboratory. It is **not** production save progression.
 
@@ -157,8 +157,10 @@ Implement in this order:
 4. “Det är min kompis” payoff;
 5. veranda scene, including “Jag kunde inte laga det som hände. Men jag kunde laga stugan.”;
 6. Alve’s explicit gratitude to Barnet;
-7. departure sequence;
+7. quiet veranda payoff;
 8. black / **SLUT PÅ ANDRA KAPITLET**.
+
+The first true lake crossing is the Act 3 opening, not an Act 2 epilogue.
 
 Locked gratitude beat in the departure scene:
 - Alve says the outcome would never have happened without Barnet.
@@ -166,14 +168,7 @@ Locked gratitude beat in the departure scene:
 - He explains he thought fixing enough things would make everything solve itself.
 - He explicitly thanks Barnet and says he is glad Barnet is his friend.
 
-Epilogue Story Moment target set:
-- EPI-001: leaving the restored lake / gratitude scene.
-- EPI-002: across the lake.
-- EPI-003: the other side visible only as undefined distant wilderness.
-- EPI-004: into the unknown / final chapter image.
-
-Epilogue image production is **not complete as of 2026-09-30**. Do not invent repository filenames or claim integration until assets are actually uploaded.
-
+The previously planned EPI-001…004 departure image set is superseded. Do not produce or integrate an Act 2 crossing epilogue. Any first-crossing visuals now belong to Act 3.
 ## Phase 6 — Production acceptance
 
 Before connecting Act 2 as release progression, execute:
@@ -348,7 +343,7 @@ Do not lose this list when the implementation thread changes.
 1. **Physical iPhone acceptance** — deferred until Kalle has the Mac. Exercise the real loop: claimed quest → lake → Alve marker → approach/turn-in → Story Moment → visual stage update, plus restart boundaries and purchases. Never reset or manually mutate Adam's real save/backend for this test.
 2. **Replace Alve placeholder with final runtime art** — keep the existing single world entity, active-project positioning and interaction ownership. Search repo for a verified standalone Alve cutout first; do not invent an asset filename.
 3. **Act 2 dialogue polish** — first runtime pass completed 2026-10-01. Keep further line-level polish available after physical playthrough; do not change locked emotional canon.
-4. **Epilogue image production/integration** — EPI-001…004 remain incomplete. Do not fake repository assets. Final crossing may continue over the live lake until canonical images exist.
+4. **Act 3 crossing handoff** — do not create Act 2 departure/EPI assets. The first true crossing and its visuals belong to Act 3.
 
 
 ### Hardening checkpoint — 2026-10-01
