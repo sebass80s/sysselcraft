@@ -213,7 +213,10 @@ export default function Act2Page() {
       ]);
       if (cancelled) return;
       setChildName(act1?.childName || "Barnet");
-      if (act1?.worldFlags?.clinicCompletionSeen !== true) {
+      const clinicComplete =
+        act1?.worldFlags?.clinicCompletionSeen === true
+        || (act1?.construction.revealed.clinic ?? 0) >= 4;
+      if (!clinicComplete) {
         setAct2AccessAllowed(false);
         setReady(true);
         return;

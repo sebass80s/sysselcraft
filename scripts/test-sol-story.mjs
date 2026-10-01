@@ -99,6 +99,9 @@ assert.match(component, /saved\.construction\.revealed\.clinic >= 4 && saved\.wo
 assert.match(component, /worldFlags: \{ \.\.\.latestSaveRef\.current\.worldFlags, clinicCompletionSeen: true \}/, "Clinic completion must persist before closing the finale");
 assert.match(component, /await saveSaveState\(snapshot, true\); latestSaveRef\.current = snapshot; setClinicCompletionSeen\(true\); setClinicStoryIndex\(null\)/, "Clinic finale must close only after the completion flag is saved");
 assert.match(component, /setClinicCompletionSeen\(saved\.worldFlags\.clinicCompletionSeen === true\)/, "Clinic completion must restore from save");
+assert.match(component, /clinicCompletionSeen \|\| construction\.revealed\.clinic >= 4/, "completed legacy Clinic saves must expose the Act 2 path");
+const act2Page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
+assert.match(act2Page, /clinicCompletionSeen === true[\s\S]*construction\.revealed\.clinic[\s\S]*>= 4/, "Act 2 access must accept either the completion flag or an already-completed legacy Clinic");
 const questInbox = fs.readFileSync(new URL("../src/components/ChildBackendQuestInbox.tsx", import.meta.url), "utf8");
 assert.match(questInbox, /backendStoryFlags\.solChoseToStay === true/, "Clinic sync must trust authoritative backend Sol state");
 assert.match(questInbox, /backendStoryFlags\.clinicProgressionBaseline/, "Clinic sync must recover the authoritative backend baseline");
