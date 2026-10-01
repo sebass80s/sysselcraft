@@ -1138,12 +1138,12 @@ All nine files have been verified on branch `nova/local-construction-snapshot`.
 | INTERMEDIATE ECONOMY BEAT | IMAGE | `04-mira-lifebuoy-purchase.png` — Adam buys the proper life buoy from Mira. **This is not a real-world contribution.** Price is **300 SysselBux** (provisional; may be rebalanced later). |
 | JETTY-07 | IMAGE | `05-bathing-edge-cleanup.png` — Adam + Alve clear the bathing edge; new life buoy is present for mounting. |
 | JETTY-08 | REUSE | `05-bathing-edge-cleanup.png` carries the mounting transition; runtime stage swap 2/4→3/4 makes the life buoy permanent. |
-| JETTY-09 | LIVE | Social/summer-use portion is improved in runtime. |
+| JETTY-09 | REUSE | Hold `05-bathing-edge-cleanup.png` while the dialogue shifts from worksite toward summer-use potential; no new still. |
 | JETTY-10 | IMAGE | `07-henning-first-visitor.png` — Henning is the first authored social visitor. |
 | JETTY-11 | IMAGE | `08-first-water-break.png` — Adam + Alve take their first proper water break; friendship remains focal. |
 | JETTY-12 | IMAGE | `06-late-restoration.png` — later substantial restoration work; supports runtime 3/4→4/4 progression. |
-| JETTY-13 | LIVE | Last substantial weak/worksite element is finished. |
-| JETTY-14 | LIVE | Remaining work clutter is removed; visual language shifts to ordinary summer use. |
+| JETTY-13 | REUSE | Hold `06-late-restoration.png` while the last weak/worksite element is finished. |
+| JETTY-14 | REUSE | Use `09-jetty-complete.png` as the near-finished cleanup presentation; contribution 16 remains the authoritative completion beat. |
 | JETTY-15 | REUSE | `09-jetty-complete.png` carries the quiet pre-completion anticipation over the essentially finished physical state. |
 | JETTY-16 | MAJOR | `09-jetty-complete.png` — authoritative completion; worksite role ends and later ambient use becomes eligible. |
 
