@@ -13,6 +13,7 @@ import { StoryMoment } from "../../components/story/StoryMoment";
 import { StoryTranscript } from "../../components/story/StoryTranscript";
 import type { StoryDebugAct } from "../../game/storyDebug";
 import { ACT2_OPENING_BEATS } from "../../game/act2OpeningStory";
+import { ACT2_ALVE_DIALOGUE } from "../../game/act2AlveStory";
 
 type StoryBeat = {
   id: string;
@@ -36,36 +37,18 @@ const STORY_BEATS: StoryBeat[] = ACT2_OPENING_BEATS.map((beat, index) => ({
     image: "/assets/village/story-moments/act2/meeting-alve/bike.png",
     body: ["Vad är det för cykel? Den verkar inte höra hemma här."],
   },
-  {
-    id: "meet-first",
-    title: "Första mötet",
+  ...ACT2_ALVE_DIALOGUE.map((beat, index) => ({
+    id: `alve-intro-${String(index + 1).padStart(2, "0")}`,
+    title: index === 0 ? "Första mötet med Alve" : "Alve-intro",
     image: "/assets/village/story-moments/act2/meeting-alve/first-hello.png",
-    body: ["Alve försöker laga stugan själv.", "Han ser först lite misstänksam ut när Barnet kommer fram."],
-  },
-  {
-    id: "meet-reality-check",
-    title: "Det är mer jobb än det ser ut",
-    image: "/assets/village/story-moments/act2/meeting-alve/a-lot-of-work.png",
-    body: ["Alve har verkligen försökt själv, men börjar inse hur mycket som behöver göras.", "Barnet ser att det här är större än ett litet fix."],
-  },
-  {
-    id: "meet-pick",
-    title: "Vad ska vi börja med?",
-    image: "/assets/village/story-moments/act2/meeting-alve/pick.png",
-    body: ["Alve pekar ut Stugan, Bryggan och Båthuset.", "Välj vad ni ska reparera först."],
-  },
-  {
-    id: "meet-shows",
-    title: "Bra val",
-    image: "/assets/village/story-moments/act2/meeting-alve/alve-shows.png",
-    body: ["Valet är gjort och UI-skyltarna försvinner.", "Alve bekräftar vad ni ska börja reparera."],
-  },
-  {
-    id: "meet-friend",
-    title: "En ny kompis",
-    image: "/assets/village/story-moments/act2/meeting-alve/new-friend.png",
-    body: ["Alve börjar le.", "Nu känns det mindre som två främlingar och mer som början på ett lag."],
-  },
+    body: [beat.speaker === "child"
+      ? `Barnet: ${beat.text}`
+      : beat.speaker === "alve"
+        ? `Alve: ${beat.text}`
+        : beat.speaker === "unknown"
+          ? `Barnet: ${beat.text}`
+          : beat.text],
+  })),
   ...BOATHOUSE_CONTRIBUTION_BEATS.slice(0, 9),
   BOATHOUSE_STEERING_WHEEL_BEAT,
   ...BOATHOUSE_CONTRIBUTION_BEATS.slice(9),
