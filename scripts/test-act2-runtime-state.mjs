@@ -506,6 +506,8 @@ assert.ok(lakeGameSource.includes('setInteractive({ useHandCursor: true })'), "A
 assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
 
 const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
+const act2AlveStorySource = fs.readFileSync(new URL("../src/game/act2AlveStory.ts", import.meta.url), "utf8");
+const act2OpeningStorySource = fs.readFileSync(new URL("../src/game/act2OpeningStory.ts", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
   "02-into-the-forest.png",
@@ -518,9 +520,9 @@ for (const required of [
   "Laga {PROJECT_COPY[previewProject].object}",
 ]) assert.ok(page.includes(required), `missing Act 2 runtime contract: ${required}`);
 
-assert.ok(page.includes('{ speaker: "unknown", text: "Alve.", nameReveal: true }'), "Alve nameplate must still be Barnet on his name reveal line");
-assert.ok(page.includes('{ speaker: "alve", text: "Okej, {childName}.'), "the line after name reveal must use Alve nameplate");
-assert.ok(page.includes('{ speaker: "unknown", text: "Varför?" }'), "unknown Alve must own the pre-introduction Varför line");
+assert.ok(act2AlveStorySource.includes('{ speaker: "unknown", text: "Alve.", nameReveal: true }'), "Alve nameplate must still be Barnet on his name reveal line");
+assert.ok(act2AlveStorySource.includes('{ speaker: "alve", text: "Okej, {childName}.'), "the line after name reveal must use Alve nameplate");
+assert.ok(act2AlveStorySource.includes('{ speaker: "unknown", text: "Varför?" }'), "unknown Alve must own the pre-introduction Varför line");
 assert.ok(page.includes('🔒 Motorbåten'), "motorboat must remain visible while locked");
 assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector must derive 0/3→3/3 from canonical state");
 assert.ok(page.includes('(["cabin", "dock"] as const)'), "production route must derive completion reactions from the authored reaction set");
