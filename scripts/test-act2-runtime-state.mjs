@@ -539,7 +539,7 @@ assert.ok(page.includes("setContributionTurnInOpen(false);"), "finishing one bea
 assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should point the child toward Alve rather than bypassing world interaction");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
-assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");
+assert.match(village, /clinicCompletionSeen \|\| construction\.revealed\.clinic >= 4/, "Act 2 trigger must accept the completion flag or an already-completed legacy Clinic");
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay at locked 200 SysselBux");
 assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay at locked 200 SysselBux");
@@ -580,7 +580,7 @@ assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_JETTY_LIF
 assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_BOATHOUSE_STEERING_WHEEL_PRICE)"), "boathouse story item must use detailed insufficient-funds feedback");
 assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_MOTORBOAT_PARTS_PRICE)"), "motorboat story item must use detailed insufficient-funds feedback");
 
-assert.ok(page.includes("clinicCompletionSeen !== true"), "direct /act2 access must be hard-gated by the Act 1 Clinic completion flag");
+assert.match(page, /clinicCompletionSeen === true[\s\S]*construction\.revealed\.clinic[\s\S]*>= 4/, "direct /act2 access must accept completed legacy Clinic saves without opening early");
 assert.equal(page.includes("void saveAct2RuntimeState(next);"), false, "backend polling must not persist asynchronously inside a React state setter");
 assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body[0], "När ni kommer tillbaka till Mira håller hon redan på att göra beställningen klar.", "Motorbåten 6/16 must keep the locked post-purchase return scene");
 assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body.some((line) => /\b(?:150|200) SysselBux\b/.test(line)), false, "post-purchase Motorbåten beat must not repeat the wallet transaction");
@@ -626,3 +626,25 @@ assert.match(storyEngineSource, /prefix === "Barnet"/, "Barnet prefix must map t
 assert.match(act2PageSource, /activeContributionPresentation\?\.speaker/, "Act 2 contribution beats must use per-line speaker nameplates");
 assert.doesNotMatch(act2PageSource, /speaker=\{activeContributionBeat\.title\}/, "beat titles must never be used as contribution speaker nameplates");
 assert.doesNotMatch(boathouseStorySource, /Order-independence lock:/, "authoring notes must never leak into Båthuset runtime text");
+
+
+const storyTranscriptSource = fs.readFileSync(new URL("../src/components/story/StoryTranscript.tsx", import.meta.url), "utf8");
+const act2TestPageSource = fs.readFileSync(new URL("../src/app/act2-test/page.tsx", import.meta.url), "utf8");
+
+assert.match(storyEngineSource, /heading\?: string/, "Story Engine v1 must separate headings from speakers");
+assert.match(dialogueCardSource, /shared-story-heading/, "DialogueCard must own semantic scene headings");
+assert.match(storyRunnerSource, /StoryTranscript/, "StoryRunner must route multi-line copy through shared speaker parsing");
+assert.match(storyTranscriptSource, /parseStoryLine/, "StoryTranscript must centralize prefix-to-nameplate rendering");
+
+const parsedChild = parseStoryLine("Barnet: Hej.", "Ture");
+assert.deepEqual(parsedChild, { text: "Hej.", speaker: "Ture", speakerTone: "child" });
+const parsedAlve = parseStoryLine("Alve: Japp.", "Ture");
+assert.deepEqual(parsedAlve, { text: "Japp.", speaker: "Alve", speakerTone: "default" });
+assert.deepEqual(parseStoryLine("Du tittar mot sjön.", "Ture"), { text: "Du tittar mot sjön." });
+
+assert.match(act2PageSource, /<StoryMoment[\s\S]*meeting-alve\/pick\.png/, "project chooser must use the shared Story Engine shell");
+assert.match(act2PageSource, /purchaseRequired && <StoryMoment/, "purchase gates must use the shared Story Engine shell");
+assert.match(act2PageSource, /namingRequired && <StoryMoment/, "naming gate must use the shared Story Engine shell");
+assert.doesNotMatch(act2PageSource, /className="story-moment"/, "Act 2 production must not keep a parallel legacy Story Moment shell");
+assert.match(act2TestPageSource, /<StoryMoment[\s\S]*<StoryTranscript/, "Act 2 test lab must render through the same Story Engine v1 presentation path");
+assert.doesNotMatch(act2TestPageSource, /<Image/, "Act 2 test lab must not keep a separate image/dialogue overlay implementation");
