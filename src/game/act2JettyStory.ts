@@ -112,6 +112,7 @@ export const JETTY_CONTRIBUTION_BEATS: Act2JettyBeat[] = [
   {
     id: "jetty-05",
     title: "5/16 · Det börjar se badbart ut",
+    image: "/assets/village/story-moments/act2/jetty/02-linus-salvaged-timber.png",
     body: [
       "Alve: Vet du vad som är det bästa med en brygga?",
       "Barnet: Att den inte ramlar ihop?",
