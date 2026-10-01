@@ -518,6 +518,7 @@ assert.ok(lakeGameSource.includes('this.add.image(815, 515, "act2-child")'), "Ac
 
 
 const page = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
+const act2OpeningStorySource = fs.readFileSync(new URL("../src/game/act2OpeningStory.ts", import.meta.url), "utf8");
 const act2AlveStorySource = fs.readFileSync(new URL("../src/game/act2AlveStory.ts", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
@@ -525,11 +526,17 @@ for (const required of [
   "03-through-the-trees.png",
   "04-first-view-of-the-lake.png",
   "05-the-bicycle.png",
+]) assert.ok(act2OpeningStorySource.includes(required), `missing canonical Act 2 opening asset: ${required}`);
+for (const required of [
   "meeting-alve/bike.png",
   "meeting-alve/first-hello.png",
+]) assert.ok(act2AlveStorySource.includes(required), `missing canonical Alve meeting asset: ${required}`);
+for (const required of [
+  "ACT2_OPENING_BEATS",
+  "ACT2_ALVE_DIALOGUE",
   "Vad börjar vi med?",
   "Laga {PROJECT_COPY[previewProject].object}",
-]) assert.ok(page.includes(required), `missing Act 2 runtime contract: ${required}`);
+]) assert.ok(page.includes(required), `missing shared Act 2 runtime contract: ${required}`);
 
 assert.ok(act2AlveStorySource.includes('{ speaker: "unknown", text: "Alve.", nameReveal: true }'), "Alve nameplate must still be Barnet on his name reveal line");
 assert.ok(act2AlveStorySource.includes('{ speaker: "alve", text: "Okej, {childName}.'), "the line after name reveal must use Alve nameplate");
