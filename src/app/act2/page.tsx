@@ -468,7 +468,7 @@ export default function Act2Page() {
 
     {!state.openingComplete && <section style={{ position: "absolute", inset: 0, background: "#111" }}>
       <Image src={opening.image} alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" style={{ maxHeight: "44vh", overflowY: "auto" }}>
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true" style={{ maxHeight: "44vh", overflowY: "auto" }}>
         <span className="dialogue-speaker">{opening.title}</span>
         {opening.body.map((line, index) => <p key={index}>{line.replaceAll("Barnet:", childName + ":")}</p>)}
         <button className="primary-button dialogue-next" onClick={() => void advanceOpening()}>
@@ -479,7 +479,7 @@ export default function Act2Page() {
 
     {state.openingComplete && !state.bicycleSeen && <section className="story-moment" role="presentation">
       <Image src="/assets/village/story-moments/act2/meeting-alve/bike.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
         <span className="dialogue-speaker child">{childName}</span>
         <p>Vad är det för cykel? Den verkar inte höra hemma här.</p>
         <button className="primary-button dialogue-next" onClick={() => void commit({ ...state, bicycleSeen: true })}>Fortsätt</button>
@@ -488,7 +488,7 @@ export default function Act2Page() {
 
     {state.bicycleSeen && !state.alveIntroComplete && <section className="story-moment" role="presentation">
       <Image src="/assets/village/story-moments/act2/meeting-alve/first-hello.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
         {alveBeat?.speaker && <span className={`dialogue-speaker ${alveBeat.speaker === "child" ? "child" : ""}`}>
           {alveBeat.speaker === "child" ? childName : alveBeat.speaker === "alve" ? "Alve" : "Barnet"}
         </span>}
@@ -501,7 +501,7 @@ export default function Act2Page() {
 
     {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !completionProject && <section className="story-moment" role="presentation">
       <Image src="/assets/village/story-moments/act2/meeting-alve/pick.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">Alve</span>
         <p>{previewProject === "motorboat" ? motorboatPreview : previewProject ? PROJECT_COPY[previewProject].preview : selectionPrompt}</p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
@@ -520,7 +520,7 @@ export default function Act2Page() {
 
     {finalePending && activeFinaleBeat && activeFinaleLine && <section style={{ position:"absolute", inset:0, zIndex:100, background:"rgba(6,10,8,.96)" }} role="presentation">
       {activeFinaleBeat.image && <Image src={activeFinaleBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">{activeFinaleBeat.title}</span>
         <p>{activeFinaleLine.replace(/^Barnet:/, childName + ":")}</p>
         <button className="primary-button dialogue-next" onClick={() => void advanceFinaleStory()}>
@@ -530,7 +530,7 @@ export default function Act2Page() {
     </section>}
     {completionProject && activeCompletionBeat && activeCompletionLine && <section style={{ position:"absolute", inset:0, zIndex:90, background:"rgba(9,14,10,.94)" }} role="presentation">
       {activeCompletionBeat.image && <Image src={activeCompletionBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">{activeCompletionBeat.title}</span>
         <p>{activeCompletionLine.replace(/^Barnet:/, childName + ":")}</p>
         <button className="primary-button dialogue-next" onClick={() => void advanceCompletionReaction()}>
@@ -540,7 +540,7 @@ export default function Act2Page() {
     </section>}
     {purchaseRequired && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
       {purchaseGateBeat?.image && <Image src={purchaseGateBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">{purchaseGateCopy.title}</span>
         <p>{purchaseGateCopy.text}</p>
         <p>{purchaseGateCopy.detail}</p>
@@ -548,7 +548,7 @@ export default function Act2Page() {
       </div>
     </section>}
     {namingRequired && <section style={{ position:"absolute", inset:0, zIndex:85, background:"rgba(9,14,10,.94)", display:"grid", placeItems:"center" }} role="presentation">
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">Vår båt</span>
         <p>Alve: Den behöver ett namn.</p>
         <input
@@ -565,7 +565,7 @@ export default function Act2Page() {
     </section>}
     {contributionTurnInOpen && contributionCandidate && activeContributionBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
       {activeContributionBeat.image && <Image src={activeContributionBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
-      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">{activeContributionBeat.title}</span>
         <p>{activeContributionLine.replace(/^Barnet:/, childName + ":")}</p>
         <button className="primary-button dialogue-next" onClick={() => void advanceContributionStory()}>
