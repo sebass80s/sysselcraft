@@ -8,6 +8,7 @@ import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/ac
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS, MOTORBOAT_PARTS_PRICE } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
+import { parseStoryLine } from "../src/game/storyEngine.ts";
 import {
   act2FinalePending,
   advanceAct2Finale,
