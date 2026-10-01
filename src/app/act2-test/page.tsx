@@ -5,6 +5,7 @@ import type { Act2LakeGameHandle } from "../../game/createAct2LakeGame";
 import type { Act2VisualStage } from "../../game/act2VisualAssets";
 import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../../game/act2CabinStory";
+import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../../game/act2BoathouseStory";
 
 type StoryBeat = {
   id: string;
@@ -118,90 +119,9 @@ const STORY_BEATS: StoryBeat[] = [
     image: "/assets/village/story-moments/act2/meeting-alve/new-friend.png",
     body: ["Alve börjar le.", "Nu känns det mindre som två främlingar och mer som början på ett lag."],
   },
-  {
-    id: "boat-01",
-    title: "1/16 · Under bråten",
-    image: "/assets/village/story-moments/act2/boathouse/under-the-rubble.png",
-    body: ["Barnet och Alve börjar röja det gamla båthuset.", "Något tungt verkar ligga fast under bråten."],
-  },
-  {
-    id: "boat-02",
-    title: "2/16 · Den låsta kistan",
-    image: "/assets/village/story-moments/act2/boathouse/finding-chest.png",
-    body: ["De får fram en gammal tung kista.", "Låset sitter fast och vägrar ge med sig."],
-  },
-  {
-    id: "boat-03",
-    title: "3/16 · Henning har en idé",
-    image: "/assets/village/story-moments/act2/boathouse/henning-will-blow-it-open.png",
-    body: ["De ber Henning om hjälp.", "Hennings lösning är betydligt mer ambitiös än någon hade tänkt sig."],
-  },
-  {
-    id: "boat-04a",
-    title: "4/16 · BOOM",
-    image: "/assets/village/story-moments/act2/boathouse/henning-after-tnt.png",
-    body: ["Klipp bort. BOOM. Klipp tillbaka.", "Alve: Är alla i din by så här?", "Barnet: Typ.", "Alve: …jag gillar den här byn."],
-  },
-  {
-    id: "boat-04b",
-    title: "4/16 · Ett gammalt fotografi",
-    image: "/assets/village/story-moments/act2/boathouse/find-photography.png",
-    body: ["I kistan finns gamla verktyg, båtdelar och ett gammalt fotografi från sjön."],
-  },
-  {
-    id: "boat-04c",
-    title: "4/16 · Den där båten…",
-    image: "/assets/village/story-moments/act2/boathouse/looking-at-boat-photo.png",
-    body: ["Alve: Den där båten…", "Barnet: Vadå?", "Alve: Det är ju den.", "Barnet: Den på bilden?", "Alve: Mm.", "Alve: Jag undrar vart de brukade åka."],
-  },
-  {
-    id: "boat-05",
-    title: "5/16 · Fynden måste få en plats",
-    image: "/assets/village/story-moments/act2/boathouse/alve-finds-a-tool.png",
-    body: ["Barnet och Alve går igenom verktygen och båtdelarna från kistan.", "Det gamla arbetsområdet är för rörigt för att användas ordentligt."],
-  },
-  {
-    id: "boat-06",
-    title: "6–8/16 · Mira ordnar verkstaden",
-    image: "/assets/village/story-moments/act2/boathouse/mira-you-need-more-tools.png",
-    body: ["Mira ser kaoset och hjälper dem göra arbetsplatsen användbar.", "Mira: Ni behöver inte fler verktyg. Ni behöver kunna hitta de ni redan har.", "Alve: Men först ska vi fixa den gamla båten."],
-  },
-  {
-    id: "boat-09",
-    title: "9/16 · En gammal ritning",
-    image: "/assets/village/story-moments/act2/boathouse/boxcar-blueprint.png",
-    body: ["I det som återstår hittar de en gammal ritning till en lådbil.", "Alve bestämmer omedelbart att de ska bygga den."],
-  },
-  {
-    id: "boat-10",
-    title: "10/16 · Lådbilen byggs",
-    image: "/assets/village/story-moments/act2/boathouse/boxcar-built.png",
-    body: ["De återanvänder delar och bygger sin första riktiga verkstadspryl tillsammans."],
-  },
-  {
-    id: "boat-11",
-    title: "11/16 · Första provturen",
-    image: "/assets/village/story-moments/act2/boathouse/boxcar-broken.png",
-    body: ["Barnet: Gick det bra?", "Alve: Japp.", "Barnet: Hjulet lossnade.", "Alve: Då vet vi vad vi ska fixa."],
-  },
-  {
-    id: "boat-12",
-    title: "12/16 · Version två",
-    image: "/assets/village/story-moments/act2/boathouse/boxcar-working.png",
-    body: ["Den förbättrade lådbilen fungerar.", "Alve: Okej. Den där var övning.", "Barnet: För vad?", "Alve: Båten."],
-  },
-  {
-    id: "boat-13-15",
-    title: "13–15/16 · Gör plats för båten",
-    image: "/assets/village/story-moments/act2/boathouse/boat-ramp.png",
-    body: ["Båtplatsen röjs och den gamla slipvagnen återställs.", "Några gamla delar från kistan visar sig passa.", "Alve: Då kan vi få in båten.", "Barnet: När vi får laga den.", "Alve: När vi får laga den."],
-  },
-  {
-    id: "boat-16",
-    title: "16/16 · Båthuset är klart",
-    image: "/assets/village/story-moments/act2/boathouse/16.png",
-    body: ["Verkstaden, fotografiet, lådbilen och slipen finns kvar som spår av hela resan.", "Barnet: Klart.", "Alve: Nästan.", "Barnet: Vad är det som är kvar?", "Alve: Den."],
-  },
+  ...BOATHOUSE_CONTRIBUTION_BEATS.slice(0, 9),
+  BOATHOUSE_STEERING_WHEEL_BEAT,
+  ...BOATHOUSE_CONTRIBUTION_BEATS.slice(9),
   ...CABIN_CONTRIBUTION_BEATS,
   CABIN_WAITING_REACTION,
   ...JETTY_CONTRIBUTION_BEATS.slice(0, 6),

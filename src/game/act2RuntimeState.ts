@@ -21,6 +21,7 @@ export type Act2RuntimeState = {
   selectedProject: Act2Project | null;
   backendClaimBaseline: number | null;
   jettyLifebuoyOwned: boolean;
+  boathouseSteeringWheelOwned: boolean;
   consumedProjectCompletionIds: string[];
   projects: Record<Act2Project, Act2ProjectState>;
   familyFinaleConsumed: boolean;
@@ -47,6 +48,7 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     selectedProject: null,
     backendClaimBaseline: null,
     jettyLifebuoyOwned: false,
+    boathouseSteeringWheelOwned: false,
     consumedProjectCompletionIds: [],
     projects: {
       cabin: emptyProject(),
@@ -132,6 +134,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       ? candidate.backendClaimBaseline
       : null,
     jettyLifebuoyOwned: candidate.jettyLifebuoyOwned === true,
+    boathouseSteeringWheelOwned: candidate.boathouseSteeringWheelOwned === true,
     consumedProjectCompletionIds: normalizeBeatIds(candidate.consumedProjectCompletionIds),
     projects,
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
@@ -210,6 +213,7 @@ export function withBackendStoryFlags(
   return {
     ...normalized,
     jettyLifebuoyOwned: worldFlags.act2JettyLifebuoyOwned === true,
+    boathouseSteeringWheelOwned: worldFlags.act2BoathouseSteeringWheelOwned === true,
   };
 }
 
@@ -218,6 +222,13 @@ export function jettyPurchaseRequired(state: Act2RuntimeState) {
   return normalized.projects.dock.contributions >= 6
     && normalized.projects.dock.contributions < 16
     && !normalized.jettyLifebuoyOwned;
+}
+
+export function boathousePurchaseRequired(state: Act2RuntimeState) {
+  const normalized = normalizeAct2RuntimeState(state);
+  return normalized.projects.boathouse.contributions >= 9
+    && normalized.projects.boathouse.contributions < 16
+    && !normalized.boathouseSteeringWheelOwned;
 }
 
 export function projectCompletionReactionId(project: Act2Project) {

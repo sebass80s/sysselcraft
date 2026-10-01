@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/act2CabinStory.ts";
+import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import {
   canSelectProject,
   consumeProjectCompletionReaction,
   createDefaultAct2RuntimeState,
   isMotorboatUnlocked,
+  boathousePurchaseRequired,
   jettyPurchaseRequired,
   normalizeAct2RuntimeState,
   prerequisiteCompletionCount,
@@ -217,6 +219,33 @@ assert.equal(CABIN_CONTRIBUTION_BEATS[15].title, "16/16 · Stugan är klar");
 assert.ok(CABIN_CONTRIBUTION_BEATS[15].body.includes("Alve: Det är vårt nu också."), "Cabin finale must keep the locked shared-home payoff");
 assert.ok(CABIN_WAITING_REACTION.body.includes("Alve: Du är ju här."), "Cabin waiting reaction must keep the locked friendship payoff");
 
+assert.equal(BOATHOUSE_CONTRIBUTION_BEATS.length, 16, "Båthuset must keep exactly 16 authoritative contribution beats");
+assert.deepEqual(
+  BOATHOUSE_CONTRIBUTION_BEATS.map((beat) => beat.id),
+  Array.from({ length: 16 }, (_, index) => `boathouse:${String(index + 1).padStart(2, "0")}`),
+  "Båthuset beat IDs must map one-to-one to contributions",
+);
+assert.equal(BOATHOUSE_CONTRIBUTION_BEATS[3].stage, 2);
+assert.equal(BOATHOUSE_CONTRIBUTION_BEATS[7].stage, 3);
+assert.equal(BOATHOUSE_CONTRIBUTION_BEATS[11].stage, 4);
+assert.equal(BOATHOUSE_CONTRIBUTION_BEATS[15].title, "16/16 · Båthuset är klart");
+assert.ok(BOATHOUSE_CONTRIBUTION_BEATS[15].body.includes("Alve: När det är dags."));
+assert.ok(BOATHOUSE_STEERING_WHEEL_BEAT.body.includes("Mira: Hundra SysselBux."));
+
+let boathouseGate = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 0);
+boathouseGate = withSelectedProject(boathouseGate, "boathouse");
+for (let i = 1; i <= 9; i++) {
+  const next = nextAct2Contribution(boathouseGate, i);
+  boathouseGate = withPresentedContribution(boathouseGate, "boathouse", next.beatId, next.visibleStage);
+}
+assert.equal(boathouseGate.projects.boathouse.contributions, 9);
+assert.equal(boathousePurchaseRequired(boathouseGate), true, "steering wheel must gate Båthuset between 9 and 10");
+const countBeforeWheel = totalAct2Contributions(boathouseGate);
+boathouseGate = withBackendStoryFlags(boathouseGate, { act2BoathouseSteeringWheelOwned: true });
+assert.equal(boathousePurchaseRequired(boathouseGate), false);
+assert.equal(totalAct2Contributions(boathouseGate), countBeforeWheel, "steering wheel purchase must be contribution-neutral");
+assert.equal(nextAct2Contribution(boathouseGate, 10)?.beatId, "boathouse:10");
+
 const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
@@ -238,13 +267,17 @@ assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector
 assert.ok(page.includes('projectCompletionReactionPending(state, "dock")'), "jetty completion reaction must be derived from persisted state");
 assert.ok(page.includes("JETTY_COMPLETION_REACTION"), "production route must present the canonical jetty completion reaction");
 assert.ok(page.includes("CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Cabin contribution track");
+assert.ok(page.includes("BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Båthuset contribution track");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 300'), "jetty lifebuoy price must stay aligned with locked provisional balance");
+assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 100'), "Båthuset steering wheel price must stay aligned with locked provisional balance");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_jetty_lifebuoy")'), "jetty lifebuoy must use the atomic story purchase RPC");
 assert.ok(village.includes("Livboj till bryggan"), "Mira must expose the Act 2 lifebuoy in her real shop");
 assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");
+assert.ok(village.includes("Ratt till lådbilen"), "Mira must expose the Båthuset steering wheel in her real shop");
+assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel stock must derive from Båthuset progress");
 
 console.log("Act 2 vertical-slice state/route contract PASS");

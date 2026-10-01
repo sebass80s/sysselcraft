@@ -8,6 +8,7 @@ import {
   isMotorboatUnlocked,
   loadAct2RuntimeState,
   consumeProjectCompletionReaction,
+  boathousePurchaseRequired,
   jettyPurchaseRequired,
   nextAct2Contribution,
   prerequisiteCompletionCount,
@@ -25,6 +26,7 @@ import { getPairedChildId } from "../../backend/childDeviceBinding";
 import { getChildGameState } from "../../backend/familyRepository";
 import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
 import { CABIN_CONTRIBUTION_BEATS } from "../../game/act2CabinStory";
+import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../../game/act2BoathouseStory";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
@@ -258,7 +260,10 @@ export default function Act2Page() {
           setBackendSyncError("");
           setState((current) => {
             const next = withBackendStoryFlags(current, backend.worldFlags);
-            if (next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned) {
+            if (
+              next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
+              || next.boathouseSteeringWheelOwned !== current.boathouseSteeringWheelOwned
+            ) {
               void saveAct2RuntimeState(next);
               return next;
             }
@@ -331,7 +336,13 @@ export default function Act2Page() {
       : prerequisiteDone === 2
         ? "Två klara. Då är det bara en kvar. Den har väntat länge nog."
         : "Stugan är klar. Bryggan är klar. Båthuset är klart. Det är dags.";
-  const purchaseRequired = state.selectedProject === "dock" && jettyPurchaseRequired(state);
+  const jettyPurchaseGate = state.selectedProject === "dock" && jettyPurchaseRequired(state);
+  const boathousePurchaseGate = state.selectedProject === "boathouse" && boathousePurchaseRequired(state);
+  const purchaseRequired = jettyPurchaseGate || boathousePurchaseGate;
+  const purchaseGateBeat = jettyPurchaseGate ? JETTY_LIFEBUOY_BEAT : boathousePurchaseGate ? BOATHOUSE_STEERING_WHEEL_BEAT : null;
+  const purchaseGateCopy = jettyPurchaseGate
+    ? { title: "Bryggan · nästa steg", text: "Sol vill att ni skaffar en riktig livboj innan arbetet fortsätter.", detail: "Mira kan ordna den i lanthandeln för 300 SysselBux." }
+    : { title: "Båthuset · nästa steg", text: "Lådbilen behöver en riktig ratt innan ni kan bygga vidare.", detail: "Mira har en som passar för 100 SysselBux." };
   const contributionCandidate = backendWorldProgression === null || purchaseRequired
     ? null
     : nextAct2Contribution(state, backendWorldProgression);
@@ -339,7 +350,9 @@ export default function Act2Page() {
     ? JETTY_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
     : contributionCandidate?.project === "cabin"
       ? CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
-      : null;
+      : contributionCandidate?.project === "boathouse"
+        ? BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
+        : null;
   const activeContributionLine = activeContributionBeat?.body[contributionLineIndex] ?? null;
   const jettyCompletionPending = projectCompletionReactionPending(state, "dock");
   const activeCompletionLine = jettyCompletionPending
@@ -437,12 +450,12 @@ export default function Act2Page() {
         </button>
       </div>
     </section>}
-    {purchaseRequired && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
-      {JETTY_LIFEBUOY_BEAT.image && <Image src={JETTY_LIFEBUOY_BEAT.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
+    {purchaseRequired && purchaseGateBeat && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
+      {purchaseGateBeat.image && <Image src={purchaseGateBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">Bryggan · nästa steg</span>
-        <p>Sol vill att ni skaffar en riktig livboj innan arbetet fortsätter.</p>
-        <p>Mira kan ordna den i lanthandeln för 300 SysselBux.</p>
+        <span className="dialogue-speaker">{purchaseGateCopy.title}</span>
+        <p>{purchaseGateCopy.text}</p>
+        <p>{purchaseGateCopy.detail}</p>
         <a className="primary-button dialogue-next" href="/">Till Mira i byn</a>
       </div>
     </section>}
