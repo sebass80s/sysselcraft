@@ -13,7 +13,6 @@ type DialogueCardProps = {
   nextDisabled?: boolean;
   footer?: ReactNode;
   className?: string;
-  scrollable?: boolean;
 };
 
 export function DialogueCard({
@@ -26,7 +25,6 @@ export function DialogueCard({
   nextDisabled = false,
   footer,
   className = "",
-  scrollable = false,
 }: DialogueCardProps) {
   const speakerClass = speakerTone === "default" ? "" : ` ${speakerTone}`;
   return (
@@ -34,7 +32,6 @@ export function DialogueCard({
       className={`dialogue-card story-moment-dialogue shared-story-dialogue ${className}`.trim()}
       role="dialog"
       aria-modal="true"
-      style={scrollable ? { maxHeight: "44vh", overflowY: "auto" } : undefined}
     >
       {heading && <h2 className="shared-story-heading">{heading}</h2>}
       {speaker && <span className={`dialogue-speaker${speakerClass}`}>{speaker}</span>}
