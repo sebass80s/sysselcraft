@@ -31,6 +31,7 @@ import {
 
 const empty = createDefaultAct2RuntimeState();
 assert.equal(empty.openingIndex, 0);
+assert.equal(empty.openingLineIndex, 0);
 assert.equal(empty.openingComplete, false);
 assert.equal(empty.selectedProject, null);
 assert.equal(prerequisiteCompletionCount(empty), 0);
@@ -67,6 +68,7 @@ assert.deepEqual(restored.projects.cabin.consumedBeatIds, ["cabin:01", "cabin:02
 
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: 99 }).openingIndex, 4);
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: -4 }).openingIndex, 0);
+assert.equal(normalizeAct2RuntimeState({ version: 1, openingLineIndex: 7 }).openingLineIndex, 7);
 
 let state = withSelectedProject(empty, "dock");
 assert.equal(state.selectedProject, "dock");
@@ -652,3 +654,20 @@ assert.match(act2PageSource, /namingRequired && <StoryMoment/, "naming gate must
 assert.doesNotMatch(act2PageSource, /className="story-moment"/, "Act 2 production must not keep a parallel legacy Story Moment shell");
 assert.match(act2TestPageSource, /<StoryMoment[\s\S]*<StoryTranscript/, "Act 2 test lab must render through the same Story Engine v1 presentation path");
 assert.doesNotMatch(act2TestPageSource, /<Image/, "Act 2 test lab must not keep a separate image/dialogue overlay implementation");
+
+
+assert.match(
+  act2PageSource,
+  /lines: \[opening\.body\[state\.openingLineIndex\] \?\? opening\.body\[0\]\]/,
+  "Act 2 opening must present one authored line at a time",
+);
+assert.doesNotMatch(
+  act2PageSource,
+  /lines: opening\.body/,
+  "Act 2 opening must not render the full beat body as one scrollable card",
+);
+assert.match(
+  act2TestPageSource,
+  /StoryTranscript lines=\{\[activeBeat\.body\[storyLineIndex\]/,
+  "Act 2 test lab must mirror line-by-line production presentation",
+);
