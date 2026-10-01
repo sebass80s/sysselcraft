@@ -438,3 +438,11 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - Runtime display size is locked at 78×117 world pixels, keeping Alve clearly child-scale relative to adult Linus while matching the existing child-world scale.
 - Existing ACT2_ALVE_WORK_POSITIONS, active-project ownership, turn-in marker, 135px hand-in radius and nearby `Tryck på Alve` interaction are unchanged.
 - The outer Alve container remains the interaction owner so later art revisions do not require rewriting gameplay logic.
+
+
+### Båthuset dialogue polish TODO — 2026-10-01
+- Båthuset 1–16 requires a later dialogue rewrite/polish pass.
+- Current issue is prose rhythm, not runtime logic: too many short alternating lines, too much ping-pong/popcorn dialogue, and too little sustained scene flow between character exchanges.
+- Preserve locked plot beats, discoveries, jokes, project order-independence, images/stages and gameplay gates.
+- Goal for rewrite: fewer line-by-line volleys, more natural paragraph-length beats, clearer action→reaction→payoff structure, and stronger distinction between narration and spoken dialogue.
+- Do not perform this rewrite during the current Story Engine refactor unless a line is technically malformed or leaks authoring text into runtime.
