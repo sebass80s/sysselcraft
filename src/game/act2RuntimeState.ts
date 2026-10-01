@@ -195,14 +195,13 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   }
 
   const validCompletionIds = new Set<string>();
-  if (normalized.projects.cabin.complete) validCompletionIds.add(projectCompletionReactionId("cabin"));
   if (normalized.projects.dock.complete) validCompletionIds.add(projectCompletionReactionId("dock"));
   normalized.consumedProjectCompletionIds = normalized.consumedProjectCompletionIds
     .filter((id) => validCompletionIds.has(id));
 
   if (!normalized.selectedProject) normalized.contributionLineIndex = 0;
 
-  const pendingCompletionProject = (["cabin", "dock"] as const)
+  const pendingCompletionProject = (["dock"] as const)
     .find((project) => normalized.projects[project].complete
       && !normalized.consumedProjectCompletionIds.includes(projectCompletionReactionId(project)));
   if (!pendingCompletionProject) normalized.completionLineIndex = 0;
@@ -337,7 +336,7 @@ export function projectCompletionReactionId(project: Act2Project) {
   return `${project}:completion-reaction`;
 }
 
-const PROJECTS_WITH_COMPLETION_REACTIONS: readonly Act2Project[] = ["cabin", "dock"];
+const PROJECTS_WITH_COMPLETION_REACTIONS: readonly Act2Project[] = ["dock"];
 
 export function projectCompletionReactionPending(state: Act2RuntimeState, project: Act2Project) {
   const normalized = normalizeAct2RuntimeState(state);
