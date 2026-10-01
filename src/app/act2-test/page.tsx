@@ -9,6 +9,8 @@ import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../../game/act
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../../game/act2BoathouseStory";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../../game/act2MotorboatStory";
 import { ACT2_FINALE_BEATS } from "../../game/act2FinaleStory";
+import { StoryDebugConsole } from "../../components/story/StoryDebugConsole";
+import type { StoryDebugAct } from "../../game/storyDebug";
 
 type StoryBeat = {
   id: string;
@@ -135,6 +137,31 @@ const STORY_BEATS: StoryBeat[] = [
   ...ACT2_FINALE_BEATS.map((beat) => ({ ...beat, stage: 4 as Act2VisualStage })),
 ];
 
+
+const storyGroupForIndex = (index: number) => {
+  if (index <= 4) return "Opening";
+  if (index <= 10) return "Meeting Alve";
+  const beat = STORY_BEATS[index];
+  if (!beat) return "Story";
+  if (beat.id.startsWith("boathouse:")) return "Båthuset";
+  if (beat.id.startsWith("cabin:")) return "Stugan";
+  if (beat.id.startsWith("dock:")) return "Bryggan";
+  if (beat.id.startsWith("motorboat:")) return "Motorbåten";
+  if (beat.id.startsWith("finale:") || beat.id.startsWith("epilogue:")) return "Finale";
+  return "Story";
+};
+
+const STORY_DEBUG_ACTS: StoryDebugAct[] = [{
+  id: "act2",
+  label: "Act 2 · Sjön",
+  entries: STORY_BEATS.map((beat, index) => ({
+    id: beat.id,
+    label: beat.title,
+    group: storyGroupForIndex(index),
+    index,
+  })),
+}];
+
 export default function Act2TestPage() {
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Act2LakeGameHandle | null>(null);
@@ -160,6 +187,14 @@ export default function Act2TestPage() {
   };
 
   const activeBeat = storyIndex === null ? null : STORY_BEATS[storyIndex];
+
+  const jumpToDebugEntry = (_actId: string, entryId: string) => {
+    const entry = STORY_DEBUG_ACTS[0].entries.find((candidate) => candidate.id === entryId);
+    if (!entry) return;
+    setStoryIndex(entry.index);
+    const beat = STORY_BEATS[entry.index];
+    if (beat?.stage) chooseStage(beat.stage);
+  };
 
   const closeStory = () => setStoryIndex(null);
   const nextStory = () => {
@@ -198,6 +233,14 @@ export default function Act2TestPage() {
   return (
     <main style={{ width: "100vw", height: "100dvh", overflow: "hidden", background: "#17251c", position: "relative" }}>
       <div ref={hostRef} style={{ width: "100%", height: "100%" }} />
+
+      <StoryDebugConsole
+        acts={STORY_DEBUG_ACTS}
+        activeActId="act2"
+        activeEntryId={activeBeat?.id ?? null}
+        onJump={jumpToDebugEntry}
+        onCloseStory={closeStory}
+      />
 
       <div style={{
         position: "fixed", top: "max(10px, env(safe-area-inset-top))", left: 12,
