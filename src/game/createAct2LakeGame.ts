@@ -227,11 +227,14 @@ export async function createAct2LakeGame(
 
       this.updateAlveInteractionFeedback();
 
-            if (this.dog) {
+      if (this.dog) {
         const desiredX = this.player.x - (this.player.flipX ? -54 : 54);
         const desiredY = this.player.y + 18;
-        this.dog.x += (desiredX - this.dog.x) * Math.min(1, delta / 220);
-        this.dog.y += (desiredY - this.dog.y) * Math.min(1, delta / 220);
+        const followStep = Math.min(1, delta / 220);
+        const nextDogX = this.dog.x + (desiredX - this.dog.x) * followStep;
+        const nextDogY = this.dog.y + (desiredY - this.dog.y) * followStep;
+        if (this.isWalkable(nextDogX, this.dog.y)) this.dog.x = nextDogX;
+        if (this.isWalkable(this.dog.x, nextDogY)) this.dog.y = nextDogY;
         this.dog.setDepth(1000 + Math.round(this.dog.y));
       }
     }
