@@ -218,17 +218,46 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
           ? backendStoryFlags.clinicProgressionBaseline
           : undefined;
 
-        if (backendSolChoseToStay && (
-          snapshot.worldFlags.solChoseToStay !== true
-          || (backendClinicBaseline !== undefined && snapshot.worldFlags.clinicProgressionBaseline !== backendClinicBaseline)
-        )) {
+        if (backendSolChoseToStay && snapshot.worldFlags.solChoseToStay !== true) {
+          snapshot = {
+            ...snapshot,
+            worldFlags: { ...snapshot.worldFlags, solChoseToStay: true },
+          };
+          await saveSaveState(snapshot, true);
+        }
+
+        // Patch continuity rule: never replay historical Clinic progress into a stale
+        // child's local world. On the first post-patch sync, anchor the cumulative
+        // Clinic thresholds to the stage already visible on this device. From then on,
+        // only new authoritative quest claims can advance the Clinic normally.
+        if (
+          backendSolChoseToStay
+          && snapshot.worldFlags.clinicContinuityBaselineLocked !== true
+          && snapshot.construction.revealed.clinic >= 1
+          && snapshot.construction.revealed.clinic < 4
+        ) {
+          const clinicStageThreshold = [0, 0, 3, 5, 9][snapshot.construction.revealed.clinic] ?? 0;
+          const continuityBaseline = Math.max(
+            0,
+            Math.floor(nextGameState.progression.worldProgression) - clinicStageThreshold,
+          );
           snapshot = {
             ...snapshot,
             worldFlags: {
               ...snapshot.worldFlags,
-              solChoseToStay: true,
-              ...(backendClinicBaseline !== undefined ? { clinicProgressionBaseline: backendClinicBaseline } : {}),
+              clinicProgressionBaseline: continuityBaseline,
+              clinicContinuityBaselineLocked: true,
             },
+          };
+          await saveSaveState(snapshot, true);
+        } else if (
+          backendSolChoseToStay
+          && snapshot.worldFlags.clinicProgressionBaseline === undefined
+          && backendClinicBaseline !== undefined
+        ) {
+          snapshot = {
+            ...snapshot,
+            worldFlags: { ...snapshot.worldFlags, clinicProgressionBaseline: backendClinicBaseline },
           };
           await saveSaveState(snapshot, true);
         }
@@ -240,7 +269,7 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
           window.dispatchEvent(new CustomEvent("sysselcraft:construction-save-changed"));
         }
 
-        const clinicBaseline = backendClinicBaseline ?? snapshot.worldFlags.clinicProgressionBaseline;
+        const clinicBaseline = snapshot.worldFlags.clinicProgressionBaseline ?? backendClinicBaseline;
         if ((backendSolChoseToStay || snapshot.worldFlags.solChoseToStay) && clinicBaseline !== undefined) {
           const nextConstruction = syncClinicContributionProgress(
             snapshot.construction,
@@ -361,13 +390,6 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
     const refreshWallet = () => void refreshQuietly(childId);
     window.addEventListener("sysselcraft:backend-wallet-refresh", refreshWallet);
     return () => window.removeEventListener("sysselcraft:backend-wallet-refresh", refreshWallet);
-  }, [childId, needsPairing, refreshQuietly, sessionReady]);
-
-  useEffect(() => {
-    if (!childId || !sessionReady || needsPairing) return;
-    const refreshProgress = () => void refreshQuietly(childId);
-    window.addEventListener("sysselcraft:quest-progress-refresh", refreshProgress);
-    return () => window.removeEventListener("sysselcraft:quest-progress-refresh", refreshProgress);
   }, [childId, needsPairing, refreshQuietly, sessionReady]);
 
   useEffect(() => {
