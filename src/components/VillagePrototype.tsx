@@ -530,13 +530,6 @@ export default function VillagePrototype() {
           recordSolRuntimeDebug("BAKERY_COMPLETION", "setBakeryStoryIndex(0)", true);
           setBakeryStoryIndex(0);
         }
-        if (revealId?.startsWith("clinic:")) {
-          // Adam and other stale devices can already be several authoritative claims
-          // ahead of the visible Clinic. Ask the quest bridge to re-run Clinic sync
-          // immediately after each reveal so 2→3→4 catches up sequentially without
-          // requiring another real-world quest between already-earned stages.
-          window.dispatchEvent(new Event("sysselcraft:quest-progress-refresh"));
-        }
         if (revealId === "clinic:4") { setClinicStoryIndex(0); }
       }
     } catch {
