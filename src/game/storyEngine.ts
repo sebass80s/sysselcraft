@@ -18,7 +18,7 @@ export type ParsedStoryLine = {
   speakerTone?: StorySpeakerTone;
 };
 
-const STORY_SPEAKER_PREFIXES = ["Barnet", "Alve", "Henning", "Mira", "Linus", "Sol", "Pappan", "Storasystern", "Hunden", "Valpen"] as const;
+export const STORY_SPEAKER_PREFIXES = ["Barnet", "Okänd", "Alve", "Henning", "Mira", "Linus", "Sol", "Pappan", "Storasystern", "Hunden", "Valpen"] as const;
 
 export function parseStoryLine(line: string, childName = "Barnet"): ParsedStoryLine {
   for (const prefix of STORY_SPEAKER_PREFIXES) {
@@ -26,6 +26,7 @@ export function parseStoryLine(line: string, childName = "Barnet"): ParsedStoryL
     if (!line.startsWith(marker)) continue;
     const text = line.slice(marker.length).trimStart();
     if (prefix === "Barnet") return { text, speaker: childName, speakerTone: "child" };
+    if (prefix === "Okänd") return { text, speaker: "Barnet", speakerTone: "default" };
     if (prefix === "Pappan") return { text, speaker: "Alves Pappa", speakerTone: "default" };
     if (prefix === "Storasystern") return { text, speaker: "Alves Syster", speakerTone: "default" };
     if (prefix === "Hunden" || prefix === "Valpen") return { text, speaker: prefix, speakerTone: "dog" };
