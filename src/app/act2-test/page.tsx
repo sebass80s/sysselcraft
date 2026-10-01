@@ -44,25 +44,26 @@ const STORY_BEATS: StoryBeat[] = [
     title: "Första mötet med Alve",
     image: act2AlveImageForIndex(0),
     lineImages: ACT2_ALVE_DIALOGUE.map((_, index) => act2AlveImageForIndex(index)),
-    body: ACT2_ALVE_DIALOGUE.map((beat) =>
-      beat.speaker === "child"
-        ? `Barnet: ${beat.text}`
+    body: ACT2_ALVE_DIALOGUE.map((beat) => {
+      const text = beat.text.replaceAll("{childName}", "Adam");
+      return beat.speaker === "child"
+        ? `Adam: ${text}`
         : beat.speaker === "alve"
-          ? `Alve: ${beat.text}`
+          ? `Alve: ${text}`
           : beat.speaker === "unknown"
-            ? `Barnet: ${beat.text}`
-            : beat.text
-    ),
+            ? `Barnet: ${text}`
+            : text;
+    }),
   },
-  ...BOATHOUSE_CONTRIBUTION_BEATS.slice(0, 9),
-  BOATHOUSE_STEERING_WHEEL_BEAT,
-  ...BOATHOUSE_CONTRIBUTION_BEATS.slice(9),
   ...CABIN_CONTRIBUTION_BEATS,
   CABIN_WAITING_REACTION,
   ...JETTY_CONTRIBUTION_BEATS.slice(0, 6),
   JETTY_LIFEBUOY_BEAT,
   ...JETTY_CONTRIBUTION_BEATS.slice(6),
   JETTY_COMPLETION_REACTION,
+  ...BOATHOUSE_CONTRIBUTION_BEATS.slice(0, 9),
+  BOATHOUSE_STEERING_WHEEL_BEAT,
+  ...BOATHOUSE_CONTRIBUTION_BEATS.slice(9),
   ...MOTORBOAT_CONTRIBUTION_BEATS,
   ...ACT2_FINALE_BEATS.map((beat) => ({
     ...beat,
@@ -77,7 +78,7 @@ const storyGroupForBeat = (beat: StoryBeat) => {
   if (beat.id === "meet-bike" || beat.id === "alve-intro") return "Meeting Alve";
   if (beat.id.startsWith("boathouse:")) return "Båthuset";
   if (beat.id.startsWith("cabin:")) return "Stugan";
-  if (beat.id.startsWith("dock:")) return "Bryggan";
+  if (beat.id.startsWith("dock:") || beat.id.startsWith("jetty-")) return "Bryggan";
   if (beat.id.startsWith("motorboat:")) return "Motorbåten";
   if (beat.id.startsWith("finale:") || beat.id.startsWith("epilogue:")) return "Finale";
   return "Story";
