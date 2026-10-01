@@ -330,3 +330,11 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 - Tapping Alve from farther away walks the child toward him; tapping within 135 world pixels opens exactly the next pending canonical contribution beat.
 - Completing that Story Moment consumes exactly one local Act 2 contribution and closes the turn-in interaction. Additional backend backlog requires another world interaction with Alve.
 - Story-economy gates and motorboat naming continue to block contribution hand-in until resolved.
+
+
+### Alve interaction polish — 2026-10-01
+- Alve pointer events stop propagation so tapping the NPC cannot be overwritten by the lake's generic touch-to-move handler.
+- A pending turn-in still uses the world ! marker from a distance.
+- Inside the 135px interaction radius the world entity also shows `Tryck på Alve`.
+- When the child reaches the Alve approach point, movement settles and Barnet turns toward Alve before the hand-in Story Moment opens.
+- This remains presentation-only polish; backend quest authority and contribution accounting are unchanged.

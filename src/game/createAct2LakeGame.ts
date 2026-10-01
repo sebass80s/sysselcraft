@@ -48,6 +48,7 @@ export async function createAct2LakeGame(
     private dog?: GameObjects.Image;
     private alvePlaceholder?: GameObjects.Container;
     private alveTurnInMarker?: GameObjects.Container;
+    private alveNearbyPrompt?: GameObjects.Container;
     private moveTarget: { x: number; y: number } | null = null;
     private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
@@ -128,15 +129,26 @@ export async function createAct2LakeGame(
       }).setOrigin(0.5);
       this.alveTurnInMarker = this.add.container(0, 0, [turnInBubble, turnInBang])
         .setVisible(requestedAlveTurnInAvailable);
-      this.alvePlaceholder = this.add.container(0, 0, [alveBody, alveHead, alveLabelBg, alveLabel, this.alveTurnInMarker])
+      const nearbyBg = this.add.rectangle(0, -166, 92, 28, 0x1e2f22, 0.94)
+        .setStrokeStyle(2, 0xf4d780, 0.9);
+      const nearbyText = this.add.text(0, -166, "Tryck på Alve", {
+        fontFamily: "Arial, sans-serif",
+        fontSize: "13px",
+        fontStyle: "bold",
+        color: "#ffffff",
+      }).setOrigin(0.5);
+      this.alveNearbyPrompt = this.add.container(0, 0, [nearbyBg, nearbyText]).setVisible(false);
+      this.alvePlaceholder = this.add.container(0, 0, [alveBody, alveHead, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt])
         .setSize(72, 150)
         .setInteractive({ useHandCursor: true })
         .setVisible(false);
-      this.alvePlaceholder.on("pointerdown", () => {
+      this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: Input.EventData) => {
+        event.stopPropagation();
         if (!this.player || !this.alvePlaceholder || !requestedAlveTurnInAvailable) return;
         const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.alvePlaceholder.x, this.alvePlaceholder.y);
         if (distance <= 135) {
           this.moveTarget = null;
+          this.facePlayerTowardAlve();
           options.onAlveTurnIn?.();
           return;
         }
@@ -200,7 +212,9 @@ export async function createAct2LakeGame(
         this.player.setDepth(1000 + Math.round(this.player.y));
       }
 
-      if (this.dog) {
+      this.updateAlveInteractionFeedback();
+
+            if (this.dog) {
         const desiredX = this.player.x - (this.player.flipX ? -54 : 54);
         const desiredY = this.player.y + 18;
         this.dog.x += (desiredX - this.dog.x) * Math.min(1, delta / 220);
@@ -209,7 +223,37 @@ export async function createAct2LakeGame(
       }
     }
 
-    private isWalkable(x: number, y: number) {
+    private updateAlveInteractionFeedback() {
+      if (!this.player || !this.alvePlaceholder || !this.alveNearbyPrompt) return;
+      const nearby = requestedAlveTurnInAvailable
+        && this.alvePlaceholder.visible
+        && Phaser.Math.Distance.Between(
+          this.player.x,
+          this.player.y,
+          this.alvePlaceholder.x,
+          this.alvePlaceholder.y,
+        ) <= 135;
+      this.alveNearbyPrompt.setVisible(nearby);
+      if (nearby && this.moveTarget) {
+        const targetDistance = Phaser.Math.Distance.Between(
+          this.player.x,
+          this.player.y,
+          this.moveTarget.x,
+          this.moveTarget.y,
+        );
+        if (targetDistance < 18) {
+          this.moveTarget = null;
+          this.facePlayerTowardAlve();
+        }
+      }
+    }
+
+    private facePlayerTowardAlve() {
+      if (!this.player || !this.alvePlaceholder) return;
+      this.player.setFlipX(this.alvePlaceholder.x < this.player.x);
+    }
+
+        private isWalkable(x: number, y: number) {
       if (x < 37 || x > ACT2_WORLD.width - 37 || y < 300 || y > ACT2_WORLD.height - 8) return false;
       return !PROJECTS.some((project) => {
         const p = ACT2_VISUAL_PLACEMENTS[project];
@@ -244,6 +288,7 @@ export async function createAct2LakeGame(
     setAlveTurnInAvailable(available: boolean) {
       requestedAlveTurnInAvailable = available;
       this.alveTurnInMarker?.setVisible(available);
+      if (!available) this.alveNearbyPrompt?.setVisible(false);
     }
 
     private positionAlve(project: Act2RestorationProject | null) {
