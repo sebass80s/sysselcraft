@@ -214,6 +214,7 @@ export const JETTY_CONTRIBUTION_BEATS: Act2JettyBeat[] = [
   {
     id: "jetty-09",
     title: "9/16 · Plats för sommaren",
+    image: "/assets/village/story-moments/act2/jetty/05-bathing-edge-cleanup.png",
     body: [
       "Alve: Okej, nu börjar den se ut som en plats man faktiskt vill vara på.",
       "Barnet: Det hjälper att det inte ligger plankor och verktyg överallt.",
@@ -319,6 +320,7 @@ export const JETTY_CONTRIBUTION_BEATS: Act2JettyBeat[] = [
   {
     id: "jetty-13",
     title: "13/16 · Sista svaga punkten",
+    image: "/assets/village/story-moments/act2/jetty/06-late-restoration.png",
     body: [
       "Barnet: Där.",
       "Alve: Nej.",
@@ -343,6 +345,7 @@ export const JETTY_CONTRIBUTION_BEATS: Act2JettyBeat[] = [
   {
     id: "jetty-14",
     title: "14/16 · Gör klart för att använda",
+    image: "/assets/village/story-moments/act2/jetty/09-jetty-complete.png",
     body: [
       "Alve: Vad gör vi med allt det här?",
       "Barnet: Plankorna tillbaka till Linus. Verktygen bort. Skräpet slänger vi.",
