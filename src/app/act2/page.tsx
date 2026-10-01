@@ -10,12 +10,15 @@ import {
   consumeProjectCompletionReaction,
   boathousePurchaseRequired,
   jettyPurchaseRequired,
+  motorboatNamingRequired,
+  motorboatPartsPurchaseRequired,
   nextAct2Contribution,
   prerequisiteCompletionCount,
   projectCompletionReactionPending,
   saveAct2RuntimeState,
   withBackendClaimBaseline,
   withBackendStoryFlags,
+  withMotorboatName,
   withPresentedContribution,
   withSelectedProject,
   type Act2Project,
@@ -27,6 +30,7 @@ import { getChildGameState } from "../../backend/familyRepository";
 import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
 import { CABIN_CONTRIBUTION_BEATS } from "../../game/act2CabinStory";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../../game/act2BoathouseStory";
+import { MOTORBOAT_CONTRIBUTION_BEATS } from "../../game/act2MotorboatStory";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
@@ -178,6 +182,7 @@ export default function Act2Page() {
   const [contributionLineIndex, setContributionLineIndex] = useState(0);
   const [completionLineIndex, setCompletionLineIndex] = useState(0);
   const [backendSyncError, setBackendSyncError] = useState("");
+  const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
 
 
   useEffect(() => {
@@ -263,6 +268,7 @@ export default function Act2Page() {
             if (
               next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
               || next.boathouseSteeringWheelOwned !== current.boathouseSteeringWheelOwned
+              || next.motorboatPartsOwned !== current.motorboatPartsOwned
             ) {
               void saveAct2RuntimeState(next);
               return next;
@@ -338,12 +344,16 @@ export default function Act2Page() {
         : "Stugan är klar. Bryggan är klar. Båthuset är klart. Det är dags.";
   const jettyPurchaseGate = state.selectedProject === "dock" && jettyPurchaseRequired(state);
   const boathousePurchaseGate = state.selectedProject === "boathouse" && boathousePurchaseRequired(state);
-  const purchaseRequired = jettyPurchaseGate || boathousePurchaseGate;
+  const motorboatPurchaseGate = state.selectedProject === "motorboat" && motorboatPartsPurchaseRequired(state);
+  const namingRequired = state.selectedProject === "motorboat" && motorboatNamingRequired(state);
+  const purchaseRequired = jettyPurchaseGate || boathousePurchaseGate || motorboatPurchaseGate;
   const purchaseGateBeat = jettyPurchaseGate ? JETTY_LIFEBUOY_BEAT : boathousePurchaseGate ? BOATHOUSE_STEERING_WHEEL_BEAT : null;
   const purchaseGateCopy = jettyPurchaseGate
     ? { title: "Bryggan · nästa steg", text: "Sol vill att ni skaffar en riktig livboj innan arbetet fortsätter.", detail: "Mira kan ordna den i lanthandeln för 300 SysselBux." }
-    : { title: "Båthuset · nästa steg", text: "Lådbilen behöver en riktig ratt innan ni kan bygga vidare.", detail: "Mira har en som passar för 100 SysselBux." };
-  const contributionCandidate = backendWorldProgression === null || purchaseRequired
+    : boathousePurchaseGate
+      ? { title: "Båthuset · nästa steg", text: "Lådbilen behöver en riktig ratt innan ni kan bygga vidare.", detail: "Mira har en som passar för 100 SysselBux." }
+      : { title: "Motorbåten · nästa steg", text: "Linus har konstaterat att några delar inte går att rädda.", detail: "Mira kan beställa reservdelspaketet för 150 SysselBux." };
+  const contributionCandidate = backendWorldProgression === null || purchaseRequired || namingRequired
     ? null
     : nextAct2Contribution(state, backendWorldProgression);
   const activeContributionBeat = contributionCandidate?.project === "dock"
@@ -352,7 +362,9 @@ export default function Act2Page() {
       ? CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
       : contributionCandidate?.project === "boathouse"
         ? BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
-        : null;
+        : contributionCandidate?.project === "motorboat"
+          ? MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
+          : null;
   const activeContributionLine = activeContributionBeat?.body[contributionLineIndex] ?? null;
   const jettyCompletionPending = projectCompletionReactionPending(state, "dock");
   const activeCompletionLine = jettyCompletionPending
@@ -450,13 +462,29 @@ export default function Act2Page() {
         </button>
       </div>
     </section>}
-    {purchaseRequired && purchaseGateBeat && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
-      {purchaseGateBeat.image && <Image src={purchaseGateBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
+    {purchaseRequired && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
+      {purchaseGateBeat?.image && <Image src={purchaseGateBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">{purchaseGateCopy.title}</span>
         <p>{purchaseGateCopy.text}</p>
         <p>{purchaseGateCopy.detail}</p>
         <a className="primary-button dialogue-next" href="/">Till Mira i byn</a>
+      </div>
+    </section>}
+    {namingRequired && <section style={{ position:"absolute", inset:0, zIndex:85, background:"rgba(9,14,10,.94)", display:"grid", placeItems:"center" }} role="presentation">
+      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+        <span className="dialogue-speaker">Vår båt</span>
+        <p>Alve: Den behöver ett namn.</p>
+        <input
+          value={motorboatNameDraft}
+          onChange={(event) => setMotorboatNameDraft(event.target.value)}
+          maxLength={24}
+          placeholder="Skriv båtens namn"
+          aria-label="Båtens namn"
+        />
+        <button className="primary-button dialogue-next" disabled={!motorboatNameDraft.trim()} onClick={() => void commit(withMotorboatName(state, motorboatNameDraft))}>
+          Spara namnet
+        </button>
       </div>
     </section>}
     {contributionCandidate && activeContributionBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">

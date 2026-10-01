@@ -9,6 +9,7 @@ export type RoomDecorKey = keyof typeof ROOM_DECOR_PRICES;
 export const DOG_HOME_PRICES = [40, 25, 30, 35] as const;
 export const ACT2_JETTY_LIFEBUOY_PRICE = 300;
 export const ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 100;
+export const ACT2_MOTORBOAT_PARTS_PRICE = 150;
 export type DogHomeUpgradeIndex = 0 | 1 | 2 | 3;
 
 export type StoryItemPurchase = {
@@ -18,7 +19,7 @@ export type StoryItemPurchase = {
   worldFlags: Record<string, unknown>;
 };
 
-async function purchaseStoryItem(itemKey: "bottle_message" | "room_football_rug" | "room_football_poster" | "room_computer_desk" | "room_trophy_shelf" | "room_string_lights" | "room_aquarium" | "dog_home_bed" | "dog_home_bowls" | "dog_home_toys" | "dog_home_cozy" | "act2_jetty_lifebuoy" | "act2_boathouse_steering_wheel"): Promise<StoryItemPurchase> {
+async function purchaseStoryItem(itemKey: "bottle_message" | "room_football_rug" | "room_football_poster" | "room_computer_desk" | "room_trophy_shelf" | "room_string_lights" | "room_aquarium" | "dog_home_bed" | "dog_home_bowls" | "dog_home_toys" | "dog_home_cozy" | "act2_jetty_lifebuoy" | "act2_boathouse_steering_wheel" | "act2_motorboat_parts"): Promise<StoryItemPurchase> {
   const { data, error } = await getSupabaseBrowserClient().rpc("purchase_story_item", {
     p_item_key: itemKey,
   });
@@ -67,4 +68,8 @@ export async function purchaseAct2JettyLifebuoy(): Promise<StoryItemPurchase> {
 
 export async function purchaseAct2BoathouseSteeringWheel(): Promise<StoryItemPurchase> {
   return purchaseStoryItem("act2_boathouse_steering_wheel");
+}
+
+export async function purchaseAct2MotorboatParts(): Promise<StoryItemPurchase> {
+  return purchaseStoryItem("act2_motorboat_parts");
 }

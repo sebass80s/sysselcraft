@@ -22,6 +22,8 @@ export type Act2RuntimeState = {
   backendClaimBaseline: number | null;
   jettyLifebuoyOwned: boolean;
   boathouseSteeringWheelOwned: boolean;
+  motorboatPartsOwned: boolean;
+  motorboatName: string | null;
   consumedProjectCompletionIds: string[];
   projects: Record<Act2Project, Act2ProjectState>;
   familyFinaleConsumed: boolean;
@@ -49,6 +51,8 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     backendClaimBaseline: null,
     jettyLifebuoyOwned: false,
     boathouseSteeringWheelOwned: false,
+    motorboatPartsOwned: false,
+    motorboatName: null,
     consumedProjectCompletionIds: [],
     projects: {
       cabin: emptyProject(),
@@ -135,6 +139,10 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       : null,
     jettyLifebuoyOwned: candidate.jettyLifebuoyOwned === true,
     boathouseSteeringWheelOwned: candidate.boathouseSteeringWheelOwned === true,
+    motorboatPartsOwned: candidate.motorboatPartsOwned === true,
+    motorboatName: typeof candidate.motorboatName === "string" && candidate.motorboatName.trim().length > 0
+      ? candidate.motorboatName.trim().slice(0, 24)
+      : null,
     consumedProjectCompletionIds: normalizeBeatIds(candidate.consumedProjectCompletionIds),
     projects,
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
@@ -214,6 +222,7 @@ export function withBackendStoryFlags(
     ...normalized,
     jettyLifebuoyOwned: worldFlags.act2JettyLifebuoyOwned === true,
     boathouseSteeringWheelOwned: worldFlags.act2BoathouseSteeringWheelOwned === true,
+    motorboatPartsOwned: worldFlags.act2MotorboatPartsOwned === true,
   };
 }
 
@@ -229,6 +238,27 @@ export function boathousePurchaseRequired(state: Act2RuntimeState) {
   return normalized.projects.boathouse.contributions >= 9
     && normalized.projects.boathouse.contributions < 16
     && !normalized.boathouseSteeringWheelOwned;
+}
+
+export function motorboatPartsPurchaseRequired(state: Act2RuntimeState) {
+  const normalized = normalizeAct2RuntimeState(state);
+  return normalized.projects.motorboat.contributions >= 5
+    && normalized.projects.motorboat.contributions < 16
+    && !normalized.motorboatPartsOwned;
+}
+
+export function motorboatNamingRequired(state: Act2RuntimeState) {
+  const normalized = normalizeAct2RuntimeState(state);
+  return normalized.projects.motorboat.contributions >= 12
+    && normalized.projects.motorboat.contributions < 16
+    && normalized.motorboatName === null;
+}
+
+export function withMotorboatName(state: Act2RuntimeState, name: string): Act2RuntimeState {
+  const normalized = normalizeAct2RuntimeState(state);
+  const nextName = name.trim().slice(0, 24);
+  if (!nextName || normalized.projects.motorboat.contributions < 12) return normalized;
+  return { ...normalized, motorboatName: nextName };
 }
 
 export function projectCompletionReactionId(project: Act2Project) {

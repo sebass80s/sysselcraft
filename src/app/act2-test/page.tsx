@@ -6,6 +6,7 @@ import type { Act2VisualStage } from "../../game/act2VisualAssets";
 import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../../game/act2CabinStory";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../../game/act2BoathouseStory";
+import { MOTORBOAT_CONTRIBUTION_BEATS } from "../../game/act2MotorboatStory";
 
 type StoryBeat = {
   id: string;
@@ -128,6 +129,7 @@ const STORY_BEATS: StoryBeat[] = [
   JETTY_LIFEBUOY_BEAT,
   ...JETTY_CONTRIBUTION_BEATS.slice(6),
   JETTY_COMPLETION_REACTION,
+  ...MOTORBOAT_CONTRIBUTION_BEATS,
   {
     id: "finale-01",
     title: "Någon är där",
