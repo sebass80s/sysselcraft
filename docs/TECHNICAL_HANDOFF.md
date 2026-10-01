@@ -643,3 +643,17 @@ Priority order:
 4. Progression / Gating Engine.
 
 Quest V2 and backend economy are explicitly not scheduled for wholesale rewrites. Refactor incrementally, preserve accepted behavior, and require regression plus physical acceptance before deleting old paths.
+
+
+### Story Engine v1 — 2026-10-01
+
+Act 2 now uses the shared Story Engine end-to-end for fullscreen story presentation, including special beats. Canonical contract is documented in `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`.
+
+Important invariants:
+- headings are not speakers;
+- speaker prefixes are centrally parsed into nameplates;
+- production Act 2 no longer owns a parallel `.story-moment` JSX shell;
+- `/act2-test` uses the same StoryMoment/StoryTranscript presentation path;
+- future Acts must reuse this engine rather than clone presentation logic.
+
+Act 1 migration is intentionally deferred until Act 2 v1 receives browser/iPhone acceptance.
