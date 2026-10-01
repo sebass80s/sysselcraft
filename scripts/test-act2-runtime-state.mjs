@@ -495,7 +495,11 @@ assert.ok(lakeGameSource.includes("options.onAlveTurnIn?.()"), "nearby Alve inte
 assert.ok(lakeGameSource.includes("event.stopPropagation()"), "Alve taps must not fall through to the generic touch-to-move handler");
 assert.ok(lakeGameSource.includes("Tryck på Alve"), "nearby pending turn-in must give explicit world feedback");
 assert.ok(lakeGameSource.includes("facePlayerTowardAlve()"), "child should face Alve when the hand-in interaction begins");
-assert.ok(lakeGameSource.includes('this.add.text(0, -133, "!"'), "pending Act 2 turn-in must show a world marker on Alve");
+assert.match(
+  lakeGameSource,
+  /const turnInBang = this\.add\.text\([^\n]*"!"[\s\S]*this\.alveTurnInMarker = this\.add\.container[\s\S]*setAlveTurnInAvailable\(available: boolean\)[\s\S]*this\.alveTurnInMarker\?\.setVisible\(available\)/,
+  "pending Act 2 turn-in must show a visible world marker on Alve without locking the test to a pixel coordinate",
+);
 assert.ok(lakeGameSource.includes('setInteractive({ useHandCursor: true })'), "Alve placeholder must already be a future interaction target");
 assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
 
