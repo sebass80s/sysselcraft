@@ -64,7 +64,11 @@ const STORY_BEATS: StoryBeat[] = [
   ...JETTY_CONTRIBUTION_BEATS.slice(6),
   JETTY_COMPLETION_REACTION,
   ...MOTORBOAT_CONTRIBUTION_BEATS,
-  ...ACT2_FINALE_BEATS.map((beat) => ({ ...beat, stage: 4 as Act2VisualStage })),
+  ...ACT2_FINALE_BEATS.map((beat) => ({
+    ...beat,
+    body: beat.body.map((line) => line.replaceAll("{childName}", "Adam")),
+    stage: 4 as Act2VisualStage,
+  })),
 
 ];
 
