@@ -1027,9 +1027,9 @@ Locked final reveal structure:
 
 The reveal should initially play as an Alve-style “there's someone in the cottage / let's see if they're burglars” discovery rather than announcing the family ceremonially in advance. The family reveal is the emotional payoff for Alve's whole Act 2 arc, not merely the cottage completion reward.
 
-### Act 2 finale dialogue — family return and first crossing
+### Act 2 finale dialogue — family return
 
-This sequence is the locked emotional ending of Act 2. It triggers **after the motorboat restoration is complete** and after the quiet aftermath. It pays off the entire Alve/family arc and then immediately uses the repaired motorboat as the bridge into the next chapter.
+This sequence is the locked emotional ending of Act 2. It triggers **after the motorboat restoration is complete** and after the quiet aftermath. It pays off the entire Alve/family arc and ends on the veranda. The first true crossing of the lake belongs to the **Act 3 opening**, not to the Act 2 finale.
 
 #### Scene 1 — After the motorboat
 
@@ -1254,7 +1254,8 @@ Storasystern tittar förbi Alve mot Barnet.
 
 Alve tittar tillbaka.
 
-> **Alve:** “Det är min kompis.”
+> **Alve:** “Det är {childName}.”  
+> **Alve:** “Han är min kompis.”
 
 #### Scene 3b — Verandan
 
@@ -1293,145 +1294,21 @@ Alve ler lite.
 
 Låt scenen vila här. Raden betyder inte att förlusten var bra eller att någon blivit ersatt; den betyder att Alve slutat försöka återskapa det förflutna och kan acceptera ett nytt liv som också får vara bra.
 
-#### Scene 4 — Första turen
+#### Act 3 boundary — crossing is deliberately deferred
 
-Lite senare står Barnet och Alve vid bryggan.
+Act 2 ends after the veranda payoff above. Let the family return, friendship payoff and **“Det är bättre.”** land without immediately converting the scene into the next adventure.
 
-Familjen är kvar vid stugan bakom dem. Väskor har burits in, dörren står öppen och platsen känns för första gången riktigt bebodd.
+The restored motorboat remains the physical bridge to Act 3. Barnet and Alve may be curious about the other side, and existing earlier story seeds about old trips across the lake remain valid, but **they do not make the first true crossing during the Act 2 finale**.
 
-Alve tittar mot motorbåten.
+The Act 3 opening owns:
+- leaving the restored lake in the motorboat;
+- the first real crossing;
+- any gratitude/departure conversation that belongs on that journey;
+- first presentation of whatever exists on the other side.
 
-> **Alve:** “Så.”  
-> **Barnet:** “Så?”  
-> **Alve:** “Den fungerar.”  
-> **Barnet:** “Det har vi redan konstaterat.”  
-> **Alve:** “Ja, men nu känns det annorlunda.”  
-> **Barnet:** “Hur då?”
+The destination remains deliberately undefined until Act 3 is authored. Hints must stay destination-neutral.
 
-Alve tittar tillbaka mot stugan.
-
-> **Alve:** “Nu behöver jag inte vänta här längre.”
-
-Barnet följer hans blick.
-
-> **Barnet:** “De kom.”  
-> **Alve:** “Ja.”
-
-Paus.
-
-> **Alve:** “De kom faktiskt.”
-
-Alve blir tyst en stund.
-
-> **Alve:** “Du vet…”  
-> **Alve:** “Det här hade aldrig hänt utan dig.”  
-> **Barnet:** “Jo då. Du gjorde ju också allt.”  
-> **Alve:** “Nej, jag menar det.”  
-> **Alve:** “Den dagen du kom var jag helt lost.”  
-> **Alve:** “Jag bara gick runt här och trodde att om jag lagade tillräckligt mycket så skulle allting lösa sig.”  
-> **Alve:** “Men jag visste inte ens var jag skulle börja längre.”  
-> **Barnet:** “Du började ju ändå.”  
-> **Alve:** “Ja.”  
-> **Alve:** “Men jag hade aldrig klarat det själv.”  
-> **Alve:** “Inte stugan. Inte bryggan. Inte båten. Inget av det.”  
-> **Barnet:** “Tur att jag kom då.”  
-> **Alve:** “Ja.”  
-> **Alve:** “Väldigt tur.”  
-> **Alve:** “Tack.”  
-> **Barnet:** “Det är ju det kompisar gör.”  
-> **Alve:** “Mm.”  
-> **Alve:** “Då är jag glad att du är min kompis.”
-
-Barnet ler.
-
-> **Barnet:** “Jag sa ju att de kanske skulle göra det.”  
-> **Alve:** “Du sa att du hoppades.”  
-> **Barnet:** “Nästan samma sak.”
-
-Alve tittar ut över sjön.
-
-> **Alve:** “Vet du vad jag tänkt på?”  
-> **Barnet:** “Det låter farligt.”  
-> **Alve:** “Andra sidan.”  
-> **Barnet:** “Vad finns där?”  
-> **Alve:** “Jag minns inte riktigt.”  
-> **Barnet:** “Har du varit där?”  
-> **Alve:** “När jag var mindre. Med familjen.”  
-> **Barnet:** “Och du kommer inte ihåg?”  
-> **Alve:** “Lite.”  
-> **Barnet:** “Vad minns du?”  
-> **Alve:** “Träd.”  
-> **Barnet:** “Starkt.”  
-> **Alve:** “Vatten.”  
-> **Barnet:** “Vi står vid en sjö.”  
-> **Alve:** “Jag försöker.”
-
-Barnet skrattar. Alve kliver ner i båten.
-
-> **Alve:** “Det finns bara ett sätt att ta reda på det.”
-
-Du tittar på honom.
-
-> **Barnet:** “Är det här en av dina planer?”  
-> **Alve:** “Ja.”  
-> **Barnet:** “Har den fler delar den här gången?”
-
-Alve tittar på motorn.
-
-> **Alve:** “Starta båten.”
-
-Han pekar ut över sjön.
-
-> **Alve:** “Åk ditåt.”  
-> **Barnet:** “Två delar.”  
-> **Alve:** “Jag blir bättre.”
-
-Barnet kliver ner i båten.
-
-Från stugan hörs pappan ropa:
-
-> **Pappan:** “Inte för långt!”
-
-Alve tittar på Barnet.
-
-> **Alve:** “Det där känner jag igen.”  
-> **Barnet:** “Kommer du lyssna?”  
-> **Alve:** “Självklart.”
-
-Paus.
-
-> **Alve:** “Ungefär.”
-
-Motorn startar.
-
-Båten lämnar bryggan.
-
-Barnet tittar tillbaka mot stugan, bryggan och hela platsen ni byggt upp tillsammans. Alve tittar framåt.
-
-> **Barnet:** “Redo?”  
-> **Alve:** “Japp.”  
-> **Barnet:** “Vart åker vi?”
-
-Alve ler.
-
-> **Alve:** “Vi får se.”
-
-Båten fortsätter ut över sjön.
-
-Sedan svart.
-
-## SLUT PÅ ANDRA KAPITLET
-
-The act therefore ends with **Barnet and Alve physically leaving in the restored motorboat**. Do not stop on a “someday” promise or a stationary teaser. The first departure itself is the final authored image/action of Act 2.
-
-### Alve after Act 2 and the other side of the lake
-After the motorboat is restored, **Alve becomes the permanent boat driver/transport character**. Alve + motorboat form the authored transport link from the lake to a future area on the other side and back again.
-
-Produce/use a reusable Story Moment/cinematic scene of **Adam and Alve travelling in the motorboat**. The same visual can carry different dialogue in future story states. The first crossing may later contain Act 3 introduction dialogue; routine later crossings can use shorter contextual dialogue.
-
-Act 2 may subtly seed curiosity about the **other side of the lake**, but the destination itself is explicitly undefined. Hints must remain destination-neutral and still make sense regardless of what Act 3 eventually becomes. Allowed grammar includes vague family memories, traces of old trips, uncertain remarks or unexplained objects. Do not name, depict or promise a specific destination until Act 3 is designed.
-
-Canonical rule: **the mystery exists; the answer is not canon yet.**
+Canonical boundary: **Act 2 closes at home; Act 3 begins by leaving it.**
 
 ## Bryggan restoration arc — LOCKED 2026-09-28
 
