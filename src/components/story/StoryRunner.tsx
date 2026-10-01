@@ -9,9 +9,10 @@ type StoryRunnerProps = {
   zIndex?: number;
   background?: string;
   scrollable?: boolean;
+  dialogueClassName?: string;
 };
 
-export function StoryRunner({ beat, onNext, zIndex, background, scrollable }: StoryRunnerProps) {
+export function StoryRunner({ beat, onNext, zIndex, background, scrollable, dialogueClassName }: StoryRunnerProps) {
   return (
     <StoryMoment
       image={beat.image}
@@ -23,6 +24,7 @@ export function StoryRunner({ beat, onNext, zIndex, background, scrollable }: St
       zIndex={zIndex}
       background={background}
       scrollable={scrollable}
+      dialogueClassName={dialogueClassName}
     >
       {beat.lines.map((line, index) => <p key={index}>{line}</p>)}
     </StoryMoment>
