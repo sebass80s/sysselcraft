@@ -2,12 +2,14 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {
   canSelectProject,
+  consumeProjectCompletionReaction,
   createDefaultAct2RuntimeState,
   isMotorboatUnlocked,
   jettyPurchaseRequired,
   normalizeAct2RuntimeState,
   prerequisiteCompletionCount,
   pendingBackendContributionCount,
+  projectCompletionReactionPending,
   nextAct2Contribution,
   totalAct2Contributions,
   withBackendClaimBaseline,
@@ -95,6 +97,19 @@ assert.equal(state.selectedProject, "motorboat");
 state = complete(state, "motorboat");
 assert.equal(state.projects.motorboat.complete, true);
 assert.equal(state.selectedProject, null);
+
+
+let jettyComplete = createDefaultAct2RuntimeState();
+jettyComplete = complete(jettyComplete, "dock");
+assert.equal(jettyComplete.projects.dock.contributions, 16);
+assert.equal(projectCompletionReactionPending(jettyComplete, "dock"), true, "16/16 must unlock a separate completion reaction");
+assert.equal(totalAct2Contributions(jettyComplete), 16, "completion reaction must not fabricate contribution 17");
+const beforeReactionCount = totalAct2Contributions(jettyComplete);
+jettyComplete = consumeProjectCompletionReaction(jettyComplete, "dock");
+assert.equal(projectCompletionReactionPending(jettyComplete, "dock"), false);
+assert.equal(totalAct2Contributions(jettyComplete), beforeReactionCount, "consuming completion reaction must be contribution-neutral");
+const repeatedReaction = consumeProjectCompletionReaction(jettyComplete, "dock");
+assert.deepEqual(repeatedReaction.consumedProjectCompletionIds, jettyComplete.consumedProjectCompletionIds, "completion reaction consumption must be idempotent");
 
 
 const prerequisiteOrders = [
@@ -203,6 +218,8 @@ assert.ok(page.includes('{ speaker: "alve", text: "Okej, {childName}.'), "the li
 assert.ok(page.includes('{ speaker: "unknown", text: "Varför?" }'), "unknown Alve must own the pre-introduction Varför line");
 assert.ok(page.includes('🔒 Motorbåten'), "motorboat must remain visible while locked");
 assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector must derive 0/3→3/3 from canonical state");
+assert.ok(page.includes('projectCompletionReactionPending(state, "dock")'), "jetty completion reaction must be derived from persisted state");
+assert.ok(page.includes("JETTY_COMPLETION_REACTION"), "production route must present the canonical jetty completion reaction");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");
