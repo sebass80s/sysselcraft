@@ -321,3 +321,12 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 - When there is no selected active project, the placeholder is hidden.
 - The placeholder container is already interactive so the later quest hand-in flow can attach to this same entity instead of introducing a parallel NPC implementation.
 - Final Alve character art remains a separate asset replacement task; runtime positioning and interaction ownership should survive that swap.
+
+
+### Alve quest hand-in loop — 2026-10-01
+- Backend worldProgression remains the authoritative evidence that a claimed real-world quest exists.
+- Polling may discover pending contribution backlog but no longer auto-opens an Act 2 Story Moment.
+- A pending, unblocked contribution shows a ! marker on the same world Alve entity that follows selectedProject.
+- Tapping Alve from farther away walks the child toward him; tapping within 135 world pixels opens exactly the next pending canonical contribution beat.
+- Completing that Story Moment consumes exactly one local Act 2 contribution and closes the turn-in interaction. Additional backend backlog requires another world interaction with Alve.
+- Story-economy gates and motorboat naming continue to block contribution hand-in until resolved.

@@ -331,6 +331,10 @@ for (const project of ["cabin", "dock", "boathouse", "motorboat"]) {
 
 const lakeGameSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
 assert.ok(lakeGameSource.includes('setActiveProject: (project: Act2RestorationProject | null) => void'), "lake runtime must expose active-project positioning for Alve");
+assert.ok(lakeGameSource.includes('setAlveTurnInAvailable: (available: boolean) => void'), "lake runtime must expose pending turn-in marker state");
+assert.ok(lakeGameSource.includes("distance <= 135"), "Alve quest hand-in must require the child to be physically nearby");
+assert.ok(lakeGameSource.includes("options.onAlveTurnIn?.()"), "nearby Alve interaction must open the Act 2 turn-in");
+assert.ok(lakeGameSource.includes('this.add.text(0, -133, "!"'), "pending Act 2 turn-in must show a world marker on Alve");
 assert.ok(lakeGameSource.includes('setInteractive({ useHandCursor: true })'), "Alve placeholder must already be a future interaction target");
 assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
 
@@ -360,6 +364,11 @@ assert.ok(page.includes("MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.numb
 assert.ok(page.includes("motorboatNamingRequired(state)"), "Motorbåten naming gate must be persisted and contribution-neutral");
 assert.ok(page.includes("ACT2_FINALE_BEATS[state.finaleIndex]"), "production route must resume the persisted Act 2 finale");
 assert.ok(page.includes("setActiveProject(state.selectedProject)"), "production route must move Alve when the active project changes");
+assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), "Alve interaction must explicitly arm the pending contribution Story Moment");
+assert.ok(page.includes("hasPendingAlveTurnIn(latest, backendWorldProgression)"), "restart must restore Alve turn-in marker immediately when a pending contribution already exists");
+assert.ok(page.includes("contributionTurnInOpen && contributionCandidate"), "backend polling must not auto-open contribution Story Moments");
+assert.ok(page.includes("setContributionTurnInOpen(false);"), "finishing one beat must close turn-in so backlog cannot auto-chain");
+assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should point the child toward Alve rather than bypassing world interaction");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");

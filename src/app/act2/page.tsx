@@ -187,6 +187,21 @@ export default function Act2Page() {
   const [backendSyncError, setBackendSyncError] = useState("");
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
   const [finaleLineIndex, setFinaleLineIndex] = useState(0);
+  const [contributionTurnInOpen, setContributionTurnInOpen] = useState(false);
+
+  function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
+    if (worldProgression === null || !candidateState.selectedProject) return false;
+    const blockedByPurchase =
+      (candidateState.selectedProject === "dock" && jettyPurchaseRequired(candidateState))
+      || (candidateState.selectedProject === "boathouse" && boathousePurchaseRequired(candidateState))
+      || (candidateState.selectedProject === "motorboat" && motorboatPartsPurchaseRequired(candidateState));
+    const blockedByNaming =
+      candidateState.selectedProject === "motorboat" && motorboatNamingRequired(candidateState);
+    return !blockedByPurchase
+      && !blockedByNaming
+      && !act2FinalePending(candidateState)
+      && nextAct2Contribution(candidateState, worldProgression) !== null;
+  }
 
 
   useEffect(() => {
@@ -226,7 +241,9 @@ export default function Act2Page() {
     let disposed = false;
     import("../../game/createAct2LakeGame").then(async ({ createAct2LakeGame }) => {
       if (disposed || !hostRef.current) return;
-      gameRef.current = await createAct2LakeGame(hostRef.current, 1);
+      gameRef.current = await createAct2LakeGame(hostRef.current, 1, {
+        onAlveTurnIn: () => setContributionTurnInOpen(true),
+      });
       const latest = await loadAct2RuntimeState();
       gameRef.current.setActiveProject(latest.selectedProject);
       gameRef.current.setProjectStages({
@@ -235,6 +252,9 @@ export default function Act2Page() {
         boathouse: latest.projects.boathouse.visibleStage,
         motorboat: latest.projects.motorboat.visibleStage,
       });
+      gameRef.current.setAlveTurnInAvailable(
+        hasPendingAlveTurnIn(latest, backendWorldProgression),
+      );
     });
     return () => {
       disposed = true;
@@ -296,6 +316,12 @@ export default function Act2Page() {
       window.clearInterval(timer);
     };
   }, [ready]);
+
+  useEffect(() => {
+    const pending = hasPendingAlveTurnIn(state, backendWorldProgression);
+    gameRef.current?.setAlveTurnInAvailable(pending);
+    if (!pending) setContributionTurnInOpen(false);
+  }, [state, backendWorldProgression]);
 
   async function commit(next: Act2RuntimeState) {
     await saveAct2RuntimeState(next);
@@ -374,7 +400,9 @@ export default function Act2Page() {
         : contributionCandidate?.project === "motorboat"
           ? MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
           : null;
-  const activeContributionLine = activeContributionBeat?.body[contributionLineIndex] ?? null;
+  const activeContributionLine = contributionTurnInOpen
+    ? activeContributionBeat?.body[contributionLineIndex] ?? null
+    : null;
   const finalePending = act2FinalePending(state);
   const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
   const activeFinaleLine = activeFinaleBeat?.body[finaleLineIndex] ?? null;
@@ -417,6 +445,7 @@ export default function Act2Page() {
     );
     await commit(next);
     setContributionLineIndex(0);
+    setContributionTurnInOpen(false);
   }
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
@@ -519,7 +548,7 @@ export default function Act2Page() {
         </button>
       </div>
     </section>}
-    {contributionCandidate && activeContributionBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
+    {contributionTurnInOpen && contributionCandidate && activeContributionBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
       {activeContributionBeat.image && <Image src={activeContributionBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
         <span className="dialogue-speaker">{activeContributionBeat.title}</span>
@@ -534,6 +563,7 @@ export default function Act2Page() {
     {state.selectedProject && !finalePending && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
       <strong>Alve: {prerequisiteDone === 0 ? `Bra val! Vi fixar ${PROJECT_COPY[state.selectedProject].object} först!` : state.selectedProject === "motorboat" ? "Nu fixar vi den." : `Bra. Då kör vi på ${PROJECT_COPY[state.selectedProject].object}.`}</strong>
       <div style={{ marginTop: 6, opacity: .82 }}>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · {state.projects[state.selectedProject].contributions}/16</div>
+      {contributionCandidate && !purchaseRequired && !namingRequired && <div style={{ marginTop: 6, color: "#f4d780", fontWeight: 800 }}>Ett klart uppdrag väntar hos Alve.</div>}
       <a href="/" style={{ display: "inline-block", marginTop: 10, color: "white", textDecoration: "underline" }}>← Till byn</a>
     </div>}
   </main>;

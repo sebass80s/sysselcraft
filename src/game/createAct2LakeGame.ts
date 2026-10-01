@@ -14,6 +14,11 @@ export type Act2LakeGameHandle = {
   setStage: (stage: Act2VisualStage) => void;
   setProjectStages: (stages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>>) => void;
   setActiveProject: (project: Act2RestorationProject | null) => void;
+  setAlveTurnInAvailable: (available: boolean) => void;
+};
+
+export type Act2LakeGameOptions = {
+  onAlveTurnIn?: () => void;
 };
 
 const PROJECTS: Act2RestorationProject[] = ["cabin", "boathouse", "dock", "motorboat"];
@@ -22,11 +27,13 @@ const VIEW_HEIGHT = 640;
 export async function createAct2LakeGame(
   parent: HTMLElement,
   initialStage: Act2VisualStage = 1,
+  options: Act2LakeGameOptions = {},
 ): Promise<Act2LakeGameHandle> {
   const Phaser = await import("phaser");
   let requestedStage = initialStage;
   let requestedProjectStages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>> = {};
   let requestedActiveProject: Act2RestorationProject | null = null;
+  let requestedAlveTurnInAvailable = false;
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -40,6 +47,7 @@ export async function createAct2LakeGame(
     private player?: GameObjects.Image;
     private dog?: GameObjects.Image;
     private alvePlaceholder?: GameObjects.Container;
+    private alveTurnInMarker?: GameObjects.Container;
     private moveTarget: { x: number; y: number } | null = null;
     private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
@@ -110,10 +118,33 @@ export async function createAct2LakeGame(
         fontStyle: "bold",
         color: "#ffffff",
       }).setOrigin(0.5);
-      this.alvePlaceholder = this.add.container(0, 0, [alveBody, alveHead, alveLabelBg, alveLabel])
-        .setSize(56, 108)
+      const turnInBubble = this.add.circle(0, -132, 18, 0xf4d780, 1)
+        .setStrokeStyle(3, 0x3a402f, 1);
+      const turnInBang = this.add.text(0, -133, "!", {
+        fontFamily: "Arial, sans-serif",
+        fontSize: "25px",
+        fontStyle: "bold",
+        color: "#283326",
+      }).setOrigin(0.5);
+      this.alveTurnInMarker = this.add.container(0, 0, [turnInBubble, turnInBang])
+        .setVisible(requestedAlveTurnInAvailable);
+      this.alvePlaceholder = this.add.container(0, 0, [alveBody, alveHead, alveLabelBg, alveLabel, this.alveTurnInMarker])
+        .setSize(72, 150)
         .setInteractive({ useHandCursor: true })
         .setVisible(false);
+      this.alvePlaceholder.on("pointerdown", () => {
+        if (!this.player || !this.alvePlaceholder || !requestedAlveTurnInAvailable) return;
+        const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.alvePlaceholder.x, this.alvePlaceholder.y);
+        if (distance <= 135) {
+          this.moveTarget = null;
+          options.onAlveTurnIn?.();
+          return;
+        }
+        this.moveTarget = {
+          x: this.alvePlaceholder.x,
+          y: Math.min(ACT2_WORLD.height - 8, this.alvePlaceholder.y + 58),
+        };
+      });
       this.positionAlve(requestedActiveProject);
 
       camera.centerOn(this.player.x, this.player.y);
@@ -210,6 +241,11 @@ export async function createAct2LakeGame(
       this.positionAlve(project);
     }
 
+    setAlveTurnInAvailable(available: boolean) {
+      requestedAlveTurnInAvailable = available;
+      this.alveTurnInMarker?.setVisible(available);
+    }
+
     private positionAlve(project: Act2RestorationProject | null) {
       if (!this.alvePlaceholder) return;
       if (!project) {
@@ -271,6 +307,12 @@ export async function createAct2LakeGame(
       requestedActiveProject = project;
       if (gameInstance.scene.isActive("Act2LakeScene")) {
         (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setActiveProject(project);
+      }
+    },
+    setAlveTurnInAvailable: (available) => {
+      requestedAlveTurnInAvailable = available;
+      if (gameInstance.scene.isActive("Act2LakeScene")) {
+        (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setAlveTurnInAvailable(available);
       }
     },
   };
