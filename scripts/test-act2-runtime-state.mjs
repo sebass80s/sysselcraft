@@ -568,6 +568,17 @@ assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy
 assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay at locked 200 SysselBux");
 assert.ok(storyShop.includes('ACT2_MOTORBOAT_PARTS_PRICE = 200'), "Motorbåten parts price must stay at locked 200 SysselBux");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_jetty_lifebuoy")'), "jetty lifebuoy must use the atomic story purchase RPC");
+assert.ok(storyShop.includes('purchaseStoryItem("act2_boathouse_steering_wheel")'), "Båthuset steering wheel must use the atomic story purchase RPC");
+assert.ok(storyShop.includes('purchaseStoryItem("act2_motorboat_parts")'), "Motorbåten parts must use the atomic story purchase RPC");
+const act2PurchaseMigration = fs.readFileSync(new URL("../supabase/migrations/20261001_sync_act2_story_item_purchase.sql", import.meta.url), "utf8");
+for (const [item, flag] of [
+  ["act2_jetty_lifebuoy", "act2JettyLifebuoyOwned"],
+  ["act2_boathouse_steering_wheel", "act2BoathouseSteeringWheelOwned"],
+  ["act2_motorboat_parts", "act2MotorboatPartsOwned"],
+]) {
+  assert.ok(act2PurchaseMigration.includes(`when '${item}' then v_price:=200`), `${item} must be reproducible from checked-in migration at 200 SysselBux`);
+  assert.ok(act2PurchaseMigration.includes(`v_flag_key:='${flag}'`), `${item} migration must persist ${flag}`);
+}
 assert.ok(village.includes("Livboj till bryggan"), "Mira must expose the Act 2 lifebuoy in her real shop");
 assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");
 assert.ok(village.includes("Ratt till lådbilen"), "Mira must expose the Båthuset steering wheel in her real shop");
