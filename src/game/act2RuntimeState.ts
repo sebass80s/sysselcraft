@@ -177,7 +177,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       ? Math.max(0, Math.min(200, candidate.finaleLineIndex as number))
       : 0,
     finaleIndex: Number.isInteger(candidate.finaleIndex)
-      ? Math.max(0, Math.min(5, candidate.finaleIndex as number))
+      ? Math.max(0, Math.min(4, candidate.finaleIndex as number))
       : 0,
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
     epilogueConsumed: candidate.epilogueConsumed === true,
@@ -213,16 +213,14 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     normalized.familyFinaleConsumed = false;
     normalized.epilogueConsumed = false;
   } else {
-    if (normalized.finaleIndex === 5 && !normalized.familyFinaleConsumed) {
+    // Act 2 now ends on the veranda/family payoff. The old extra "first crossing"
+    // scene belongs to Act 3 and must not keep a completed Act 2 save pending.
+    if (candidate.familyFinaleConsumed === true || candidate.epilogueConsumed === true || candidate.act2Complete === true) {
       normalized.finaleIndex = 4;
       normalized.finaleLineIndex = 0;
-    }
-    if (normalized.familyFinaleConsumed && normalized.finaleIndex < 5) {
-      normalized.finaleIndex = 5;
-      normalized.finaleLineIndex = 0;
-    }
-    if (normalized.epilogueConsumed && !normalized.familyFinaleConsumed) {
-      normalized.epilogueConsumed = false;
+      normalized.familyFinaleConsumed = true;
+      normalized.epilogueConsumed = true;
+      normalized.act2Complete = true;
     }
   }
 
@@ -373,9 +371,6 @@ export function advanceAct2Finale(state: Act2RuntimeState): Act2RuntimeState {
   if (!act2FinalePending(normalized)) return normalized;
   if (normalized.finaleIndex < 4) {
     return { ...normalized, finaleIndex: normalized.finaleIndex + 1, finaleLineIndex: 0 };
-  }
-  if (normalized.finaleIndex === 4) {
-    return { ...normalized, finaleIndex: 5, finaleLineIndex: 0, familyFinaleConsumed: true };
   }
   return normalizeAct2RuntimeState({
     ...normalized,
