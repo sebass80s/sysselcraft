@@ -101,7 +101,7 @@ Implement:
 - 16 beats and four runtime stages.
 - nine accepted Story Moment assets.
 - Sol safety beat.
-- Mira life-buoy purchase, currently 300 SysselBux provisional balance.
+- Mira life-buoy purchase: 200 SysselBux.
 - permanent life buoy after the authored installation transition.
 - Henning first social visit.
 - first water break.
@@ -126,7 +126,7 @@ Implement:
 - workshop state.
 - soapbox-car arc.
 - slip/trolley restoration.
-- story-bound Mira steering-wheel/workshop purchase, currently 100 SysselBux provisional unless later rebalanced.
+- story-bound Mira steering-wheel/workshop purchase: 200 SysselBux.
 - completion line leading toward the locked motorboat, without unlocking it early.
 
 Acceptance: no actionable explosive instructions; motorboat remains locked unless all three prerequisite projects are complete.
@@ -138,7 +138,7 @@ Implement:
 - 16 beats and four runtime stages.
 - restored slip integration.
 - family-photo/boat-history continuity.
-- Mira parts package, currently 150 SysselBux.
+- Mira parts package: 200 SysselBux.
 - water tests.
 - persistent player-chosen boat name, rendered at runtime rather than baked into generated art.
 - “Inte idag” character payoff.
@@ -290,7 +290,7 @@ Production integration has moved beyond the initial Phase 1 skeleton.
 - `/act2-test` imports the same Bryggan source instead of maintaining a second dialogue copy;
 - visual transitions are locked at contributions 4, 8 and 12;
 - the Sol → Mira livboj gate sits between contributions 6 and 7 and is contribution-neutral;
-- the existing atomic backend `purchase_story_item` RPC now supports `act2_jetty_lifebuoy` for 300 SysselBux with backend flag `act2JettyLifebuoyOwned`;
+- the existing atomic backend `purchase_story_item` RPC now supports `act2_jetty_lifebuoy` for 200 SysselBux with backend flag `act2JettyLifebuoyOwned`;
 - Mira exposes the item only when the Bryggan gate is relevant; backend ownership releases the gate after restart;
 - Bryggan 16/16 unlocks a separate persisted completion reaction. That reaction never increments contribution count and cannot replay after it is consumed.
 
@@ -308,7 +308,7 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 ### Full Act 2 restoration runtime batch — 2026-10-01
 - Stugan, Bryggan, Båthuset and Motorbåten now each have 16 canonical contribution beats wired to the production Act 2 route.
 - Canonical story sources are shared with /act2-test instead of maintaining condensed duplicate dialogue tracks.
-- Story-bound economy gates are authoritative and contribution-neutral: Bryggan livboj 300 SysselBux, Båthuset ratt 100 SysselBux, Motorbåten reservdelspaket 150 SysselBux.
+- Story-bound economy gates are authoritative and contribution-neutral: Bryggan livboj 200 SysselBux, Båthuset ratt 200 SysselBux, Motorbåten reservdelspaket 200 SysselBux.
 - Motorboat naming after 12/16 is persisted locally and does not consume a contribution.
 - The family-return + first-crossing finale is a separate six-beat restart-safe sequence after Motorbåten 16/16; completion sets familyFinaleConsumed, epilogueConsumed and act2Complete without inventing contribution 65.
 - Finale assets 01–04 are used where present. The final departure intentionally runs over the live lake because no canonical departure still exists in repo.
@@ -354,5 +354,14 @@ Do not lose this list when the implementation thread changes.
 - Direct /act2 access is blocked unless Act 1 worldFlags.clinicCompletionSeen is true; direct URL access can no longer enter Act 2 early.
 - Backend story-ownership polling persists outside React state-updater callbacks.
 - Completion reactions are explicit: Stugan uses CABIN_WAITING_REACTION, Bryggan uses JETTY_COMPLETION_REACTION, Båthuset creates no phantom pending reaction and Motorbåten proceeds to the finale.
-- Motorbåt 5 runtime syntax was repaired. The required 150 SysselBux purchase still gates after 5/16; 6/16 is now a post-purchase Mira scene and no longer narrates a second payment.
+- Motorbåt 5 runtime syntax was repaired. The required 200 SysselBux purchase still gates after 5/16; 6/16 is now a post-purchase Mira scene and no longer narrates a second payment.
 - Deterministic runtime-source checks reject known developer/internal language in child-facing Story sources.
+
+
+### Act 2 story-item price lock — 2026-10-01
+The term **story-items** refers here only to the three required Act 2 restoration purchases:
+- Bryggan: livboj — 200 SysselBux.
+- Båthuset: ratt till lådbilen — 200 SysselBux.
+- Motorbåten: reservdelspaket — 200 SysselBux.
+
+Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside this price lock and remain unchanged.

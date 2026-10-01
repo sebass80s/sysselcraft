@@ -241,7 +241,7 @@ assert.equal(BOATHOUSE_CONTRIBUTION_BEATS[7].stage, 3);
 assert.equal(BOATHOUSE_CONTRIBUTION_BEATS[11].stage, 4);
 assert.equal(BOATHOUSE_CONTRIBUTION_BEATS[15].title, "16/16 · Båthuset är klart");
 assert.ok(BOATHOUSE_CONTRIBUTION_BEATS[15].body.includes("Alve: När det är dags."));
-assert.ok(BOATHOUSE_STEERING_WHEEL_BEAT.body.includes("Mira: Hundra SysselBux."));
+assert.ok(BOATHOUSE_STEERING_WHEEL_BEAT.body.includes("Mira: Tvåhundra SysselBux."));
 
 let boathouseGate = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 0);
 boathouseGate = withSelectedProject(boathouseGate, "boathouse");
@@ -378,9 +378,9 @@ assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should poin
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
-assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 300'), "jetty lifebuoy price must stay aligned with locked provisional balance");
-assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 100'), "Båthuset steering wheel price must stay aligned with locked provisional balance");
-assert.ok(storyShop.includes('ACT2_MOTORBOAT_PARTS_PRICE = 150'), "Motorbåten parts price must stay at locked 150 SysselBux");
+assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay aligned with locked provisional balance");
+assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay aligned with locked provisional balance");
+assert.ok(storyShop.includes('ACT2_MOTORBOAT_PARTS_PRICE = 200'), "Motorbåten parts price must stay at locked 150 SysselBux");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_jetty_lifebuoy")'), "jetty lifebuoy must use the atomic story purchase RPC");
 assert.ok(village.includes("Livboj till bryggan"), "Mira must expose the Act 2 lifebuoy in her real shop");
 assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");

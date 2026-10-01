@@ -7,9 +7,9 @@ export const FOOTBALL_RUG_PRICE = 30;
 export const ROOM_DECOR_PRICES = { footballPoster: 20, computerDesk: 80, trophyShelf: 35, stringLights: 25, aquarium: 60 } as const;
 export type RoomDecorKey = keyof typeof ROOM_DECOR_PRICES;
 export const DOG_HOME_PRICES = [40, 25, 30, 35] as const;
-export const ACT2_JETTY_LIFEBUOY_PRICE = 300;
-export const ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 100;
-export const ACT2_MOTORBOAT_PARTS_PRICE = 150;
+export const ACT2_JETTY_LIFEBUOY_PRICE = 200;
+export const ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200;
+export const ACT2_MOTORBOAT_PARTS_PRICE = 200;
 export type DogHomeUpgradeIndex = 0 | 1 | 2 | 3;
 
 export type StoryItemPurchase = {
