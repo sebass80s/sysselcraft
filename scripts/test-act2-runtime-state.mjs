@@ -272,8 +272,8 @@ const corruptedCompletionIds = normalizeAct2RuntimeState({
 });
 assert.deepEqual(
   corruptedCompletionIds.consumedProjectCompletionIds,
-  ["cabin:completion-reaction"],
-  "completion reaction IDs must be known, deduplicated and backed by a completed authored project",
+  [],
+  "only authored automatic completion-reaction IDs may survive normalization",
 );
 
 const impossibleFinaleIndex = normalizeAct2RuntimeState({
