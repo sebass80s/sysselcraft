@@ -538,6 +538,23 @@ The raw triage intentionally over-counted visual candidates. This pass asks a st
 
 **Båthuset proposed queue: 9 images** (down from 11 candidates).
 
+### Motorbåten production status — VERIFIED 2026-10-01
+
+Repo verification confirms **10 uploaded production stills** under `public/assets/village/story-moments/act2/motorboat/`:
+
+- `01-finally-the-boat.png`
+- `02-linus-inspects-the-boat.png`
+- `03-mira-spare-parts-order.png`
+- `04-the-engine-lives.png`
+- `05-launching-the-boat.png`
+- `06-first-test-stall.png`
+- `07-our-boat.png`
+- `08-ready-for-the-real-test.png`
+- `09-we-ride-boat.png`
+- `10-home-again.png`
+
+These are now mapped across MOTORBOAT-01…16 in `src/game/act2MotorboatStory.ts`. Adjacent dialogue beats intentionally reuse the same still where the visual situation is continuous. This verified 10-file set supersedes the older provisional 8-image reduction note for runtime integration purposes.
+
 ### Motorbåten scene families
 - **IMG-A2-MTR-001 — Old boat enters workshop / same boat.** MOTORBOAT-01 + MOTORBOAT-02 consolidation: boat on restored slip with old photograph available for comparison.
 - **IMG-A2-MTR-002 — First substantial repair / “Inte idag”.** MOTORBOAT-04 MAJOR.
