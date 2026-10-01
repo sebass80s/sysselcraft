@@ -71,6 +71,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [backendSyncError, setBackendSyncError] = useState("");
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
   const [contributionTurnInOpen, setContributionTurnInOpen] = useState(false);
+  const [cabinRevisitOpen, setCabinRevisitOpen] = useState(false);
+  const [cabinRevisitLineIndex, setCabinRevisitLineIndex] = useState(0);
   const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
 
   useEffect(() => {
@@ -158,6 +160,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       if (disposed || !hostRef.current) return;
       gameRef.current = await createAct2LakeGame(hostRef.current, 1, {
         onAlveTurnIn: () => setContributionTurnInOpen(true),
+        onCabinRevisit: () => {
+          setCabinRevisitLineIndex(0);
+          setCabinRevisitOpen(true);
+        },
       });
       const latest = debug ? stateRef.current : await loadAct2RuntimeState();
       gameRef.current.setActiveProject(latest.selectedProject);
@@ -169,6 +175,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       });
       gameRef.current.setAlveTurnInAvailable(
         hasPendingAlveTurnIn(latest, backendWorldProgressionRef.current),
+      );
+      gameRef.current.setCabinRevisitAvailable(
+        latest.projects.cabin.complete && !latest.projects.motorboat.complete,
       );
     });
     return () => {
@@ -235,6 +244,13 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     const pending = hasPendingAlveTurnIn(state, backendWorldProgression);
     gameRef.current?.setAlveTurnInAvailable(pending);
   }, [state, backendWorldProgression]);
+
+  useEffect(() => {
+    gameRef.current?.setCabinRevisitAvailable(
+      state.projects.cabin.complete && !state.projects.motorboat.complete,
+    );
+    if (state.projects.motorboat.complete) setCabinRevisitOpen(false);
+  }, [state.projects.cabin.complete, state.projects.motorboat.complete]);
 
   async function commit(next: Act2RuntimeState) {
     if (!debug) await saveAct2RuntimeState(next);
@@ -344,16 +360,20 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeFinalePresentation = activeFinaleLine
     ? parseStoryLine(activeFinaleLine, childName)
     : null;
-  const completionProject = (["cabin", "dock"] as const)
+  const completionProject = (["dock"] as const)
     .find((project) => projectCompletionReactionPending(state, project)) ?? null;
-  const activeCompletionBeat = completionProject === "cabin"
-    ? CABIN_WAITING_REACTION
-    : completionProject === "dock"
-      ? JETTY_COMPLETION_REACTION
-      : null;
+  const activeCompletionBeat = completionProject === "dock"
+    ? JETTY_COMPLETION_REACTION
+    : null;
   const activeCompletionLine = activeCompletionBeat?.body[state.completionLineIndex] ?? null;
   const activeCompletionPresentation = activeCompletionLine
     ? parseStoryLine(activeCompletionLine, childName)
+    : null;
+  const activeCabinRevisitLine = cabinRevisitOpen
+    ? CABIN_WAITING_REACTION.body[cabinRevisitLineIndex] ?? null
+    : null;
+  const activeCabinRevisitPresentation = activeCabinRevisitLine
+    ? parseStoryLine(activeCabinRevisitLine, childName)
     : null;
 
   async function advanceFinaleStory() {
@@ -372,6 +392,15 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       return;
     }
     await commit(consumeProjectCompletionReaction(state, completionProject));
+  }
+
+  function advanceCabinRevisit() {
+    if (cabinRevisitLineIndex + 1 < CABIN_WAITING_REACTION.body.length) {
+      setCabinRevisitLineIndex((index) => index + 1);
+      return;
+    }
+    setCabinRevisitOpen(false);
+    setCabinRevisitLineIndex(0);
   }
 
   async function advanceContributionStory() {
@@ -438,6 +467,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         setState(reset);
         setPreviewProject(null);
         setContributionTurnInOpen(false);
+        setCabinRevisitOpen(false);
+        setCabinRevisitLineIndex(0);
       }}>↺ Act 2</button>
       <button className="secondary-button compact" type="button" onClick={() => setState((current) => ({
         ...current,
@@ -554,6 +585,22 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       dialogueClassName="act2-dialogue-card"
       zIndex={100}
       background="rgba(6,10,8,.96)"
+    />}
+    {cabinRevisitOpen && activeCabinRevisitLine && !state.projects.motorboat.complete && <StoryRunner
+      beat={{
+        id: `act2:cabin-revisit:${cabinRevisitLineIndex}`,
+        image: CABIN_WAITING_REACTION.image,
+        imageFit: "contain",
+        heading: CABIN_WAITING_REACTION.title,
+        speaker: activeCabinRevisitPresentation?.speaker,
+        speakerTone: activeCabinRevisitPresentation?.speakerTone,
+        lines: activeCabinRevisitPresentation ? [activeCabinRevisitPresentation.text] : [],
+        nextLabel: cabinRevisitLineIndex + 1 < CABIN_WAITING_REACTION.body.length ? "Fortsätt" : "Tillbaka",
+      }}
+      onNext={advanceCabinRevisit}
+      dialogueClassName="act2-dialogue-card"
+      zIndex={92}
+      background="rgba(9,14,10,.94)"
     />}
     {completionProject && activeCompletionBeat && activeCompletionLine && <StoryRunner
       beat={{
