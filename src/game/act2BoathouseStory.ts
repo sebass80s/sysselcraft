@@ -686,7 +686,6 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Barnet: Vår tur?",
       "Alve tittar från båten till fotografiet och sedan ut över sjön.",
       "Alve: Att ta reda på om den fortfarande kan åka någonstans.",
-      "Order-independence lock: this scene must remain valid whether Båthuset is the first, second or third restoration project. It must not assume that Stugan or Bryggan is unfinished or complete."
     ],
     "stage": 4
   }
