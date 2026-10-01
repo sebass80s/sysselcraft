@@ -4,12 +4,14 @@ import {
   canSelectProject,
   createDefaultAct2RuntimeState,
   isMotorboatUnlocked,
+  jettyPurchaseRequired,
   normalizeAct2RuntimeState,
   prerequisiteCompletionCount,
   pendingBackendContributionCount,
   nextAct2Contribution,
   totalAct2Contributions,
   withBackendClaimBaseline,
+  withBackendStoryFlags,
   withPresentedContribution,
   withSelectedProject,
 } from "../src/game/act2RuntimeState.ts";
@@ -171,6 +173,18 @@ for (let i = 1; i <= 3; i++) {
 let fourth = nextAct2Contribution(boundary, 4);
 assert.equal(fourth?.visibleStage, 2, "dock beat 4 is the authored 1/4→2/4 transition");
 
+let purchaseGate = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 0);
+purchaseGate = withSelectedProject(purchaseGate, "dock");
+for (let i = 1; i <= 6; i++) {
+  const next = nextAct2Contribution(purchaseGate, i);
+  purchaseGate = withPresentedContribution(purchaseGate, "dock", next.beatId, next.visibleStage);
+}
+assert.equal(purchaseGate.projects.dock.contributions, 6);
+assert.equal(jettyPurchaseRequired(purchaseGate), true, "lifebuoy must gate jetty after contribution 6");
+purchaseGate = withBackendStoryFlags(purchaseGate, { act2JettyLifebuoyOwned: true });
+assert.equal(jettyPurchaseRequired(purchaseGate), false, "authoritative ownership must release jetty gate");
+assert.equal(nextAct2Contribution(purchaseGate, 7)?.beatId, "dock:07");
+
 const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
@@ -192,5 +206,10 @@ assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");
+const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
+assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 300'), "jetty lifebuoy price must stay aligned with locked provisional balance");
+assert.ok(storyShop.includes('purchaseStoryItem("act2_jetty_lifebuoy")'), "jetty lifebuoy must use the atomic story purchase RPC");
+assert.ok(village.includes("Livboj till bryggan"), "Mira must expose the Act 2 lifebuoy in her real shop");
+assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");
 
 console.log("Act 2 vertical-slice state/route contract PASS");
