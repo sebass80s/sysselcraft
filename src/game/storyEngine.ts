@@ -18,7 +18,7 @@ export type ParsedStoryLine = {
   speakerTone?: StorySpeakerTone;
 };
 
-const STORY_SPEAKER_PREFIXES = ["Barnet", "Alve", "Henning", "Mira", "Linus", "Sol", "Hunden", "Valpen"] as const;
+const STORY_SPEAKER_PREFIXES = ["Barnet", "Alve", "Henning", "Mira", "Linus", "Sol", "Pappan", "Storasystern", "Hunden", "Valpen"] as const;
 
 export function parseStoryLine(line: string, childName = "Barnet"): ParsedStoryLine {
   for (const prefix of STORY_SPEAKER_PREFIXES) {
