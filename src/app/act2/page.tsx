@@ -42,6 +42,9 @@ import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../../game/act2AlveSt
 
 
 
+// Temporary shipping gate. /act2-test remains available for development and visual QA.
+const ACT2_PRODUCTION_ENABLED = false;
+
 const PROJECT_COPY: Record<Act2Project, { label: string; preview: string; object: string }> = {
   cabin: { label: "Stugan", object: "stugan", preview: "Stugan... Jag hoppas min familj vill komma hit igen om vi får ordning på den." },
   dock: { label: "Bryggan", object: "bryggan", preview: "Bryggan är bra. Då kan vi knyta fast båten här sen. Och bada!" },
@@ -248,6 +251,13 @@ export default function Act2Page() {
   }
 
   if (!ready) return <main className="parent-page"><p>Laddar sjön…</p></main>;
+  if (!ACT2_PRODUCTION_ENABLED) {
+    return <main className="parent-page">
+      <h1>Stigen är inte öppen än</h1>
+      <p>Det finns mer att göra i byn innan vägen mot sjön öppnas.</p>
+      <a className="primary-button" href="/">Tillbaka till byn</a>
+    </main>;
+  }
   if (!act2AccessAllowed) {
     return <main className="parent-page">
       <h1>Stigen är inte öppen än</h1>
