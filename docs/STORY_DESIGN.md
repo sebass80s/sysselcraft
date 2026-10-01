@@ -5512,7 +5512,7 @@ Alve tittar på dig.
 
 > **Alve:** “Jag tar det.”
 
-**Boundary lock:** beat 16 ends the motorboat project itself. It must **not** begin the cottage/family discovery. The already locked Act 2 finale remains a separate post-project Story Moment: quiet aftermath → open cottage / suspected intruders → family return → first departure in the restored boat → **SLUT PÅ ANDRA KAPITLET**.
+**Boundary lock:** beat 16 ends the motorboat project itself. It must **not** begin the cottage/family discovery. The locked Act 2 finale remains a separate post-project Story Moment: quiet aftermath → open cottage / suspected intruders → family return → veranda payoff → **SLUT PÅ ANDRA KAPITLET**. The first true crossing belongs to Act 3.
 
 ### Contributions 13–16: the proper test / Act 2 climax
 The final block adds no new purchase or major repair. It proves that Adam and Alve can use what they restored.
@@ -5538,7 +5538,7 @@ The final block adds no new purchase or major repair. It proves that Adam and Al
 
 ### Act 2 family-return payoff — superseded summary
 
-The authoritative dialogue is **Act 2 finale dialogue — family return and first crossing** above. Do not maintain a second divergent reveal script here.
+The authoritative dialogue is **Act 2 finale dialogue — family return** above. Do not maintain a second divergent reveal script here.
 
 Locked family facts:
 - Alve's mother became ill and later died before Act 2; her death is never stated outright in child-facing dialogue.
