@@ -397,7 +397,7 @@ Core sequence: **define whole area → paint one coherent master → Kalle accep
 Do not independently generate pieces and try to assemble them later. Do not regenerate an accepted master/building to solve placement. Do not ask image generation to solve crop/alpha/alignment/envelope problems. Do not produce stage variants with drifting perspective/footprints. Never use spritesheets/contact sheets unless Kalle explicitly requests one.
 
 
-## Act 2 paper-design lock — Alve/opening/project UX (2026-09-28)
+## Act 2 design-history lock — Alve/opening/project UX (2026-09-28)
 
 - Late Act 1 foreshadows the lake with an overgrown **SJÖN →** sign and a brief Linus memory; no immediate quest.
 - Act 2 starts when the dog runs down that remembered path. Forest travel is cinematic only, not a playable map, ending in the lake reveal.
@@ -413,7 +413,7 @@ Do not independently generate pieces and try to assemble them later. Do not rege
 - Clicking Alve at the active project opens short project-specific friend cutscenes. Mix project talk, banter and gradually revealed family/lake memories. Do not use him as a quest-vending machine.
 - Alve's story is deliberately revealed over time: **stranger → building companion → friend** in parallel with **neglected lake → restored lake → living lake**.
 - When a project is complete, lake residents/activities can replace the “worksite” feeling. Guiding principle: **Alve works where restoration is active; village life appears where restoration is complete.**
-- Still paper design. Do not connect /act2-test, add progression/save flags, or implement the opening until Kalle explicitly moves this slice into production.
+- Historical status note: this slice was still paper design on 2026-09-28. Production integration has since moved to `/act2`; `/act2-test` remains acceptance-only.
 
 
 ### Act 2 pacing/economy/village integration — LOCKED 2026-09-28
@@ -498,7 +498,7 @@ Canonical visual rules remain absolute: Barnet only from behind with canonical c
 
 COTTAGE-12's previously open home clue is now locked as **Alve's familiar keyring from home**. It proves somebody from home visited without revealing who.
 
-Creative image production being complete does not equal runtime integration. Next concrete Stugan step is to add the accepted exported files to the Act 2 Stugan Story Moment asset folder and wire the 1–16 contribution sequence into isolated `/act2-test`, preserving the rule that Story Moments occur only at their mapped quest contributions. Do not connect the Act 2 map/save progression yet.
+Historical checkpoint: at this point creative production was ahead of runtime integration. The accepted Stugan assets and 1–16 mapping were subsequently integrated; current production status is governed by the later Act 2 implementation sections below.
 
 
 ## Act 2 Stugan browser acceptance — 2026-09-28
@@ -509,12 +509,12 @@ Creative image production being complete does not equal runtime integration. Nex
 - Canonical assets are present under `public/assets/village/story-moments/act2/cabin/`: `1.png` … `6.png` plus `renovating-cabin1.png`, `renovating-cabin2.png`, `renovating-cabin3.png`.
 - Current test mapping: early work at 1/16; memory discoveries at 2–3; Alve motive at 4; mid work at 5–6; rain/game at 7–8; VÅR STUGA at 9; veranda work at 10–11; home keyring at 12; completed-cottage still across the final preparation/completion beats 13–16.
 - `/act2-test` now contains the Alve intro, Båthuset sequence and Stugan sequence. This is an acceptance harness, not production progression.
-- **Do not connect Act 2 to production map/save/progression merely because the browser slice is accepted.** Adam's physical iPhone save remains untouched. Production integration is a separate explicit gate.
+- Historical acceptance boundary: browser acceptance did not itself authorize production integration. Production integration was implemented later through the explicit `/act2` runtime/state work.
 - Next Nova must begin by verifying branch/HEAD and canonical docs against repo reality. The next content track should start from the existing locked Act 2 design rather than reopening accepted Stugan visuals.
 
-## Act 2 implementation handoff — 2026-09-30
+## Act 2 implementation handoff — 2026-09-30 (historical plan, runtime now implemented)
 
-Act 2 has moved from story/art pre-production into implementation planning. The canonical execution plan is now `docs/ACT2_IMPLEMENTATION_PLAN.md`. Read that document before wiring production progression.
+Act 2 moved from story/art pre-production into implementation on 2026-09-30. The execution plan remains in `docs/ACT2_IMPLEMENTATION_PLAN.md`; production runtime/state work has since been implemented on `/act2`.
 
 Current locked implementation order:
 1. real Act 2 runtime foundation + OPEN-001…005 + Alve/project chooser;
@@ -524,10 +524,10 @@ Current locked implementation order:
 5. family finale + epilogue;
 6. fresh-save/existing-save/order-matrix/restart/economy acceptance before release progression is considered complete.
 
-Important current boundary:
+Current boundary:
 - `/act2-test` remains the story/visual acceptance lab, not production save authority.
-- Do not implement all 64 contribution beats before the runtime/state spine exists.
-- First production vertical slice is: **Act 1 → Act 2 trigger → OPEN-001…005 → bicycle → Alve → project chooser → chosen project begins and survives restart.**
+- `/act2` owns production Act 2 runtime/state presentation.
+- The original vertical slice **Act 1 → Act 2 trigger → OPEN-001…005 → bicycle → Alve → project chooser → chosen project begins and survives restart** is implemented; do not recreate it through a parallel path.
 - Stugan/Bryggan/Båthuset remain order-independent. Motorbåten unlocks only at 3/3.
 - Family finale is outside the 64 contribution count.
 - Act 3 destination remains undefined.
