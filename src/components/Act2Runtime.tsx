@@ -98,9 +98,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           ...createDefaultAct2RuntimeState(),
           entered: true,
           backendClaimBaseline: 0,
-          jettyLifebuoyOwned: true,
-          boathouseSteeringWheelOwned: true,
-          motorboatPartsOwned: true,
         };
         backendWorldProgressionRef.current = 999;
         setBackendWorldProgression(999);
@@ -432,14 +429,17 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           ...createDefaultAct2RuntimeState(),
           entered: true,
           backendClaimBaseline: 0,
-          jettyLifebuoyOwned: true,
-          boathouseSteeringWheelOwned: true,
-          motorboatPartsOwned: true,
         };
         setState(reset);
         setPreviewProject(null);
         setContributionTurnInOpen(false);
       }}>↺ Act 2</button>
+      <button className="secondary-button compact" type="button" onClick={() => setState((current) => ({
+        ...current,
+        jettyLifebuoyOwned: true,
+        boathouseSteeringWheelOwned: true,
+        motorboatPartsOwned: true,
+      }))}>Ge testköp</button>
       <span style={{ alignSelf: "center", color: "white", fontSize: 12, fontWeight: 800 }}>DEBUG · production UI</span>
     </div>}
     {!debug && (<button
