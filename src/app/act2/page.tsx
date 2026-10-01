@@ -477,6 +477,7 @@ export default function Act2Page() {
         nextLabel: state.openingIndex === OPENING.length - 1 ? "Gå närmare" : "Fortsätt",
       }}
       onNext={() => void advanceOpening()}
+      dialogueClassName="act2-dialogue-card"
       background="#111"
       scrollable
     />}
@@ -491,6 +492,7 @@ export default function Act2Page() {
         nextLabel: "Fortsätt",
       }}
       onNext={() => void commit({ ...state, bicycleSeen: true })}
+      dialogueClassName="act2-dialogue-card"
     />}
 
     {state.bicycleSeen && !state.alveIntroComplete && <StoryRunner
@@ -503,6 +505,7 @@ export default function Act2Page() {
         nextLabel: state.alveIntroIndex === ALVE_DIALOGUE.length - 1 ? "Välj projekt" : "Fortsätt",
       }}
       onNext={() => void advanceAlve()}
+      dialogueClassName="act2-dialogue-card"
     />}
 
     {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !completionProject && <section className="story-moment" role="presentation">
@@ -534,6 +537,7 @@ export default function Act2Page() {
         nextLabel: state.finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa",
       }}
       onNext={() => void advanceFinaleStory()}
+      dialogueClassName="act2-dialogue-card"
       zIndex={100}
       background="rgba(6,10,8,.96)"
     />}
@@ -547,6 +551,7 @@ export default function Act2Page() {
         nextLabel: state.completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten",
       }}
       onNext={() => void advanceCompletionReaction()}
+      dialogueClassName="act2-dialogue-card"
       zIndex={90}
       background="rgba(9,14,10,.94)"
     />}
@@ -583,6 +588,7 @@ export default function Act2Page() {
       onNext={() => void advanceContributionStory()}
       zIndex={80}
       background="rgba(9,14,10,.94)"
+      dialogueClassName="act2-dialogue-card"
       footer={contributionCandidate.backlog > 1 ? <small>{contributionCandidate.backlog - 1} questframsteg väntar bakom detta beat.</small> : undefined}
     >
       <p>{activeContributionLine.replace(/^Barnet:/, childName + ":")}</p>
