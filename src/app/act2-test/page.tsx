@@ -47,7 +47,7 @@ const STORY_BEATS: StoryBeat[] = [
     body: ACT2_ALVE_DIALOGUE.map((beat) => {
       const text = beat.text.replaceAll("{childName}", "Adam");
       return beat.speaker === "child"
-        ? `Adam: ${text}`
+        ? `Barnet: ${text}`
         : beat.speaker === "alve"
           ? `Alve: ${text}`
           : beat.speaker === "unknown"
@@ -237,7 +237,7 @@ export default function Act2TestPage() {
             </div>
           }
         >
-          <StoryTranscript lines={[activeBeat.body[storyLineIndex] ?? activeBeat.body[0]]} />
+          <StoryTranscript childName="Adam" lines={[activeBeat.body[storyLineIndex] ?? activeBeat.body[0]]} />
         </StoryMoment>
       )}
     </main>
