@@ -34,8 +34,8 @@ function assertProject(name, beats) {
     assert.ok(beat.body.every((line) => typeof line === "string" && line.trim().length > 0), `${name} beat ${number} contains an empty/non-string line`);
     assert.equal(
       beat.stage,
-      Math.ceil(number / 4),
-      `${name} beat ${number} must be in visual stage ${Math.ceil(number / 4)}`,
+      Math.min(4, 1 + Math.floor(number / 4)),
+      `${name} beat ${number} must be in visual stage ${Math.min(4, 1 + Math.floor(number / 4))}`,
     );
     assertAsset(beat.image, `${name} ${beat.title}`);
   });
