@@ -148,6 +148,9 @@ assert.equal(midCompletionReaction.completionLineIndex, 3, "restart must preserv
 const consumedMidCompletion = consumeProjectCompletionReaction(midCompletionReaction, "dock");
 assert.equal(consumedMidCompletion.completionLineIndex, 0, "consuming the completion reaction must reset its line index");
 assert.equal(projectCompletionReactionPending(jettyComplete, "boathouse"), false, "projects without authored completion reactions must not leave pending ghosts");
+let cabinComplete = createDefaultAct2RuntimeState();
+cabinComplete = complete(cabinComplete, "cabin");
+assert.equal(projectCompletionReactionPending(cabinComplete, "cabin"), false, "Cabin 16/16 must not auto-open the revisit scene");
 assert.equal(totalAct2Contributions(jettyComplete), 16, "completion reaction must not fabricate contribution 17");
 const beforeReactionCount = totalAct2Contributions(jettyComplete);
 jettyComplete = consumeProjectCompletionReaction(jettyComplete, "dock");
@@ -535,8 +538,10 @@ assert.ok(act2AlveStorySource.includes('{ speaker: "alve", text: "Okej, {childNa
 assert.ok(act2AlveStorySource.includes('{ speaker: "unknown", text: "Varför?" }'), "unknown Alve must own the pre-introduction Varför line");
 assert.ok(page.includes('🔒 Motorbåten'), "motorboat must remain visible while locked");
 assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector must derive 0/3→3/3 from canonical state");
-assert.ok(page.includes('(["cabin", "dock"] as const)'), "production route must derive completion reactions from the authored reaction set");
-assert.ok(page.includes("CABIN_WAITING_REACTION"), "production route must present the canonical Cabin waiting reaction");
+assert.ok(page.includes('(["dock"] as const)'), "production route must keep only the authored automatic completion reaction");
+assert.ok(page.includes("CABIN_WAITING_REACTION"), "production route must present the canonical Cabin revisit scene");
+assert.ok(page.includes("state.projects.cabin.complete && !state.projects.motorboat.complete"), "Cabin revisit must exist only after Cabin completion and before Motorboat completion");
+assert.ok(page.includes("onCabinRevisit"), "Cabin revisit must open from a real world Cabin interaction");
 assert.ok(page.includes("JETTY_COMPLETION_REACTION"), "production route must present the canonical jetty completion reaction");
 assert.ok(page.includes("CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Cabin contribution track");
 assert.ok(page.includes("BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Båthuset contribution track");
