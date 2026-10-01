@@ -159,6 +159,7 @@ export function withPresentedContribution(
 ): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
   if (!beatId || normalized.projects[project].complete) return normalized;
+  if (normalized.selectedProject !== project) return normalized;
   if (project === "motorboat" && !isMotorboatUnlocked(normalized)) return normalized;
   const current = normalized.projects[project];
   if (current.consumedBeatIds.includes(beatId)) return normalized;
