@@ -505,7 +505,7 @@ assert.match(
 assert.ok(lakeGameSource.includes('setInteractive({ useHandCursor: true })'), "Alve placeholder must already be a future interaction target");
 assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
 
-const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
+const page = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 const act2AlveStorySource = fs.readFileSync(new URL("../src/game/act2AlveStory.ts", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
@@ -611,7 +611,8 @@ assert.match(globalCss, /\.story-moment::after \{[^}]*pointer-events:none/, "Sto
 const storyRunnerSource = fs.readFileSync(new URL("../src/components/story/StoryRunner.tsx", import.meta.url), "utf8");
 const storyMomentSource = fs.readFileSync(new URL("../src/components/story/StoryMoment.tsx", import.meta.url), "utf8");
 const dialogueCardSource = fs.readFileSync(new URL("../src/components/story/DialogueCard.tsx", import.meta.url), "utf8");
-const act2PageSource = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
+const act2PageSource = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
+const act2RouteSource = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 
 assert.match(storyMomentSource, /shared-story-moment/, "shared Story Engine must own the fullscreen Story Moment shell");
 assert.match(storyMomentSource, /shared-story-tint/, "shared Story Engine must own the non-interactive tint layer");
@@ -653,8 +654,9 @@ assert.match(act2PageSource, /<StoryMoment[\s\S]*meeting-alve\/pick\.png/, "proj
 assert.match(act2PageSource, /purchaseRequired && <StoryMoment/, "purchase gates must use the shared Story Engine shell");
 assert.match(act2PageSource, /namingRequired && <StoryMoment/, "naming gate must use the shared Story Engine shell");
 assert.doesNotMatch(act2PageSource, /className="story-moment"/, "Act 2 production must not keep a parallel legacy Story Moment shell");
-assert.match(act2TestPageSource, /<StoryMoment[\s\S]*<StoryTranscript/, "Act 2 test lab must render through the same Story Engine v1 presentation path");
-assert.doesNotMatch(act2TestPageSource, /<Image/, "Act 2 test lab must not keep a separate image/dialogue overlay implementation");
+assert.match(act2TestPageSource, /<Act2Runtime debug \/>/, "Act 2 test lab must render the exact shared production runtime");
+assert.match(act2RouteSource, /<Act2Runtime productionEnabled=\{ACT2_PRODUCTION_ENABLED\} \/>/, "Act 2 production route must render the same shared runtime");
+assert.doesNotMatch(act2TestPageSource, /StoryMoment|StoryTranscript|<Image|project-choice/, "Act 2 test lab route must not keep a parallel story implementation");
 
 
 assert.match(
@@ -668,7 +670,7 @@ assert.doesNotMatch(
   "Act 2 opening must not render the full beat body as one scrollable card",
 );
 assert.match(
-  act2TestPageSource,
-  /StoryTranscript lines=\{\[activeBeat\.body\[storyLineIndex\]/,
-  "Act 2 test lab must mirror line-by-line production presentation",
+  act2PageSource,
+  /lines: \[opening\.body\[state\.openingLineIndex\] \?\? opening\.body\[0\]\]/,
+  "Shared Act 2 runtime must own line-by-line opening presentation for both production and debug",
 );
