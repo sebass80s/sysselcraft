@@ -3,7 +3,6 @@ import fs from "node:fs";
 import {
   ACT2_ALVE_WORK_POSITIONS,
   ACT2_VISUAL_PLACEMENTS,
-  ACT2_PLAYER_FOOT_RADIUS,
 } from "../src/game/act2VisualAssets.ts";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/act2CabinStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
