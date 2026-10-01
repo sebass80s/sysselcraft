@@ -7,10 +7,12 @@ import {
   createDefaultAct2RuntimeState,
   isMotorboatUnlocked,
   loadAct2RuntimeState,
+  jettyPurchaseRequired,
   nextAct2Contribution,
   prerequisiteCompletionCount,
   saveAct2RuntimeState,
   withBackendClaimBaseline,
+  withBackendStoryFlags,
   withPresentedContribution,
   withSelectedProject,
   type Act2Project,
@@ -19,7 +21,7 @@ import {
 import { loadSaveState } from "../../game/saveState";
 import { getPairedChildId } from "../../backend/childDeviceBinding";
 import { getChildGameState } from "../../backend/familyRepository";
-import { JETTY_CONTRIBUTION_BEATS } from "../../game/act2JettyStory";
+import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../../game/act2JettyStory";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
@@ -189,6 +191,7 @@ export default function Act2Page() {
           if (backend) {
             setBackendWorldProgression(backend.progression.worldProgression);
             entered = withBackendClaimBaseline(entered, backend.progression.worldProgression);
+            entered = withBackendStoryFlags(entered, backend.worldFlags);
           }
         } catch {
           if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
@@ -249,6 +252,14 @@ export default function Act2Page() {
         if (!cancelled && backend) {
           setBackendWorldProgression(backend.progression.worldProgression);
           setBackendSyncError("");
+          setState((current) => {
+            const next = withBackendStoryFlags(current, backend.worldFlags);
+            if (next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned) {
+              void saveAct2RuntimeState(next);
+              return next;
+            }
+            return current;
+          });
         }
       } catch {
         if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
@@ -316,7 +327,8 @@ export default function Act2Page() {
       : prerequisiteDone === 2
         ? "Två klara. Då är det bara en kvar. Den har väntat länge nog."
         : "Stugan är klar. Bryggan är klar. Båthuset är klart. Det är dags.";
-  const contributionCandidate = backendWorldProgression === null
+  const purchaseRequired = state.selectedProject === "dock" && jettyPurchaseRequired(state);
+  const contributionCandidate = backendWorldProgression === null || purchaseRequired
     ? null
     : nextAct2Contribution(state, backendWorldProgression);
   const activeJettyBeat = contributionCandidate?.project === "dock"
@@ -395,6 +407,15 @@ export default function Act2Page() {
       </div>
     </section>}
 
+    {purchaseRequired && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
+      {JETTY_LIFEBUOY_BEAT.image && <Image src={JETTY_LIFEBUOY_BEAT.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
+      <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
+        <span className="dialogue-speaker">Bryggan · nästa steg</span>
+        <p>Sol vill att ni skaffar en riktig livboj innan arbetet fortsätter.</p>
+        <p>Mira kan ordna den i lanthandeln för 300 SysselBux.</p>
+        <a className="primary-button dialogue-next" href="/">Till Mira i byn</a>
+      </div>
+    </section>}
     {activeJettyBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
       {activeJettyBeat.image && <Image src={activeJettyBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true">
