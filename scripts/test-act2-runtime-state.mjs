@@ -114,7 +114,7 @@ function complete(projectState, project) {
     if (project === "motorboat" && motorboatNamingRequired(current)) {
       current = withMotorboatName(current, "Testbåten");
     }
-    const stage = Math.min(4, Math.ceil(i / 4));
+    const stage = Math.min(4, 1 + Math.floor(i / 4));
     current = withPresentedContribution(current, project, `${project}:${String(i).padStart(2, "0")}`, stage);
   }
   return current;
