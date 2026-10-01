@@ -59,7 +59,7 @@ main { min-height: 100dvh; }
 .story-moment-dialogue p { font-size: 1rem; text-shadow: 0 1px rgba(255,255,255,.35); }
 .dialogue-card p { margin: .4rem 0 .55rem; font-size: .94rem; line-height: 1.35; }
 .dialogue-card h2 { margin: .35rem 0 .5rem; font-size: 1.2rem; }
-.dialogue-speaker { display: inline-flex; align-items: center; gap: .35rem; font-size: .76rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; color: #fff7dd; background: #315f8c; border-radius: 999px; padding: .32rem .56rem; }
+.dialogue-speaker { display: inline-flex; align-items: center; gap: .35rem; max-width: 100%; font-size: .76rem; line-height: 1.15; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff7dd; background: #315f8c; border-radius: 999px; padding: .32rem .56rem; }
 .dialogue-card > .dialogue-speaker,
 .dialogue-card .shared-story-transcript-line > .dialogue-speaker {
   position: static;
