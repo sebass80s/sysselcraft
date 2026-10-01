@@ -275,7 +275,22 @@ Du börjar gå mot cykeln.
 
 > **Barnet:** “Då är det någon här.”
 
-After OPEN-005, continue directly into the existing close bicycle beat (meeting-alve/bike.png) and then the revised canonical Alve meeting sequence in STORY_DESIGN.md. OPEN-005 must remain the distant discovery; the next beat earns the close inspection.
+After OPEN-005, continue directly into the existing close bicycle beat (`meeting-alve/bike.png`) and then the revised canonical Alve meeting sequence in STORY_DESIGN.md. OPEN-005 must remain the distant discovery; the next beat earns the close inspection.
+
+### Canonical first-Alve visual sequence — LOCKED 2026-10-01
+
+The first Alve meeting uses the existing assets under `public/assets/village/story-moments/act2/meeting-alve/` and must not collapse back to a single held `first-hello.png` image. Current production/debug mapping is intentionally shared through `src/game/act2AlveStory.ts`.
+
+Visual order:
+1. `bike.png` — close bicycle inspection after OPEN-005.
+2. `first-hello.png` — first contact at the cottage.
+3. `a-lot-of-work.png` — the scale of the repairs becomes clear.
+4. `new-friend.png` — Barnet offers help and the interaction softens.
+5. `alve-shows.png` — Alve points out Stugan, Bryggan, Båthuset and explains why Motorbåten waits.
+6. `new-friend.png` — friendship banter before the choice.
+7. `pick.png` — project-selection Story Moment.
+
+Several consecutive dialogue lines may intentionally hold the same still. The rule is visual progression by authored story phase, not one image per line.
 
 ## Locked cross-project finale beats
 
@@ -867,7 +882,7 @@ Failed generations that showed Barnet from the front or visible civilization are
 
 The Stugan Story Moment production pass is complete at the conversation/creative-acceptance level: **9 intended production stills total** (COT-001…COT-009). The six narrative stills cover memory discoveries, Alve's motive, rain/game friendship, VÅR STUGA, the home-keyring clue and completed cottage. The three added work stills cover the missing physical-restoration rhythm.
 
-This does **not** mean runtime integration is complete. Next implementation gate is: place the accepted exported files under the Act 2 Stugan Story Moment asset folder, map them to the correct contribution beats, then verify the 1–16 sequence in isolated `/act2-test` before any production Act 2 map/save integration.
+Historical checkpoint: at this point runtime integration was not complete. Stugan assets and the 1–16 mapping have since been integrated into the shared Act 2 story sources and production runtime.
 
 
 ### Stugan runtime acceptance — 2026-09-28
@@ -1209,7 +1224,7 @@ Canonical files:
 - `04-first-view-of-the-lake.png`
 - `05-the-bicycle.png`
 
-They are wired into the isolated `/act2-test` story flow before the existing close bicycle beat. This is story-lab integration only, not production Act 1→Act 2 progression.
+They are wired into both the shared Act 2 story sources and `/act2-test`. Production Act 2 now consumes the same canonical opening/story data through `/act2`; `/act2-test` remains non-authoritative acceptance/debug only.
 
 ### Finale status
 The family-return finale uses father + early-teen older sister only. No little brother. The mother is absent physically and remains only in historical memory/photo continuity.
