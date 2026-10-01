@@ -62,6 +62,12 @@ ACT2_ALVE_DIALOGUE.forEach((beat, index) => {
   assertAsset(act2AlveImageForIndex(index), `Alve intro line ${index + 1}`);
 });
 
+assert.equal(ACT2_FINALE_BEATS.length, 5, "Act 2 finale must end at the veranda; first crossing belongs to Act 3");
+assert.equal(ACT2_FINALE_BEATS.some((beat) => beat.id === "finale:first-crossing"), false, "Act 2 must not contain the Act 3 crossing");
+const friendshipBeat = ACT2_FINALE_BEATS.find((beat) => beat.id === "finale:family-embrace");
+assert.ok(friendshipBeat?.body.includes("Alve: Det är {childName}."), "family embrace must name the child before the friend payoff");
+assert.ok(friendshipBeat?.body.includes("Alve: Han är min kompis."), "family embrace must preserve the friend payoff");
+
 ACT2_FINALE_BEATS.forEach((beat) => {
   assert.ok(beat.id && beat.title, "finale beats must have id and title");
   assert.ok(beat.body.length > 0, `${beat.id} must contain dialogue/body lines`);
