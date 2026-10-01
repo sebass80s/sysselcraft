@@ -150,7 +150,6 @@ export const ACT2_FINALE_BEATS: Act2FinaleBeat[] = [
       "Alve: Vadå?",
       "Barnet: Att du är glad.",
       "Alve: Jag är jätteglad.",
-      "Paus.",
       "Alve: Jag försöker bara att inte vara konstig.",
       "Barnet: Det går sådär."
     ]
@@ -161,7 +160,6 @@ export const ACT2_FINALE_BEATS: Act2FinaleBeat[] = [
     "image": "/assets/village/story-moments/act2/finale/03-family-embrace.png",
     "body": [
       "Alve skrattar till. Storasystern går fram först och kastar armarna om honom. Pappan följer efter och drar in dem båda. Alve försvinner nästan in i familjekramen.",
-      "Låt återföreningen landa visuellt innan nästa replik.",
       "Storasystern tittar förbi Alve mot Barnet.",
       "Storasystern: Och vem är det där?",
       "Alve tittar tillbaka.",
@@ -180,7 +178,6 @@ export const ACT2_FINALE_BEATS: Act2FinaleBeat[] = [
       "Barnet: Blev det det?",
       "Alve tittar in genom den öppna dörren.",
       "Alve: Nej.",
-      "Paus.",
       "Alve: Jag kunde inte laga det som hände.",
       "Alve: Men jag kunde laga stugan.",
       "Du tittar på honom.",
