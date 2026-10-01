@@ -64,11 +64,9 @@ const STORY_BEATS: StoryBeat[] = ACT2_OPENING_BEATS.map((beat, index) => ({
 ]);
 
 
-const storyGroupForIndex = (index: number) => {
-  if (index <= 4) return "Opening";
-  if (index <= 10) return "Meeting Alve";
-  const beat = STORY_BEATS[index];
-  if (!beat) return "Story";
+const storyGroupForBeat = (beat: StoryBeat) => {
+  if (beat.id.startsWith("opening-")) return "Opening";
+  if (beat.id === "meet-bike" || beat.id.startsWith("alve-intro-")) return "Meeting Alve";
   if (beat.id.startsWith("boathouse:")) return "Båthuset";
   if (beat.id.startsWith("cabin:")) return "Stugan";
   if (beat.id.startsWith("dock:")) return "Bryggan";
@@ -83,7 +81,7 @@ const STORY_DEBUG_ACTS: StoryDebugAct[] = [{
   entries: STORY_BEATS.map((beat, index) => ({
     id: beat.id,
     label: beat.title,
-    group: storyGroupForIndex(index),
+    group: storyGroupForBeat(beat),
     index,
   })),
 }];
@@ -142,20 +140,7 @@ export default function Act2TestPage() {
     setStoryIndex(nextIndex);
     setStoryLineIndex(0);
     const nextBeat = STORY_BEATS[nextIndex];
-    if (nextBeat.stage) {
-      chooseStage(nextBeat.stage);
-    } else if (nextIndex >= 5 && nextIndex < 19) {
-      const boathouseProgress = nextIndex - 5;
-      if (boathouseProgress >= 14) chooseStage(4);
-      else if (boathouseProgress >= 10) chooseStage(3);
-      else if (boathouseProgress >= 5) chooseStage(2);
-    } else if (nextIndex >= 19 && nextIndex < 29) {
-      const cottageProgress = nextIndex - 19;
-      if (cottageProgress >= 9) chooseStage(4);
-      else if (cottageProgress >= 7) chooseStage(3);
-      else if (cottageProgress >= 4) chooseStage(2);
-      else chooseStage(1);
-    }
+    if (nextBeat.stage) chooseStage(nextBeat.stage);
   };
   const previousStory = () => {
     if (storyIndex === null) return;
