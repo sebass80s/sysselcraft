@@ -4,8 +4,6 @@ import {
   ACT2_ALVE_WORK_POSITIONS,
   ACT2_VISUAL_PLACEMENTS,
   ACT2_PLAYER_FOOT_RADIUS,
-  ACT2_SHORELINE,
-  act2ShorelineYAt,
 } from "../src/game/act2VisualAssets.ts";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/act2CabinStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
@@ -493,15 +491,6 @@ for (const project of ["cabin", "dock", "boathouse", "motorboat"]) {
   assert.equal(insideBlockedFootprint, false, `Alve placeholder work positions must remain walkable for ${project}`);
 }
 
-assert.ok(ACT2_SHORELINE.length >= 4, "Act 2 shoreline must be a real world mask, not one flat magic number");
-for (let i = 1; i < ACT2_SHORELINE.length; i += 1) {
-  assert.ok(ACT2_SHORELINE[i].x > ACT2_SHORELINE[i - 1].x, "shoreline points must be ordered left-to-right");
-}
-assert.ok(act2ShorelineYAt(930) > 585 + ACT2_PLAYER_FOOT_RADIUS.y, "canonical player spawn must remain safely on land");
-assert.ok(700 + ACT2_PLAYER_FOOT_RADIUS.y >= act2ShorelineYAt(930), "a point visibly down in the lake must be blocked");
-assert.ok(620 + ACT2_PLAYER_FOOT_RADIUS.y < act2ShorelineYAt(930), "beach land near spawn must remain walkable");
-assert.ok(660 + ACT2_PLAYER_FOOT_RADIUS.y >= act2ShorelineYAt(1700), "right-side shoreline must block walking into the lake");
-
 const lakeGameSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
 assert.ok(lakeGameSource.includes('setActiveProject: (project: Act2RestorationProject | null) => void'), "lake runtime must expose active-project positioning for Alve");
 assert.ok(lakeGameSource.includes('setAlveTurnInAvailable: (available: boolean) => void'), "lake runtime must expose pending turn-in marker state");
@@ -519,10 +508,13 @@ assert.match(
 );
 assert.ok(lakeGameSource.includes('setInteractive({ useHandCursor: true })'), "Alve placeholder must already be a future interaction target");
 assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
-assert.ok(lakeGameSource.includes("act2ShorelineYAt(x)"), "Act 2 movement must use the canonical shoreline collision");
-assert.ok(lakeGameSource.includes("ACT2_PLAYER_FOOT_RADIUS"), "Act 2 shoreline collision must account for the player's feet, not only sprite center");
+assert.ok(lakeGameSource.includes('this.textures.getPixel('), "Act 2 water collision must derive from the accepted lake-master texture");
+assert.ok(lakeGameSource.includes('"act2-lake-master"'), "Act 2 water collision must sample the canonical lake master");
+assert.ok(lakeGameSource.includes("ACT2_PLAYER_FOOT_RADIUS"), "Act 2 water collision must account for the player's feet, not only sprite center");
+assert.ok(lakeGameSource.includes("private isWaterAt"), "Act 2 runtime must centralize map-pixel water classification");
 assert.ok(lakeGameSource.includes("if (!this.isWalkable(target.x, target.y)) return;"), "touch movement must reject blocked water targets");
 assert.ok(lakeGameSource.includes("if (this.isWalkable(nextX, this.player.y))"), "keyboard movement must share the same world collision");
+assert.ok(lakeGameSource.includes('this.add.image(815, 515, "act2-child")'), "Act 2 debug/runtime spawn must start on accepted land, not in the lake");
 
 
 const page = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
