@@ -26,6 +26,8 @@ export function parseStoryLine(line: string, childName = "Barnet"): ParsedStoryL
     if (!line.startsWith(marker)) continue;
     const text = line.slice(marker.length).trimStart();
     if (prefix === "Barnet") return { text, speaker: childName, speakerTone: "child" };
+    if (prefix === "Pappan") return { text, speaker: "Alves Pappa", speakerTone: "default" };
+    if (prefix === "Storasystern") return { text, speaker: "Alves Syster", speakerTone: "default" };
     if (prefix === "Hunden" || prefix === "Valpen") return { text, speaker: prefix, speakerTone: "dog" };
     return { text, speaker: prefix, speakerTone: "default" };
   }
