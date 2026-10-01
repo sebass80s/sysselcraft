@@ -482,11 +482,12 @@ export default function Act2Page() {
       beat={{
         id: `act2:opening:${state.openingIndex}`,
         image: opening.image,
-        speaker: opening.title,
-        lines: opening.body.map((line) => line.replaceAll("Barnet:", childName + ":")),
+        heading: opening.title,
+        lines: opening.body,
         nextLabel: state.openingIndex === OPENING.length - 1 ? "Gå närmare" : "Fortsätt",
       }}
       onNext={() => void advanceOpening()}
+      childName={childName}
       dialogueClassName="act2-dialogue-card"
       background="#111"
       scrollable
@@ -542,6 +543,7 @@ export default function Act2Page() {
         id: `act2:finale:${state.finaleIndex}:${state.finaleLineIndex}`,
         image: activeFinaleBeat.image,
         imageFit: "contain",
+        heading: activeFinaleBeat.title,
         speaker: activeFinalePresentation?.speaker,
         speakerTone: activeFinalePresentation?.speakerTone,
         lines: activeFinalePresentation ? [activeFinalePresentation.text] : [],
@@ -557,6 +559,7 @@ export default function Act2Page() {
         id: `act2:completion:${completionProject}:${state.completionLineIndex}`,
         image: activeCompletionBeat.image,
         imageFit: "contain",
+        heading: activeCompletionBeat.title,
         speaker: activeCompletionPresentation?.speaker,
         speakerTone: activeCompletionPresentation?.speakerTone,
         lines: activeCompletionPresentation ? [activeCompletionPresentation.text] : [],
@@ -570,7 +573,7 @@ export default function Act2Page() {
     {purchaseRequired && <StoryMoment
       image={purchaseGateBeat?.image}
       imageFit="contain"
-      speaker={purchaseGateCopy.title}
+      heading={purchaseGateCopy.title}
       zIndex={78}
       background="rgba(9,14,10,.94)"
       dialogueClassName="act2-dialogue-card"
