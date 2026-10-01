@@ -168,6 +168,7 @@ export default function Act2TestPage() {
   const gameRef = useRef<Act2LakeGameHandle | null>(null);
   const [stage, setStage] = useState<Act2VisualStage>(1);
   const [storyIndex, setStoryIndex] = useState<number | null>(null);
+  const [storyLineIndex, setStoryLineIndex] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -193,20 +194,28 @@ export default function Act2TestPage() {
     const entry = STORY_DEBUG_ACTS[0].entries.find((candidate) => candidate.id === entryId);
     if (!entry) return;
     setStoryIndex(entry.index);
+    setStoryLineIndex(0);
     const beat = STORY_BEATS[entry.index];
     if (beat?.stage) chooseStage(beat.stage);
   };
 
-  const closeStory = () => setStoryIndex(null);
+  const closeStory = () => { setStoryIndex(null); setStoryLineIndex(0); };
   const nextStory = () => {
     if (storyIndex === null) return;
+    const currentBeat = STORY_BEATS[storyIndex];
+    if (storyLineIndex < currentBeat.body.length - 1) {
+      setStoryLineIndex(storyLineIndex + 1);
+      return;
+    }
     if (storyIndex >= STORY_BEATS.length - 1) {
       setStoryIndex(null);
+      setStoryLineIndex(0);
       chooseStage(4);
       return;
     }
     const nextIndex = storyIndex + 1;
     setStoryIndex(nextIndex);
+    setStoryLineIndex(0);
     const nextBeat = STORY_BEATS[nextIndex];
     if (nextBeat.stage) {
       chooseStage(nextBeat.stage);
@@ -224,10 +233,16 @@ export default function Act2TestPage() {
     }
   };
   const previousStory = () => {
-    if (storyIndex === null || storyIndex <= 0) return;
+    if (storyIndex === null) return;
+    if (storyLineIndex > 0) {
+      setStoryLineIndex(storyLineIndex - 1);
+      return;
+    }
+    if (storyIndex <= 0) return;
     const previousIndex = storyIndex - 1;
-    setStoryIndex(previousIndex);
     const previousBeat = STORY_BEATS[previousIndex];
+    setStoryIndex(previousIndex);
+    setStoryLineIndex(Math.max(0, previousBeat.body.length - 1));
     if (previousBeat.stage) chooseStage(previousBeat.stage);
   };
 
@@ -253,7 +268,7 @@ export default function Act2TestPage() {
         }}>
           Akt 2 · sjön · testmiljö
         </div>
-        <button type="button" onClick={() => setStoryIndex(0)} style={{
+        <button type="button" onClick={() => { setStoryIndex(0); setStoryLineIndex(0); }} style={{
           minHeight: 38, border: 0, borderRadius: 9, padding: "0 13px",
           fontWeight: 800, cursor: "pointer", background: "#f4d780", color: "#283326",
         }}>
@@ -290,20 +305,20 @@ export default function Act2TestPage() {
           scrollable
           footer={
             <div className="story-debug-story-nav">
-              <button type="button" className="secondary-button" onClick={previousStory} disabled={storyIndex === 0}>
+              <button type="button" className="secondary-button" onClick={previousStory} disabled={storyIndex === 0 && storyLineIndex === 0}>
                 ← Förra
               </button>
-              <span>{storyIndex! + 1} / {STORY_BEATS.length}</span>
+              <span>{storyIndex! + 1} / {STORY_BEATS.length} · rad {storyLineIndex + 1}/{activeBeat.body.length}</span>
               <button type="button" className="secondary-button" onClick={closeStory}>
                 Stäng
               </button>
               <button type="button" className="primary-button" onClick={nextStory}>
-                {storyIndex === STORY_BEATS.length - 1 ? "Klar ✓" : "Nästa →"}
+                {storyIndex === STORY_BEATS.length - 1 && storyLineIndex === activeBeat.body.length - 1 ? "Klar ✓" : "Nästa →"}
               </button>
             </div>
           }
         >
-          <StoryTranscript lines={activeBeat.body} />
+          <StoryTranscript lines={[activeBeat.body[storyLineIndex] ?? activeBeat.body[0]]} />
         </StoryMoment>
       )}
     </main>
