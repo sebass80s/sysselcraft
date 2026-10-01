@@ -13,6 +13,7 @@ const transcript = read("src/components/story/StoryTranscript.tsx");
 const runner = read("src/components/story/StoryRunner.tsx");
 const debugPage = read("src/app/act2-test/page.tsx");
 const act2Page = read("src/app/act2/page.tsx");
+const act2Runtime = read("src/components/Act2Runtime.tsx");
 
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -52,18 +53,16 @@ assert.match(transcript, /showSpeakers\?: boolean/, "StoryTranscript must suppor
 assert.match(transcript, /showSpeakers && parsed\.speaker/, "StoryTranscript must honor nameplate ownership");
 assert.match(runner, /showSpeakers=\{!beat\.speaker\}/, "StoryRunner must prevent duplicate explicit + parsed nameplates");
 
-assert.match(debugPage, /loadSaveState/, "Story Debug must load the saved child identity");
-assert.match(debugPage, /<StoryTranscript childName=\{childName\}/, "Story Debug must pass the saved child name into the story parser");
-assert.doesNotMatch(debugPage, /replaceAll\("\{childName\}",\s*"[^"]+"\)/, "Story Debug must not bake a personal name into authored lines");
-assert.match(debugPage, /id: "project-choice"/, "Story Debug must preserve the canonical first-project choice");
-for (const project of ["cabin", "dock", "boathouse"]) {
-  assert.ok(debugPage.includes(`jumpToProject("${project}")`), `Story Debug chooser must expose ${project}`);
-}
-
-
-assert.match(act2Page, /parseStoryLine\(activeContributionLine, childName\)/, "Act 2 contribution cards must parse speaker and child name centrally");
-assert.match(act2Page, /parseStoryLine\(activeFinaleLine, childName\)/, "Act 2 finale cards must parse speaker and child name centrally");
-assert.match(act2Page, /parseStoryLine\(activeCompletionLine, childName\)/, "Act 2 completion cards must parse speaker and child name centrally");
+assert.match(debugPage, /<Act2Runtime debug \/>/, "Story Debug must render the shared production runtime");
+assert.match(act2Page, /<Act2Runtime productionEnabled=\{ACT2_PRODUCTION_ENABLED\} \/>/, "Production must render the same shared Act 2 runtime");
+assert.doesNotMatch(debugPage, /StoryMoment|StoryTranscript|project-choice|jumpToProject/, "Debug route must not carry a parallel story renderer");
+assert.match(act2Runtime, /if \(debug\) \{[\s\S]*loadSaveState\(\)/, "Shared runtime debug mode must load the saved child identity");
+assert.match(act2Runtime, /if \(!debug\) await saveAct2RuntimeState\(next\)/, "Debug mode must not persist Act 2 runtime state");
+assert.match(act2Runtime, /parseStoryLine\(activeContributionLine, childName\)/, "Act 2 contribution cards must parse speaker and child name centrally");
+assert.match(act2Runtime, /parseStoryLine\(activeFinaleLine, childName\)/, "Act 2 finale cards must parse speaker and child name centrally");
+assert.match(act2Runtime, /parseStoryLine\(activeCompletionLine, childName\)/, "Act 2 completion cards must parse speaker and child name centrally");
+assert.match(act2Runtime, /meeting-alve\/pick\.png/, "Canonical production project chooser must live in the shared runtime");
+assert.match(act2Runtime, /availablePrerequisites\.map/, "Shared runtime must own the first-project chooser");
 
 assert.deepEqual(
   parseStoryLine("Barnet: Hej.", "Testbarn"),
