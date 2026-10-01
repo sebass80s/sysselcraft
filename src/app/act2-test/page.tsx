@@ -51,7 +51,7 @@ const STORY_BEATS: StoryBeat[] = [
         : beat.speaker === "alve"
           ? `Alve: ${text}`
           : beat.speaker === "unknown"
-            ? `Barnet: ${text}`
+            ? `Okänd: ${text}`
             : text;
     }),
   },
