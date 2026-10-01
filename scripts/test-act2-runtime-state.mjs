@@ -48,6 +48,9 @@ assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: -4 }).opening
 let state = withSelectedProject(empty, "dock");
 assert.equal(state.selectedProject, "dock");
 
+const wrongProject = withPresentedContribution(state, "cabin", "cabin:01", 1);
+assert.equal(wrongProject.projects.cabin.contributions, 0, "inactive project must never consume a contribution");
+
 state = withPresentedContribution(state, "dock", "dock:01", 1);
 assert.equal(state.projects.dock.contributions, 1);
 assert.equal(state.projects.dock.visibleStage, 1);
@@ -60,11 +63,11 @@ assert.equal(duplicate.projects.dock.visibleStage, 1, "duplicate beat must not m
 let lockedBoat = withPresentedContribution(empty, "motorboat", "motorboat:01", 1);
 assert.equal(lockedBoat.projects.motorboat.contributions, 0, "motorboat cannot advance before 3/3");
 
-function complete(projectState, prefix) {
-  let current = projectState;
+function complete(projectState, project) {
+  let current = withSelectedProject(projectState, project);
   for (let i = 1; i <= 16; i++) {
     const stage = Math.min(4, Math.ceil(i / 4));
-    current = withPresentedContribution(current, prefix, `${prefix}:${String(i).padStart(2, "0")}`, stage);
+    current = withPresentedContribution(current, project, `${project}:${String(i).padStart(2, "0")}`, stage);
   }
   return current;
 }
@@ -86,6 +89,26 @@ assert.equal(state.selectedProject, "motorboat");
 state = complete(state, "motorboat");
 assert.equal(state.projects.motorboat.complete, true);
 assert.equal(state.selectedProject, null);
+
+
+const prerequisiteOrders = [
+  ["cabin", "dock", "boathouse"],
+  ["cabin", "boathouse", "dock"],
+  ["dock", "cabin", "boathouse"],
+  ["dock", "boathouse", "cabin"],
+  ["boathouse", "cabin", "dock"],
+  ["boathouse", "dock", "cabin"],
+];
+for (const order of prerequisiteOrders) {
+  let ordered = createDefaultAct2RuntimeState();
+  assert.equal(isMotorboatUnlocked(ordered), false);
+  ordered = complete(ordered, order[0]);
+  assert.equal(isMotorboatUnlocked(ordered), false, `motorboat unlocked after only 1/3 in ${order.join("→")}`);
+  ordered = complete(ordered, order[1]);
+  assert.equal(isMotorboatUnlocked(ordered), false, `motorboat unlocked after only 2/3 in ${order.join("→")}`);
+  ordered = complete(ordered, order[2]);
+  assert.equal(isMotorboatUnlocked(ordered), true, `motorboat did not unlock at 3/3 in ${order.join("→")}`);
+}
 
 const invalidFinale = normalizeAct2RuntimeState({
   version: 1,
