@@ -647,7 +647,7 @@ Quest V2 and backend economy are explicitly not scheduled for wholesale rewrites
 
 ### Story Engine v1 — 2026-10-01
 
-Act 2 now uses the shared Story Engine end-to-end for fullscreen story presentation, including special beats. Canonical contract is documented in `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`.
+Act 2 now uses the shared Story Engine end-to-end for fullscreen story presentation, including special beats. Canonical contract is documented in `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`. First-Alve dialogue and visual progression are both centralized in `src/game/act2AlveStory.ts`; production `/act2` and debug `/act2-test` must consume that same source rather than hardcoding parallel image/dialogue tracks.
 
 Important invariants:
 - headings are not speakers;
