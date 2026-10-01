@@ -11,6 +11,7 @@ import {
 export type Act2LakeGameHandle = {
   destroy: () => void;
   setStage: (stage: Act2VisualStage) => void;
+  setProjectStages: (stages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>>) => void;
 };
 
 const PROJECTS: Act2RestorationProject[] = ["cabin", "boathouse", "dock", "motorboat"];
@@ -22,6 +23,7 @@ export async function createAct2LakeGame(
 ): Promise<Act2LakeGameHandle> {
   const Phaser = await import("phaser");
   let requestedStage = initialStage;
+  let requestedProjectStages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>> = {};
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -66,10 +68,11 @@ export async function createAct2LakeGame(
       for (const project of PROJECTS) {
         const placement = ACT2_VISUAL_PLACEMENTS[project];
         const display = getAct2DisplaySize(project);
+        const projectStage = this.renderStage(requestedProjectStages[project] ?? requestedStage);
         const image = this.add.image(
           placement.x,
           placement.baseY,
-          this.textureKey(project, requestedStage),
+          this.textureKey(project, projectStage),
         )
           .setOrigin(placement.origin.x, placement.origin.y)
           .setDisplaySize(display.width, display.height)
@@ -163,9 +166,24 @@ export async function createAct2LakeGame(
 
     setStage(stage: Act2VisualStage) {
       requestedStage = stage;
+      requestedProjectStages = {};
       for (const project of PROJECTS) {
         this.projectImages.get(project)?.setTexture(this.textureKey(project, stage));
       }
+    }
+
+    setProjectStages(stages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>>) {
+      requestedProjectStages = { ...stages };
+      for (const project of PROJECTS) {
+        const stage = this.renderStage(stages[project] ?? requestedStage);
+        this.projectImages.get(project)?.setTexture(this.textureKey(project, stage));
+      }
+    }
+
+    private renderStage(stage: 0 | Act2VisualStage): Act2VisualStage {
+      // Act 2 stage 1 art is the accepted damaged/initial state.
+      // Persisted stage 0 means "not yet advanced", so it intentionally renders as 1/4.
+      return stage === 0 ? 1 : stage;
     }
 
     private textureKey(project: Act2RestorationProject, stage: Act2VisualStage) {
@@ -195,8 +213,15 @@ export async function createAct2LakeGame(
     destroy: () => gameInstance.destroy(true),
     setStage: (stage) => {
       requestedStage = stage;
+      requestedProjectStages = {};
       if (gameInstance.scene.isActive("Act2LakeScene")) {
         (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setStage(stage);
+      }
+    },
+    setProjectStages: (stages) => {
+      requestedProjectStages = { ...stages };
+      if (gameInstance.scene.isActive("Act2LakeScene")) {
+        (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setProjectStages(stages);
       }
     },
   };
