@@ -353,4 +353,11 @@ assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel s
 assert.ok(village.includes("Reservdelspaket till motorbåten"), "Mira must expose the Motorbåten parts package");
 assert.ok(village.includes("motorboatPartsPurchaseRequired(act2)"), "parts stock must derive from Motorbåten progress");
 
+const cabinStorySource = fs.readFileSync(new URL("../src/game/act2CabinStory.ts", import.meta.url), "utf8");
+const motorboatStorySource = fs.readFileSync(new URL("../src/game/act2MotorboatStory.ts", import.meta.url), "utf8");
+assert.ok(!cabinStorySource.includes("## Motorbåten restoration arc"), "runtime story sources must not leak design-document prose");
+assert.ok(!cabinStorySource.includes("Locked completion beat:"), "runtime story sources must stop at authored child-facing content");
+assert.ok(!motorboatStorySource.includes("wallet-loopen"), "runtime story sources must not expose backend implementation language");
+assert.ok(!motorboatStorySource.includes("utan tekniska motorinstruktioner"), "runtime narration must not expose authoring instructions");
+
 console.log("Act 2 vertical-slice state/route contract PASS");

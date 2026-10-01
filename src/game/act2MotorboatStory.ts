@@ -295,7 +295,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve: Just det.",
       "Barnet: Bra plan.",
       "Alve: Jag hade nästan hela.",
-      "Linus förklarar vad reservdelspaketet ska lösa, enkelt och utan tekniska motorinstruktioner.",
+      "Linus förklarar vad reservdelspaketet ska lösa."
       "Du lyssnar. Alve nickar väldigt allvarligt.",
       "När Linus är klar blir det tyst.",
       "Barnet: Kommer du ihåg allt?",
@@ -334,8 +334,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Barnet: Ja.",
       "Alve: Bra. För jag har redan bestämt mig.",
       "Mira: Det märktes.",
-      "Du betalar 150 SysselBux genom den vanliga auktoritativa wallet-loopen.",
-      "Mira gör klart beställningen.",
+            "Mira gör klart beställningen.",
       "Mira: Det kommer inte göra båten färdig.",
       "Alve: Jag vet.",
       "Mira tittar på honom lite misstänksamt.",
