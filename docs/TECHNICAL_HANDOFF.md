@@ -288,13 +288,28 @@ Treat the physical-device loop as a regression baseline. Backend/quest/approval/
 8. Re-test Quest System v2 source interactions, recurrence and parent management on physical iPhone before declaring the daily-use foundation child-ready.
 9. Village Event Director remains intentionally later and must not steal MVP focus.
 
-## Deployment/resource policy
+## Deployment/resource policy — LOCKED 2026-10-01
 
-**Local/native testing is the default.** Use local browser for fast visual iteration and `npm run ios:sync` + Xcode/physical iPhone for native visual, UI and gameplay QA.
+**Local/native testing is the default. GitHub Actions is the routine remote verifier. Vercel is for acceptance checkpoints and releases.**
 
-Use Vercel only when a test genuinely needs network/web deployment, a shareable remote URL or web-specific behavior. Do not spend Vercel deployments on routine local/native iterations.
+Canonical workflow:
+1. push relevant code changes to GitHub;
+2. let GitHub Actions verify every relevant code push;
+3. batch multiple small code/copy/test/refactor changes on the feature branch;
+4. create a Vercel preview only when Kalle actually needs a meaningful browser/remote acceptance checkpoint;
+5. create a production deployment only for an actual release.
 
-Standard GitHub-hosted Actions for this public repository are approved autonomously. Avoid explicitly billed/larger runners or paid third-party compute without approval.
+Storage discipline:
+- docs-only, Markdown-only, handover-only and similarly trivial commits must not generate Vercel deployments; use an Ignored Build Step or equivalent Vercel configuration;
+- do not deploy after every copy fix, UI tweak, test fix or tiny refactor;
+- keep feature branches short-lived and close/merge them when the workstream is done;
+- normally keep one useful current preview per active workstream rather than many near-identical snapshots;
+- after merge, do not preserve old preview history without a concrete reason;
+- local browser + native Xcode/iPhone testing should answer questions whenever remote deployment is unnecessary.
+
+Reason: the project has hit the Vercel Hobby deployment-storage ceiling in practice. Treat Vercel storage as scarce.
+
+Standard GitHub-hosted Actions are approved autonomously. Avoid explicitly billed/larger runners or paid third-party compute without approval.
 
 ## Nova + local Codex workflow (2026-09-15)
 
@@ -508,15 +523,15 @@ Diamond reward purchase/delivery is physically accepted on iPhone against live S
 Duplicate pending purchases are now blocked at two layers. The child shop reads its own pending redemption reward IDs and disables matching Mira buttons with `⏳ Väntar på förälder`; successful purchase also updates this local set immediately. Live migration `prevent_duplicate_pending_diamond_reward` updates `purchase_diamond_reward` to reject the same child/reward pair while a `pending_delivery` row exists. The physical immediate-disable behavior passed. Final code commit `be690488461a8dc5a937c3dcb523a5511f4172ef` has green CI #847.
 
 
-## Vercel deployment policy — locked 2026-09-26
+## Vercel deployment policy — SUPERSEDED 2026-10-01
 
-Vercel deploys are a managed resource, not a blocker.
+The older 2026-09-26 rule is no longer current.
 
-- Do **not** trigger deployments gratuitously for every tiny edit or documentation-only change.
-- Batch related changes when that is natural and does not slow down development or testing.
-- When a deployment is genuinely useful for testing, acceptance, debugging, or release progress, **use it without hesitation**.
-- Do not introduce awkward workarounds, delay validation, or complicate the workflow merely to save a Vercel deployment.
-- Practical rule: avoid waste, not Vercel.
+**Current hard rule: GitHub Actions on every relevant code push. Vercel only at a physical/explicit acceptance checkpoint or release.**
+
+Do not trigger Vercel for documentation-only commits, Markdown/handover updates, isolated copy fixes, isolated lint/test repairs, or every intermediate commit in a feature branch. Batch those changes, verify them with GitHub Actions, and create one preview when there is actually something meaningful for Kalle to click-test.
+
+Production deployments are reserved for actual release.
 
 
 ## Parent quest admin physical acceptance — 2026-09-26
