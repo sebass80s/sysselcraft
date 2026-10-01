@@ -236,3 +236,64 @@ main { min-height: 100dvh; }
 .shared-story-body p {
   margin: .4rem 0 .55rem;
 }
+
+
+/* Dev/test-only Story Debug Console. Mounted only by isolated test routes. */
+.story-debug-console {
+  position: fixed;
+  top: max(10px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: 140;
+}
+.story-debug-toggle {
+  min-height: 40px;
+  border: 0;
+  border-radius: 10px;
+  padding: 0 12px;
+  background: rgba(24,31,25,.92);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+.story-debug-panel {
+  margin-top: 8px;
+  width: min(360px, calc(100vw - 24px));
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,253,244,.98);
+  color: #283326;
+  box-shadow: 0 18px 60px rgba(0,0,0,.3);
+}
+.story-debug-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.story-debug-heading button {
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+.story-debug-panel label {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.story-debug-panel select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #b9a47d;
+  border-radius: 9px;
+  background: #fffef9;
+  color: #282219;
+  padding: 0 9px;
+}
+.story-debug-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
