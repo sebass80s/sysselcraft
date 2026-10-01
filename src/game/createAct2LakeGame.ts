@@ -16,10 +16,12 @@ export type Act2LakeGameHandle = {
   setProjectStages: (stages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>>) => void;
   setActiveProject: (project: Act2RestorationProject | null) => void;
   setAlveTurnInAvailable: (available: boolean) => void;
+  setCabinRevisitAvailable: (available: boolean) => void;
 };
 
 export type Act2LakeGameOptions = {
   onAlveTurnIn?: () => void;
+  onCabinRevisit?: () => void;
 };
 
 const PROJECTS: Act2RestorationProject[] = ["cabin", "boathouse", "dock", "motorboat"];
@@ -35,6 +37,7 @@ export async function createAct2LakeGame(
   let requestedProjectStages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>> = {};
   let requestedActiveProject: Act2RestorationProject | null = null;
   let requestedAlveTurnInAvailable = false;
+  let requestedCabinRevisitAvailable = false;
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -93,6 +96,15 @@ export async function createAct2LakeGame(
           .setDisplaySize(display.width, display.height)
           .setDepth(1000 + placement.baseY);
         this.projectImages.set(project, image);
+        if (project === "cabin") {
+          image.setInteractive({ useHandCursor: true });
+          image.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
+            if (!requestedCabinRevisitAvailable) return;
+            event.stopPropagation();
+            this.moveTarget = null;
+            options.onCabinRevisit?.();
+          });
+        }
       }
 
       // Acceptance spawn only. Story entry/exit points remain deliberately undefined
@@ -328,6 +340,10 @@ export async function createAct2LakeGame(
       if (!available) this.alveNearbyPrompt?.setVisible(false);
     }
 
+    setCabinRevisitAvailable(available: boolean) {
+      requestedCabinRevisitAvailable = available;
+    }
+
     private positionAlve(project: Act2RestorationProject | null) {
       if (!this.alvePlaceholder) return;
       if (!project) {
@@ -395,6 +411,12 @@ export async function createAct2LakeGame(
       requestedAlveTurnInAvailable = available;
       if (gameInstance.scene.isActive("Act2LakeScene")) {
         (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setAlveTurnInAvailable(available);
+      }
+    },
+    setCabinRevisitAvailable: (available) => {
+      requestedCabinRevisitAvailable = available;
+      if (gameInstance.scene.isActive("Act2LakeScene")) {
+        (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setCabinRevisitAvailable(available);
       }
     },
   };
