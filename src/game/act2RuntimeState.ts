@@ -191,7 +191,7 @@ export function nextAct2Contribution(
     project,
     number,
     beatId: `${project}:${String(number).padStart(2, "0")}`,
-    visibleStage: Math.ceil(number / 4) as 1 | 2 | 3 | 4,
+    visibleStage: Math.min(4, 1 + Math.floor(number / 4)) as 1 | 2 | 3 | 4,
     backlog,
   };
 }
