@@ -538,6 +538,10 @@ The raw triage intentionally over-counted visual candidates. This pass asks a st
 
 **Båthuset proposed queue: 9 images** (down from 11 candidates).
 
+### Motorbåten dialogue runtime audit — VERIFIED 2026-10-01
+
+Runtime `src/game/act2MotorboatStory.ts` was compared beat-by-beat against the latest locked line dialogue in `docs/STORY_DESIGN.md`. Beats **1–5 and 7–16 already matched** the latest lock. Beat **6/16 · Mira beställer två** was an older shortened variant and has been replaced with the latest locked version, including the explicit **200 SysselBux** purchase semantics. Do not reintroduce the superseded shorter Mira variant.
+
 ### Motorbåten production status — VERIFIED 2026-10-01
 
 Repo verification confirms **10 uploaded production stills** under `public/assets/village/story-moments/act2/motorboat/`:
@@ -1129,7 +1133,7 @@ All nine files have been verified on branch `nova/local-construction-snapshot`.
 | JETTY-02 | REUSE | Continue over `01-early-restoration.png`; deeper support rot is discovered. |
 | JETTY-03 | IMAGE | `02-linus-salvaged-timber.png` — Linus returns with reused sound timber/material. |
 | JETTY-04 | REUSE | `02-linus-salvaged-timber.png` carries the first substantial repair sequence; runtime stage swap 1/4→2/4. |
-| JETTY-05 | LIVE | Alve talks swimming; attention shifts to the bathing edge. |
+| JETTY-05 | REUSE | Hold `02-linus-salvaged-timber.png` while Alve talks swimming and attention shifts to the bathing edge; no new still is introduced. |
 | JETTY-06 | IMAGE | `03-sol-safety-check.png` — Sol inspects bathing access and identifies cleanup + life-buoy needs. |
 | INTERMEDIATE ECONOMY BEAT | IMAGE | `04-mira-lifebuoy-purchase.png` — Adam buys the proper life buoy from Mira. **This is not a real-world contribution.** Price is **300 SysselBux** (provisional; may be rebalanced later). |
 | JETTY-07 | IMAGE | `05-bathing-edge-cleanup.png` — Adam + Alve clear the bathing edge; new life buoy is present for mounting. |
