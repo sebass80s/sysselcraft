@@ -34,6 +34,8 @@ import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../../game/act
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../../game/act2BoathouseStory";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../../game/act2MotorboatStory";
 import { ACT2_FINALE_BEATS } from "../../game/act2FinaleStory";
+import { StoryMoment } from "../../components/story/StoryMoment";
+import { StoryRunner } from "../../components/story/StoryRunner";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
 type DialogueBeat = { speaker?: "child" | "unknown" | "alve"; text: string; nameReveal?: boolean };
@@ -466,38 +468,42 @@ export default function Act2Page() {
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
     {state.openingComplete && <div ref={hostRef} style={{ position: "absolute", inset: 0 }} aria-label="Sjön i Act 2" />}
 
-    {!state.openingComplete && <section style={{ position: "absolute", inset: 0, background: "#111" }}>
-      <Image src={opening.image} alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true" style={{ maxHeight: "44vh", overflowY: "auto" }}>
-        <span className="dialogue-speaker">{opening.title}</span>
-        {opening.body.map((line, index) => <p key={index}>{line.replaceAll("Barnet:", childName + ":")}</p>)}
-        <button className="primary-button dialogue-next" onClick={() => void advanceOpening()}>
-          {state.openingIndex === OPENING.length - 1 ? "Gå närmare" : "Fortsätt"}
-        </button>
-      </div>
-    </section>}
+    {!state.openingComplete && <StoryRunner
+      beat={{
+        id: `act2:opening:${state.openingIndex}`,
+        image: opening.image,
+        speaker: opening.title,
+        lines: opening.body.map((line) => line.replaceAll("Barnet:", childName + ":")),
+        nextLabel: state.openingIndex === OPENING.length - 1 ? "Gå närmare" : "Fortsätt",
+      }}
+      onNext={() => void advanceOpening()}
+      background="#111"
+      scrollable
+    />}
 
-    {state.openingComplete && !state.bicycleSeen && <section className="story-moment" role="presentation">
-      <Image src="/assets/village/story-moments/act2/meeting-alve/bike.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker child">{childName}</span>
-        <p>Vad är det för cykel? Den verkar inte höra hemma här.</p>
-        <button className="primary-button dialogue-next" onClick={() => void commit({ ...state, bicycleSeen: true })}>Fortsätt</button>
-      </div>
-    </section>}
+    {state.openingComplete && !state.bicycleSeen && <StoryRunner
+      beat={{
+        id: "act2:bicycle",
+        image: "/assets/village/story-moments/act2/meeting-alve/bike.png",
+        speaker: childName,
+        speakerTone: "child",
+        lines: ["Vad är det för cykel? Den verkar inte höra hemma här."],
+        nextLabel: "Fortsätt",
+      }}
+      onNext={() => void commit({ ...state, bicycleSeen: true })}
+    />}
 
-    {state.bicycleSeen && !state.alveIntroComplete && <section className="story-moment" role="presentation">
-      <Image src="/assets/village/story-moments/act2/meeting-alve/first-hello.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
-        {alveBeat?.speaker && <span className={`dialogue-speaker ${alveBeat.speaker === "child" ? "child" : ""}`}>
-          {alveBeat.speaker === "child" ? childName : alveBeat.speaker === "alve" ? "Alve" : "Barnet"}
-        </span>}
-        <p>{displayText}</p>
-        <button className="primary-button dialogue-next" onClick={() => void advanceAlve()}>
-          {state.alveIntroIndex === ALVE_DIALOGUE.length - 1 ? "Välj projekt" : "Fortsätt"}
-        </button>
-      </div>
-    </section>}
+    {state.bicycleSeen && !state.alveIntroComplete && <StoryRunner
+      beat={{
+        id: `act2:alve-intro:${state.alveIntroIndex}`,
+        image: "/assets/village/story-moments/act2/meeting-alve/first-hello.png",
+        speaker: alveBeat?.speaker ? (alveBeat.speaker === "child" ? childName : alveBeat.speaker === "alve" ? "Alve" : "Barnet") : undefined,
+        speakerTone: alveBeat?.speaker === "child" ? "child" : "default",
+        lines: displayText ? [displayText] : [],
+        nextLabel: state.alveIntroIndex === ALVE_DIALOGUE.length - 1 ? "Välj projekt" : "Fortsätt",
+      }}
+      onNext={() => void advanceAlve()}
+    />}
 
     {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !completionProject && <section className="story-moment" role="presentation">
       <Image src="/assets/village/story-moments/act2/meeting-alve/pick.png" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
@@ -518,26 +524,32 @@ export default function Act2Page() {
       </div>
     </section>}
 
-    {finalePending && activeFinaleBeat && activeFinaleLine && <section style={{ position:"absolute", inset:0, zIndex:100, background:"rgba(6,10,8,.96)" }} role="presentation">
-      {activeFinaleBeat.image && <Image src={activeFinaleBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">{activeFinaleBeat.title}</span>
-        <p>{activeFinaleLine.replace(/^Barnet:/, childName + ":")}</p>
-        <button className="primary-button dialogue-next" onClick={() => void advanceFinaleStory()}>
-          {state.finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa"}
-        </button>
-      </div>
-    </section>}
-    {completionProject && activeCompletionBeat && activeCompletionLine && <section style={{ position:"absolute", inset:0, zIndex:90, background:"rgba(9,14,10,.94)" }} role="presentation">
-      {activeCompletionBeat.image && <Image src={activeCompletionBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">{activeCompletionBeat.title}</span>
-        <p>{activeCompletionLine.replace(/^Barnet:/, childName + ":")}</p>
-        <button className="primary-button dialogue-next" onClick={() => void advanceCompletionReaction()}>
-          {state.completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten"}
-        </button>
-      </div>
-    </section>}
+    {finalePending && activeFinaleBeat && activeFinaleLine && <StoryRunner
+      beat={{
+        id: `act2:finale:${state.finaleIndex}:${state.finaleLineIndex}`,
+        image: activeFinaleBeat.image,
+        imageFit: "contain",
+        speaker: activeFinaleBeat.title,
+        lines: [activeFinaleLine.replace(/^Barnet:/, childName + ":")],
+        nextLabel: state.finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa",
+      }}
+      onNext={() => void advanceFinaleStory()}
+      zIndex={100}
+      background="rgba(6,10,8,.96)"
+    />}
+    {completionProject && activeCompletionBeat && activeCompletionLine && <StoryRunner
+      beat={{
+        id: `act2:completion:${completionProject}:${state.completionLineIndex}`,
+        image: activeCompletionBeat.image,
+        imageFit: "contain",
+        speaker: activeCompletionBeat.title,
+        lines: [activeCompletionLine.replace(/^Barnet:/, childName + ":")],
+        nextLabel: state.completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten",
+      }}
+      onNext={() => void advanceCompletionReaction()}
+      zIndex={90}
+      background="rgba(9,14,10,.94)"
+    />}
     {purchaseRequired && <section style={{ position:"absolute", inset:0, zIndex:78, background:"rgba(9,14,10,.94)" }} role="presentation">
       {purchaseGateBeat?.image && <Image src={purchaseGateBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
       <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
@@ -563,17 +575,18 @@ export default function Act2Page() {
         </button>
       </div>
     </section>}
-    {contributionTurnInOpen && contributionCandidate && activeContributionBeat && activeContributionLine && <section style={{ position:"absolute", inset:0, zIndex:80, background:"rgba(9,14,10,.94)" }} role="presentation">
-      {activeContributionBeat.image && <Image src={activeContributionBeat.image} alt="" fill priority sizes="100vw" style={{ objectFit:"contain" }} />}
-      <div className="dialogue-card story-moment-dialogue act2-dialogue-card" role="dialog" aria-modal="true">
-        <span className="dialogue-speaker">{activeContributionBeat.title}</span>
-        <p>{activeContributionLine.replace(/^Barnet:/, childName + ":")}</p>
-        <button className="primary-button dialogue-next" onClick={() => void advanceContributionStory()}>
-          {state.contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
-        </button>
-        {contributionCandidate.backlog > 1 && <small>{contributionCandidate.backlog - 1} questframsteg väntar bakom detta beat.</small>}
-      </div>
-    </section>}
+    {contributionTurnInOpen && contributionCandidate && activeContributionBeat && activeContributionLine && <StoryMoment
+      image={activeContributionBeat.image}
+      imageFit="contain"
+      speaker={activeContributionBeat.title}
+      nextLabel={state.contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
+      onNext={() => void advanceContributionStory()}
+      zIndex={80}
+      background="rgba(9,14,10,.94)"
+      footer={contributionCandidate.backlog > 1 ? <small>{contributionCandidate.backlog - 1} questframsteg väntar bakom detta beat.</small> : undefined}
+    >
+      <p>{activeContributionLine.replace(/^Barnet:/, childName + ":")}</p>
+    </StoryMoment>}
     {backendSyncError && <div role="status" style={{ position:"absolute", right:16, top:16, zIndex:30, background:"rgba(0,0,0,.65)", color:"white", padding:"8px 12px", borderRadius:10 }}>{backendSyncError}</div>}
     {state.selectedProject && !finalePending && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
       <strong>Alve: {prerequisiteDone === 0 ? `Bra val! Vi fixar ${PROJECT_COPY[state.selectedProject].object} först!` : state.selectedProject === "motorboat" ? "Nu fixar vi den." : `Bra. Då kör vi på ${PROJECT_COPY[state.selectedProject].object}.`}</strong>
