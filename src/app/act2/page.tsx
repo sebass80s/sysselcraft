@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Act2LakeGameHandle } from "../../game/createAct2LakeGame";
 import {
