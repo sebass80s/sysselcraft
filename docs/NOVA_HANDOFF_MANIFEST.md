@@ -152,9 +152,26 @@ Pairing does not migrate local save. Local prototype and backend quests remain s
 
 Adaptive Phaser world/camera; A*-style tap-to-move; keyboard movement; separate collision footprints and Y/base-depth sorting; reusable asset architecture; data-driven dialogue; Linus intro + puppy; Linus-to-house onboarding; quest marker/approval event; truck/material delivery and persisted completion; Capacitor Preferences local save; Supabase family/pairing/quest boundary; idempotent server rewards.
 
-## Deployment / cost law
+## Deployment / cost law — LOCKED 2026-10-01
 
-Local/native testing is default. Use Vercel only when genuinely needed. Standard GitHub-hosted Actions may be used autonomously, but do not opt into explicitly billed/larger runners or paid services without approval. During the current OneDrive blocker, neither Actions nor Vercel is useful for proving the local/native state.
+**GitHub first, Vercel rarely.**
+
+Canonical rule: **GitHub Actions on every relevant code push. Vercel only at a real acceptance checkpoint or release.**
+
+Reason: the project has reached Vercel Hobby's deployment-storage ceiling in practice. Treat Vercel deployment storage as scarce. Do not use Vercel as the default verification loop.
+
+Operational rules:
+- Batch code work on the feature branch. Ten coherent commits verified by GitHub Actions are preferable to ten Vercel previews.
+- Do not deploy after every copy fix, UI tweak, test repair or small refactor. Accumulate changes and create a preview only when Kalle actually needs to click-test a meaningful checkpoint.
+- Docs-only, Markdown-only, handoff-only and similarly trivial commits must not trigger Vercel builds. Keep an Ignored Build Step / equivalent Vercel configuration that skips such changes.
+- Keep feature branches short-lived. Merge/close them when done so stale branch previews do not remain unnecessarily protected from retention cleanup.
+- Normally keep **one useful current preview per active workstream**, not a trail of near-identical snapshots.
+- After merge, do not preserve feature-preview history without a concrete reason.
+- Production deploys are for actual release, not for incremental tuning that could have been verified locally, in GitHub Actions or in one acceptance preview.
+- Local/browser/native testing remains preferred whenever it answers the question.
+- Standard GitHub-hosted Actions may be used autonomously. Do not opt into explicitly billed/larger runners or paid services without approval.
+
+Older guidance saying to “use Vercel without hesitation” is superseded by this policy.
 
 ## Next Nova checklist
 
