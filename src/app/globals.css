@@ -62,11 +62,10 @@ main { min-height: 100dvh; }
 .dialogue-speaker { display: inline-flex; align-items: center; gap: .35rem; font-size: .76rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; color: #fff7dd; background: #315f8c; border-radius: 999px; padding: .32rem .56rem; }
 .dialogue-card > .dialogue-speaker,
 .dialogue-card .shared-story-transcript-line > .dialogue-speaker {
-  position: absolute;
-  top: -.45rem;
-  left: .9rem;
-  transform: translateY(-100%);
-  z-index: 30;
+  position: static;
+  transform: none;
+  z-index: auto;
+  margin: 0 0 .18rem 0;
 }
 .dialogue-speaker.child { background: #b8772d; }
 .henning-story-speaker.henning { background: #477a3f; }
