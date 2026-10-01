@@ -410,6 +410,13 @@ const childFacingForbidden = ["Adam:", "wallet-loopen", "authoritative", "Contri
 for (const forbidden of childFacingForbidden) {
   assert.equal(childFacingStorySources.some((source) => source.includes(forbidden)), false, `runtime story source leaked internal text: ${forbidden}`);
 }
+assert.ok(villageSource.includes("function act2StoryItemInsufficientFundsMessage(price: number)"), "Act 2 story purchases must share one insufficient-funds formatter");
+assert.ok(villageSource.includes("Du har ${current} SysselBux. Du behöver ${missing} till."), "insufficient-funds feedback must show current balance and exact shortfall");
+assert.ok(villageSource.includes("Gör några uppdrag och kom tillbaka"), "insufficient-funds feedback must explain the recovery path");
+assert.ok(villageSource.includes("act2StoryItemInsufficientFundsMessage(ACT2_JETTY_LIFEBUOY_PRICE)"), "jetty story item must use detailed insufficient-funds feedback");
+assert.ok(villageSource.includes("act2StoryItemInsufficientFundsMessage(ACT2_BOATHOUSE_STEERING_WHEEL_PRICE)"), "boathouse story item must use detailed insufficient-funds feedback");
+assert.ok(villageSource.includes("act2StoryItemInsufficientFundsMessage(ACT2_MOTORBOAT_PARTS_PRICE)"), "motorboat story item must use detailed insufficient-funds feedback");
+
 assert.ok(page.includes("clinicCompletionSeen !== true"), "direct /act2 access must be hard-gated by the Act 1 Clinic completion flag");
 assert.equal(page.includes("void saveAct2RuntimeState(next);"), false, "backend polling must not persist asynchronously inside a React state setter");
 assert.ok(MOTORBOAT_CONTRIBUTION_BEATS[5].body[0].includes("redan betalt"), "Motorbåten 6/16 must be a post-purchase scene and must not charge the wallet twice");

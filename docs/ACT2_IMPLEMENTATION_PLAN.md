@@ -373,3 +373,10 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - Authoring/UI labels such as "KÖP:" were removed from child-facing story arrays. Required purchase prices remain spoken naturally by Mira where the scene includes the transaction.
 - Alve's deliberate recurring voice patterns (short nej/japp, plans, teasing and repeated character callbacks) were preserved rather than mechanically deduplicated.
 - Locked emotional lines, mother-loss subtext, family payoff and finale friendship lines were not rewritten.
+
+
+### Act 2 insufficient-funds UX — 2026-10-01
+- All three required Act 2 story-item purchases keep backend authority: insufficient funds never debit the wallet and never set ownership.
+- Mira's shop now reports the child's current SysselBux balance and the exact amount still missing.
+- The message explicitly tells the child to complete more real-world quests and return after saving enough.
+- This is presentation-only; purchase price, wallet authority and story gating remain unchanged.

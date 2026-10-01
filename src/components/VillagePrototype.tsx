@@ -106,6 +106,12 @@ export default function VillagePrototype() {
   const [act2BoathouseSteeringWheelOwned, setAct2BoathouseSteeringWheelOwned] = useState(false);
   const [act2MotorboatPartsNeeded, setAct2MotorboatPartsNeeded] = useState(false);
   const [act2MotorboatPartsOwned, setAct2MotorboatPartsOwned] = useState(false);
+
+  function act2StoryItemInsufficientFundsMessage(price: number) {
+    const current = getLatestBackendWallet()?.sysselBux ?? backendWallet?.sysselBux ?? sysselBux;
+    const missing = Math.max(0, price - current);
+    return `Du har ${current} SysselBux. Du behöver ${missing} till. Gör några uppdrag och kom tillbaka när du har sparat ihop till den.`;
+  }
   const roomStage = !footballRugOwned ? 0 : !roomDecorOwned.footballPoster ? 1 : !roomDecorOwned.computerDesk ? 2 : !roomDecorOwned.trophyShelf ? 3 : !roomDecorOwned.stringLights ? 4 : !roomDecorOwned.aquarium ? 5 : 6;
   const roomSceneSrc = roomStage === 0 ? "/assets/village/interiors/room/room-base.png" : `/assets/village/interiors/room/room-${roomStage}.png`;
   const attention = residentAttention(construction);
@@ -662,7 +668,7 @@ export default function VillagePrototype() {
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? "Du har inte tillräckligt många SysselBux." : message);
+      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_MOTORBOAT_PARTS_PRICE) : message);
     } finally { setShopBusy(false); }
   }
 
@@ -688,7 +694,7 @@ export default function VillagePrototype() {
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? "Du har inte tillräckligt många SysselBux." : message);
+      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_BOATHOUSE_STEERING_WHEEL_PRICE) : message);
     } finally { setShopBusy(false); }
   }
 
@@ -714,7 +720,7 @@ export default function VillagePrototype() {
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? "Du har inte tillräckligt många SysselBux." : message);
+      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_JETTY_LIFEBUOY_PRICE) : message);
     } finally { setShopBusy(false); }
   }
 
