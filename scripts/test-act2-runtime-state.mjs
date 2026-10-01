@@ -612,7 +612,15 @@ const childFacingStorySources = [
   "../src/game/act2MotorboatStory.ts",
   "../src/game/act2FinaleStory.ts",
 ].map((path) => fs.readFileSync(new URL(path, import.meta.url), "utf8"));
-const childFacingForbidden = ["Adam:", "wallet-loopen", "authoritative", "Contribution 16 completes", "utan tekniska motorinstruktioner"];
+const childFacingForbidden = [
+  "Adam:",
+  "wallet-loopen",
+  "authoritative",
+  "auktoritativa story-item",
+  "story-item-köpsfunktionen",
+  "Contribution 16 completes",
+  "utan tekniska motorinstruktioner",
+];
 for (const forbidden of childFacingForbidden) {
   assert.equal(childFacingStorySources.some((source) => source.includes(forbidden)), false, `runtime story source leaked internal text: ${forbidden}`);
 }
