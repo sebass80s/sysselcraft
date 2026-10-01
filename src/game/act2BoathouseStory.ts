@@ -273,7 +273,6 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Barnet: Inte än.",
       "Alve tittar på dig.",
       "Alve: Jag vet.",
-      "Paus.",
       "Alve: Men jag kan tänka på den.",
     ],
     "stage": 3
