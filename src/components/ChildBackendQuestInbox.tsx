@@ -365,6 +365,13 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
 
   useEffect(() => {
     if (!childId || !sessionReady || needsPairing) return;
+    const refreshProgress = () => void refreshQuietly(childId);
+    window.addEventListener("sysselcraft:quest-progress-refresh", refreshProgress);
+    return () => window.removeEventListener("sysselcraft:quest-progress-refresh", refreshProgress);
+  }, [childId, needsPairing, refreshQuietly, sessionReady]);
+
+  useEffect(() => {
+    if (!childId || !sessionReady || needsPairing) return;
     const refreshInterval = open ? OPEN_REFRESH_MS : BACKGROUND_REFRESH_MS;
     const timer = window.setInterval(() => {
       if (document.visibilityState === "visible") void refreshQuietly(childId);

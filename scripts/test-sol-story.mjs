@@ -105,6 +105,12 @@ assert.match(questInbox, /backendStoryFlags\.clinicProgressionBaseline/, "Clinic
 assert.match(questInbox, /startClinicConstruction\(snapshot\.construction\)/, "stale local saves must be able to restore Clinic stage 1");
 assert.match(questInbox, /backendClinicBaseline \?\? snapshot\.worldFlags\.clinicProgressionBaseline/, "Clinic progression must prefer the backend baseline when available");
 assert.match(questInbox, /syncClinicContributionProgress\([\s\S]*nextGameState\.progression\.worldProgression[\s\S]*clinicBaseline/, "quest refresh must drive Clinic progression from authoritative claimed-task progress");
+assert.match(questInbox, /sysselcraft:quest-progress-refresh/, "Clinic reveal catch-up must have an explicit quest-progress refresh listener");
+assert.match(component, /revealId\?\.startsWith\("clinic:"\)[\s\S]*sysselcraft:quest-progress-refresh/, "each Clinic reveal must immediately request another authoritative catch-up pass");
+
+const villageGame = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
+assert.match(villageGame, /movementStallFrames/, "village movement must track blocked path progress");
+assert.match(villageGame, /const replanned = findPath\([\s\S]*finalTarget[\s\S]*navigationObstacles/, "blocked dynamic paths must replan instead of jittering forever");
 
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.match(storyShop, /BOTTLE_MESSAGE_PRICE = 100/, "Flaskpost should remain the 100 SysselBux Act 1 saving goal");

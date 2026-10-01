@@ -91,6 +91,7 @@ export async function createVillageGame(
     private player?: GameObjects.Image;
     private dog?: GameObjects.Image;
     private path: Point[] = [];
+    private movementStallFrames = 0;
     private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
     private targetMarker?: GameObjects.Arc;
@@ -371,7 +372,31 @@ export async function createVillageGame(
       const dx = Math.cos(angle);
       const dy = Math.sin(angle);
       this.setFacing(dx, dy);
+      const before = { x: this.player.x, y: this.player.y };
+      const finalTarget = this.path.at(-1) ?? next;
       this.tryMove(dx * speed, dy * speed);
+      const moved = distance(before, this.player);
+      if (moved > 0.25) {
+        this.movementStallFrames = 0;
+        return;
+      }
+
+      this.movementStallFrames += 1;
+      if (this.movementStallFrames < 3) return;
+
+      // Dynamic construction/quest state can invalidate a path after it was planned.
+      // Replan once from the player's actual position instead of repeatedly pushing
+      // into the same blocked waypoint and producing the visible "stuck/jitter" loop.
+      this.movementStallFrames = 0;
+      const replanned = findPath(
+        { x: this.player.x, y: this.player.y },
+        finalTarget,
+        this.navigationObstacles,
+      );
+      this.path = replanned;
+      const replannedTarget = replanned.at(-1);
+      if (replannedTarget) this.targetMarker?.setPosition(replannedTarget.x, replannedTarget.y).setVisible(true);
+      else this.targetMarker?.setVisible(false);
     }
 
     private setFacing(dx: number, dy: number) {
@@ -754,6 +779,7 @@ export async function createVillageGame(
       this.navigationObstacles = [...STATIC_OBSTACLES, { type: "rect", x: 1130, y: 355, width: 205, height: 72 }, ...productionObstacles];
       // A route planned before the reveal may now cross the new footprint.
       this.path = [];
+      this.movementStallFrames = 0;
       this.targetMarker?.setVisible(false);
       if (this.player && !isWalkable(this.player, this.navigationObstacles)) {
         const safePoint = nearestWalkablePoint(this.player, this.navigationObstacles);
