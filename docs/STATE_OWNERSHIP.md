@@ -158,3 +158,11 @@ Do not use wallet balances or category totals as proxies for consumed Act 2 stor
 
 The detailed implementation and restart/order test matrix lives in `docs/ACT2_IMPLEMENTATION_PLAN.md`.
 
+## Act 2 debug/revisit presentation boundary — 2026-10-01
+
+Two recent clarifications are part of the Act 2 ownership contract:
+
+- `/act2-test` may synthesize an isolated `Act2RuntimeState` to drive the shared production renderer, but it must not persist that state. Debug is a state source, never a second story/runtime owner.
+- Stugan's `CABIN_WAITING_REACTION` is repeatable presentation state only. It is eligible when Stugan is complete and Motorbåten is incomplete, opens from a world interaction with the finished cabin, and does not alter project contribution count, backend progression, purchase ownership or automatic completion-reaction ledgers.
+
+Water collision is renderer/navigation state derived from the accepted lake-master texture plus authored object footprints. It has no persistence authority and must never become a saved progression signal.
