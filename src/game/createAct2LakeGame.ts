@@ -1,4 +1,4 @@
-import type { GameObjects, Input, Types } from "phaser";
+import type { GameObjects, Input } from "phaser";
 import {
   ACT2_ALVE_WORK_POSITIONS,
   ACT2_VISUAL_ASSETS,
@@ -142,7 +142,7 @@ export async function createAct2LakeGame(
         .setSize(72, 150)
         .setInteractive({ useHandCursor: true })
         .setVisible(false);
-      this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: Types.Input.EventData) => {
+      this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event) => {
         event.stopPropagation();
         if (!this.player || !this.alvePlaceholder || !requestedAlveTurnInAvailable) return;
         const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.alvePlaceholder.x, this.alvePlaceholder.y);
