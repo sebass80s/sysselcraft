@@ -5,9 +5,10 @@ import { parseStoryLine } from "../../game/storyEngine";
 type StoryTranscriptProps = {
   lines: readonly string[];
   childName?: string;
+  showSpeakers?: boolean;
 };
 
-export function StoryTranscript({ lines, childName = "Barnet" }: StoryTranscriptProps) {
+export function StoryTranscript({ lines, childName = "Barnet", showSpeakers = true }: StoryTranscriptProps) {
   return (
     <div className="shared-story-transcript">
       {lines.map((line, index) => {
@@ -17,7 +18,7 @@ export function StoryTranscript({ lines, childName = "Barnet" }: StoryTranscript
           : "";
         return (
           <div className="shared-story-transcript-line" key={index}>
-            {parsed.speaker && (
+            {showSpeakers && parsed.speaker && (
               <span className={`dialogue-speaker${speakerClass}`}>{parsed.speaker}</span>
             )}
             <p>{parsed.text}</p>
