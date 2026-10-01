@@ -181,6 +181,8 @@ export default function Act2Page() {
   const router = useRouter();
   const hostRef = useRef<HTMLDivElement>(null);
   const debugHoldTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const debugTapCountRef = useRef(0);
+  const debugTapResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gameRef = useRef<Act2LakeGameHandle | null>(null);
   const [state, setState] = useState<Act2RuntimeState>(createDefaultAct2RuntimeState);
   const [ready, setReady] = useState(false);
@@ -482,6 +484,14 @@ export default function Act2Page() {
     setContributionTurnInOpen(false);
   }
 
+  const openStoryDebugLab = () => {
+    if (debugHoldTimerRef.current) {
+      clearTimeout(debugHoldTimerRef.current);
+      debugHoldTimerRef.current = null;
+    }
+    router.push("/act2-test");
+  };
+
   const cancelDebugHold = () => {
     if (debugHoldTimerRef.current) {
       clearTimeout(debugHoldTimerRef.current);
@@ -491,10 +501,21 @@ export default function Act2Page() {
 
   const startDebugHold = () => {
     cancelDebugHold();
-    debugHoldTimerRef.current = setTimeout(() => {
-      debugHoldTimerRef.current = null;
-      router.push("/act2-test");
-    }, 900);
+    debugHoldTimerRef.current = setTimeout(openStoryDebugLab, 650);
+  };
+
+  const registerDebugTap = () => {
+    debugTapCountRef.current += 1;
+    if (debugTapResetRef.current) clearTimeout(debugTapResetRef.current);
+    if (debugTapCountRef.current >= 5) {
+      debugTapCountRef.current = 0;
+      openStoryDebugLab();
+      return;
+    }
+    debugTapResetRef.current = setTimeout(() => {
+      debugTapCountRef.current = 0;
+      debugTapResetRef.current = null;
+    }, 1800);
   };
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
@@ -502,10 +523,13 @@ export default function Act2Page() {
       type="button"
       aria-label="Akt 2 · Sjön"
       title="Akt 2 · Sjön"
-      onPointerDown={startDebugHold}
-      onPointerUp={cancelDebugHold}
-      onPointerCancel={cancelDebugHold}
-      onPointerLeave={cancelDebugHold}
+      onTouchStart={startDebugHold}
+      onTouchEnd={cancelDebugHold}
+      onTouchCancel={cancelDebugHold}
+      onPointerDown={(event) => { if (event.pointerType !== "touch") startDebugHold(); }}
+      onPointerUp={(event) => { if (event.pointerType !== "touch") cancelDebugHold(); }}
+      onPointerCancel={(event) => { if (event.pointerType !== "touch") cancelDebugHold(); }}
+      onClick={registerDebugTap}
       onContextMenu={(event) => event.preventDefault()}
       style={{
         position: "absolute",
