@@ -102,7 +102,7 @@ Act 2 lake restoration uses three player-chosen, order-independent tracks: summe
 
 Each completed project may independently unlock world reactions such as new Mira shop goods, optional activities and ambient changes. Established Act 1 residents should increasingly spend time at the lake as it comes alive; notably, a completed jetty can make swimming/jetty hangout activity eligible. At 3/3 the lake should feel like the village's summer gathering place.
 
-The isolated /act2-test route remains disconnected from Act 1 progression until Kalle explicitly asks to wire the area.
+`/act2-test` is a non-authoritative story/visual acceptance lab. Production Act 2 is connected through `/act2`; test-route visits must never mutate authoritative production progression.
 
 ## Product thesis and locked laws
 
@@ -532,7 +532,7 @@ Current boundary:
 - Family finale is outside the 64 contribution count.
 - Act 3 destination remains undefined.
 
-The Act 2 opening five-image sequence is already present in the repository and wired into `/act2-test`. Family-finale production art is substantially complete. Epilogue image production is still unfinished; do not invent repository assets or claim that final visual bridge is integrated.
+The Act 2 opening five-image sequence is present and consumed by the shared production story path as well as `/act2-test`. The first Alve meeting now uses the canonical existing meeting-alve image progression (`bike` → `first-hello` → `a-lot-of-work` → `new-friend` → `alve-shows` → `new-friend` → `pick`) from `src/game/act2AlveStory.ts`. Family-finale production art is substantially complete. Epilogue image production is still unfinished; do not invent repository assets or claim that final visual bridge is integrated.
 
 Alve's departure-scene gratitude beat is now locked in `STORY_DESIGN.md`: he explicitly says the outcome would never have happened without Barnet, admits he was **“helt lost”** on the day Barnet found him, explains that he thought fixing enough things would make everything solve itself, thanks Barnet and says he is glad Barnet is his friend.
 
