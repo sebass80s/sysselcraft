@@ -19,7 +19,6 @@ type StoryMomentProps = {
   zIndex?: number;
   background?: string;
   dialogueClassName?: string;
-  scrollable?: boolean;
 };
 
 export function StoryMoment({
@@ -36,7 +35,6 @@ export function StoryMoment({
   zIndex = 20,
   background = "#1d281f",
   dialogueClassName = "",
-  scrollable = false,
 }: StoryMomentProps) {
   const style: CSSProperties = { position: "absolute", inset: 0, zIndex, background };
   return (
@@ -56,7 +54,6 @@ export function StoryMoment({
         nextDisabled={nextDisabled}
         footer={footer}
         className={dialogueClassName}
-        scrollable={scrollable}
       >
         {children}
       </DialogueCard>
