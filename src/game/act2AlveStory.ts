@@ -4,6 +4,16 @@ export type Act2AlveDialogueBeat = {
   nameReveal?: boolean;
 };
 
+const MEETING_ALVE_BASE = "/assets/village/story-moments/act2/meeting-alve";
+
+export function act2AlveImageForIndex(index: number) {
+  if (index <= 8) return `${MEETING_ALVE_BASE}/first-hello.png`;
+  if (index <= 28) return `${MEETING_ALVE_BASE}/a-lot-of-work.png`;
+  if (index <= 38) return `${MEETING_ALVE_BASE}/new-friend.png`;
+  if (index <= 50) return `${MEETING_ALVE_BASE}/alve-shows.png`;
+  return `${MEETING_ALVE_BASE}/new-friend.png`;
+}
+
 export const ACT2_ALVE_DIALOGUE: Act2AlveDialogueBeat[] = [
   { speaker: "child", text: "Hej." },
   { text: "Pojken vid stugan rycker till och vänder sig om. Han håller fortfarande en lös bräda i handen." },
