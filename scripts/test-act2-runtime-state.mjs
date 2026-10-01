@@ -161,6 +161,16 @@ assert.equal(candidate?.beatId, "cabin:01", "unconsumed authoritative backlog fo
 const baselineCannotMove = withBackendClaimBaseline(bridge, 999);
 assert.equal(baselineCannotMove.backendClaimBaseline, 12, "Act 2 claim baseline is establish-once");
 
+const boundaryState = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 0);
+let boundary = withSelectedProject(boundaryState, "dock");
+for (let i = 1; i <= 3; i++) {
+  const next = nextAct2Contribution(boundary, i);
+  assert.equal(next?.visibleStage, 1, `dock beat ${i} must remain visual stage 1`);
+  boundary = withPresentedContribution(boundary, "dock", next.beatId, next.visibleStage);
+}
+let fourth = nextAct2Contribution(boundary, 4);
+assert.equal(fourth?.visibleStage, 2, "dock beat 4 is the authored 1/4→2/4 transition");
+
 const page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 for (const required of [
   "01-dog-runs-off.png",
@@ -173,6 +183,12 @@ for (const required of [
   "Vad börjar vi med?",
   "Laga {PROJECT_COPY[previewProject].object}",
 ]) assert.ok(page.includes(required), `missing Act 2 runtime contract: ${required}`);
+
+assert.ok(page.includes('{ speaker: "unknown", text: "Alve.", nameReveal: true }'), "Alve nameplate must still be Barnet on his name reveal line");
+assert.ok(page.includes('{ speaker: "alve", text: "Okej, {childName}.'), "the line after name reveal must use Alve nameplate");
+assert.ok(page.includes('{ speaker: "unknown", text: "Varför?" }'), "unknown Alve must own the pre-introduction Varför line");
+assert.ok(page.includes('🔒 Motorbåten'), "motorboat must remain visible while locked");
+assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector must derive 0/3→3/3 from canonical state");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.ok(village.includes('clinicCompletionSeen && <a href="/act2/"'), "Act 2 trigger must remain gated by completed Clinic finale");
