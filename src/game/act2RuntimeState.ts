@@ -20,6 +20,7 @@ export type Act2RuntimeState = {
   alveIntroComplete: boolean;
   selectedProject: Act2Project | null;
   backendClaimBaseline: number | null;
+  jettyLifebuoyOwned: boolean;
   projects: Record<Act2Project, Act2ProjectState>;
   familyFinaleConsumed: boolean;
   epilogueConsumed: boolean;
@@ -44,6 +45,7 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     alveIntroComplete: false,
     selectedProject: null,
     backendClaimBaseline: null,
+    jettyLifebuoyOwned: false,
     projects: {
       cabin: emptyProject(),
       dock: emptyProject(),
@@ -127,6 +129,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     backendClaimBaseline: typeof candidate.backendClaimBaseline === "number" && Number.isInteger(candidate.backendClaimBaseline) && candidate.backendClaimBaseline >= 0
       ? candidate.backendClaimBaseline
       : null,
+    jettyLifebuoyOwned: candidate.jettyLifebuoyOwned === true,
     projects,
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
     epilogueConsumed: candidate.epilogueConsumed === true,
@@ -194,6 +197,24 @@ export function nextAct2Contribution(
     visibleStage: Math.min(4, 1 + Math.floor(number / 4)) as 1 | 2 | 3 | 4,
     backlog,
   };
+}
+
+export function withBackendStoryFlags(
+  state: Act2RuntimeState,
+  worldFlags: Record<string, unknown>,
+): Act2RuntimeState {
+  const normalized = normalizeAct2RuntimeState(state);
+  return {
+    ...normalized,
+    jettyLifebuoyOwned: worldFlags.act2JettyLifebuoyOwned === true,
+  };
+}
+
+export function jettyPurchaseRequired(state: Act2RuntimeState) {
+  const normalized = normalizeAct2RuntimeState(state);
+  return normalized.projects.dock.contributions >= 6
+    && normalized.projects.dock.contributions < 16
+    && !normalized.jettyLifebuoyOwned;
 }
 
 export function withSelectedProject(state: Act2RuntimeState, project: Act2Project): Act2RuntimeState {
