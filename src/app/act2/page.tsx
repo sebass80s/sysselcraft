@@ -35,6 +35,7 @@ import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../../game/act2MotorboatStory";
 import { ACT2_FINALE_BEATS } from "../../game/act2FinaleStory";
 import { StoryMoment } from "../../components/story/StoryMoment";
+import { parseStoryLine } from "../../game/storyEngine";
 import { StoryRunner } from "../../components/story/StoryRunner";
 
 type OpeningBeat = { image: string; title: string; body: string[] };
@@ -419,9 +420,15 @@ export default function Act2Page() {
   const activeContributionLine = contributionTurnInOpen
     ? activeContributionBeat?.body[state.contributionLineIndex] ?? null
     : null;
+  const activeContributionPresentation = activeContributionLine
+    ? parseStoryLine(activeContributionLine, childName)
+    : null;
   const finalePending = act2FinalePending(state);
   const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
   const activeFinaleLine = activeFinaleBeat?.body[state.finaleLineIndex] ?? null;
+  const activeFinalePresentation = activeFinaleLine
+    ? parseStoryLine(activeFinaleLine, childName)
+    : null;
   const completionProject = (["cabin", "dock"] as const)
     .find((project) => projectCompletionReactionPending(state, project)) ?? null;
   const activeCompletionBeat = completionProject === "cabin"
@@ -430,6 +437,9 @@ export default function Act2Page() {
       ? JETTY_COMPLETION_REACTION
       : null;
   const activeCompletionLine = activeCompletionBeat?.body[state.completionLineIndex] ?? null;
+  const activeCompletionPresentation = activeCompletionLine
+    ? parseStoryLine(activeCompletionLine, childName)
+    : null;
 
   async function advanceFinaleStory() {
     if (!activeFinaleBeat) return;
@@ -532,8 +542,9 @@ export default function Act2Page() {
         id: `act2:finale:${state.finaleIndex}:${state.finaleLineIndex}`,
         image: activeFinaleBeat.image,
         imageFit: "contain",
-        speaker: activeFinaleBeat.title,
-        lines: [activeFinaleLine.replace(/^Barnet:/, childName + ":")],
+        speaker: activeFinalePresentation?.speaker,
+        speakerTone: activeFinalePresentation?.speakerTone,
+        lines: activeFinalePresentation ? [activeFinalePresentation.text] : [],
         nextLabel: state.finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa",
       }}
       onNext={() => void advanceFinaleStory()}
@@ -546,8 +557,9 @@ export default function Act2Page() {
         id: `act2:completion:${completionProject}:${state.completionLineIndex}`,
         image: activeCompletionBeat.image,
         imageFit: "contain",
-        speaker: activeCompletionBeat.title,
-        lines: [activeCompletionLine.replace(/^Barnet:/, childName + ":")],
+        speaker: activeCompletionPresentation?.speaker,
+        speakerTone: activeCompletionPresentation?.speakerTone,
+        lines: activeCompletionPresentation ? [activeCompletionPresentation.text] : [],
         nextLabel: state.completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten",
       }}
       onNext={() => void advanceCompletionReaction()}
@@ -583,7 +595,8 @@ export default function Act2Page() {
     {contributionTurnInOpen && contributionCandidate && activeContributionBeat && activeContributionLine && <StoryMoment
       image={activeContributionBeat.image}
       imageFit="contain"
-      speaker={activeContributionBeat.title}
+      speaker={activeContributionPresentation?.speaker}
+      speakerTone={activeContributionPresentation?.speakerTone}
       nextLabel={state.contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
       onNext={() => void advanceContributionStory()}
       zIndex={80}
@@ -591,7 +604,7 @@ export default function Act2Page() {
       dialogueClassName="act2-dialogue-card"
       footer={contributionCandidate.backlog > 1 ? <small>{contributionCandidate.backlog - 1} questframsteg väntar bakom detta beat.</small> : undefined}
     >
-      <p>{activeContributionLine.replace(/^Barnet:/, childName + ":")}</p>
+      <p>{activeContributionPresentation?.text}</p>
     </StoryMoment>}
     {backendSyncError && <div role="status" style={{ position:"absolute", right:16, top:16, zIndex:30, background:"rgba(0,0,0,.65)", color:"white", padding:"8px 12px", borderRadius:10 }}>{backendSyncError}</div>}
     {state.selectedProject && !finalePending && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
