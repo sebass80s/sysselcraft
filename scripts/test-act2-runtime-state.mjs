@@ -593,3 +593,9 @@ assert.ok(!motorboatStorySource.includes("wallet-loopen"), "runtime story source
 assert.ok(!motorboatStorySource.includes("utan tekniska motorinstruktioner"), "runtime narration must not expose authoring instructions");
 
 console.log("Act 2 vertical-slice state/route contract PASS");
+
+
+const globalCss = fs.readFileSync(new URL("../src/app/globals.css", import.meta.url), "utf8");
+assert.match(globalCss, /\.story-moment \{[^}]*pointer-events:auto/, "Story Moment overlays must remain clickable");
+assert.match(globalCss, /\.story-moment img \{[^}]*pointer-events:none/, "Story Moment artwork must not steal dialogue clicks");
+assert.match(globalCss, /\.story-moment::after \{[^}]*pointer-events:none/, "Story Moment tint overlay must not steal dialogue clicks");
