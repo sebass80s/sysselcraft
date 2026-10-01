@@ -7,13 +7,13 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "image": "/assets/village/story-moments/act2/boathouse/under-the-rubble.png",
     "body": [
       "Ni börjar röja det gamla båthuset. Det luktar trä, sjö och gammalt damm. Överallt ligger trasiga plankor, lådor och rep.",
-      "Alve står mitt i röran och ser nästan nöjd ut."
+      "Alve står mitt i röran och ser nästan nöjd ut.",
       "Barnet: Du ser väldigt glad ut för någon som står mitt i ett jättestök.",
       "Alve: Det är bra stök. Man vet aldrig vad som finns under.",
       "Du lyfter undan en gammal låda.",
       "Barnet: Jag hoppas på något som inte har åtta ben.",
-      "Alve: Jag hoppas på verktyg. Eller en hemlig lucka. Jag vet att det inte borde finnas en här, men båthuset hade varit bättre om det gjorde det."
-      "Ni fortsätter röja. En stor hög med gammalt bråte längst in sitter ovanligt hårt, och Alve får knappt loss en planka."
+      "Alve: Jag hoppas på verktyg. Eller en hemlig lucka. Jag vet att det inte borde finnas en här, men båthuset hade varit bättre om det gjorde det.",
+      "Ni fortsätter röja. En stor hög med gammalt bråte längst in sitter ovanligt hårt, och Alve får knappt loss en planka.",
       "Alve: Det är något under.",
       "Barnet: Hur vet du det?",
       "Alve: För att allt annat flyttar på sig och det här vägrar.",
@@ -21,12 +21,12 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Barnet: Det där är inte golvet. Det är en väldigt stor låda.",
       "Alve: Ännu bättre. Stora lådor innehåller bättre saker än små lådor.",
       "Barnet: Det där har du hittat på.",
-      "Alve: Det känns sant."
+      "Alve: Det känns sant.",
       "Ni får undan tillräckligt mycket för att se att det är en gammal tung kista.",
       "Alve tittar på den med ett stort leende.",
       "Alve: Okej. Nu blev det här projektet mycket bättre.",
       "Barnet: Vi skulle laga båthuset.",
-      "Alve: Det gör vi. Fast först tar vi reda på vad det där är."
+      "Alve: Det gör vi. Fast först tar vi reda på vad det där är.",
     ],
     "stage": 1
   },
@@ -36,7 +36,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "image": "/assets/village/story-moments/act2/boathouse/finding-chest.png",
     "body": [
       "Ni har fått fram hela kistan. Den är tung, smutsig och låset ser ut att ha suttit där ungefär lika länge som båthuset.",
-      "Alve drar i locket. Det rör sig inte. Han drar hårdare. Fortfarande ingenting."
+      "Alve drar i locket. Det rör sig inte. Han drar hårdare. Fortfarande ingenting.",
       "Barnet: Jag tror den är låst.",
       "Alve släpper taget och tittar på dig.",
       "Alve: Jag märkte det.",
@@ -44,11 +44,11 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve börjar undersöka låset.",
       "Alve: Det här borde gå. Jag behöver bara komma på med vad.",
       "Du tittar runt på alla gamla saker omkring er.",
-      "Barnet: Bra plan."
+      "Barnet: Bra plan.",
       "Alve provar först försiktigt och sedan lite mindre försiktigt. Till slut sätter han sig bredvid kistan.",
       "Alve: Den hatar mig.",
       "Barnet: Det är ett lås.",
-      "Alve: Det är personligt nu."
+      "Alve: Det är personligt nu.",
       "Ni provar flera rimliga sätt att få upp den, men låset sitter fast.",
       "Efter en stund lutar du dig mot väggen.",
       "Barnet: Vi kanske behöver hjälp.",
@@ -58,11 +58,11 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve funderar.",
       "Alve: Linus kanske. Eller Henning.",
       "Barnet: Varför Henning?",
-      "Alve: Jag vet inte. Han känns som någon som har idéer."
+      "Alve: Jag vet inte. Han känns som någon som har idéer.",
       "Du tänker på Henning.",
       "Barnet: Det där är både sant och lite oroande.",
       "Alve reser sig.",
-      "Alve: Perfekt. Då frågar vi honom."
+      "Alve: Perfekt. Då frågar vi honom.",
     ],
     "stage": 1
   },
@@ -71,39 +71,39 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "title": "3/16 · Henning har en idé",
     "image": "/assets/village/story-moments/act2/boathouse/henning-will-blow-it-open.png",
     "body": [
-      "Henning kommer ner till båthuset och går ett långsamt varv runt kistan. Du och Alve väntar medan han fortsätter granska den."
+      "Henning kommer ner till båthuset och går ett långsamt varv runt kistan. Du och Alve väntar medan han fortsätter granska den.",
       "Alve: Har du någon idé?",
       "Henning nickar långsamt.",
       "Henning: Japp.",
       "Barnet: En normal idé?",
       "Henning: Vad menar du med normal?",
       "Alve tittar på dig.",
-      "Alve: Det där var inte ett bra svar."
+      "Alve: Det där var inte ett bra svar.",
       "Henning böjer sig ner och granskar låset.",
       "Henning: Det är gammalt. Rostigt. Och sitter ordentligt.",
       "Alve: Det vet vi.",
       "Henning: Ni har försökt få upp det?",
       "Barnet: Ja. Försiktigt. Mestadels.",
-      "Alve hostar lite."
+      "Alve hostar lite.",
       "Henning reser sig.",
       "Henning: Då behöver vi något som är mindre försiktigt.",
       "Alve lyser upp.",
       "Alve: Jag gillar redan den här planen.",
       "Du tittar misstänksamt på Henning.",
       "Barnet: Hur mycket mindre försiktigt pratar vi om här?",
-      "Henning: Tillräckligt. Jag har dynamit."
+      "Henning: Tillräckligt. Jag har dynamit.",
       "Alve vänder sig mot dig med ett ansiktsuttryck som säger att detta är den bästa dagen hittills.",
       "Alve: Han har dynamit. Varför har bagaren dynamit?",
       "Henning: Det är en lång historia.",
       "Barnet: Vi ska inte fråga.",
-      "Alve: Jag vill väldigt gärna fråga."
+      "Alve: Jag vill väldigt gärna fråga.",
       "Henning börjar ordna med sin plan.",
       "Vi klipper bort långt innan något praktiskt visas.",
       "Alve lutar sig lite mot dig.",
       "Alve: Är det här normalt här?",
       "Du tittar på Henning.",
       "Sedan tillbaka på Alve.",
-      "Barnet: Tyvärr börjar det kännas så."
+      "Barnet: Tyvärr börjar det kännas så.",
     ],
     "stage": 1
   },
@@ -113,20 +113,20 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "image": "/assets/village/story-moments/act2/boathouse/henning-after-tnt.png",
     "body": [
       "Vi lämnar båthuset. Henning gör det Henning tänker göra, helt utanför bild.",
-      "BOOM."
+      "BOOM.",
       "När ni kommer tillbaka står Henning framför båthuset med sot i ansiktet och ett väldigt nöjt uttryck. Kistan är öppen.",
-      "Alve stannar."
+      "Alve stannar.",
       "Alve: Är alla i din by så här?",
       "Du tittar på Henning och sedan på Alve.",
       "Barnet: Typ.",
-      "Alve: …jag gillar den här byn."
+      "Alve: …jag gillar den här byn.",
       "Henning borstar lite sot från ärmen.",
       "Henning: Det gick ju bra.",
       "Barnet: Det beror lite på hur man räknar.",
       "Henning: Kistan är öppen.",
       "Alve går redan mot den.",
       "Alve: Det är det viktiga.",
-      "Ni sätter er bredvid kistan och går igenom innehållet. Där finns gamla verktyg, beslag, repstumpar och delar som ser ut att ha hört till båtar."
+      "Ni sätter er bredvid kistan och går igenom innehållet. Där finns gamla verktyg, beslag, repstumpar och delar som ser ut att ha hört till båtar.",
       "Alve plockar upp en metallbit.",
       "Alve: Den här ser viktig ut.",
       "Barnet: Vet du vad det är?",
@@ -140,12 +140,12 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve: Den där båten… det är ju den.",
       "Du tittar från bilden mot den gamla båten.",
       "Barnet: Den på bilden?",
-      "Alve: Mm."
+      "Alve: Mm.",
       "På baksidan av fotografiet står det:",
       "“Sista turen över sjön innan hösten.”",
       "Alve läser texten en gång till.",
       "Sedan tittar han ut genom båthusets öppning, över sjön.",
-      "Alve: Jag undrar vart de brukade åka."
+      "Alve: Jag undrar vart de brukade åka.",
     ],
     "stage": 2
   },
@@ -155,28 +155,28 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "image": "/assets/village/story-moments/act2/boathouse/alve-finds-a-tool.png",
     "body": [
       "Nästa gång ni kommer tillbaka ligger allt från kistan utspritt över golvet. Verktyg på ett ställe, båtdelar på ett annat och en hög med saker ni fortfarande inte förstår.",
-      "Alve står mitt bland högarna."
+      "Alve står mitt bland högarna.",
       "Alve: Jag har gjort ett system.",
       "Barnet: Vilket system?",
-      "Alve: Saker jag förstår. Saker jag nästan förstår. Och saker som antagligen är väldigt viktiga."
+      "Alve: Saker jag förstår. Saker jag nästan förstår. Och saker som antagligen är väldigt viktiga.",
       "Den sista högen är störst.",
       "Barnet: Du förstår alltså nästan ingenting.",
       "Alve: Jag förstår att vi behöver spara allt.",
       "Du plockar upp fotografiet igen.",
       "Alve märker det direkt.",
-      "Alve: Jag har tänkt på den där båten. Den ser inte gammal ut på bilden, och nu står den bara här."
+      "Alve: Jag har tänkt på den där båten. Den ser inte gammal ut på bilden, och nu står den bara här.",
       "Barnet: Den har nog stått där länge.",
       "Alve går fram till båten och lägger handen på sidan.",
       "Alve: Tänk om några av delarna i kistan hör till den.",
       "Barnet: Då kanske vi kan använda dem senare.",
       "Alve: Senare?",
       "Barnet: Vi håller fortfarande på med båthuset.",
-      "Alve ser sig omkring på det trasiga arbetsbordet, verktygen på golvet och bråtet i hörnen. Han suckar."
+      "Alve ser sig omkring på det trasiga arbetsbordet, verktygen på golvet och bråtet i hörnen. Han suckar.",
       "Alve: Okej. Jag erkänner att det här inte är världens bästa verkstad.",
       "Barnet: Det är knappt en verkstad.",
       "Alve: Än.",
       "Han plockar upp fotografiet och sätter det försiktigt mot väggen.",
-      "Alve: Men den där stannar här."
+      "Alve: Men den där stannar här.",
     ],
     "stage": 2
   },
@@ -185,11 +185,11 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "title": "6/16 · Mira ser problemet",
     "image": "/assets/village/story-moments/act2/boathouse/mira-you-need-more-tools.png",
     "body": [
-      "Mira kommer ner till båthuset och stannar i dörröppningen. Hon tittar på golvet, arbetsbordet och Alves tre högar."
+      "Mira kommer ner till båthuset och stannar i dörröppningen. Hon tittar på golvet, arbetsbordet och Alves tre högar.",
       "Mira: Vad har hänt här?",
       "Alve: Vi organiserar.",
       "Barnet: Han organiserar.",
-      "Mira: Det förklarar en del."
+      "Mira: Det förklarar en del.",
       "Hon går fram till verktygen.",
       "Mira: Ni har faktiskt hittat en hel del användbart. Problemet är att allt ligger överallt.",
       "Alve pekar på sina högar.",
@@ -210,7 +210,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve: När verkstaden är klar kan vi börja med den.",
       "Barnet: När de andra projekten är klara.",
       "Alve suckar, men inte särskilt hårt.",
-      "Alve: Jag vet. Okej. Då bygger vi en riktig verkstad först."
+      "Alve: Jag vet. Okej. Då bygger vi en riktig verkstad först.",
     ],
     "stage": 2
   },
@@ -220,17 +220,17 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "image": "/assets/village/story-moments/act2/boathouse/mira-you-need-more-tools.png",
     "body": [
       "Nästa gång ni kommer tillbaka har Mira ordnat det ni behöver. Lådor, förvaring, krokar och bättre belysning ligger samlat vid arbetsbordet.",
-      "Alve tittar på allt."
+      "Alve tittar på allt.",
       "Alve: Det här är väldigt många saker för att kunna hitta andra saker.",
       "Barnet: Det är ungefär hela poängen med förvaring.",
       "Ni sätter igång.",
       "Det gamla arbetsbordet blir stadigt igen. Verktyg får egna platser. Smådelarna från kistan hamnar i lådor istället för i Alves tre högar.",
       "Efter en stund står Alve mitt i rummet och ser sig omkring.",
-      "Alve: Jag hatar att erkänna det här, men Mira hade rätt. Det är faktiskt lättare när man inte behöver leta efter hammaren varje gång."
+      "Alve: Jag hatar att erkänna det här, men Mira hade rätt. Det är faktiskt lättare när man inte behöver leta efter hammaren varje gång.",
       "Barnet: Fotot då?",
       "Alve tar försiktigt upp det gamla fotografiet, funderar en stund och hänger det ovanför arbetsbordet.",
       "Alve: Där.",
-      "Barnet: Bra plats."
+      "Barnet: Bra plats.",
       "Alve tittar på bilden.",
       "På båten ute på sjön.",
       "Sedan på den gamla motorbåten som står i båthuset.",
@@ -241,7 +241,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve: Men först verkstaden.",
       "Du tittar på honom.",
       "Barnet: Du sa det själv.",
-      "Alve: Skriv upp datumet."
+      "Alve: Skriv upp datumet.",
     ],
     "stage": 2
   },
@@ -251,18 +251,18 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "image": "/assets/village/story-moments/act2/boathouse/mira-you-need-more-tools.png",
     "body": [
       "När ni kommer tillbaka är båthuset förändrat. Det är fortfarande gammalt och lite snett här och där, men det fungerar.",
-      "Arbetsbordet är helt. Verktygen hänger där de ska. Lådorna är märkta. Fotografiet sitter kvar på väggen."
+      "Arbetsbordet är helt. Verktygen hänger där de ska. Lådorna är märkta. Fotografiet sitter kvar på väggen.",
       "Alve lägger ifrån sig ett verktyg på rätt plats.",
       "Barnet: Du la tillbaka den. Frivilligt?",
-      "Alve: Jag gör det nu. Jag vill inte prata om det."
+      "Alve: Jag gör det nu. Jag vill inte prata om det.",
       "Ni sätter er en stund på arbetsbänken och tittar ut över sjön.",
       "Barnet: Det blev faktiskt bra.",
       "Alve tittar runt.",
-      "Alve: Det känns inte som ett gammalt båthus längre. Det känns som vår verkstad."
+      "Alve: Det känns inte som ett gammalt båthus längre. Det känns som vår verkstad.",
       "Det blir tyst en stund.",
       "Sedan reser han sig igen.",
       "Alve: Vad ska vi bygga? Vi behöver ju något att använda verkstaden till.",
-      "Barnet: Vi har precis blivit klara."
+      "Barnet: Vi har precis blivit klara.",
       "Han ser sig omkring bland lådorna, hyllorna och delarna ni sparat.",
       "Barnet: Vad tänker du bygga?",
       "Alve ler.",
@@ -274,7 +274,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve tittar på dig.",
       "Alve: Jag vet.",
       "Paus.",
-      "Alve: Men jag kan tänka på den."
+      "Alve: Men jag kan tänka på den.",
     ],
     "stage": 3
   },
@@ -287,14 +287,14 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Gamla papper. Några brädor. En burk med skruvar som kanske är äldre än både dig och Alve tillsammans.",
       "Du drar fram en hopvikt pappersbit.",
       "Barnet: Vad är det här?",
-      "Ni vecklar ut den på arbetsbordet. Det är en handritad plan med fyra hjul, en enkel ram och ett säte."
+      "Ni vecklar ut den på arbetsbordet. Det är en handritad plan med fyra hjul, en enkel ram och ett säte.",
       "Alve lutar sig närmare.",
       "Alve: Det där är en lådbil.",
       "Barnet: Ser ut så.",
       "Alve tittar från ritningen till verkstaden och tillbaka igen. Du känner igen blicken direkt.",
       "Barnet: Nej. Jag vet redan att du tänker säga att vi ska bygga den.",
       "Alve ler stort.",
-      "Alve: Bra. Då är vi överens."
+      "Alve: Bra. Då är vi överens.",
       "Du tittar på ritningen igen.",
       "Den är gammal och lite sliten, men fortfarande tydlig nog.",
       "Barnet: Tror du den här faktiskt har blivit byggd någon gång?",
@@ -307,7 +307,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Allt har plötsligt ett syfte.",
       "Barnet: Okej. Vi bygger en lådbil.",
       "Alve slår händerna mot bordet.",
-      "Alve: Äntligen."
+      "Alve: Äntligen.",
     ],
     "stage": 3
   },
@@ -317,7 +317,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "image": "/assets/village/story-moments/act2/boathouse/boxcar-built.png",
     "body": [
       "Ni lägger ritningen mitt på arbetsbordet och börjar bygga. Ratten från Mira ligger bredvid.",
-      "Alve håller upp den."
+      "Alve håller upp den.",
       "Alve: Det här är definitivt den viktigaste delen.",
       "Barnet: Viktigare än hjulen?",
       "Alve: Man måste kunna känna att man kör något.",
@@ -326,11 +326,11 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Efter ett tag börjar något faktiskt likna en lådbil. Alve backar några steg.",
       "Alve: Okej. Den ser snabb ut.",
       "Barnet: Den står still.",
-      "Alve: Den ser snabbt stillastående ut."
+      "Alve: Den ser snabbt stillastående ut.",
       "Du testar ratten. Den sitter fast. Alve trycker försiktigt på ett hjul.",
       "Alve: Det där sitter också.",
       "Barnet: Säger du det som ett faktum eller ett hopp?",
-      "Alve: Lite av båda."
+      "Alve: Lite av båda.",
       "Ni gör klart de sista detaljerna.",
       "När ni till slut rullar ut lådbilen framför båthuset stannar Alve bredvid den.",
       "Alve: Det här är det första vi byggt här som inte fanns innan.",
@@ -338,7 +338,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Barnet: Inte illa för ett gammalt båthus.",
       "Alve tittar på lådbilen igen.",
       "Alve: Vi borde testa den.",
-      "Barnet: Jag visste att du skulle säga det."
+      "Barnet: Jag visste att du skulle säga det.",
     ],
     "stage": 3
   },
@@ -354,20 +354,20 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Barnet: Bra början.",
       "Alve skjuter ifrån. Lådbilen börjar rulla, först försiktigt och sedan lite snabbare.",
       "Alve: Den funkar!",
-      "Du följer efter. Sedan hörs ett ljud. Ett hjul lossnar och rullar åt sidan, och lådbilen stannar snabbt och odramatiskt."
+      "Du följer efter. Sedan hörs ett ljud. Ett hjul lossnar och rullar åt sidan, och lådbilen stannar snabbt och odramatiskt.",
       "Du kommer fram.",
       "Alve sitter kvar och tittar efter hjulet.",
       "Barnet: Gick det bra? Hjulet lossnade.",
-      "Alve: Japp. Då vet vi vad vi ska fixa."
+      "Alve: Japp. Då vet vi vad vi ska fixa.",
       "Du börjar skratta.",
       "Alve kliver ur och hämtar hjulet.",
       "Alve håller upp hjulet.",
       "Alve: Det här var ett test som visade exakt vad som behövde bli bättre. Det är nästan mer användbart.",
-      "Barnet: Nästan."
+      "Barnet: Nästan.",
       "Ni tar tillbaka lådbilen till verkstaden.",
       "För första gången ser misslyckandet inte ut att irritera Alve särskilt mycket.",
       "Han lägger hjulet på arbetsbordet.",
-      "Alve: Version två."
+      "Alve: Version två.",
     ],
     "stage": 3
   },
@@ -376,19 +376,19 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "title": "12/16 · Version två",
     "image": "/assets/village/story-moments/act2/boathouse/boxcar-working.png",
     "body": [
-      "Ni går igenom hela lådbilen tillsammans, inte bara hjulet som lossnade. Den här gången försöker Alve inte skynda."
+      "Ni går igenom hela lådbilen tillsammans, inte bara hjulet som lossnade. Den här gången försöker Alve inte skynda.",
       "När du märker det säger du inget först.",
       "Efter en stund tittar han upp.",
       "Alve: Vad? Du gjorde den där blicken.",
       "Barnet: Vilken blick?",
-      "Alve: Den där ‘Alve gör något oväntat vettigt’-blicken."
+      "Alve: Den där ‘Alve gör något oväntat vettigt’-blicken.",
       "Du ler.",
       "Barnet: Jag tänkte bara att du inte verkar ha bråttom.",
       "Alve fortsätter arbeta.",
       "Alve tittar mot hjulet.",
-      "Alve: Det gick ju fort förra gången. Det hjälpte inte så mycket."
+      "Alve: Det gick ju fort förra gången. Det hjälpte inte så mycket.",
       "Ni gör klart version två.",
-      "När den rullas ut ser den nästan likadan ut, men den är bättre byggd."
+      "När den rullas ut ser den nästan likadan ut, men den är bättre byggd.",
       "Alve sätter sig bakom ratten igen.",
       "Alve: Redo?",
       "Barnet: Jag står bredvid. Du är den som ska köra.",
@@ -405,7 +405,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve: Okej. Den där var övning.",
       "Barnet: För vad?",
       "Alve tittar mot den gamla motorbåten.",
-      "Alve: Båten."
+      "Alve: Båten.",
     ],
     "stage": 4
   },
@@ -414,24 +414,24 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "title": "13/16 · Gör plats för båten",
     "image": "/assets/village/story-moments/act2/boathouse/boat-ramp.png",
     "body": [
-      "Efter lådbilen står ni kvar i verkstaden och tittar runt. Det har blivit mycket bättre här inne, men längst in ligger fortfarande bråte, plankor och delar i vägen."
+      "Efter lådbilen står ni kvar i verkstaden och tittar runt. Det har blivit mycket bättre här inne, men längst in ligger fortfarande bråte, plankor och delar i vägen.",
       "Alve följer din blick.",
       "Alve: Okej. Jag ser problemet. Det är ungefär lika brett som en båt.",
-      "Barnet: Bra, då pratar vi om samma."
+      "Barnet: Bra, då pratar vi om samma.",
       "Ni går fram till den gamla båtplatsen.",
       "Alve försöker uppskatta utrymmet.",
       "Alve: Om vi ska laga båten här inne så måste den faktiskt få plats här inne.",
       "Barnet: Bra början.",
       "Alve nickar mot lådbilen.",
       "Alve: Vi kanske måste flytta lådbilen. Det gör lite ont att säga.",
-      "Barnet: Du överlever."
+      "Barnet: Du överlever.",
       "Ni börjar röja. Det går snabbare än förr eftersom ni nu vet var saker ska hamna.",
-      "Efter ett tag syns den gamla båtplatsen igen. På golvet finns spår efter något tungt som en gång rullats in och ut."
+      "Efter ett tag syns den gamla båtplatsen igen. På golvet finns spår efter något tungt som en gång rullats in och ut.",
       "Alve böjer sig ner.",
       "Alve: Vad är det här?",
       "Barnet: Ser ut som att något har gått här. Spåren fortsätter hela vägen mot vattnet.",
       "Alve följer dem med blicken.",
-      "Alve: Båten. Det måste ha funnits något som drog in den."
+      "Alve: Båten. Det måste ha funnits något som drog in den.",
     ],
     "stage": 4
   },
@@ -440,25 +440,25 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "title": "14/16 · Den gamla slipen",
     "image": "/assets/village/story-moments/act2/boathouse/boat-ramp.png",
     "body": [
-      "Linus kommer ner, går längs spåren och stannar vid resterna av den gamla mekanismen."
+      "Linus kommer ner, går längs spåren och stannar vid resterna av den gamla mekanismen.",
       "Linus: Det här är inte bara spår. Här har suttit en slipvagn.",
       "Alve tittar på honom.",
       "Alve: En vadå?",
-      "Linus: En slipvagn. Tänk dig en låg vagn som båten står på. Den går på de här spåren så man kan dra båten upp ur vattnet och in i båthuset utan att lyfta hela båten."
+      "Linus: En slipvagn. Tänk dig en låg vagn som båten står på. Den går på de här spåren så man kan dra båten upp ur vattnet och in i båthuset utan att lyfta hela båten.",
       "Alve följer spåren med blicken.",
       "Alve: Så båten åkte på en liten vagn?",
-      "Linus: Ungefär. Vagnen går i vattnet, båten hamnar ovanpå och sedan drar man in allt tillsammans. Betydligt enklare än att bära en båt."
+      "Linus: Ungefär. Vagnen går i vattnet, båten hamnar ovanpå och sedan drar man in allt tillsammans. Betydligt enklare än att bära en båt.",
       "Alve ser genast intresserad ut.",
       "Alve: Kan vi laga den?",
       "Linus undersöker delarna.",
       "Linus: Kanske. Mycket är rostigt, men själva konstruktionen ser ut att gå att rädda.",
       "Ni hämtar fram delarna från kistan igen. Alve jämför dem med mekanismen och håller plötsligt upp en av metallbitarna.",
       "Alve: Den här passar ju.",
-      "Linus provar den. Den passar faktiskt."
+      "Linus provar den. Den passar faktiskt.",
       "Barnet: Så den viktiga saken var viktig?",
       "Alve: Jag sa ju det.",
       "Barnet: Du visste inte ens vad den var.",
-      "Alve: Detaljer."
+      "Alve: Detaljer.",
       "Linus fortsätter gå igenom delarna.",
       "Linus: Det här är bra. Några av sakerna ni hittade i kistan hör faktiskt hit.",
       "Alve tittar bort mot det gamla fotografiet på väggen.",
@@ -468,7 +468,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Linus: Då var de kloka.",
       "Alve ler.",
       "Alve: Där kom det.",
-      "Ni börjar återställa mekanismen tillsammans."
+      "Ni börjar återställa mekanismen tillsammans.",
     ],
     "stage": 4
   },
@@ -478,25 +478,25 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "image": "/assets/village/story-moments/act2/boathouse/boat-ramp.png",
     "body": [
       "Den gamla slipvagnen är på plats igen. Inte blank och ny, men hel.",
-      "Alve står bredvid den och försöker inte se alltför förväntansfull ut. Det går sådär."
+      "Alve står bredvid den och försöker inte se alltför förväntansfull ut. Det går sådär.",
       "Alve: Vi måste testa den.",
       "Barnet: Ja. Det är nästan som att test är en del av att laga saker.",
-      "Alve: Du sa ja väldigt snabbt. Jag känner att du och Linus har pratat för mycket."
-      "Ni testar mekanismen utan motorbåten först. Vagnen rör sig långsamt längs spåret, ut och sedan in igen. Allt håller."
+      "Alve: Du sa ja väldigt snabbt. Jag känner att du och Linus har pratat för mycket.",
+      "Ni testar mekanismen utan motorbåten först. Vagnen rör sig långsamt längs spåret, ut och sedan in igen. Allt håller.",
       "Alve går bredvid och tittar på varje del.",
       "När vagnen stannar på sin plats står han kvar en stund.",
       "Alve: Den fungerar. Då kan vi få in båten.",
       "Barnet: När vi får laga den.",
       "Alve nickar, den här gången utan protest.",
-      "Alve: När vi får laga den."
-      "Han ser sig omkring i båthuset. Verkstaden, fotografiet, lådbilen och slipen. Allt är redo."
+      "Alve: När vi får laga den.",
+      "Han ser sig omkring i båthuset. Verkstaden, fotografiet, lådbilen och slipen. Allt är redo.",
       "Alve: Det känns faktiskt som att vi byggt hela platsen för den.",
       "Barnet: Inte bara för den.",
       "Alve tittar på lådbilen.",
       "Sedan på arbetsbordet.",
       "Alve: Nej.",
       "Han ler.",
-      "Alve: Men ganska mycket för den."
+      "Alve: Men ganska mycket för den.",
     ],
     "stage": 4
   },
@@ -507,18 +507,18 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
     "body": [
       "När ni kommer tillbaka till båthuset nästa gång finns det egentligen inget kvar att reparera.",
       "Verkstaden fungerar. Verktygen har sina platser. Fotografiet sitter ovanför arbetsbordet. Lådbilen står vid väggen. Slipvagnen fungerar och båtplatsen är röjd.",
-      "Alve står mitt i allt och ser sig omkring."
+      "Alve står mitt i allt och ser sig omkring.",
       "Barnet: Klart.",
       "Alve tittar runt ett varv till.",
       "Alve: Nästan.",
       "Barnet: Vad är det som är kvar? Båthuset är ju klart.",
       "Alve pekar mot motorbåten.",
-      "Alve: Jag vet. Den är kvar."
+      "Alve: Jag vet. Den är kvar.",
       "Han går fram till arbetsbordet och tittar på fotografiet från kistan.",
       "Den gamla bilden visar båten ute på sjön, från en tid när allt här användes.",
       "Alve: När vi hittade den här trodde jag mest att vi hade hittat ännu en gammal grej.",
       "Barnet: Och nu?",
-      "Alve: Nu känns det som att allt här hänger ihop. Verktygen, delarna, slipen, båten…"
+      "Alve: Nu känns det som att allt här hänger ihop. Verktygen, delarna, slipen, båten…",
       "Han tittar på lådbilen och ler.",
       "Alve: Och en väldigt snabb bil.",
       "Barnet: Med fyra hjul.",
@@ -527,7 +527,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
       "Alve: Förut stod den bara här och blev äldre. Nu har vi faktiskt någonstans att laga den.",
       "Barnet: När det är dags.",
       "Alve nickar, den här gången utan att protestera.",
-      "Alve: När det är dags."
+      "Alve: När det är dags.",
       "Han lägger handen mot båten.",
       "Alve: Men då är det vår tur.",
       "Barnet: Vår tur?",
@@ -546,22 +546,22 @@ export const BOATHOUSE_STEERING_WHEEL_BEAT: Act2ProjectStoryBeat = {
   "Ni har börjat plocka fram delar till lådbilen. Alve lägger ut allt på arbetsbordet.",
   "Alve: Fyra hjul, trä, skruvar, ett säte… vi har nästan allt.",
   "Barnet: Inte allt.",
-  "Du pekar på ratten på ritningen. Alve tittar på delarna igen."
+  "Du pekar på ratten på ritningen. Alve tittar på delarna igen.",
   "Alve: Okej. Vi har ingen ratt. Man kan säkert styra på något annat sätt.",
   "Barnet: Det känns som en ganska viktig del. Vi köper en ratt.",
-  "Alve: Du har blivit väldigt tråkigt klok sedan du började umgås med Linus."
+  "Alve: Du har blivit väldigt tråkigt klok sedan du började umgås med Linus.",
   "Hos Mira lägger hon fram en liten enkel ratt som passar projektet.",
   "Mira: Till en lådbil?",
   "Barnet: Japp.",
   "Mira: Och Alve ska köra den?",
   "Alve: Japp.",
   "Mira skjuter ratten lite närmare dig.",
-  "Mira: Tvåhundra SysselBux."
+  "Mira: Tvåhundra SysselBux.",
   "Efter köpet tar Alve upp ratten.",
   "Alve: Nu har vi allt.",
   "Mira: Det där är exakt den sortens mening som brukar göra mig nervös.",
   "Alve: Du kommer ändra dig när du ser den.",
-  "Mira: Det är också en mening som gör mig nervös."
+  "Mira: Det är också en mening som gör mig nervös.",
 ],
   stage: 3,
 };
