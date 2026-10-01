@@ -59,6 +59,7 @@ export type SaveStateV1 = {
     solTourLinusSeen?: boolean;
     solChoseToStay?: boolean;
     clinicProgressionBaseline?: number;
+    clinicContinuityBaselineLocked?: boolean;
     clinicCompletionSeen?: boolean;
     recyclingClaimBaseline?: number;
     recyclingClaimBaselineStage?: 0 | 1 | 2 | 3 | 4;
@@ -102,6 +103,7 @@ export function createDefaultSaveState(): SaveStateV1 {
       solTourLinusSeen: false,
       solChoseToStay: false,
       clinicProgressionBaseline: undefined,
+      clinicContinuityBaselineLocked: false,
       clinicCompletionSeen: false,
       recyclingClaimBaseline: undefined,
       recyclingClaimBaselineStage: undefined,
@@ -214,6 +216,7 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       solTourLinusSeen: candidate.worldFlags?.solTourLinusSeen === true,
       solChoseToStay: candidate.worldFlags?.solChoseToStay === true,
       clinicProgressionBaseline: typeof candidate.worldFlags?.clinicProgressionBaseline === "number" && Number.isInteger(candidate.worldFlags.clinicProgressionBaseline) && candidate.worldFlags.clinicProgressionBaseline >= 0 ? candidate.worldFlags.clinicProgressionBaseline : undefined,
+      clinicContinuityBaselineLocked: candidate.worldFlags?.clinicContinuityBaselineLocked === true,
       clinicCompletionSeen: candidate.worldFlags?.clinicCompletionSeen === true,
       recyclingClaimBaseline: typeof candidate.worldFlags?.recyclingClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.recyclingClaimBaseline) && candidate.worldFlags.recyclingClaimBaseline >= 0 ? candidate.worldFlags.recyclingClaimBaseline : undefined,
       recyclingClaimBaselineStage: [0, 1, 2, 3, 4].includes(candidate.worldFlags?.recyclingClaimBaselineStage as number) ? candidate.worldFlags?.recyclingClaimBaselineStage : undefined,
