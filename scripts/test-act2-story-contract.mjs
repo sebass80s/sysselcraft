@@ -83,6 +83,8 @@ const authoredStoryBodies = [
 ];
 
 for (const line of authoredStoryBodies) {
+  assert.notEqual(line.trim(), "Paus.", "editorial pause markers must never render as clickable story cards");
+  assert.equal(/^Låt .*visuellt/i.test(line.trim()), false, "editorial stage directions must never render as player-facing story cards");
   const parsed = parseStoryLine(line, "Testbarn");
   assert.equal(parsed.text.includes("{childName}"), false, `child-name token must never leak into rendered dialogue: ${line}`);
   for (const prefix of STORY_SPEAKER_PREFIXES) {
