@@ -9,12 +9,11 @@ type StoryRunnerProps = {
   onNext: () => void;
   zIndex?: number;
   background?: string;
-  scrollable?: boolean;
   dialogueClassName?: string;
   childName?: string;
 };
 
-export function StoryRunner({ beat, onNext, zIndex, background, scrollable, dialogueClassName, childName }: StoryRunnerProps) {
+export function StoryRunner({ beat, onNext, zIndex, background, dialogueClassName, childName }: StoryRunnerProps) {
   return (
     <StoryMoment
       image={beat.image}
@@ -26,7 +25,6 @@ export function StoryRunner({ beat, onNext, zIndex, background, scrollable, dial
       onNext={onNext}
       zIndex={zIndex}
       background={background}
-      scrollable={scrollable}
       dialogueClassName={dialogueClassName}
     >
       <StoryTranscript lines={beat.lines} childName={childName} />
