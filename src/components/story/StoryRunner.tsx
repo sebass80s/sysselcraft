@@ -17,6 +17,7 @@ export function StoryRunner({ beat, onNext, zIndex, background, scrollable, dial
     <StoryMoment
       image={beat.image}
       imageFit={beat.imageFit}
+      heading={beat.heading}
       speaker={beat.speaker}
       speakerTone={beat.speakerTone}
       nextLabel={beat.nextLabel}
