@@ -1,6 +1,14 @@
 import { Preferences } from "@capacitor/preferences";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
+export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
+
+export type Act2ProjectState = {
+  contributions: number;
+  visibleStage: 0 | 1 | 2 | 3 | 4;
+  consumedBeatIds: string[];
+  complete: boolean;
+};
 
 export type Act2RuntimeState = {
   version: 1;
@@ -10,10 +18,19 @@ export type Act2RuntimeState = {
   bicycleSeen: boolean;
   alveIntroIndex: number;
   alveIntroComplete: boolean;
-  selectedProject: Exclude<Act2Project, "motorboat"> | null;
+  selectedProject: Act2Project | null;
+  projects: Record<Act2Project, Act2ProjectState>;
+  familyFinaleConsumed: boolean;
+  epilogueConsumed: boolean;
+  act2Complete: boolean;
 };
 
 const KEY = "sysselcraft.act2.runtime.v1";
+const PROJECTS: Act2Project[] = ["cabin", "dock", "boathouse", "motorboat"];
+
+function emptyProject(): Act2ProjectState {
+  return { contributions: 0, visibleStage: 0, consumedBeatIds: [], complete: false };
+}
 
 export function createDefaultAct2RuntimeState(): Act2RuntimeState {
   return {
@@ -25,15 +42,74 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     alveIntroIndex: 0,
     alveIntroComplete: false,
     selectedProject: null,
+    projects: {
+      cabin: emptyProject(),
+      dock: emptyProject(),
+      boathouse: emptyProject(),
+      motorboat: emptyProject(),
+    },
+    familyFinaleConsumed: false,
+    epilogueConsumed: false,
+    act2Complete: false,
   };
+}
+
+function normalizeBeatIds(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return [...new Set(value.filter((id): id is string => typeof id === "string" && id.length > 0))];
+}
+
+function normalizeProject(value: unknown): Act2ProjectState {
+  const candidate = value && typeof value === "object" ? value as Partial<Act2ProjectState> : {};
+  const contributions = Number.isInteger(candidate.contributions)
+    ? Math.max(0, Math.min(16, candidate.contributions as number))
+    : 0;
+  const visibleStage = [0, 1, 2, 3, 4].includes(candidate.visibleStage as number)
+    ? candidate.visibleStage as 0 | 1 | 2 | 3 | 4
+    : 0;
+  return {
+    contributions,
+    visibleStage,
+    consumedBeatIds: normalizeBeatIds(candidate.consumedBeatIds),
+    complete: contributions >= 16 || candidate.complete === true,
+  };
+}
+
+export function prerequisiteCompletionCount(state: Act2RuntimeState) {
+  return (["cabin", "dock", "boathouse"] as Act2PrerequisiteProject[])
+    .filter((project) => state.projects[project].complete).length;
+}
+
+export function isMotorboatUnlocked(state: Act2RuntimeState) {
+  return prerequisiteCompletionCount(state) === 3;
+}
+
+export function canSelectProject(state: Act2RuntimeState, project: Act2Project) {
+  if (state.projects[project].complete) return false;
+  if (project === "motorboat") return isMotorboatUnlocked(state);
+  return true;
 }
 
 export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   const defaults = createDefaultAct2RuntimeState();
   if (!value || typeof value !== "object") return defaults;
-  const candidate = value as Partial<Act2RuntimeState>;
-  const project = candidate.selectedProject;
-  return {
+  const candidate = value as Partial<Act2RuntimeState> & {
+    selectedProject?: unknown;
+    projects?: Partial<Record<Act2Project, unknown>>;
+  };
+
+  const projects = {
+    cabin: normalizeProject(candidate.projects?.cabin),
+    dock: normalizeProject(candidate.projects?.dock),
+    boathouse: normalizeProject(candidate.projects?.boathouse),
+    motorboat: normalizeProject(candidate.projects?.motorboat),
+  };
+
+  const selected = PROJECTS.includes(candidate.selectedProject as Act2Project)
+    ? candidate.selectedProject as Act2Project
+    : null;
+
+  const normalized: Act2RuntimeState = {
     version: 1,
     entered: candidate.entered === true,
     openingIndex: Number.isInteger(candidate.openingIndex)
@@ -45,10 +121,61 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       ? Math.max(0, candidate.alveIntroIndex as number)
       : 0,
     alveIntroComplete: candidate.alveIntroComplete === true,
-    selectedProject: project === "cabin" || project === "dock" || project === "boathouse"
-      ? project
-      : null,
+    selectedProject: selected,
+    projects,
+    familyFinaleConsumed: candidate.familyFinaleConsumed === true,
+    epilogueConsumed: candidate.epilogueConsumed === true,
+    act2Complete: candidate.act2Complete === true,
   };
+
+  if (normalized.selectedProject && !canSelectProject(normalized, normalized.selectedProject)) {
+    normalized.selectedProject = null;
+  }
+  if (normalized.projects.motorboat.complete && !isMotorboatUnlocked(normalized)) {
+    normalized.projects.motorboat = emptyProject();
+  }
+  if (normalized.familyFinaleConsumed && !normalized.projects.motorboat.complete) {
+    normalized.familyFinaleConsumed = false;
+  }
+  if (normalized.epilogueConsumed && !normalized.familyFinaleConsumed) {
+    normalized.epilogueConsumed = false;
+  }
+  normalized.act2Complete = normalized.epilogueConsumed;
+
+  return normalized;
+}
+
+export function withSelectedProject(state: Act2RuntimeState, project: Act2Project): Act2RuntimeState {
+  const normalized = normalizeAct2RuntimeState(state);
+  if (!canSelectProject(normalized, project)) return normalized;
+  return { ...normalized, selectedProject: project };
+}
+
+export function withPresentedContribution(
+  state: Act2RuntimeState,
+  project: Act2Project,
+  beatId: string,
+  visibleStage: 0 | 1 | 2 | 3 | 4,
+): Act2RuntimeState {
+  const normalized = normalizeAct2RuntimeState(state);
+  if (!beatId || normalized.projects[project].complete) return normalized;
+  if (project === "motorboat" && !isMotorboatUnlocked(normalized)) return normalized;
+  const current = normalized.projects[project];
+  if (current.consumedBeatIds.includes(beatId)) return normalized;
+
+  const contributions = Math.min(16, current.contributions + 1);
+  const nextProject: Act2ProjectState = {
+    contributions,
+    visibleStage: Math.max(current.visibleStage, visibleStage) as 0 | 1 | 2 | 3 | 4,
+    consumedBeatIds: [...current.consumedBeatIds, beatId],
+    complete: contributions >= 16,
+  };
+
+  return normalizeAct2RuntimeState({
+    ...normalized,
+    selectedProject: nextProject.complete ? null : project,
+    projects: { ...normalized.projects, [project]: nextProject },
+  });
 }
 
 export async function loadAct2RuntimeState(): Promise<Act2RuntimeState> {
