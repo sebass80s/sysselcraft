@@ -574,7 +574,7 @@ Established Act 1 residents must support authored lake presence as restoration a
 
 Do not implement these flags by casually mutating SaveStateV1 or inventing backend ownership. Persistence/authority must be designed against STATE_OWNERSHIP.md and existing Quest V2 progression before implementation. This section locks product behavior, not a premature storage schema.
 
-The isolated /act2-test lake acceptance route remains separate from Act 1 progression until Kalle explicitly asks to connect the area.
+`/act2-test` remains a non-authoritative visual/dialogue acceptance harness. Production Act 2 is now connected through `/act2`; visiting the test route must never advance or own production save/progression state.
 
 
 ### Act 2 cross-area progression consumers — LOCKED PRODUCT CONTRACT 2026-09-28
@@ -592,7 +592,7 @@ Pacing requirement: four project art stages must not be interpreted as four ques
 
 The existing `/act2-test` route is now doing double duty as the accepted visual lake-map harness and an isolated Story Moment sequencing lab. It currently includes the Alve intro, Båthuset and Stugan content. Stugan integration landed in `3155894ebc62edb74b117c479b0676133b638c4a`; Kalle reported CI green and completed browser visual acceptance.
 
-This checkpoint does **not** change the production boundary above. `/act2-test` must remain detached from Adam's authoritative production save, Quest V2 progression and Act 1→Act 2 transition until an explicit production-integration slice is designed and requested. Do not infer persistence from the test controls. The test route may freely sequence authored content and stage swaps for acceptance without establishing save semantics.
+This paragraph is historical context from the isolated-lab phase. Production integration has since been implemented in `/act2`. The invariant that remains current is narrower: `/act2-test` must stay detached from authoritative production save and Quest V2 consumption, and may freely sequence authored content/stage swaps only for acceptance.
 
 Canonical Stugan test assets live under `public/assets/village/story-moments/act2/cabin/`. The accepted runtime mapping uses nine images across sixteen contributions, so implementation must preserve the rule that **contribution count, Story Moment count and four visual construction stages are three different layers**. Do not collapse them into one-to-one progression.
 
@@ -604,7 +604,7 @@ The implementation sequence is canonical in `docs/ACT2_IMPLEMENTATION_PLAN.md`.
 Act 2 is a discrete outdoor area, consistent with the locked world-expansion architecture. Do not turn the village Phaser scene into one mega-map. Act 1 and Act 2 share child identity, backend quest/economy authority and global story state, while each area owns its own background, navigation geometry, collision, spawn/exits and local presentation.
 
 ### State boundary
-Production Act 2 requires one explicit persisted state family rather than scattered React booleans. At minimum it must represent opening/Alve intro completion, current project, per-project 0–16 contribution state, per-project 0–4 visible stage, consumed Story Beat IDs, 3/3 prerequisite completion, motorboat lock/completion, finale/epilogue consumption and Act 2 completion.
+Production Act 2 now uses the explicit persisted `Act2RuntimeState` family rather than scattered React booleans. It represents opening/Alve intro completion, current project, per-project 0–16 contribution state, per-project 0–4 visible stage, consumed Story Beat IDs, prerequisite completion derived from project state, motorboat lock/completion, finale/epilogue consumption and Act 2 completion.
 
 Derive 3/3 from canonical project completion state rather than storing a second independently mutable counter.
 
@@ -623,9 +623,9 @@ Implement complete vertical tracks rather than all 64 beats horizontally:
 This order is for engineering only. Player order among the first three remains free and all six completion orders must be accepted before release.
 
 ### Production gate
-The first production milestone is deliberately small:
+The original first production milestone was:
 **Act 1 transition → OPEN-001…005 → bicycle → Alve → project chooser → selected project begins and survives restart.**
-Only after this runtime/state spine is proven should the 16-beat project tracks be connected.
+That runtime/state spine is now implemented. Current work may extend/refine the connected 16-beat project tracks without reintroducing a parallel state path.
 
 ### Test route
 `/act2-test` is a visual/dialogue oracle and acceptance harness. Production state must never depend on visiting the test route.
