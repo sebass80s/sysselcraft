@@ -58,7 +58,7 @@ assert.match(act2Page, /<Act2Runtime productionEnabled=\{ACT2_PRODUCTION_ENABLED
 assert.doesNotMatch(debugPage, /StoryMoment|StoryTranscript|project-choice|jumpToProject/, "Debug route must not carry a parallel story renderer");
 assert.match(act2Runtime, /if \(debug\) \{[\s\S]*loadSaveState\(\)/, "Shared runtime debug mode must load the saved child identity");
 assert.match(act2Runtime, /if \(!debug\) await saveAct2RuntimeState\(next\)/, "Debug mode must not persist Act 2 runtime state");
-assert.match(act2Runtime, /<StoryTranscript lines=\{activeContributionLines\} childName=\{childName\} \/>/, "Act 2 contribution cards must use shared transcript parsing for grouped speakers");
+assert.match(act2Runtime, /parseStoryLine\(activeContributionLine, childName\)/, "Act 2 contribution cards must parse speaker and child name centrally");
 assert.match(act2Runtime, /parseStoryLine\(activeFinaleLine, childName\)/, "Act 2 finale cards must parse speaker and child name centrally");
 assert.match(act2Runtime, /parseStoryLine\(activeCompletionLine, childName\)/, "Act 2 completion cards must parse speaker and child name centrally");
 assert.match(act2Runtime, /meeting-alve\/pick\.png/, "Canonical production project chooser must live in the shared runtime");
