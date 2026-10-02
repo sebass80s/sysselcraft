@@ -176,13 +176,9 @@ export async function createAct2LakeGame(
       }).setOrigin(0.5);
       this.alveIdlePrompt = this.add.container(0, 0, [idlePromptBg, this.alveIdlePromptText]).setVisible(false);
       this.alvePlaceholder = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt, this.alveIdlePrompt])
-        .setSize(120, 335)
-        .setInteractive(
-          new Phaser.Geom.Rectangle(-60, -220, 120, 335),
-          Phaser.Geom.Rectangle.Contains,
-        )
         .setVisible(false);
-      this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
+
+      const handleAlvePointerDown = (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
         event.stopPropagation();
         if (!this.player || !this.alvePlaceholder) return;
         if (!requestedAlveTurnInAvailable) {
@@ -202,7 +198,19 @@ export async function createAct2LakeGame(
           x: this.alvePlaceholder.x,
           y: Math.min(ACT2_WORLD.height - 8, this.alvePlaceholder.y + 58),
         };
-      });
+      };
+
+      alveSprite
+        .setInteractive({ useHandCursor: true })
+        .on("pointerdown", handleAlvePointerDown);
+      this.alveTurnInMarker
+        .setSize(48, 48)
+        .setInteractive({ useHandCursor: true })
+        .on("pointerdown", handleAlvePointerDown);
+      this.alveNearbyPrompt
+        .setSize(108, 40)
+        .setInteractive({ useHandCursor: true })
+        .on("pointerdown", handleAlvePointerDown);
       this.positionAlve(requestedActiveProject);
 
       camera.centerOn(this.player.x, this.player.y);
