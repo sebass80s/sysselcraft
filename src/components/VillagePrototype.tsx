@@ -1323,9 +1323,10 @@ export default function VillagePrototype() {
       pendingPurchaseStory: null,
       purchaseStoryLineIndex: 0,
     });
+    const resumeProject = act2PurchaseStory;
     setAct2PurchaseStory(null);
     setAct2PurchaseStoryIndex(0);
-    router.push("/act2");
+    router.push(resumeProject ? `/act2?resume=${resumeProject}` : "/act2");
   }
 
   if (loadError) return <section className="parent-page"><div className="parent-tool-card" role="alert">
