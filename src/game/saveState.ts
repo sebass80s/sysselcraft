@@ -61,6 +61,9 @@ export type SaveStateV1 = {
     clinicProgressionBaseline?: number;
     clinicContinuityBaselineLocked?: boolean;
     clinicCompletionSeen?: boolean;
+    act1ChapterFinaleSeen?: boolean;
+    act1ChapterFinaleIndex?: number;
+    act1EndCardSeen?: boolean;
     recyclingClaimBaseline?: number;
     recyclingClaimBaselineStage?: 0 | 1 | 2 | 3 | 4;
     bakeryClaimBaseline?: number;
@@ -105,6 +108,9 @@ export function createDefaultSaveState(): SaveStateV1 {
       clinicProgressionBaseline: undefined,
       clinicContinuityBaselineLocked: false,
       clinicCompletionSeen: false,
+      act1ChapterFinaleSeen: false,
+      act1ChapterFinaleIndex: undefined,
+      act1EndCardSeen: false,
       recyclingClaimBaseline: undefined,
       recyclingClaimBaselineStage: undefined,
       bakeryClaimBaseline: undefined,
@@ -182,6 +188,27 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
     reachedDogReveal ||
     (typeof candidate.dogVisible === "boolean" ? candidate.dogVisible : defaults.dogVisible);
 
+  const clinicCompletionSeen = candidate.worldFlags?.clinicCompletionSeen === true;
+  const hasAct1ChapterFinaleState =
+    typeof candidate.worldFlags?.act1ChapterFinaleSeen === "boolean"
+    || typeof candidate.worldFlags?.act1EndCardSeen === "boolean"
+    || (typeof candidate.worldFlags?.act1ChapterFinaleIndex === "number"
+      && Number.isInteger(candidate.worldFlags.act1ChapterFinaleIndex));
+
+  // Saves that completed Clinic before the chapter-finale feature existed must
+  // not replay a brand-new Act 1 ending on boot.
+  const legacyAct1ChapterAlreadyAcknowledged = clinicCompletionSeen && !hasAct1ChapterFinaleState;
+  const act1ChapterFinaleSeen =
+    legacyAct1ChapterAlreadyAcknowledged || candidate.worldFlags?.act1ChapterFinaleSeen === true;
+  const act1EndCardSeen =
+    legacyAct1ChapterAlreadyAcknowledged || candidate.worldFlags?.act1EndCardSeen === true;
+  const act1ChapterFinaleIndex =
+    !act1ChapterFinaleSeen
+      && typeof candidate.worldFlags?.act1ChapterFinaleIndex === "number"
+      && Number.isInteger(candidate.worldFlags.act1ChapterFinaleIndex)
+      ? Math.max(0, Math.min(200, candidate.worldFlags.act1ChapterFinaleIndex))
+      : undefined;
+
   return {
     version: 1,
     progression,
@@ -217,7 +244,10 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
       solChoseToStay: candidate.worldFlags?.solChoseToStay === true,
       clinicProgressionBaseline: typeof candidate.worldFlags?.clinicProgressionBaseline === "number" && Number.isInteger(candidate.worldFlags.clinicProgressionBaseline) && candidate.worldFlags.clinicProgressionBaseline >= 0 ? candidate.worldFlags.clinicProgressionBaseline : undefined,
       clinicContinuityBaselineLocked: candidate.worldFlags?.clinicContinuityBaselineLocked === true,
-      clinicCompletionSeen: candidate.worldFlags?.clinicCompletionSeen === true,
+      clinicCompletionSeen,
+      act1ChapterFinaleSeen,
+      act1ChapterFinaleIndex,
+      act1EndCardSeen,
       recyclingClaimBaseline: typeof candidate.worldFlags?.recyclingClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.recyclingClaimBaseline) && candidate.worldFlags.recyclingClaimBaseline >= 0 ? candidate.worldFlags.recyclingClaimBaseline : undefined,
       recyclingClaimBaselineStage: [0, 1, 2, 3, 4].includes(candidate.worldFlags?.recyclingClaimBaselineStage as number) ? candidate.worldFlags?.recyclingClaimBaselineStage : undefined,
       bakeryClaimBaseline: typeof candidate.worldFlags?.bakeryClaimBaseline === "number" && Number.isInteger(candidate.worldFlags.bakeryClaimBaseline) && candidate.worldFlags.bakeryClaimBaseline >= 0 ? candidate.worldFlags.bakeryClaimBaseline : undefined,
