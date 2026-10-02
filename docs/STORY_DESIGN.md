@@ -5751,6 +5751,53 @@ Preferred final thematic exchange:
 
 This is the approved Act 3 emotional core. Preserve it when the detailed manuscript is authored.
 
+### Alve's role in Act 3 — LOCKED 2026-10-02
+
+Alve is no longer the emotional protagonist in Act 3. **Nova carries the act. Alve is the sidekick, friend and emotional counterpoint.**
+
+Core trio:
+- **Barnet** is the anchor and the person Nova can speak most openly with.
+- **Nova** drives the Act 3 projects and emotional conflict. Her need to make everything perfect comes from the belief that she may have caused the divorce and might be able to repair the family.
+- **Alve** is the sidekick and catalyst: impulsive, funny, practical and still recognizably himself, but changed by Act 2.
+
+Alve must not become a miniature therapist or steal Nova's story. His value is that he recognizes a pattern in her: trying to rebuild the past until it becomes what it used to be. His experience with the summer place and his mother gives him empathy without making the situations identical.
+
+Use brief moments where Alve notices things before Barnet does, then backs away instead of explaining them. Example tone:
+
+> **Nova:** “Om allt blir exakt som det var kanske de kommer ihåg hur bra det var.”  
+> **Nova:** “Vad?”  
+> **Alve:** “Inget.”  
+> **Nova:** “Du gör den där grejen.”  
+> **Alve:** “Vilken grej?”  
+> **Nova:** “När du tänker jättemycket och låtsas att du inte gör det.”  
+> **Alve:** “Jag tänkte bara att… ibland blir det inte som förr.”
+
+He may also react bluntly when Nova voices self-blame:
+
+> **Nova:** “Det var samma dag jag var skitjobbig.”  
+> **Alve:** “Okej?”  
+> **Nova:** “Så…”  
+> **Alve:** “Nej.”  
+> **Nova:** “Vadå nej?”  
+> **Alve:** “Bara nej. Det där räknas inte.”
+
+Near the emotional climax, Alve may get **one important line**, but Nova keeps the final realization:
+
+> **Nova:** “Jag trodde att om det var mitt fel så kunde jag fixa det.”  
+> **Alve:** “Jag trodde också att man kunde fixa allt.”  
+> **Alve:** “Det kan man inte.”  
+> **Barnet:** “Nej.”  
+> **Alve:** “Men man kan fixa ganska mycket annat.”
+
+Nova then owns the resolution:
+
+> **Nova:** “Det var deras grej.”  
+> **Barnet:** “Ja.”  
+> **Nova:** “Inte min.”
+
+Series continuity purpose: Act 2 showed Alve learning to stop rebuilding backward. Act 3 should show that growth indirectly by letting him give a little of that understanding forward, while remaining a child, a friend and a sidekick rather than taking over Nova's arc.
+
+
 
 The child initially believes, explicitly or implicitly, that if the right place, tradition or shared moment can be rebuilt well enough, the family might become what it was before. The restoration/progression structure should therefore deliberately create tension with the player's learned SysselCraft logic: if broken things can be repaired, perhaps the family can too.
 
