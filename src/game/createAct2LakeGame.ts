@@ -27,6 +27,15 @@ export type Act2LakeGameOptions = {
 const PROJECTS: Act2RestorationProject[] = ["cabin", "boathouse", "dock", "motorboat"];
 const VIEW_HEIGHT = 640;
 
+const ALVE_IDLE_WORLD_PROMPTS = [
+  "Gör några uppdrag så kommer vi vidare med bygget!",
+  "Vi behöver några uppdrag till innan vi kan fortsätta.",
+  "Kör några uppdrag, så bygger vi vidare sen!",
+  "Lite fler uppdrag först. Sen fortsätter vi!",
+  "Vi är inte riktigt redo för nästa steg än. Gör några uppdrag!",
+  "Fixar du några uppdrag till så tar vi nästa byggsteg sen.",
+] as const;
+
 export async function createAct2LakeGame(
   parent: HTMLElement,
   initialStage: Act2VisualStage = 1,
@@ -53,6 +62,10 @@ export async function createAct2LakeGame(
     private alvePlaceholder?: GameObjects.Container;
     private alveTurnInMarker?: GameObjects.Container;
     private alveNearbyPrompt?: GameObjects.Container;
+    private alveIdlePrompt?: GameObjects.Container;
+    private alveIdlePromptText?: GameObjects.Text;
+    private alveIdlePromptHide?: Phaser.Time.TimerEvent;
+    private lastAlveIdlePromptIndex = -1;
     private moveTarget: { x: number; y: number } | null = null;
     private cursors?: Types.Input.Keyboard.CursorKeys;
     private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
@@ -151,7 +164,18 @@ export async function createAct2LakeGame(
         color: "#ffffff",
       }).setOrigin(0.5);
       this.alveNearbyPrompt = this.add.container(0, 0, [nearbyBg, nearbyText]).setVisible(false);
-      this.alvePlaceholder = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt])
+      const idlePromptBg = this.add.rectangle(0, -198, 310, 58, 0x1e2f22, 0.94)
+        .setStrokeStyle(2, 0xf4d780, 0.9);
+      this.alveIdlePromptText = this.add.text(0, -198, "", {
+        fontFamily: "Arial, sans-serif",
+        fontSize: "15px",
+        fontStyle: "bold",
+        color: "#ffffff",
+        align: "center",
+        wordWrap: { width: 280 },
+      }).setOrigin(0.5);
+      this.alveIdlePrompt = this.add.container(0, 0, [idlePromptBg, this.alveIdlePromptText]).setVisible(false);
+      this.alvePlaceholder = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt, this.alveIdlePrompt])
         .setSize(120, 335)
         .setInteractive(
           new Phaser.Geom.Rectangle(-60, -220, 120, 335),
@@ -160,7 +184,13 @@ export async function createAct2LakeGame(
         .setVisible(false);
       this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
         event.stopPropagation();
-        if (!this.player || !this.alvePlaceholder || !requestedAlveTurnInAvailable) return;
+        if (!this.player || !this.alvePlaceholder) return;
+        if (!requestedAlveTurnInAvailable) {
+          this.moveTarget = null;
+          this.facePlayerTowardAlve();
+          this.showAlveIdleWorldPrompt();
+          return;
+        }
         const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.alvePlaceholder.x, this.alvePlaceholder.y);
         if (distance <= 135) {
           this.moveTarget = null;
@@ -240,6 +270,22 @@ export async function createAct2LakeGame(
         if (this.isWalkable(this.dog.x, nextDogY)) this.dog.y = nextDogY;
         this.dog.setDepth(1000 + Math.round(this.dog.y));
       }
+    }
+
+    private showAlveIdleWorldPrompt() {
+      if (!this.alveIdlePrompt || !this.alveIdlePromptText) return;
+      let index = Math.floor(Math.random() * ALVE_IDLE_WORLD_PROMPTS.length);
+      if (ALVE_IDLE_WORLD_PROMPTS.length > 1 && index === this.lastAlveIdlePromptIndex) {
+        index = (index + 1) % ALVE_IDLE_WORLD_PROMPTS.length;
+      }
+      this.lastAlveIdlePromptIndex = index;
+      this.alveIdlePromptText.setText(ALVE_IDLE_WORLD_PROMPTS[index]);
+      this.alveIdlePrompt.setVisible(true);
+      this.alveIdlePromptHide?.remove(false);
+      this.alveIdlePromptHide = this.time.delayedCall(3200, () => {
+        this.alveIdlePrompt?.setVisible(false);
+        this.alveIdlePromptHide = undefined;
+      });
     }
 
     private updateAlveInteractionFeedback() {
@@ -344,6 +390,7 @@ export async function createAct2LakeGame(
       requestedAlveTurnInAvailable = available;
       this.alveTurnInMarker?.setVisible(available);
       if (!available) this.alveNearbyPrompt?.setVisible(false);
+      if (available) this.alveIdlePrompt?.setVisible(false);
     }
 
     setCabinRevisitAvailable(available: boolean) {
