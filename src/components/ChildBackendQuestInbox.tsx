@@ -2,9 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { Capacitor } from "@capacitor/core";
-import { requestChildPairingOpen } from "@/game/childPairingBridge";
 import { getBackendAuthState, subscribeBackendAuth } from "@/backend/auth";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "@/backend/childDeviceBinding";
 import {
@@ -42,20 +39,15 @@ const BACKGROUND_REFRESH_MS = 30_000;
 
 export default function ChildBackendQuestInbox() {
   const [bindingVersion, setBindingVersion] = useState(0);
-  const router = useRouter();
   useEffect(() => {
     const reloadBinding = () => setBindingVersion((version) => version + 1);
     window.addEventListener(CHILD_BINDING_CHANGED, reloadBinding);
     return () => window.removeEventListener(CHILD_BINDING_CHANGED, reloadBinding);
   }, []);
-  const openPairing = () => {
-    if (Capacitor.isNativePlatform()) requestChildPairingOpen();
-    else router.push("/pair/");
-  };
-  return <BoundChildQuestInbox key={bindingVersion} onPair={openPairing} />;
+  return <BoundChildQuestInbox key={bindingVersion} />;
 }
 
-function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
+function BoundChildQuestInbox() {
   const [childId, setChildId] = useState<string | null>(null);
   const [pairingChecked, setPairingChecked] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
@@ -628,7 +620,6 @@ function BoundChildQuestInbox({ onPair }: { onPair: () => void }) {
             <button className="secondary-button compact" disabled={busy} onClick={refreshNow}>
               ↻ Uppdatera
             </button>
-            <button type="button" onClick={onPair}>Koppla om</button>
           </div>
         </section>
       )}
