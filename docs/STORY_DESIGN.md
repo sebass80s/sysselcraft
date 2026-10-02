@@ -5752,6 +5752,25 @@ The line should land after the player has helped Nova make the day work. Its fun
 
 Do not undercut this moment with an immediate joke or a long adult explanation. Let the contradiction hurt: the family day can be real, warm and successful while the divorce is still real too.
 
+**Final-beat structure lock:** this family-day sequence belongs at the end of Act 3, immediately before Nova's emotional resolution. The player should be allowed to believe for as long as possible that Nova's plan may actually work and that the story might end in a romantic reunion.
+
+The staging should support that hope without making a false explicit promise: the parents cooperate, laugh, remember things together and genuinely enjoy the day. The scene may visually invite the player to expect a kiss or reconciliation.
+
+The break must arrive through ordinary logistics, not melodrama. Preferred tone:
+
+> **Mamman:** “Det här var jättetrevligt.”  
+> **Mamman:** “Men nu måste Nova och jag åka hem.”  
+> **Mamman:** “Vi ses vid överlämningen nästa vecka.”
+
+No kiss. No reunion. No villainous rejection. The parents remain warm and functional with each other, but the separation remains real.
+
+Then preserve Nova's hinge line:
+
+> **Nova:** “Men ni hade ju kul.”
+
+This should be the moment where both Nova and the player understand that a good day together was never proof that the marriage would return. The family-day plan succeeds; the reunion fantasy does not.
+
+
 
 Visual/story contrast across acts:
 - **Act 1:** rural village, open space, a place waiting for life to return.
