@@ -592,3 +592,18 @@ The audit closed several forms of drift that a future Nova must not reintroduce:
 - working-branch Vercel Git deploy is paused; GitHub Actions is the routine verification surface.
 
 Do not infer physical acceptance from CI. Browser/iPhone acceptance remains required for shoreline feel, navigation/camera, purchase return journeys, restart boundaries and the final Motorbåten/family sequence.
+
+## 2026-10-02 — Full Act 2 flow verified
+
+GitHub Actions **#1475 SUCCESS** at `c6e9a20f0a5cb8b2c7ade56090ab24c449c69445`.
+
+The automated full-flow contract now traverses Act 2 from the production entry baseline through opening, bicycle, Alve intro, all four projects, all three Mira story purchases, motorboat naming, exactly 64 authoritative contributions, the five-beat family/veranda finale and the persisted black chapter-end card.
+
+Two transition/recovery bugs were found and fixed during the audit:
+- the disabled production route used to establish `entered/backendClaimBaseline` before showing the shipping lock, which could create latent pre-release backlog;
+- if the first backend read failed, later polling recovered progression but not the missing baseline, leaving Act 2 unable to advance.
+
+Old pre-release baseline residue is now reconciled away at the first legitimate production entry.
+
+Production remains intentionally locked with `ACT2_PRODUCTION_ENABLED = false`; physical browser/iPhone acceptance is still required before unlocking.
+
