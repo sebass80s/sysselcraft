@@ -44,6 +44,16 @@ assert.doesNotMatch(speakerPlacement, /translateY\(/, "nameplates must not depen
 assert.match(css, /\.dialogue-speaker \{[^}]*max-width:\s*100%[^}]*white-space:\s*nowrap[^}]*text-overflow:\s*ellipsis/s,
   "nameplates must remain bounded for long child names");
 
+assert.match(
+  css,
+  /\.dialogue-card\.story-moment-dialogue\.act2-dialogue-card \{[^}]*left:\s*max\(1rem, env\(safe-area-inset-left\)\)[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*max-height:[^}]*overflow-y:\s*auto/s,
+  "Act 2 story cards must honor side safe areas and retain a scroll recovery path",
+);
+assert.match(css, /\.act2-project-status \{[^}]*pointer-events:\s*none/s,
+  "Act 2 project status must not steal gameplay taps");
+assert.match(css, /\.act2-sync-status \{[^}]*safe-area-inset-right[^}]*pointer-events:\s*none/s,
+  "Act 2 sync status must sit in the safe HUD area without stealing taps");
+
 assert.ok(
   dialogueCard.indexOf("dialogue-speaker") < dialogueCard.indexOf("shared-story-body"),
   "DialogueCard must render its nameplate before dialogue body content",
