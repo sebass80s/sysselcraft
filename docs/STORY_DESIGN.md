@@ -5767,6 +5767,11 @@ The village residents should help Nova without taking over her story. Their supp
 
 Act 3 should therefore feel geographically broader than Act 2: **city story in front, village support network behind it, lake route connecting them.**
 
+**Travel lock:** Barnet, Alve and Nova use the restored motorboat as their normal physical connection between the Act 3 city and the Act 1 village. When a quest chain needs Mira, Henning, Linus or Sol, the fiction should usually be that the trio travels back across the lake by boat, gets what they need or asks for help, and then returns to the city. This makes the motorboat a continuing gameplay/story asset rather than a one-off Act 2 finale prop.
+
+The lake crossing should feel like part of the world's geography, not a menu teleport. It can be mechanically compressed when needed for pacing, but the fiction remains that the trio actually travels between the two places.
+
+
 
 ### Act 3 direction — divorce / changing family
 
