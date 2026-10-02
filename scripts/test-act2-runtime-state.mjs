@@ -639,18 +639,13 @@ assert.ok(
 );
 assert.ok(page.includes("state.contributionLineIndex"), "contribution Story Moments must render from persisted line state");
 
-assert.match(
-  motorboatStorySource,
-  /"Alve: Mamma brukade alltid säga åt mig att sitta ner\."/,
-  "motorboat arc must seed Alve's mother before the family payoff",
-);
-for (const narrationLeak of [
-  "Den här gången svarar Barnet inte med ett skämt.",
-  "När ni går igenom båten upptäcker Barnet en detalj på sidan.",
-  "Alve vänder sig direkt mot Barnet.",
-]) {
-  assert.equal(motorboatStorySource.includes(narrationLeak), false, `motorboat narration must use second person instead of Barnet: ${narrationLeak}`);
-}
+assert.ok(page.includes("previousOpening()"), "Act 2 opening must support Föregående navigation");
+assert.ok(page.includes("previousAlve()"), "Alve intro must support Föregående navigation");
+assert.ok(page.includes("previousFinaleStory()"), "Act 2 finale must support Föregående navigation");
+assert.ok(page.includes("previousCompletionReaction()"), "completion reactions must support Föregående navigation");
+assert.ok(page.includes("previousCabinRevisit()"), "cabin revisit must support Föregående navigation");
+assert.ok(page.includes("previousContributionStory()"), "project contribution beats must support Föregående navigation");
+
 assert.ok(page.includes("state.completionLineIndex"), "completion reactions must render from persisted line state");
 assert.ok(page.includes("state.finaleLineIndex"), "finale beats must render from persisted line state");
 
@@ -758,6 +753,18 @@ assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body.some((line) => /\b(?:150|200) 
 
 const cabinStorySource = fs.readFileSync(new URL("../src/game/act2CabinStory.ts", import.meta.url), "utf8");
 const motorboatStorySource = fs.readFileSync(new URL("../src/game/act2MotorboatStory.ts", import.meta.url), "utf8");
+assert.match(
+  motorboatStorySource,
+  /"Alve: Mamma brukade alltid säga åt mig att sitta ner\."/,
+  "motorboat arc must seed Alve's mother before the family payoff",
+);
+for (const narrationLeak of [
+  "Den här gången svarar Barnet inte med ett skämt.",
+  "När ni går igenom båten upptäcker Barnet en detalj på sidan.",
+  "Alve vänder sig direkt mot Barnet.",
+]) {
+  assert.equal(motorboatStorySource.includes(narrationLeak), false, `motorboat narration must use second person instead of Barnet: ${narrationLeak}`);
+}
 assert.ok(!cabinStorySource.includes("## Motorbåten restoration arc"), "runtime story sources must not leak design-document prose");
 assert.ok(!cabinStorySource.includes("Locked completion beat:"), "runtime story sources must stop at authored child-facing content");
 assert.ok(!motorboatStorySource.includes("wallet-loopen"), "runtime story sources must not expose backend implementation language");
