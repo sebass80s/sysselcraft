@@ -97,6 +97,14 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      // Shipping lock must be a hard side-effect boundary. Merely visiting the
+      // locked production route must never establish Act 2 entry/baseline state,
+      // otherwise quests completed before release can become latent Act 2 backlog.
+      if (!debug && !productionEnabled) {
+        setReady(true);
+        return;
+      }
+
       if (debug) {
         const act1 = await loadSaveState();
         if (cancelled) return;
@@ -151,7 +159,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       setReady(true);
     })();
     return () => { cancelled = true; };
-  }, [debug]);
+  }, [debug, productionEnabled]);
 
   useEffect(() => {
     if (!ready || !state.openingComplete || !hostRef.current) return;
