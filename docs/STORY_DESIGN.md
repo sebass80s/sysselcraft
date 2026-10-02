@@ -5818,6 +5818,20 @@ Suggested tone:
 >
 > Nova tittar på Barnet.
 >
+> **Alve:** “Det stod typ still där ute innan han kom.”  
+> **Nova:** “Var?”  
+> **Alve:** “Vid sjön. Stugan. Allt.”  
+> **Alve:** “Sen kom han genom skogen den där gången och…”  
+>
+> Alve rycker lite på axlarna.
+>
+> **Alve:** “Sen började saker hända.”  
+> **Nova:** “För att han fixade allt?”  
+> **Alve:** “Nä.”  
+> **Alve:** “Men jag hade nog fortfarande stått där och slagit snett med hammaren om han inte dykt upp.”  
+>
+> Nova tittar på Barnet igen.
+>
 > **Alve:** “Han är rätt jobbig ibland.”  
 > **Barnet:** “Tack.”  
 > **Alve:** “Men han ger sig inte.”  
