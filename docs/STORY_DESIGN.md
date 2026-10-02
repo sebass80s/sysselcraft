@@ -5725,13 +5725,13 @@ The parents **do not reunite**. This is a hard story rule.
 
 **Approved emotional core — 2026-10-02**
 
-The Act 3 protagonist may be open about believing the divorce was their fault. This does not need to be hidden as a late reveal.
+The Act 3 protagonist is **Nova**, a girl who joins Barnet and Alve as the core Act 3 trio. Nova may be open about believing the divorce was her fault. This does not need to be hidden as a late reveal.
 
-The key childhood logic is concrete: the separation announcement happened on the same day the child had been unusually difficult, angry or defiant. The child therefore connected the events and concluded that their behavior caused the family to break apart.
+The key childhood logic is concrete: the separation announcement happened on the same day Nova had been unusually difficult, angry or defiant. The child therefore connected the events and concluded that their behavior caused the family to break apart.
 
 That mistaken causal belief drives the act:
 - if being “bad” caused the separation, being perfect might undo it;
-- the child becomes highly invested in doing everything right;
+- Nova becomes highly invested in doing everything right;
 - restoration work and the planned shared family day become attempts to repair the parents' relationship;
 - mistakes feel disproportionately threatening because they seem capable of ruining the family again.
 
@@ -5741,7 +5741,7 @@ A canonical emotional formulation for the later story is:
 > **Barnet:** “Och nu?”  
 > **Nilo:** “Nu tror jag bara att vuxna gör saker som barn inte kan styra.”
 
-The end-state must not be that the child understands every adult reason for the divorce. The important realization is narrower and more age-appropriate: the divorce was beyond the child's control and was never caused by one bad day.
+The end-state must not be that Nova understands every adult reason for the divorce. The important realization is narrower and more age-appropriate: the divorce was beyond Nova's control and was never caused by one bad day.
 
 Preferred final thematic exchange:
 
@@ -5767,7 +5767,7 @@ Preferred thematic endpoint:
 
 **A family can change without ceasing to be a family.**
 
-A useful child-facing formulation to preserve for later writing is the idea that the child may end with the realization that having two homes does not necessarily mean having “two half homes”; it may mean having two whole homes. Do not lock that exact line until the Act 3 manuscript is authored.
+A useful child-facing formulation to preserve for later writing is the idea that Nova may end with the realization that having two homes does not necessarily mean having “two half homes”; it may mean having two whole homes. Do not lock that exact line until the Act 3 manuscript is authored.
 
 Do not turn Act 3 into a therapy lesson, courtroom story, custody explainer or parent-villain narrative. Keep the conflict in the child's hope, disappointment and adaptation. The parents may disagree or have distance between them, but neither should be reduced to a villain merely because the relationship ended.
 
