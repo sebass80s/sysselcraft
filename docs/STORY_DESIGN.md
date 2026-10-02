@@ -5745,6 +5745,29 @@ Visual/story contrast across acts:
 
 This contrast is important: Alve came from a place where almost nothing was happening. Nova comes from a place where things are happening constantly, yet she is emotionally stuck trying to restore the past.
 
+### Act 1 village continuity in Act 3 — LOCKED 2026-10-02
+
+The Act 1 village must remain an active part of the game world in Act 3. It must not read as a finished, forgotten hub that the player has outgrown.
+
+Act 3 should repeatedly send Barnet, Alve and Nova back to the village for help during the major quest chains. The village therefore functions as an ongoing support network and home base rather than a museum of completed progression.
+
+Core resident roles:
+- **Mira:** practical items, tools, supplies, ordering, sourcing and purchases.
+- **Henning:** food, event energy, odd ideas, social preparation and warm chaos.
+- **Linus:** repairs, construction, troubleshooting and making broken things physically work.
+- **Sol:** relationships, emotional reading, perspective and advice when the real problem cannot be solved with tools.
+
+These roles should recur across Act 3 quest chains where appropriate. Do not force all four residents into every chain, but each major chain should have a credible reason to reconnect with the village or one of its residents.
+
+The design purpose is twofold:
+1. preserve the village as a living world that continues after Act 1;
+2. let the player feel that the relationships and places they built earlier now matter to later stories.
+
+The village residents should help Nova without taking over her story. Their support should remain practical and character-specific. In particular, Sol must not become a therapist delivering exposition; her strength is noticing people and saying the right small thing at the right moment.
+
+Act 3 should therefore feel geographically broader than Act 2: **city story in front, village support network behind it, lake route connecting them.**
+
+
 ### Act 3 direction — divorce / changing family
 
 Act 3 should center on a child whose parents have separated.
