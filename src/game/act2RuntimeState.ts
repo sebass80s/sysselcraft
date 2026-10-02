@@ -266,11 +266,6 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   return normalized;
 }
 
-export function act2AccessPreviouslyGranted(state: Act2RuntimeState) {
-  const normalized = normalizeAct2RuntimeState(state);
-  return normalized.entered && normalized.productionEntryCommitted;
-}
-
 export function prepareAct2ProductionEntry(state: Act2RuntimeState): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
   if (normalized.productionEntryCommitted) {
