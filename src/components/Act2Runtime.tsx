@@ -82,21 +82,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     stateRef.current = state;
   }, [state]);
 
-  useEffect(() => {
-    if (!ready) return;
-    const atChapterStart =
-      !state.openingComplete &&
-      state.openingIndex === 0 &&
-      state.openingLineIndex === 0;
-    if (!atChapterStart) {
-      setChapterIntroVisible(false);
-      setChapterIntroNameVisible(false);
-      return;
-    }
-    setChapterIntroVisible(true);
-    setChapterIntroNameVisible(false);
-  }, [ready, state.openingComplete, state.openingIndex, state.openingLineIndex]);
-
   function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
     if (worldProgression === null || !candidateState.selectedProject) return false;
     const blockedByPurchase =
@@ -158,6 +143,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         backendWorldProgressionRef.current = 999;
         setBackendWorldProgression(999);
         setAct2AccessAllowed(true);
+        setChapterIntroVisible(!finalePreview);
+        setChapterIntroNameVisible(false);
         setState(debugState);
         setReady(true);
         return;
@@ -225,6 +212,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       }
       await saveAct2RuntimeState(entered);
       if (cancelled) return;
+      const atChapterStart =
+        !entered.openingComplete
+        && entered.openingIndex === 0
+        && entered.openingLineIndex === 0;
+      setChapterIntroVisible(atChapterStart);
+      setChapterIntroNameVisible(false);
       setState(entered);
       setReady(true);
       if (resumeProject === "boathouse" || resumeProject === "dock") {
@@ -232,7 +225,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       }
     })();
     return () => { cancelled = true; };
-  }, [debug, productionEnabled]);
+  }, [debug, productionEnabled, router]);
 
   useEffect(() => {
     if (!ready || !state.openingComplete || !hostRef.current) return;
