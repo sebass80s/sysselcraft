@@ -72,6 +72,11 @@ main { min-height: 100dvh; }
 .henning-story-speaker.linus { background: #315f8c; }
 .henning-story-speaker.child { background: #b8772d; }
 .dialogue-speaker.dog { background: #6e4a2f; }
+.dialogue-speaker.alve { background: #2f6f68; }
+.dialogue-speaker.henning { background: #477a3f; }
+.dialogue-speaker.mira { background: #7a4f89; }
+.dialogue-speaker.linus { background: #315f8c; }
+.dialogue-speaker.sol { background: #9a6a16; }
 .dialogue-next { float: right; min-width: 110px; }
 .dog-name-input { width: 100%; border: 2px solid #b9a47d; border-radius: 10px; padding: .55rem .7rem; background: #fffef9; color: #282219; outline: none; margin-bottom: .5rem; }
 .dog-name-input:focus { border-color: #477a3f; box-shadow: 0 0 0 3px rgba(71,122,63,.14); }
