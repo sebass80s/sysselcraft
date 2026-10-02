@@ -170,11 +170,11 @@ assert.ok(
   runtime.indexOf("if (!debug && !productionEnabled)") < runtime.indexOf("loadAct2RuntimeState(),"),
   "shipping lock must short-circuit before Act 2 state/baseline can be loaded and mutated",
 );
-assert.match(runtime, /href="\/"[\s\S]*Till Mira i byn/, "story purchase gates must provide a real return path to Mira");
+assert.match(runtime, /act2-purchase=boathouse[\s\S]*Till Mira i byn/, "story purchase gates must provide a contextual return path to Mira");
 assert.match(runtime, /SLUT PÅ ANDRA KAPITLET/, "Act 2 must render the canonical black chapter-end card");
 assert.match(runtime, /endCardSeen: true/, "chapter-end card must be dismissible without replay");
 assert.match(debugRoute, /<Act2Runtime debug \/>/, "debug flow must use the production runtime");
-assert.match(prodRoute, /ACT2_PRODUCTION_ENABLED = false/, "shipping lock must remain explicit until physical acceptance");
+assert.match(prodRoute, /ACT2_PRODUCTION_ENABLED = true/, "production Act 2 must remain open behind the persisted Act 1 end-card gate");
 
 console.log("PASS: complete Act 1→Act 2→64 contributions→family/veranda→chapter-end flow");
-console.log("NOTE: production /act2 remains intentionally shipping-locked; /act2-test exercises the same runtime.");
+console.log("NOTE: production /act2 is open behind the Act 1 end-card gate; /act2-test exercises the same runtime.");
