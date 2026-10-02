@@ -14,6 +14,8 @@ const runner = read("src/components/story/StoryRunner.tsx");
 const debugPage = read("src/app/act2-test/page.tsx");
 const act2Page = read("src/app/act2/page.tsx");
 const act2Runtime = read("src/components/Act2Runtime.tsx");
+const storyOverlayBridge = read("src/game/storyOverlayBridge.ts");
+const questInboxSource = read("src/components/ChildBackendQuestInbox.tsx");
 
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -65,15 +67,23 @@ assert.match(
   "StoryRunner must expose the clean-image pause for final panels",
 );
 const storyMomentSource = read("src/components/story/StoryMoment.tsx");
-assert.match(storyMomentSource, /setImageOnly\(true\)/, "StoryMoment must hide the dialogue before advancing");
+assert.match(storyMomentSource, /setImageOnlyPresentationId\(presentationId\)/, "StoryMoment must hide the dialogue before advancing");
 assert.match(storyMomentSource, /shared-story-image-continue/, "clean image mode must advance from the unobstructed image");
 assert.match(storyMomentSource, /presentationId/, "clean image mode must reset between authored panels");
-assert.match(css, /\.shared-story-image-continue \{[^}]*background:\s*transparent/s,
-  "clean image continuation must not visually cover the beat art");
+assert.match(storyMomentSource, /className="primary-button shared-story-image-continue"[\s\S]*Fortsätt/, "clean image mode must keep a visible Continue button");
+assert.match(css, /\.shared-story-image-continue \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
+  "clean image Continue button must stay in the safe bottom-right corner");
 
 assert.match(transcript, /showSpeakers\?: boolean/, "StoryTranscript must support explicit nameplate ownership");
 assert.match(transcript, /showSpeakers && parsed\.speaker/, "StoryTranscript must honor nameplate ownership");
 assert.match(runner, /showSpeakers=\{!beat\.speaker\}/, "StoryRunner must prevent duplicate explicit + parsed nameplates");
+
+assert.match(storyMomentSource, /beginStoryOverlay\(\)/, "Every Story Moment must publish active story-overlay state");
+assert.match(storyOverlayBridge, /document\.body\.dataset\.storyOverlayActive = active \? "true" : "false"/,
+  "Story Engine must expose active overlay state for external HUD suppression");
+assert.match(questInboxSource, /data-story-ui="quest-dock"/, "quest dock must expose a stable Story Engine suppression hook");
+assert.match(css, /body\[data-story-overlay-active="true"\] \[data-story-ui="quest-dock"\][\s\S]*display:\s*none !important/,
+  "quest dock must be hidden automatically during Story Engine beats");
 
 assert.match(debugPage, /<Act2Runtime debug \/>/, "Story Debug must render the shared production runtime");
 assert.match(act2Page, /<Act2Runtime productionEnabled=\{ACT2_PRODUCTION_ENABLED\} \/>/, "Production must render the same shared Act 2 runtime");
