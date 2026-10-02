@@ -376,7 +376,8 @@ export default function VillagePrototype() {
   }, []);
 
   useEffect(() => {
-    if (!saveReady || resettingSave || constructionWriteRef.current || solRuntimeTestActiveRef.current || browserDebugModeRef.current !== null) return;
+    if (!saveReady || resettingSave || constructionWriteRef.current || solRuntimeTestActiveRef.current) return;
+    if (browserDebugModeRef.current !== null) return;
     const snapshot: SaveStateV1 = {
       version: 1, progression,
       diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, construction,
