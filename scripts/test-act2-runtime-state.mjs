@@ -615,7 +615,6 @@ assert.ok(page.includes("setActiveProject(state.selectedProject)"), "production 
 assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), "Alve interaction must explicitly arm the pending contribution Story Moment");
 assert.ok(page.includes("hasPendingAlveTurnIn(latest, backendWorldProgressionRef.current)"), "restart must restore Alve turn-in marker immediately from the latest authoritative progression without recreating the game");
 assert.ok(page.includes("backendWorldProgressionRef.current = backend.progression.worldProgression"), "authoritative progression refreshes must update the restart-safe game bootstrap ref");
-assert.match(page, /href="\/"[^>]*>← Till byn<\/a>/, "Act 2 must keep an explicit route back to the village");
 assert.ok(
   page.includes('href={boathousePurchaseGate ? "/?act2-purchase=boathouse" : jettyPurchaseGate ? "/?act2-purchase=dock" : "/?act2-purchase=motorboat"}'),
   "story purchase gates must route back to Mira with explicit purchase context",
@@ -625,13 +624,20 @@ assert.ok(page.includes("state.completionLineIndex"), "completion reactions must
 assert.ok(page.includes("state.finaleLineIndex"), "finale beats must render from persisted line state");
 assert.ok(page.includes("contributionTurnInOpen && contributionCandidate"), "backend polling must not auto-open contribution Story Moments");
 assert.ok(page.includes("setContributionTurnInOpen(false);"), "finishing one beat must close turn-in so backlog cannot auto-chain");
-assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should point the child toward Alve rather than bypassing world interaction");
+assert.ok(page.includes('className="act2-project-status"'), "Act 2 must keep a compact active-project status");
+assert.ok(page.includes("Aktivt projekt:"), "Act 2 project status must identify the active project");
+assert.equal(page.includes("Ett klart uppdrag väntar hos Alve."), false, "compact Act 2 project status must not carry quest guidance copy");
+assert.equal(page.includes("← Till byn"), false, "compact Act 2 project status must not carry village navigation");
 assert.ok(page.includes('className="prototype-header"'), "Act 2 must reuse the village HUD shell");
 assert.ok(page.includes('className="resource-hud"'), "Act 2 must show the shared resource HUD");
 assert.ok(page.includes('backendWallet?.diamonds'), "Act 2 HUD must show authoritative backend diamonds");
 assert.ok(page.includes('backendWallet?.sysselBux'), "Act 2 HUD must show authoritative backend SysselBux");
 assert.ok(page.includes('!contributionTurnInOpen'), "Act 2 HUD must hide while a contribution Story Moment is open");
 assert.ok(page.includes('!finalePending'), "Act 2 HUD must hide during the finale");
+
+const act2Route = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
+assert.ok(act2Route.includes("ChildBackendQuestInbox"), "Act 2 must reuse the same child quest dock as Act 1");
+assert.match(act2Route, /<ChildBackendQuestInbox \/>/, "Act 2 route must mount the shared Uppdrag UI");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
