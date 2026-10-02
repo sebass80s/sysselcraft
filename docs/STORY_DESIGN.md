@@ -5738,6 +5738,21 @@ Nova remembers this as a place where her family used to spend time together. Her
 
 The player should initially be able to read the objective simply as **“fix the park/place so the family can have that day again.”** Only gradually does the emotional purpose become undeniable.
 
+### Act 3 dramatic hinge — LOCKED 2026-10-02
+
+The major Act 3 family-day sequence should succeed on its own terms: the place looks good, the food works, the parents are present, they can laugh together and genuinely have a nice time. This success is important because it proves that Nova did not fail through lack of effort.
+
+The emotional break comes when Nova realizes that a good day together does **not** mean her parents are getting back together.
+
+Preserve this line as a key dramatic hinge:
+
+> **Nova:** “Men ni hade ju kul.”
+
+The line should land after the player has helped Nova make the day work. Its function is to expose the assumption underneath the entire act: Nova believed that if she could recreate enough of what was good, the relationship would repair itself.
+
+Do not undercut this moment with an immediate joke or a long adult explanation. Let the contradiction hurt: the family day can be real, warm and successful while the divorce is still real too.
+
+
 Visual/story contrast across acts:
 - **Act 1:** rural village, open space, a place waiting for life to return.
 - **Act 2:** forest/lake summer place, memory, repair and family history.
