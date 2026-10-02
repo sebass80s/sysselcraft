@@ -629,6 +629,7 @@ assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should poin
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.match(village, /\(act1EndCardSeen \|\| act2AccessSeen\) && <button[^>]*[\s\S]*Stigen till sjön/, "Act 2 trigger must stay visible after either Chapter 1 acknowledgement or an already committed Act 2 entry");
+assert.match(village, /async function enterAct2FromVillage\(\)[\s\S]*prepareAct2ProductionEntry\(current\)[\s\S]*saveAct2RuntimeState\(entered\)[\s\S]*router\.push\("\/act2"\)/, "lake path interaction must commit Act 2 entry before navigation");
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay at locked 200 SysselBux");
 assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay at locked 200 SysselBux");
