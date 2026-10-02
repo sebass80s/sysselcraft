@@ -1,4 +1,5 @@
 import { Preferences } from "@capacitor/preferences";
+import { getPairedChildId } from "@/backend/childDeviceBinding";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -40,7 +41,12 @@ export type Act2RuntimeState = {
   endCardSeen: boolean;
 };
 
-const KEY = "sysselcraft.act2.runtime.v1";
+const LEGACY_KEY = "sysselcraft.act2.runtime.v1";
+
+async function runtimeKey(): Promise<string> {
+  const childId = await getPairedChildId();
+  return childId ? LEGACY_KEY + "." + childId : LEGACY_KEY;
+}
 const PROJECTS: Act2Project[] = ["cabin", "dock", "boathouse", "motorboat"];
 
 function emptyProject(): Act2ProjectState {
@@ -466,7 +472,8 @@ export function withPresentedContribution(
 }
 
 export async function loadAct2RuntimeState(): Promise<Act2RuntimeState> {
-  const { value } = await Preferences.get({ key: KEY });
+  const key = await runtimeKey();
+  const { value } = await Preferences.get({ key });
   if (!value) return createDefaultAct2RuntimeState();
   try {
     return normalizeAct2RuntimeState(JSON.parse(value));
@@ -476,5 +483,6 @@ export async function loadAct2RuntimeState(): Promise<Act2RuntimeState> {
 }
 
 export async function saveAct2RuntimeState(state: Act2RuntimeState): Promise<void> {
-  await Preferences.set({ key: KEY, value: JSON.stringify(normalizeAct2RuntimeState(state)) });
+  const key = await runtimeKey();
+  await Preferences.set({ key, value: JSON.stringify(normalizeAct2RuntimeState(state)) });
 }
