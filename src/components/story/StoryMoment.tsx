@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { CSSProperties, ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { DialogueCard } from "./DialogueCard";
 import type { StorySpeakerTone } from "../../game/storyEngine";
 
@@ -19,6 +19,8 @@ type StoryMomentProps = {
   zIndex?: number;
   background?: string;
   dialogueClassName?: string;
+  revealImageBeforeNext?: boolean;
+  presentationId?: string;
 };
 
 export function StoryMoment({
@@ -35,8 +37,24 @@ export function StoryMoment({
   zIndex = 20,
   background = "#1d281f",
   dialogueClassName = "",
+  revealImageBeforeNext = false,
+  presentationId = "",
 }: StoryMomentProps) {
+  const [imageOnly, setImageOnly] = useState(false);
+  useEffect(() => {
+    setImageOnly(false);
+  }, [presentationId]);
+
   const style: CSSProperties = { position: "absolute", inset: 0, zIndex, background };
+  const handleNext = onNext
+    ? () => {
+        if (revealImageBeforeNext && image && !imageOnly) {
+          setImageOnly(true);
+          return;
+        }
+        onNext();
+      }
+    : undefined;
   return (
     <section className="shared-story-moment" style={style} role="presentation">
       {image && (
@@ -44,19 +62,27 @@ export function StoryMoment({
           <Image src={image} alt="" fill priority sizes="100vw" style={{ objectFit: imageFit }} />
         </div>
       )}
-      <div className="shared-story-tint" aria-hidden="true" />
-      <DialogueCard
+      {!imageOnly && <div className="shared-story-tint" aria-hidden="true" />}
+      {!imageOnly && <DialogueCard
         heading={heading}
         speaker={speaker}
         speakerTone={speakerTone}
         nextLabel={nextLabel}
-        onNext={onNext}
+        onNext={handleNext}
         nextDisabled={nextDisabled}
         footer={footer}
         className={dialogueClassName}
       >
         {children}
-      </DialogueCard>
+      </DialogueCard>}
+      {imageOnly && onNext && (
+        <button
+          type="button"
+          className="shared-story-image-continue"
+          aria-label="Fortsätt"
+          onClick={onNext}
+        />
+      )}
     </section>
   );
 }
