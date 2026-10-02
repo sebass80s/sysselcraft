@@ -427,6 +427,8 @@ export default function VillagePrototype() {
               setAct2BoathouseSteeringWheelOwned(act2.boathouseSteeringWheelOwned);
               setAct2MotorboatPartsNeeded(motorboatPartsPurchaseRequired(act2));
               setAct2MotorboatPartsOwned(act2.motorboatPartsOwned);
+              setAct2PurchaseStory(act2.pendingPurchaseStory);
+              setAct2PurchaseStoryIndex(act2.purchaseStoryLineIndex);
               const childId = await getPairedChildId();
               if (!childId) throw new Error("Barnets enhet är inte kopplad.");
               const client = getSupabaseBrowserClient();
@@ -694,7 +696,11 @@ export default function VillagePrototype() {
       setBackendWallet(wallet);
       publishBackendWallet(wallet);
       const currentAct2 = await loadAct2RuntimeState();
-      const nextAct2 = withBackendStoryFlags(currentAct2, purchase.worldFlags);
+      const nextAct2 = {
+        ...withBackendStoryFlags(currentAct2, purchase.worldFlags),
+        pendingPurchaseStory: "boathouse" as const,
+        purchaseStoryLineIndex: 0,
+      };
       await saveAct2RuntimeState(nextAct2);
       setAct2BoathouseSteeringWheelOwned(nextAct2.boathouseSteeringWheelOwned);
       setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(nextAct2));
@@ -722,7 +728,11 @@ export default function VillagePrototype() {
       setBackendWallet(wallet);
       publishBackendWallet(wallet);
       const currentAct2 = await loadAct2RuntimeState();
-      const nextAct2 = withBackendStoryFlags(currentAct2, purchase.worldFlags);
+      const nextAct2 = {
+        ...withBackendStoryFlags(currentAct2, purchase.worldFlags),
+        pendingPurchaseStory: "dock" as const,
+        purchaseStoryLineIndex: 0,
+      };
       await saveAct2RuntimeState(nextAct2);
       setAct2JettyLifebuoyOwned(nextAct2.jettyLifebuoyOwned);
       setAct2JettyLifebuoyNeeded(jettyPurchaseRequired(nextAct2));
@@ -1137,12 +1147,24 @@ export default function VillagePrototype() {
     ? parseStoryLine(act2PurchaseLine, childName || "Barnet")
     : null;
 
-  function advanceAct2PurchaseStory() {
+  async function advanceAct2PurchaseStory() {
     if (!act2PurchaseBeat) return;
+    const currentAct2 = await loadAct2RuntimeState();
     if (act2PurchaseStoryIndex + 1 < act2PurchaseBeat.body.length) {
-      setAct2PurchaseStoryIndex((index) => index + 1);
+      const nextIndex = act2PurchaseStoryIndex + 1;
+      await saveAct2RuntimeState({
+        ...currentAct2,
+        pendingPurchaseStory: act2PurchaseStory,
+        purchaseStoryLineIndex: nextIndex,
+      });
+      setAct2PurchaseStoryIndex(nextIndex);
       return;
     }
+    await saveAct2RuntimeState({
+      ...currentAct2,
+      pendingPurchaseStory: null,
+      purchaseStoryLineIndex: 0,
+    });
     setAct2PurchaseStory(null);
     setAct2PurchaseStoryIndex(0);
   }
@@ -1210,7 +1232,7 @@ export default function VillagePrototype() {
         lines: act2PurchasePresentation ? [act2PurchasePresentation.text] : [],
         nextLabel: act2PurchaseStoryIndex + 1 < act2PurchaseBeat.body.length ? "Fortsätt" : "Tillbaka till butiken",
       }}
-      onNext={advanceAct2PurchaseStory}
+      onNext={() => void advanceAct2PurchaseStory()}
       childName={childName || "Barnet"}
       dialogueClassName="act2-dialogue-card"
       zIndex={145}
