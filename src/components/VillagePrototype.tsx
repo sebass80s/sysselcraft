@@ -32,7 +32,7 @@ import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward,
 import { ACT2_BOATHOUSE_STEERING_WHEEL_PRICE, ACT2_JETTY_LIFEBUOY_PRICE, ACT2_MOTORBOAT_PARTS_PRICE, BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, ROOM_DECOR_PRICES, DOG_HOME_PRICES, commitStoryBeat, purchaseAct2BoathouseSteeringWheel, purchaseAct2JettyLifebuoy, purchaseAct2MotorboatParts, purchaseBottleMessage, purchaseFootballRug, purchaseRoomDecor, purchaseDogHomeUpgrade, type RoomDecorKey } from "../backend/storyShop";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
-import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
+import { clearSaveState, createDefaultSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { chooseDogHomeDialogue, deriveDogHomeStageFromWorldFlags, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
 import { boathousePurchaseRequired, jettyPurchaseRequired, motorboatPartsPurchaseRequired, loadAct2RuntimeState, saveAct2RuntimeState, withBackendStoryFlags } from "../game/act2RuntimeState";
@@ -227,8 +227,48 @@ export default function VillagePrototype() {
     let cancelled = false;
 
     async function restore() {
-      const saved = await loadSaveState(true);
+      let saved = await loadSaveState(true);
       if (cancelled) return;
+
+      const debugAct1Finale = !Capacitor.isNativePlatform()
+        && new URLSearchParams(window.location.search).get("debug") === "act1-finale";
+      if (debugAct1Finale) {
+        const base = saved ?? createDefaultSaveState();
+        saved = {
+          ...base,
+          introComplete: true,
+          dialogueOpen: false,
+          childName: base.childName || "Barnet",
+          dogName: base.dogName || "Valpen",
+          dogVisible: true,
+          construction: {
+            earned: { recycling: 4, bakery: 4, clinic: 4 },
+            revealed: { recycling: 4, bakery: 4, clinic: 4 },
+            pending: [],
+            completedStoryBeats: ["recycling:completion", "bakery:completion"],
+          },
+          worldFlags: {
+            ...base.worldFlags,
+            firstDeliveryComplete: true,
+            recyclingCenterStage: 4,
+            henningArrivalSeen: true,
+            miraArrivalSeen: true,
+            bottleMessagePurchased: true,
+            bottleMessageSent: true,
+            solArrivalSeen: true,
+            solTourBakerySeen: true,
+            solTourShopSeen: true,
+            solTourLinusSeen: true,
+            solChoseToStay: true,
+            clinicCompletionSeen: true,
+            act1ChapterFinaleSeen: false,
+            act1ChapterFinaleIndex: 0,
+            act1EndCardSeen: false,
+          },
+        };
+        await saveSaveState(saved, true);
+        window.history.replaceState({}, "", window.location.pathname);
+      }
 
       if (saved) {
         constructionRef.current = saved.construction;
