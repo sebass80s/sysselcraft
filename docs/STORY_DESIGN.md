@@ -1471,6 +1471,18 @@ Act 3 owns the destination, the first arrival and whatever exists on the other s
 
 Canonical boundary: **Act 2 ends as the children leave the restored lake place; Act 3 begins with what lies ahead.**
 
+### Act 3 opening title card — LOCKED 2026-10-02
+
+Immediately after the black **SLUT PÅ ANDRA KAPITLET** card, Act 3 begins with a black chapter-title screen in the same visual language as the Act 2 chapter intro.
+
+Display:
+
+> **KAPITEL 3**  
+> **På andra sidan sjön**
+
+This is the first formal Act 3 beat. Keep the presentation simple and cinematic: black background, chapter title first, subtitle/location line beneath it. The transition should feel like a direct continuation of the motorboat departure across the lake, not a menu jump.
+
+
 ## Bryggan restoration arc — overview — LOCKED 2026-09-28
 
 Bryggan uses the canonical **4 + 4 + 4 + 4 = 16 authoritative real-world contributions**. Its identity is bad, vila, kompisar och sommarliv. The arc moves from repairing unsafe timber to making a place people actually want to use. The life-buoy purchase is an intermediate economy/story beat and never substitutes for a contribution.
