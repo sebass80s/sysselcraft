@@ -5770,6 +5770,60 @@ Then preserve Nova's hinge line:
 
 This should be the moment where both Nova and the player understand that a good day together was never proof that the marriage would return. The family-day plan succeeds; the reunion fantasy does not.
 
+### Act 3 post-family-day resolution — LOCKED 2026-10-02
+
+Immediately after the family-day break and Nova's line **“Men ni hade ju kul.”**, Nova leaves the scene because she cannot stay inside the collapsed reunion fantasy. This may be staged as her walking or running away from the family-day setting.
+
+Barnet follows her.
+
+Alve should not dominate this resolution. He may remain behind briefly or arrive later, but the core emotional scene belongs to **Barnet + Nova**.
+
+The dramatic progression should be:
+1. frustration that the plan “worked” but did not produce reunion;
+2. collapse of Nova's perfection logic;
+3. explicit connection to the day she believed she caused the divorce;
+4. realization that believing it was her fault also gave her the illusion that she could fix it;
+5. release of that responsibility.
+
+Preferred emotional exchange:
+
+> **Nova:** “Vi gjorde ju allt rätt.”  
+> **Barnet:** “Ja.”  
+> **Nova:** “Allt blev som det skulle.”  
+> **Barnet:** “Ja.”  
+> **Nova:** “Så varför blev inte de det?”
+
+Later:
+
+> **Nova:** “Jag tänkte att om jag bara gjorde det bättre den här gången…”  
+> **Barnet:** “Den här gången?”  
+> **Nova:** “Den dagen de berättade. Jag hade varit så jävla jobbig.”  
+> **Nova:** “Jag skrek. Smällde i dörren. Allt.”  
+> **Nova:** “Och sen på kvällen sa de att pappa skulle flytta.”
+
+Then:
+
+> **Nova:** “Jag trodde att om det var mitt fel så kunde jag fixa det.”  
+> **Barnet:** “Tror du det nu?”
+
+Nova should reach the realization herself:
+
+> **Nova:** “Nej.”  
+> **Nova:** “Jag tror bara att jag önskade att det var mitt fel.”  
+> **Barnet:** “Varför?”  
+> **Nova:** “För då hade jag kunnat göra något åt det.”
+
+Final resolution remains:
+
+> **Nova:** “Det var deras grej.”  
+> **Barnet:** “Ja.”  
+> **Nova:** “Inte min.”
+
+Barnet's role is not to “fix” Nova or explain divorce. As in Act 2, Barnet's importance is staying present long enough for the other child to find their own way forward.
+
+Visual follow-through: the colder, greyer POV may remain during the first part of this scene. As Nova releases the self-blame, color can return gradually into the calmer, more neutral final palette already defined for Act 3.
+
+
 ### Act 3 final visual POV shift — LOCKED 2026-10-02
 
 The family-day climax should use **Nova's subjective visual perspective** to reinforce the emotional turn.
