@@ -760,6 +760,25 @@ The repaired motorboat is also the deliberate bridge to **Act 3**. The boy remem
 **Act 2 starts when authored play moves to the lake summer place.** Sol is not an Act 2 prerequisite, unfinished bridge, or opening Act 2 task. Preserve her completed Act 1 implementation unless a concrete regression is found.
 
 
+## Act 2 canonical beat index — VERIFIED 2026-10-02
+
+This index is the canonical checklist for authored Act 2 runtime beats. The detailed dialogue sections below may be historically split across the document, but **beat identity, order and special non-contribution story beats are fixed here**.
+
+- **Opening:** OPEN-001 Valpen sticker → OPEN-002 In i skogen → OPEN-003 Något där framme → OPEN-004 Sjön → OPEN-005 Cykeln → close bicycle beat → first Alve meeting → project chooser.
+- **Stugan 1–16:** Vi börjar här → Märkena på väggen → Fotot → Som förr → Det gamla spelet → Golvet är lava → Regnet → Det ser bättre ut → VÅR STUGA → Verandan → Vet de om det här? → Någon har varit här → Det sista riktiga jobbet → Gör plats för människor → Om de kommer → Stugan är klar.
+- **Stugan revisit:** “En stund till” is optional/repeatable after Stugan 16/16 while Motorbåten is not yet complete. It is not contribution 17.
+- **Bryggan 1–16:** Vi börjar röja → Det är värre under → Linus och återbruket → Första riktiga lagningen → Det börjar se badbart ut → Sol kollar badplatsen → Röj badkanten → Redo för människor → Plats för sommaren → Henning kommer ner → Första riktiga vattenpausen → Från arbetsplats till sommarplats → Sista svaga punkten → Gör klart för att använda → Är vi faktiskt klara? → Bryggan är klar.
+- **Bryggan economy beat:** Livbojen hos Mira occurs **between 6/16 and 7/16**, costs 200 SysselBux, is not a contribution, and its authored Mira dialogue must play.
+- **Bryggan completion beat:** “Nästa dag · Folk har kommit tillbaka” is a one-time authored post-completion payoff, not contribution 17.
+- **Båthuset 1–16:** Under bråten → Den låsta kistan → Henning har en idé → BOOM → Fynden → Mira ser problemet → Verkstaden tar form → Vår verkstad → En gammal ritning → Lådbilen byggs → Första provturen → Version två → Gör plats för båten → Den gamla slipen → Den fungerar → Båthuset är klart.
+- **Båthuset economy beat:** Ratten till lådbilen occurs **between 9/16 and 10/16**, costs 200 SysselBux, is not a contribution, and its authored Mira dialogue must play.
+- **Motorbåten 1–16:** Äntligen båten → Samma båt → Linus känner igen den → Inte idag → Det som saknas → Mira beställer två → Paketet kommer → Den lever → Ner i vattnet → Första turen → Tillbaka igen → Vår båt → Det riktiga testet → Vi åker båt → Inte idag → Hem igen.
+- **Motorbåten economy gate:** reservdelspaketet is bought from Mira **between 5/16 and 6/16** for 200 SysselBux and is not itself a contribution. Beat 6 is the post-purchase story continuation.
+- **Motorbåten naming gate:** after 12/16 and before 13/16, the player names the restored boat. Naming is not a contribution.
+- **Act 2 finale:** Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → black **SLUT PÅ ANDRA KAPITLET** end card. The first true crossing belongs to Act 3.
+
+Runtime child-facing copy may receive flow/wording polish, but it must preserve this beat order, narrative event, gate placement and emotional payload. One dialogue card remains one nameplate + one reply/narration unit + one click.
+
 ## Act 2 opening, Alve and project-selection UX — LOCKED 2026-09-28
 
 ### Foreshadowing and arrival
@@ -1310,9 +1329,13 @@ The destination remains deliberately undefined until Act 3 is authored. Hints mu
 
 Canonical boundary: **Act 2 closes at home; Act 3 begins by leaving it.**
 
-## Bryggan restoration arc — LOCKED 2026-09-28
+## Bryggan restoration arc — overview — LOCKED 2026-09-28
 
 Bryggan uses the canonical **4 + 4 + 4 + 4 = 16 authoritative real-world contributions**. Its identity is bad, vila, kompisar och sommarliv. The arc moves from repairing unsafe timber to making a place people actually want to use. The life-buoy purchase is an intermediate economy/story beat and never substitutes for a contribution.
+
+> Historical document-order note: the exact Stugan 1–12 dialogue was authored immediately after this overview. The canonical beat index above, not markdown proximity, defines project ownership.
+
+## Stugan exact dialogue — beats 1–12
 
 ### Stugan dialogue lock — beats 1–3
 
@@ -2039,6 +2062,8 @@ The completed jetty therefore carries three persistent consequences:
 3. controlled-random swimming/hanging scenes can appear on later lake visits.
 
 Canonical arc: **1–4 discover real damage/reuse Linus material → 5–8 make bathing safe and install life buoy → 9–12 people begin returning before completion → 13–16 finish and hand the place back to summer life.**
+
+## Bryggan exact dialogue and completion
 
 ### Bryggan post-completion finisher — LOCKED CONCEPT
 
@@ -4626,11 +4651,17 @@ När Linus är klar blir det tyst.
 > **Linus:** “Jag skriver ner det.”  
 > **Alve:** “Det var också min plan.”
 
+**Intermediate economy gate — reservdelspaket hos Mira**
+
+After 5/16, the Motorbåten contribution stream pauses. Barnet returns to Mira and buys the required **reservdelspaket for 200 SysselBux** through the authoritative story-item purchase flow. This purchase is **not contribution 6** and must not fabricate progress.
+
+Once the purchase is authoritative, the next real-world contribution unlocks the following post-purchase beat:
+
 **6/16 — Mira beställer två**
 
-Ni kommer in till Mira med lappen från Linus.
+När ni kommer tillbaka till Mira håller hon redan på att göra beställningen klar.
 
-Mira läser den. Sedan läser hon den en gång till.
+Mira läser lappen från Linus en gång till.
 
 > **Mira:** “Så ni tänker verkligen få igång den där gamla båten?”  
 > **Barnet:** “Ja.”  
@@ -4639,13 +4670,8 @@ Mira läser den. Sedan läser hon den en gång till.
 
 Mira tittar på Alve.
 
-> **Alve:** “Hej.”
-
-Mira tittar tillbaka på beställningen.
-
-> **Mira:** “Jag beställer ett reservdelspaket.”  
-> **Alve:** “Bra.”  
-> **Mira:** “Och en extra av den viktigaste delen.”  
+> **Alve:** “Hej.”  
+> **Mira:** “Jag beställer en extra av den viktigaste delen också.”  
 > **Alve:** “Varför?”  
 > **Mira:** “För att du är inblandad.”
 
@@ -4655,22 +4681,9 @@ Du börjar skratta.
 > **Mira:** “Att jag har träffat dig.”  
 > **Alve:** “Jag tycker inte om vart det här samtalet är på väg.”
 
-Mira lägger undan lappen.
-
-> **Mira:** “Det blir 200 SysselBux.”
-
-Alve tittar på dig.
-
-> **Alve:** “Vi har råd, eller hur?”  
-> **Barnet:** “Ja.”  
-> **Alve:** “Bra. För jag har redan bestämt mig.”  
-> **Mira:** “Det märktes.”
-
-Du betalar 200 SysselBux genom den auktoritativa story-item-köpsfunktionen.
-
 Mira gör klart beställningen.
 
-> **Mira:** “Det kommer inte göra båten färdig.”  
+> **Mira:** “Paketet kommer inte göra båten färdig.”  
 > **Alve:** “Jag vet.”
 
 Mira tittar på honom lite misstänksamt.
@@ -4679,23 +4692,16 @@ Mira tittar på honom lite misstänksamt.
 > **Alve:** “Ja.”  
 > **Mira:** “Och du tänker inte försöka starta den direkt?”
 
-Alve blir tyst.
-
-Du tittar på honom.
-
-Mira tittar på honom.
+Alve blir tyst. Du tittar på honom. Mira tittar på honom.
 
 > **Alve:** “Vad räknas som direkt?”  
 > **Mira:** “Alve.”  
-> **Alve:** “Okej.”
-
-Han tittar på dig.
-
+> **Alve:** “Okej.”  
 > **Alve:** “Inte direkt.”  
 > **Barnet:** “Det där lät inte särskilt pålitligt.”  
 > **Mira:** “Därför beställde jag två.”
 
-**Economy lock:** the motorboat story purchase is a **reservdelspaket** costing **200 SysselBux**. It must use the authoritative backend wallet and is an intermediate story/economy beat, not a contribution.
+**Economy lock:** the 200-SysselBux wallet transaction happens between 5/16 and 6/16. Beat 6 may reference the completed order but must never charge again or expose backend implementation language.
 
 ### Contributions 5–8: village support and the first sign of life
 Continued sorting/repair reveals one important missing/unsalvageable need. Keep it deliberately non-technical in child-facing dialogue. Linus cannot fabricate it. Mira can source the required replacement/support package, creating the motorboat's major **story-bound SysselBux purchase**. Exact item and price remain open for economy balancing; it must be affordable through normal play and use the authoritative backend wallet.
