@@ -109,7 +109,7 @@ assert.match(component, /saved\.construction\.revealed\.clinic >= 4 && saved\.wo
 assert.match(component, /clinicCompletionSeen: true,[\s\S]*act1ChapterFinaleSeen: false,[\s\S]*act1ChapterFinaleIndex: 0,[\s\S]*act1EndCardSeen: false/, "Clinic completion must persist the new Act 1 finale as the next restart-safe story");
 assert.match(component, /await saveSaveState\(snapshot, true\);[\s\S]*setClinicCompletionSeen\(true\);[\s\S]*setAct1ChapterFinaleIndex\(0\);[\s\S]*setClinicStoryIndex\(null\)/, "Clinic finale must hand off to the Act 1 chapter finale only after save succeeds");
 assert.match(component, /setClinicCompletionSeen\(saved\.worldFlags\.clinicCompletionSeen === true\)/, "Clinic completion must restore from save");
-assert.match(component, /\(act1EndCardSeen \|\| act2AccessSeen\) && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must unlock after Chapter 1 acknowledgement or remain available after a committed Act 2 entry");
+assert.match(component, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
 const act2Page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 const act2Runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 assert.match(act2Runtime, /!act1ChapterComplete && !act2AccessPreviouslyGranted\(act2\)/, "Act 2 access must accept either the acknowledged Act 1 ending or a previously committed Act 2 entry");
