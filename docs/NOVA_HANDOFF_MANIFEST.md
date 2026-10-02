@@ -607,3 +607,28 @@ Old pre-release baseline residue is now reconciled away at the first legitimate 
 
 Production remains intentionally locked with `ACT2_PRODUCTION_ENABLED = false`; physical browser/iPhone acceptance is still required before unlocking.
 
+## 2026-10-02 — Act 1 chapter-finale handoff checkpoint
+
+Current branch HEAD is `08ec561003d253c97b6fea163f413e6e0c624e5c` and GitHub Actions **#1496 SUCCESS** on that exact commit.
+
+Act 1 now has a real chapter-ending flow after Clinic:
+- Clinic finale completes and persists `clinicCompletionSeen=true`.
+- The new locked ensemble dialogue `act1ChapterFinaleDialogue` begins immediately afterward.
+- Finale progress is persisted with `act1ChapterFinaleIndex` and resumes on restart.
+- Completing the ensemble scene persists `act1ChapterFinaleSeen=true`.
+- A black **SLUT PÅ FÖRSTA KAPITLET** card then appears and is acknowledged with `act1EndCardSeen=true`.
+- Only after that acknowledgement is **Stigen till sjön** visible.
+- Production Act 2 also independently requires `act1EndCardSeen=true`, so direct URL entry cannot bypass the chapter boundary.
+- Old saves that completed Clinic before this feature existed normalize as already having acknowledged the Act 1 finale/end card; they must not suddenly replay new Act 1 story on boot.
+- The current Act 1 finale Story Moment image is intentionally a placeholder: `/assets/village/story-moments/sol-clinic-complete.png`.
+- **Do not generate or replace the final ensemble image until Kalle provides the correct canonical character references.**
+
+Locked Act 1 finale order:
+**Clinic finale → ensemble payoff → black SLUT PÅ FÖRSTA KAPITLET → back to village → Stigen till sjön → /act2 → OPEN-001 Valpen sticker.**
+
+The exact ensemble dialogue is canonical in `src/game/solStory.ts` and `docs/STORY_DESIGN.md`.
+
+Act 2 production remains intentionally shipping-locked with `ACT2_PRODUCTION_ENABLED=false` pending physical acceptance.
+
+Deployment policy remains hard-locked: GitHub Actions for routine code verification; Vercel only for a meaningful acceptance checkpoint or release. `vercel.json` disables routine deployment of `nova/local-construction-snapshot`.
+
