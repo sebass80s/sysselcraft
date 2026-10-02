@@ -5717,6 +5717,34 @@ The village can begin living again. The child learns that effort can create visi
 ### Act 2 thematic role
 Alve tries to restore the old summer place and, underneath that, tries to restore a past that cannot return exactly as it was. His mother remains an intentionally understated absence. By the end, Alve has not “fixed” grief; he has stopped waiting for the old world to come back and is ready to move forward.
 
+### Act 3 setting — lakeside city — LOCKED 2026-10-02
+
+Act 3 takes place in a **larger Swedish lakeside town/city**, not a metropolis and not another rural settlement. It should feel clearly more urban than Act 1 and Act 2 while remaining intimate, walkable and child-scale.
+
+The city grew along the lake. Its visual vocabulary may include:
+- a compact town centre by the harbour;
+- a lakeside promenade;
+- mixed older town blocks and newer apartment areas;
+- school, library, bus stops, shops and everyday city movement;
+- bicycles, buses, pedestrians and background residents who make the world feel populated without all becoming story NPCs.
+
+The city should not merely mean “more buildings”. Its structure should reinforce Nova's story. Her life is divided between two homes in different parts of the city. One parent may live closer to the older centre and familiar school/friends; the other may live in a newer residential area where Nova's room still feels more provisional. Everyday details such as duplicate chargers, toothbrushes, keys and weekly schedules can quietly communicate this split life.
+
+Nova's established design details may support this characterization: the phone in her back pocket can be part of keeping track of schedules/handoffs, and her headphones can function as a believable way to shut the world out when she needs space. Do not over-symbolize these props.
+
+A central Act 3 restoration/play space should sit near the water, such as a **city park / folkpark / public lakeside recreation area** with shared family memories. Possible elements include a small café, pavilion, minigolf, playground, bathing jetty, grill area or small stage. The place is not an abandoned ruin; it still functions, but has become worn or lost some of its former character.
+
+Nova remembers this as a place where her family used to spend time together. Her apparent project goal becomes restoring the place and recreating a specific “perfect day” from before the divorce. Underneath, she is attempting to construct a situation in which her parents remember how good things were and reunite.
+
+The player should initially be able to read the objective simply as **“fix the park/place so the family can have that day again.”** Only gradually does the emotional purpose become undeniable.
+
+Visual/story contrast across acts:
+- **Act 1:** rural village, open space, a place waiting for life to return.
+- **Act 2:** forest/lake summer place, memory, repair and family history.
+- **Act 3:** populated lakeside city, dense everyday movement, two homes and a child whose private life has stopped even while the city keeps moving.
+
+This contrast is important: Alve came from a place where almost nothing was happening. Nova comes from a place where things are happening constantly, yet she is emotionally stuck trying to restore the past.
+
 ### Act 3 direction — divorce / changing family
 
 Act 3 should center on a child whose parents have separated.
