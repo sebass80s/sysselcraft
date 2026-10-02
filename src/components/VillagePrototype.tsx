@@ -35,7 +35,7 @@ import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { clearSaveState, createDefaultSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { chooseDogHomeDialogue, deriveDogHomeStageFromWorldFlags, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
-import { act2AccessPreviouslyGranted, boathousePurchaseRequired, jettyPurchaseRequired, motorboatPartsPurchaseRequired, loadAct2RuntimeState, prepareAct2ProductionEntry, saveAct2RuntimeState, withBackendStoryFlags } from "../game/act2RuntimeState";
+import { boathousePurchaseRequired, jettyPurchaseRequired, motorboatPartsPurchaseRequired, loadAct2RuntimeState, saveAct2RuntimeState, withBackendStoryFlags } from "../game/act2RuntimeState";
 import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { parseStoryLine } from "../game/storyEngine";
@@ -77,7 +77,6 @@ export default function VillagePrototype() {
   const [act1ChapterFinaleIndex, setAct1ChapterFinaleIndex] = useState<number | null>(null);
   const [act1ChapterFinaleSeen, setAct1ChapterFinaleSeen] = useState(false);
   const [act1EndCardSeen, setAct1EndCardSeen] = useState(false);
-  const [act2AccessSeen, setAct2AccessSeen] = useState(false);
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
   const [bottleStoryIndex, setBottleStoryIndex] = useState<number | null>(null);
@@ -274,10 +273,6 @@ export default function VillagePrototype() {
           },
         };
       }
-
-      const act2State = await loadAct2RuntimeState();
-      if (cancelled) return;
-      setAct2AccessSeen(act2AccessPreviouslyGranted(act2State));
 
       if (saved) {
         latestSaveRef.current = saved;
@@ -1304,16 +1299,6 @@ export default function VillagePrototype() {
     ? parseStoryLine(act2PurchaseLine, childName || "Barnet")
     : null;
 
-  async function enterAct2FromVillage() {
-    const current = await loadAct2RuntimeState();
-    const entered = act2AccessPreviouslyGranted(current)
-      ? current
-      : prepareAct2ProductionEntry(current);
-    await saveAct2RuntimeState(entered);
-    setAct2AccessSeen(true);
-    router.push("/act2");
-  }
-
   async function advanceAct2PurchaseStory() {
     if (!act2PurchaseBeat) return;
     const currentAct2 = await loadAct2RuntimeState();
@@ -1345,7 +1330,7 @@ export default function VillagePrototype() {
 
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser"><button className="dog-hud-button" type="button" onClick={() => setRoomOpen(true)} aria-label="Mitt rum" title="Mitt rum">🏠</button>{dogName && <button className="dog-hud-button" type="button" onClick={openDogHome} aria-label={`Besök ${dogName}`} title={`Besök ${dogName}`}>🐶</button>}<strong>💎 {backendWallet?.diamonds ?? (backendWalletExpected === false ? diamonds : "…")}</strong><strong>🪙 {backendWallet?.sysselBux ?? (backendWalletExpected === false ? sysselBux : "…")}</strong></div></header>
-    <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>{(act1EndCardSeen || act2AccessSeen) && <button type="button" className="secondary-button" style={{ position:"absolute", right:16, bottom:54, zIndex:25 }} onClick={() => void enterAct2FromVillage()}>🌲 Stigen till sjön</button>}
+    <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>{act1EndCardSeen && <button type="button" className="secondary-button" style={{ position:"absolute", right:16, bottom:54, zIndex:25 }} onClick={() => router.push("/act2")}>🌲 Stigen till sjön</button>}
     {!solRuntimeTestActive && <>
     {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`} onClick={dogHomeShowcase ? () => { setDogHomeShowcase(false); setDogHomeOpen(false); } : undefined}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={(event) => { event.stopPropagation(); setDogHomeShowcase(false); setDogHomeOpen(false); }}>← Till byn</button>{!dogHomeShowcase && line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Visa mig!"}</button></div>}</div>; })()}
     {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum" onClick={() => { if (roomShowcase) { setRoomShowcase(false); setRoomOpen(false); } }}>
