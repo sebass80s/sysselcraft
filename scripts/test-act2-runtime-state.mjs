@@ -664,6 +664,7 @@ assert.ok(page.includes('!finalePending'), "Act 2 HUD must hide during the final
 
 const questInbox = fs.readFileSync(new URL("../src/components/ChildBackendQuestInbox.tsx", import.meta.url), "utf8");
 assert.equal(questInbox.includes("Koppla om"), false, "Uppdrag must not expose re-pairing; that belongs in Vuxenläge");
+assert.ok(questInbox.includes('data-story-ui="quest-dock"'), "shared Uppdrag dock must opt into Story Engine HUD suppression");
 
 const act2Route = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 assert.ok(act2Route.includes("ChildBackendQuestInbox"), "Act 2 must reuse the same child quest dock as Act 1");
