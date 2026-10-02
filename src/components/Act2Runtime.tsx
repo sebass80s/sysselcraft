@@ -664,6 +664,34 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     >
       <p>{activeContributionPresentation?.text}</p>
     </StoryMoment>}
+    {state.act2Complete && !state.endCardSeen && <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Slut på andra kapitlet"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 140,
+        display: "grid",
+        placeItems: "center",
+        background: "#050706",
+        color: "white",
+        textAlign: "center",
+        padding: 24,
+      }}
+    >
+      <div>
+        <h1 style={{ margin: 0, fontSize: "clamp(2rem, 7vw, 4.5rem)", letterSpacing: ".04em" }}>SLUT PÅ ANDRA KAPITLET</h1>
+        <button
+          className="primary-button"
+          type="button"
+          style={{ marginTop: 28 }}
+          onClick={() => void commit({ ...state, endCardSeen: true })}
+        >
+          Fortsätt vid sjön
+        </button>
+      </div>
+    </div>}
     {backendSyncError && <div role="status" style={{ position:"absolute", right:16, top:16, zIndex:30, background:"rgba(0,0,0,.65)", color:"white", padding:"8px 12px", borderRadius:10 }}>{backendSyncError}</div>}
     {state.selectedProject && !finalePending && <div style={{ position: "absolute", left: 16, bottom: 16, zIndex: 20, background: "rgba(22,28,22,.88)", color: "white", borderRadius: 14, padding: "12px 16px", maxWidth: 380 }}>
       <strong>Alve: {prerequisiteDone === 0 ? `Bra val! Vi fixar ${PROJECT_COPY[state.selectedProject].object} först!` : state.selectedProject === "motorboat" ? "Nu fixar vi den." : `Bra. Då kör vi på ${PROJECT_COPY[state.selectedProject].object}.`}</strong>
