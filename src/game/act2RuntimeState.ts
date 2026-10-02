@@ -34,6 +34,7 @@ export type Act2RuntimeState = {
   familyFinaleConsumed: boolean;
   epilogueConsumed: boolean;
   act2Complete: boolean;
+  endCardSeen: boolean;
 };
 
 const KEY = "sysselcraft.act2.runtime.v1";
@@ -73,6 +74,7 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     familyFinaleConsumed: false,
     epilogueConsumed: false,
     act2Complete: false,
+    endCardSeen: false,
   };
 }
 
@@ -182,6 +184,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
     epilogueConsumed: candidate.epilogueConsumed === true,
     act2Complete: candidate.act2Complete === true,
+    endCardSeen: candidate.endCardSeen === true,
   };
 
   if (normalized.projects.motorboat.contributions > 0 && !isMotorboatUnlocked(normalized)) {
@@ -211,6 +214,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     normalized.finaleLineIndex = 0;
     normalized.familyFinaleConsumed = false;
     normalized.epilogueConsumed = false;
+    normalized.endCardSeen = false;
   } else {
     // Act 2 now ends on the veranda/family payoff. The old extra "first crossing"
     // scene belongs to Act 3 and must not keep a completed Act 2 save pending.
@@ -224,6 +228,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   }
 
   normalized.act2Complete = normalized.epilogueConsumed;
+  if (!normalized.act2Complete) normalized.endCardSeen = false;
 
   return normalized;
 }
