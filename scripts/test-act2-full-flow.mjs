@@ -161,9 +161,9 @@ const runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", imp
 const prodRoute = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 const debugRoute = fs.readFileSync(new URL("../src/app/act2-test/page.tsx", import.meta.url), "utf8");
 
-assert.match(village, /clinicCompletionSeen \|\| construction\.revealed\.clinic >= 4/, "Act 1 must expose the lake path only after Clinic completion");
+assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "Act 1 must expose the lake path only after the chapter-one end card");
 assert.match(village, /router\.push\("\/act2"\)/, "Act 1 lake path must enter the production Act 2 route");
-assert.match(runtime, /clinicCompletionSeen === true[\s\S]*construction\.revealed\.clinic[\s\S]*>= 4/, "Act 2 must independently recheck Clinic completion");
+assert.match(runtime, /act1ChapterComplete = act1\?\.worldFlags\?\.act1EndCardSeen === true/, "Act 2 must independently require the acknowledged Act 1 chapter ending");
 assert.match(runtime, /prepareAct2ProductionEntry\(act2\)/, "production entry must reconcile pre-release locked-route residue before setting the baseline");
 assert.match(runtime, /withBackendClaimBaseline\(current, backend\.progression\.worldProgression\)/, "backend polling must recover a missing baseline after transient entry sync failure");
 assert.ok(
