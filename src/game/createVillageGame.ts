@@ -210,7 +210,7 @@ export async function createVillageGame(
         }
         // Resolve NPC taps at scene level too. This avoids depending on Phaser's
         // object-level pointer event ordering in the native iOS WebView.
-        if (this.linus && this.linus.getBounds().contains(pointer.worldX, pointer.worldY)) {
+        if (this.linus && Phaser.Geom.Rectangle.Contains(new Phaser.Geom.Rectangle(this.linus.x - 82, this.linus.y - 155, 164, 180), pointer.worldX, pointer.worldY)) {
           if (requestedConstruction.attention?.resident === "linus") {
             this.approachAttentionResident();
             return;
@@ -1007,8 +1007,16 @@ export async function createVillageGame(
         this.linusInteractionPending = true;
         this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
-        if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
-        else this.maybeCompleteWorldInteraction();
+        if (finalPoint) {
+          this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+        } else if (isWalkable(REQUIRED_APPROACHES.linus, this.navigationObstacles)) {
+          // A fresh game must never leave the first Linus tap as a silent no-op just
+          // because the coarse path grid failed to produce a route.
+          this.path = [REQUIRED_APPROACHES.linus];
+          this.targetMarker?.setPosition(REQUIRED_APPROACHES.linus.x, REQUIRED_APPROACHES.linus.y).setVisible(true);
+        } else {
+          this.maybeCompleteWorldInteraction();
+        }
       });
 
       this.henning = this.add.image(430, 452, "henning-painted")
