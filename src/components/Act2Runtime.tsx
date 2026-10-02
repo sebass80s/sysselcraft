@@ -227,12 +227,14 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           setBackendWorldProgression(backend.progression.worldProgression);
           setBackendSyncError("");
           const current = await loadAct2RuntimeState();
-          const next = withBackendStoryFlags(current, backend.worldFlags);
-          const ownershipChanged =
-            next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
+          let next = withBackendClaimBaseline(current, backend.progression.worldProgression);
+          next = withBackendStoryFlags(next, backend.worldFlags);
+          const stateChanged =
+            next.backendClaimBaseline !== current.backendClaimBaseline
+            || next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
             || next.boathouseSteeringWheelOwned !== current.boathouseSteeringWheelOwned
             || next.motorboatPartsOwned !== current.motorboatPartsOwned;
-          if (ownershipChanged) {
+          if (stateChanged) {
             await saveAct2RuntimeState(next);
             if (!cancelled) setState(next);
           }
