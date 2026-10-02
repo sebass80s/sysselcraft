@@ -27,7 +27,7 @@ import { constructionPresentation } from "../game/constructionPresentation";
 import { recyclingCompletionDialogue } from "../game/recyclingStory";
 import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
-import { bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
+import { act1ChapterFinaleDialogue, bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
 import { ACT2_BOATHOUSE_STEERING_WHEEL_PRICE, ACT2_JETTY_LIFEBUOY_PRICE, ACT2_MOTORBOAT_PARTS_PRICE, BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, ROOM_DECOR_PRICES, DOG_HOME_PRICES, commitStoryBeat, purchaseAct2BoathouseSteeringWheel, purchaseAct2JettyLifebuoy, purchaseAct2MotorboatParts, purchaseBottleMessage, purchaseFootballRug, purchaseRoomDecor, purchaseDogHomeUpgrade, type RoomDecorKey } from "../backend/storyShop";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "../backend/childDeviceBinding";
@@ -74,6 +74,9 @@ export default function VillagePrototype() {
   const [clinicStoryIndex, setClinicStoryIndex] = useState<number | null>(null);
   const [clinicStoryReplayIndex, setClinicStoryReplayIndex] = useState<number | null>(null);
   const [clinicCompletionSeen, setClinicCompletionSeen] = useState(false);
+  const [act1ChapterFinaleIndex, setAct1ChapterFinaleIndex] = useState<number | null>(null);
+  const [act1ChapterFinaleSeen, setAct1ChapterFinaleSeen] = useState(false);
+  const [act1EndCardSeen, setAct1EndCardSeen] = useState(false);
   const [miraStoryIndex, setMiraStoryIndex] = useState<number | null>(null);
   const [miraStoryReplayIndex, setMiraStoryReplayIndex] = useState<number | null>(null);
   const [bottleStoryIndex, setBottleStoryIndex] = useState<number | null>(null);
@@ -260,6 +263,15 @@ export default function VillagePrototype() {
         setSolTourLinusSeen(saved.worldFlags.solTourLinusSeen === true);
         setSolChoseToStay(saved.worldFlags.solChoseToStay === true);
         setClinicCompletionSeen(saved.worldFlags.clinicCompletionSeen === true);
+        setAct1ChapterFinaleSeen(saved.worldFlags.act1ChapterFinaleSeen === true);
+        setAct1EndCardSeen(saved.worldFlags.act1EndCardSeen === true);
+        setAct1ChapterFinaleIndex(
+          saved.worldFlags.act1ChapterFinaleSeen === true
+            ? null
+            : typeof saved.worldFlags.act1ChapterFinaleIndex === "number"
+              ? saved.worldFlags.act1ChapterFinaleIndex
+              : null,
+        );
         if (!solRuntimeTestActiveRef.current) {
           if (recyclingCompletionPending(saved.construction)) {
             setRecyclingStoryIndex(0);
@@ -632,10 +644,94 @@ export default function VillagePrototype() {
     if (nextIndex < clinicCompletionDialogue.length) { setClinicStoryIndex(nextIndex); return; }
     constructionWriteRef.current = true; setConstructionBusy(true); setConstructionError("");
     try {
-      const snapshot: SaveStateV1 = { ...latestSaveRef.current, worldFlags: { ...latestSaveRef.current.worldFlags, clinicCompletionSeen: true } };
-      await saveSaveState(snapshot, true); latestSaveRef.current = snapshot; setClinicCompletionSeen(true); setClinicStoryIndex(null);
+      const snapshot: SaveStateV1 = {
+        ...latestSaveRef.current,
+        worldFlags: {
+          ...latestSaveRef.current.worldFlags,
+          clinicCompletionSeen: true,
+          act1ChapterFinaleSeen: false,
+          act1ChapterFinaleIndex: 0,
+          act1EndCardSeen: false,
+        },
+      };
+      await saveSaveState(snapshot, true);
+      latestSaveRef.current = snapshot;
+      setClinicCompletionSeen(true);
+      setAct1ChapterFinaleSeen(false);
+      setAct1EndCardSeen(false);
+      setAct1ChapterFinaleIndex(0);
+      setClinicStoryIndex(null);
     } catch { setConstructionError("Det gick inte att spara klinikens avslutning. Försök igen."); }
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
+  }
+
+  async function advanceAct1ChapterFinale() {
+    if (act1ChapterFinaleIndex === null || !latestSaveRef.current || constructionWriteRef.current) return;
+    const nextIndex = act1ChapterFinaleIndex + 1;
+    constructionWriteRef.current = true;
+    setConstructionBusy(true);
+    setConstructionError("");
+    try {
+      if (nextIndex < act1ChapterFinaleDialogue.length) {
+        const snapshot: SaveStateV1 = {
+          ...latestSaveRef.current,
+          worldFlags: {
+            ...latestSaveRef.current.worldFlags,
+            act1ChapterFinaleSeen: false,
+            act1ChapterFinaleIndex: nextIndex,
+            act1EndCardSeen: false,
+          },
+        };
+        await saveSaveState(snapshot, true);
+        latestSaveRef.current = snapshot;
+        setAct1ChapterFinaleIndex(nextIndex);
+        return;
+      }
+      const snapshot: SaveStateV1 = {
+        ...latestSaveRef.current,
+        worldFlags: {
+          ...latestSaveRef.current.worldFlags,
+          act1ChapterFinaleSeen: true,
+          act1ChapterFinaleIndex: undefined,
+          act1EndCardSeen: false,
+        },
+      };
+      await saveSaveState(snapshot, true);
+      latestSaveRef.current = snapshot;
+      setAct1ChapterFinaleSeen(true);
+      setAct1ChapterFinaleIndex(null);
+    } catch {
+      setConstructionError("Det gick inte att spara kapitelfinalen. Försök igen.");
+    } finally {
+      constructionWriteRef.current = false;
+      setConstructionBusy(false);
+    }
+  }
+
+  async function acknowledgeAct1EndCard() {
+    if (!latestSaveRef.current || constructionWriteRef.current) return;
+    constructionWriteRef.current = true;
+    setConstructionBusy(true);
+    setConstructionError("");
+    try {
+      const snapshot: SaveStateV1 = {
+        ...latestSaveRef.current,
+        worldFlags: {
+          ...latestSaveRef.current.worldFlags,
+          act1ChapterFinaleSeen: true,
+          act1ChapterFinaleIndex: undefined,
+          act1EndCardSeen: true,
+        },
+      };
+      await saveSaveState(snapshot, true);
+      latestSaveRef.current = snapshot;
+      setAct1EndCardSeen(true);
+    } catch {
+      setConstructionError("Det gick inte att spara kapitelavslutet. Försök igen.");
+    } finally {
+      constructionWriteRef.current = false;
+      setConstructionBusy(false);
+    }
   }
 
   function replayClinicStoryMoment() { setParentMenuOpen(false); setConstructionDialogueId(null); setClinicStoryReplayIndex(0); }
@@ -1093,6 +1189,14 @@ export default function VillagePrototype() {
   const clinicStoryReplayLine = clinicStoryReplayIndex === null ? null : clinicCompletionDialogue[clinicStoryReplayIndex];
   const clinicSpeakerName = clinicStoryLine?.speaker === "Barnet" ? childName || "Barnet" : clinicStoryLine?.speaker ?? "";
   const clinicReplaySpeakerName = clinicStoryReplayLine?.speaker === "Barnet" ? childName || "Barnet" : clinicStoryReplayLine?.speaker ?? "";
+  const act1ChapterFinaleLine = act1ChapterFinaleIndex === null ? null : act1ChapterFinaleDialogue[act1ChapterFinaleIndex];
+  const act1ChapterFinaleSpeakerName = act1ChapterFinaleLine?.speaker === "Barnet"
+    ? childName || "Barnet"
+    : act1ChapterFinaleLine?.speaker === "Hunden"
+      ? dogName || "Hunden"
+      : act1ChapterFinaleLine?.speaker ?? "";
+  // TEMP placeholder until the accepted Act 1 ensemble Story Moment is produced from canonical references.
+  const act1ChapterFinaleImage = "/assets/village/story-moments/sol-clinic-complete.png";
   const bakeryStoryReplayLine = bakeryStoryReplayIndex === null ? null : bakeryCompletionDialogue[bakeryStoryReplayIndex];
   const bakerySpeakerName = bakeryStoryLine?.speaker === "Barnet" ? childName || "Barnet" : bakeryStoryLine?.speaker ?? "";
   const bakeryReplaySpeakerName = bakeryStoryReplayLine?.speaker === "Barnet" ? childName || "Barnet" : bakeryStoryReplayLine?.speaker ?? "";
@@ -1176,7 +1280,7 @@ export default function VillagePrototype() {
 
   return <section className="prototype-shell">
     <header className="prototype-header"><div className="prototype-brand-row"><button className="prototype-brand-button" type="button" onClick={() => setMainMenuOpen((open) => !open)} aria-expanded={mainMenuOpen} aria-haspopup="menu" aria-label="Öppna SysselCraft-menyn"><Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="" width={360} height={124} priority /></button>{mainMenuOpen && <div className="main-menu-popover" role="menu"><button className="parent-menu-button" role="menuitem" type="button" onClick={() => { setMainMenuOpen(false); setParentMenuOpen(true); }}>🔐 Vuxenläge</button></div>}</div><div className="resource-hud" aria-label="Resurser"><button className="dog-hud-button" type="button" onClick={() => setRoomOpen(true)} aria-label="Mitt rum" title="Mitt rum">🏠</button>{dogName && <button className="dog-hud-button" type="button" onClick={openDogHome} aria-label={`Besök ${dogName}`} title={`Besök ${dogName}`}>🐶</button>}<strong>💎 {backendWallet?.diamonds ?? (backendWalletExpected === false ? diamonds : "…")}</strong><strong>🪙 {backendWallet?.sysselBux ?? (backendWalletExpected === false ? sysselBux : "…")}</strong></div></header>
-    <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>{(clinicCompletionSeen || construction.revealed.clinic >= 4) && <button type="button" className="secondary-button" style={{ position:"absolute", right:16, bottom:54, zIndex:25 }} onClick={() => router.push("/act2")}>🌲 Stigen till sjön</button>}
+    <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>{act1EndCardSeen && <button type="button" className="secondary-button" style={{ position:"absolute", right:16, bottom:54, zIndex:25 }} onClick={() => router.push("/act2")}>🌲 Stigen till sjön</button>}
     {!solRuntimeTestActive && <>
     {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`} onClick={dogHomeShowcase ? () => { setDogHomeShowcase(false); setDogHomeOpen(false); } : undefined}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={(event) => { event.stopPropagation(); setDogHomeShowcase(false); setDogHomeOpen(false); }}>← Till byn</button>{!dogHomeShowcase && line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Visa mig!"}</button></div>}</div>; })()}
     {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum" onClick={() => { if (roomShowcase) { setRoomShowcase(false); setRoomOpen(false); } }}>
@@ -1251,6 +1355,9 @@ export default function VillagePrototype() {
     {miraStoryReplayIndex !== null && miraStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryReplayLine.speaker === "Barnet" ? "child" : miraStoryReplayLine.speaker.toLowerCase()}`}>{miraReplaySpeakerName}</span><p>{miraReplayText}</p><button className="primary-button dialogue-next" onClick={advanceMiraStoryReplay}>{miraStoryReplayIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {clinicStoryIndex !== null && clinicStoryLine && <div className="story-moment" role="presentation"><Image src={clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"} alt="" fill priority sizes="100vw" /></div>}
     {clinicStoryIndex !== null && clinicStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Sols klinik är färdig"><span className={`dialogue-speaker henning-story-speaker ${clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker.toLowerCase()}`}>{clinicSpeakerName}</span><p>{clinicStoryLine.text}</p><button className="primary-button dialogue-next" onClick={advanceClinicStory}>{clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
+    {act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="story-moment" role="presentation"><Image src={act1ChapterFinaleImage} alt="" fill priority sizes="100vw" /></div>}
+    {act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byn lever igen"><span className={`dialogue-speaker henning-story-speaker ${act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker.toLowerCase()}`}>{act1ChapterFinaleSpeakerName}</span><p>{act1ChapterFinaleLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceAct1ChapterFinale()}>{constructionBusy ? "Sparar…" : act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {act1ChapterFinaleSeen && !act1EndCardSeen && act1ChapterFinaleIndex === null && <div role="dialog" aria-modal="true" aria-label="Slut på första kapitlet" style={{ position:"fixed", inset:0, zIndex:150, display:"grid", placeItems:"center", background:"#050706", color:"white", textAlign:"center", padding:24 }}><div><h1 style={{ margin:0, fontSize:"clamp(2rem, 7vw, 4.5rem)", letterSpacing:".04em" }}>SLUT PÅ FÖRSTA KAPITLET</h1><button className="primary-button" type="button" disabled={constructionBusy} style={{ marginTop:28 }} onClick={() => void acknowledgeAct1EndCard()}>{constructionBusy ? "Sparar…" : "Tillbaka till byn"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></div>}
     {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="story-moment" role="presentation"><Image src={clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"} alt="" fill priority sizes="100vw" /></div>}
     {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Sols färdiga klinik"><span className={`dialogue-speaker henning-story-speaker ${clinicStoryReplayLine.speaker === "Barnet" ? "child" : clinicStoryReplayLine.speaker.toLowerCase()}`}>{clinicReplaySpeakerName}</span><p>{clinicStoryReplayLine.text}</p><button className="primary-button dialogue-next" onClick={advanceClinicStoryReplay}>{clinicStoryReplayIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {bakeryStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png" alt="" fill priority sizes="100vw" /></div>}
