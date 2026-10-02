@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const component = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+const saveStateSource = fs.readFileSync(new URL("../src/game/saveState.ts", import.meta.url), "utf8");
 const styles = fs.readFileSync(new URL("../src/app/globals.css", import.meta.url), "utf8");
 const game = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
 const backend = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
@@ -102,6 +103,8 @@ assert.match(component, /SLUT PÅ FÖRSTA KAPITLET/);
 assert.match(component, /sol-clinic-complete\.png/, "Act 1 finale must use the explicit temporary placeholder until approved ensemble art exists");
 assert.match(component, /act1ChapterFinaleIndex !== null && act1ChapterFinaleLine/, "Act 1 finale must render one persisted reply at a time");
 assert.match(component, /act1ChapterFinaleSeen && !act1EndCardSeen/, "chapter-one end card must follow the ensemble finale exactly once");
+assert.match(saveStateSource, /legacyAct1ChapterAlreadyAcknowledged = clinicCompletionSeen && !hasAct1ChapterFinaleState/, "old Clinic-complete saves must be migrated past the newly added finale");
+assert.match(saveStateSource, /act1EndCardSeen =\s*legacyAct1ChapterAlreadyAcknowledged \|\| candidate\.worldFlags\?\.act1EndCardSeen === true/, "legacy saves must regain lake access without replaying the new chapter ending");
 assert.match(component, /saved\.construction\.revealed\.clinic >= 4 && saved\.worldFlags\.clinicCompletionSeen !== true[\s\S]*setClinicStoryIndex\(0\)/, "unfinished Clinic finale must resume after restart");
 assert.match(component, /clinicCompletionSeen: true,[\s\S]*act1ChapterFinaleSeen: false,[\s\S]*act1ChapterFinaleIndex: 0,[\s\S]*act1EndCardSeen: false/, "Clinic completion must persist the new Act 1 finale as the next restart-safe story");
 assert.match(component, /await saveSaveState\(snapshot, true\);[\s\S]*setClinicCompletionSeen\(true\);[\s\S]*setAct1ChapterFinaleIndex\(0\);[\s\S]*setClinicStoryIndex\(null\)/, "Clinic finale must hand off to the Act 1 chapter finale only after save succeeds");
