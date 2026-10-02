@@ -437,7 +437,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "boathouse:14",
     "title": "14/16 · Den gamla slipen",
-    "image": "/assets/village/story-moments/act2/boathouse/boat-ramp.png",
+    "image": "/assets/village/story-moments/act2/boathouse/linus-helping.png",
     "body": [
       "Linus kommer ner, går längs spåren och stannar vid resterna av den gamla mekanismen.",
       "Linus: Det här är inte bara spår. Här har suttit en slipvagn.",
