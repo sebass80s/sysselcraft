@@ -128,6 +128,7 @@ export default function VillagePrototype() {
   const attention = residentAttention(construction);
   const hostRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<VillageGameHandle | null>(null);
+  const browserDebugModeRef = useRef<"act1-finale" | "fresh-start" | null>(null);
   const restoredIntroCompleteRef = useRef(false);
   const restoredDogVisibleRef = useRef(false);
   const childNameInputRef = useRef<HTMLInputElement>(null);
@@ -230,9 +231,14 @@ export default function VillagePrototype() {
       let saved = await loadSaveState(true);
       if (cancelled) return;
 
-      const debugAct1Finale = !Capacitor.isNativePlatform()
-        && new URLSearchParams(window.location.search).get("debug") === "act1-finale";
-      if (debugAct1Finale) {
+      const browserDebug = !Capacitor.isNativePlatform()
+        ? new URLSearchParams(window.location.search).get("debug")
+        : null;
+      if (browserDebug === "fresh-start") {
+        browserDebugModeRef.current = "fresh-start";
+        saved = createDefaultSaveState();
+      } else if (browserDebug === "act1-finale") {
+        browserDebugModeRef.current = "act1-finale";
         const base = saved ?? createDefaultSaveState();
         saved = {
           ...base,
@@ -266,8 +272,6 @@ export default function VillagePrototype() {
             act1EndCardSeen: false,
           },
         };
-        await saveSaveState(saved, true);
-        window.history.replaceState({}, "", window.location.pathname);
       }
 
       if (saved) {
@@ -371,7 +375,7 @@ export default function VillagePrototype() {
   }, []);
 
   useEffect(() => {
-    if (!saveReady || resettingSave || constructionWriteRef.current || solRuntimeTestActiveRef.current) return;
+    if (!saveReady || resettingSave || constructionWriteRef.current || solRuntimeTestActiveRef.current || browserDebugModeRef.current !== null) return;
     const snapshot: SaveStateV1 = {
       version: 1, progression,
       diamonds, sysselBux, introComplete, dialogueOpen, dialogueIndex, childName, dogName, dogVisible, construction,
