@@ -640,6 +640,12 @@ assert.ok(
 assert.ok(page.includes("state.contributionLineIndex"), "contribution Story Moments must render from persisted line state");
 assert.ok(page.includes("state.completionLineIndex"), "completion reactions must render from persisted line state");
 assert.ok(page.includes("state.finaleLineIndex"), "finale beats must render from persisted line state");
+
+assert.ok(page.includes("revealImageBeforeNext={state.openingLineIndex === opening.body.length - 1}"), "opening beats must reveal full art after their last panel");
+assert.ok(page.includes("revealImageBeforeNext={alveImageComplete}"), "Alve intro must reveal art after the last panel using each image");
+assert.ok(page.includes("revealImageBeforeNext={state.finaleLineIndex + 1 >= activeFinaleBeat.body.length}"), "finale beats must reveal full art after their last panel");
+assert.ok(page.includes("revealImageBeforeNext={state.completionLineIndex + 1 >= activeCompletionBeat.body.length}"), "completion beats must reveal full art after their last panel");
+assert.ok(page.includes("revealImageBeforeNext={state.contributionLineIndex + 1 >= activeContributionBeat.body.length}"), "contribution beats must reveal full art after their last panel");
 assert.ok(page.includes("contributionTurnInOpen && contributionCandidate"), "backend polling must not auto-open contribution Story Moments");
 assert.ok(page.includes("setContributionTurnInOpen(false);"), "finishing one beat must close turn-in so backlog cannot auto-chain");
 assert.ok(page.includes('className="act2-project-status"'), "Act 2 must keep a compact active-project status");
