@@ -676,7 +676,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     >
       <p>{purchaseGateCopy.text}</p>
       <p>{purchaseGateCopy.detail}</p>
-      <a className="primary-button dialogue-next" href="/">Till Mira i byn</a>
+      <a
+        className="primary-button dialogue-next"
+        href={boathousePurchaseGate ? "/?act2-purchase=boathouse" : jettyPurchaseGate ? "/?act2-purchase=dock" : "/?act2-purchase=motorboat"}
+      >
+        Till Mira i byn
+      </a>
     </StoryMoment>}
     {namingRequired && <StoryMoment
       speaker="Alve"
