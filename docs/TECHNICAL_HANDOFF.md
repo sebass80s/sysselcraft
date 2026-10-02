@@ -684,3 +684,23 @@ Stugan's “En stund till” scene is a world revisit, not project completion. A
 Story-card presentation is locked: **one nameplate + one reply/narration unit + one click**. Do not batch multiple speakers into one card to reduce clicks. Anti-popcorn work belongs in the authored dialogue. First rhythm passes have been made across Båthuset, Stugan, Bryggan and Motorbåten without changing story order, gates, images or progression.
 
 Automated contracts now explicitly protect shared production/debug rendering, non-persistent debug Act 2 state, single-speaker contribution cards and Cabin revisit semantics. A fresh positive `npm run verify` result is still required after the latest hardening batch.
+
+## Act 1 chapter-final transition checkpoint — 2026-10-02
+
+Act 1 now has a persisted chapter-ending flow layered after the existing Clinic finale without changing Clinic construction/progression semantics.
+
+Canonical runtime order:
+1. Clinic completion dialogue finishes and persists `clinicCompletionSeen=true`.
+2. `act1ChapterFinaleDialogue` plays once.
+3. Finale line progress is restart-safe through persisted Act 1 finale state.
+4. Completing the ensemble scene exposes a black **SLUT PÅ FÖRSTA KAPITLET** card.
+5. Acknowledging that card persists `act1EndCardSeen=true`.
+6. Only then is **Stigen till sjön** exposed as the deliberate Act 1→Act 2 transition.
+7. Production `/act2` independently requires the chapter-one acknowledgement before establishing its Act 2 entry/baseline state.
+8. `OPEN-001 · Valpen sticker` remains the first fiction beat of Act 2.
+
+Legacy-save rule: saves that had already completed Clinic before this feature existed normalize as having already acknowledged the new Act 1 finale/end card. They must not suddenly replay newly authored Act 1 story on boot.
+
+The current Act 1 ensemble Story Moment image is intentionally a placeholder: `/assets/village/story-moments/sol-clinic-complete.png`. Do not generate or replace the final ensemble image until Kalle provides the canonical character references.
+
+Verification: GitHub Actions **#1497 SUCCESS** on `32bd71a3fdc776941614c8f4b037b60ce140eedc`.
