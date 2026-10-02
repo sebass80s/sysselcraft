@@ -4,8 +4,10 @@ const activeStoryOverlays = new Set<symbol>();
 
 function publishStoryOverlayVisibility() {
   if (typeof window === "undefined") return;
+  const active = activeStoryOverlays.size > 0;
+  document.body.dataset.storyOverlayActive = active ? "true" : "false";
   window.dispatchEvent(new CustomEvent(STORY_OVERLAY_VISIBILITY_EVENT, {
-    detail: { active: activeStoryOverlays.size > 0 },
+    detail: { active },
   }));
 }
 
