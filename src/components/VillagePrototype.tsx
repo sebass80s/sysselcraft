@@ -275,6 +275,7 @@ export default function VillagePrototype() {
       }
 
       if (saved) {
+        latestSaveRef.current = saved;
         constructionRef.current = saved.construction;
         setConstruction(saved.construction);
         restoredIntroCompleteRef.current = saved.introComplete;
