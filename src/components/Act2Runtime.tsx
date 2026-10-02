@@ -56,6 +56,8 @@ type Act2RuntimeProps = {
   productionEnabled?: boolean;
 };
 
+const ACT2_DEBUG_LAB_ENABLED = process.env.NODE_ENV !== "production";
+
 export function Act2Runtime({ debug = false, productionEnabled = true }: Act2RuntimeProps) {
   const router = useRouter();
   const hostRef = useRef<HTMLDivElement>(null);
@@ -515,6 +517,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }
 
   const openStoryDebugLab = () => {
+    if (!ACT2_DEBUG_LAB_ENABLED) return;
     if (debugHoldTimerRef.current) {
       clearTimeout(debugHoldTimerRef.current);
       debugHoldTimerRef.current = null;
@@ -601,7 +604,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       }))}>Ge testköp</button>
       <span style={{ alignSelf: "center", color: "white", fontSize: 12, fontWeight: 800 }}>DEBUG · production UI</span>
     </div>}
-    {!debug && (<button
+    {!debug && ACT2_DEBUG_LAB_ENABLED && (<button
       type="button"
       aria-label="Akt 2 · Sjön"
       title="Akt 2 · Sjön"
@@ -817,7 +820,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         </button>
       </div>
     </div>}
-    {backendSyncError && <div role="status" style={{ position:"absolute", right:16, top:16, zIndex:30, background:"rgba(0,0,0,.65)", color:"white", padding:"8px 12px", borderRadius:10 }}>{backendSyncError}</div>}
+    {backendSyncError && <div role="status" className="act2-sync-status">{backendSyncError}</div>}
     {hudVisible && state.selectedProject && <div className="act2-project-status" aria-label="Aktivt projekt">
       <strong>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · {state.projects[state.selectedProject].contributions}/16</strong>
     </div>}
