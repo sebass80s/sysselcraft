@@ -345,7 +345,7 @@ export const MOTORBOAT_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
   {
     "id": "motorboat:07",
     "title": "7/16 · Paketet kommer",
-    "image": "/assets/village/story-moments/act2/motorboat/03-mira-spare-parts-order.png",
+    "image": "/assets/village/story-moments/act2/motorboat/02-linus-inspects-the-boat.png",
     "body": [
       "Nästa gång ni kommer till båthuset ligger ett paket på arbetsbänken. Alve stannar mitt i steget.",
       "Alve: Är det där…",
