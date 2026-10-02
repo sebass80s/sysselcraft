@@ -5772,57 +5772,205 @@ This should be the moment where both Nova and the player understand that a good 
 
 ### Act 3 post-family-day resolution — LOCKED 2026-10-02
 
-Immediately after the family-day break and Nova's line **“Men ni hade ju kul.”**, Nova leaves the scene because she cannot stay inside the collapsed reunion fantasy. This may be staged as her walking or running away from the family-day setting.
+Immediately after the family-day break and Nova's line **“Men ni hade ju kul.”**, Nova leaves the scene because she cannot stay inside the collapsed reunion fantasy. Barnet follows her. Alve does not dominate this resolution; he remains behind initially so the core emotional scene belongs to **Barnet + Nova**.
 
-Barnet follows her.
+#### Canonical resolution scene
 
-Alve should not dominate this resolution. He may remain behind briefly or arrive later, but the core emotional scene belongs to **Barnet + Nova**.
+Barnet finds Nova a short distance from the park, sitting by the water.
 
-The dramatic progression should be:
-1. frustration that the plan “worked” but did not produce reunion;
-2. collapse of Nova's perfection logic;
-3. explicit connection to the day she believed she caused the divorce;
-4. realization that believing it was her fault also gave her the illusion that she could fix it;
-5. release of that responsibility.
+Her headphones are still around her neck. She has not put them on.
 
-Preferred emotional exchange:
+Barnet sits down a little way beside her.
 
 > **Nova:** “Vi gjorde ju allt rätt.”  
 > **Barnet:** “Ja.”  
 > **Nova:** “Allt blev som det skulle.”  
-> **Barnet:** “Ja.”  
+> **Barnet:** “Ja.”
+
+Nova looks back toward the park.
+
 > **Nova:** “Så varför blev inte de det?”
 
-Later:
+Barnet says nothing.
 
-> **Nova:** “Jag tänkte att om jag bara gjorde det bättre den här gången…”  
-> **Barnet:** “Den här gången?”  
-> **Nova:** “Den dagen de berättade. Jag hade varit så jävla jobbig.”  
-> **Nova:** “Jag skrek. Smällde i dörren. Allt.”  
-> **Nova:** “Och sen på kvällen sa de att pappa skulle flytta.”
+Nova picks up a small stone and throws it into the water.
 
-Then:
+> **Nova:** “Jag fattar inte.”
 
-> **Nova:** “Jag trodde att om det var mitt fel så kunde jag fixa det.”  
+Another stone.
+
+> **Nova:** “De hade kul.”  
+> **Barnet:** “Ja.”  
+> **Nova:** “Pappa fick mamma att skratta.”  
+> **Barnet:** “Jag såg det.”  
+> **Nova:** “Hon skrattade sådär som hon brukade.”
+
+Nova falls quiet.
+
+> **Nova:** “Jag tänkte verkligen att…”  
+> **Barnet:** “Vadå?”  
+> **Nova:** “Att om jag bara gjorde det bättre den här gången…”  
+> **Barnet:** “Den här gången?”
+
+Nova pulls her knees up.
+
+> **Nova:** “Den dagen de berättade.”  
+> **Nova:** “Jag hade varit så jävla jobbig.”  
+> **Nova:** “Jag skrek på pappa.”  
+> **Nova:** “Mamma blev arg.”  
+> **Nova:** “Jag smällde igen dörren så hårt att en tavla ramlade ner.”  
+> **Nova:** “Jag tror faktiskt den gick sönder.”  
+> **Barnet:** “Okej.”  
+> **Nova:** “Och sen på kvällen satte de sig med mig.”  
+> **Nova:** “Och sa att pappa skulle flytta.”
+
+A pause.
+
+> **Nova:** “Så jag tänkte att det kanske var därför.”  
+> **Barnet:** “För att du blev arg?”
+
+Nova shrugs.
+
+> **Nova:** “Jag vet att det låter dumt.”  
+> **Barnet:** “Det sa jag inte.”
+
+Nova nudges the gravel with her shoe.
+
+> **Nova:** “Jag trodde att om det var mitt fel så kunde jag fixa det.”
+
+Barnet looks at her.
+
 > **Barnet:** “Tror du det nu?”
 
-Nova should reach the realization herself:
+Nova looks out over the lake for a long time.
 
-> **Nova:** “Nej.”  
+> **Nova:** “Nej.”
+
+A short pause.
+
 > **Nova:** “Jag tror bara att jag önskade att det var mitt fel.”  
 > **Barnet:** “Varför?”  
 > **Nova:** “För då hade jag kunnat göra något åt det.”
 
-Final resolution remains:
+Barnet does not answer for her.
+
+Nova looks back toward the park. In the colder post-fantasy view, the crooked decorations, uneven paint and handmade repairs remain visible.
+
+> **Nova:** “Jag kunde ha varit snällare.”  
+> **Barnet:** “Ja.”
+
+Nova looks sharply at Barnet.
+
+> **Nova:** “Va?”  
+> **Barnet:** “Du kunde säkert ha varit snällare.”  
+> **Barnet:** “Jag med.”
+
+Nova lets out a small laugh despite herself, then becomes serious again.
+
+> **Nova:** “Men de hade väl ändå…”
+
+She does not finish the sentence.
+
+Barnet waits.
+
+Nova slowly shakes her head.
 
 > **Nova:** “Det var deras grej.”  
 > **Barnet:** “Ja.”  
-> **Nova:** “Inte min.”
+> **Nova:** “Inte min.”  
+> **Barnet:** “Nej.”
 
-Barnet's role is not to “fix” Nova or explain divorce. As in Act 2, Barnet's importance is staying present long enough for the other child to find their own way forward.
+The color begins to return gradually, not to the earlier idealized gold but to a calmer, more truthful palette. The imperfections remain.
 
-Visual follow-through: the colder, greyer POV may remain during the first part of this scene. As Nova releases the self-blame, color can return gradually into the calmer, more neutral final palette already defined for Act 3.
+Nova looks back toward the park.
 
+> **Nova:** “Vi gjorde ändå ett ganska bra jobb.”  
+> **Barnet:** “Ja.”
+
+Nova squints at one of the decorations.
+
+> **Nova:** “Den där hänger jättesnett.”  
+> **Barnet:** “Den har hängt så hela dagen.”  
+> **Nova:** “Va?”  
+> **Barnet:** “Japp.”
+
+Nova laughs for real.
+
+Do not end the emotional sequence here. After Nova has reached the realization herself, **her mother comes to find her**.
+
+The mother has understood what Nova was trying to do with the family day. She must not arrive early enough to hand Nova the realization; Nova owns that. The mother's role is to confirm, comfort and remove any remaining ambiguity about responsibility.
+
+Preferred continuation:
+
+Nova hears footsteps behind her.
+
+She turns.
+
+Her mother is standing a short distance away.
+
+Nova looks down.
+
+> **Nova:** “Förlåt.”
+
+Her mother walks over and sits beside her.
+
+> **Mamman:** “För vad?”  
+> **Nova:** “För allt det här.”
+
+Nova gestures vaguely toward the park.
+
+Her mother looks back at it, then at Nova.
+
+> **Mamman:** “Jag tror jag förstod vad du försökte göra.”
+
+Nova says nothing.
+
+> **Mamman:** “Det var väldigt fint.”  
+> **Nova:** “Det funkade inte.”
+
+Her mother pauses.
+
+> **Mamman:** “Nej.”
+
+Do not soften this into false hope.
+
+Nova looks down.
+
+> **Mamman:** “Men det var inte för att du gjorde något fel.”
+
+Nova looks at her.
+
+> **Mamman:** “Och den där dagen heller.”  
+> **Nova:** “Vilken dag?”  
+> **Mamman:** “Du vet vilken.”
+
+Nova's face tightens.
+
+Her mother moves closer.
+
+> **Mamman:** “Du kunde ha skrikit hela dagen.”  
+> **Mamman:** “Du kunde ha smällt igen varenda dörr vi hade.”  
+> **Mamman:** “Det hade fortfarande inte varit därför.”
+
+Nova starts to cry.
+
+Her mother opens her arms.
+
+Nova leans into her and they hug.
+
+Keep the hug quiet. No speech is required immediately.
+
+If one final line is used, prefer something simple and non-therapeutic, such as:
+
+> **Mamman:** “Du behöver aldrig laga oss.”
+
+Nova holds on a little tighter.
+
+Barnet remains nearby but gives them space.
+
+This maternal beat must confirm the thematic truth without taking it away from Nova: **Nova first realizes “Det var deras grej. Inte min.” Then her mother confirms that Nova was never responsible for causing or repairing the divorce.**
+
+Visual follow-through: the calmer post-resolution palette continues through the hug. Do not restore the earlier fantasy warmth. The scene should feel safe, real and imperfect rather than magically repaired.
 
 ### Act 3 final visual POV shift — LOCKED 2026-10-02
 
