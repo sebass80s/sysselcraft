@@ -5770,6 +5770,37 @@ Then preserve Nova's hinge line:
 
 This should be the moment where both Nova and the player understand that a good day together was never proof that the marriage would return. The family-day plan succeeds; the reunion fantasy does not.
 
+### Act 3 final visual POV shift — LOCKED 2026-10-02
+
+The family-day climax should use **Nova's subjective visual perspective** to reinforce the emotional turn.
+
+Before the break:
+- the scene is warm, golden and lively;
+- faces feel soft and youthful;
+- the parents can appear slightly idealized through Nova's hopeful perception;
+- the overall image should feel close to a remembered “perfect family day”.
+
+At the ordinary handoff line:
+
+> **Mamman:** “Det här var jättetrevligt.”  
+> **Mamman:** “Men nu måste Nova och jag åka hem.”  
+> **Mamman:** “Vi ses vid överlämningen nästa vecka.”
+
+the palette shifts noticeably colder and greyer. Do not make it a horror effect or hard black-and-white snap; it is a perceptual collapse of Nova's reunion fantasy.
+
+In the colder view:
+- the adults may look subtly older, more tired and more ordinary;
+- lighting becomes flatter and less nostalgic;
+- the scene should feel like the same reality without Nova's hopeful filter.
+
+Nova herself may retain slightly more color than the environment, emphasizing that the shift is happening in her perception rather than representing a literal world-state change.
+
+After Nova reaches the realization that the divorce was not hers to fix, color can gradually return, but **not to the same idealized warmth as before**. The final visual state should feel calmer, more neutral and real.
+
+Visual progression shorthand:
+**nostalgia → cold shower → reality → new calm.**
+
+
 
 
 Visual/story contrast across acts:
