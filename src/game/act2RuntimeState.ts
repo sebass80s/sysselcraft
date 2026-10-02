@@ -13,6 +13,7 @@ export type Act2ProjectState = {
 export type Act2RuntimeState = {
   version: 1;
   entered: boolean;
+  productionEntryCommitted: boolean;
   openingIndex: number;
   openingLineIndex: number;
   openingComplete: boolean;
@@ -48,6 +49,7 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
   return {
     version: 1,
     entered: false,
+    productionEntryCommitted: false,
     openingIndex: 0,
     openingLineIndex: 0,
     openingComplete: false,
@@ -145,6 +147,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   const normalized: Act2RuntimeState = {
     version: 1,
     entered: candidate.entered === true,
+    productionEntryCommitted: candidate.productionEntryCommitted === true,
     openingIndex: Number.isInteger(candidate.openingIndex)
       ? Math.max(0, Math.min(4, candidate.openingIndex as number))
       : 0,
@@ -231,6 +234,27 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   if (!normalized.act2Complete) normalized.endCardSeen = false;
 
   return normalized;
+}
+
+export function prepareAct2ProductionEntry(state: Act2RuntimeState): Act2RuntimeState {
+  const normalized = normalizeAct2RuntimeState(state);
+  if (normalized.productionEntryCommitted) {
+    return normalized.entered ? normalized : { ...normalized, entered: true };
+  }
+
+  // Before release, the locked production route could still persist entered/baseline.
+  // Treat any state without this marker as pre-release residue and establish the
+  // real Act 2 journey from a clean baseline. Backend-owned purchase flags are
+  // preserved and will be reconciled again from authoritative world_flags.
+  const clean = createDefaultAct2RuntimeState();
+  return {
+    ...clean,
+    entered: true,
+    productionEntryCommitted: true,
+    jettyLifebuoyOwned: normalized.jettyLifebuoyOwned,
+    boathouseSteeringWheelOwned: normalized.boathouseSteeringWheelOwned,
+    motorboatPartsOwned: normalized.motorboatPartsOwned,
+  };
 }
 
 export function totalAct2Contributions(state: Act2RuntimeState) {
