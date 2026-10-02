@@ -5723,6 +5723,35 @@ Act 3 should center on a child whose parents have separated.
 
 The parents **do not reunite**. This is a hard story rule.
 
+**Approved emotional core — 2026-10-02**
+
+The Act 3 protagonist may be open about believing the divorce was their fault. This does not need to be hidden as a late reveal.
+
+The key childhood logic is concrete: the separation announcement happened on the same day the child had been unusually difficult, angry or defiant. The child therefore connected the events and concluded that their behavior caused the family to break apart.
+
+That mistaken causal belief drives the act:
+- if being “bad” caused the separation, being perfect might undo it;
+- the child becomes highly invested in doing everything right;
+- restoration work and the planned shared family day become attempts to repair the parents' relationship;
+- mistakes feel disproportionately threatening because they seem capable of ruining the family again.
+
+A canonical emotional formulation for the later story is:
+
+> **Nilo:** “Jag trodde att om det var mitt fel så kunde jag fixa det.”  
+> **Barnet:** “Och nu?”  
+> **Nilo:** “Nu tror jag bara att vuxna gör saker som barn inte kan styra.”
+
+The end-state must not be that the child understands every adult reason for the divorce. The important realization is narrower and more age-appropriate: the divorce was beyond the child's control and was never caused by one bad day.
+
+Preferred final thematic exchange:
+
+> **Nilo:** “Det var deras grej.”  
+> **Barnet:** “Ja.”  
+> **Nilo:** “Inte min.”
+
+This is the approved Act 3 emotional core. Preserve it when the detailed manuscript is authored.
+
+
 The child initially believes, explicitly or implicitly, that if the right place, tradition or shared moment can be rebuilt well enough, the family might become what it was before. The restoration/progression structure should therefore deliberately create tension with the player's learned SysselCraft logic: if broken things can be repaired, perhaps the family can too.
 
 That belief must not be validated.
