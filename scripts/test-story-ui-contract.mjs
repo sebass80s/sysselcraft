@@ -59,6 +59,18 @@ assert.ok(
   "DialogueCard must render its nameplate before dialogue body content",
 );
 
+assert.match(
+  runner,
+  /revealImageBeforeNext/,
+  "StoryRunner must expose the clean-image pause for final panels",
+);
+const storyMomentSource = read("src/components/story/StoryMoment.tsx");
+assert.match(storyMomentSource, /setImageOnly\(true\)/, "StoryMoment must hide the dialogue before advancing");
+assert.match(storyMomentSource, /shared-story-image-continue/, "clean image mode must advance from the unobstructed image");
+assert.match(storyMomentSource, /presentationId/, "clean image mode must reset between authored panels");
+assert.match(css, /\.shared-story-image-continue \{[^}]*background:\s*transparent/s,
+  "clean image continuation must not visually cover the beat art");
+
 assert.match(transcript, /showSpeakers\?: boolean/, "StoryTranscript must support explicit nameplate ownership");
 assert.match(transcript, /showSpeakers && parsed\.speaker/, "StoryTranscript must honor nameplate ownership");
 assert.match(runner, /showSpeakers=\{!beat\.speaker\}/, "StoryRunner must prevent duplicate explicit + parsed nameplates");
