@@ -221,7 +221,7 @@ export async function createAct2LakeGame(
         const nextY = Phaser.Math.Clamp(this.player.y + dy * speed, 300, ACT2_WORLD.height - 8);
         if (this.isWalkable(nextX, this.player.y)) this.player.x = nextX;
         if (this.isWalkable(this.player.x, nextY)) this.player.y = nextY;
-        this.player.setFlipX(dx < 0);
+        this.player.setFlipX(dx > 0);
         this.player.setDepth(1000 + Math.round(this.player.y));
       }
 
@@ -266,7 +266,7 @@ export async function createAct2LakeGame(
 
     private facePlayerTowardAlve() {
       if (!this.player || !this.alvePlaceholder) return;
-      this.player.setFlipX(this.alvePlaceholder.x < this.player.x);
+      this.player.setFlipX(this.alvePlaceholder.x > this.player.x);
     }
 
     private isWalkable(x: number, y: number) {
