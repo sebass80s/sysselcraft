@@ -351,6 +351,34 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     }
   }
 
+  async function previousOpening() {
+    if (state.openingLineIndex > 0) {
+      await commit({ ...state, openingLineIndex: state.openingLineIndex - 1 });
+      return;
+    }
+    if (state.openingIndex > 0) {
+      const previousIndex = state.openingIndex - 1;
+      const previousBeat = ACT2_OPENING_BEATS[previousIndex];
+      await commit({
+        ...state,
+        openingIndex: previousIndex,
+        openingLineIndex: Math.max(0, previousBeat.body.length - 1),
+      });
+    }
+  }
+
+  async function previousBicycle() {
+    const previousIndex = ACT2_OPENING_BEATS.length - 1;
+    const previousBeat = ACT2_OPENING_BEATS[previousIndex];
+    await commit({
+      ...state,
+      openingComplete: false,
+      bicycleSeen: false,
+      openingIndex: previousIndex,
+      openingLineIndex: Math.max(0, previousBeat.body.length - 1),
+    });
+  }
+
   async function advanceAlve() {
     const beat = ACT2_ALVE_DIALOGUE[state.alveIntroIndex];
     const nextIndex = state.alveIntroIndex + 1;
@@ -362,6 +390,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     if (beat?.nameReveal) {
       // The next rendered Alve line now uses the permanent Alve nameplate.
     }
+  }
+
+  async function previousAlve() {
+    if (state.alveIntroIndex <= 0) return;
+    await commit({ ...state, alveIntroIndex: state.alveIntroIndex - 1 });
   }
 
   async function chooseProject(project: Act2Project) {
@@ -474,6 +507,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     ? parseStoryLine(activeCabinRevisitLine, childName)
     : null;
 
+  async function previousFinaleStory() {
+    if (state.finaleLineIndex <= 0) return;
+    await commit({ ...state, finaleLineIndex: state.finaleLineIndex - 1 });
+  }
+
   async function advanceFinaleStory() {
     if (!activeFinaleBeat) return;
     if (state.finaleLineIndex + 1 < activeFinaleBeat.body.length) {
@@ -481,6 +519,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       return;
     }
     await commit(advanceAct2Finale(state));
+  }
+
+  async function previousCompletionReaction() {
+    if (state.completionLineIndex <= 0) return;
+    await commit({ ...state, completionLineIndex: state.completionLineIndex - 1 });
   }
 
   async function advanceCompletionReaction() {
@@ -492,6 +535,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     await commit(consumeProjectCompletionReaction(state, completionProject));
   }
 
+  function previousCabinRevisit() {
+    if (cabinRevisitLineIndex <= 0) return;
+    setCabinRevisitLineIndex((index) => Math.max(0, index - 1));
+  }
+
   function advanceCabinRevisit() {
     if (cabinRevisitLineIndex + 1 < CABIN_WAITING_REACTION.body.length) {
       setCabinRevisitLineIndex((index) => index + 1);
@@ -499,6 +547,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     }
     setCabinRevisitOpen(false);
     setCabinRevisitLineIndex(0);
+  }
+
+  async function previousContributionStory() {
+    if (state.contributionLineIndex <= 0) return;
+    await commit({ ...state, contributionLineIndex: state.contributionLineIndex - 1 });
   }
 
   async function advanceContributionStory() {
@@ -661,6 +714,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: [opening.body[state.openingLineIndex] ?? opening.body[0]],
         nextLabel: state.openingIndex === ACT2_OPENING_BEATS.length - 1 && state.openingLineIndex === opening.body.length - 1 ? "Gå närmare" : "Fortsätt",
       }}
+      onPrevious={state.openingIndex > 0 || state.openingLineIndex > 0 ? () => void previousOpening() : undefined}
       onNext={() => void advanceOpening()}
       revealImageBeforeNext={state.openingLineIndex === opening.body.length - 1}
       childName={childName}
@@ -677,6 +731,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: ["Du hör någon som spikar med en hammare längre bort"],
         nextLabel: "Fortsätt",
       }}
+      onPrevious={() => void previousBicycle()}
       onNext={() => void commit({ ...state, bicycleSeen: true })}
       revealImageBeforeNext
       dialogueClassName="act2-dialogue-card"
@@ -691,6 +746,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: displayText ? [displayText] : [],
         nextLabel: state.alveIntroIndex === ACT2_ALVE_DIALOGUE.length - 1 ? "Välj projekt" : "Fortsätt",
       }}
+      onPrevious={state.alveIntroIndex > 0 ? () => void previousAlve() : undefined}
       onNext={() => void advanceAlve()}
       revealImageBeforeNext={alveImageComplete}
       dialogueClassName="act2-dialogue-card"
@@ -726,6 +782,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: activeFinalePresentation ? [activeFinalePresentation.text] : [],
         nextLabel: state.finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa",
       }}
+      onPrevious={state.finaleLineIndex > 0 ? () => void previousFinaleStory() : undefined}
       onNext={() => void advanceFinaleStory()}
       revealImageBeforeNext={state.finaleLineIndex + 1 >= activeFinaleBeat.body.length}
       dialogueClassName="act2-dialogue-card"
@@ -743,6 +800,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: activeCabinRevisitPresentation ? [activeCabinRevisitPresentation.text] : [],
         nextLabel: cabinRevisitLineIndex + 1 < CABIN_WAITING_REACTION.body.length ? "Fortsätt" : "Tillbaka",
       }}
+      onPrevious={cabinRevisitLineIndex > 0 ? previousCabinRevisit : undefined}
       onNext={advanceCabinRevisit}
       revealImageBeforeNext={cabinRevisitLineIndex + 1 >= CABIN_WAITING_REACTION.body.length}
       dialogueClassName="act2-dialogue-card"
@@ -760,6 +818,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: activeCompletionPresentation ? [activeCompletionPresentation.text] : [],
         nextLabel: state.completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten",
       }}
+      onPrevious={state.completionLineIndex > 0 ? () => void previousCompletionReaction() : undefined}
       onNext={() => void advanceCompletionReaction()}
       revealImageBeforeNext={state.completionLineIndex + 1 >= activeCompletionBeat.body.length}
       dialogueClassName="act2-dialogue-card"
@@ -806,6 +865,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       imageFit="contain"
       speaker={activeContributionPresentation?.speaker}
       speakerTone={activeContributionPresentation?.speakerTone}
+      previousLabel="Föregående"
+      onPrevious={state.contributionLineIndex > 0 ? () => void previousContributionStory() : undefined}
       nextLabel={state.contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
       onNext={() => void advanceContributionStory()}
       revealImageBeforeNext={state.contributionLineIndex + 1 >= activeContributionBeat.body.length}
