@@ -5699,3 +5699,52 @@ Locked family facts:
 Canonical Motorbåten arc: **1–4 history/diagnosis → 5–8 village support/first life → 9–12 water test/their boat → 13–16 independent proper test/homecoming → family return payoff.**
 
 Canonical Act 2 contribution count is now **64 authored contributions total: 16 Stugan + 16 Bryggan + 16 Båthuset + 16 Motorbåten.**
+
+
+## SysselCraft thematic spine — LOCKED 2026-10-02
+
+SysselCraft's recurring emotional principle is not that everything can be repaired. The game may handle heavy themes, but it should do so subtly, through story, place, behavior and implication rather than explicit explanation.
+
+Core principle:
+
+**Life can hit hard. Some things do not go back to how they were. The child still gets to move forward and build something new.**
+
+This principle should guide future acts without making the game bleak or didactic. Child-facing stories should remain adventurous, warm, funny and concrete. The heavier layer may be more legible to older children and adults than to younger players.
+
+### Act 1 thematic role
+The village can begin living again. The child learns that effort can create visible change and bring people back into the world.
+
+### Act 2 thematic role
+Alve tries to restore the old summer place and, underneath that, tries to restore a past that cannot return exactly as it was. His mother remains an intentionally understated absence. By the end, Alve has not “fixed” grief; he has stopped waiting for the old world to come back and is ready to move forward.
+
+### Act 3 direction — divorce / changing family
+
+Act 3 should center on a child whose parents have separated.
+
+The parents **do not reunite**. This is a hard story rule.
+
+The child initially believes, explicitly or implicitly, that if the right place, tradition or shared moment can be rebuilt well enough, the family might become what it was before. The restoration/progression structure should therefore deliberately create tension with the player's learned SysselCraft logic: if broken things can be repaired, perhaps the family can too.
+
+That belief must not be validated.
+
+The emotional arc is:
+- the child tries to rebuild a shared past;
+- both parents remain loving and present as parents, but they are no longer a couple;
+- the child eventually understands that this change is real and is not their responsibility to reverse;
+- the family is still a family, but in a different form;
+- the child begins building for the future rather than reconstructing the past.
+
+Preferred thematic endpoint:
+
+**A family can change without ceasing to be a family.**
+
+A useful child-facing formulation to preserve for later writing is the idea that the child may end with the realization that having two homes does not necessarily mean having “two half homes”; it may mean having two whole homes. Do not lock that exact line until the Act 3 manuscript is authored.
+
+Do not turn Act 3 into a therapy lesson, courtroom story, custody explainer or parent-villain narrative. Keep the conflict in the child's hope, disappointment and adaptation. The parents may disagree or have distance between them, but neither should be reduced to a villain merely because the relationship ended.
+
+Series-level shorthand:
+- **Act 1:** the world can change;
+- **Act 2:** the past does not always come back;
+- **Act 3:** people can choose not to remain together without choosing the child away.
+
+The long-term SysselCraft identity should remain: **take the hit, grieve what changed, and keep building forward.**
