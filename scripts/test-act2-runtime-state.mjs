@@ -608,7 +608,10 @@ assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), 
 assert.ok(page.includes("hasPendingAlveTurnIn(latest, backendWorldProgressionRef.current)"), "restart must restore Alve turn-in marker immediately from the latest authoritative progression without recreating the game");
 assert.ok(page.includes("backendWorldProgressionRef.current = backend.progression.worldProgression"), "authoritative progression refreshes must update the restart-safe game bootstrap ref");
 assert.match(page, /href="\/"[^>]*>← Till byn<\/a>/, "Act 2 must keep an explicit route back to the village");
-assert.ok(page.includes('href="/">Till Mira i byn</a>'), "story purchase gates must route back to Mira without mutating Act 2 state");
+assert.ok(
+  page.includes('href={boathousePurchaseGate ? "/?act2-purchase=boathouse" : jettyPurchaseGate ? "/?act2-purchase=dock" : "/?act2-purchase=motorboat"}'),
+  "story purchase gates must route back to Mira with explicit purchase context",
+);
 assert.ok(page.includes("state.contributionLineIndex"), "contribution Story Moments must render from persisted line state");
 assert.ok(page.includes("state.completionLineIndex"), "completion reactions must render from persisted line state");
 assert.ok(page.includes("state.finaleLineIndex"), "finale beats must render from persisted line state");
