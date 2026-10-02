@@ -130,10 +130,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       ]);
       if (cancelled) return;
       setChildName(act1?.childName || "Barnet");
-      const clinicComplete =
-        act1?.worldFlags?.clinicCompletionSeen === true
-        || (act1?.construction.revealed.clinic ?? 0) >= 4;
-      if (!clinicComplete) {
+      const act1ChapterComplete = act1?.worldFlags?.act1EndCardSeen === true;
+      if (!act1ChapterComplete) {
         setAct2AccessAllowed(false);
         setReady(true);
         return;
