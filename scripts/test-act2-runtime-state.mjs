@@ -576,8 +576,8 @@ assert.match(
 );
 assert.match(
   lakeGameSource,
-  /new Phaser\.Geom\.Rectangle\(-60, -220, 120, 335\)[\s\S]*Phaser\.Geom\.Rectangle\.Contains/,
-  "Alve hit area must include the visible turn-in marker and nearby prompt",
+  /alveSprite[\s\S]*setInteractive\(\{ useHandCursor: true \}\)[\s\S]*alveTurnInMarker[\s\S]*setInteractive\(\{ useHandCursor: true \}\)[\s\S]*alveNearbyPrompt[\s\S]*setInteractive\(\{ useHandCursor: true \}\)/,
+  "Alve, the turn-in marker and the nearby prompt must each be reliable interaction targets",
 );
 assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
 assert.ok(lakeGameSource.includes('this.textures.getPixel('), "Act 2 water collision must derive from the accepted lake-master texture");
