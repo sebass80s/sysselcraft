@@ -2969,7 +2969,7 @@ They clear and repair the work area/workbench. Alve is already eager to work on 
 
 **Mira** gets the major village-support role in this block. She sees the chaos of loose tools, fittings and boat parts and identifies the practical problem: they do not primarily need more tools, they need to be able to find and use the ones they already have. This can unlock an authored workshop-supply package such as tool storage/pegboard, boxes and suitable work lighting.
 
-This block should contain a natural **story-bound SysselBux purchase from Mira** for the workshop supplies. Exact contents and price remain open for balancing. It is an intermediate story/economy beat and does not replace one of the four real-world quest contributions.
+Mira's workshop-storage/lighting support in this block is **narrative village support, not a SysselBux gate**. The locked Båthuset story purchase is instead the **200-SysselBux steering wheel for the soapbox car between 9/16 and 10/16**. Do not add a second workshop-supplies purchase here.
 
 By contribution 8, the boathouse visibly reads as Adam and Alve's functioning project workshop. The photograph from the chest is mounted permanently above/near the workbench, keeping the old motorboat and unanswered trip across the lake present in the environment.
 
@@ -4704,7 +4704,7 @@ Alve blir tyst. Du tittar på honom. Mira tittar på honom.
 **Economy lock:** the 200-SysselBux wallet transaction happens between 5/16 and 6/16. Beat 6 may reference the completed order but must never charge again or expose backend implementation language.
 
 ### Contributions 5–8: village support and the first sign of life
-Continued sorting/repair reveals one important missing/unsalvageable need. Keep it deliberately non-technical in child-facing dialogue. Linus cannot fabricate it. Mira can source the required replacement/support package, creating the motorboat's major **story-bound SysselBux purchase**. Exact item and price remain open for economy balancing; it must be affordable through normal play and use the authoritative backend wallet.
+Continued sorting/repair reveals one important missing/unsalvageable need. Keep it deliberately non-technical in child-facing dialogue. Linus cannot fabricate it. Mira can source the locked **reservdelspaket for 200 SysselBux between 5/16 and 6/16**. It must use the authoritative backend wallet and remains contribution-neutral.
 
 Mira's tone should recognize the Adam/Alve combination rather than turn the scene into a shop tutorial. Target gag:
 > **Mira:** “Så ni tänker verkligen få igång den där gamla båten?”  
