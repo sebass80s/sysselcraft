@@ -1195,8 +1195,7 @@ export default function VillagePrototype() {
     : act1ChapterFinaleLine?.speaker === "Hunden"
       ? dogName || "Hunden"
       : act1ChapterFinaleLine?.speaker ?? "";
-  // TEMP placeholder until the accepted Act 1 ensemble Story Moment is produced from canonical references.
-  const act1ChapterFinaleImage = "/assets/village/story-moments/sol-clinic-complete.png";
+  const act1ChapterFinaleImage = "/assets/village/story-moments/act1-chapter-finale.png";
   const bakeryStoryReplayLine = bakeryStoryReplayIndex === null ? null : bakeryCompletionDialogue[bakeryStoryReplayIndex];
   const bakerySpeakerName = bakeryStoryLine?.speaker === "Barnet" ? childName || "Barnet" : bakeryStoryLine?.speaker ?? "";
   const bakeryReplaySpeakerName = bakeryStoryReplayLine?.speaker === "Barnet" ? childName || "Barnet" : bakeryStoryReplayLine?.speaker ?? "";
