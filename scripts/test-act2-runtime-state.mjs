@@ -5,6 +5,7 @@ import {
   ACT2_VISUAL_PLACEMENTS,
 } from "../src/game/act2VisualAssets.ts";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../src/game/act2CabinStory.ts";
+import { JETTY_LIFEBUOY_BEAT } from "../src/game/act2JettyStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS, MOTORBOAT_PARTS_PRICE } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
@@ -74,6 +75,22 @@ assert.deepEqual(restored.projects.cabin.consumedBeatIds, ["cabin:01", "cabin:02
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: 99 }).openingIndex, 4);
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: -4 }).openingIndex, 0);
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingLineIndex: 7 }).openingLineIndex, 7);
+
+const pendingMiraStory = normalizeAct2RuntimeState({
+  version: 1,
+  jettyLifebuoyOwned: true,
+  pendingPurchaseStory: "dock",
+  purchaseStoryLineIndex: 5,
+});
+assert.equal(pendingMiraStory.pendingPurchaseStory, "dock");
+assert.equal(pendingMiraStory.purchaseStoryLineIndex, 5, "Mira purchase story must resume on the exact persisted line");
+const impossibleMiraStory = normalizeAct2RuntimeState({
+  version: 1,
+  pendingPurchaseStory: "dock",
+  purchaseStoryLineIndex: 5,
+});
+assert.equal(impossibleMiraStory.pendingPurchaseStory, null, "purchase story cannot exist before the authoritative item is owned");
+assert.equal(impossibleMiraStory.purchaseStoryLineIndex, 0);
 
 const preReleaseLockedVisit = normalizeAct2RuntimeState({
   version: 1,
@@ -623,6 +640,13 @@ assert.ok(village.includes("Ratt till lådbilen"), "Mira must expose the Båthus
 assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel stock must derive from Båthuset progress");
 assert.ok(village.includes("Reservdelspaket till motorbåten"), "Mira must expose the Motorbåten parts package");
 assert.ok(village.includes("motorboatPartsPurchaseRequired(act2)"), "parts stock must derive from Motorbåten progress");
+assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira shop must render the canonical Bryggan lifebuoy story beat");
+assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira shop must render the canonical Båthuset steering-wheel story beat");
+assert.ok(village.includes("act2PurchaseBeat?.body[act2PurchaseStoryIndex]"), "Mira purchase beats must render their authored body one reply at a time");
+assert.ok(village.includes('pendingPurchaseStory: "dock" as const'), "lifebuoy purchase must persist its canonical story beat");
+assert.ok(village.includes('pendingPurchaseStory: "boathouse" as const'), "steering-wheel purchase must persist its canonical story beat");
+assert.ok(JETTY_LIFEBUOY_BEAT.body.length > 0, "canonical lifebuoy economy beat must contain dialogue");
+assert.ok(BOATHOUSE_STEERING_WHEEL_BEAT.body.length > 0, "canonical steering-wheel economy beat must contain dialogue");
 
 const dialoguePolishSources = [
   fs.readFileSync(new URL("../src/game/act2CabinStory.ts", import.meta.url), "utf8"),
