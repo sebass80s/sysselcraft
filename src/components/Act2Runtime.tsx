@@ -174,7 +174,31 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         (resumeProject === "boathouse" || resumeProject === "dock")
         && !entered.projects[resumeProject].complete
       ) {
-        entered = { ...entered, selectedProject: resumeProject };
+        if (
+          resumeProject === "boathouse"
+          && entered.boathouseSteeringWheelOwned
+          && entered.projects.boathouse.contributions < 9
+        ) {
+          entered = {
+            ...entered,
+            selectedProject: "boathouse",
+            projects: {
+              ...entered.projects,
+              boathouse: {
+                contributions: 9,
+                visibleStage: 3,
+                consumedBeatIds: [
+                  "boathouse:01", "boathouse:02", "boathouse:03",
+                  "boathouse:04", "boathouse:05", "boathouse:06",
+                  "boathouse:07", "boathouse:08", "boathouse:09",
+                ],
+                complete: false,
+              },
+            },
+          };
+        } else {
+          entered = { ...entered, selectedProject: resumeProject };
+        }
       }
       await saveAct2RuntimeState(entered);
       if (cancelled) return;
