@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import type { Act2LakeGameHandle } from "../game/createAct2LakeGame";
 import {
   createDefaultAct2RuntimeState,
@@ -68,6 +69,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [childName, setChildName] = useState("Barnet");
   const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
   const [backendWorldProgression, setBackendWorldProgression] = useState<number | null>(null);
+  const [backendWallet, setBackendWallet] = useState<{ diamonds: number; sysselBux: number } | null>(null);
   const backendWorldProgressionRef = useRef<number | null>(null);
   const [backendSyncError, setBackendSyncError] = useState("");
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
@@ -172,6 +174,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           if (backend) {
             backendWorldProgressionRef.current = backend.progression.worldProgression;
             setBackendWorldProgression(backend.progression.worldProgression);
+            setBackendWallet({ diamonds: backend.diamonds, sysselBux: backend.sysselBux });
             entered = withBackendClaimBaseline(entered, backend.progression.worldProgression);
             entered = withBackendStoryFlags(entered, backend.worldFlags);
           }
@@ -290,6 +293,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         if (!cancelled && backend) {
           backendWorldProgressionRef.current = backend.progression.worldProgression;
           setBackendWorldProgression(backend.progression.worldProgression);
+          setBackendWallet({ diamonds: backend.diamonds, sysselBux: backend.sysselBux });
           setBackendSyncError("");
           const current = await loadAct2RuntimeState();
           let next = withBackendClaimBaseline(current, backend.progression.worldProgression);
@@ -414,6 +418,18 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const contributionCandidate = backendWorldProgression === null || purchaseRequired || namingRequired
     ? null
     : nextAct2Contribution(state, backendWorldProgression);
+  const hudVisible =
+    !debug
+    && !chapterIntroVisible
+    && state.openingComplete
+    && state.alveIntroComplete
+    && state.selectedProject !== null
+    && !finalePending
+    && !completionProject
+    && !purchaseRequired
+    && !namingRequired
+    && !contributionTurnInOpen
+    && !cabinRevisitOpen;
   const activeContributionBeat = contributionCandidate?.project === "dock"
     ? JETTY_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
     : contributionCandidate?.project === "cabin"
@@ -533,6 +549,15 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   };
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
+    {hudVisible && <header className="prototype-header" aria-label="SysselCraft HUD">
+      <div className="prototype-brand-row">
+        <Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="SysselCraft" width={360} height={124} priority />
+      </div>
+      <div className="resource-hud" aria-label="Resurser">
+        <strong>💎 {backendWallet?.diamonds ?? "…"}</strong>
+        <strong>🪙 {backendWallet?.sysselBux ?? "…"}</strong>
+      </div>
+    </header>}
     {chapterIntroVisible && <div className="act2-chapter-intro" role="dialog" aria-modal="true" aria-label="Kapitel 2 · Alve">
       <div className="act2-chapter-intro-title">
         <span>KAPITEL 2</span>
