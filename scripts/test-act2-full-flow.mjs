@@ -157,6 +157,10 @@ const debugRoute = fs.readFileSync(new URL("../src/app/act2-test/page.tsx", impo
 assert.match(village, /clinicCompletionSeen \|\| construction\.revealed\.clinic >= 4/, "Act 1 must expose the lake path only after Clinic completion");
 assert.match(village, /router\.push\("\/act2"\)/, "Act 1 lake path must enter the production Act 2 route");
 assert.match(runtime, /clinicCompletionSeen === true[\s\S]*construction\.revealed\.clinic[\s\S]*>= 4/, "Act 2 must independently recheck Clinic completion");
+assert.ok(
+  runtime.indexOf("if (!debug && !productionEnabled)") < runtime.indexOf("loadAct2RuntimeState(),"),
+  "shipping lock must short-circuit before Act 2 state/baseline can be loaded and mutated",
+);
 assert.match(runtime, /href="\/"[\s\S]*Till Mira i byn/, "story purchase gates must provide a real return path to Mira");
 assert.match(runtime, /SLUT PÅ ANDRA KAPITLET/, "Act 2 must render the canonical black chapter-end card");
 assert.match(runtime, /endCardSeen: true/, "chapter-end card must be dismissible without replay");
