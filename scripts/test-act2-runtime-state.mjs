@@ -560,7 +560,11 @@ assert.match(
   /const turnInBang = this\.add\.text\([^\n]*"!"[\s\S]*this\.alveTurnInMarker = this\.add\.container[\s\S]*setAlveTurnInAvailable\(available: boolean\)[\s\S]*this\.alveTurnInMarker\?\.setVisible\(available\)/,
   "pending Act 2 turn-in must show a visible world marker on Alve without locking the test to a pixel coordinate",
 );
-assert.ok(lakeGameSource.includes('setInteractive({ useHandCursor: true })'), "Alve placeholder must already be a future interaction target");
+assert.match(
+  lakeGameSource,
+  /new Phaser\.Geom\.Rectangle\(-60, -220, 120, 335\)[\s\S]*Phaser\.Geom\.Rectangle\.Contains/,
+  "Alve hit area must include the visible turn-in marker and nearby prompt",
+);
 assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
 assert.ok(lakeGameSource.includes('this.textures.getPixel('), "Act 2 water collision must derive from the accepted lake-master texture");
 assert.ok(lakeGameSource.includes('"act2-lake-master"'), "Act 2 water collision must sample the canonical lake master");
@@ -634,6 +638,9 @@ assert.ok(page.includes('backendWallet?.diamonds'), "Act 2 HUD must show authori
 assert.ok(page.includes('backendWallet?.sysselBux'), "Act 2 HUD must show authoritative backend SysselBux");
 assert.ok(page.includes('!contributionTurnInOpen'), "Act 2 HUD must hide while a contribution Story Moment is open");
 assert.ok(page.includes('!finalePending'), "Act 2 HUD must hide during the finale");
+
+const questInbox = fs.readFileSync(new URL("../src/components/ChildBackendQuestInbox.tsx", import.meta.url), "utf8");
+assert.equal(questInbox.includes("Koppla om"), false, "Uppdrag must not expose re-pairing; that belongs in Vuxenläge");
 
 const act2Route = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 assert.ok(act2Route.includes("ChildBackendQuestInbox"), "Act 2 must reuse the same child quest dock as Act 1");
@@ -776,6 +783,10 @@ assert.match(act2PageSource, /purchaseRequired && <StoryMoment/, "purchase gates
 assert.match(act2PageSource, /namingRequired && <StoryMoment/, "naming gate must use the shared Story Engine shell");
 assert.doesNotMatch(act2PageSource, /className="story-moment"/, "Act 2 production must not keep a parallel legacy Story Moment shell");
 assert.match(act2TestPageSource, /<Act2Runtime debug \/>/, "Act 2 test lab must render the exact shared production runtime");
+assert.match(act2TestPageSource, /process\.env\.NODE_ENV !== "production"/, "Act 2 test lab must be build-time disabled in production");
+assert.match(act2TestPageSource, /if \(!ACT2_DEBUG_LAB_ENABLED\) notFound\(\)/, "Production requests to the Act 2 test lab must 404");
+assert.match(act2PageSource, /!debug && ACT2_DEBUG_LAB_ENABLED/, "Production runtime must not expose the hidden Act 2 debug gesture");
+
 assert.match(act2RouteSource, /<Act2Runtime productionEnabled=\{ACT2_PRODUCTION_ENABLED\} \/>/, "Act 2 production route must render the same shared runtime");
 assert.doesNotMatch(act2TestPageSource, /StoryMoment|StoryTranscript|<Image|project-choice/, "Act 2 test lab route must not keep a parallel story implementation");
 
