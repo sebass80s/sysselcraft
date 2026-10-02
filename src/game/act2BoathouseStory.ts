@@ -539,7 +539,7 @@ export const BOATHOUSE_CONTRIBUTION_BEATS: Act2ProjectStoryBeat[] = [
 
 export const BOATHOUSE_STEERING_WHEEL_BEAT: Act2ProjectStoryBeat = {
   id: "boathouse:steering-wheel",
-  title: "Mellan 9 och 10 · Ratten till lådbilen",
+  title: "Ratten till lådbilen",
   image: "/assets/village/story-moments/act2/boathouse/boxcar-blueprint.png",
   body: [
   "Ni har börjat plocka fram delar till lådbilen. Alve lägger ut allt på arbetsbordet.",
