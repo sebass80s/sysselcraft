@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { beginStoryOverlay } from "../../game/storyOverlayBridge";
 import { DialogueCard } from "./DialogueCard";
 import type { StorySpeakerTone } from "../../game/storyEngine";
 
@@ -40,16 +41,16 @@ export function StoryMoment({
   revealImageBeforeNext = false,
   presentationId = "",
 }: StoryMomentProps) {
-  const [imageOnly, setImageOnly] = useState(false);
-  useEffect(() => {
-    setImageOnly(false);
-  }, [presentationId]);
+  const [imageOnlyPresentationId, setImageOnlyPresentationId] = useState<string | null>(null);
+  const imageOnly = imageOnlyPresentationId === presentationId;
+
+  useEffect(() => beginStoryOverlay(), []);
 
   const style: CSSProperties = { position: "absolute", inset: 0, zIndex, background };
   const handleNext = onNext
     ? () => {
         if (revealImageBeforeNext && image && !imageOnly) {
-          setImageOnly(true);
+          setImageOnlyPresentationId(presentationId);
           return;
         }
         onNext();
@@ -78,10 +79,11 @@ export function StoryMoment({
       {imageOnly && onNext && (
         <button
           type="button"
-          className="shared-story-image-continue"
-          aria-label="Fortsätt"
+          className="primary-button shared-story-image-continue"
           onClick={onNext}
-        />
+        >
+          Fortsätt
+        </button>
       )}
     </section>
   );
