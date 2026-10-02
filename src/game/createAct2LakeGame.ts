@@ -152,8 +152,11 @@ export async function createAct2LakeGame(
       }).setOrigin(0.5);
       this.alveNearbyPrompt = this.add.container(0, 0, [nearbyBg, nearbyText]).setVisible(false);
       this.alvePlaceholder = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt])
-        .setSize(90, 210)
-        .setInteractive({ useHandCursor: true })
+        .setSize(120, 335)
+        .setInteractive(
+          new Phaser.Geom.Rectangle(-60, -220, 120, 335),
+          Phaser.Geom.Rectangle.Contains,
+        )
         .setVisible(false);
       this.alvePlaceholder.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
         event.stopPropagation();
