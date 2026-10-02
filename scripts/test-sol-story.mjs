@@ -123,7 +123,7 @@ assert.doesNotMatch(questInbox, /sysselcraft:quest-progress-refresh/, "Clinic mu
 assert.doesNotMatch(component, /sysselcraft:quest-progress-refresh/, "revealing a Clinic stage must not force historical catch-up");
 assert.match(questInbox, /clinicContinuityBaselineLocked/, "stale Clinic saves must anchor progression to their currently visible stage");
 assert.match(questInbox, /clinicProgressionBaseline: continuityBaseline/, "Clinic continuity migration must persist the rebased local baseline");
-assert.match(act2Page, /const ACT2_PRODUCTION_ENABLED = false/, "Act 2 production must remain temporarily locked while development continues");
+assert.match(act2Page, /const ACT2_PRODUCTION_ENABLED = true/, "Act 2 production must remain open behind the persisted Act 1 end-card gate");
 
 const villageGame = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
 assert.match(villageGame, /movementStallFrames/, "village movement must track blocked path progress");
