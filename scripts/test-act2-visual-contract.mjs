@@ -45,4 +45,7 @@ if (/stage.*threshold|threshold.*stage/i.test(source)) {
   throw new Error("Act 2 visual contract must not invent progression thresholds");
 }
 
+assert.match(runtime, /this\.player\.setFlipX\(dx > 0\)/, "Act 2 child facing must use the corrected mirrored orientation");
+assert.match(runtime, /this\.player\.setFlipX\(this\.alvePlaceholder\.x > this\.player\.x\)/, "Act 2 Alve interaction must preserve the corrected child facing orientation");
+
 console.log("Act 2 visual/runtime contract: PASS");
