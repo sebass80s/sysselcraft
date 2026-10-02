@@ -469,3 +469,17 @@ A repo/CI/live-backend audit was run without Vercel. Important findings and fixe
 Verification checkpoint: GitHub Actions CI **#1461 SUCCESS** on commit `404be3fc40276257ff4d3b46fcb0386e55d9a2fb`, including lint, Next production build, quest regressions, Act 2 visual/story/UI contracts and the full Act 2 runtime-state suite.
 
 Still requires human/physical evidence: full shoreline feel, touch/camera behavior, restart on device, story-item round trips, and complete Motorbåten → family/veranda playthrough.
+
+### Full Act 2 flow verification — 2026-10-02
+
+A complete automated chapter-flow contract now runs in `npm run verify` as `test:act2-full-flow`.
+
+Verified chain:
+**Clinic-complete Act 1 gate → clean production entry/baseline → OPEN-001…005 → bicycle → full Alve intro → project selection → Stugan/Bryggan/Båthuset → all story purchases → Motorbåten unlock → motorboat parts gate → boat naming gate → 64/64 contributions → five-beat family/veranda finale → persisted black “SLUT PÅ ANDRA KAPITLET” card.**
+
+The test also exercises restart/normalization boundaries, village purchase round-trips and recovery after an initial backend sync failure. Pre-release visits to the locked production route can no longer establish a latent Act 2 baseline, and old pre-release baseline residue is discarded on the first legitimate production entry.
+
+Verification checkpoint: GitHub Actions **#1475 SUCCESS** on `c6e9a20f0a5cb8b2c7ade56090ab24c449c69445`.
+
+Important release boundary: `ACT2_PRODUCTION_ENABLED` remains `false`. The real Act 1 → `/act2` route is intentionally shipping-locked until physical acceptance. `/act2-test` renders the same shared runtime for acceptance testing.
+
