@@ -88,7 +88,7 @@ export const ACT2_FINALE_BEATS: Act2FinaleBeat[] = [
     "body": [
       "Alve öppnar dörren försiktigt.",
       "Han stannar.",
-      "Inne i stugan håller hans pappa på att ställa ner en väska. Alves storasyster, i tidiga tonåren, står bredvid en flyttlåda med några saker hemifrån i famnen.",
+      "Inne i stugan håller hans pappa på att ställa ner en väska. En äldre tjej som nog är Alves storasyster står bredvid en flyttlåda med några saker hemifrån i famnen.",
       "Alve säger ingenting.",
       "Barnet: Alve?",
       "Pappan vänder sig om.",
