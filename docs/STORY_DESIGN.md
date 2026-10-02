@@ -600,7 +600,7 @@ Act 2 moves the authored adventure from the restored village down to the **lake*
 Act 2 should deepen the stories and relationships of the established cast rather than replace them with a large new ensemble. The intended major addition is **one new child character**, giving the player their first important peer relationship instead of another adult service-provider/resident. A second new major resident is not currently planned and should require a later explicit story decision.
 
 ### The child's connection to the lake
-The new boy's family used to have a **summer cottage by the lake**, with its own jetty, boathouse and old motorboat. The family stopped spending summers there as the surrounding area emptied and the property fell into disrepair. The family is not defined by tragedy or loss: they moved on, and the summer place simply became impractical and neglected.
+The new boy's family used to have a **summer cottage by the lake**, with its own jetty, boathouse and old motorboat. The family stopped spending summers there as the surrounding area emptied and the property fell into disrepair. The family history also carries an intentionally understated absence around Alve's mother. She does not return with the family, and the child-facing story must never explain the loss directly; the Act 2 epilogue only hints that Alve has stopped waiting for the past to return.
 
 The boy wants to restore the place so his family will **want and be able to spend summers there again**. He returns to the old summer place and meets the player there. His motivation is personal and age-appropriate; he is not a child mechanic. The player, existing residents and household-quest progression provide the practical restoration momentum while friendship with the boy develops through the act.
 
@@ -1378,21 +1378,98 @@ Alve ler lite.
 
 Låt scenen vila här. Raden betyder inte att förlusten var bra eller att någon blivit ersatt; den betyder att Alve slutat försöka återskapa det förflutna och kan acceptera ett nytt liv som också får vara bra.
 
-#### Act 3 boundary — crossing is deliberately deferred
+#### Act 2 epilogue / Act 3 bridge — LOCKED 2026-10-02
 
-Act 2 ends after the veranda payoff above. Let the family return, friendship payoff and **“Det är bättre.”** land without immediately converting the scene into the next adventure.
+The veranda payoff **“Det är bättre.”** remains the emotional climax of Act 2. After it has landed, add one short final epilogue beat before the black **SLUT PÅ ANDRA KAPITLET** card.
 
-The restored motorboat remains the physical bridge to Act 3. Barnet and Alve may be curious about the other side, and existing earlier story seeds about old trips across the lake remain valid, but **they do not make the first true crossing during the Act 2 finale**.
+This epilogue is a bridge, not the start of the Act 3 destination story. Barnet and Alve leave the restored lake place in the motorboat, but Act 2 does not reveal what is on the other side.
 
-The Act 3 opening owns:
-- leaving the restored lake in the motorboat;
-- the first real crossing;
-- any gratitude/departure conversation that belongs on that journey;
-- first presentation of whatever exists on the other side.
+**Title:** Över sjön
 
-The destination remains deliberately undefined until Act 3 is authored. Hints must stay destination-neutral.
+**Canonical dialogue:**
 
-Canonical boundary: **Act 2 closes at home; Act 3 begins by leaving it.**
+En stund senare ligger sjön nästan helt stilla.
+
+Du och Alve står nere vid bryggan igen. Motorbåten guppar lätt mot kanten.
+
+> **Barnet:** “Ska vi verkligen åka nu?”  
+> **Alve:** “Bara en liten sväng.”  
+> **Barnet:** “Du sa nyss att du fått nog av projekt.”  
+> **Alve:** “Det här är inget projekt.”
+
+Alve lossar repet och kliver i båten.
+
+> **Alve:** “Det finns något där borta.”  
+> **Barnet:** “På andra sidan?”  
+> **Alve:** “Mm.”  
+> **Barnet:** “Vad då?”
+
+Alve tittar ut över sjön.
+
+> **Alve:** “Jag vet inte exakt. Jag bara minns att vi brukade åka dit.”
+
+Du kliver i båten efter honom.
+
+> **Barnet:** “Med din familj?”  
+> **Alve:** “Ja.”
+
+Alve sätter handen på relingen.
+
+> **Alve:** “Mamma brukade alltid säga att man skulle vänta tills vattnet låg helt stilla först.”
+
+Han blir tyst en stund.
+
+> **Alve:** “Jag trodde länge att man bara behövde vänta.”  
+> **Barnet:** “På vad?”
+
+Alve tittar ut över sjön.
+
+> **Alve:** “Jag vet inte längre.”
+
+Du säger inget.
+
+Alve tittar tillbaka mot stugan. Ljuset är tänt därinne.
+
+> **Alve:** “Jag ville laga allt för att få tillbaka det som var.”  
+> **Alve:** “Men det blev något annat istället.”  
+> **Barnet:** “Sämre?”
+
+Alve skakar på huvudet.
+
+> **Alve:** “Nej.”
+
+Han vänder sig mot sjön igen.
+
+> **Alve:** “Bara nytt.”
+
+Du sätter dig bredvid honom.
+
+> **Barnet:** “Är vattnet helt stilla nu då?”
+
+Alve tittar ut över sjön.
+
+> **Alve:** “Inte helt.”  
+> **Alve:** “Men nära nog.”  
+> **Barnet:** “Bra plan.”  
+> **Alve:** “Jag sa ju att jag blivit bättre på planer.”
+
+Motorn hostar till, sedan går den igång.
+
+Båten glider långsamt ut från bryggan.
+
+Alve tittar inte tillbaka den här gången.
+
+Ni styr ut över sjön tillsammans.
+
+Then show the black **SLUT PÅ ANDRA KAPITLET** card.
+
+**Subtext lock:** the mother is deliberately referenced only indirectly. A child reader may understand this simply as Alve no longer waiting for the past to return. An adult reader should be able to read that his mother will not come back and that Alve has stopped trying to rebuild the old world exactly as it was. Do not make that loss explicit in child-facing dialogue.
+
+**Single-image art lock:** the entire epilogue uses one still image. It shows **Alve and Barnet on the jetty beside the motorboat on a Swedish summer night**, with the restored cottage glowing warmly in the distance and the boathouse visible in the background. The image should feel calm, safe and forward-looking rather than sad. **Do not author or generate the image prompt until Kalle supplies the required canonical character references.**
+
+Act 3 owns the destination, the first arrival and whatever exists on the other side. The destination remains deliberately undefined until Act 3 is authored.
+
+Canonical boundary: **Act 2 ends as the children leave the restored lake place; Act 3 begins with what lies ahead.**
 
 ## Bryggan restoration arc — overview — LOCKED 2026-09-28
 
