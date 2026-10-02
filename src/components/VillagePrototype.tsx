@@ -36,6 +36,10 @@ import { clearSaveState, loadSaveState, saveSaveState, withConstructionState, ty
 import { chooseDogHomeDialogue, deriveDogHomeStageFromWorldFlags, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
 import { boathousePurchaseRequired, jettyPurchaseRequired, motorboatPartsPurchaseRequired, loadAct2RuntimeState, saveAct2RuntimeState, withBackendStoryFlags } from "../game/act2RuntimeState";
+import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
+import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
+import { parseStoryLine } from "../game/storyEngine";
+import { StoryRunner } from "./story/StoryRunner";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
   QUEST_PRESENTATION_EVENT,
@@ -108,6 +112,8 @@ export default function VillagePrototype() {
   const [act2BoathouseSteeringWheelOwned, setAct2BoathouseSteeringWheelOwned] = useState(false);
   const [act2MotorboatPartsNeeded, setAct2MotorboatPartsNeeded] = useState(false);
   const [act2MotorboatPartsOwned, setAct2MotorboatPartsOwned] = useState(false);
+  const [act2PurchaseStory, setAct2PurchaseStory] = useState<"dock" | "boathouse" | null>(null);
+  const [act2PurchaseStoryIndex, setAct2PurchaseStoryIndex] = useState(0);
 
   function act2StoryItemInsufficientFundsMessage(price: number) {
     const current = getLatestBackendWallet()?.sysselBux ?? backendWallet?.sysselBux ?? sysselBux;
@@ -693,6 +699,8 @@ export default function VillagePrototype() {
       setAct2BoathouseSteeringWheelOwned(nextAct2.boathouseSteeringWheelOwned);
       setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(nextAct2));
       setShopMessage("Ratten är er! Nu kan lådbilen byggas klart. 🛞");
+      setAct2PurchaseStory("boathouse");
+      setAct2PurchaseStoryIndex(0);
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
@@ -719,6 +727,8 @@ export default function VillagePrototype() {
       setAct2JettyLifebuoyOwned(nextAct2.jettyLifebuoyOwned);
       setAct2JettyLifebuoyNeeded(jettyPurchaseRequired(nextAct2));
       setShopMessage("Livbojen är er! Ta med den tillbaka till bryggan. 🛟");
+      setAct2PurchaseStory("dock");
+      setAct2PurchaseStoryIndex(0);
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
@@ -1117,6 +1127,26 @@ export default function VillagePrototype() {
     <button className="primary-button" onClick={() => window.location.reload()}>Försök igen</button>
   </div></section>;
 
+  const act2PurchaseBeat = act2PurchaseStory === "dock"
+    ? JETTY_LIFEBUOY_BEAT
+    : act2PurchaseStory === "boathouse"
+      ? BOATHOUSE_STEERING_WHEEL_BEAT
+      : null;
+  const act2PurchaseLine = act2PurchaseBeat?.body[act2PurchaseStoryIndex] ?? null;
+  const act2PurchasePresentation = act2PurchaseLine
+    ? parseStoryLine(act2PurchaseLine, childName || "Barnet")
+    : null;
+
+  function advanceAct2PurchaseStory() {
+    if (!act2PurchaseBeat) return;
+    if (act2PurchaseStoryIndex + 1 < act2PurchaseBeat.body.length) {
+      setAct2PurchaseStoryIndex((index) => index + 1);
+      return;
+    }
+    setAct2PurchaseStory(null);
+    setAct2PurchaseStoryIndex(0);
+  }
+
   if (loadError) return <section className="parent-page"><div className="parent-tool-card" role="alert">
     <h1>Sparningen kunde inte öppnas</h1><p>{loadError}</p>
     <button className="primary-button" onClick={() => window.location.reload()}>Försök läsa igen</button>
@@ -1169,6 +1199,23 @@ export default function VillagePrototype() {
         </section>
       </div>
     </div>}
+    {act2PurchaseBeat && act2PurchaseLine && <StoryRunner
+      beat={{
+        id: `act2:shop-purchase:${act2PurchaseStory}:${act2PurchaseStoryIndex}`,
+        image: act2PurchaseBeat.image,
+        imageFit: "contain",
+        heading: act2PurchaseBeat.title,
+        speaker: act2PurchasePresentation?.speaker,
+        speakerTone: act2PurchasePresentation?.speakerTone,
+        lines: act2PurchasePresentation ? [act2PurchasePresentation.text] : [],
+        nextLabel: act2PurchaseStoryIndex + 1 < act2PurchaseBeat.body.length ? "Fortsätt" : "Tillbaka till butiken",
+      }}
+      onNext={advanceAct2PurchaseStory}
+      childName={childName || "Barnet"}
+      dialogueClassName="act2-dialogue-card"
+      zIndex={145}
+      background="rgba(9,14,10,.94)"
+    />}
     {bottleLetterOpen && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-letter.png" alt="Barnet läser brevet som ska skickas som flaskpost" fill priority sizes="100vw" /></div>}
     {bottleLetterOpen && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Brevet i flaskposten"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Brevet är klart.</p><button className="primary-button dialogue-next" onClick={advanceBottleLetter}>Gå till vattnet</button></div>}
     {bottleStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-message.png" alt="" fill priority sizes="100vw" /></div>}
