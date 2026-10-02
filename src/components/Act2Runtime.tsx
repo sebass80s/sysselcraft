@@ -554,7 +554,18 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
     {hudVisible && <header className="prototype-header" aria-label="SysselCraft HUD">
       <div className="prototype-brand-row">
-        <Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="SysselCraft" width={360} height={124} priority />
+        <button
+          className="prototype-brand-button"
+          type="button"
+          onClick={() => router.push("/")}
+          aria-label="Till byn"
+          title="Till byn"
+        >
+          <Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="SysselCraft" width={360} height={124} priority />
+        </button>
+        <button className="secondary-button compact act2-village-button" type="button" onClick={() => router.push("/")}>
+          ← Till byn
+        </button>
       </div>
       <div className="resource-hud" aria-label="Resurser">
         <strong>💎 {backendWallet?.diamonds ?? "…"}</strong>
