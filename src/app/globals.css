@@ -353,11 +353,11 @@ main { min-height: 100dvh; }
   color: #fff;
   text-align: center;
   pointer-events: auto;
-  animation: act2-chapter-intro-fade 2.8s ease-in-out forwards;
 }
 .act2-chapter-intro-title {
   display: grid;
-  gap: .45rem;
+  gap: .7rem;
+  justify-items: center;
   padding: 1.5rem;
 }
 .act2-chapter-intro-title span {
@@ -366,11 +366,18 @@ main { min-height: 100dvh; }
   letter-spacing: .18em;
 }
 .act2-chapter-intro-title strong {
+  min-height: 1em;
   font-size: clamp(2.4rem, 8vw, 5rem);
   line-height: 1;
   letter-spacing: .06em;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .8s ease, transform .8s ease;
 }
-@keyframes act2-chapter-intro-fade {
-  0%, 62% { opacity: 1; }
-  100% { opacity: 0; }
+.act2-chapter-intro-title strong.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.act2-chapter-intro-next {
+  margin-top: 1.15rem;
 }

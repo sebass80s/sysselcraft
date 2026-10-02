@@ -76,6 +76,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [cabinRevisitLineIndex, setCabinRevisitLineIndex] = useState(0);
   const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
   const [chapterIntroVisible, setChapterIntroVisible] = useState(true);
+  const [chapterIntroNameVisible, setChapterIntroNameVisible] = useState(false);
 
   useEffect(() => {
     stateRef.current = state;
@@ -89,11 +90,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       state.openingLineIndex === 0;
     if (!atChapterStart) {
       setChapterIntroVisible(false);
+      setChapterIntroNameVisible(false);
       return;
     }
     setChapterIntroVisible(true);
-    const timer = window.setTimeout(() => setChapterIntroVisible(false), 2800);
-    return () => window.clearTimeout(timer);
+    setChapterIntroNameVisible(false);
   }, [ready, state.openingComplete, state.openingIndex, state.openingLineIndex]);
 
   function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
@@ -482,10 +483,23 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   };
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
-    {chapterIntroVisible && <div className="act2-chapter-intro" role="presentation" aria-hidden="true">
+    {chapterIntroVisible && <div className="act2-chapter-intro" role="dialog" aria-modal="true" aria-label="Kapitel 2 · Alve">
       <div className="act2-chapter-intro-title">
         <span>KAPITEL 2</span>
-        <strong>ALVE</strong>
+        <strong className={chapterIntroNameVisible ? "is-visible" : ""}>ALVE</strong>
+        <button
+          className="primary-button act2-chapter-intro-next"
+          type="button"
+          onClick={() => {
+            if (!chapterIntroNameVisible) {
+              setChapterIntroNameVisible(true);
+              return;
+            }
+            setChapterIntroVisible(false);
+          }}
+        >
+          {chapterIntroNameVisible ? "Fortsätt" : "Fortsätt"}
+        </button>
       </div>
     </div>}
     {debug && <div style={{
