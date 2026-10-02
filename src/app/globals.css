@@ -245,6 +245,13 @@ main { min-height: 100dvh; }
   line-height: 1.25;
 }
 
+.act2-village-button {
+  min-height: 40px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+}
+
+
 .act2-sync-status {
   position: absolute;
   top: max(calc(env(safe-area-inset-top) + 3.2rem), 3.6rem);
