@@ -576,8 +576,8 @@ assert.match(
 );
 assert.match(
   lakeGameSource,
-  /alveSprite[\s\S]*setInteractive\(\{ useHandCursor: true \}\)[\s\S]*alveTurnInMarker[\s\S]*setInteractive\(\{ useHandCursor: true \}\)[\s\S]*alveNearbyPrompt[\s\S]*setInteractive\(\{ useHandCursor: true \}\)/,
-  "Alve, the turn-in marker and the nearby prompt must each be reliable interaction targets",
+  /alveInteractionArea = this\.add\.rectangle\(0, -90, 150, 310,[\s\S]*alveInteractionArea[\s\S]*setInteractive\(\{ useHandCursor: true \}\)[\s\S]*handleAlvePointerDown/,
+  "Alve must use one real world-space interaction area covering his sprite and turn-in marker",
 );
 assert.ok(lakeGameSource.includes('ACT2_ALVE_WORK_POSITIONS[project]'), "Alve must derive his position from the active restoration project");
 assert.ok(lakeGameSource.includes('this.textures.getPixel('), "Act 2 water collision must derive from the accepted lake-master texture");
@@ -786,6 +786,12 @@ assert.match(act2PageSource, /activeContributionPresentation\?\.speaker/, "Act 2
 assert.doesNotMatch(act2PageSource, /storyCardChunk/, "Act 2 contribution UI must not stack multiple authored speakers into one card");
 assert.doesNotMatch(act2PageSource, /speaker=\{activeContributionBeat\.title\}/, "beat titles must never be used as contribution speaker nameplates");
 assert.doesNotMatch(boathouseStorySource, /Order-independence lock:/, "authoring notes must never leak into Båthuset runtime text");
+
+assert.match(
+  boathouseStorySource,
+  /"id": "boathouse:14"[\s\S]*"image": "\/assets\/village\/story-moments\/act2\/boathouse\/linus-helping\.png"/,
+  "Båthuset slipway explanation must show Linus helping",
+);
 
 
 const storyTranscriptSource = fs.readFileSync(new URL("../src/components/story/StoryTranscript.tsx", import.meta.url), "utf8");
