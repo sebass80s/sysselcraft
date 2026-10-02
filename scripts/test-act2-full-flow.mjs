@@ -17,6 +17,7 @@ import {
   nextAct2Contribution,
   normalizeAct2RuntimeState,
   prerequisiteCompletionCount,
+  prepareAct2ProductionEntry,
   projectCompletionReactionPending,
   totalAct2Contributions,
   withBackendClaimBaseline,
@@ -28,10 +29,9 @@ import {
 
 const restart = (state) => normalizeAct2RuntimeState(JSON.parse(JSON.stringify(state)));
 
-let state = {
-  ...createDefaultAct2RuntimeState(),
-  entered: true,
-};
+let state = prepareAct2ProductionEntry(createDefaultAct2RuntimeState());
+assert.equal(state.entered, true);
+assert.equal(state.productionEntryCommitted, true);
 state = withBackendClaimBaseline(state, 100);
 assert.equal(state.backendClaimBaseline, 100, "Act 2 entry must freeze the current backend progression baseline");
 
@@ -157,6 +157,7 @@ const debugRoute = fs.readFileSync(new URL("../src/app/act2-test/page.tsx", impo
 assert.match(village, /clinicCompletionSeen \|\| construction\.revealed\.clinic >= 4/, "Act 1 must expose the lake path only after Clinic completion");
 assert.match(village, /router\.push\("\/act2"\)/, "Act 1 lake path must enter the production Act 2 route");
 assert.match(runtime, /clinicCompletionSeen === true[\s\S]*construction\.revealed\.clinic[\s\S]*>= 4/, "Act 2 must independently recheck Clinic completion");
+assert.match(runtime, /prepareAct2ProductionEntry\(act2\)/, "production entry must reconcile pre-release locked-route residue before setting the baseline");
 assert.ok(
   runtime.indexOf("if (!debug && !productionEnabled)") < runtime.indexOf("loadAct2RuntimeState(),"),
   "shipping lock must short-circuit before Act 2 state/baseline can be loaded and mutated",
