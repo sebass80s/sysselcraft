@@ -5797,6 +5797,38 @@ Nova then owns the resolution:
 
 Series continuity purpose: Act 2 showed Alve learning to stop rebuilding backward. Act 3 should show that growth indirectly by letting him give a little of that understanding forward, while remaining a child, a friend and a sidekick rather than taking over Nova's arc.
 
+A further continuity beat is approved: Alve may indirectly imply that Barnet helped save him in Act 2 and that Nova might benefit from accepting the same kind of help. He should **not** say “Barnet saved me” outright. Keep it in Alve's own understated, slightly awkward language.
+
+Suggested tone:
+
+> **Alve:** “Du behöver inte göra allt själv.”  
+> **Nova:** “Det är lätt för dig att säga.”  
+> **Alve:** “Nä.”  
+>
+> Han tittar på Barnet.
+>
+> **Alve:** “Jag gjorde typ exakt samma grej.”  
+> **Nova:** “Vadå?”  
+> **Alve:** “Försökte fixa allt själv.”  
+> **Nova:** “Gick det?”  
+>
+> Alve blir tyst en stund.
+>
+> **Alve:** “Inte förrän någon började hjälpa mig.”  
+>
+> Nova tittar på Barnet.
+>
+> **Alve:** “Han är rätt jobbig ibland.”  
+> **Barnet:** “Tack.”  
+> **Alve:** “Men han ger sig inte.”  
+>
+> Alve tittar på Nova igen.
+>
+> **Alve:** “Så om jag var du skulle jag kanske låta honom hållas.”
+
+This beat should function as a quiet callback to Act 2 and as validation of the player's role in Alve's recovery, without turning Alve into a narrator explaining his own character arc.
+
+
 
 
 The child initially believes, explicitly or implicitly, that if the right place, tradition or shared moment can be rebuilt well enough, the family might become what it was before. The restoration/progression structure should therefore deliberately create tension with the player's learned SysselCraft logic: if broken things can be repaired, perhaps the family can too.
