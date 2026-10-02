@@ -75,10 +75,26 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [cabinRevisitOpen, setCabinRevisitOpen] = useState(false);
   const [cabinRevisitLineIndex, setCabinRevisitLineIndex] = useState(0);
   const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
+  const [chapterIntroVisible, setChapterIntroVisible] = useState(true);
 
   useEffect(() => {
     stateRef.current = state;
   }, [state]);
+
+  useEffect(() => {
+    if (!ready) return;
+    const atChapterStart =
+      !state.openingComplete &&
+      state.openingIndex === 0 &&
+      state.openingLineIndex === 0;
+    if (!atChapterStart) {
+      setChapterIntroVisible(false);
+      return;
+    }
+    setChapterIntroVisible(true);
+    const timer = window.setTimeout(() => setChapterIntroVisible(false), 2800);
+    return () => window.clearTimeout(timer);
+  }, [ready, state.openingComplete, state.openingIndex, state.openingLineIndex]);
 
   function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
     if (worldProgression === null || !candidateState.selectedProject) return false;
@@ -466,6 +482,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   };
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
+    {chapterIntroVisible && <div className="act2-chapter-intro" role="presentation" aria-hidden="true">
+      <div className="act2-chapter-intro-title">
+        <span>KAPITEL 2</span>
+        <strong>ALVE</strong>
+      </div>
+    </div>}
     {debug && <div style={{
       position: "fixed", top: "max(8px, env(safe-area-inset-top))", right: 10, zIndex: 150,
       display: "flex", gap: 6, padding: 7, borderRadius: 10, background: "rgba(22,28,22,.88)",
