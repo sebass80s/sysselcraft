@@ -397,7 +397,7 @@ export const JETTY_CONTRIBUTION_BEATS: Act2JettyBeat[] = [
 
 export const JETTY_LIFEBUOY_BEAT: Act2JettyBeat = {
   id: "jetty-lifebuoy",
-  title: "Mellan 6 och 7 · Livbojen",
+  title: "Livbojen",
   image: "/assets/village/story-moments/act2/jetty/04-mira-lifebuoy-purchase.png",
   body: [
     "Mira: En livboj?",
