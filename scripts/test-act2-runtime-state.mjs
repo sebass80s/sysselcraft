@@ -617,7 +617,7 @@ assert.ok(page.includes("setContributionTurnInOpen(false);"), "finishing one bea
 assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should point the child toward Alve rather than bypassing world interaction");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
-assert.match(village, /clinicCompletionSeen \|\| construction\.revealed\.clinic >= 4/, "Act 2 trigger must accept the completion flag or an already-completed legacy Clinic");
+assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "Act 2 trigger must remain hidden until the Act 1 chapter ending is acknowledged");
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay at locked 200 SysselBux");
 assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay at locked 200 SysselBux");
@@ -684,7 +684,7 @@ assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_JETTY_LIF
 assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_BOATHOUSE_STEERING_WHEEL_PRICE)"), "boathouse story item must use detailed insufficient-funds feedback");
 assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_MOTORBOAT_PARTS_PRICE)"), "motorboat story item must use detailed insufficient-funds feedback");
 
-assert.match(page, /clinicCompletionSeen === true[\s\S]*construction\.revealed\.clinic[\s\S]*>= 4/, "direct /act2 access must accept completed legacy Clinic saves without opening early");
+assert.match(page, /act1ChapterComplete = act1\?\.worldFlags\?\.act1EndCardSeen === true/, "direct /act2 access must require the acknowledged Act 1 chapter ending");
 assert.equal(page.includes("void saveAct2RuntimeState(next);"), false, "backend polling must not persist asynchronously inside a React state setter");
 assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body[0], "När ni kommer tillbaka till Mira håller hon redan på att göra beställningen klar.", "Motorbåten 6/16 must keep the locked post-purchase return scene");
 assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body.some((line) => /\b(?:150|200) SysselBux\b/.test(line)), false, "post-purchase Motorbåten beat must not repeat the wallet transaction");
