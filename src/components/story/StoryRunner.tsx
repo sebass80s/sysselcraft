@@ -11,9 +11,10 @@ type StoryRunnerProps = {
   background?: string;
   dialogueClassName?: string;
   childName?: string;
+  revealImageBeforeNext?: boolean;
 };
 
-export function StoryRunner({ beat, onNext, zIndex, background, dialogueClassName, childName }: StoryRunnerProps) {
+export function StoryRunner({ beat, onNext, zIndex, background, dialogueClassName, childName, revealImageBeforeNext = false }: StoryRunnerProps) {
   return (
     <StoryMoment
       image={beat.image}
@@ -26,6 +27,8 @@ export function StoryRunner({ beat, onNext, zIndex, background, dialogueClassNam
       zIndex={zIndex}
       background={background}
       dialogueClassName={dialogueClassName}
+      revealImageBeforeNext={revealImageBeforeNext}
+      presentationId={beat.id}
     >
       <StoryTranscript lines={beat.lines} childName={childName} showSpeakers={!beat.speaker} />
     </StoryMoment>
