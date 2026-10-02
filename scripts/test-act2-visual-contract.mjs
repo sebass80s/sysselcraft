@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const source = fs.readFileSync("src/game/act2VisualAssets.ts", "utf8");
