@@ -104,8 +104,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   parseStoryLine("Alve: Det är {childName}.", "Testbarn"),
-  { text: "Det är Testbarn.", speaker: "Alve", speakerTone: "default" },
-  "child-name templates must render inside NPC dialogue",
+  { text: "Det är Testbarn.", speaker: "Alve", speakerTone: "alve" },
+  "child-name templates must render inside NPC dialogue with Alve's dedicated nameplate tone",
 );
 
 ACT2_FINALE_BEATS.forEach((beat) => {
