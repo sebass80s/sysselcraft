@@ -175,7 +175,8 @@ export async function createAct2LakeGame(
         wordWrap: { width: 280 },
       }).setOrigin(0.5);
       this.alveIdlePrompt = this.add.container(0, 0, [idlePromptBg, this.alveIdlePromptText]).setVisible(false);
-      this.alvePlaceholder = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt, this.alveIdlePrompt])
+      const alveInteractionArea = this.add.rectangle(0, -90, 150, 310, 0xffffff, 0.001);
+      this.alvePlaceholder = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt, this.alveIdlePrompt, alveInteractionArea])
         .setVisible(false);
 
       const handleAlvePointerDown = (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
@@ -200,15 +201,7 @@ export async function createAct2LakeGame(
         };
       };
 
-      alveSprite
-        .setInteractive({ useHandCursor: true })
-        .on("pointerdown", handleAlvePointerDown);
-      this.alveTurnInMarker
-        .setSize(48, 48)
-        .setInteractive({ useHandCursor: true })
-        .on("pointerdown", handleAlvePointerDown);
-      this.alveNearbyPrompt
-        .setSize(108, 40)
+      alveInteractionArea
         .setInteractive({ useHandCursor: true })
         .on("pointerdown", handleAlvePointerDown);
       this.positionAlve(requestedActiveProject);
