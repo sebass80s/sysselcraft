@@ -22,6 +22,7 @@ import {
   motorboatPartsPurchaseRequired,
   normalizeAct2RuntimeState,
   prerequisiteCompletionCount,
+  prepareAct2ProductionEntry,
   pendingBackendContributionCount,
   projectCompletionReactionPending,
   nextAct2Contribution,
@@ -73,6 +74,33 @@ assert.deepEqual(restored.projects.cabin.consumedBeatIds, ["cabin:01", "cabin:02
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: 99 }).openingIndex, 4);
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingIndex: -4 }).openingIndex, 0);
 assert.equal(normalizeAct2RuntimeState({ version: 1, openingLineIndex: 7 }).openingLineIndex, 7);
+
+const preReleaseLockedVisit = normalizeAct2RuntimeState({
+  version: 1,
+  entered: true,
+  backendClaimBaseline: 42,
+  selectedProject: "dock",
+  projects: {
+    dock: { contributions: 7 },
+  },
+});
+const cleanProductionEntry = prepareAct2ProductionEntry(preReleaseLockedVisit);
+assert.equal(cleanProductionEntry.entered, true);
+assert.equal(cleanProductionEntry.productionEntryCommitted, true);
+assert.equal(cleanProductionEntry.backendClaimBaseline, null, "pre-release locked-route baseline must never leak into the real Act 2 journey");
+assert.equal(cleanProductionEntry.projects.dock.contributions, 0, "pre-release local Act 2 progress must not survive into first real production entry");
+
+const acceptedProductionEntry = prepareAct2ProductionEntry({
+  ...cleanProductionEntry,
+  backendClaimBaseline: 100,
+  selectedProject: "cabin",
+  projects: {
+    ...cleanProductionEntry.projects,
+    cabin: { contributions: 2, visibleStage: 1, consumedBeatIds: ["cabin:01", "cabin:02"], complete: false },
+  },
+});
+assert.equal(acceptedProductionEntry.backendClaimBaseline, 100, "real production baseline must stay establish-once");
+assert.equal(acceptedProductionEntry.projects.cabin.contributions, 2, "real production progress must survive subsequent entries");
 
 let state = withSelectedProject(empty, "dock");
 assert.equal(state.selectedProject, "dock");
