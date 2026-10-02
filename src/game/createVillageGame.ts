@@ -306,6 +306,10 @@ export async function createVillageGame(
       this.linusStoryMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (!this.player || constructionDialogueOpen) return;
+        if (!this.introComplete) {
+          callbacks.onLinusInteract();
+          return;
+        }
         this.linusInteractionPending = true;
         this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
         const target = this.path.at(-1);
