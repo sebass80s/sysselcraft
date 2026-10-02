@@ -626,6 +626,12 @@ assert.ok(page.includes("state.finaleLineIndex"), "finale beats must render from
 assert.ok(page.includes("contributionTurnInOpen && contributionCandidate"), "backend polling must not auto-open contribution Story Moments");
 assert.ok(page.includes("setContributionTurnInOpen(false);"), "finishing one beat must close turn-in so backlog cannot auto-chain");
 assert.ok(page.includes("Ett klart uppdrag väntar hos Alve."), "HUD should point the child toward Alve rather than bypassing world interaction");
+assert.ok(page.includes('className="prototype-header"'), "Act 2 must reuse the village HUD shell");
+assert.ok(page.includes('className="resource-hud"'), "Act 2 must show the shared resource HUD");
+assert.ok(page.includes('backendWallet?.diamonds'), "Act 2 HUD must show authoritative backend diamonds");
+assert.ok(page.includes('backendWallet?.sysselBux'), "Act 2 HUD must show authoritative backend SysselBux");
+assert.ok(page.includes('!contributionTurnInOpen'), "Act 2 HUD must hide while a contribution Story Moment is open");
+assert.ok(page.includes('!finalePending'), "Act 2 HUD must hide during the finale");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
