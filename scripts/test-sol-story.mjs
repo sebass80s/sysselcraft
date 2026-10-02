@@ -112,7 +112,7 @@ assert.match(component, /setClinicCompletionSeen\(saved\.worldFlags\.clinicCompl
 assert.match(component, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
 const act2Page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 const act2Runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
-assert.match(act2Runtime, /!act1ChapterComplete && !act2AccessPreviouslyGranted\(act2\)/, "Act 2 access must accept either the acknowledged Act 1 ending or a previously committed Act 2 entry");
+assert.match(act2Runtime, /if \(!act1ChapterComplete\)/, "Act 2 access must require the acknowledged Act 1 chapter ending");
 const questInbox = fs.readFileSync(new URL("../src/components/ChildBackendQuestInbox.tsx", import.meta.url), "utf8");
 assert.match(questInbox, /backendStoryFlags\.solChoseToStay === true/, "Clinic sync must trust authoritative backend Sol state");
 assert.match(questInbox, /backendStoryFlags\.clinicProgressionBaseline/, "Clinic sync must recover the authoritative backend baseline");
