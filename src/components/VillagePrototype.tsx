@@ -850,7 +850,7 @@ export default function VillagePrototype() {
       const nextAct2 = {
         ...withBackendStoryFlags(currentAct2, purchase.worldFlags),
         pendingPurchaseStory: "boathouse" as const,
-        purchaseStoryLineIndex: 0,
+        purchaseStoryLineIndex: 14,
       };
       await saveAct2RuntimeState(nextAct2);
       setAct2BoathouseSteeringWheelOwned(nextAct2.boathouseSteeringWheelOwned);
@@ -882,7 +882,7 @@ export default function VillagePrototype() {
       const nextAct2 = {
         ...withBackendStoryFlags(currentAct2, purchase.worldFlags),
         pendingPurchaseStory: "dock" as const,
-        purchaseStoryLineIndex: 0,
+        purchaseStoryLineIndex: 11,
       };
       await saveAct2RuntimeState(nextAct2);
       setAct2JettyLifebuoyOwned(nextAct2.jettyLifebuoyOwned);
@@ -1325,6 +1325,7 @@ export default function VillagePrototype() {
     });
     setAct2PurchaseStory(null);
     setAct2PurchaseStoryIndex(0);
+    router.push("/act2");
   }
 
   if (loadError) return <section className="parent-page"><div className="parent-tool-card" role="alert">
@@ -1388,7 +1389,7 @@ export default function VillagePrototype() {
         speaker: act2PurchasePresentation?.speaker,
         speakerTone: act2PurchasePresentation?.speakerTone,
         lines: act2PurchasePresentation ? [act2PurchasePresentation.text] : [],
-        nextLabel: act2PurchaseStoryIndex + 1 < act2PurchaseBeat.body.length ? "Fortsätt" : "Tillbaka till butiken",
+        nextLabel: act2PurchaseStoryIndex + 1 < act2PurchaseBeat.body.length ? "Fortsätt" : "Tillbaka till sjön",
       }}
       onNext={() => void advanceAct2PurchaseStory()}
       childName={childName || "Barnet"}
