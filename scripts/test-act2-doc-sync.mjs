@@ -18,7 +18,7 @@ function assertProject(project, beats) {
   beats.forEach((beat, index) => {
     const number = index + 1;
     assert.match(beat.title, new RegExp(`^${number}/16 · `), `${project} beat ${number} must keep its numbered title`);
-    const title = beat.title.replace(/^d+\/16 · /, "");
+    const title = beat.title.replace(/^\d+\/16 · /, "");
     assert.ok(
       storyDesign.includes(`**${number}/16 — ${title}**`) || storyDesign.includes(`**${number}/16 - ${title}**`),
       `${project} ${beat.title} must exist in STORY_DESIGN`,
