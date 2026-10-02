@@ -103,6 +103,7 @@ export async function createVillageGame(
     private linusStoryMarker?: GameObjects.Container;
     private noticeboardInteractionPending = false;
     private linus?: GameObjects.Image;
+    private linusInteractionZone?: GameObjects.Zone;
     private henning?: GameObjects.Image;
     private sol?: GameObjects.Image;
     private solTourMarker?: GameObjects.Text;
@@ -994,6 +995,30 @@ export async function createVillageGame(
         .setDepth(1445)
         .setInteractive({ useHandCursor: true });
       this.residents.linus = this.linus;
+      // Dedicated interaction zone: the painted PNG may contain transparent padding,
+      // so onboarding must not depend on the texture's implicit interactive bounds.
+      this.linusInteractionZone = this.add.zone(this.linus.x, this.linus.y - 72, 190, 190)
+        .setDepth(2990)
+        .setInteractive({ useHandCursor: true });
+      this.linusInteractionZone.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.player) return;
+        if (requestedConstruction.attention?.resident === "linus") {
+          this.approachAttentionResident();
+          return;
+        }
+        this.linusInteractionPending = true;
+        this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
+        const finalPoint = this.path.at(-1);
+        if (finalPoint) {
+          this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
+        } else if (isWalkable(REQUIRED_APPROACHES.linus, this.navigationObstacles)) {
+          this.path = [REQUIRED_APPROACHES.linus];
+          this.targetMarker?.setPosition(REQUIRED_APPROACHES.linus.x, REQUIRED_APPROACHES.linus.y).setVisible(true);
+        } else {
+          this.maybeCompleteWorldInteraction();
+        }
+      });
       this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (requestedConstruction.attention?.resident === "linus") {
