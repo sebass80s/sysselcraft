@@ -26,6 +26,8 @@ export type Act2RuntimeState = {
   boathouseSteeringWheelOwned: boolean;
   motorboatPartsOwned: boolean;
   motorboatName: string | null;
+  pendingPurchaseStory: "dock" | "boathouse" | null;
+  purchaseStoryLineIndex: number;
   consumedProjectCompletionIds: string[];
   projects: Record<Act2Project, Act2ProjectState>;
   contributionLineIndex: number;
@@ -62,6 +64,8 @@ export function createDefaultAct2RuntimeState(): Act2RuntimeState {
     boathouseSteeringWheelOwned: false,
     motorboatPartsOwned: false,
     motorboatName: null,
+    pendingPurchaseStory: null,
+    purchaseStoryLineIndex: 0,
     consumedProjectCompletionIds: [],
     contributionLineIndex: 0,
     completionLineIndex: 0,
@@ -170,6 +174,12 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     motorboatName: typeof candidate.motorboatName === "string" && candidate.motorboatName.trim().length > 0
       ? candidate.motorboatName.trim().slice(0, 24)
       : null,
+    pendingPurchaseStory: candidate.pendingPurchaseStory === "dock" || candidate.pendingPurchaseStory === "boathouse"
+      ? candidate.pendingPurchaseStory
+      : null,
+    purchaseStoryLineIndex: Number.isInteger(candidate.purchaseStoryLineIndex)
+      ? Math.max(0, Math.min(200, candidate.purchaseStoryLineIndex as number))
+      : 0,
     consumedProjectCompletionIds: normalizeBeatIds(candidate.consumedProjectCompletionIds),
     projects,
     contributionLineIndex: Number.isInteger(candidate.contributionLineIndex)
@@ -204,6 +214,15 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   if (normalized.projects.dock.complete) validCompletionIds.add(projectCompletionReactionId("dock"));
   normalized.consumedProjectCompletionIds = normalized.consumedProjectCompletionIds
     .filter((id) => validCompletionIds.has(id));
+
+  if (
+    (normalized.pendingPurchaseStory === "dock" && !normalized.jettyLifebuoyOwned)
+    || (normalized.pendingPurchaseStory === "boathouse" && !normalized.boathouseSteeringWheelOwned)
+  ) {
+    normalized.pendingPurchaseStory = null;
+    normalized.purchaseStoryLineIndex = 0;
+  }
+  if (!normalized.pendingPurchaseStory) normalized.purchaseStoryLineIndex = 0;
 
   if (!normalized.selectedProject) normalized.contributionLineIndex = 0;
 
