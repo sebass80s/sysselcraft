@@ -638,6 +638,19 @@ assert.ok(
   "story purchase gates must route back to Mira with explicit purchase context",
 );
 assert.ok(page.includes("state.contributionLineIndex"), "contribution Story Moments must render from persisted line state");
+
+assert.match(
+  motorboatStorySource,
+  /"Alve: Mamma brukade alltid säga åt mig att sitta ner\."/,
+  "motorboat arc must seed Alve's mother before the family payoff",
+);
+for (const narrationLeak of [
+  "Den här gången svarar Barnet inte med ett skämt.",
+  "När ni går igenom båten upptäcker Barnet en detalj på sidan.",
+  "Alve vänder sig direkt mot Barnet.",
+]) {
+  assert.equal(motorboatStorySource.includes(narrationLeak), false, `motorboat narration must use second person instead of Barnet: ${narrationLeak}`);
+}
 assert.ok(page.includes("state.completionLineIndex"), "completion reactions must render from persisted line state");
 assert.ok(page.includes("state.finaleLineIndex"), "finale beats must render from persisted line state");
 
