@@ -1,4 +1,4 @@
-export type StorySpeakerTone = "default" | "child" | "dog";
+export type StorySpeakerTone = "default" | "child" | "dog" | "alve" | "henning" | "mira" | "linus" | "sol";
 
 export type StoryBeatPresentation = {
   id: string;
@@ -31,6 +31,11 @@ export function parseStoryLine(line: string, childName = "Barnet"): ParsedStoryL
     if (prefix === "Pappan") return { text, speaker: "Alves Pappa", speakerTone: "default" };
     if (prefix === "Storasystern") return { text, speaker: "Alves Syster", speakerTone: "default" };
     if (prefix === "Hunden" || prefix === "Valpen") return { text, speaker: prefix, speakerTone: "dog" };
+    if (prefix === "Alve") return { text, speaker: prefix, speakerTone: "alve" };
+    if (prefix === "Henning") return { text, speaker: prefix, speakerTone: "henning" };
+    if (prefix === "Mira") return { text, speaker: prefix, speakerTone: "mira" };
+    if (prefix === "Linus") return { text, speaker: prefix, speakerTone: "linus" };
+    if (prefix === "Sol") return { text, speaker: prefix, speakerTone: "sol" };
     return { text, speaker: prefix, speakerTone: "default" };
   }
   return { text: renderedLine };
