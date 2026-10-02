@@ -5800,6 +5800,23 @@ After Nova reaches the realization that the divorce was not hers to fix, color c
 Visual progression shorthand:
 **nostalgia → cold shower → reality → new calm.**
 
+The same POV shift applies to the **restored/fixed environment itself**, not only to color and faces.
+
+Before the break, Nova's hopeful perception may make the trio's practical work look almost unrealistically perfect: decorations hang neatly, repaired objects look seamless, paint looks even, tables and food presentation feel polished, and the whole family-day setting reads close to an idealized memory.
+
+After the handoff line, reveal the same work more honestly:
+- repairs are competent but visibly handmade;
+- paint may be slightly uneven;
+- garlands or decorations may hang a little crooked;
+- a table may wobble or show an improvised fix;
+- screws, patches, joins or repaired wood may be visible;
+- food and setup still look good, but no longer like a perfect advertisement.
+
+Nothing should suddenly become ruined or objectively worse. The reveal is that the work was **always human and imperfect**, while Nova's hope had made it look flawless.
+
+When visual warmth returns after Nova's resolution, keep these imperfections visible. They should no longer read as failures. This supports the Act 3 theme: things do not need to be perfect in order to be good, useful, loved or worth keeping.
+
+
 
 
 
