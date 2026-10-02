@@ -390,6 +390,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const opening = ACT2_OPENING_BEATS[state.openingIndex];
   const alveBeat = ACT2_ALVE_DIALOGUE[state.alveIntroIndex];
   const displayText = alveBeat?.text.replaceAll("{childName}", childName);
+  const currentAlveImage = act2AlveImageForIndex(state.alveIntroIndex);
+  const nextAlveImage = state.alveIntroIndex + 1 < ACT2_ALVE_DIALOGUE.length
+    ? act2AlveImageForIndex(state.alveIntroIndex + 1)
+    : null;
+  const alveImageComplete = nextAlveImage !== currentAlveImage;
   const prerequisiteDone = prerequisiteCompletionCount(state);
   const motorboatUnlocked = isMotorboatUnlocked(state);
   const availablePrerequisites = (["cabin", "dock", "boathouse"] as const)
@@ -657,6 +662,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         nextLabel: state.openingIndex === ACT2_OPENING_BEATS.length - 1 && state.openingLineIndex === opening.body.length - 1 ? "Gå närmare" : "Fortsätt",
       }}
       onNext={() => void advanceOpening()}
+      revealImageBeforeNext={state.openingLineIndex === opening.body.length - 1}
       childName={childName}
       dialogueClassName="act2-dialogue-card"
       background="#111"
@@ -672,19 +678,21 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         nextLabel: "Fortsätt",
       }}
       onNext={() => void commit({ ...state, bicycleSeen: true })}
+      revealImageBeforeNext
       dialogueClassName="act2-dialogue-card"
     />}
 
     {state.bicycleSeen && !state.alveIntroComplete && <StoryRunner
       beat={{
         id: `act2:alve-intro:${state.alveIntroIndex}`,
-        image: act2AlveImageForIndex(state.alveIntroIndex),
+        image: currentAlveImage,
         speaker: alveBeat?.speaker ? (alveBeat.speaker === "child" ? childName : alveBeat.speaker === "alve" ? "Alve" : "Barnet") : undefined,
         speakerTone: alveBeat?.speaker === "child" ? "child" : "default",
         lines: displayText ? [displayText] : [],
         nextLabel: state.alveIntroIndex === ACT2_ALVE_DIALOGUE.length - 1 ? "Välj projekt" : "Fortsätt",
       }}
       onNext={() => void advanceAlve()}
+      revealImageBeforeNext={alveImageComplete}
       dialogueClassName="act2-dialogue-card"
     />}
 
@@ -719,6 +727,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         nextLabel: state.finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa",
       }}
       onNext={() => void advanceFinaleStory()}
+      revealImageBeforeNext={state.finaleLineIndex + 1 >= activeFinaleBeat.body.length}
       dialogueClassName="act2-dialogue-card"
       zIndex={100}
       background="rgba(6,10,8,.96)"
@@ -735,6 +744,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         nextLabel: cabinRevisitLineIndex + 1 < CABIN_WAITING_REACTION.body.length ? "Fortsätt" : "Tillbaka",
       }}
       onNext={advanceCabinRevisit}
+      revealImageBeforeNext={cabinRevisitLineIndex + 1 >= CABIN_WAITING_REACTION.body.length}
       dialogueClassName="act2-dialogue-card"
       zIndex={92}
       background="rgba(9,14,10,.94)"
@@ -751,6 +761,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         nextLabel: state.completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten",
       }}
       onNext={() => void advanceCompletionReaction()}
+      revealImageBeforeNext={state.completionLineIndex + 1 >= activeCompletionBeat.body.length}
       dialogueClassName="act2-dialogue-card"
       zIndex={90}
       background="rgba(9,14,10,.94)"
@@ -797,6 +808,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       speakerTone={activeContributionPresentation?.speakerTone}
       nextLabel={state.contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
       onNext={() => void advanceContributionStory()}
+      revealImageBeforeNext={state.contributionLineIndex + 1 >= activeContributionBeat.body.length}
+      presentationId={`${activeContributionBeat.id}:${state.contributionLineIndex}`}
       zIndex={80}
       background="rgba(9,14,10,.94)"
       dialogueClassName="act2-dialogue-card"
