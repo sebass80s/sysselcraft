@@ -131,6 +131,12 @@ Act 2 must preserve the existing authority split rather than inventing a second 
 - authoritative claimed/contribution evidence used to determine that new real-world work exists;
 - story-bound purchases when implemented through backend economy RPC/state.
 
+### Act 2 local persistence identity
+
+The dedicated Act 2 world/story save is device-local presentation state, but it is now **scoped by paired child id**. A child must never inherit another child's consumed Act 2 beats, selected project, visible stages or finale state merely because the same browser/device is re-paired.
+
+Legacy pre-scoping data under `sysselcraft.act2.runtime.v1` is migrated once to the currently paired child on that device and then the shared legacy key is removed. Backend wallet/progression/world flags remain authoritative according to the reconciliation rules below; child-scoping only prevents local presentation-state cross-contamination.
+
 ### Act 2 world/story authoritative
 A dedicated persisted Act 2 state family owns what the child has already **seen/consumed in the game world**:
 - Act 2 entered/opening consumed;
