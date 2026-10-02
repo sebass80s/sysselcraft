@@ -483,3 +483,15 @@ Verification checkpoint: GitHub Actions **#1475 SUCCESS** on `c6e9a20f0a5cb8b2c7
 
 Important release boundary: `ACT2_PRODUCTION_ENABLED` remains `false`. The real Act 1 → `/act2` route is intentionally shipping-locked until physical acceptance. `/act2-test` renders the same shared runtime for acceptance testing.
 
+### Act 1 chapter boundary dependency — 2026-10-02
+
+The production Act 2 entry contract now includes the explicit Act 1 chapter ending.
+
+Required order:
+**Clinic completion → Act 1 ensemble finale → SLUT PÅ FÖRSTA KAPITLET → acknowledgement → Stigen till sjön → production Act 2 entry/baseline → OPEN-001 Valpen sticker.**
+
+`act1EndCardSeen=true` is therefore part of the production Act 2 access contract. Merely having Clinic stage 4 or `clinicCompletionSeen` is no longer sufficient for newly authored progression. Legacy Clinic-complete saves are migration-compatible and normalize as already acknowledged so old players are not forced through newly inserted story retroactively.
+
+Do not move Act 2 baseline establishment earlier than deliberate path activation. Do not auto-route directly from the Act 1 chapter card into Act 2.
+
+Current Act 1 finale visual is a temporary placeholder only. Final ensemble art remains pending canonical references.
