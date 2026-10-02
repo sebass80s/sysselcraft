@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { ensureChildAnonymousSession } from "@/backend/auth";
+import { ensureChildAnonymousSession, getBackendAuthState, signOutBackendSession } from "@/backend/auth";
 import { getPairedChildId, setPairedChildId } from "@/backend/childDeviceBinding";
 import {
   getBoundChildIdForCurrentSession,
@@ -70,6 +70,11 @@ export default function ChildPairingPanel({ onClose }: { onClose: () => void }) 
   async function pair(event: FormEvent) {
     event.preventDefault(); setBusy(true); setMessage("");
     try {
+      const auth = await getBackendAuthState();
+      if (auth.signedIn && !auth.isAnonymous) {
+        await signOutBackendSession();
+      }
+      await ensureChildAnonymousSession();
       const childId = await redeemChildPairingCode(code);
       if (!(await isChildDeviceBound(childId))) throw new Error("Parningen skapades, men enhetsbindningen kunde inte bekräftas. Försök igen.");
       if (!(await getChildGameState(childId))) throw new Error("Kopplingen skapades, men barnets spelstatus kunde inte läsas. Försök igen.");
