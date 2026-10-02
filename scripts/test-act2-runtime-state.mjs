@@ -631,8 +631,11 @@ assert.ok(page.includes("setContributionTurnInOpen(false);"), "finishing one bea
 assert.ok(page.includes('className="act2-project-status"'), "Act 2 must keep a compact active-project status");
 assert.ok(page.includes("Aktivt projekt:"), "Act 2 project status must identify the active project");
 assert.equal(page.includes("Ett klart uppdrag väntar hos Alve."), false, "compact Act 2 project status must not carry quest guidance copy");
-assert.equal(page.includes("← Till byn"), false, "compact Act 2 project status must not carry village navigation");
+assert.ok(page.includes("← Till byn"), "Act 2 HUD must expose an explicit route back to the village");
 assert.ok(page.includes('className="prototype-header"'), "Act 2 must reuse the village HUD shell");
+assert.match(page, /className="prototype-brand-button"[\s\S]*onClick=\{\(\) => router\.push\("\/"\)\}/, "Act 2 SysselCraft logo must navigate back to the village");
+assert.match(page, /className="secondary-button compact act2-village-button"[\s\S]*← Till byn/, "Act 2 HUD must show an explicit Till byn control");
+
 assert.ok(page.includes('className="resource-hud"'), "Act 2 must show the shared resource HUD");
 assert.ok(page.includes('backendWallet?.diamonds'), "Act 2 HUD must show authoritative backend diamonds");
 assert.ok(page.includes('backendWallet?.sysselBux'), "Act 2 HUD must show authoritative backend SysselBux");
