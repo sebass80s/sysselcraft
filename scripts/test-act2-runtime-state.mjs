@@ -749,6 +749,7 @@ assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_MOTORBOAT
 assert.match(page, /if \(!act1ChapterComplete\)/, "direct /act2 access must require the acknowledged Act 1 chapter ending");
 assert.equal(page.includes("void saveAct2RuntimeState(next);"), false, "backend polling must not persist asynchronously inside a React state setter");
 assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body[0], "När ni kommer tillbaka till Mira håller hon redan på att göra beställningen klar.", "Motorbåten 6/16 must keep the locked post-purchase return scene");
+assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[6].image, "/assets/village/story-moments/act2/motorboat/02-linus-inspects-the-boat.png", "Motorbåten 7/16 must leave Mira and show Linus at the boat for the package-opening scene");
 assert.equal(MOTORBOAT_CONTRIBUTION_BEATS[5].body.some((line) => /\b(?:150|200) SysselBux\b/.test(line)), false, "post-purchase Motorbåten beat must not repeat the wallet transaction");
 
 const cabinStorySource = fs.readFileSync(new URL("../src/game/act2CabinStory.ts", import.meta.url), "utf8");
