@@ -13,6 +13,8 @@ type StoryMomentProps = {
   speaker?: string;
   speakerTone?: StorySpeakerTone;
   children: ReactNode;
+  previousLabel?: string;
+  onPrevious?: () => void;
   nextLabel?: string;
   onNext?: () => void;
   nextDisabled?: boolean;
@@ -31,6 +33,8 @@ export function StoryMoment({
   speaker,
   speakerTone = "default",
   children,
+  previousLabel = "Föregående",
+  onPrevious,
   nextLabel,
   onNext,
   nextDisabled = false,
@@ -68,6 +72,8 @@ export function StoryMoment({
         heading={heading}
         speaker={speaker}
         speakerTone={speakerTone}
+        previousLabel={previousLabel}
+        onPrevious={onPrevious}
         nextLabel={nextLabel}
         onNext={handleNext}
         nextDisabled={nextDisabled}
@@ -77,13 +83,22 @@ export function StoryMoment({
         {children}
       </DialogueCard>}
       {imageOnly && onNext && (
-        <button
-          type="button"
-          className="primary-button shared-story-image-continue"
-          onClick={onNext}
-        >
-          Fortsätt
-        </button>
+        <div className="shared-story-image-navigation">
+          <button
+            type="button"
+            className="secondary-button shared-story-image-previous"
+            onClick={() => setImageOnlyPresentationId(null)}
+          >
+            Föregående
+          </button>
+          <button
+            type="button"
+            className="primary-button shared-story-image-continue"
+            onClick={onNext}
+          >
+            Fortsätt
+          </button>
+        </div>
       )}
     </section>
   );
