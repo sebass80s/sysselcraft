@@ -579,7 +579,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         image: "/assets/village/story-moments/act2/meeting-alve/bike.png",
         speaker: childName,
         speakerTone: "child",
-        lines: ["Vad är det för cykel? Den verkar inte höra hemma här."],
+        lines: ["Du hör någon som spikar med en hammare längre bort"],
         nextLabel: "Fortsätt",
       }}
       onNext={() => void commit({ ...state, bicycleSeen: true })}
