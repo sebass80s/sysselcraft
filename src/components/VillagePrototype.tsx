@@ -437,9 +437,12 @@ export default function VillagePrototype() {
           if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_LINUS_INTERACT_BLOCKED", "runtime active", true); return; }
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solArrivalSeen && flags.solTourShopSeen && !flags.solTourLinusSeen) { setSolTourStoryStop("linus"); setSolTourStoryIndex(0); return; }
-          // The naming/dog sequence is onboarding only. Once intro is complete, Linus must
-          // never restart it when tapped again.
-          if (restoredIntroCompleteRef.current) return;
+          // Never leave Linus inert. If onboarding is already complete, replay the
+          // established first-meeting Story Moment instead of silently discarding the tap.
+          if (restoredIntroCompleteRef.current) {
+            setLinusStoryReplayIndex(0);
+            return;
+          }
           setDialogueIndex(0);
           setDialogueOpen(true);
           setLinusStoryMomentOpen(true);
