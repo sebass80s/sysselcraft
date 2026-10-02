@@ -161,9 +161,9 @@ const runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", imp
 const prodRoute = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 const debugRoute = fs.readFileSync(new URL("../src/app/act2-test/page.tsx", import.meta.url), "utf8");
 
-assert.match(village, /\(act1EndCardSeen \|\| act2AccessSeen\) && <button[^>]*[\s\S]*Stigen till sjön/, "Act 1 must expose the lake path after the chapter-one end card and preserve it after committed Act 2 entry");
+assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
 assert.match(village, /router\.push\("\/act2"\)/, "Act 1 lake path must enter the production Act 2 route");
-assert.match(runtime, /!act1ChapterComplete && !act2AccessPreviouslyGranted\(act2\)/, "Act 2 must independently accept either the acknowledged Act 1 ending or previously committed Act 2 access");
+assert.match(runtime, /if \(!act1ChapterComplete\)/, "Act 2 must independently require the acknowledged Act 1 chapter ending");
 assert.match(runtime, /prepareAct2ProductionEntry\(act2\)/, "production entry must reconcile pre-release locked-route residue before setting the baseline");
 assert.match(runtime, /withBackendClaimBaseline\(current, backend\.progression\.worldProgression\)/, "backend polling must recover a missing baseline after transient entry sync failure");
 assert.ok(
@@ -177,4 +177,4 @@ assert.match(debugRoute, /<Act2Runtime debug \/>/, "debug flow must use the prod
 assert.match(prodRoute, /ACT2_PRODUCTION_ENABLED = true/, "production Act 2 must remain open behind the persisted Act 1 end-card or committed-reentry gate");
 
 console.log("PASS: complete Act 1→Act 2→64 contributions→family/veranda→chapter-end flow");
-console.log("NOTE: production /act2 is open behind the Act 1 end-card gate and preserves committed reentry; /act2-test exercises the same runtime.");
+console.log("NOTE: production /act2 is open behind the Act 1 end-card gate; /act2-test exercises the same runtime.");
