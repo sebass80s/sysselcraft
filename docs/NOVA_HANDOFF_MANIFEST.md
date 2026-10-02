@@ -632,3 +632,12 @@ Act 2 production remains intentionally shipping-locked with `ACT2_PRODUCTION_ENA
 
 Deployment policy remains hard-locked: GitHub Actions for routine code verification; Vercel only for a meaningful acceptance checkpoint or release. `vercel.json` disables routine deployment of `nova/local-construction-snapshot`.
 
+## 2026-10-02 — Handover closeout
+
+Latest branch checkpoint at handover: `32bd71a3fdc776941614c8f4b037b60ce140eedc`, GitHub Actions **#1497 SUCCESS**.
+
+Important: the Act 1 chapter finale is **implemented**, not merely designed. The exact dialogue is in `src/game/solStory.ts`; persisted flow/gating is wired in the village/save/runtime code. The only intentionally temporary part is the visual, which currently reuses `sol-clinic-complete.png` as a placeholder.
+
+Do not regenerate the final Act 1 ensemble image until Kalle supplies the correct character references.
+
+Next work should resume from physical/browser acceptance and visual replacement, not reimplement the chapter-final state machine.
