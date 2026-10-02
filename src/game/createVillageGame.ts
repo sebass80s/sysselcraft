@@ -216,7 +216,11 @@ export async function createVillageGame(
             this.approachAttentionResident();
             return;
           }
-          if (this.introComplete && !this.backendLinusAttention) {
+          if (!this.introComplete) {
+            callbacks.onLinusInteract();
+            return;
+          }
+          if (!this.backendLinusAttention) {
             callbacks.onLinusInteract();
             return;
           }
@@ -1007,6 +1011,10 @@ export async function createVillageGame(
           this.approachAttentionResident();
           return;
         }
+        if (!this.introComplete) {
+          callbacks.onLinusInteract();
+          return;
+        }
         this.linusInteractionPending = true;
         this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
@@ -1026,6 +1034,10 @@ export async function createVillageGame(
           return;
         }
         if (!this.player) return;
+        if (!this.introComplete) {
+          callbacks.onLinusInteract();
+          return;
+        }
         // A backend quest marker changes what happens once the player reaches Linus,
         // but must never make Linus himself non-interactive. This keeps ordinary
         // resident dialogue available after onboarding and between quest batches.
