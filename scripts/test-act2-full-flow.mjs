@@ -35,6 +35,13 @@ assert.equal(state.productionEntryCommitted, true);
 state = withBackendClaimBaseline(state, 100);
 assert.equal(state.backendClaimBaseline, 100, "Act 2 entry must freeze the current backend progression baseline");
 
+let recoveredEntry = prepareAct2ProductionEntry(createDefaultAct2RuntimeState());
+assert.equal(recoveredEntry.backendClaimBaseline, null);
+recoveredEntry = withBackendClaimBaseline(recoveredEntry, 140);
+assert.equal(recoveredEntry.backendClaimBaseline, 140, "a later successful backend sync must establish a missing entry baseline");
+assert.equal(nextAct2Contribution(withSelectedProject(recoveredEntry, "cabin"), 140), null, "recovery baseline must not create latent backlog");
+assert.equal(nextAct2Contribution(withSelectedProject(recoveredEntry, "cabin"), 141)?.beatId, "cabin:01", "first quest after recovered baseline must advance normally");
+
 // Opening: every authored line is reachable, then bicycle, then every Alve intro line.
 for (let beatIndex = 0; beatIndex < ACT2_OPENING_BEATS.length; beatIndex += 1) {
   const beat = ACT2_OPENING_BEATS[beatIndex];
@@ -158,6 +165,7 @@ assert.match(village, /clinicCompletionSeen \|\| construction\.revealed\.clinic 
 assert.match(village, /router\.push\("\/act2"\)/, "Act 1 lake path must enter the production Act 2 route");
 assert.match(runtime, /clinicCompletionSeen === true[\s\S]*construction\.revealed\.clinic[\s\S]*>= 4/, "Act 2 must independently recheck Clinic completion");
 assert.match(runtime, /prepareAct2ProductionEntry\(act2\)/, "production entry must reconcile pre-release locked-route residue before setting the baseline");
+assert.match(runtime, /withBackendClaimBaseline\(current, backend\.progression\.worldProgression\)/, "backend polling must recover a missing baseline after transient entry sync failure");
 assert.ok(
   runtime.indexOf("if (!debug && !productionEnabled)") < runtime.indexOf("loadAct2RuntimeState(),"),
   "shipping lock must short-circuit before Act 2 state/baseline can be loaded and mutated",
