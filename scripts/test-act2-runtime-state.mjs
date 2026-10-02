@@ -762,7 +762,7 @@ assert.match(storyTranscriptSource, /parseStoryLine/, "StoryTranscript must cent
 const parsedChild = parseStoryLine("Barnet: Hej.", "Ture");
 assert.deepEqual(parsedChild, { text: "Hej.", speaker: "Ture", speakerTone: "child" });
 const parsedAlve = parseStoryLine("Alve: Japp.", "Ture");
-assert.deepEqual(parsedAlve, { text: "Japp.", speaker: "Alve", speakerTone: "default" });
+assert.deepEqual(parsedAlve, { text: "Japp.", speaker: "Alve", speakerTone: "alve" });
 assert.deepEqual(parseStoryLine("Du tittar mot sjön.", "Ture"), { text: "Du tittar mot sjön." });
 
 assert.match(act2PageSource, /<StoryMoment[\s\S]*meeting-alve\/pick\.png/, "project chooser must use the shared Story Engine shell");
