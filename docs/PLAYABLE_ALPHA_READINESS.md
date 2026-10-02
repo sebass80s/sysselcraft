@@ -444,3 +444,25 @@ Current status: **production runtime integration is substantially implemented bu
 - Dialogue-card UI is now contractually fixed at one speaker/nameplate and one reply per click. Recent click-count work is manuscript-only; any multi-speaker card is a regression.
 - Stugan's “En stund till” is now a repeatable post-16/16 cabin interaction until Motorbåten completion, not an automatic completion reaction.
 - The latest full `npm run verify` after these changes has not yet been reported PASS. Do not upgrade readiness based on earlier green checkpoints.
+
+## Act 1 chapter-final / Act 2 transition checkpoint — 2026-10-02
+
+Code/CI status:
+- [x] Clinic completion still persists before the ending sequence.
+- [x] New Act 1 ensemble finale is implemented and restart-safe.
+- [x] Black **SLUT PÅ FÖRSTA KAPITLET** card is implemented and acknowledged persistently.
+- [x] **Stigen till sjön** is gated behind chapter-one acknowledgement.
+- [x] Direct production Act 2 entry independently checks the same chapter boundary.
+- [x] Old Clinic-complete saves do not retroactively replay the new Act 1 finale.
+- [x] Placeholder art is explicit and temporary; final ensemble art is still OPEN.
+- [x] GitHub Actions **#1497 SUCCESS** at `32bd71a3fdc776941614c8f4b037b60ce140eedc`.
+
+Physical acceptance still OPEN:
+- Clinic finale → ensemble scene → chapter-end card on iPhone;
+- force-quit/relaunch during the ensemble scene;
+- force-quit/relaunch on the end-card boundary;
+- end-card acknowledgement → return to village → path availability;
+- path activation → locked/shared Act 2 opening;
+- final replacement ensemble image once canonical references are supplied.
+
+Do not treat CI-green as physical acceptance. Production Act 2 remains intentionally shipping-locked.
