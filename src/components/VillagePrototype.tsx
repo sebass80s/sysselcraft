@@ -481,8 +481,7 @@ export default function VillagePrototype() {
           void (async () => {
             try {
               const act2 = await loadAct2RuntimeState();
-              const requestedAct2Purchase = new URLSearchParams(window.location.search).get("act2-purchase");
-              setAct2JettyLifebuoyNeeded(
+                      setAct2JettyLifebuoyNeeded(
                 jettyPurchaseRequired(act2) || (requestedAct2Purchase === "dock" && !act2.jettyLifebuoyOwned),
               );
               setAct2JettyLifebuoyOwned(act2.jettyLifebuoyOwned);
