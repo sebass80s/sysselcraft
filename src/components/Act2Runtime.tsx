@@ -418,18 +418,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const contributionCandidate = backendWorldProgression === null || purchaseRequired || namingRequired
     ? null
     : nextAct2Contribution(state, backendWorldProgression);
-  const hudVisible =
-    !debug
-    && !chapterIntroVisible
-    && state.openingComplete
-    && state.alveIntroComplete
-    && state.selectedProject !== null
-    && !finalePending
-    && !completionProject
-    && !purchaseRequired
-    && !namingRequired
-    && !contributionTurnInOpen
-    && !cabinRevisitOpen;
   const activeContributionBeat = contributionCandidate?.project === "dock"
     ? JETTY_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
     : contributionCandidate?.project === "cabin"
@@ -460,6 +448,18 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeCompletionPresentation = activeCompletionLine
     ? parseStoryLine(activeCompletionLine, childName)
     : null;
+  const hudVisible =
+    !debug
+    && !chapterIntroVisible
+    && state.openingComplete
+    && state.alveIntroComplete
+    && state.selectedProject !== null
+    && !finalePending
+    && !completionProject
+    && !purchaseRequired
+    && !namingRequired
+    && !contributionTurnInOpen
+    && !cabinRevisitOpen;
   const activeCabinRevisitLine = cabinRevisitOpen
     ? CABIN_WAITING_REACTION.body[cabinRevisitLineIndex] ?? null
     : null;
