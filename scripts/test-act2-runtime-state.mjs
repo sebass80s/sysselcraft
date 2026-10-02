@@ -48,9 +48,12 @@ assert.equal(empty.finaleLineIndex, 0);
 assert.equal(canSelectProject(empty, "motorboat"), false);
 
 const act2RuntimeSource = fs.readFileSync(new URL("../src/game/act2RuntimeState.ts", import.meta.url), "utf8");
-assert.match(act2RuntimeSource, /getPairedChildId\(\)/, "Act 2 runtime persistence must resolve the paired child before loading or saving");
+assert.match(act2RuntimeSource, /getAct2PairedChildId\(\)/, "Act 2 runtime persistence must resolve the paired child before loading or saving");
 assert.match(act2RuntimeSource, /childRuntimeKey\(childId\)/, "Act 2 runtime persistence must use a child-scoped key when paired");
 assert.match(act2RuntimeSource, /Preferences\.remove\(\{ key: LEGACY_KEY \}\)/, "legacy shared Act 2 state must be removed after one-time child migration");
+const childBindingSource = fs.readFileSync(new URL("../src/backend/childDeviceBinding.ts", import.meta.url), "utf8");
+assert.match(act2RuntimeSource, /CHILD_ID_KEY = "sysselcraft\.backend\.childId"/, "Act 2 must read the canonical paired-child preference key");
+assert.match(childBindingSource, /CHILD_ID_KEY = "sysselcraft\.backend\.childId"/, "pairing and Act 2 must stay on the same paired-child preference key");
 
 const restored = normalizeAct2RuntimeState({
   version: 1,
