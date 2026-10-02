@@ -554,6 +554,20 @@ assert.ok(lakeGameSource.includes("distance <= 135"), "Alve quest hand-in must r
 assert.ok(lakeGameSource.includes("options.onAlveTurnIn?.()"), "nearby Alve interaction must open the Act 2 turn-in");
 assert.ok(lakeGameSource.includes("event.stopPropagation()"), "Alve taps must not fall through to the generic touch-to-move handler");
 assert.ok(lakeGameSource.includes("Tryck på Alve"), "nearby pending turn-in must give explicit world feedback");
+
+for (const prompt of [
+  "Gör några uppdrag så kommer vi vidare med bygget!",
+  "Vi behöver några uppdrag till innan vi kan fortsätta.",
+  "Kör några uppdrag, så bygger vi vidare sen!",
+  "Lite fler uppdrag först. Sen fortsätter vi!",
+  "Vi är inte riktigt redo för nästa steg än. Gör några uppdrag!",
+  "Fixar du några uppdrag till så tar vi nästa byggsteg sen.",
+]) {
+  assert.ok(lakeGameSource.includes(prompt), `idle Alve world prompt must include: ${prompt}`);
+}
+assert.ok(lakeGameSource.includes("showAlveIdleWorldPrompt()"), "inactive Alve taps must surface a world prompt");
+assert.ok(lakeGameSource.includes("lastAlveIdlePromptIndex"), "idle Alve prompt rotation should avoid immediate repeats");
+assert.ok(lakeGameSource.includes("delayedCall(3200"), "idle Alve world prompt should dismiss itself without story state");
 assert.ok(lakeGameSource.includes("facePlayerTowardAlve()"), "child should face Alve when the hand-in interaction begins");
 assert.match(
   lakeGameSource,
