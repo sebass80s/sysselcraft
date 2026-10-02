@@ -481,17 +481,11 @@ export default function VillagePrototype() {
           void (async () => {
             try {
               const act2 = await loadAct2RuntimeState();
-                      setAct2JettyLifebuoyNeeded(
-                jettyPurchaseRequired(act2) || (requestedAct2Purchase === "dock" && !act2.jettyLifebuoyOwned),
-              );
+              setAct2JettyLifebuoyNeeded(jettyPurchaseRequired(act2));
               setAct2JettyLifebuoyOwned(act2.jettyLifebuoyOwned);
-              setAct2BoathouseSteeringWheelNeeded(
-                boathousePurchaseRequired(act2) || (requestedAct2Purchase === "boathouse" && !act2.boathouseSteeringWheelOwned),
-              );
+              setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(act2));
               setAct2BoathouseSteeringWheelOwned(act2.boathouseSteeringWheelOwned);
-              setAct2MotorboatPartsNeeded(
-                motorboatPartsPurchaseRequired(act2) || (requestedAct2Purchase === "motorboat" && !act2.motorboatPartsOwned),
-              );
+              setAct2MotorboatPartsNeeded(motorboatPartsPurchaseRequired(act2));
               setAct2MotorboatPartsOwned(act2.motorboatPartsOwned);
               setAct2PurchaseStory(act2.pendingPurchaseStory);
               setAct2PurchaseStoryIndex(act2.purchaseStoryLineIndex);
