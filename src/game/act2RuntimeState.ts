@@ -1,5 +1,4 @@
 import { Preferences } from "@capacitor/preferences";
-import { getPairedChildId } from "../backend/childDeviceBinding";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -42,6 +41,13 @@ export type Act2RuntimeState = {
 };
 
 const LEGACY_KEY = "sysselcraft.act2.runtime.v1";
+const CHILD_ID_KEY = "sysselcraft.backend.childId";
+
+async function getAct2PairedChildId() {
+  const { value } = await Preferences.get({ key: CHILD_ID_KEY });
+  const childId = value?.trim() ?? "";
+  return childId || null;
+}
 
 function childRuntimeKey(childId: string) {
   return `${LEGACY_KEY}.${childId}`;
@@ -480,7 +486,7 @@ function parseStoredAct2RuntimeState(value: string | null): Act2RuntimeState | n
 }
 
 export async function loadAct2RuntimeState(): Promise<Act2RuntimeState> {
-  const childId = await getPairedChildId();
+  const childId = await getAct2PairedChildId();
   if (!childId) {
     const { value } = await Preferences.get({ key: LEGACY_KEY });
     return parseStoredAct2RuntimeState(value) ?? createDefaultAct2RuntimeState();
@@ -506,7 +512,7 @@ export async function loadAct2RuntimeState(): Promise<Act2RuntimeState> {
 }
 
 export async function saveAct2RuntimeState(state: Act2RuntimeState): Promise<void> {
-  const childId = await getPairedChildId();
+  const childId = await getAct2PairedChildId();
   const key = childId ? childRuntimeKey(childId) : LEGACY_KEY;
   await Preferences.set({ key, value: JSON.stringify(normalizeAct2RuntimeState(state)) });
 }
