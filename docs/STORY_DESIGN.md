@@ -6057,6 +6057,56 @@ The lake crossing should feel like part of the world's geography, not a menu tel
 
 
 
+
+
+### Act 3 macro structure — the whole act builds toward the family party — LOCKED 2026-10-02
+
+Act 3's practical spine is a **single long preparation arc for Nova's family-day party/event**. The player should understand most of the act as helping Nova make the day perfect. This keeps the objective simple for a child while the emotional meaning becomes progressively heavier for older players.
+
+The four main progress tracks are not four construction projects. They are four preparation streams for the same event:
+
+1. **Henning — food and cake**
+   - menu planning;
+   - ingredients;
+   - cooking/baking problems;
+   - the cake as an important visible payoff;
+   - room for Henning's warmth, chaos and ideas.
+
+2. **Linus — lighting**
+   - practical setup;
+   - repairing/rigging lights;
+   - power, fixtures, cables or improvised mounting;
+   - a visible transformation of the party space as evening approaches.
+
+3. **Mira — furniture and practical setup**
+   - tables, chairs, textiles, serving surfaces and other practical items;
+   - sourcing, ordering or finding what is missing;
+   - arrangement and logistics that feed Nova's need for everything to be exactly right.
+
+4. **Sol — music**
+   - choosing music;
+   - speakers/playback;
+   - helping create the emotional atmosphere of the day;
+   - Sol may also quietly notice the relational subtext, but she must not become a therapist or spoil Nova's arc.
+
+These four tracks may interleave rather than play as four isolated blocks. Their shared destination is the same final family-day scene.
+
+The village therefore remains mechanically and narratively relevant throughout Act 3: Barnet, Alve and Nova repeatedly travel by motorboat back to the Act 1 village to get help from the residents, then return to the city to continue preparations.
+
+The progress fantasy presented to the player is:
+**make the party better and better until everything feels perfect.**
+
+The emotional truth underneath is:
+**Nova is trying to construct a perfect enough day that her parents will become a couple again.**
+
+By the final beat, all four preparation tracks should have paid off visibly:
+- Henning's food/cake is there;
+- Linus's lighting works;
+- Mira's furniture/setup is in place;
+- Sol's music is playing;
+- the family day genuinely succeeds.
+
+That success is essential because it sets up the later break: the event can be beautiful, warm and successful without changing the parents' decision to remain separated.
 ### Act 3 direction — divorce / changing family
 
 Act 3 should center on a child whose parents have separated.
