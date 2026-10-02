@@ -276,6 +276,11 @@ main { min-height: 100dvh; }
   pointer-events: auto;
   isolation: isolate;
 }
+
+body[data-story-overlay-active="true"] [data-story-ui="quest-dock"],
+body[data-story-overlay-active="true"] [data-story-ui="quest-overlay"] {
+  display: none !important;
+}
 .shared-story-image {
   position: absolute;
   inset: 0;
