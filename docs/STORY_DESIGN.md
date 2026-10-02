@@ -510,6 +510,71 @@ Parked for a later village-life polish pass.
 Locked presentation grammar: question mark means a new quest is available to accept; exclamation mark means an approved/completed quest is ready to turn in; speech bubble means authored story/dialogue attention; no marker means ordinary optional interaction. Linus uses a speech bubble at the very start of a fresh game to invite onboarding, and that behavior is browser-verified.
 
 
+## Act 1 chapter finale — LOCKED 2026-10-02
+
+Act 1 does **not** flow directly from the Clinic completion dialogue into Act 2. After the Clinic finale has completed, the village gets one dedicated ensemble payoff scene. This is a narrative beat only: it does not advance Clinic construction, award quest progress or establish the Act 2 backend baseline.
+
+Exact locked dialogue:
+
+> **Barnet:** “Det blev faktiskt fint här.”  
+> **Sol:** “Fint?”  
+> **Sol:** “Det här är mer än fint.”  
+> **Henning:** “Bageriet är igång.”  
+> **Mira:** “Butiken också.”  
+> **Linus:** “Återvinningen fungerar.”  
+> **Sol:** “Och kliniken är klar.”  
+> **Henning:** “Det låter nästan som att vi har en by.”  
+> **Mira:** “Nästan?”  
+> **Henning:** “Okej då. Vi har en by.”  
+> **Linus:** “Det var ganska tomt här när du kom.”  
+> **Barnet:** “Mm.”  
+> **Linus:** “Nu är det folk överallt.”  
+> **Sol:** “Och det är inte för att byggnaderna råkade laga sig själva.”  
+> **Mira:** “Eller för att Henning plötsligt blev effektiv.”  
+> **Henning:** “Jag väljer att ta det där som beröm.”  
+> **Linus:** “Du hjälpte oss att få igång allt igen.”  
+> **Barnet:** “Jag gjorde ju bara uppdrag.”  
+> **Sol:** “Precis.”  
+> **Sol:** “Ett i taget.”  
+> **Mira:** “Och till slut stod vi här.”  
+> **Henning:** “Med bageri.”  
+> **Sol:** “Klinik.”  
+> **Mira:** “Butik.”  
+> **Linus:** “Och en by som lever igen.”  
+> **Barnet:** “Tror ni att det kommer fler?”  
+> **Linus:** “Det tror jag.”  
+> **Sol:** “Det finns plats.”  
+> **Mira:** “Och nu finns det en anledning att komma hit.”  
+> **Henning:** “Framför allt bageriet.”  
+> **Mira:** “Henning.”  
+> **Henning:** “Vad? Det är sant.”  
+> **Linus:** “Det här är bara början.”  
+> **Barnet:** “Bara början?”  
+> **Linus:** “Japp.”  
+> **Linus:** “Det finns fortfarande mycket kvar där ute.”
+
+After the last line, let the village image breathe briefly, then fade to black and show:
+
+**SLUT PÅ FÖRSTA KAPITLET**
+
+### Act 1 → Act 2 trigger lock
+
+The chapter card ends Act 1; it does **not** automatically start Act 2.
+
+Canonical trigger order:
+1. Clinic completion dialogue finishes.
+2. Act 1 ensemble finale above plays once.
+3. Black **SLUT PÅ FÖRSTA KAPITLET** card is acknowledged.
+4. Player returns to the normal village.
+5. Only now is **Stigen till sjön** armed/available as the chapter transition.
+6. Player deliberately activates the path.
+7. Production enters `/act2`, establishes the Act 2 backend baseline at that moment, and starts **OPEN-001 · Valpen sticker**.
+8. The puppy therefore initiates the fiction of Act 2, while the player still controls when to leave Act 1.
+
+Do not auto-route to Act 2 from the chapter card. Do not establish the Act 2 baseline before the player activates the path.
+
+Old saves that completed the Clinic before this chapter-finale feature existed must not suddenly replay the new Act 1 finale/end card on boot; migration/normalization should treat that historical completion as already acknowledged unless the finale was explicitly started by the new flow.
+
 ## Post-Clinic bridge toward Act 2 — 2026-09-26
 
 The Clinic completion now ends with a deliberate continuing-play handoff rather than a generic placeholder. Linus explicitly frames the restored village as unfinished, points to empty places and future residents who do not yet know the village exists, and tells the child to keep helping with household quests while the village becomes ready for its next build. Sol supports the forward-looking beat. This preserves the recurring quest loop as meaningful play after the current authored story ends without inventing the identity of the next resident/building. The exact Act 2 trigger and next resident remain future design work.
