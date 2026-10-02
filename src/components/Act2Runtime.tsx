@@ -169,10 +169,20 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
         }
       }
+      const resumeProject = new URLSearchParams(window.location.search).get("resume");
+      if (
+        (resumeProject === "boathouse" || resumeProject === "dock")
+        && !entered.projects[resumeProject].complete
+      ) {
+        entered = { ...entered, selectedProject: resumeProject };
+      }
       await saveAct2RuntimeState(entered);
       if (cancelled) return;
       setState(entered);
       setReady(true);
+      if (resumeProject === "boathouse" || resumeProject === "dock") {
+        router.replace("/act2");
+      }
     })();
     return () => { cancelled = true; };
   }, [debug, productionEnabled]);
