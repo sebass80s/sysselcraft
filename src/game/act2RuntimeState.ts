@@ -1,4 +1,5 @@
 import { Preferences } from "@capacitor/preferences";
+import { getPairedChildId } from "../backend/childDeviceBinding";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -40,7 +41,11 @@ export type Act2RuntimeState = {
   endCardSeen: boolean;
 };
 
-const KEY = "sysselcraft.act2.runtime.v1";
+const LEGACY_KEY = "sysselcraft.act2.runtime.v1";
+
+function childRuntimeKey(childId: string) {
+  return `${LEGACY_KEY}.${childId}`;
+}
 const PROJECTS: Act2Project[] = ["cabin", "dock", "boathouse", "motorboat"];
 
 function emptyProject(): Act2ProjectState {
@@ -465,16 +470,43 @@ export function withPresentedContribution(
   });
 }
 
-export async function loadAct2RuntimeState(): Promise<Act2RuntimeState> {
-  const { value } = await Preferences.get({ key: KEY });
-  if (!value) return createDefaultAct2RuntimeState();
+function parseStoredAct2RuntimeState(value: string | null): Act2RuntimeState | null {
+  if (!value) return null;
   try {
     return normalizeAct2RuntimeState(JSON.parse(value));
   } catch {
-    return createDefaultAct2RuntimeState();
+    return null;
   }
 }
 
+export async function loadAct2RuntimeState(): Promise<Act2RuntimeState> {
+  const childId = await getPairedChildId();
+  if (!childId) {
+    const { value } = await Preferences.get({ key: LEGACY_KEY });
+    return parseStoredAct2RuntimeState(value) ?? createDefaultAct2RuntimeState();
+  }
+
+  const key = childRuntimeKey(childId);
+  const scoped = await Preferences.get({ key });
+  const scopedState = parseStoredAct2RuntimeState(scoped.value);
+  if (scopedState) return scopedState;
+
+  // One-time migration from the pre-account-scoped Act 2 save. The legacy
+  // value lives on this device, so assign it to the child currently paired
+  // on this device and remove the shared key before another child can inherit it.
+  const legacy = await Preferences.get({ key: LEGACY_KEY });
+  const legacyState = parseStoredAct2RuntimeState(legacy.value);
+  if (legacyState) {
+    await Preferences.set({ key, value: JSON.stringify(legacyState) });
+    await Preferences.remove({ key: LEGACY_KEY });
+    return legacyState;
+  }
+
+  return createDefaultAct2RuntimeState();
+}
+
 export async function saveAct2RuntimeState(state: Act2RuntimeState): Promise<void> {
-  await Preferences.set({ key: KEY, value: JSON.stringify(normalizeAct2RuntimeState(state)) });
+  const childId = await getPairedChildId();
+  const key = childId ? childRuntimeKey(childId) : LEGACY_KEY;
+  await Preferences.set({ key, value: JSON.stringify(normalizeAct2RuntimeState(state)) });
 }
