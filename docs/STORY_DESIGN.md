@@ -5799,8 +5799,11 @@ Series continuity purpose: Act 2 showed Alve learning to stop rebuilding backwar
 
 A further continuity beat is approved: Alve may indirectly imply that Barnet helped save him in Act 2 and that Nova might benefit from accepting the same kind of help. He should **not** say “Barnet saved me” outright. Keep it in Alve's own understated, slightly awkward language.
 
+**Placement lock:** this scene belongs specifically in a moment where Nova insists that she **does not need help** and intends to handle/fix things herself. Alve's response should be prompted by that resistance. Do not play this as a detached nostalgia beat or generic Act 2 callback. Its dramatic function is to challenge Nova's belief that accepting help means losing control.
+
 Suggested tone:
 
+> **Nova:** “Jag behöver ingen hjälp.”  
 > **Alve:** “Du behöver inte göra allt själv.”  
 > **Nova:** “Det är lätt för dig att säga.”  
 > **Alve:** “Nä.”  
