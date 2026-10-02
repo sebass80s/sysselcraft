@@ -873,7 +873,7 @@ Pojken höjer ögonbrynen.
 
 Han försöker hålla sig allvarlig, men börjar le.
 
-> **Barnet:** “Jag heter Adam.”
+> **Barnet:** “Jag heter {childName}.”
 
 Pojken tvekar ett ögonblick.
 
@@ -881,7 +881,7 @@ Pojken tvekar ett ögonblick.
 
 **Nameplate changes: Barnet → Alve.**
 
-> **Alve:** “Okej, Adam. Om du verkligen tänker hjälpa till så behöver du se resten.”
+> **Alve:** “Okej, {childName}. Om du verkligen tänker hjälpa till så behöver du se resten.”
 
 Alve börjar gå mot sjön och du följer efter.
 
