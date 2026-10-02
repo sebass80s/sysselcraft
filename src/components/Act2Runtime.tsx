@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { Act2LakeGameHandle } from "../game/createAct2LakeGame";
 import {
   createDefaultAct2RuntimeState,
+  act2AccessPreviouslyGranted,
   act2FinalePending,
   advanceAct2Finale,
   isMotorboatUnlocked,
@@ -158,7 +159,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       if (cancelled) return;
       setChildName(act1?.childName || "Barnet");
       const act1ChapterComplete = act1?.worldFlags?.act1EndCardSeen === true;
-      if (!act1ChapterComplete) {
+      if (!act1ChapterComplete && !act2AccessPreviouslyGranted(act2)) {
         setAct2AccessAllowed(false);
         setReady(true);
         return;
