@@ -127,11 +127,34 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         const act1 = await loadSaveState();
         if (cancelled) return;
         setChildName(act1?.childName || "Barnet");
-        const debugState: Act2RuntimeState = {
-          ...createDefaultAct2RuntimeState(),
-          entered: true,
-          backendClaimBaseline: 0,
-        };
+        const finalePreview = new URLSearchParams(window.location.search).get("finale") === "1";
+        const defaults = createDefaultAct2RuntimeState();
+        const debugState: Act2RuntimeState = finalePreview
+          ? {
+              ...defaults,
+              entered: true,
+              openingComplete: true,
+              bicycleSeen: true,
+              alveIntroComplete: true,
+              backendClaimBaseline: 0,
+              projects: {
+                cabin: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `cabin:${String(i + 1).padStart(2, "0")}`), complete: true },
+                dock: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `dock:${String(i + 1).padStart(2, "0")}`), complete: true },
+                boathouse: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `boathouse:${String(i + 1).padStart(2, "0")}`), complete: true },
+                motorboat: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `motorboat:${String(i + 1).padStart(2, "0")}`), complete: true },
+              },
+              finaleIndex: 0,
+              finaleLineIndex: 0,
+              familyFinaleConsumed: false,
+              epilogueConsumed: false,
+              act2Complete: false,
+              endCardSeen: false,
+            }
+          : {
+              ...defaults,
+              entered: true,
+              backendClaimBaseline: 0,
+            };
         backendWorldProgressionRef.current = 999;
         setBackendWorldProgression(999);
         setAct2AccessAllowed(true);
