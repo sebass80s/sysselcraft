@@ -32,6 +32,7 @@ import {
   type QuestPresentationSource,
   type QuestSourceOpenEventDetail,
 } from "@/game/questPresentationBridge";
+import { isStoryOverlayActive, STORY_OVERLAY_VISIBILITY_EVENT } from "@/game/storyOverlayBridge";
 import styles from "./ChildBackendQuestInbox.module.css";
 
 const OPEN_REFRESH_MS = 15_000;
@@ -63,6 +64,21 @@ function BoundChildQuestInbox() {
   const [message, setMessage] = useState("");
   const [pendingTurnIns, setPendingTurnIns] = useState<PendingQuestTurnIn[]>([]);
   const [questCompleteMoment, setQuestCompleteMoment] = useState<{ title: string; diamonds: number; sysselBux: number; image: string } | null>(null);
+  const [storyOverlayActive, setStoryOverlayActive] = useState(isStoryOverlayActive);
+
+  useEffect(() => {
+    const onStoryVisibility = (event: Event) => {
+      const detail = (event as CustomEvent<{ active?: boolean }>).detail;
+      const active = detail?.active === true;
+      setStoryOverlayActive(active);
+      if (active) {
+        setOpen(false);
+        setSourceFilter(null);
+      }
+    };
+    window.addEventListener(STORY_OVERLAY_VISIBILITY_EVENT, onStoryVisibility);
+    return () => window.removeEventListener(STORY_OVERLAY_VISIBILITY_EVENT, onStoryVisibility);
+  }, []);
 
   const [requests] = useState(createQuestRequestGuard);
   useEffect(() => {
@@ -422,6 +438,7 @@ function BoundChildQuestInbox() {
   // Pairing and re-pairing live in SysselCraft → Vuxenläge.
   // Keep the quest dock out of the village HUD until a valid child binding exists.
   if (!childId || needsPairing) return null;
+  if (storyOverlayActive) return null;
 
   const presented = presentBackendQuests(quests, gameState, { recyclingCenterStage: localRecyclingCenterStage, bakeryStage: localBakeryStage, henningPresent: localHenningPresent });
   // World quest sources present only NEW quests. Once accepted, a quest belongs in
