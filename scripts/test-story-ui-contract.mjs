@@ -80,9 +80,19 @@ assert.deepEqual(
 );
 assert.deepEqual(
   parseStoryLine("Alve: Hej {childName}.", "Testbarn"),
-  { text: "Hej Testbarn.", speaker: "Alve", speakerTone: "default" },
-  "NPC dialogue may interpolate the child name without leaking a speaker prefix",
+  { text: "Hej Testbarn.", speaker: "Alve", speakerTone: "alve" },
+  "Alve dialogue must use his dedicated nameplate tone while interpolating the child name",
 );
+for (const [line, tone] of [
+  ["Henning: Hej.", "henning"],
+  ["Mira: Hej.", "mira"],
+  ["Linus: Hej.", "linus"],
+  ["Sol: Hej.", "sol"],
+]) {
+  assert.equal(parseStoryLine(line).speakerTone, tone, `${line.split(":")[0]} must have a dedicated Story Engine nameplate tone`);
+}
+assert.equal(parseStoryLine("Pappan: Hej.").speakerTone, "default", "Alves pappa is a one-off NPC and must keep the neutral tone");
+assert.equal(parseStoryLine("Storasystern: Hej.").speakerTone, "default", "Alves syster is a one-off NPC and must keep the neutral tone");
 assert.deepEqual(
   parseStoryLine("Berättarrad med {childName}.", "Testbarn"),
   { text: "Berättarrad med Testbarn." },
