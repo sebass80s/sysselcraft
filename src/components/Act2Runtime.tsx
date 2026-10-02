@@ -16,6 +16,7 @@ import {
   motorboatPartsPurchaseRequired,
   nextAct2Contribution,
   prerequisiteCompletionCount,
+  prepareAct2ProductionEntry,
   projectCompletionReactionPending,
   saveAct2RuntimeState,
   withBackendClaimBaseline,
@@ -138,7 +139,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         return;
       }
       setAct2AccessAllowed(true);
-      let entered: Act2RuntimeState = act2.entered ? act2 : { ...act2, entered: true };
+      let entered: Act2RuntimeState = prepareAct2ProductionEntry(act2);
       if (childId) {
         try {
           const backend = await getChildGameState(childId);
