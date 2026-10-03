@@ -1107,7 +1107,7 @@ Bryggan image production is complete in the repository. The earlier seven-still 
 
 The story still uses **16 authoritative real-world contributions**. Image count, contribution count and visual stage count remain separate concepts.
 
-**Economy lock:** the life-buoy purchase is story-canonical. Its current locked provisional price is **300 SysselBux** and may be rebalanced later. No price is baked into the artwork.
+**Economy lock:** the life-buoy purchase is story-canonical. Its locked runtime price is **200 SysselBux**. No price is baked into the artwork.
 
 ### Authoritative Bryggan asset set
 
@@ -1116,7 +1116,7 @@ The story still uses **16 authoritative real-world contributions**. Image count,
 | 01 | `01-early-restoration.png` | Adam + Alve begin clearing the damaged jetty and discover deeper rot. |
 | 02 | `02-linus-salvaged-timber.png` | Linus returns with reusable timber/material for the first substantial repair. |
 | 03 | `03-sol-safety-check.png` | Sol performs the calm bathing-area safety inspection. |
-| 04 | `04-mira-lifebuoy-purchase.png` | Adam buys the proper life buoy from Mira in the village shop. |
+| 04 | `04-mira-lifebuoy-purchase.png` | Barnet buys the proper life buoy from Mira in the village shop. |
 | 05 | `05-bathing-edge-cleanup.png` | Adam + Alve clear the bathing edge and bring/mount the new life buoy. |
 | 06 | `06-late-restoration.png` | Later substantial restoration work while the jetty is nearing completion. |
 | 07 | `07-henning-first-visitor.png` | Henning becomes the first authored social visitor before completion. |
@@ -1135,7 +1135,7 @@ All nine files have been verified on branch `nova/local-construction-snapshot`.
 | JETTY-04 | REUSE | `02-linus-salvaged-timber.png` carries the first substantial repair sequence; runtime stage swap 1/4→2/4. |
 | JETTY-05 | REUSE | Hold `02-linus-salvaged-timber.png` while Alve talks swimming and attention shifts to the bathing edge; no new still is introduced. |
 | JETTY-06 | IMAGE | `03-sol-safety-check.png` — Sol inspects bathing access and identifies cleanup + life-buoy needs. |
-| INTERMEDIATE ECONOMY BEAT | IMAGE | `04-mira-lifebuoy-purchase.png` — Adam buys the proper life buoy from Mira. **This is not a real-world contribution.** Price is **300 SysselBux** (provisional; may be rebalanced later). |
+| INTERMEDIATE ECONOMY BEAT | IMAGE | `04-mira-lifebuoy-purchase.png` — Barnet buys the proper life buoy from Mira. **This is not a real-world contribution.** Price is **200 SysselBux**. |
 | JETTY-07 | IMAGE | `05-bathing-edge-cleanup.png` — Adam + Alve clear the bathing edge; new life buoy is present for mounting. |
 | JETTY-08 | REUSE | `05-bathing-edge-cleanup.png` carries the mounting transition; runtime stage swap 2/4→3/4 makes the life buoy permanent. |
 | JETTY-09 | REUSE | Hold `05-bathing-edge-cleanup.png` while the dialogue shifts from worksite toward summer-use potential; no new still. |
@@ -1181,7 +1181,7 @@ Serves JETTY-06. Sol performs a calm prevention/safety inspection because Adam a
 
 #### 04 — Mira life-buoy purchase
 Asset: `04-mira-lifebuoy-purchase.png`  
-Intermediate economy/story beat between JETTY-06 and JETTY-07. Adam buys the proper life buoy from Mira in her village shop; Alve may accompany him. This image is **not** contribution 7 and does not increase restoration contribution count. The current locked provisional price is **300 SysselBux** and may be rebalanced later.
+Intermediate economy/story beat between JETTY-06 and JETTY-07. Barnet buys the proper life buoy from Mira in her village shop; Alve may accompany him. This image is **not** contribution 7 and does not increase restoration contribution count. The locked runtime price is **200 SysselBux**.
 
 #### 05 — Bathing-edge cleanup
 Asset: `05-bathing-edge-cleanup.png`  
