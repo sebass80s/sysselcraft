@@ -11,6 +11,7 @@ import { resolveInteraction, worldInputEnabled } from "../src/runtime/interactio
 import { resolveInteractionPriority } from "../src/runtime/interaction/interactionPriority.ts";
 import { resolveDirectMovementIntent } from "../src/runtime/world/movement.ts";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../src/runtime/world/worldCamera.ts";
+import { WORLD_ENTITY_DEPTH_BASE, worldEntityDepth } from "../src/runtime/world/worldDepth.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
@@ -195,6 +196,17 @@ const linusPriorityFixtures = [
 
 for (const fixture of linusPriorityFixtures) {
   assert.equal(resolveInteractionPriority(fixture.candidates)?.id, fixture.expected, fixture.name);
+}
+
+const worldDepthFixtures = [
+  { name: "world depth rounds down below the half-pixel boundary", y: 427.4, expected: 1427 },
+  { name: "world depth rounds up above the half-pixel boundary", y: 427.6, expected: 1428 },
+  { name: "world depth preserves integer authored y values", y: 452, expected: 1452 },
+];
+
+assert.equal(WORLD_ENTITY_DEPTH_BASE, 1000);
+for (const fixture of worldDepthFixtures) {
+  assert.equal(worldEntityDepth(fixture.y), fixture.expected, fixture.name);
 }
 
 const cameraDeadzoneFixtures = [
@@ -1046,6 +1058,12 @@ assert.ok(
   "Act 2 Lake must consume the shared World/Area camera contract",
 );
 assert.ok(
+  act2LakeSource.includes("worldEntityDepth(this.player.y)")
+    && act2LakeSource.includes("worldEntityDepth(this.dog.y)")
+    && act2LakeSource.includes("worldEntityDepth(position.y)"),
+  "Act 2 Lake dynamic entities must consume shared world depth ordering",
+);
+assert.ok(
   act2LakeSource.includes("update(_time: number, delta: number)"),
   "Act 2 Lake update loop must remain present for world-input parity coverage",
 );
@@ -1070,6 +1088,12 @@ assert.ok(
   villageGameSource.includes("WORLD_CAMERA.followLerpX")
     && villageGameSource.includes("worldCameraDeadzone(viewWidth)"),
   "Village must consume the shared World/Area camera contract",
+);
+assert.ok(
+  villageGameSource.includes("worldEntityDepth(this.player.y)")
+    && villageGameSource.includes("worldEntityDepth(this.dog.y)")
+    && villageGameSource.includes("worldEntityDepth(truck.y)"),
+  "Village dynamic entities must consume shared world depth ordering",
 );
 assert.ok(
   villageGameSource.includes("setWorldInputEnabled: (enabled: boolean) => void"),
@@ -1275,4 +1299,4 @@ assert.ok(
   "Village must not retain local story-attention bubble drawing",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${villagePointerTargetFixtures.length} pointer-target fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${cameraDeadzoneFixtures.length} camera fixtures + ${directMovementFixtures.length} direct-movement fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${villagePointerTargetFixtures.length} pointer-target fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${worldDepthFixtures.length} depth fixtures + ${cameraDeadzoneFixtures.length} camera fixtures + ${directMovementFixtures.length} direct-movement fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
