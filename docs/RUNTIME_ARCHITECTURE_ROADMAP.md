@@ -1243,3 +1243,31 @@ Parity guards:
 - marker sync initializes after sprite creation and resyncs around construction presentation.
 
 **Status:** Linus base intent + marker arbitration are centralized. Generic pointer hit-target arbitration and the remaining NPC-specific behavior are still pending.
+
+
+## Interaction priority checkpoint 3 — Henning reuse proof
+
+The shared priority resolver is now proven on a second mixed NPC.
+
+Henning base intent maps to:
+1. construction attention — priority 30;
+2. backend bakery quest source — priority 20;
+3. ordinary resident interaction — priority 10.
+
+Both base entrypoints now consume one `resolveHenningIntent()`:
+- scene-level Henning hit;
+- Henning sprite.
+
+This closes a legacy inconsistency where scene-level taps honored construction/quest priority while sprite taps could bypass both and fall through to ordinary Henning behavior.
+
+Henning backend quest marker presentation is also centralized through `syncHenningPriorityMarker()`:
+- quest marker is shown only when quest-source wins;
+- construction attention suppresses the lower-priority quest marker;
+- quest marker has one canonical creation path;
+- construction-driven resident movement resyncs the marker position.
+
+The Sol-tour marker remains intentionally separate. It is an explicit story CTA, not yet folded into generic NPC marker priority.
+
+Parity locks the three Henning priority outcomes and guards the two base consumers + single quest-marker creation path.
+
+**Status:** shared interaction priority is now reusable across Linus and Henning. Story-CTA arbitration remains pending.
