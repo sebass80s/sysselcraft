@@ -700,3 +700,15 @@ Act 3 is the first consumer of Runtime Architecture 1.0, not an excuse to create
 If you spot a material improvement to architecture, UX, reliability, maintainability or testing, surface it immediately. Do not wait for Kalle to ask and do not bury it in a later handoff.
 
 Respect the live freeze: propose or implement improvements on the development branch unless an explicit live hotfix is requested.
+
+
+## CANONICAL SYSTEM REGISTRY RULE
+
+Before adding any reusable UI/marker/interaction asset or component, check the central System Registry/shared engine layer.
+
+If the concept already exists, reuse it.
+Do not hardcode a new Act-specific asset path or local implementation for the same concept.
+
+Quest marker means the canonical quest marker. Dialogue card means the canonical dialogue card. Global HUD means the canonical Game UI Shell.
+
+Arch 1.0 should add automated/static guards where practical so duplicate system concepts are caught early.
