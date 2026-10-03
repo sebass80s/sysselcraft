@@ -834,3 +834,14 @@ Improvement rule: when a material architecture/product/UX/reliability improvemen
 Arch 1.0 must expose one central registry/layer for reusable engine concepts and their canonical assets/components. Chapter code should consume quest markers, attention markers, Story UI, HUD/menu primitives and similar shared systems through that layer rather than embedding new asset paths or local component variants.
 
 Where practical, add static/regression checks that flag Act-specific duplicate system assets or direct forks of registered concepts.
+
+
+## Runtime 1.0 migration strategy
+
+The canonical implementation strategy is now **clean parallel runtime + controlled migration**, not piecemeal extraction of the legacy client.
+
+Reuse backend/economy/story/assets/progression decisions. Rebuild the client runtime systems cleanly under the mandatory Architecture 1.0 rules.
+
+A parity harness is required. It must run representative save/state fixtures through legacy behavior and Runtime 1.0 and compare product-level outcomes such as world state, NPC/interactable availability, next eligible story, gates, completion and chapter transitions.
+
+Do not remove legacy runtime or promote Runtime 1.0 until parity harness + browser acceptance + physical iPhone acceptance pass.
