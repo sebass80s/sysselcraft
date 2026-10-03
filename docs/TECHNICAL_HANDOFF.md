@@ -857,3 +857,10 @@ This does not affect frozen live. Keep parity coverage around grouped History ou
 ### Runtime 1.0 checkpoint: Act 2 Game UI Shell
 
 On the architecture branch, Act 2 now consumes the shared `GameUiShell` rather than owning a separate header implementation. Village still uses its legacy header and must migrate next before the global shell milestone is complete.
+
+
+### Runtime 1.0 checkpoint: global Game UI Shell
+
+On `nova/runtime-architecture-v1`, both Village and Act 2 now consume the same `GameUiShell` component. This closes the duplicate-HUD implementation milestone on the development branch.
+
+Village-specific room/dog actions and Act 2-specific chapter navigation are passed as shell configuration rather than separate HUD implementations.
