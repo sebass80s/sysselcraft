@@ -160,7 +160,7 @@ Implement in this order:
 7. quiet veranda payoff;
 8. black / **SLUT PÅ ANDRA KAPITLET**.
 
-The first true lake crossing is the Act 3 opening, not an Act 2 epilogue.
+Act 2 owns the locked **Över sjön** crossing epilogue. It deliberately does not reveal the destination; Act 3 owns the arrival and what lies on the other side.
 
 Locked gratitude beat in the departure scene:
 - Alve says the outcome would never have happened without Barnet.
@@ -168,7 +168,7 @@ Locked gratitude beat in the departure scene:
 - He explains he thought fixing enough things would make everything solve itself.
 - He explicitly thanks Barnet and says he is glad Barnet is his friend.
 
-The previously planned EPI-001…004 departure image set is superseded. Do not produce or integrate an Act 2 crossing epilogue. Any first-crossing visuals now belong to Act 3.
+The old four-image EPI-001…004 proposal is superseded by the integrated finale sequence. Current production uses the locked Act 2 departure/crossing assets under `public/assets/village/story-moments/act2/finale/`, including `05-after-motorboat.png` and `06-across-the-lake.png`.
 ## Phase 6 — Production acceptance
 
 Before connecting Act 2 as release progression, execute:
@@ -306,9 +306,9 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 - Canonical story sources are shared with `/act2-test` instead of maintaining condensed duplicate dialogue tracks. This includes the first-Alve image progression; do not re-hardcode `first-hello.png` across the entire meeting.
 - Story-bound economy gates are authoritative and contribution-neutral: Bryggan livboj 200 SysselBux, Båthuset ratt 200 SysselBux, Motorbåten reservdelspaket 200 SysselBux.
 - Motorboat naming after 12/16 is persisted locally and does not consume a contribution.
-- The family-return finale is a separate restart-safe sequence after Motorbåten 16/16; completion sets familyFinaleConsumed, epilogueConsumed and act2Complete without inventing contribution 65. The first real crossing of the lake belongs to the Act 3 opening, not the Act 2 finale.
-- Finale assets 01–04 are used where present. The final departure intentionally runs over the live lake because no canonical departure still exists in repo.
-- Physical-device acceptance and a green build of the batched final HEAD remain required before calling the Act 2 implementation accepted.
+- The family-return finale is a separate restart-safe sequence after Motorbåten 16/16; completion does not invent contribution 65. The locked **Över sjön** epilogue is part of Act 2, while Act 3 owns destination/arrival.
+- Finale assets include the production departure/crossing images `05-after-motorboat.png` and `06-across-the-lake.png`.
+- Full physical production playthrough is accepted; the release candidate still requires the latest exact HEAD to be CI-green after any final hotfix/cleanup.
 
 
 ### Alve world placeholder — 2026-10-01
@@ -340,10 +340,10 @@ Do not call Phase 4A accepted until the final batched HEAD has a green build and
 
 Do not lose this list when the implementation thread changes.
 
-1. **Physical iPhone acceptance** — deferred until Kalle has the Mac. Exercise the real loop: claimed quest → lake → Alve marker → approach/turn-in → Story Moment → visual stage update, plus restart boundaries and purchases. Never reset or manually mutate Adam's real save/backend for this test.
-2. **Replace Alve placeholder with final runtime art** — keep the existing single world entity, active-project positioning and interaction ownership. Search repo for a verified standalone Alve cutout first; do not invent an asset filename.
-3. **Act 2 dialogue polish** — first runtime pass completed 2026-10-01. Keep further line-level polish available after physical playthrough; do not change locked emotional canon.
-4. **Act 3 crossing handoff** — do not create Act 2 departure/EPI assets. The first true crossing and its visuals belong to Act 3.
+1. **Hotfix-only physical follow-up** — full iPhone playthrough is complete. During Adam's play, patch only concrete regressions; never reset or manually mutate Adam's real save/backend.
+2. **Motorbåt approach polish** — Alve's motorboat work position can require repeated taps because navigation is straight-line rather than obstacle-routing. Non-blocking polish after release acceptance.
+3. **Mira shop history** — later product work: add a history tab for completed purchases. Do not mix this feature into the Act 2 release-candidate hotfix batch.
+4. **Act 3 remains frozen** until the Act 2 release candidate is confirmed green and stable.
 
 
 ### Hardening checkpoint — 2026-10-01
