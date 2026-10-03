@@ -808,3 +808,19 @@ Rules:
 - hotfixes to live, if genuinely required during Adam's play, must be deliberate isolated fixes based from the frozen release snapshot and then reconciled back into the development branch;
 - Adam's real save/backend remains protected and must not be reset for development testing.
 
+
+
+## Runtime Architecture 1.0 non-negotiables
+
+The complete contract lives in `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`.
+
+Operational summary:
+- one persistent Game UI Shell across every world;
+- one canonical implementation/asset per reusable game concept;
+- chapters provide content/configuration, not duplicate runtime machinery;
+- Story Registry + shared History must replace Act 2-specific history assembly before Act 3;
+- Interaction System owns all generic markers/hotspots/input semantics;
+- Quest V2 stays authoritative; progression consumption is shared;
+- new Acts must not fork HUD, Story Engine, markers, replay/history or generic input logic.
+
+Treat any new Act-specific duplicate of an existing game concept as architecture regression.
