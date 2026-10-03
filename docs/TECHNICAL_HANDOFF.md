@@ -1145,3 +1145,19 @@ Quest marker syncs remain separate but consume the same winning intent, so lower
 Arrival completion no longer uses raw backend-attention booleans to choose callback. It resolves current intent and sends quest callback only when `quest-source` wins.
 
 Do not fold shop/decision CTA into NPC arbitration until there is an actual competing interaction contract.
+
+
+## Runtime 1.0 pointer-target checkpoint
+
+Village scene-level pointer arbitration now uses `resolveInteractionPriority()`.
+
+Canonical fallback target priorities:
+- Recycling 50
+- Linus 40
+- Shop 30
+- Henning 20
+- Ground 10
+
+The old behavior order is preserved exactly.
+
+Do not remove the object-level Phaser pointer handlers yet. They exist partly because native iOS WebView event ordering has historically been unreliable. A future de-duplication must be acceptance-tested on physical iPhone before retirement.
