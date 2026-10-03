@@ -135,3 +135,17 @@ Covered states:
 Parity compares product-visible History ordering/grouping/beat identity, not legacy implementation shape.
 
 This closes the model-definition part of Act 2 History migration. The next step is to execute the parity checkpoint and then switch the development consumer to shared Registry/History. Production/live remains untouched.
+
+
+## Checkpoint — Act 2 dev consumer migrated to shared History
+
+The development-branch `Act2Runtime` now builds Historik from:
+- `ACT2_STORY_REGISTRY`;
+- generic `historyEntriesFor()`;
+- `act2HistoryProgress()`.
+
+The legacy inline Act 2 History assembly has been removed from the development consumer.
+
+Parity now compares product-visible grouped History output rather than irrelevant cross-group flat-array ordering.
+
+This is a development-branch migration only. Frozen live remains unchanged.
