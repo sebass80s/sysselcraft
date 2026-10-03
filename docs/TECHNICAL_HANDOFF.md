@@ -977,3 +977,18 @@ Village noticeboard now supplies one interaction definition containing its accep
 Parity locks 36 px as activate and 37 px as approach.
 
 Continue with another simple duplicated interaction before tackling world-input authority. Avoid folding Linus' mixed quest/story priority into a generic rewrite until its behavior has explicit parity coverage.
+
+
+## Runtime 1.0 interaction checkpoint 3 — Recycling
+
+Village Recycling now uses shared `resolveInteraction()` for arrival/enable behavior.
+
+Preserved product behavior:
+- only stage-4 Recycling is interactable through this path;
+- approach point remains the canonical visual-production placement approach;
+- arrival radius remains 40 px;
+- existing Village click hit-test, pathfinding, target marker and callback remain untouched.
+
+Parity locks 40 px = activate and 41 px = approach.
+
+No Vercel verification is expected during the current build-rate-limit period. GitHub remains the source of truth for code/checkpoints; do not report a build as run unless an actual Actions run exists.
