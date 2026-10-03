@@ -665,7 +665,11 @@ assert.ok(
   "Act 2 must reuse the village HUD shell and shield the lake canvas from pointer-through",
 );
 assert.match(page, /className="prototype-brand-button"[\s\S]*onClick=\{\(\) => router\.push\("\/"\)\}/, "Act 2 SysselCraft logo must navigate back to the village");
-assert.match(page, /className="secondary-button compact act2-village-button"[\s\S]*← Till byn/, "Act 2 HUD must show an explicit Till byn control");
+assert.match(
+  page,
+  /main-menu-popover[\s\S]*← Till byn/,
+  "Act 2 SysselCraft dropdown must keep an explicit Till byn control",
+);
 
 assert.ok(page.includes('className="resource-hud"'), "Act 2 must show the shared resource HUD");
 assert.ok(page.includes('backendWallet?.diamonds'), "Act 2 HUD must show authoritative backend diamonds");
