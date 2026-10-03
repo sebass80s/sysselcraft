@@ -72,6 +72,8 @@ const BOTTLE_MESSAGE_INTERACTION: InteractionDefinition = {
 };
 const HENNING_APPROACH: Point = { x: 370, y: 468 };
 const HENNING_INTERACTION_RADIUS = 95;
+const SOL_APPROACH: Point = { x: 835, y: 485 };
+const SOL_INTERACTION_RADIUS = 95;
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
 
@@ -657,7 +659,20 @@ export async function createVillageGame(
       }
 
       if (this.solInteractionPending && this.player && this.sol?.visible) {
-        if (distance(this.player, this.sol) > 95) return;
+        const interaction: InteractionDefinition = {
+          id: "village:sol",
+          kind: "npc",
+          anchor: { x: this.sol.x, y: this.sol.y },
+          approachPoint: SOL_APPROACH,
+          interactionRadius: SOL_INTERACTION_RADIUS,
+          enabled: true,
+        };
+        const resolution = resolveInteraction(
+          [interaction],
+          { interactionId: interaction.id, requestedAt: interaction.approachPoint ?? interaction.anchor },
+          { x: this.player.x, y: this.player.y },
+        );
+        if (resolution.status !== "activate") return;
         this.solInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
@@ -1134,7 +1149,7 @@ export async function createVillageGame(
         if (!this.acceptsWorldInput()) return;
         if (!this.player || requestedSolTourStop !== "decision" || !this.sol?.visible) return;
         this.solInteractionPending = true;
-        this.path = findPath(this.player, { x: 835, y: 485 }, this.navigationObstacles);
+        this.path = findPath(this.player, SOL_APPROACH, this.navigationObstacles);
         const target = this.path.at(-1);
         if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
