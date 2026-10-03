@@ -58,6 +58,18 @@ type Act2RuntimeProps = {
   productionEnabled?: boolean;
 };
 
+type Act2ReplayBeat = {
+  id: string;
+  title: string;
+  image?: string;
+  body: readonly string[];
+};
+
+type Act2ReplayState = {
+  beat: Act2ReplayBeat;
+  lineIndex: number;
+};
+
 const ACT2_DEBUG_LAB_ENABLED = process.env.NODE_ENV !== "production";
 
 export function Act2Runtime({ debug = false, productionEnabled = true }: Act2RuntimeProps) {
@@ -83,6 +95,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
   const [chapterIntroVisible, setChapterIntroVisible] = useState(true);
   const [chapterIntroNameVisible, setChapterIntroNameVisible] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const [historyReplay, setHistoryReplay] = useState<Act2ReplayState | null>(null);
 
   const chapterCardVisible = ready && (chapterIntroVisible || (state.act2Complete && !state.endCardSeen));
   useEffect(() => {
@@ -369,9 +383,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       || purchaseBlocked
       || namingBlocked
       || contributionTurnInOpen
-      || cabinRevisitOpen;
+      || cabinRevisitOpen
+      || historyOpen
+      || historyReplay !== null;
     gameRef.current?.setWorldInputEnabled(!worldBlocked);
-  }, [chapterCardVisible, state, contributionTurnInOpen, cabinRevisitOpen]);
+  }, [chapterCardVisible, state, contributionTurnInOpen, cabinRevisitOpen, historyOpen, historyReplay]);
 
   async function commit(next: Act2RuntimeState) {
     if (!debug) await saveAct2RuntimeState(next);
@@ -544,7 +560,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     || purchaseRequired
     || namingRequired
     || contributionTurnInOpen
-    || cabinRevisitOpen;
+    || cabinRevisitOpen
+    || historyOpen
+    || historyReplay !== null;
   const uiShell = deriveGameUiShell({
     debug,
     worldReady: state.openingComplete && state.alveIntroComplete,
@@ -558,6 +576,78 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeCabinRevisitPresentation = activeCabinRevisitLine
     ? parseStoryLine(activeCabinRevisitLine, childName)
     : null;
+
+  const projectStorySources = {
+    cabin: CABIN_CONTRIBUTION_BEATS,
+    dock: JETTY_CONTRIBUTION_BEATS,
+    boathouse: BOATHOUSE_CONTRIBUTION_BEATS,
+    motorboat: MOTORBOAT_CONTRIBUTION_BEATS,
+  } as const;
+  const historyEntries: Array<{ group: string; beat: Act2ReplayBeat }> = [];
+
+  if (state.openingComplete) {
+    for (const beat of ACT2_OPENING_BEATS) {
+      historyEntries.push({ group: "Inledning", beat });
+    }
+  }
+
+  for (const project of ["cabin", "dock", "boathouse", "motorboat"] as const) {
+    const completedCount = state.projects[project].contributions;
+    projectStorySources[project].slice(0, completedCount).forEach((beat) => {
+      historyEntries.push({ group: PROJECT_COPY[project].label, beat });
+    });
+  }
+
+  if (state.jettyLifebuoyOwned) {
+    historyEntries.push({ group: "Bryggan", beat: JETTY_LIFEBUOY_BEAT });
+  }
+  if (state.boathouseSteeringWheelOwned) {
+    historyEntries.push({ group: "Båthuset", beat: BOATHOUSE_STEERING_WHEEL_BEAT });
+  }
+  if (state.consumedProjectCompletionIds.includes("dock:completion-reaction")) {
+    historyEntries.push({ group: "Bryggan", beat: JETTY_COMPLETION_REACTION });
+  }
+
+  const completedFinaleCount = state.epilogueConsumed
+    ? ACT2_FINALE_BEATS.length
+    : Math.min(state.finaleIndex, ACT2_FINALE_BEATS.length);
+  ACT2_FINALE_BEATS.slice(0, completedFinaleCount).forEach((beat) => {
+    historyEntries.push({ group: "Finalen", beat });
+  });
+
+  const historyGroups = historyEntries.reduce<Array<{ label: string; entries: Act2ReplayBeat[] }>>((groups, entry) => {
+    const existing = groups.find((group) => group.label === entry.group);
+    if (existing) existing.entries.push(entry.beat);
+    else groups.push({ label: entry.group, entries: [entry.beat] });
+    return groups;
+  }, []);
+
+  const historyReplayLine = historyReplay
+    ? historyReplay.beat.body[historyReplay.lineIndex] ?? null
+    : null;
+  const historyReplayPresentation = historyReplayLine
+    ? parseStoryLine(historyReplayLine, childName)
+    : null;
+
+  function openHistoryReplay(beat: Act2ReplayBeat) {
+    setHistoryOpen(false);
+    setHistoryReplay({ beat, lineIndex: 0 });
+  }
+
+  function advanceHistoryReplay() {
+    if (!historyReplay) return;
+    if (historyReplay.lineIndex + 1 < historyReplay.beat.body.length) {
+      setHistoryReplay({ ...historyReplay, lineIndex: historyReplay.lineIndex + 1 });
+      return;
+    }
+    setHistoryReplay(null);
+    setHistoryOpen(true);
+  }
+
+  function previousHistoryReplay() {
+    if (!historyReplay || historyReplay.lineIndex <= 0) return;
+    setHistoryReplay({ ...historyReplay, lineIndex: historyReplay.lineIndex - 1 });
+  }
 
   async function previousFinaleStory() {
     if (finaleLineIndex <= 0) return;
@@ -676,6 +766,13 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         <button className="secondary-button compact act2-village-button" type="button" onClick={() => router.push("/")}>
           ← Till byn
         </button>
+        {historyEntries.length > 0 && <button
+          className="secondary-button compact act2-history-button"
+          type="button"
+          onClick={() => setHistoryOpen(true)}
+        >
+          📖 Historik
+        </button>}
         {state.act2Complete && state.endCardSeen && <button
           className="secondary-button compact act2-chapter3-button"
           type="button"
@@ -689,6 +786,52 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         <strong>🪙 {backendWallet?.sysselBux ?? "…"}</strong>
       </div>
     </header>}
+    {historyOpen && <div className="act2-history-overlay" role="dialog" aria-modal="true" aria-label="Historiska storybeats">
+      <section className="act2-history-panel">
+        <div className="act2-history-heading">
+          <div>
+            <span>Kapitel 2</span>
+            <h2>Historik</h2>
+            <p>Spela upp redan genomförda storybeats. Replay ändrar inte framsteg eller belöningar.</p>
+          </div>
+          <button className="secondary-button compact" type="button" onClick={() => setHistoryOpen(false)}>Stäng</button>
+        </div>
+        <div className="act2-history-groups">
+          {historyGroups.map((group) => <section className="act2-history-group" key={group.label}>
+            <h3>{group.label}</h3>
+            <div className="act2-history-grid">
+              {group.entries.map((beat) => <button
+                className="act2-history-entry"
+                type="button"
+                key={beat.id}
+                onClick={() => openHistoryReplay(beat)}
+              >
+                <strong>{beat.title}</strong>
+                <span>Spela upp →</span>
+              </button>)}
+            </div>
+          </section>)}
+        </div>
+      </section>
+    </div>}
+    {historyReplay && historyReplayLine && historyReplayPresentation && <StoryRunner
+      beat={{
+        id: `act2:history:${historyReplay.beat.id}:${historyReplay.lineIndex}`,
+        image: historyReplay.beat.image,
+        imageFit: "contain",
+        heading: `Historik · ${historyReplay.beat.title}`,
+        speaker: historyReplayPresentation.speaker,
+        speakerTone: historyReplayPresentation.speakerTone,
+        lines: [historyReplayPresentation.text],
+        nextLabel: historyReplay.lineIndex + 1 < historyReplay.beat.body.length ? "Fortsätt" : "Till historiken",
+      }}
+      onPrevious={historyReplay.lineIndex > 0 ? previousHistoryReplay : undefined}
+      onNext={advanceHistoryReplay}
+      zIndex={110}
+      background="rgba(6,10,8,.96)"
+      childName={childName}
+      revealImageBeforeNext={historyReplay.lineIndex + 1 >= historyReplay.beat.body.length}
+    />}
     {chapterIntroVisible && <div className="act2-chapter-intro" role="dialog" aria-modal="true" aria-label="Kapitel 2 · Alve">
       <div className="act2-chapter-intro-title">
         <span>KAPITEL 2</span>
