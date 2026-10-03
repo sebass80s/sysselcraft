@@ -161,4 +161,16 @@ assert.ok(card());
 // Returning to an already visited panel must not resurrect its old image-only state.
 props.presentationId = "epilogue:last";
 assert.ok(card());
+const act2RuntimeSource = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
+assert.match(
+  act2RuntimeSource,
+  /const postAct2LakeIdle = state\.act2Complete && state\.endCardSeen;/,
+  "completed Act 2 lake idle must have an explicit HUD recovery state",
+);
+assert.match(
+  act2RuntimeSource,
+  /\(state\.selectedProject !== null \|\| postAct2LakeIdle\)/,
+  "HUD must remain visible after the end card even though no project is selected",
+);
+
 console.log("PASS: actual save/load restart boundaries, child scoping, legacy completion/adoption, full-image previous, duplicate transition lock and save-failure retry");
