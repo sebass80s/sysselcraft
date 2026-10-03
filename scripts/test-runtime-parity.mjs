@@ -1062,6 +1062,22 @@ assert.ok(
   "Linus arrival must route to quest callback only when quest intent still wins",
 );
 assert.ok(
+  villageGameSource.includes('id: "village:linus"')
+    && villageGameSource.includes("interactionRadius: LINUS_INTERACTION_RADIUS")
+    && villageGameSource.includes("activationZones: ["),
+  "Village Linus arrival must use shared multi-zone interaction resolution",
+);
+assert.ok(
+  villageGameSource.includes("const LINUS_INTERACTION_RADIUS = 95")
+    && villageGameSource.includes("const LINUS_APPROACH_RADIUS = 18"),
+  "Village Linus must preserve the accepted 95px resident and 18px authored-arrival radii",
+);
+assert.equal(
+  villageGameSource.includes("const linusApproachReached ="),
+  false,
+  "Village Linus must not retain the legacy hand-written dual-distance arrival check",
+);
+assert.ok(
   villageGameSource.includes("this.residents.linus = this.linus;\n      this.syncLinusPriorityMarkers();"),
   "Linus marker arbitration must initialize immediately after the sprite exists",
 );
