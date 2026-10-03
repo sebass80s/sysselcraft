@@ -1124,3 +1124,24 @@ Scene hit and sprite hit both consume `resolveHenningIntent()`.
 `syncHenningPriorityMarker()` owns the backend quest marker and shows it only when quest-source is the winning intent. Construction updates resync it so marker position cannot stale after resident movement.
 
 Do not fold the Sol-tour marker into this rule yet. It is an explicit story CTA and needs separate parity/ownership decisions.
+
+
+## Runtime 1.0 story-CTA priority checkpoint
+
+Sol-tour CTAs now use the shared interaction-priority concept for Linus and Henning.
+
+Priority:
+- Linus: construction 50 > intro 40 > story-cta 30 > quest 20 > resident 10.
+- Henning: construction 40 > story-cta 30 > quest 20 > resident 10.
+
+`syncSolTourMarker()` is the canonical Sol-tour marker sync. It is refreshed by:
+- `setSolTourStop`;
+- relevant target visibility changes;
+- Linus intro completion;
+- construction presentation changes.
+
+Quest marker syncs remain separate but consume the same winning intent, so lower quest markers disappear while CTA wins.
+
+Arrival completion no longer uses raw backend-attention booleans to choose callback. It resolves current intent and sends quest callback only when `quest-source` wins.
+
+Do not fold shop/decision CTA into NPC arbitration until there is an actual competing interaction contract.
