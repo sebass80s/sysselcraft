@@ -701,9 +701,19 @@ assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/,
 assert.ok(page.includes("📖 Historik"), "Act 2 HUD must expose completed story history");
 assert.match(
   page,
-  /prototype-brand-logo[\s\S]*📖 Historik[\s\S]*← Till byn/,
-  "Act 2 HUD must place Historik directly below the SysselCraft logo and before Till byn",
+  /aria-label="Öppna SysselCraft-menyn"[\s\S]*🔐 Vuxenläge[\s\S]*📖 Historik[\s\S]*← Till byn/,
+  "Act 2 SysselCraft logo dropdown must order Vuxenläge, Historik, then Till byn",
 );
+assert.ok(
+  page.includes('router.push("/?menu=adult")'),
+  "Act 2 Vuxenläge menu item must route to the canonical village adult-mode panel",
+);
+assert.ok(
+  village.includes('params.get("menu") === "adult"')
+    && village.includes("setParentMenuOpen(true)"),
+  "village must consume the Act 2 adult-mode menu handoff",
+);
+
 assert.ok(
   page.includes("if (!state.projects[project].complete) continue;")
     && page.includes("projectStorySources[project].forEach((beat) =>"),
