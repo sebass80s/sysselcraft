@@ -19,6 +19,9 @@ for (const beat of ["bottle_message_sent","sol_arrival_seen","sol_tour_bakery_se
 }
 assert.match(migration, /bottleMessagePurchased/);
 assert.match(component, /purchaseBottleMessage\(\)/);
+assert.match(component, /!act1EndCardSeen && <article className="mira-shop-item">[\s\S]*<strong>Flaskpost<\/strong>/, "Flaskpost must disappear from Mira's catalog once Act 1 is closed");
+assert.match(component, /setShopCurrency\(act1EndCardSeen \|\| flags\?\.bottleMessagePurchased \? "diamonds" : "sysselbux"\)/, "post-Act-1 shop shelf must not depend on stale Flaskpost ownership");
+
 assert.match(component, /setBottleMessageReady\(true\)/);
 assert.match(component, /commitStoryBeat\("bottle_message_sent"\)/);
 assert.match(component, /bottleMessageSent \|\| solArrivalSeen/);
