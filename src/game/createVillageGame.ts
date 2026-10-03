@@ -292,18 +292,11 @@ export async function createVillageGame(
       this.linusStoryMarker = undefined;
       if (this.introComplete || !this.linus) return;
 
-      const bubble = this.add.graphics();
-      bubble.fillStyle(0xfffbef, 0.98);
-      bubble.lineStyle(3, 0x5b3a1f, 1);
-      bubble.fillRoundedRect(-29, -21, 58, 42, 14);
-      bubble.strokeRoundedRect(-29, -21, 58, 42, 14);
-      bubble.fillTriangle(-10, 18, -2, 18, -10, 29);
-      const dots = this.add.text(0, -5, "•••", {
-        color: "#5b3a1f", fontSize: "22px", fontStyle: "bold",
-      }).setOrigin(0.5);
-
-      this.linusStoryMarker = this.add.container(this.linus.x, this.linus.y - 155, [bubble, dots])
-        .setDepth(3000).setSize(76, 72).setInteractive({ useHandCursor: true });
+      this.linusStoryMarker = createInteractionMarker(this, {
+        kind: "npc-attention",
+        x: this.linus.x,
+        y: this.linus.y - 155,
+      });
       this.linusStoryMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (!this.player || constructionDialogueOpen) return;
@@ -316,10 +309,6 @@ export async function createVillageGame(
         const target = this.path.at(-1);
         if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
-      });
-      this.tweens.add({
-        targets: this.linusStoryMarker, y: "-=3", duration: 1000,
-        yoyo: true, repeat: -1, ease: "Sine.InOut",
       });
     }
 
@@ -771,22 +760,14 @@ export async function createVillageGame(
       resident.setPosition(attention.position.x, attention.position.y).setDepth(1000 + attention.position.y);
       // Construction/story attention is dialogue, not a quest state.
       // Keep MMO semantics reserved: ? = available quest, ! = completed quest turn-in.
-      const speechBubble = this.add.graphics();
-      speechBubble.fillStyle(0xfffbef, 0.98);
-      speechBubble.lineStyle(3, 0x5b3a1f, 1);
-      speechBubble.fillRoundedRect(-29, -21, 58, 42, 14);
-      speechBubble.strokeRoundedRect(-29, -21, 58, 42, 14);
-      speechBubble.fillTriangle(-10, 18, -2, 18, -10, 29);
-      const speechDots = this.add.text(0, -5, "•••", {
-        color: "#5b3a1f", fontSize: "22px", fontStyle: "bold",
-      }).setOrigin(0.5);
-      // The construction guide position is already authored beside the resident.
-      // Anchor the marker above the resident's actual sprite instead, otherwise Recycling
-      // can place the bubble outside the visible camera near the negative-x build site.
+      // Anchor the canonical story-attention marker above the resident's actual sprite.
       const markerX = resident.x;
       const markerY = resident.y - 155;
-      this.attentionMarker = this.add.container(markerX, markerY, [speechBubble, speechDots])
-        .setDepth(3000).setSize(76, 72).setInteractive({ useHandCursor: true });
+      this.attentionMarker = createInteractionMarker(this, {
+        kind: "npc-attention",
+        x: markerX,
+        y: markerY,
+      });
       this.attentionMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         this.approachAttentionResident();
