@@ -60,7 +60,8 @@ assert.ok(writes.every((key) => key === "sysselcraft.act2.runtime.v1.isolated-te
 // but must resume at the newly added epilogue exactly once. The first six-beat
 // migration could also poison that save by rewriting it to index 5 + consumed,
 // so both pre-marker signatures must recover without resetting the device save.
-const { finaleSchemaVersion: _currentFinaleSchema, ...preFinaleSchemaState } = state;
+const preFinaleSchemaState = { ...state };
+delete preFinaleSchemaState.finaleSchemaVersion;
 for (const endCardSeen of [false, true]) {
   const legacy = s.normalizeAct2RuntimeState({
     ...preFinaleSchemaState,
