@@ -55,7 +55,7 @@ function childRuntimeKey(childId: string) {
   return `${LEGACY_KEY}.${childId}`;
 }
 const PROJECTS: Act2Project[] = ["cabin", "dock", "boathouse", "motorboat"];
-const ACT2_FINALE_SCHEMA_VERSION = 2;
+const ACT2_FINALE_SCHEMA_VERSION = 2 as const;
 
 type Act2RuntimeCandidate = Partial<Act2RuntimeState> & {
   selectedProject?: unknown;
