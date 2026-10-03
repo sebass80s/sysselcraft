@@ -249,11 +249,19 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     normalized.epilogueConsumed = false;
     normalized.endCardSeen = false;
   } else {
-    // Preserve completed saves from the five-beat release. New runs enter
-    // epilogue index 5 with familyFinaleConsumed=true but remain incomplete.
+    // Saves completed under the old five-beat ending have already seen the
+    // family/veranda payoff but not the newly added epilogue. Resume them at
+    // epilogue index 5 instead of treating the new ending as already consumed.
     const legacyFamilyComplete = candidate.familyFinaleConsumed === true
       && (candidate.finaleIndex ?? 0) < 5;
-    if (legacyFamilyComplete || candidate.epilogueConsumed === true || candidate.act2Complete === true) {
+    if (legacyFamilyComplete) {
+      normalized.finaleIndex = 5;
+      normalized.finaleLineIndex = 0;
+      normalized.familyFinaleConsumed = true;
+      normalized.epilogueConsumed = false;
+      normalized.act2Complete = false;
+      normalized.endCardSeen = false;
+    } else if (candidate.epilogueConsumed === true || candidate.act2Complete === true) {
       normalized.finaleIndex = 5;
       normalized.finaleLineIndex = 0;
       normalized.familyFinaleConsumed = true;
