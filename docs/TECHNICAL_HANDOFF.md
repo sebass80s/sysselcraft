@@ -869,3 +869,10 @@ Village-specific room/dog actions and Act 2-specific chapter navigation are pass
 ### Runtime 1.0 checkpoint: canonical quest marker
 
 A shared Interaction System marker renderer now exists and Act 2 consumes it for Alve turn-in. Village marker code is still legacy/local and must migrate before the marker milestone is complete.
+
+
+### Runtime 1.0 checkpoint: quest-marker presentation complete
+
+Current Act 1/Act 2 quest markers now consume `createInteractionMarker()`. The previous Village noticeboard/Linus/Henning local badge renderers are removed.
+
+Do not confuse this with full Interaction System completion: NPC/story attention, generic hotspot resolution and shared input authority remain pending.
