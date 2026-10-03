@@ -673,3 +673,23 @@ Rules:
 - hotfixes to live, if genuinely required during Adam's play, must be deliberate isolated fixes based from the frozen release snapshot and then reconciled back into the development branch;
 - Adam's real save/backend remains protected and must not be reset for development testing.
 
+
+
+## FUTURE NOVA: ARCHITECTURE RULES ARE NON-NEGOTIABLE
+
+Before writing new gameplay code, read `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`, especially **Runtime Architecture 1.0 master contract**.
+
+Do not:
+- create an Act-specific HUD;
+- create another quest-marker asset/component;
+- create another dialogue/story shell;
+- create Act-specific History/replay;
+- clone interaction/input logic;
+- invent another progression-consumption model;
+- solve a shared-system problem locally inside one Act.
+
+First ask: **does this concept already exist in the engine?**
+If yes, configure/reuse it.
+If no, add it once to the shared engine so all chapters inherit it.
+
+Act 3 is the first consumer of Runtime Architecture 1.0, not an excuse to create Runtime Architecture 2.0 accidentally.
