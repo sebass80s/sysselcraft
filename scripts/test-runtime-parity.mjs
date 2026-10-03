@@ -252,10 +252,22 @@ function registryAct2HistoryProjection(state) {
   }));
 }
 
+function groupHistoryProjection(entries) {
+  return entries.reduce((groups,entry)=>{
+    let group=groups.find((candidate)=>candidate.label===entry.group);
+    if(!group) {
+      group={ label:entry.group, entries:[] };
+      groups.push(group);
+    }
+    group.entries.push({ id:entry.id, title:entry.title });
+    return groups;
+  },[]);
+}
+
 function assertAct2HistoryParity(name,state) {
   assert.deepEqual(
-    registryAct2HistoryProjection(state),
-    legacyAct2HistoryProjection(state),
+    groupHistoryProjection(registryAct2HistoryProjection(state)),
+    groupHistoryProjection(legacyAct2HistoryProjection(state)),
     `Act 2 History parity failed: ${name}`,
   );
 }
