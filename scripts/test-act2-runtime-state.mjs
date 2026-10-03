@@ -698,6 +698,18 @@ assert.ok(village.includes('setShopCurrency("sysselbux")'), "Act 2 purchase cont
 assert.ok(village.includes('router.push(`/act2?resume=${project}`)'), "contextual Mira close must return to the same Act 2 project");
 assert.match(page, /resumeProject === "boathouse" \|\| resumeProject === "dock" \|\| resumeProject === "motorboat"/, "Act 2 must accept contextual return from all three story purchases");
 assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
+assert.ok(page.includes("📖 Historik"), "Act 2 HUD must expose completed story history");
+assert.ok(page.includes("historyEntries.push({ group: PROJECT_COPY[project].label, beat })"), "history must derive project beats from already completed contribution counts");
+assert.ok(page.includes('group: "Finalen"'), "completed finale beats must be replayable from history");
+assert.ok(page.includes("setHistoryReplay({ beat, lineIndex: 0 })"), "history replay must use isolated local presentation state");
+const historyReplayStart = page.indexOf("function openHistoryReplay");
+const historyReplayEnd = page.indexOf("const openStoryDebugLab");
+assert.ok(historyReplayStart >= 0 && historyReplayEnd > historyReplayStart, "history replay implementation must be discoverable for safety audit");
+const historyReplaySource = page.slice(historyReplayStart, historyReplayEnd);
+assert.equal(historyReplaySource.includes("saveAct2RuntimeState"), false, "history replay must never persist Act 2 state");
+assert.equal(historyReplaySource.includes("withPresentedContribution"), false, "history replay must never consume a contribution");
+assert.equal(historyReplaySource.includes("purchase"), false, "history replay must never execute story purchases");
+
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay at locked 200 SysselBux");
 assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay at locked 200 SysselBux");
