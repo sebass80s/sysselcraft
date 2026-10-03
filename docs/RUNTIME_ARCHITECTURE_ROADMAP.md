@@ -1327,3 +1327,35 @@ Parity locks:
 Object-level Phaser handlers remain in place as native/WebView reliability fallbacks and continue to stop propagation. This slice only converges the scene-level arbitration decision.
 
 **Status:** pointer priority is now explicit for the Village scene fallback path. Cross-entrypoint de-duplication / a fully generic hit-test registry is still pending and should only follow after browser + iPhone parity.
+
+
+## Interaction behavior checkpoint 6 — Henning shared arrival resolution
+
+Village Henning now uses shared `resolveInteraction()` for ordinary resident arrival.
+
+Preserved authored behavior:
+- id: `village:henning`;
+- NPC semantics;
+- dynamic anchor: current Henning sprite position;
+- authored approach point: `{ x: 370, y: 468 }`;
+- accepted interaction radius: `95` px;
+- local facing and callback execution remain world-runtime responsibilities.
+
+Parity locks:
+- 95 px => activate;
+- 96 px => approach to the authored approach point.
+
+This extends shared approach/radius ownership beyond hotspots and quest sources into a normal Village NPC.
+
+### Interaction System checkpoint audit
+
+Current convergence status:
+- marker presentation: **converged** across current Village + Act 2 consumers;
+- interaction resolution: **converged for six real consumers**: Act 2 Alve turn-in, Village noticeboard, Recycling, bottle message, construction attention and Henning;
+- approach-point/radius ownership: **substantially converged**, with remaining special cases primarily Linus dual geometry, Shop/Mira multi-approach behavior and Sol-specific resident behavior;
+- pointer priority: **explicit/shared** for Linus and Henning mixed intents plus Village scene fallback target arbitration;
+- world-input authority: **converged** across Village + Lake;
+- overlay suppression: **converged** through React presentation authority + shared world-input contract;
+- generic hotspot semantics: **established** for Recycling and bottle message, but no generic hit-test registry exists yet.
+
+Interaction System is therefore no longer an early extraction. It is in **late convergence**. Do not delete the native/object-level pointer fallbacks until browser + physical iPhone parity is complete.
