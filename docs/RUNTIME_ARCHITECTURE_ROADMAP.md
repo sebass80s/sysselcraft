@@ -1128,3 +1128,28 @@ Parity locks:
 - 33 px remains approach.
 
 Current shared-resolution consumers: Act 2 Alve turn-in, Village noticeboard, Village Recycling, Village bottle message, Village construction attention.
+
+
+## World-input authority checkpoint — 2026-10-03
+
+The first cross-world world-input convergence slice is implemented.
+
+Shared authority:
+- `worldInputEnabled({ enabled, blockingOverlayVisible })` is now the canonical pure decision;
+- Village exposes an explicit `setWorldInputEnabled(enabled)` handle matching the Lake contract;
+- Village background pointer movement and keyboard/path movement consume the shared authority;
+- Village presentation state now explicitly drives `setWorldInputEnabled(!villageInputLocked)`;
+- legacy `setConstructionDialogueOpen()` remains temporarily as overlay-state compatibility and is deliberately separate from the explicit enabled flag;
+- Act 2 Lake pointer interaction and movement update loops consume the same shared authority.
+
+Material bug fixed during convergence:
+- Act 2 Lake previously cleared pointer movement when world input was disabled but keyboard movement could still execute in `update()`;
+- keyboard movement now obeys the same shared world-input authority.
+
+Parity coverage now includes:
+- enabled + no overlay => input allowed;
+- explicitly disabled => input blocked;
+- blocking overlay => input blocked even when otherwise enabled;
+- source-contract guards for both Village and Lake consuming the shared authority.
+
+**Status:** world-input authority is now **IN PROGRESS / cross-world contract established**. Do not remove the Village compatibility overlay flag until remaining overlay surfaces are mapped and parity-covered.
