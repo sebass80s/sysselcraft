@@ -19,6 +19,7 @@ export type Act2LakeGameHandle = {
   setAlvePresent: (present: boolean) => void;
   setAlveTurnInAvailable: (available: boolean) => void;
   setCabinRevisitAvailable: (available: boolean) => void;
+  setWorldInputEnabled: (enabled: boolean) => void;
 };
 
 export type Act2LakeGameOptions = {
@@ -50,6 +51,7 @@ export async function createAct2LakeGame(
   let requestedAlvePresent = true;
   let requestedAlveTurnInAvailable = false;
   let requestedCabinRevisitAvailable = false;
+  let requestedWorldInputEnabled = true;
 
   const parentWidth = Math.max(parent.clientWidth, 1);
   const parentHeight = Math.max(parent.clientHeight, 1);
@@ -115,7 +117,7 @@ export async function createAct2LakeGame(
         if (project === "cabin") {
           image.setInteractive({ useHandCursor: true });
           image.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
-            if (!requestedCabinRevisitAvailable) return;
+            if (!requestedWorldInputEnabled || !requestedCabinRevisitAvailable) return;
             event.stopPropagation();
             this.moveTarget = null;
             options.onCabinRevisit?.();
@@ -182,6 +184,7 @@ export async function createAct2LakeGame(
         .setVisible(false);
 
       const handleAlvePointerDown = (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
+        if (!requestedWorldInputEnabled) return;
         event.stopPropagation();
         if (!this.player || !this.alveEntity || !requestedAlvePresent) return;
         if (!requestedAlveTurnInAvailable) {
@@ -213,7 +216,7 @@ export async function createAct2LakeGame(
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
 
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
-        if (!this.player) return;
+        if (!requestedWorldInputEnabled || !this.player) return;
         const target = { x: pointer.worldX, y: pointer.worldY };
         if (!this.isWalkable(target.x, target.y)) return;
         this.moveTarget = target;
@@ -414,6 +417,11 @@ export async function createAct2LakeGame(
       requestedCabinRevisitAvailable = available;
     }
 
+    setWorldInputEnabled(enabled: boolean) {
+      requestedWorldInputEnabled = enabled;
+      if (!enabled) this.moveTarget = null;
+    }
+
     private positionAlve(project: Act2RestorationProject | null) {
       if (!this.alveEntity) return;
       const position = project ? ACT2_ALVE_WORK_POSITIONS[project] : ACT2_ALVE_IDLE_POSITION;
@@ -489,6 +497,12 @@ export async function createAct2LakeGame(
       requestedCabinRevisitAvailable = available;
       if (gameInstance.scene.isActive("Act2LakeScene")) {
         (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setCabinRevisitAvailable(available);
+      }
+    },
+    setWorldInputEnabled: (enabled) => {
+      requestedWorldInputEnabled = enabled;
+      if (gameInstance.scene.isActive("Act2LakeScene")) {
+        (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setWorldInputEnabled(enabled);
       }
     },
   };
