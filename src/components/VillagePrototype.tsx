@@ -575,7 +575,7 @@ export default function VillagePrototype() {
       if (!cancelled) setBootError(true);
     });
     return () => { cancelled = true; gameRef.current?.destroy(); gameRef.current = null; };
-  }, [saveReady, recordSolRuntimeDebug]);
+  }, [saveReady, recordSolRuntimeDebug, act1EndCardSeen]);
 
   useEffect(() => { gameRef.current?.setIntroComplete(introComplete); }, [introComplete]);
   useEffect(() => { gameRef.current?.setDogVisible(dogVisible); }, [dogVisible]);
