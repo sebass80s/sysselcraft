@@ -256,6 +256,122 @@ main { min-height: 100dvh; }
 }
 
 
+.act2-history-button {
+  min-height: 40px;
+  white-space: nowrap;
+}
+
+.act2-history-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 105;
+  display: grid;
+  place-items: center;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  background: rgba(10, 16, 12, .86);
+  pointer-events: auto;
+}
+
+.act2-history-panel {
+  width: min(900px, 100%);
+  max-height: min(760px, calc(100dvh - 2rem));
+  overflow: auto;
+  border-radius: 18px;
+  padding: 1rem;
+  background: rgba(248, 244, 230, .97);
+  color: #2f332c;
+  box-shadow: 0 16px 48px rgba(0,0,0,.32);
+}
+
+.act2-history-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  position: sticky;
+  top: -1rem;
+  z-index: 2;
+  margin: -1rem -1rem .8rem;
+  padding: 1rem;
+  background: rgba(248, 244, 230, .98);
+  border-bottom: 1px solid rgba(47,51,44,.12);
+}
+
+.act2-history-heading span {
+  display: block;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .62;
+}
+
+.act2-history-heading h2 {
+  margin: .12rem 0 .2rem;
+  font-size: 1.45rem;
+}
+
+.act2-history-heading p {
+  margin: 0;
+  max-width: 48rem;
+  font-size: .86rem;
+  line-height: 1.35;
+}
+
+.act2-history-groups {
+  display: grid;
+  gap: 1rem;
+}
+
+.act2-history-group h3 {
+  margin: 0 0 .45rem;
+  font-size: 1rem;
+}
+
+.act2-history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: .55rem;
+}
+
+.act2-history-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .3rem;
+  min-height: 72px;
+  border: 1px solid rgba(47,51,44,.14);
+  border-radius: 12px;
+  padding: .7rem .8rem;
+  background: white;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,0,0,.06);
+}
+
+.act2-history-entry strong {
+  font-size: .84rem;
+  line-height: 1.25;
+}
+
+.act2-history-entry span {
+  margin-top: auto;
+  font-size: .72rem;
+  font-weight: 800;
+  opacity: .68;
+}
+
+@media (max-width: 760px) {
+  .act2-history-overlay { padding: max(.55rem, env(safe-area-inset-top)) max(.55rem, env(safe-area-inset-right)) max(.55rem, env(safe-area-inset-bottom)) max(.55rem, env(safe-area-inset-left)); }
+  .act2-history-panel { max-height: calc(100dvh - 1.1rem); padding: .7rem; border-radius: 14px; }
+  .act2-history-heading { margin: -.7rem -.7rem .65rem; padding: .7rem; }
+  .act2-history-heading p { font-size: .74rem; }
+  .act2-history-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .act2-history-entry { min-height: 60px; padding: .55rem .6rem; }
+}
+
+
 .act2-sync-status {
   position: absolute;
   top: max(calc(env(safe-area-inset-top) + 3.2rem), 3.6rem);
