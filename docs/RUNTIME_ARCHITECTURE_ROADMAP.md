@@ -1088,3 +1088,23 @@ Parity locks the arrival boundary:
 - 41 px remains approach.
 
 Interaction behavior convergence remains **IN PROGRESS**.
+
+
+## Interaction behavior checkpoint 4 — bottle message hotspot
+
+Village bottle-message interaction now uses the shared Interaction System.
+
+Canonical authored definition:
+- id `village:bottle-message`;
+- hotspot semantics;
+- anchor + approach point `{ x: 835, y: 500 }`;
+- arrival radius `38`;
+- enabled only while the bottle-message story interaction is available.
+
+Shared `resolveInteraction()` owns disabled / activate / approach behavior. Existing Village pathfinding, target-marker handling and story callback remain local.
+
+Parity locks:
+- 38 px activates;
+- 39 px remains approach.
+
+Current shared-resolution consumers: Act 2 Alve turn-in, Village noticeboard, Village Recycling, Village bottle message.
