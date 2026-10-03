@@ -806,3 +806,14 @@ Second short interaction slice completed on `nova/runtime-architecture-v1`.
 Village noticeboard now consumes shared `resolveInteraction()` and has one authored definition for its approach point/radius. Accepted 36 px arrival behavior is parity-covered, including the 37 px outside-boundary case.
 
 Shared resolution is therefore proven in both Lake and Village, but the Interaction System is still incomplete. Remaining local interactions and world-input authority must continue in short parity-backed slices. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — Recycling joins shared resolution
+
+Third short Interaction System behavior slice completed.
+
+Village Recycling now delegates disabled / activate / approach resolution to shared `resolveInteraction()`, preserving its stage-4 gate, authored approach point and 40 px arrival radius. Parity covers the 40/41 px boundary.
+
+Current shared-resolution consumers: Act 2 Alve turn-in, Village noticeboard, Village Recycling.
+
+Continue in short slices. Vercel is currently rate-limited and should not be treated as verification evidence. No Act 3 and no production promotion.
