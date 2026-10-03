@@ -1138,10 +1138,6 @@ export async function createVillageGame(
     destroy: () => game.destroy(true),
     setConstructionDialogueOpen: (open) => {
       constructionDialogueOpen = open;
-      requestedWorldInputEnabled = !open;
-      if (game.scene.isActive("VillageScene")) {
-        (game.scene.getScene("VillageScene") as VillageScene).setWorldInputEnabled(!open);
-      }
     },
     setWorldInputEnabled: (enabled) => {
       requestedWorldInputEnabled = enabled;
