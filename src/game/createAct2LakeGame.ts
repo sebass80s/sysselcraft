@@ -1,4 +1,5 @@
 import type { GameObjects, Input, Types } from "phaser";
+import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import {
   ACT2_ALVE_WORK_POSITIONS,
   ACT2_ALVE_IDLE_POSITION,
@@ -149,16 +150,13 @@ export async function createAct2LakeGame(
         fontStyle: "bold",
         color: "#ffffff",
       }).setOrigin(0.5);
-      const turnInBubble = this.add.circle(0, -164, 18, 0xf4d780, 1)
-        .setStrokeStyle(3, 0x3a402f, 1);
-      const turnInBang = this.add.text(0, -165, "!", {
-        fontFamily: "Arial, sans-serif",
-        fontSize: "25px",
-        fontStyle: "bold",
-        color: "#283326",
-      }).setOrigin(0.5);
-      this.alveTurnInMarker = this.add.container(0, 0, [turnInBubble, turnInBang])
-        .setVisible(requestedAlveTurnInAvailable);
+      this.alveTurnInMarker = createInteractionMarker(this, {
+        kind: "quest-turn-in",
+        x: 0,
+        y: -164,
+        visible: requestedAlveTurnInAvailable,
+        interactive: false,
+      });
       const nearbyBg = this.add.rectangle(0, -198, 92, 28, 0x1e2f22, 0.94)
         .setStrokeStyle(2, 0xf4d780, 0.9);
       const nearbyText = this.add.text(0, -198, "Tryck på Alve", {
