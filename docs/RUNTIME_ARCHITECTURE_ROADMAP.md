@@ -1153,3 +1153,36 @@ Parity coverage now includes:
 - source-contract guards for both Village and Lake consuming the shared authority.
 
 **Status:** world-input authority is now **IN PROGRESS / cross-world contract established**. Do not remove the Village compatibility overlay flag until remaining overlay surfaces are mapped and parity-covered.
+
+
+## World-input authority checkpoint 2 — Village legacy lock retired
+
+Village presentation now owns one complete blocking-overlay boolean:
+
+`villageBlockingOverlayVisible`
+
+It includes current modal/story surfaces such as:
+- Linus dialogue/replay;
+- construction/Recycling/Henning/Bakery/Clinic/Mira/Sol story surfaces;
+- Act 1 finale;
+- bottle-message story;
+- shop and abandoned-shop dialogue;
+- room and dog-home surfaces;
+- main menu and Vuxenläge;
+- child pairing;
+- Act 2 purchase story opened from Village;
+- safe/debug story overlays;
+- save-error blocking UI.
+
+That single presentation result drives `setWorldInputEnabled()`.
+
+The superseded Village compatibility system is removed:
+- no `constructionDialogueOpen` flag in Phaser;
+- no `setConstructionDialogueOpen()` handle;
+- no manual open/close input toggles from individual React close paths.
+
+All object-level Village pointer handlers now pass through one scene-level `acceptsWorldInput()`, which delegates to shared `worldInputEnabled()`.
+
+Parity guards the retirement so the legacy lock cannot silently return.
+
+**Status:** Village world-input ownership is now converged onto the explicit shared authority. Remaining Interaction System work should focus on interaction resolution/priority and then World/Area primitives, not another input-lock model.
