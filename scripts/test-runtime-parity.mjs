@@ -647,6 +647,20 @@ assert.ok(
   !villageGameSource.includes("setConstructionDialogueOpen"),
   "Village Phaser handle must not expose the retired dialogue-lock setter",
 );
+assert.ok(
+  villageGameSource.includes("private resolveLinusIntent()"),
+  "Village must centralize Linus base interaction priority",
+);
+assert.equal(
+  (villageGameSource.match(/const linusIntent = this\.resolveLinusIntent\(\);/g) ?? []).length,
+  3,
+  "All three Linus base pointer entrypoints must consume the shared priority decision",
+);
+assert.equal(
+  (villageGameSource.match(/requestedConstruction\.attention\?\.resident === \"linus\"/g) ?? []).length,
+  1,
+  "Linus base priority must not duplicate construction-attention checks outside resolveLinusIntent",
+);
 assert.equal(
   (villageGameSource.match(/createInteractionMarker\(this, \{/g) ?? []).length,
   3,
