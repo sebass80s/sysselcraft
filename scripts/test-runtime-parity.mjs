@@ -8,8 +8,8 @@ import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "..
 import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
-import { JETTY_CONTRIBUTION_BEATS } from "../src/game/act2JettyStory.ts";
-import { BOATHOUSE_CONTRIBUTION_BEATS } from "../src/game/act2BoathouseStory.ts";
+import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
+import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 
@@ -189,5 +189,115 @@ const cabinDoneHistory = historyEntriesFor(ACT2_STORY_REGISTRY, act2HistoryProgr
 assert.equal(cabinDoneHistory.filter((entry)=>entry.storylineId===ACT2_STORYLINE_IDS.opening).length, ACT2_OPENING_BEATS.length);
 assert.equal(cabinDoneHistory.filter((entry)=>entry.storylineId===ACT2_STORYLINE_IDS.cabin).length, CABIN_CONTRIBUTION_BEATS.length);
 assert.equal(cabinDoneHistory.some((entry)=>entry.storylineId===ACT2_STORYLINE_IDS.dock), false, "unfinished Act 2 projects stay hidden");
+
+
+
+function legacyAct2HistoryProjection(state) {
+  const projected = [];
+  if (state.openingComplete) {
+    ACT2_OPENING_BEATS.forEach((beat,index)=>projected.push({
+      group:"Inledning",
+      id:`act2:opening:${String(index+1).padStart(2,"0")}`,
+      title:beat.title,
+    }));
+  }
+  const sources = {
+    cabin:["Stugan",CABIN_CONTRIBUTION_BEATS],
+    dock:["Bryggan",JETTY_CONTRIBUTION_BEATS],
+    boathouse:["Båthuset",BOATHOUSE_CONTRIBUTION_BEATS],
+    motorboat:["Motorbåten",MOTORBOAT_CONTRIBUTION_BEATS],
+  };
+  for (const project of ["cabin","dock","boathouse","motorboat"]) {
+    if (!state.projects[project].complete) continue;
+    const [group,beats]=sources[project];
+    beats.forEach((beat,index)=>projected.push({
+      group,
+      id:`act2:${project}:${String(index+1).padStart(2,"0")}`,
+      title:beat.title,
+    }));
+  }
+  if (state.projects.dock.complete && state.jettyLifebuoyOwned) projected.push({
+    group:"Bryggan", id:"act2:dock:lifebuoy", title:JETTY_LIFEBUOY_BEAT.title,
+  });
+  if (state.projects.boathouse.complete && state.boathouseSteeringWheelOwned) projected.push({
+    group:"Båthuset", id:"act2:boathouse:steering-wheel", title:BOATHOUSE_STEERING_WHEEL_BEAT.title,
+  });
+  if (state.projects.dock.complete && state.consumedProjectCompletionIds.includes("dock:completion-reaction")) projected.push({
+    group:"Bryggan", id:"act2:dock:completion-reaction", title:JETTY_COMPLETION_REACTION.title,
+  });
+  if (state.epilogueConsumed) {
+    ACT2_FINALE_BEATS.forEach((beat,index)=>projected.push({
+      group:"Finalen",
+      id:`act2:finale:${String(index+1).padStart(2,"0")}`,
+      title:beat.title,
+    }));
+  }
+  return projected;
+}
+
+const historyGroupByStoryline = {
+  [ACT2_STORYLINE_IDS.opening]:"Inledning",
+  [ACT2_STORYLINE_IDS.cabin]:"Stugan",
+  [ACT2_STORYLINE_IDS.dock]:"Bryggan",
+  [ACT2_STORYLINE_IDS.boathouse]:"Båthuset",
+  [ACT2_STORYLINE_IDS.motorboat]:"Motorbåten",
+  [ACT2_STORYLINE_IDS.finale]:"Finalen",
+};
+
+function registryAct2HistoryProjection(state) {
+  return historyEntriesFor(ACT2_STORY_REGISTRY,act2HistoryProgress(state)).map((entry)=>({
+    group:historyGroupByStoryline[entry.storylineId],
+    id:entry.beat.id,
+    title:entry.beat.title,
+  }));
+}
+
+function assertAct2HistoryParity(name,state) {
+  assert.deepEqual(
+    registryAct2HistoryProjection(state),
+    legacyAct2HistoryProjection(state),
+    `Act 2 History parity failed: ${name}`,
+  );
+}
+
+assertAct2HistoryParity("fresh", emptyAct2);
+assertAct2HistoryParity("opening + cabin complete", cabinDone);
+
+const dockDone = {
+  ...emptyAct2,
+  projects:{
+    ...emptyAct2.projects,
+    dock:{ contributions:16, visibleStage:4, consumedBeatIds:JETTY_CONTRIBUTION_BEATS.map((beat)=>beat.id), complete:true },
+  },
+  jettyLifebuoyOwned:true,
+  consumedProjectCompletionIds:["dock:completion-reaction"],
+};
+assertAct2HistoryParity("dock special beats",dockDone);
+
+const boathouseDone = {
+  ...emptyAct2,
+  projects:{
+    ...emptyAct2.projects,
+    boathouse:{ contributions:16, visibleStage:4, consumedBeatIds:BOATHOUSE_CONTRIBUTION_BEATS.map((beat)=>beat.id), complete:true },
+  },
+  boathouseSteeringWheelOwned:true,
+};
+assertAct2HistoryParity("boathouse steering wheel",boathouseDone);
+
+const fullyCompletedAct2 = {
+  ...emptyAct2,
+  openingComplete:true,
+  projects:{
+    cabin:{ contributions:16, visibleStage:4, consumedBeatIds:CABIN_CONTRIBUTION_BEATS.map((beat)=>beat.id), complete:true },
+    dock:{ contributions:16, visibleStage:4, consumedBeatIds:JETTY_CONTRIBUTION_BEATS.map((beat)=>beat.id), complete:true },
+    boathouse:{ contributions:16, visibleStage:4, consumedBeatIds:BOATHOUSE_CONTRIBUTION_BEATS.map((beat)=>beat.id), complete:true },
+    motorboat:{ contributions:16, visibleStage:4, consumedBeatIds:MOTORBOAT_CONTRIBUTION_BEATS.map((beat)=>beat.id), complete:true },
+  },
+  jettyLifebuoyOwned:true,
+  boathouseSteeringWheelOwned:true,
+  consumedProjectCompletionIds:["dock:completion-reaction"],
+  epilogueConsumed:true,
+};
+assertAct2HistoryParity("fully completed Act 2",fullyCompletedAct2);
 
 console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
