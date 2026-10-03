@@ -380,3 +380,20 @@ Both now use `resolveHenningIntent()`, backed by generic `resolveInteractionPrio
 Henning quest-marker creation is also centralized and suppressed while construction attention wins.
 
 Sol-tour marker behavior is intentionally unchanged and remains a separate story-entry mechanism pending a dedicated arbitration slice.
+
+
+## Checkpoint — Sol-tour CTA participates in interaction priority
+
+The audit confirmed a mismatch between story semantics and world routing: React's resident callbacks prioritize Sol-tour story beats, while backend quest routes could bypass those callbacks before this slice.
+
+Sol-tour is now an explicit `story-cta` candidate.
+
+Linus:
+construction > intro > story CTA > quest > resident.
+
+Henning:
+construction > story CTA > quest > resident.
+
+`syncSolTourMarker()` owns CTA marker presentation. Lower quest markers are suppressed whenever CTA wins, and construction attention suppresses CTA. Arrival routing re-checks the current winner before choosing quest vs resident/story callback.
+
+Shop and Sol-decision stops remain outside mixed-NPC arbitration because no competing interaction type currently exists there.
