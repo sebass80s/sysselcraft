@@ -836,3 +836,15 @@ Runtime 1.0 is accepted only when:
 - physical iPhone acceptance passes.
 
 The frozen live runtime remains the behavioral oracle until that point.
+
+
+### Stable story identity rule — mandatory
+
+Story beat and storyline identity is global engine identity, not local Act naming.
+
+- every `storylineId` must be chapter-qualified, e.g. `act2:cabin` or `act3:intro`;
+- beat IDs must remain globally unique;
+- History/progression/save adapters must reference these stable IDs rather than display labels;
+- titles and labels may change without changing identity.
+
+This prevents later chapters from colliding in History, progression or save migration.

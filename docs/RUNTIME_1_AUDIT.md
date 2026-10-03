@@ -80,3 +80,22 @@ Build these new shared foundations without modifying the frozen live branch:
 - Do not deploy Runtime 1.0 to production.
 - Do not delete legacy runtime until parity harness + browser + physical iPhone acceptance pass.
 - Do not introduce Act-specific replacements for systems already registered as canonical.
+
+
+## Checkpoint — shared story/history contracts
+
+Implemented on the Runtime 1.0 branch:
+- generic Story Registry;
+- generic read-only Story History/replay contract;
+- generic Interaction contract;
+- chapter-qualified stable `storylineId` rule;
+- parity fixtures for spoiler gating, authored ordering and replay clamping.
+
+Storyline IDs are global engine identifiers and must be chapter-qualified, for example:
+- `act2:cabin`
+- `act2:opening`
+- `act3:intro`
+
+Do not use ambiguous local IDs such as `cabin` or `intro`.
+
+Next migration target remains Act 2 story registration. Existing Act 2 story content should be adapted into the registry rather than rewritten.

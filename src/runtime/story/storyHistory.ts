@@ -9,8 +9,8 @@ export type StoryHistoryProgress = {
 };
 
 export type StoryHistoryEntry = {
-  chapter: string;
-  storyline: string;
+  chapterId: string;
+  storylineId: string;
   beat: StoryBeatDefinition;
 };
 
@@ -23,11 +23,11 @@ export function historyEntriesFor(
       beat.history.mode === "after-beat-complete"
         ? progress.completedBeatIds.has(beat.id)
         : beat.history.mode === "after-storyline-complete"
-          ? progress.completedStorylineIds.has(beat.storyline)
+          ? progress.completedStorylineIds.has(beat.storylineId)
           : false;
 
     return visible
-      ? [{ chapter: beat.chapter, storyline: beat.storyline, beat }]
+      ? [{ chapterId: beat.chapterId, storylineId: beat.storylineId, beat }]
       : [];
   });
 }

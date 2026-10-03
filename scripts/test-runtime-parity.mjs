@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { deriveGameUiShell } from "../src/game/uiShellState.ts";
 import { SYSTEM_ASSETS, SYSTEM_COMPONENT_IDS, CANONICAL_SYSTEMS } from "../src/runtime/systemRegistry.ts";
+import { createStoryRegistry } from "../src/runtime/story/storyRegistry.ts";
+import { historyEntriesFor, resolveReplayRequest } from "../src/runtime/story/storyHistory.ts";
 
 const shellFixtures = [
   {
@@ -64,4 +66,96 @@ assert.ok(
   "Runtime 1.0 must preserve the accepted resource HUD semantics",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures)`);
+
+
+const storyRegistry = createStoryRegistry([
+  {
+    id: "act2:cabin:01",
+    chapterId: "act2",
+    storylineId: "act2:cabin",
+    title: "Stugan 1",
+    body: ["Alve: Första raden.", "Barnet: Andra raden."],
+    history: { mode: "after-storyline-complete" },
+  },
+  {
+    id: "act2:cabin:02",
+    chapterId: "act2",
+    storylineId: "act2:cabin",
+    title: "Stugan 2",
+    body: ["Alve: Tredje raden."],
+    history: { mode: "after-storyline-complete" },
+  },
+  {
+    id: "act2:opening:01",
+    chapterId: "act2",
+    storylineId: "act2:opening",
+    title: "Inledning",
+    body: ["Barnet: Valpen?"],
+    history: { mode: "after-beat-complete" },
+  },
+  {
+    id: "act3:intro:01",
+    chapterId: "act3",
+    storylineId: "act3:intro",
+    title: "På andra sidan",
+    body: ["Barnet: Här är det nytt."],
+    history: { mode: "after-storyline-complete" },
+  },
+]);
+
+const hiddenHistory = historyEntriesFor(storyRegistry, {
+  completedBeatIds: new Set(["act2:cabin:01"]),
+  completedStorylineIds: new Set(),
+});
+assert.deepEqual(
+  hiddenHistory.map(({ beat }) => beat.id),
+  [],
+  "storyline-gated beats must stay hidden until the whole storyline is complete",
+);
+
+const openingOnlyHistory = historyEntriesFor(storyRegistry, {
+  completedBeatIds: new Set(["act2:opening:01"]),
+  completedStorylineIds: new Set(),
+});
+assert.deepEqual(
+  openingOnlyHistory.map(({ beat }) => beat.id),
+  ["act2:opening:01"],
+  "beat-level history policy must expose only the completed beat",
+);
+
+const completedCabinHistory = historyEntriesFor(storyRegistry, {
+  completedBeatIds: new Set(["act2:cabin:01", "act2:cabin:02"]),
+  completedStorylineIds: new Set(["act2:cabin"]),
+});
+assert.deepEqual(
+  completedCabinHistory.map(({ beat }) => beat.id),
+  ["act2:cabin:01", "act2:cabin:02"],
+  "completed storyline must expose its registered beats in authored order",
+);
+
+const replay = resolveReplayRequest(
+  storyRegistry,
+  {
+    completedBeatIds: new Set(["act2:cabin:01", "act2:cabin:02"]),
+    completedStorylineIds: new Set(["act2:cabin"]),
+  },
+  { beatId: "act2:cabin:01", startLineIndex: 999 },
+);
+assert.equal(replay?.lineIndex, 1, "history replay must clamp line index without mutating progress");
+
+assert.throws(
+  () => createStoryRegistry([
+    {
+      id: "bad:01",
+      chapterId: "act3",
+      storylineId: "cabin",
+      title: "Bad",
+      body: ["Nope"],
+      history: { mode: "never" },
+    },
+  ]),
+  /must be chapter-qualified/,
+  "storyline ids must be globally stable and chapter-qualified",
+);
+
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
