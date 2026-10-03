@@ -430,6 +430,66 @@ const interactionFixtures = [
     expectedTarget: { x: 835, y: 485 },
   },
   {
+    name: "Village closed shop activates at accepted 42px shop radius",
+    playerPosition: { x: 42, y: 0 },
+    interaction: {
+      id: "village:shop",
+      kind: "hotspot",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 0, y: 0 },
+      interactionRadius: 42,
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village closed shop keeps approaching outside accepted 42px shop radius",
+    playerPosition: { x: 43, y: 0 },
+    interaction: {
+      id: "village:shop",
+      kind: "hotspot",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 0, y: 0 },
+      interactionRadius: 42,
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 0, y: 0 },
+  },
+  {
+    name: "Village open shop activates at accepted 42px Mira approach zone",
+    playerPosition: { x: 142, y: 0 },
+    interaction: {
+      id: "village:shop",
+      kind: "hotspot",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 0, y: 0 },
+      interactionRadius: 42,
+      activationZones: [
+        { anchor: { x: 100, y: 0 }, interactionRadius: 42 },
+      ],
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village open shop keeps approaching outside shop and Mira arrival zones",
+    playerPosition: { x: 143, y: 0 },
+    interaction: {
+      id: "village:shop",
+      kind: "hotspot",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 0, y: 0 },
+      interactionRadius: 42,
+      activationZones: [
+        { anchor: { x: 100, y: 0 }, interactionRadius: 42 },
+      ],
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 0, y: 0 },
+  },
+  {
     name: "Village Linus activates inside accepted 95px resident radius",
     playerPosition: { x: 95, y: 0 },
     interaction: {
