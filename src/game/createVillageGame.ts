@@ -74,6 +74,8 @@ const HENNING_APPROACH: Point = { x: 370, y: 468 };
 const HENNING_INTERACTION_RADIUS = 95;
 const SOL_APPROACH: Point = { x: 835, y: 485 };
 const SOL_INTERACTION_RADIUS = 95;
+const LINUS_INTERACTION_RADIUS = 95;
+const LINUS_APPROACH_RADIUS = 18;
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
 
@@ -721,11 +723,24 @@ export async function createVillageGame(
       }
 
       if (!this.linusInteractionPending || !this.player || !this.linus) return;
-      // Quest-source navigation can stop at the authored approach point, which is
-      // intentionally a little farther from Linus than the generic NPC radius.
-      // Treat reaching that point as arrival instead of leaving the interaction stuck.
-      const linusApproachReached = distance(this.player, REQUIRED_APPROACHES.linus) <= 18;
-      if (distance(this.player, this.linus) > 95 && !linusApproachReached) return;
+      const interaction: InteractionDefinition = {
+        id: "village:linus",
+        kind: "npc",
+        anchor: { x: this.linus.x, y: this.linus.y },
+        approachPoint: REQUIRED_APPROACHES.linus,
+        interactionRadius: LINUS_INTERACTION_RADIUS,
+        activationZones: [
+          { anchor: REQUIRED_APPROACHES.linus, interactionRadius: LINUS_APPROACH_RADIUS },
+        ],
+        marker: this.backendLinusAttention ? "quest-available" : undefined,
+        enabled: true,
+      };
+      const resolution = resolveInteraction(
+        [interaction],
+        { interactionId: interaction.id, requestedAt: interaction.approachPoint ?? interaction.anchor },
+        { x: this.player.x, y: this.player.y },
+      );
+      if (resolution.status !== "activate") return;
       this.linusInteractionPending = false;
       this.playerFacing = this.player.x < this.linus.x ? "east" : "west";
       this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
