@@ -1046,11 +1046,6 @@ assert.ok(
   "Act 2 Lake must consume the shared World/Area camera contract",
 );
 assert.ok(
-  villageGameSource.includes("WORLD_CAMERA.followLerpX")
-    && villageGameSource.includes("worldCameraDeadzone(viewWidth)"),
-  "Village must consume the shared World/Area camera contract",
-);
-assert.ok(
   act2LakeSource.includes("update(_time: number, delta: number)"),
   "Act 2 Lake update loop must remain present for world-input parity coverage",
 );
@@ -1071,6 +1066,11 @@ assert.ok(
 
 
 const villageGameSource = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
+assert.ok(
+  villageGameSource.includes("WORLD_CAMERA.followLerpX")
+    && villageGameSource.includes("worldCameraDeadzone(viewWidth)"),
+  "Village must consume the shared World/Area camera contract",
+);
 assert.ok(
   villageGameSource.includes("setWorldInputEnabled: (enabled: boolean) => void"),
   "Village handle must expose the canonical world-input contract",
