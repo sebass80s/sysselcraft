@@ -44,6 +44,15 @@ function assertProject(name, beats) {
 assertProject("Stugan", CABIN_CONTRIBUTION_BEATS);
 assertProject("Bryggan", JETTY_CONTRIBUTION_BEATS);
 assertProject("Båthuset", BOATHOUSE_CONTRIBUTION_BEATS);
+assert.ok(
+  BOATHOUSE_CONTRIBUTION_BEATS[8].body.some((line) => line.includes("Vi har ingen ratt"))
+    && BOATHOUSE_CONTRIBUTION_BEATS[8].body.some((line) => line.includes("Vi köper en ratt")),
+  "Båthuset 9/16 must introduce the missing steering wheel before the purchase gate",
+);
+assert.ok(
+  BOATHOUSE_STEERING_WHEEL_BEAT.body[0]?.startsWith("Hos Mira"),
+  "Båthuset steering-wheel purchase beat must resume at Mira after the need has already been introduced",
+);
 assertProject("Motorbåten", MOTORBOAT_CONTRIBUTION_BEATS);
 
 for (const beat of [CABIN_WAITING_REACTION, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION, BOATHOUSE_STEERING_WHEEL_BEAT]) {
