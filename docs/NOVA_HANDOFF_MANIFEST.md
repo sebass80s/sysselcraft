@@ -631,3 +631,20 @@ Act 3's locked story direction and Nova's emotional arc live in `docs/STORY_DESI
 - Act-specific tests should prefer behavior/state contracts over regexes that freeze incidental source-code shape.
 
 Do not resurrect superseded five-beat-final, shipping-lock or “physical acceptance still open” instructions from Git history.
+
+
+## PRE-ACT-3 ARCHITECTURE GATE — LOCKED 2026-10-03
+
+Do **not** start substantial Act 3 runtime implementation by cloning `Act2Runtime`, story history, HUD, markers or interaction logic.
+
+First implement the shared-runtime rules in `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`:
+- one Game UI Shell across the game;
+- one Story Engine + Story Registry;
+- one read-only Story History system driven by registry metadata and completion policy;
+- one Interaction System for NPC/quest markers, approach points and input priority;
+- shared progression/gating over authoritative Quest V2 evidence;
+- chapter runtime primarily as data/configuration.
+
+Important current debt: Act 2 Historik works and is regression-protected, but its catalog is assembled directly from `ACT2_*` modules inside `Act2Runtime.tsx`. This must be generalized before Act 3 so new beats automatically inherit rendering/replay/history semantics rather than requiring another Act-specific implementation.
+
+Architecture success criterion: adding a normal Act 3 beat should require authored data/state configuration, not new code for dialogue UI, history replay, overlay suppression or beat-consumption semantics.
