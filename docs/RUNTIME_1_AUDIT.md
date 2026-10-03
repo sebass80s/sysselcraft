@@ -409,3 +409,33 @@ Recycling 50 > Linus 40 > Shop 30 > Henning 20 > Ground 10.
 The shared priority resolver now decides the winning hit target. Target-specific behavior remains unchanged after selection.
 
 This preserves the iOS-oriented scene fallback while removing hidden priority semantics from the `if` chain.
+
+
+## Checkpoint — Henning arrival uses shared resolution
+
+Henning is now another real consumer of the canonical interaction definition/resolver.
+
+Accepted legacy behavior is preserved:
+- fixed approach point `370,468`;
+- activation radius 95 px around Henning's current sprite position;
+- 95 activates, 96 continues approach;
+- facing and callback remain local.
+
+### Consolidated Interaction audit
+
+Completed/converged:
+- shared marker rendering;
+- shared world-input authority;
+- overlay suppression;
+- mixed NPC intent priority for Linus/Henning;
+- Sol-tour CTA arbitration;
+- explicit Village scene target priority;
+- six shared interaction-resolution consumers.
+
+Remaining special-case work is concentrated in:
+- Linus ordinary arrival dual geometry;
+- Shop/Mira two-approach behavior;
+- Sol resident interaction;
+- deeper generic hit-test/entrypoint de-duplication.
+
+Those remaining cases should not be generalized until automated parity and physical acceptance protect their existing behavior.
