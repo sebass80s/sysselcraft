@@ -186,3 +186,22 @@ Existing child-scoped keys and one-time legacy adoption are unchanged. No new st
 
 GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
 See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for verification and physical acceptance.
+
+## Act 2 legacy-finale migration correction — 2026-10-03
+
+This section supersedes the earlier closeout statement that already completed five-beat saves remain fully complete and do not receive the new epilogue.
+
+The correct current rule is:
+
+- a child-scoped save that completed the old five-beat family/veranda ending but predates **Över sjön** retains all project/family-finale history;
+- normalization moves it to `finaleIndex=5`;
+- `familyFinaleConsumed=true` remains true;
+- `epilogueConsumed=false`, `act2Complete=false`, and `endCardSeen=false` until the new epilogue is actually consumed;
+- this migration is local presentation/story reconciliation only;
+- it must not mutate backend quest history, wallet, world progression or rewards;
+- after the epilogue is consumed once, normal `act2Complete && endCardSeen` semantics apply.
+
+The physical save that exposed this bug must be preserved for acceptance. Do not reset/reinstall it merely to make the state easier to test.
+
+Alve's idle visibility is renderer state only: `selectedProject=null` does not change persistence authority and must not imply that Alve is absent from the world.
+
