@@ -37,6 +37,7 @@ import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../game/act2MotorboatStory";
 import { ACT2_FINALE_BEATS } from "../game/act2FinaleStory";
 import { beginStoryOverlay } from "../game/storyOverlayBridge";
+import { deriveGameUiShell } from "../game/uiShellState";
 import { StoryMoment } from "./story/StoryMoment";
 import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
@@ -496,19 +497,29 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeCompletionPresentation = activeCompletionLine
     ? parseStoryLine(activeCompletionLine, childName)
     : null;
-  const postAct2LakeIdle = state.act2Complete && state.endCardSeen;
-  const hudVisible =
-    !debug
-    && !chapterIntroVisible
-    && state.openingComplete
-    && state.alveIntroComplete
-    && (state.selectedProject !== null || postAct2LakeIdle)
-    && !finalePending
-    && !completionProject
-    && !purchaseRequired
-    && !namingRequired
-    && !contributionTurnInOpen
-    && !cabinRevisitOpen;
+  const projectChooserVisible =
+    state.alveIntroComplete
+    && !state.selectedProject
+    && !state.projects.motorboat.complete
+    && !completionProject;
+  const storyUiVisible =
+    !state.openingComplete
+    || (state.openingComplete && !state.bicycleSeen)
+    || (state.bicycleSeen && !state.alveIntroComplete)
+    || projectChooserVisible
+    || finalePending
+    || Boolean(completionProject)
+    || purchaseRequired
+    || namingRequired
+    || contributionTurnInOpen
+    || cabinRevisitOpen;
+  const uiShell = deriveGameUiShell({
+    debug,
+    worldReady: state.openingComplete && state.alveIntroComplete,
+    blockingOverlayVisible: chapterCardVisible || storyUiVisible,
+    projectStatusAvailable: state.selectedProject !== null,
+  });
+  const hudVisible = uiShell.showHud;
   const activeCabinRevisitLine = cabinRevisitOpen
     ? CABIN_WAITING_REACTION.body[cabinRevisitLineIndex] ?? null
     : null;
@@ -761,7 +772,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       dialogueClassName="act2-dialogue-card"
     />}
 
-    {state.alveIntroComplete && !state.selectedProject && !state.projects.motorboat.complete && !completionProject && <StoryMoment
+    {projectChooserVisible && <StoryMoment
       image="/assets/village/story-moments/act2/meeting-alve/pick.png"
       speaker="Alve"
       dialogueClassName="act2-dialogue-card"
@@ -915,7 +926,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       </div>
     </div>}
     {backendSyncError && <div role="status" className="act2-sync-status">{backendSyncError}</div>}
-    {hudVisible && state.selectedProject && <div className="act2-project-status" aria-label="Aktivt projekt">
+    {uiShell.showProjectStatus && state.selectedProject && <div className="act2-project-status" aria-label="Aktivt projekt">
       <strong>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · {state.projects[state.selectedProject].contributions}/16</strong>
     </div>}
   </main>;

@@ -142,3 +142,19 @@ The current migration deliberately replays only the newly added epilogue for an 
 
 Physical iPhone acceptance of this migrated-path Story UI is still open.
 
+
+
+## Gameplay UI shell contract · LOCKED 2026-10-03
+
+Global gameplay chrome (logo/navigation, wallet/resources and equivalent chapter-level HUD) is **presentation infrastructure**, not quest or project state.
+
+Canonical rule:
+
+- the shell is visible whenever the playable world is ready and no blocking Story/Chapter overlay is active;
+- a selected project may add project-specific status, but may never be required for the global HUD itself;
+- `selectedProject=null`, a completed project, a completed chapter, idle NPC state or future chapter progression must never implicitly hide the global shell;
+- Story Engine/chapter overlays suppress the shell explicitly through presentation state;
+- project status is derived separately from global HUD visibility;
+- future Act 3 runtime must use the same shell contract rather than inventing new visibility chains.
+
+The pure authority is `src/game/uiShellState.ts`; Act 2 consumes it through `deriveGameUiShell`. `scripts/test-ui-shell-state.mjs` protects the lifecycle matrix, including the critical valid-world/no-project case that previously caused the HUD to disappear.
