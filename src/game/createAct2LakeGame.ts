@@ -1,6 +1,7 @@
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/interactionContract";
+import { WORLD_CAMERA, worldCameraDeadzone } from "../runtime/world/worldCamera";
 import { resolveDirectMovementIntent } from "../runtime/world/movement";
 import {
   ACT2_ALVE_WORK_POSITIONS,
@@ -96,7 +97,7 @@ export async function createAct2LakeGame(
 
     create() {
       const camera = this.cameras.main;
-      camera.setBackgroundColor("#789a68");
+      camera.setBackgroundColor(WORLD_CAMERA.backgroundColor);
       camera.setBounds(0, 0, ACT2_WORLD.width, ACT2_WORLD.height);
 
       this.add.image(0, 0, "act2-lake-master")
@@ -227,8 +228,9 @@ export async function createAct2LakeGame(
       this.positionAlve(requestedActiveProject);
 
       camera.centerOn(this.player.x, this.player.y);
-      camera.startFollow(this.player, true, 0.08, 0.08);
-      camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
+      camera.startFollow(this.player, true, WORLD_CAMERA.followLerpX, WORLD_CAMERA.followLerpY);
+      const cameraDeadzone = worldCameraDeadzone(viewWidth);
+      camera.setDeadzone(cameraDeadzone.width, cameraDeadzone.height);
 
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false }) || !this.player) return;
