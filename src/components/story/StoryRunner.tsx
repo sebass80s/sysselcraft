@@ -6,8 +6,8 @@ import type { StoryBeatPresentation } from "../../game/storyEngine";
 
 type StoryRunnerProps = {
   beat: StoryBeatPresentation;
-  onPrevious?: () => void;
-  onNext: () => void;
+  onPrevious?: () => void | Promise<void>;
+  onNext: () => void | Promise<void>;
   zIndex?: number;
   background?: string;
   dialogueClassName?: string;

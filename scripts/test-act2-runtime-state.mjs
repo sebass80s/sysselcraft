@@ -506,12 +506,12 @@ assert.equal(motorboatGate.motorboatName, "Sjöbusen");
 assert.equal(motorboatNamingRequired(motorboatGate), false);
 assert.equal(totalAct2Contributions(motorboatGate), beforeName, "boat naming must be contribution-neutral");
 
-assert.equal(ACT2_FINALE_BEATS.length, 5, "Act 2 finale must end on the five-beat family/veranda payoff");
+assert.equal(ACT2_FINALE_BEATS.length, 6, "Act 2 finale must include the lake epilogue");
 assert.equal(ACT2_FINALE_BEATS[1].title, "Någon är där");
 assert.equal(ACT2_FINALE_BEATS[2].title, "De kom");
 assert.ok(ACT2_FINALE_BEATS[3].body.includes("Alve: Han är min kompis."));
 assert.ok(ACT2_FINALE_BEATS[4].body.includes("Alve: Det är bättre."));
-assert.equal(ACT2_FINALE_BEATS.at(-1)?.id, "finale:veranda", "Act 2 must end on the veranda; the first crossing belongs to Act 3");
+assert.equal(ACT2_FINALE_BEATS.at(-1)?.id, "finale:across-the-lake", "Act 2 must end with the canonical lake epilogue");
 
 let finaleState = createDefaultAct2RuntimeState();
 finaleState = complete(finaleState, "cabin");
@@ -525,8 +525,8 @@ assert.equal(finaleState.finaleLineIndex, 4, "restart must preserve the exact li
 finaleState = advanceAct2Finale(finaleState);
 assert.equal(finaleState.finaleIndex, 1);
 assert.equal(finaleState.finaleLineIndex, 0, "advancing a finale beat must reset the persisted line index");
-for (let i = 1; i < 5; i++) finaleState = advanceAct2Finale(finaleState);
-assert.equal(finaleState.finaleIndex, 4, "five-beat Act 2 finale must finish on the veranda index");
+for (let i = 1; i < ACT2_FINALE_BEATS.length; i++) finaleState = advanceAct2Finale(finaleState);
+assert.equal(finaleState.finaleIndex, 5, "six-beat Act 2 finale must finish on the epilogue index");
 assert.equal(finaleState.familyFinaleConsumed, true);
 assert.equal(finaleState.epilogueConsumed, true);
 assert.equal(finaleState.act2Complete, true);
@@ -651,7 +651,7 @@ assert.ok(page.includes("state.finaleLineIndex"), "finale beats must render from
 
 assert.ok(page.includes("revealImageBeforeNext={state.openingLineIndex === opening.body.length - 1}"), "opening beats must reveal full art after their last panel");
 assert.ok(page.includes("revealImageBeforeNext={alveImageComplete}"), "Alve intro must reveal art after the last panel using each image");
-assert.ok(page.includes("revealImageBeforeNext={state.finaleLineIndex + 1 >= activeFinaleBeat.body.length}"), "finale beats must reveal full art after their last panel");
+assert.ok(page.includes("revealImageBeforeNext={finaleLineIndex + 1 >= activeFinaleBeat.body.length}"), "finale beats must reveal full art after their last panel");
 assert.ok(page.includes("revealImageBeforeNext={state.completionLineIndex + 1 >= activeCompletionBeat.body.length}"), "completion beats must reveal full art after their last panel");
 assert.ok(page.includes("revealImageBeforeNext={state.contributionLineIndex + 1 >= activeContributionBeat.body.length}"), "contribution beats must reveal full art after their last panel");
 assert.ok(page.includes("contributionTurnInOpen && contributionCandidate"), "backend polling must not auto-open contribution Story Moments");

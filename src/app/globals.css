@@ -303,11 +303,33 @@ body[data-story-overlay-active="true"] [data-story-ui="quest-overlay"] {
 .shared-story-dialogue {
   z-index: 2;
 }
-.shared-story-image-continue {
+.shared-story-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: .55rem;
+}
+.shared-story-navigation .dialogue-next {
+  float: none;
+}
+.shared-story-navigation button {
+  min-width: 110px;
+  min-height: 44px;
+}
+.shared-story-image-navigation {
   position: absolute;
   right: max(1rem, env(safe-area-inset-right));
   bottom: max(1rem, env(safe-area-inset-bottom));
   z-index: 3;
+  display: flex;
+  gap: .55rem;
+  align-items: center;
+}
+.shared-story-image-previous,
+.shared-story-image-continue {
+  position: static;
   min-width: 110px;
   min-height: 44px;
   box-shadow: 0 8px 24px rgba(0,0,0,.22);
@@ -455,4 +477,16 @@ body[data-story-overlay-active="true"] [data-story-ui="quest-overlay"] {
 }
 .act2-chapter-intro-next {
   margin-top: 1.15rem;
+}
+
+.shared-story-navigation-error {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  left: max(1rem, env(safe-area-inset-left));
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 4;
+  margin: 0;
+  padding: .6rem;
+  background: #fffdf4;
+  color: #702b22;
 }

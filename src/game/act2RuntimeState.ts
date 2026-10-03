@@ -203,7 +203,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
       ? Math.max(0, Math.min(200, candidate.finaleLineIndex as number))
       : 0,
     finaleIndex: Number.isInteger(candidate.finaleIndex)
-      ? Math.max(0, Math.min(4, candidate.finaleIndex as number))
+      ? Math.max(0, Math.min(5, candidate.finaleIndex as number))
       : 0,
     familyFinaleConsumed: candidate.familyFinaleConsumed === true,
     epilogueConsumed: candidate.epilogueConsumed === true,
@@ -249,14 +249,17 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     normalized.epilogueConsumed = false;
     normalized.endCardSeen = false;
   } else {
-    // Act 2 now ends on the veranda/family payoff. The old extra "first crossing"
-    // scene belongs to Act 3 and must not keep a completed Act 2 save pending.
-    if (candidate.familyFinaleConsumed === true || candidate.epilogueConsumed === true || candidate.act2Complete === true) {
-      normalized.finaleIndex = 4;
+    // Preserve completed saves from the five-beat release. New runs enter
+    // epilogue index 5 with familyFinaleConsumed=true but remain incomplete.
+    const legacyFamilyComplete = candidate.familyFinaleConsumed === true
+      && (candidate.finaleIndex ?? 0) < 5;
+    if (legacyFamilyComplete || candidate.epilogueConsumed === true || candidate.act2Complete === true) {
+      normalized.finaleIndex = 5;
       normalized.finaleLineIndex = 0;
       normalized.familyFinaleConsumed = true;
       normalized.epilogueConsumed = true;
-      normalized.act2Complete = true;
+    } else {
+      normalized.familyFinaleConsumed = normalized.finaleIndex === 5;
     }
   }
 
@@ -427,8 +430,13 @@ export function act2FinalePending(state: Act2RuntimeState) {
 export function advanceAct2Finale(state: Act2RuntimeState): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
   if (!act2FinalePending(normalized)) return normalized;
-  if (normalized.finaleIndex < 4) {
-    return { ...normalized, finaleIndex: normalized.finaleIndex + 1, finaleLineIndex: 0 };
+  if (normalized.finaleIndex < 5) {
+    return {
+      ...normalized,
+      finaleIndex: normalized.finaleIndex + 1,
+      finaleLineIndex: 0,
+      familyFinaleConsumed: normalized.finaleIndex === 4,
+    };
   }
   return normalizeAct2RuntimeState({
     ...normalized,

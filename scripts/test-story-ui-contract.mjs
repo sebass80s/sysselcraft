@@ -71,7 +71,7 @@ assert.match(storyMomentSource, /setImageOnlyPresentationId\(presentationId\)/, 
 assert.match(storyMomentSource, /shared-story-image-continue/, "clean image mode must advance from the unobstructed image");
 assert.match(storyMomentSource, /presentationId/, "clean image mode must reset between authored panels");
 assert.match(storyMomentSource, /className="primary-button shared-story-image-continue"[\s\S]*Fortsätt/, "clean image mode must keep a visible Continue button");
-assert.match(css, /\.shared-story-image-continue \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
+assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
 assert.match(transcript, /showSpeakers\?: boolean/, "StoryTranscript must support explicit nameplate ownership");
@@ -132,3 +132,9 @@ assert.deepEqual(
 );
 
 console.log("Story UI contract: PASS");
+
+assert.match(css, /\.shared-story-navigation \{[^}]*display:\s*flex/s);
+assert.match(css, /\.shared-story-navigation \.dialogue-next \{[^}]*float:\s*none/s);
+assert.match(css, /\.shared-story-image-previous,\s*\.shared-story-image-continue \{[^}]*position:\s*static[^}]*min-height:\s*44px/s);
+assert.match(act2Runtime, /if \(chapterCardVisible\) return beginStoryOverlay\(\)/,
+  "Act 2 chapter cards must suppress external quest UI until acknowledged");

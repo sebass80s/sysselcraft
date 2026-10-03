@@ -59,11 +59,17 @@ assert.equal(
   "canonical child-facing docs must not leak implementation prose",
 );
 
-assert.equal(ACT2_FINALE_BEATS.length, 5, "Act 2 finale must keep five family/veranda beats");
+assert.equal(ACT2_FINALE_BEATS.length, 6, "Act 2 finale must keep family/veranda plus epilogue");
 for (const beat of ACT2_FINALE_BEATS) {
   assert.ok(storyDesign.includes(beat.title), `finale beat "${beat.title}" must exist in STORY_DESIGN`);
 }
-assert.equal(ACT2_FINALE_BEATS.at(-1)?.id, "finale:veranda");
+assert.equal(ACT2_FINALE_BEATS.at(-1)?.id, "finale:across-the-lake");
 assert.ok(runtime.includes("SLUT PÅ ANDRA KAPITLET"), "runtime must close Act 2 with the canonical chapter-end card");
 
 console.log("PASS: Act 2 runtime beats and canonical STORY_DESIGN are synchronized");
+
+const epilogueManuscript = storyDesign.split("#### Act 2 epilogue / Act 3 bridge")[1]
+  .split("**Canonical dialogue:**")[1].split("Then show the black")[0];
+const canonicalLines = epilogueManuscript.split("\n").map((line) => line.trim()).filter(Boolean)
+  .map((line) => line.replace(/^> \*\*(.+?):\*\* “(.*)”$/, "$1: $2"));
+assert.deepEqual(ACT2_FINALE_BEATS.at(-1).body, canonicalLines, "Epilogue must preserve every canonical line exactly");

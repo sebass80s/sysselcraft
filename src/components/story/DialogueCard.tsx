@@ -46,6 +46,7 @@ export function DialogueCard({
             <button
               type="button"
               className="secondary-button dialogue-previous"
+              disabled={nextDisabled}
               onClick={onPrevious}
             >
               {previousLabel}

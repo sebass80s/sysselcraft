@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { beginStoryOverlay } from "../../game/storyOverlayBridge";
 import { DialogueCard } from "./DialogueCard";
 import type { StorySpeakerTone } from "../../game/storyEngine";
@@ -14,9 +14,9 @@ type StoryMomentProps = {
   speakerTone?: StorySpeakerTone;
   children: ReactNode;
   previousLabel?: string;
-  onPrevious?: () => void;
+  onPrevious?: () => void | Promise<void>;
   nextLabel?: string;
-  onNext?: () => void;
+  onNext?: () => void | Promise<void>;
   nextDisabled?: boolean;
   footer?: ReactNode;
   zIndex?: number;
@@ -47,6 +47,25 @@ export function StoryMoment({
 }: StoryMomentProps) {
   const [imageOnlyPresentationId, setImageOnlyPresentationId] = useState<string | null>(null);
   const imageOnly = imageOnlyPresentationId === presentationId;
+  const navigationPending = useRef(false);
+  const [pending, setPending] = useState(false);
+  const [navigationError, setNavigationError] = useState("");
+
+  async function navigate(action: () => void | Promise<void>) {
+    if (navigationPending.current || nextDisabled) return;
+    navigationPending.current = true;
+    setPending(true);
+    setNavigationError("");
+    try {
+      await action();
+      setImageOnlyPresentationId(null);
+    } catch {
+      setNavigationError("Kunde inte spara. Försök igen.");
+    } finally {
+      navigationPending.current = false;
+      setPending(false);
+    }
+  }
 
   useEffect(() => beginStoryOverlay(), []);
 
@@ -57,7 +76,7 @@ export function StoryMoment({
           setImageOnlyPresentationId(presentationId);
           return;
         }
-        onNext();
+        void navigate(onNext);
       }
     : undefined;
   return (
@@ -73,10 +92,10 @@ export function StoryMoment({
         speaker={speaker}
         speakerTone={speakerTone}
         previousLabel={previousLabel}
-        onPrevious={onPrevious}
+        onPrevious={onPrevious ? () => void navigate(onPrevious) : undefined}
         nextLabel={nextLabel}
         onNext={handleNext}
-        nextDisabled={nextDisabled}
+        nextDisabled={nextDisabled || pending}
         footer={footer}
         className={dialogueClassName}
       >
@@ -87,6 +106,7 @@ export function StoryMoment({
           <button
             type="button"
             className="secondary-button shared-story-image-previous"
+            disabled={nextDisabled || pending}
             onClick={() => setImageOnlyPresentationId(null)}
           >
             Föregående
@@ -94,12 +114,14 @@ export function StoryMoment({
           <button
             type="button"
             className="primary-button shared-story-image-continue"
-            onClick={onNext}
+            disabled={nextDisabled || pending}
+            onClick={() => void navigate(onNext)}
           >
             Fortsätt
           </button>
         </div>
       )}
+      {navigationError && <p className="shared-story-navigation-error" role="alert">{navigationError}</p>}
     </section>
   );
 }

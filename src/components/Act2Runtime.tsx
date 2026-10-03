@@ -36,6 +36,7 @@ import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../game/act2Ca
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../game/act2MotorboatStory";
 import { ACT2_FINALE_BEATS } from "../game/act2FinaleStory";
+import { beginStoryOverlay } from "../game/storyOverlayBridge";
 import { StoryMoment } from "./story/StoryMoment";
 import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
@@ -81,6 +82,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
   const [chapterIntroVisible, setChapterIntroVisible] = useState(true);
   const [chapterIntroNameVisible, setChapterIntroNameVisible] = useState(false);
+
+  const chapterCardVisible = ready && (chapterIntroVisible || (state.act2Complete && !state.endCardSeen));
+  useEffect(() => {
+    if (chapterCardVisible) return beginStoryOverlay();
+  }, [chapterCardVisible]);
 
   useEffect(() => {
     stateRef.current = state;
@@ -132,6 +138,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
                 boathouse: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `boathouse:${String(i + 1).padStart(2, "0")}`), complete: true },
                 motorboat: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `motorboat:${String(i + 1).padStart(2, "0")}`), complete: true },
               },
+              consumedProjectCompletionIds: ["dock:completion-reaction"],
               finaleIndex: 0,
               finaleLineIndex: 0,
               familyFinaleConsumed: false,
@@ -475,7 +482,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     : null;
   const finalePending = act2FinalePending(state);
   const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
-  const activeFinaleLine = activeFinaleBeat?.body[state.finaleLineIndex] ?? null;
+  const finaleLineIndex = Math.min(state.finaleLineIndex, Math.max(0, (activeFinaleBeat?.body.length ?? 1) - 1));
+  const activeFinaleLine = activeFinaleBeat?.body[finaleLineIndex] ?? null;
   const activeFinalePresentation = activeFinaleLine
     ? parseStoryLine(activeFinaleLine, childName)
     : null;
@@ -508,14 +516,14 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     : null;
 
   async function previousFinaleStory() {
-    if (state.finaleLineIndex <= 0) return;
-    await commit({ ...state, finaleLineIndex: state.finaleLineIndex - 1 });
+    if (finaleLineIndex <= 0) return;
+    await commit({ ...state, finaleLineIndex: finaleLineIndex - 1 });
   }
 
   async function advanceFinaleStory() {
     if (!activeFinaleBeat) return;
-    if (state.finaleLineIndex + 1 < activeFinaleBeat.body.length) {
-      await commit({ ...state, finaleLineIndex: state.finaleLineIndex + 1 });
+    if (finaleLineIndex + 1 < activeFinaleBeat.body.length) {
+      await commit({ ...state, finaleLineIndex: finaleLineIndex + 1 });
       return;
     }
     await commit(advanceAct2Finale(state));
@@ -708,14 +716,14 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
 
     {!state.openingComplete && <StoryRunner
       beat={{
-        id: `act2:opening:${state.openingIndex}`,
+        id: `act2:opening:${state.openingIndex}:${state.openingLineIndex}`,
         image: opening.image,
         heading: opening.title,
         lines: [opening.body[state.openingLineIndex] ?? opening.body[0]],
         nextLabel: state.openingIndex === ACT2_OPENING_BEATS.length - 1 && state.openingLineIndex === opening.body.length - 1 ? "Gå närmare" : "Fortsätt",
       }}
-      onPrevious={state.openingIndex > 0 || state.openingLineIndex > 0 ? () => void previousOpening() : undefined}
-      onNext={() => void advanceOpening()}
+      onPrevious={state.openingIndex > 0 || state.openingLineIndex > 0 ? () => previousOpening() : undefined}
+      onNext={() => advanceOpening()}
       revealImageBeforeNext={state.openingLineIndex === opening.body.length - 1}
       childName={childName}
       dialogueClassName="act2-dialogue-card"
@@ -731,8 +739,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: ["Du hör någon som spikar med en hammare längre bort"],
         nextLabel: "Fortsätt",
       }}
-      onPrevious={() => void previousBicycle()}
-      onNext={() => void commit({ ...state, bicycleSeen: true })}
+      onPrevious={() => previousBicycle()}
+      onNext={() => commit({ ...state, bicycleSeen: true })}
       revealImageBeforeNext
       dialogueClassName="act2-dialogue-card"
     />}
@@ -746,8 +754,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: displayText ? [displayText] : [],
         nextLabel: state.alveIntroIndex === ACT2_ALVE_DIALOGUE.length - 1 ? "Välj projekt" : "Fortsätt",
       }}
-      onPrevious={state.alveIntroIndex > 0 ? () => void previousAlve() : undefined}
-      onNext={() => void advanceAlve()}
+      onPrevious={state.alveIntroIndex > 0 ? () => previousAlve() : undefined}
+      onNext={() => advanceAlve()}
       revealImageBeforeNext={alveImageComplete}
       dialogueClassName="act2-dialogue-card"
     />}
@@ -780,11 +788,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         speaker: activeFinalePresentation?.speaker,
         speakerTone: activeFinalePresentation?.speakerTone,
         lines: activeFinalePresentation ? [activeFinalePresentation.text] : [],
-        nextLabel: state.finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa",
+        nextLabel: finaleLineIndex + 1 < activeFinaleBeat.body.length ? "Fortsätt" : state.finaleIndex === ACT2_FINALE_BEATS.length - 1 ? "SLUT PÅ ANDRA KAPITLET" : "Nästa",
       }}
-      onPrevious={state.finaleLineIndex > 0 ? () => void previousFinaleStory() : undefined}
-      onNext={() => void advanceFinaleStory()}
-      revealImageBeforeNext={state.finaleLineIndex + 1 >= activeFinaleBeat.body.length}
+      onPrevious={finaleLineIndex > 0 ? () => previousFinaleStory() : undefined}
+      onNext={() => advanceFinaleStory()}
+      revealImageBeforeNext={finaleLineIndex + 1 >= activeFinaleBeat.body.length}
       dialogueClassName="act2-dialogue-card"
       zIndex={100}
       background="rgba(6,10,8,.96)"
@@ -818,8 +826,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         lines: activeCompletionPresentation ? [activeCompletionPresentation.text] : [],
         nextLabel: state.completionLineIndex + 1 < activeCompletionBeat.body.length ? "Fortsätt" : "Tillbaka till projekten",
       }}
-      onPrevious={state.completionLineIndex > 0 ? () => void previousCompletionReaction() : undefined}
-      onNext={() => void advanceCompletionReaction()}
+      onPrevious={state.completionLineIndex > 0 ? () => previousCompletionReaction() : undefined}
+      onNext={() => advanceCompletionReaction()}
       revealImageBeforeNext={state.completionLineIndex + 1 >= activeCompletionBeat.body.length}
       dialogueClassName="act2-dialogue-card"
       zIndex={90}
@@ -866,9 +874,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       speaker={activeContributionPresentation?.speaker}
       speakerTone={activeContributionPresentation?.speakerTone}
       previousLabel="Föregående"
-      onPrevious={state.contributionLineIndex > 0 ? () => void previousContributionStory() : undefined}
+      onPrevious={state.contributionLineIndex > 0 ? () => previousContributionStory() : undefined}
       nextLabel={state.contributionLineIndex + 1 < activeContributionBeat.body.length ? "Fortsätt" : "Klart"}
-      onNext={() => void advanceContributionStory()}
+      onNext={() => advanceContributionStory()}
       revealImageBeforeNext={state.contributionLineIndex + 1 >= activeContributionBeat.body.length}
       presentationId={`${activeContributionBeat.id}:${state.contributionLineIndex}`}
       zIndex={80}

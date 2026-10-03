@@ -137,16 +137,38 @@ state = runProject(state, "motorboat");
 assert.equal(totalAct2Contributions(state), 64);
 assert.equal(act2FinalePending(state), true, "Motorbåten 16/16 must immediately unlock the family finale");
 
+assert.deepEqual(ACT2_FINALE_BEATS.map((beat) => beat.id), [
+  "finale:after-motorboat", "finale:someone-there", "finale:family-return",
+  "finale:family-embrace", "finale:veranda", "finale:across-the-lake",
+]);
 for (let beatIndex = 0; beatIndex < ACT2_FINALE_BEATS.length; beatIndex += 1) {
   const beat = ACT2_FINALE_BEATS[beatIndex];
-  assert.ok(beat.body.length > 0, `finale beat ${beatIndex + 1} must contain story`);
-  state = restart({ ...state, finaleIndex: beatIndex, finaleLineIndex: Math.max(0, beat.body.length - 1) });
+  assert.equal(state.finaleIndex, beatIndex, "natural transitions must not skip any beat");
+  assert.equal(state.act2Complete, false);
+  assert.equal(state.epilogueConsumed, false);
+  for (let lineIndex = 0; lineIndex < beat.body.length; lineIndex += 1) {
+    state = restart({ ...state, finaleLineIndex: lineIndex });
+    assert.equal(state.finaleIndex, beatIndex);
+    assert.equal(state.finaleLineIndex, lineIndex, "every finale line must survive restart");
+    if (lineIndex > 0) {
+      state = restart({ ...state, finaleLineIndex: state.finaleLineIndex - 1 });
+      state = restart({ ...state, finaleLineIndex: state.finaleLineIndex + 1 });
+      assert.equal(state.finaleLineIndex, lineIndex, "previous/forward is contribution-neutral");
+    }
+  }
   state = advanceAct2Finale(state);
+  state = restart(state);
+  if (beat.id === "finale:veranda") {
+    assert.equal(state.familyFinaleConsumed, true);
+    assert.equal(state.epilogueConsumed, false);
+    assert.equal(state.act2Complete, false, "veranda must not skip the epilogue");
+    assert.equal(state.finaleIndex, 5);
+  }
 }
 assert.equal(state.act2Complete, true);
 assert.equal(state.familyFinaleConsumed, true);
 assert.equal(state.epilogueConsumed, true);
-assert.equal(state.endCardSeen, false, "chapter-end card must still be pending immediately after the veranda");
+assert.equal(state.endCardSeen, false, "chapter-end card must still be pending immediately after the epilogue");
 assert.equal(act2FinalePending(state), false);
 assert.equal(totalAct2Contributions(state), 64, "finale must never fabricate contribution 65");
 
@@ -176,5 +198,5 @@ assert.match(runtime, /endCardSeen: true/, "chapter-end card must be dismissible
 assert.match(debugRoute, /<Act2Runtime debug \/>/, "debug flow must use the production runtime");
 assert.match(prodRoute, /ACT2_PRODUCTION_ENABLED = true/, "production Act 2 must remain open behind the persisted Act 1 end-card or committed-reentry gate");
 
-console.log("PASS: complete Act 1→Act 2→64 contributions→family/veranda→chapter-end flow");
+console.log("PASS: complete Act 1→Act 2→64 contributions→family/veranda→epilogue→chapter-end flow");
 console.log("NOTE: production /act2 is open behind the Act 1 end-card gate; /act2-test exercises the same runtime.");

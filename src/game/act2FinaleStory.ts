@@ -1,13 +1,14 @@
 export type Act2FinaleBeat = {
   id: string;
   title: string;
-  image?: string;
+  image: string;
   body: string[];
 };
 
 export const ACT2_FINALE_BEATS: Act2FinaleBeat[] = [
   {
     "id": "finale:after-motorboat",
+    "image": "/assets/village/story-moments/act2/finale/05-after-motorboat.png",
     "title": "Efter motorbåten",
     "body": [
       "Motorbåten är klar. För första gången finns det inget stort projekt kvar vid sjön.",
@@ -189,6 +190,56 @@ export const ACT2_FINALE_BEATS: Act2FinaleBeat[] = [
       "Barnet: Nej.",
       "Alve ler lite.",
       "Alve: Det är bättre."
+    ]
+  },
+  {
+    "id": "finale:across-the-lake",
+    "title": "Över sjön",
+    "image": "/assets/village/story-moments/act2/finale/06-across-the-lake.png",
+    "body": [
+      "En stund senare ligger sjön nästan helt stilla.",
+      "Du och Alve står nere vid bryggan igen. Motorbåten guppar lätt mot kanten.",
+      "Barnet: Ska vi verkligen åka nu?",
+      "Alve: Bara en liten sväng.",
+      "Barnet: Du sa nyss att du fått nog av projekt.",
+      "Alve: Det här är inget projekt.",
+      "Alve lossar repet och kliver i båten.",
+      "Alve: Det finns något där borta.",
+      "Barnet: På andra sidan?",
+      "Alve: Mm.",
+      "Barnet: Vad då?",
+      "Alve tittar ut över sjön.",
+      "Alve: Jag vet inte exakt. Jag bara minns att vi brukade åka dit.",
+      "Du kliver i båten efter honom.",
+      "Barnet: Med din familj?",
+      "Alve: Ja.",
+      "Alve sätter handen på relingen.",
+      "Alve: Mamma brukade alltid säga att man skulle vänta tills vattnet låg helt stilla först.",
+      "Han blir tyst en stund.",
+      "Alve: Jag trodde länge att man bara behövde vänta.",
+      "Barnet: På vad?",
+      "Alve tittar ut över sjön.",
+      "Alve: Jag vet inte längre.",
+      "Du säger inget.",
+      "Alve tittar tillbaka mot stugan. Ljuset är tänt därinne.",
+      "Alve: Jag ville laga allt för att få tillbaka det som var.",
+      "Alve: Men det blev något annat istället.",
+      "Barnet: Sämre?",
+      "Alve skakar på huvudet.",
+      "Alve: Nej.",
+      "Han vänder sig mot sjön igen.",
+      "Alve: Bara nytt.",
+      "Du sätter dig bredvid honom.",
+      "Barnet: Är vattnet helt stilla nu då?",
+      "Alve tittar ut över sjön.",
+      "Alve: Inte helt.",
+      "Alve: Men nära nog.",
+      "Barnet: Bra plan.",
+      "Alve: Jag sa ju att jag blivit bättre på planer.",
+      "Motorn hostar till, sedan går den igång.",
+      "Båten glider långsamt ut från bryggan.",
+      "Alve tittar inte tillbaka den här gången.",
+      "Ni styr ut över sjön tillsammans."
     ]
   },
 ];
