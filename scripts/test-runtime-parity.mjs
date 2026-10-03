@@ -430,6 +430,55 @@ const interactionFixtures = [
     expectedTarget: { x: 835, y: 485 },
   },
   {
+    name: "Village Linus activates inside accepted 95px resident radius",
+    playerPosition: { x: 95, y: 0 },
+    interaction: {
+      id: "village:linus",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 230, y: 460 },
+      interactionRadius: 95,
+      activationZones: [
+        { anchor: { x: 230, y: 460 }, interactionRadius: 18 },
+      ],
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village Linus activates at authored approach within accepted 18px arrival zone",
+    playerPosition: { x: 230, y: 478 },
+    interaction: {
+      id: "village:linus",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 230, y: 460 },
+      interactionRadius: 95,
+      activationZones: [
+        { anchor: { x: 230, y: 460 }, interactionRadius: 18 },
+      ],
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village Linus keeps approaching outside both accepted arrival zones",
+    playerPosition: { x: 230, y: 479 },
+    interaction: {
+      id: "village:linus",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 230, y: 460 },
+      interactionRadius: 95,
+      activationZones: [
+        { anchor: { x: 230, y: 460 }, interactionRadius: 18 },
+      ],
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 230, y: 460 },
+  },
+  {
     name: "Village Henning activates at accepted 95px resident radius",
     playerPosition: { x: 95, y: 0 },
     interaction: {
