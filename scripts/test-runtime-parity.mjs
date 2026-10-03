@@ -6,13 +6,35 @@ import { createStoryRegistry } from "../src/runtime/story/storyRegistry.ts";
 import { historyEntriesFor, resolveReplayRequest } from "../src/runtime/story/storyHistory.ts";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../src/runtime/story/act2StoryRegistry.ts";
 import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
-import { resolveInteraction } from "../src/runtime/interaction/interactionContract.ts";
+import { resolveInteraction, worldInputEnabled } from "../src/runtime/interaction/interactionContract.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
+
+const worldInputFixtures = [
+  {
+    name: "explicitly enabled world without blocking overlay accepts input",
+    state: { enabled: true, blockingOverlayVisible: false },
+    expected: true,
+  },
+  {
+    name: "explicitly disabled world rejects input",
+    state: { enabled: false, blockingOverlayVisible: false },
+    expected: false,
+  },
+  {
+    name: "blocking overlay rejects input even when world is otherwise enabled",
+    state: { enabled: true, blockingOverlayVisible: true },
+    expected: false,
+  },
+];
+
+for (const fixture of worldInputFixtures) {
+  assert.equal(worldInputEnabled(fixture.state), fixture.expected, fixture.name);
+}
 
 const interactionFixtures = [
   {
@@ -520,6 +542,14 @@ assert.ok(
 const markerRendererSource = fs.readFileSync(new URL("../src/runtime/interaction/markerRenderer.ts", import.meta.url), "utf8");
 const act2LakeSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
 assert.ok(
+  act2LakeSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled"),
+  "Act 2 Lake must consume the shared world-input authority",
+);
+assert.ok(
+  act2LakeSource.includes("update(_time: number, delta: number)"),
+  "Act 2 Lake update loop must remain present for world-input parity coverage",
+);
+assert.ok(
   markerRendererSource.includes('GLYPH_BY_KIND'),
   "Interaction System must own the canonical marker glyph mapping",
 );
@@ -535,6 +565,14 @@ assert.ok(
 
 
 const villageGameSource = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
+assert.ok(
+  villageGameSource.includes("setWorldInputEnabled: (enabled: boolean) => void"),
+  "Village handle must expose the canonical world-input contract",
+);
+assert.ok(
+  villageGameSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled"),
+  "Village movement/input must consume the shared world-input authority",
+);
 assert.equal(
   (villageGameSource.match(/createInteractionMarker\(this, \{/g) ?? []).length,
   3,
@@ -557,4 +595,4 @@ assert.ok(
   "Village must not retain local story-attention bubble drawing",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
