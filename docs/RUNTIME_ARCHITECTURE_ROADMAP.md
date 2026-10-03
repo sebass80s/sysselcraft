@@ -414,7 +414,7 @@ Target authoring experience: adding a new chapter should feel like **fueling a p
 
 ## Runtime Architecture 1.0 master contract — LOCKED 2026-10-03
 
-This section consolidates the architecture decisions made after Act 2 acceptance. These are not suggestions. They are the operating contract for all forward development.
+This section consolidates the architecture decisions made after Act 2 acceptance. These are mandatory project rules. They are not suggestions, guidelines, recommendations or advice. All forward development must comply with them.
 
 ### Product model
 
@@ -703,3 +703,19 @@ Runtime Architecture 1.0 is not complete until all of these are true:
 8. A future Act 5 should not require re-bugtesting stable generic UI/story/marker systems merely because it is Act 5.
 
 Any implementation that violates these principles should be treated as architecture regression and corrected before building further on top of it.
+
+
+### Improvement escalation rule
+
+If the active developer/assistant identifies an architectural, product, UX, reliability, testing or maintainability improvement that materially strengthens SysselCraft, it must be raised immediately in the current work session.
+
+Do not silently defer useful improvements until a later handoff.
+
+The required behavior is:
+- identify the improvement;
+- explain why it matters;
+- distinguish whether it is required now, safe to defer, or conflicts with the current freeze/release boundary;
+- if it is compatible with the current task and architecture rules, propose the concrete change immediately;
+- never hide behind “not asked” when a material structural improvement is obvious.
+
+This does not authorize scope creep on frozen live code. Improvements must respect branch, release and architecture rules.
