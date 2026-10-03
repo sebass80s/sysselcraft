@@ -934,7 +934,7 @@ Remaining UI architecture work is now about centralizing shell visibility/overla
 - Act 2 turn-in marker: **migrated**;
 - Village noticeboard/Linus/Henning quest markers: **migrated**;
 - quest-marker presentation milestone: **complete across current playable worlds**;
-- NPC/story-attention marker convergence: **pending**.
+- NPC/story-attention marker convergence: **complete**.
 
 The canonical renderer reuses the established Village quest-marker visual language. There is no separate marker asset file in the current repository; do not invent chapter-specific marker files.
 
@@ -950,3 +950,19 @@ All current Quest V2/world quest markers use one canonical shared renderer:
 No chapter-specific quest-marker renderer should be added from this point forward.
 
 This does **not** close the entire Interaction System milestone. Story-attention markers, generic interaction resolution, approach-point ownership and world-input authority still require convergence.
+
+
+### Marker presentation convergence — complete on dev branch
+
+Canonical Interaction System presentation now owns:
+- quest available marker;
+- quest turn-in marker;
+- NPC/story-attention marker.
+
+Current Village and Act 2 marker presentation has migrated to the shared renderer. No new chapter-local marker renderers should be created.
+
+Interaction System is **not fully complete** yet. Remaining work:
+- shared interaction resolution;
+- approach-point ownership;
+- world-input authority / overlay suppression integration;
+- migration of generic hotspot semantics where useful.
