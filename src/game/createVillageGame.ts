@@ -15,7 +15,6 @@ export type SolTourStop = "bakery" | "shop" | "linus" | "decision" | null;
 export type VillageGameHandle = {
   destroy: () => void;
   setConstruction: (presentation: ConstructionPresentation) => void;
-  setConstructionDialogueOpen: (open: boolean) => void;
   setWorldInputEnabled: (enabled: boolean) => void;
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
@@ -94,7 +93,6 @@ export async function createVillageGame(
 ): Promise<VillageGameHandle> {
   const Phaser = await import("phaser");
   let requestedConstruction: ConstructionPresentation = { stages: {}, attention: null };
-  let constructionDialogueOpen = false;
   let requestedWorldInputEnabled = true;
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
@@ -217,7 +215,7 @@ export async function createVillageGame(
         this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
       }
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
-        if (!this.player || !worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: constructionDialogueOpen })) return;
+        if (!this.player || !worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false })) return;
         const recyclingPlacement = VISUAL_PRODUCTION_PLACEMENTS.find((placement) => placement.building === "recycling");
         if (requestedConstruction.stages.recycling === 4 && recyclingPlacement &&
             Phaser.Geom.Rectangle.Contains(
@@ -320,7 +318,7 @@ export async function createVillageGame(
       });
       this.linusStoryMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen) return;
+        if (!this.player) return;
         if (!this.introComplete) {
           callbacks.onLinusInteract();
           return;
@@ -361,7 +359,7 @@ export async function createVillageGame(
     update(_: number, delta: number) {
       if (!this.player) return;
       this.updateDog();
-      if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: constructionDialogueOpen })) {
+      if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false })) {
         this.path = [];
         this.targetMarker?.setVisible(false);
         return;
@@ -533,8 +531,7 @@ export async function createVillageGame(
           this.attentionInteractionPending = false;
           this.path = [];
           this.targetMarker?.setVisible(false);
-          constructionDialogueOpen = true;
-          callbacks.onConstructionInteract(attention.id);
+                    callbacks.onConstructionInteract(attention.id);
           return;
         }
       }
@@ -641,7 +638,7 @@ export async function createVillageGame(
         .setInteractive({ useHandCursor: true, pixelPerfect: false });
       this.shop.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen) return;
+        if (!this.player) return;
         this.shopInteractionPending = true;
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
@@ -677,7 +674,7 @@ export async function createVillageGame(
       }).setOrigin(0.5).setDepth(3100).setInteractive({ useHandCursor: true });
       this.solTourMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen || requestedSolTourStop !== stop) return;
+        if (!this.player || requestedSolTourStop !== stop) return;
         if (stop === "shop") {
           this.shopInteractionPending = true;
           this.path = findPath(this.player, { x: 1130, y: 425 }, this.navigationObstacles);
@@ -714,7 +711,7 @@ export async function createVillageGame(
       }).setOrigin(0.5).setDepth(3000).setVisible(requestedBottleMessageReady).setInteractive({ useHandCursor: true });
       this.bottleMessageMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen || !requestedBottleMessageReady) return;
+        if (!this.player || !requestedBottleMessageReady) return;
         this.bottleMessageInteractionPending = true;
         this.shopInteractionPending = false;
         this.path = findPath(this.player, BOTTLE_MESSAGE_INTERACTION.approachPoint ?? BOTTLE_MESSAGE_INTERACTION.anchor, this.navigationObstacles);
@@ -771,7 +768,7 @@ export async function createVillageGame(
           });
           this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
             event.stopPropagation();
-            if (!this.player || constructionDialogueOpen) return;
+            if (!this.player) return;
             this.linusInteractionPending = true;
             this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
             const target = this.path.at(-1);
@@ -796,7 +793,7 @@ export async function createVillageGame(
       });
       this.noticeboardMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen || !requestedQuestSourceAttention.noticeboard) return;
+        if (!this.player || !requestedQuestSourceAttention.noticeboard) return;
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = true;
@@ -864,7 +861,7 @@ export async function createVillageGame(
 
     private approachAttentionResident() {
       const attention = requestedConstruction.attention;
-      if (!attention || !this.player || constructionDialogueOpen || this.activeRevealId) return;
+      if (!attention || !this.player || this.activeRevealId) return;
       this.linusInteractionPending = false;
       this.attentionInteractionPending = true;
       this.path = findPath(this.player, attention.approach, this.navigationObstacles);
@@ -993,7 +990,7 @@ export async function createVillageGame(
       this.mira.input?.hitArea.setTo(-30, -10, 150, 175);
       this.mira.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen || !requestedShopOpen || !this.mira?.visible) return;
+        if (!this.player || !requestedShopOpen || !this.mira?.visible) return;
         this.shopInteractionPending = true;
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
@@ -1018,7 +1015,7 @@ export async function createVillageGame(
       this.sol.input?.hitArea.setTo(-30, -10, 150, 180);
       this.sol.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen || requestedSolTourStop !== "decision" || !this.sol?.visible) return;
+        if (!this.player || requestedSolTourStop !== "decision" || !this.sol?.visible) return;
         this.solInteractionPending = true;
         this.path = findPath(this.player, { x: 835, y: 485 }, this.navigationObstacles);
         const target = this.path.at(-1);
@@ -1101,7 +1098,7 @@ export async function createVillageGame(
       this.residents.henning = this.henning;
       this.henning.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
-        if (!this.player || constructionDialogueOpen || !this.henning?.visible) return;
+        if (!this.player || !this.henning?.visible) return;
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
@@ -1136,9 +1133,6 @@ export async function createVillageGame(
 
   return {
     destroy: () => game.destroy(true),
-    setConstructionDialogueOpen: (open) => {
-      constructionDialogueOpen = open;
-    },
     setWorldInputEnabled: (enabled) => {
       requestedWorldInputEnabled = enabled;
       if (game.scene.isActive("VillageScene")) {
