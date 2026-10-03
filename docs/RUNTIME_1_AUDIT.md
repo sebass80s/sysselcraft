@@ -119,3 +119,19 @@ Act 2-specific completion flags are translated into generic History progress by 
 The parity harness now checks the registry count against the real source arrays and verifies current opening/project spoiler behavior.
 
 Production `Act2Runtime` still uses the legacy History assembly at this checkpoint. No player behavior has changed.
+
+
+## Checkpoint — Act 2 History parity model
+
+The parity harness now contains an explicit model of the accepted legacy `Act2Runtime` History projection and compares it with Runtime 1.0 Registry/History output.
+
+Covered states:
+- fresh Act 2;
+- opening + completed Stugan;
+- completed Bryggan with lifebuoy + completion reaction;
+- completed Båthuset with steering-wheel story;
+- fully completed Act 2 including finale.
+
+Parity compares product-visible History ordering/grouping/beat identity, not legacy implementation shape.
+
+This closes the model-definition part of Act 2 History migration. The next step is to execute the parity checkpoint and then switch the development consumer to shared Registry/History. Production/live remains untouched.
