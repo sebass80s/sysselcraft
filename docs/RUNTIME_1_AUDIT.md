@@ -397,3 +397,15 @@ construction > story CTA > quest > resident.
 `syncSolTourMarker()` owns CTA marker presentation. Lower quest markers are suppressed whenever CTA wins, and construction attention suppresses CTA. Arrival routing re-checks the current winner before choosing quest vs resident/story callback.
 
 Shop and Sol-decision stops remain outside mixed-NPC arbitration because no competing interaction type currently exists there.
+
+
+## Checkpoint — Village scene pointer order made explicit
+
+The scene fallback handler previously encoded target priority only through source-code order.
+
+Current explicit arbitration:
+Recycling 50 > Linus 40 > Shop 30 > Henning 20 > Ground 10.
+
+The shared priority resolver now decides the winning hit target. Target-specific behavior remains unchanged after selection.
+
+This preserves the iOS-oriented scene fallback while removing hidden priority semantics from the `if` chain.
