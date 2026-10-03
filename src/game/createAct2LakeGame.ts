@@ -183,7 +183,7 @@ export async function createAct2LakeGame(
         .setVisible(false);
 
       const handleAlvePointerDown = (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
-        if (!requestedWorldInputEnabled) return;
+        if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false })) return;
         event.stopPropagation();
         if (!this.player || !this.alveEntity || !requestedAlvePresent) return;
         if (!requestedAlveTurnInAvailable) {
