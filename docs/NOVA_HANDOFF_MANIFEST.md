@@ -895,3 +895,17 @@ This removes duplicate/conflicting Linus markers and stale marker positioning.
 Parity guards the single creation paths and initialization/resync behavior.
 
 Next recommended Interaction slice: inspect generic pointer hit-target arbitration across overlapping world objects, or apply the priority pattern to Henning if that offers a safer incremental proof. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — Henning priority reuse complete
+
+The generic priority resolver is now used by both Linus and Henning.
+
+Henning base priority:
+construction attention > backend bakery quest > resident.
+
+Scene and sprite entrypoints share one decision. Backend quest marker creation is centralized and suppressed when construction attention wins.
+
+Sol-tour marker remains intentionally outside this arbitration until a dedicated story-CTA slice.
+
+Next recommended work: audit explicit story CTA markers (starting with Sol tour) against NPC/quest priority, or begin generic pointer hit-target arbitration if the CTA rules are first documented. No Act 3 and no production promotion.
