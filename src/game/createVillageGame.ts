@@ -2,6 +2,7 @@ import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
+import { WORLD_CAMERA, worldCameraDeadzone } from "../runtime/world/worldCamera";
 import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
 import {
   AMBIENT_TEXTURE_KEYS,
@@ -188,7 +189,7 @@ export async function createVillageGame(
 
     create() {
       const camera = this.cameras.main;
-      camera.setBackgroundColor("#789a68");
+      camera.setBackgroundColor(WORLD_CAMERA.backgroundColor);
       camera.setBounds(WORLD_MIN_X, 0, WORLD_WIDTH, WORLD_HEIGHT);
       this.drawVillage();
       this.player = this.add.image(REQUIRED_APPROACHES.spawn.x, REQUIRED_APPROACHES.spawn.y, "child-painted")
@@ -205,8 +206,9 @@ export async function createVillageGame(
         .setVisible(false)
         .setDepth(900);
       camera.centerOn(this.player.x, this.player.y);
-      camera.startFollow(this.player, true, 0.08, 0.08);
-      camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
+      camera.startFollow(this.player, true, WORLD_CAMERA.followLerpX, WORLD_CAMERA.followLerpY);
+      const cameraDeadzone = worldCameraDeadzone(viewWidth);
+      camera.setDeadzone(cameraDeadzone.width, cameraDeadzone.height);
       this.createNoticeboardMarker();
       this.setQuestSourceAttention("noticeboard", requestedQuestSourceAttention.noticeboard);
       this.setQuestSourceAttention("linus", requestedQuestSourceAttention.linus);
