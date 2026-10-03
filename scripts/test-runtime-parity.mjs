@@ -1116,6 +1116,17 @@ assert.ok(
 
 
 const markerRendererSource = fs.readFileSync(new URL("../src/runtime/interaction/markerRenderer.ts", import.meta.url), "utf8");
+const act2RuntimeStateSource = fs.readFileSync(new URL("../src/game/act2RuntimeState.ts", import.meta.url), "utf8");
+assert.ok(
+  act2RuntimeStateSource.includes("runSequentialMigrations(")
+    && act2RuntimeStateSource.includes("ACT2_FINALE_SCHEMA_VERSION = 2"),
+  "Act 2 finale compatibility must run through the shared save migration engine",
+);
+assert.equal(
+  act2RuntimeStateSource.includes("const preEpilogueSchemaComplete ="),
+  false,
+  "Act 2 normalizer must not retain the old inline finale schema migration",
+);
 const act2LakeSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
 assert.ok(
   act2LakeSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled"),
