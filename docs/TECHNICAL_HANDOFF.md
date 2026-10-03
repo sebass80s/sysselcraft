@@ -845,3 +845,10 @@ Reuse backend/economy/story/assets/progression decisions. Rebuild the client run
 A parity harness is required. It must run representative save/state fixtures through legacy behavior and Runtime 1.0 and compare product-level outcomes such as world state, NPC/interactable availability, next eligible story, gates, completion and chapter transitions.
 
 Do not remove legacy runtime or promote Runtime 1.0 until parity harness + browser acceptance + physical iPhone acceptance pass.
+
+
+### Runtime 1.0 checkpoint: Act 2 History consumer
+
+On `nova/runtime-architecture-v1`, Act 2 Historik now consumes the shared Story Registry/History contract. The old inline History assembly is no longer the dev consumer path.
+
+This does not affect frozen live. Keep parity coverage around grouped History output before removing further legacy/runtime compatibility code.
