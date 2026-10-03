@@ -148,6 +148,21 @@ Do not create a new economy engine. Supabase RPC/state remains transaction autho
 ### Asset production
 Do not block runtime architecture on an asset-manifest rewrite. A manifest can be introduced later if Act 3 asset volume justifies it.
 
+## Continuous replacement cleanup — architectural rule
+
+A migration is not complete while its superseded implementation remains in the active tree without a compatibility reason.
+
+For every extracted/shared system:
+- migrate a proven vertical path;
+- add/adjust regression coverage for the new contract;
+- delete the replaced implementation and dead presentation/debug scaffolding once parity is proven;
+- remove source-shape tests tied to the discarded implementation;
+- update canonical architecture/handoff docs in the same change set;
+- search for obsolete symbols, flags and contradictory values before closeout;
+- verify the cleaned tree in CI.
+
+This rule exists to prevent “temporary” parallel systems from becoming permanent architecture. Git history is the archive. The working tree should describe the current product.
+
 ## Refactor safety rules
 
 - No flag-day rewrite.
