@@ -734,3 +734,20 @@ This supersedes earlier closeout wording that said all completed five-beat saves
 
 No backend mutation, native regeneration, Act 1 change or asset change was required for either hotfix. Physical validation of the migrated legacy save remains the immediate acceptance gate.
 
+
+## 2026-10-03 · POST-ACT-2 WORLD + CHAPTER 3 BOUNDARY — LOCKED
+
+Physical iPhone acceptance reached the complete Act 2 ending and exposed the final world-state contract.
+
+**Canonical completed state is `act2Complete === true && endCardSeen === true`.**
+
+At that boundary:
+- Act 2 is finished. The lake must not continue presenting Alve as a quest giver.
+- Alve is removed from the interactive lake world. His presence is now driven explicitly by chapter status via `setAlvePresent`, not indirectly by `selectedProject`.
+- The global gameplay HUD remains visible through the shared UI-shell contract.
+- `← Till byn` remains available.
+- A sibling HUD button `Till kapitel 3 →` appears and routes to `/act3`.
+- `/act3` is currently a **read-only chapter boundary only**. It writes no Act 3 save, owns no progression, and must not clear/replay Act 2.
+- Future Act 3 runtime must take ownership after this route and persist its own intro/entry state. Do not move Act 3 persistence into Act 2.
+
+This supersedes the earlier null-project rule only for **completed chapter state**: before Act 2 completion, `selectedProject=null` still means Alve is visible at `ACT2_ALVE_IDLE_POSITION`; after persisted chapter completion, Alve is intentionally absent.

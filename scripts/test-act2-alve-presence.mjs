@@ -85,6 +85,14 @@ for (const [project, position] of Object.entries(assets.ACT2_ALVE_WORK_POSITIONS
 }
 handle.setActiveProject(null);
 assert.equal(scene.alvePlaceholder.depth, 1000 + idle.y);
+handle.setAlvePresent(false);
+assert.equal(scene.alvePlaceholder.visible, false, "completed Act 2 must remove Alve from the lake world");
+handle.setAlveTurnInAvailable(true);
+assert.equal(scene.alveTurnInMarker.visible, false, "hidden Alve must never expose a turn-in marker");
+handle.setAlvePresent(true);
+assert.equal(scene.alvePlaceholder.visible, true, "pre-completion idle state must still restore Alve");
+assert.equal(scene.alveTurnInMarker.visible, true);
+handle.setAlveTurnInAvailable(false);
 const hit = scene.alvePlaceholder.value.find((child) => child.interactive);
 assert.ok(hit, "the existing shared click target must remain attached");
 let stopped = 0;

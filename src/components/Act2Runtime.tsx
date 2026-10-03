@@ -254,6 +254,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       });
       const latest = debug ? stateRef.current : await loadAct2RuntimeState();
       gameRef.current.setActiveProject(latest.selectedProject);
+      gameRef.current.setAlvePresent(!(latest.act2Complete && latest.endCardSeen));
       gameRef.current.setProjectStages({
         cabin: latest.projects.cabin.visibleStage,
         dock: latest.projects.dock.visibleStage,
@@ -291,6 +292,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   useEffect(() => {
     gameRef.current?.setActiveProject(state.selectedProject);
   }, [state.selectedProject]);
+
+  useEffect(() => {
+    gameRef.current?.setAlvePresent(!(state.act2Complete && state.endCardSeen));
+  }, [state.act2Complete, state.endCardSeen]);
 
   useEffect(() => {
     if (!ready || debug) return;
@@ -644,6 +649,13 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         <button className="secondary-button compact act2-village-button" type="button" onClick={() => router.push("/")}>
           ← Till byn
         </button>
+        {state.act2Complete && state.endCardSeen && <button
+          className="secondary-button compact act2-chapter3-button"
+          type="button"
+          onClick={() => router.push("/act3")}
+        >
+          Till kapitel 3 →
+        </button>}
       </div>
       <div className="resource-hud" aria-label="Resurser">
         <strong>💎 {backendWallet?.diamonds ?? "…"}</strong>

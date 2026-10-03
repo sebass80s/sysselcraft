@@ -173,4 +173,15 @@ assert.match(
   "HUD must remain visible after the end card even though no project is selected",
 );
 
+assert.match(
+  act2RuntimeSource,
+  /state\.act2Complete && state\.endCardSeen && <button[\s\S]*router\.push\("\/act3"\)[\s\S]*Till kapitel 3/,
+  "completed Act 2 must expose the explicit chapter 3 transition next to the lake HUD",
+);
+assert.match(
+  act2RuntimeSource,
+  /setAlvePresent\(!\(state\.act2Complete && state\.endCardSeen\)\)/,
+  "Alve lake presence must derive directly from the persisted chapter-close boundary",
+);
+
 console.log("PASS: actual save/load restart boundaries, child scoping, legacy completion/adoption, full-image previous, duplicate transition lock and save-failure retry");

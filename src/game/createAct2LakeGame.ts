@@ -16,6 +16,7 @@ export type Act2LakeGameHandle = {
   setStage: (stage: Act2VisualStage) => void;
   setProjectStages: (stages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>>) => void;
   setActiveProject: (project: Act2RestorationProject | null) => void;
+  setAlvePresent: (present: boolean) => void;
   setAlveTurnInAvailable: (available: boolean) => void;
   setCabinRevisitAvailable: (available: boolean) => void;
 };
@@ -46,6 +47,7 @@ export async function createAct2LakeGame(
   let requestedStage = initialStage;
   let requestedProjectStages: Partial<Record<Act2RestorationProject, 0 | Act2VisualStage>> = {};
   let requestedActiveProject: Act2RestorationProject | null = null;
+  let requestedAlvePresent = true;
   let requestedAlveTurnInAvailable = false;
   let requestedCabinRevisitAvailable = false;
 
@@ -182,7 +184,7 @@ export async function createAct2LakeGame(
 
       const handleAlvePointerDown = (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
         event.stopPropagation();
-        if (!this.player || !this.alvePlaceholder) return;
+        if (!this.player || !this.alvePlaceholder || !requestedAlvePresent) return;
         if (!requestedAlveTurnInAvailable) {
           this.moveTarget = null;
           this.facePlayerTowardAlve();
@@ -388,9 +390,23 @@ export async function createAct2LakeGame(
       this.positionAlve(project);
     }
 
+    setAlvePresent(present: boolean) {
+      requestedAlvePresent = present;
+      this.alvePlaceholder?.setVisible(present);
+      if (!present) {
+        this.alveTurnInMarker?.setVisible(false);
+        this.alveNearbyPrompt?.setVisible(false);
+        this.alveIdlePrompt?.setVisible(false);
+        this.moveTarget = null;
+      } else {
+        this.positionAlve(requestedActiveProject);
+        this.alveTurnInMarker?.setVisible(requestedAlveTurnInAvailable);
+      }
+    }
+
     setAlveTurnInAvailable(available: boolean) {
       requestedAlveTurnInAvailable = available;
-      this.alveTurnInMarker?.setVisible(available);
+      this.alveTurnInMarker?.setVisible(available && requestedAlvePresent);
       if (!available) this.alveNearbyPrompt?.setVisible(false);
       if (available) this.alveIdlePrompt?.setVisible(false);
     }
@@ -405,7 +421,7 @@ export async function createAct2LakeGame(
       this.alvePlaceholder
         .setPosition(position.x, position.y)
         .setDepth(1000 + Math.round(position.y))
-        .setVisible(true);
+        .setVisible(requestedAlvePresent);
     }
 
     private renderStage(stage: 0 | Act2VisualStage): Act2VisualStage {
@@ -456,6 +472,12 @@ export async function createAct2LakeGame(
       requestedActiveProject = project;
       if (gameInstance.scene.isActive("Act2LakeScene")) {
         (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setActiveProject(project);
+      }
+    },
+    setAlvePresent: (present) => {
+      requestedAlvePresent = present;
+      if (gameInstance.scene.isActive("Act2LakeScene")) {
+        (gameInstance.scene.getScene("Act2LakeScene") as Act2LakeScene).setAlvePresent(present);
       }
     },
     setAlveTurnInAvailable: (available) => {
