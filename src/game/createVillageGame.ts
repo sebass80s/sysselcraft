@@ -218,10 +218,39 @@ export async function createVillageGame(
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!this.player || !this.acceptsWorldInput()) return;
         const recyclingPlacement = VISUAL_PRODUCTION_PLACEMENTS.find((placement) => placement.building === "recycling");
-        if (requestedConstruction.stages.recycling === 4 && recyclingPlacement &&
-            Phaser.Geom.Rectangle.Contains(
-              new Phaser.Geom.Rectangle(recyclingPlacement.x - recyclingPlacement.width / 2, recyclingPlacement.baseY - recyclingPlacement.height * 0.92, recyclingPlacement.width, recyclingPlacement.height),
-              pointer.worldX, pointer.worldY)) {
+        const recyclingHit = Boolean(
+          requestedConstruction.stages.recycling === 4 &&
+          recyclingPlacement &&
+          Phaser.Geom.Rectangle.Contains(
+            new Phaser.Geom.Rectangle(
+              recyclingPlacement.x - recyclingPlacement.width / 2,
+              recyclingPlacement.baseY - recyclingPlacement.height * 0.92,
+              recyclingPlacement.width,
+              recyclingPlacement.height,
+            ),
+            pointer.worldX,
+            pointer.worldY,
+          ),
+        );
+        const linusHit = Boolean(
+          this.linus &&
+          Phaser.Geom.Rectangle.Contains(
+            new Phaser.Geom.Rectangle(this.linus.x - 82, this.linus.y - 155, 164, 180),
+            pointer.worldX,
+            pointer.worldY,
+          ),
+        );
+        const shopHit = Boolean(this.shop?.visible && this.shop.getBounds().contains(pointer.worldX, pointer.worldY));
+        const henningHit = Boolean(this.henning?.visible && this.henning.getBounds().contains(pointer.worldX, pointer.worldY));
+        const scenePointerTarget = resolveInteractionPriority([
+          { id: "ground", priority: 10, enabled: true },
+          { id: "henning", priority: 20, enabled: henningHit },
+          { id: "shop", priority: 30, enabled: shopHit },
+          { id: "linus", priority: 40, enabled: linusHit },
+          { id: "recycling", priority: 50, enabled: recyclingHit },
+        ])?.id ?? "ground";
+
+        if (scenePointerTarget === "recycling" && recyclingPlacement) {
           this.recyclingInteractionPending = true;
           this.linusInteractionPending = false;
           this.path = findPath(this.player, recyclingPlacement.approach, this.navigationObstacles);
@@ -232,7 +261,7 @@ export async function createVillageGame(
         }
         // Resolve NPC taps at scene level too. This avoids depending on Phaser's
         // object-level pointer event ordering in the native iOS WebView.
-        if (this.linus && Phaser.Geom.Rectangle.Contains(new Phaser.Geom.Rectangle(this.linus.x - 82, this.linus.y - 155, 164, 180), pointer.worldX, pointer.worldY)) {
+        if (scenePointerTarget === "linus") {
           const linusIntent = this.resolveLinusIntent();
           if (linusIntent === "construction-attention") {
             this.approachAttentionResident();
@@ -253,7 +282,7 @@ export async function createVillageGame(
           else this.maybeCompleteWorldInteraction();
           return;
         }
-        if (this.shop?.visible && this.shop.getBounds().contains(pointer.worldX, pointer.worldY)) {
+        if (scenePointerTarget === "shop") {
           this.shopInteractionPending = true;
           this.linusInteractionPending = false;
           this.henningInteractionPending = false;
@@ -265,7 +294,7 @@ export async function createVillageGame(
           else this.maybeCompleteWorldInteraction();
           return;
         }
-        if (this.henning?.visible && this.henning.getBounds().contains(pointer.worldX, pointer.worldY)) {
+        if (scenePointerTarget === "henning") {
           const henningIntent = this.resolveHenningIntent();
           if (henningIntent === "construction-attention") {
             this.approachAttentionResident();
@@ -282,6 +311,7 @@ export async function createVillageGame(
           else this.maybeCompleteWorldInteraction();
           return;
         }
+        if (scenePointerTarget !== "ground") return;
         this.linusInteractionPending = false;
         this.henningInteractionPending = false;
         this.shopInteractionPending = false;
