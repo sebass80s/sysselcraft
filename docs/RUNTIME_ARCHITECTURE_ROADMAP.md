@@ -260,10 +260,14 @@ This rule exists because Act 2 repeatedly exposed the cost of local fixes: UI pl
 ### Cross-game ownership
 
 **Game UI Shell**
+- is a **single persistent game-wide shell** mounted above every playable area and chapter;
 - owns the SysselCraft logo/menu, resources, Vuxenläge, Historik and Uppdrag surfaces;
-- Acts must not invent parallel HUDs;
-- menu placement, z-index, input shielding and overlay suppression are shared behavior;
-- changing a global UI surface should require one implementation change.
+- Village, Lake, Act 3 and later areas render *inside/under* this shell rather than creating their own HUD;
+- Acts must not invent parallel headers, resource bars, menu buttons or layout variants;
+- the shell's placement, spacing, typography, z-index, safe areas, input shielding and overlay suppression are constant across the game;
+- chapter/area code may only provide shell state/configuration such as whether a global action is enabled, badge counts, or contextual status text;
+- hiding global chrome for Story Moments uses one shared overlay contract and restores the exact same shell afterward;
+- changing a global UI surface should require one implementation change and propagate everywhere.
 
 **Story Engine + Story Registry**
 - owns story presentation across the entire game;
@@ -322,3 +326,27 @@ And:
 
 Do not use this architecture work to reopen accepted Act 2 content. The physically accepted Act 2 production behavior is the reference implementation to preserve while shared systems are extracted.
 
+
+
+### Constant-UI invariant
+
+The player should not be able to tell from the HUD implementation whether they are in the Village, Act 2 lake, Act 3 or a later chapter. The **same Game UI Shell instance/component contract** must frame every playable world.
+
+A chapter transition changes:
+- world/map content;
+- NPCs/interactables;
+- available storylines and contextual actions;
+- chapter-specific status/configuration.
+
+A chapter transition must **not** change:
+- SysselCraft logo/menu structure;
+- resource HUD structure;
+- Vuxenläge entry;
+- Historik entry and behavior;
+- Uppdrag entry;
+- standard button styling;
+- safe-area layout;
+- overlay suppression semantics;
+- global z-index/input ownership.
+
+If a future Act needs a one-off HUD implementation, treat that as an architecture failure unless there is an explicit documented product exception.
