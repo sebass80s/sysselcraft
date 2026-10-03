@@ -194,7 +194,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       }
       const resumeProject = new URLSearchParams(window.location.search).get("resume");
       if (
-        (resumeProject === "boathouse" || resumeProject === "dock")
+        (resumeProject === "boathouse" || resumeProject === "dock" || resumeProject === "motorboat")
         && !entered.projects[resumeProject].complete
       ) {
         if (
@@ -233,7 +233,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       setChapterIntroNameVisible(false);
       setState(entered);
       setReady(true);
-      if (resumeProject === "boathouse" || resumeProject === "dock") {
+      if (resumeProject === "boathouse" || resumeProject === "dock" || resumeProject === "motorboat") {
         router.replace("/act2");
       }
     })();
