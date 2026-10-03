@@ -1,4 +1,5 @@
 import type Phaser from "phaser";
+import { worldEntityDepth } from "../runtime/world/worldDepth";
 import {
   VISUAL_PRODUCTION_PLACEMENTS, VISUAL_PRODUCTION_ORIGIN,
   OPENING_BUILDING_STAGES, getVisualProductionAsset, getVisualProductionTextureKey,
@@ -23,7 +24,7 @@ export function createVisualProductionBuildings(scene: Phaser.Scene, stages = OP
       getVisualProductionTextureKey(placement.building, stage))
       .setOrigin(VISUAL_PRODUCTION_ORIGIN.x, VISUAL_PRODUCTION_ORIGIN.y)
       .setDisplaySize(placement.width, placement.height)
-      .setDepth(1000 + Math.round(placement.baseY));
+      .setDepth(worldEntityDepth(placement.baseY));
     // The supplied Clinic stage sheet carries neighboring source-sheet captions in its
     // transparent top/bottom margins. Keep the calibrated canvas/anchor, but never render
     // those non-game labels into the village.

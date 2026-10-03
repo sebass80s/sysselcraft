@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createRequire } from 'node:module';
@@ -10,16 +10,18 @@ import sharp from 'sharp';
 // Execute the actual pure navigation and production runtime modules, without a DOM.
 const temporary = mkdtempSync(join(tmpdir(), 'sysselcraft-gate0-'));
 try {
-  for (const name of ['visualProductionAssets', 'visualProductionRuntime', 'villageNavigation']) {
-    const source = readFileSync(`src/game/${name}.ts`, 'utf8');
+  mkdirSync(join(temporary, 'game'), { recursive: true });
+  mkdirSync(join(temporary, 'runtime/world'), { recursive: true });
+  for (const name of ['game/visualProductionAssets', 'game/visualProductionRuntime', 'game/villageNavigation', 'runtime/world/worldDepth']) {
+    const source = readFileSync(`src/${name}.ts`, 'utf8');
     writeFileSync(join(temporary, `${name}.js`), ts.transpileModule(source, {
       compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
     }).outputText);
   }
   const require = createRequire(import.meta.url);
-  const assets = require(join(temporary, 'visualProductionAssets.js'));
-  const runtime = require(join(temporary, 'visualProductionRuntime.js'));
-  const nav = require(join(temporary, 'villageNavigation.js'));
+  const assets = require(join(temporary, 'game/visualProductionAssets.js'));
+  const runtime = require(join(temporary, 'game/visualProductionRuntime.js'));
+  const nav = require(join(temporary, 'game/villageNavigation.js'));
   const paths = ['public/assets/village/reboot/start-area-master-1920x640.webp',
     ...Object.values(assets.VISUAL_PRODUCTION_ASSETS).flat().map(p => `public${p}`)];
   for (const path of paths) {
@@ -41,6 +43,7 @@ try {
   const scene = { add: { image(x, y, key) {
     return { x, y, key, setOrigin(x, y) { this.origin = { x, y }; return this; },
       setDisplaySize(width, height) { this.size = { width, height }; return this; },
+      setCrop(...crop) { this.crop = crop; return this; },
       setDepth(depth) { this.depth = depth; return this; } };
   } } };
   assert.deepEqual(runtime.createVisualProductionBuildings(scene), []);
@@ -49,6 +52,7 @@ try {
       const [image] = runtime.createVisualProductionBuildings(scene, { [p.building]: stage });
       assert.equal(image.x, p.x); assert.equal(image.y, p.baseY);
       assert.equal(image.depth, 1000 + p.baseY);
+      assert.deepEqual(image.crop, p.building === "clinic" ? [0, 24, 520, 326] : undefined);
       assert.deepEqual(image.size, { width: p.width, height: p.height });
       assert.deepEqual(image.origin, assets.VISUAL_PRODUCTION_ORIGIN);
     }

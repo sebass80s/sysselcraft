@@ -1,4 +1,5 @@
 import type Phaser from "phaser";
+import { worldEntityDepth } from "../runtime/world/worldDepth";
 
 export type AmbientWorldObject = {
   x: number;
@@ -78,7 +79,7 @@ export function createStage4PlaytestBuildings(scene: Phaser.Scene) {
     scene.add.image(building.x, building.y, building.key)
       .setOrigin(0.5, 0.92)
       .setDisplaySize(building.width, building.height)
-      .setDepth(1000 + Math.round(building.y)),
+      .setDepth(worldEntityDepth(building.y)),
   );
 }
 

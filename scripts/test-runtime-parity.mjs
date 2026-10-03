@@ -209,6 +209,37 @@ for (const fixture of worldDepthFixtures) {
   assert.equal(worldEntityDepth(fixture.y), fixture.expected, fixture.name);
 }
 
+// Execute both building renderers against the pre-extraction depth oracle.
+const depthDependencies = { "../runtime/world/worldDepth": { worldEntityDepth } };
+const decor = loadTsModule("../src/game/worldDecor.ts", depthDependencies);
+const productionAssets = loadTsModule("../src/game/visualProductionAssets.ts", {});
+const productionRuntime = loadTsModule("../src/game/visualProductionRuntime.ts", {
+  ...depthDependencies, "./visualProductionAssets": productionAssets,
+});
+const depthScene = { add: { image(x, y, key) {
+  return { x, y, key,
+    setOrigin() { return this; }, setDisplaySize() { return this; },
+    setCrop() { return this; }, setDepth(depth) { this.depth = depth; return this; },
+  };
+} } };
+for (const y of [0, 427.4, 427.5, 427.6, -0.5, -1.5]) {
+  assert.equal(worldEntityDepth(y), 1000 + Math.round(y));
+  const building = decor.STAGE4_PLAYTEST_BUILDINGS[0];
+  const previousY = building.y;
+  building.y = y;
+  assert.equal(decor.createStage4PlaytestBuildings(depthScene)[0].depth, 1000 + Math.round(y));
+  building.y = previousY;
+  const placement = productionAssets.VISUAL_PRODUCTION_PLACEMENTS[0];
+  const previousBaseY = placement.baseY;
+  placement.baseY = y;
+  for (const stage of [1, 2, 3, 4]) {
+    const [image] = productionRuntime.createVisualProductionBuildings(depthScene, { [placement.building]: stage });
+    assert.equal(image.depth, 1000 + Math.round(y));
+    assert.equal(image.y, y);
+  }
+  placement.baseY = previousBaseY;
+}
+
 const cameraDeadzoneFixtures = [
   { name: "phone-width camera deadzone preserves the accepted 32% width", viewWidth: 667, expected: { width: 213.44, height: 180 } },
   { name: "wide camera deadzone preserves the accepted 340px width cap", viewWidth: 1536, expected: { width: 340, height: 180 } },

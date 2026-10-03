@@ -1511,3 +1511,16 @@ Runtime 1.0 now has three real, consumed World / Area primitives:
 3. dynamic depth ordering, consumed by Lake + Village.
 
 Next high-risk work is collision/pathfinding and deeper movement-runtime convergence. Do not migrate that blindly: navigation/input changes still require browser and physical iPhone acceptance. Keep authored world bounds, collision geometry and pathfinding local until that acceptance gate is available.
+
+
+## Shared world depth audit closeout — 2026-10-03
+
+The requested baseline `fb5f2f76af722d193efa5dbc88d25e711189e044` was already superseded by `cfdc3a53a0bf6631a2d19b47ba5ea413ca942a3a` (ten commits ahead, CI run 37147229335 successful). The existing slice migrated Lake before Village and extracted `worldEntityDepth(y) = 1000 + Math.round(y)`. Its parity commit followed the migrations; this historical ordering does not satisfy parity-first and must not be repeated.
+
+Audit of both area runtimes confirms depth is the smallest identical contract. Bounds/collision remain different (Lake shoreline pixel sampling and foot radii versus Village obstacle geometry and A*). Dog-follow also differs (Lake delta-based interpolation with collision versus Village fixed interpolation and facing offsets). No movement, navigation or input behavior was changed.
+
+A source sweep found two remaining copies of the depth formula in `worldDecor.ts` and `visualProductionRuntime.ts`. Both now consume the canonical primitive. Behavioral parity was added and passed against the old renderers before these two migrations, then passed again afterwards. It executes the real renderers across fractional, exact half-pixel, zero and negative Y values and all four production building stages. The standalone Gate 0 harness now resolves the shared dependency in its temporary module tree.
+
+Authored special/static depth overrides remain unchanged. No Act 3, production deployment, Adam data, native project or iPhone/WebView fallback was touched. This closes the depth slice; it does not authorize collision/pathfinding convergence.
+
+Validation: `npm run verify` passed on the completed slice, including Runtime 1.0 parity. `node scripts/audit-v4-gate0.mjs` passed (12 building stages, 240 directed paths across eight visibility combinations). Its stale image mock was extended to preserve and assert the existing Clinic crop. A source sweep found no remaining inline `1000 + Math.round(...)` implementation under `src`. Physical iPhone acceptance was not rerun for this pure arithmetic extraction.
