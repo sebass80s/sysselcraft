@@ -259,7 +259,7 @@ export default function VillagePrototype() {
         setShopCurrency("sysselbux");
         setShopMessage("");
         setShopPanelOpen(true);
-        gameRef.current?.setConstructionDialogueOpen(true);
+        
       } catch {
         if (!cancelled) setShopMessage("Kunde inte öppna Act 2-köpet hos Mira.");
       }
@@ -491,14 +491,14 @@ export default function VillagePrototype() {
         onQuestSourceInteract: (source) => { if (!solRuntimeTestActiveRef.current) requestQuestSourceOpen(source); },
         onConstructionInteract: (id) => {
           if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_CONSTRUCTION_INTERACT_BLOCKED", id, true); return; }
-          if (residentAttention(constructionRef.current)?.id !== id) { gameRef.current?.setConstructionDialogueOpen(false); return; }
+          if (residentAttention(constructionRef.current)?.id !== id) {  return; }
           setConstructionDialogueId(id);
           setConstructionDialogueIndex(0);
         },
         onRecyclingInteract: () => {
           if (solRuntimeTestActiveRef.current) return;
           setRecyclingDialogueIndex(0);
-          gameRef.current?.setConstructionDialogueOpen(true);
+          
         },
         onLinusInteract: () => {
           if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_LINUS_INTERACT_BLOCKED", "runtime active", true); return; }
@@ -524,7 +524,7 @@ export default function VillagePrototype() {
           recordSolRuntimeDebug("PHASER_HENNING_DIALOGUE", "setHenningDialogueOpen(true)", true);
           setHenningDialogueIndex(0); setHenningDialogueOpen(true);
         },
-        onBottleMessageInteract: () => { if (!solRuntimeTestActiveRef.current) { setBottleLetterOpen(true); gameRef.current?.setConstructionDialogueOpen(true); } },
+        onBottleMessageInteract: () => { if (!solRuntimeTestActiveRef.current) { setBottleLetterOpen(true);  } },
         onSolInteract: () => {
           if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_SOL_INTERACT_BLOCKED", "runtime active", true); return; }
           const flags = latestSaveRef.current?.worldFlags;
@@ -533,13 +533,13 @@ export default function VillagePrototype() {
         onAbandonedShopInteract: () => {
           if (solRuntimeTestActiveRef.current) return;
           setAbandonedShopDialogueIndex(0);
-          gameRef.current?.setConstructionDialogueOpen(true);
+          
         },
         onShopInteract: () => {
           if (solRuntimeTestActiveRef.current) { recordSolRuntimeDebug("PHASER_SHOP_INTERACT_BLOCKED", "runtime active", true); return; }
           const flags = latestSaveRef.current?.worldFlags;
           if (flags?.solTourBakerySeen && !flags.solTourShopSeen) { setSolTourStoryStop("shop"); setSolTourStoryIndex(0); return; }
-          gameRef.current?.setConstructionDialogueOpen(true); setShopPanelOpen(true); setShopCurrency(act1EndCardSeen || flags?.bottleMessagePurchased ? "diamonds" : "sysselbux"); setShopMessage("");
+           setShopPanelOpen(true); setShopCurrency(act1EndCardSeen || flags?.bottleMessagePurchased ? "diamonds" : "sysselbux"); setShopMessage("");
           void (async () => {
             try {
               const act2 = await loadAct2RuntimeState();
@@ -668,7 +668,7 @@ export default function VillagePrototype() {
         const game = gameRef.current; if (!game) throw new Error("Village is not ready");
         setConstructionDialogueId(null); await game.presentConstructionReveal(revealId, commit);
       } else await commit();
-      setConstructionDialogueId(null); gameRef.current?.setConstructionDialogueOpen(false);
+      setConstructionDialogueId(null); 
       if (!solRuntimeTestActiveRef.current) {
         if (revealId === "recycling:4" && recyclingCompletionPending(next)) { setRecyclingStoryIndex(0); setRecyclingStoryOpen(true); }
         if (revealId === "bakery:4" && bakeryCompletionPending(next)) {
@@ -680,7 +680,7 @@ export default function VillagePrototype() {
     } catch {
       setConstructionError("Det gick inte att spara. Försök igen.");
       if (revealId && residentAttention(constructionRef.current)?.id === revealId) setConstructionDialogueId(revealId);
-      else gameRef.current?.setConstructionDialogueOpen(false);
+      else 
     } finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
 
@@ -729,7 +729,7 @@ export default function VillagePrototype() {
       setHenningStoryIndex(null);
       // Recycling deliberately keeps village movement locked while Henning's arrival
       // cutscene takes over. Release that lock when the arrival story is finished.
-      gameRef.current?.setConstructionDialogueOpen(false);
+      
     } catch {
       setConstructionError("Det gick inte att spara. Försök igen.");
     } finally {
@@ -1094,7 +1094,7 @@ export default function VillagePrototype() {
         await saveSaveState(snapshot, true);
       }
       gameRef.current?.setBottleMessageReady(false);
-      gameRef.current?.setConstructionDialogueOpen(false);
+      
       setBottleStoryIndex(null);
     } catch { setConstructionError("Flaskposten kunde inte sparas. Försök igen."); }
     finally { setConstructionBusy(false); }
@@ -1171,7 +1171,7 @@ export default function VillagePrototype() {
 
   function closeShop() {
     setShopPanelOpen(false);
-    gameRef.current?.setConstructionDialogueOpen(false);
+    
     if (act2PurchaseReturnProject) {
       const project = act2PurchaseReturnProject;
       setAct2PurchaseReturnProject(null);
@@ -1295,7 +1295,7 @@ export default function VillagePrototype() {
     if (last) {
       recordSolRuntimeDebug("HENNING_DIALOGUE_CLOSE", "setHenningDialogueOpen(false)", true);
       setHenningDialogueOpen(false); setHenningDialogueIndex(0);
-      gameRef.current?.setConstructionDialogueOpen(false);
+      
     } else {
       recordSolRuntimeDebug("HENNING_DIALOGUE_ADVANCE", String(henningDialogueIndex + 1), true);
       setHenningDialogueIndex((index) => index + 1);
@@ -1531,7 +1531,7 @@ export default function VillagePrototype() {
       ] as const;
       const step = recyclingDialogue[recyclingDialogueIndex];
       const last = recyclingDialogueIndex === recyclingDialogue.length - 1;
-      return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Linus om återvinningen"><span className="dialogue-speaker">{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => { if (last) { setRecyclingDialogueIndex(null); gameRef.current?.setConstructionDialogueOpen(false); } else setRecyclingDialogueIndex((index) => index === null ? null : index + 1); }}>{last ? "Klart" : "Nästa"}</button></div>;
+      return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Linus om återvinningen"><span className="dialogue-speaker">{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => { if (last) { setRecyclingDialogueIndex(null);  } else setRecyclingDialogueIndex((index) => index === null ? null : index + 1); }}>{last ? "Klart" : "Nästa"}</button></div>;
     })()}
     {henningDialogueOpen && (() => {
       const henningDialogue = [
@@ -1551,8 +1551,8 @@ export default function VillagePrototype() {
     {henningStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png" alt="" fill priority sizes="100vw" /></div>}
     {henningStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Henning kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker.toLowerCase()}`}>{henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker}</span><p>{henningArrivalDialogue[henningStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceHenningStory()}>{constructionBusy ? "Sparar…" : henningStoryIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {((linusStoryMomentOpen && dialogueOpen) || linusStoryReplayIndex !== null) && !recyclingStoryOpen && <div className="story-moment" role="presentation"><Image src={(linusStoryReplayIndex !== null ? linusStoryReplayIndex : dialogueIndex) >= linusIntroDialogue.findIndex((step) => step.kind === "reveal-dog") ? "/assets/village/story-moments/linus-puppy-handover.png" : "/assets/village/story-moments/linus-first-meeting.png"} alt="" fill priority sizes="100vw" /></div>}
-    {abandonedShopDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Den övergivna lanthandeln"><span className={`dialogue-speaker ${abandonedShopDialogueLine.speaker === "Barnet" ? "child" : ""}`}>{abandonedShopDialogueLine.speaker === "Barnet" ? childName || "Barnet" : "Linus"}</span><p>{abandonedShopDialogueLine.text}</p><button className="primary-button dialogue-next" onClick={() => { if (abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length) setAbandonedShopDialogueIndex(abandonedShopDialogueIndex + 1); else { setAbandonedShopDialogueIndex(null); gameRef.current?.setConstructionDialogueOpen(false); } }}>{abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"}</button></div>}
-    {constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal"><span className={`dialogue-speaker ${constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}`}>{constructionSpeakerName}</span><p>{constructionDialogueLine.text}</p><button className="primary-button" disabled={constructionBusy} onClick={() => { if (constructionDialogueIndex + 1 < attention.dialogue.length) setConstructionDialogueIndex((index) => index + 1); else void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id); }}>{constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); setConstructionDialogueIndex(0); gameRef.current?.setConstructionDialogueOpen(false); }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {abandonedShopDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Den övergivna lanthandeln"><span className={`dialogue-speaker ${abandonedShopDialogueLine.speaker === "Barnet" ? "child" : ""}`}>{abandonedShopDialogueLine.speaker === "Barnet" ? childName || "Barnet" : "Linus"}</span><p>{abandonedShopDialogueLine.text}</p><button className="primary-button dialogue-next" onClick={() => { if (abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length) setAbandonedShopDialogueIndex(abandonedShopDialogueIndex + 1); else { setAbandonedShopDialogueIndex(null);  } }}>{abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"}</button></div>}
+    {constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal"><span className={`dialogue-speaker ${constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}`}>{constructionSpeakerName}</span><p>{constructionDialogueLine.text}</p><button className="primary-button" disabled={constructionBusy} onClick={() => { if (constructionDialogueIndex + 1 < attention.dialogue.length) setConstructionDialogueIndex((index) => index + 1); else void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id); }}>{constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); setConstructionDialogueIndex(0);  }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig"><span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span><p>{recyclingStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>{constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {linusStoryReplayStep && !recyclingStoryOpen && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Replay av Linus första möte">{linusStoryReplayStep.kind === "line" && <><span className={`dialogue-speaker ${linusStoryReplayStep.speaker === "Barnet" ? "child" : ""}`}>{linusStoryReplaySpeaker}</span><p>{linusStoryReplayText}</p></>}{linusStoryReplayStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><p><strong>{childName || "Barnet"}</strong></p></>}{linusStoryReplayStep.kind === "reveal-dog" && <><span className="dialogue-speaker">Linus</span><p>🐶 Valpen kommer fram.</p></>}{linusStoryReplayStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><p><strong>{dogName || "Valpen"}</strong></p></>}<button className="primary-button dialogue-next" onClick={advanceLinusStoryReplay}>{linusStoryReplayIndex === linusIntroDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {dialogueOpen && dialogueStep && !recyclingStoryOpen && <div className={`dialogue-card ${linusStoryMomentOpen ? "story-moment-dialogue" : ""}`} role="dialog" aria-modal="true" aria-live="polite">{dialogueStep.kind === "line" && <><span className={`dialogue-speaker ${dialogueStep.speaker === "Barnet" ? "child" : ""}`}>{speakerName}</span><p>{introDialogueText}</p><button className="primary-button dialogue-next" onClick={advanceDialogue}>Fortsätt</button></>}{dialogueStep.kind === "name-child" && <><span className="dialogue-speaker">Linus</span><h2>Vad heter du?</h2><input ref={childNameInputRef} className="dog-name-input" defaultValue={childName} onInput={(event) => setChildNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishChildNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ditt namn" /><button className="primary-button dialogue-next" onClick={finishChildNaming} disabled={!childNameCanSubmit}>Det är jag!</button></>}{dialogueStep.kind === "name-dog" && <><span className="dialogue-speaker dog">🐶 Din nya kompis</span><h2>Vad ska valpen heta?</h2><input ref={dogNameInputRef} className="dog-name-input" defaultValue={dogName} onInput={(event) => setDogNameCanSubmit(Boolean(event.currentTarget.value.trim()))} onKeyDown={(event) => event.key === "Enter" && finishDogNaming()} maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done" placeholder="Skriv ett namn" /><button className="primary-button dialogue-next" onClick={finishDogNaming} disabled={!dogNameCanSubmit}>Det blir namnet!</button></>}</div>}
