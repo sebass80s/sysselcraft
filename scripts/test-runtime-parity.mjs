@@ -141,6 +141,35 @@ const interactionFixtures = [
     expectedStatus: "approach",
     expectedTarget: { x: 835, y: 500 },
   },
+  {
+    name: "Village construction attention activates within accepted 32px arrival radius",
+    playerPosition: { x: 500, y: 532 },
+    interaction: {
+      id: "village:construction-attention:test",
+      kind: "npc",
+      anchor: { x: 500, y: 500 },
+      approachPoint: { x: 500, y: 500 },
+      interactionRadius: 32,
+      marker: "npc-attention",
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village construction attention keeps approaching outside accepted arrival radius",
+    playerPosition: { x: 500, y: 533 },
+    interaction: {
+      id: "village:construction-attention:test",
+      kind: "npc",
+      anchor: { x: 500, y: 500 },
+      approachPoint: { x: 500, y: 500 },
+      interactionRadius: 32,
+      marker: "npc-attention",
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 500, y: 500 },
+  },
 ];
 
 for (const fixture of interactionFixtures) {
