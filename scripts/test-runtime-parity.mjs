@@ -1132,6 +1132,17 @@ assert.ok(
     && villageGameSource.includes("const LINUS_APPROACH_RADIUS = 18"),
   "Village Linus must preserve the accepted 95px resident and 18px authored-arrival radii",
 );
+assert.ok(
+  villageGameSource.includes('id: "village:shop"')
+    && villageGameSource.includes("anchor: SHOP_APPROACH")
+    && villageGameSource.includes("activationZones: requestedShopOpen")
+    && villageGameSource.includes("anchor: MIRA_APPROACH"),
+  "Village Shop/Mira arrival must use shared multi-zone interaction resolution",
+);
+assert.ok(
+  villageGameSource.includes("const SHOP_INTERACTION_RADIUS = 42"),
+  "Village Shop/Mira must preserve the accepted 42px interaction radius",
+);
 assert.equal(
   villageGameSource.includes("const linusApproachReached ="),
   false,
