@@ -17,20 +17,32 @@ import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 
 const henningPriorityFixtures = [
   {
-    name: "Henning construction attention outranks backend quest",
+    name: "Henning construction attention outranks story CTA and backend quest",
     candidates: [
       { id: "resident", priority: 10, enabled: true },
       { id: "quest-source", priority: 20, enabled: true },
-      { id: "construction-attention", priority: 30, enabled: true },
+      { id: "story-cta", priority: 30, enabled: true },
+      { id: "construction-attention", priority: 50, enabled: true },
     ],
     expected: "construction-attention",
+  },
+  {
+    name: "Henning Sol-tour CTA outranks backend quest",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: true },
+      { id: "story-cta", priority: 30, enabled: true },
+      { id: "construction-attention", priority: 50, enabled: false },
+    ],
+    expected: "story-cta",
   },
   {
     name: "Henning backend quest outranks ordinary resident interaction",
     candidates: [
       { id: "resident", priority: 10, enabled: true },
       { id: "quest-source", priority: 20, enabled: true },
-      { id: "construction-attention", priority: 30, enabled: false },
+      { id: "story-cta", priority: 30, enabled: false },
+      { id: "construction-attention", priority: 50, enabled: false },
     ],
     expected: "quest-source",
   },
@@ -39,7 +51,8 @@ const henningPriorityFixtures = [
     candidates: [
       { id: "resident", priority: 10, enabled: true },
       { id: "quest-source", priority: 20, enabled: false },
-      { id: "construction-attention", priority: 30, enabled: false },
+      { id: "story-cta", priority: 30, enabled: false },
+      { id: "construction-attention", priority: 50, enabled: false },
     ],
     expected: "resident",
   },
@@ -55,8 +68,9 @@ const linusPriorityFixtures = [
     candidates: [
       { id: "resident", priority: 10, enabled: true },
       { id: "quest-source", priority: 20, enabled: true },
-      { id: "intro", priority: 30, enabled: true },
-      { id: "construction-attention", priority: 40, enabled: true },
+      { id: "story-cta", priority: 30, enabled: true },
+      { id: "intro", priority: 40, enabled: true },
+      { id: "construction-attention", priority: 50, enabled: true },
     ],
     expected: "construction-attention",
   },
@@ -65,18 +79,30 @@ const linusPriorityFixtures = [
     candidates: [
       { id: "resident", priority: 10, enabled: true },
       { id: "quest-source", priority: 20, enabled: true },
-      { id: "intro", priority: 30, enabled: true },
-      { id: "construction-attention", priority: 40, enabled: false },
+      { id: "intro", priority: 40, enabled: true },
+      { id: "construction-attention", priority: 50, enabled: false },
     ],
     expected: "intro",
+  },
+  {
+    name: "Linus Sol-tour CTA outranks backend quest after onboarding",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: true },
+      { id: "story-cta", priority: 30, enabled: true },
+      { id: "intro", priority: 40, enabled: false },
+      { id: "construction-attention", priority: 50, enabled: false },
+    ],
+    expected: "story-cta",
   },
   {
     name: "Linus backend quest outranks ordinary resident interaction after intro",
     candidates: [
       { id: "resident", priority: 10, enabled: true },
       { id: "quest-source", priority: 20, enabled: true },
-      { id: "intro", priority: 30, enabled: false },
-      { id: "construction-attention", priority: 40, enabled: false },
+      { id: "story-cta", priority: 30, enabled: false },
+      { id: "intro", priority: 40, enabled: false },
+      { id: "construction-attention", priority: 50, enabled: false },
     ],
     expected: "quest-source",
   },
@@ -85,8 +111,9 @@ const linusPriorityFixtures = [
     candidates: [
       { id: "resident", priority: 10, enabled: true },
       { id: "quest-source", priority: 20, enabled: false },
-      { id: "intro", priority: 30, enabled: false },
-      { id: "construction-attention", priority: 40, enabled: false },
+      { id: "story-cta", priority: 30, enabled: false },
+      { id: "intro", priority: 40, enabled: false },
+      { id: "construction-attention", priority: 50, enabled: false },
     ],
     expected: "resident",
   },
