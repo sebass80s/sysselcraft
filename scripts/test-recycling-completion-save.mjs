@@ -13,6 +13,21 @@ const preferences = {
 };
 
 const modules = new Map();
+function loadRuntime(name) {
+  const key = `runtime:${name}`;
+  if (modules.has(key)) return modules.get(key).exports;
+  const record = { exports: {} };
+  modules.set(key, record);
+  const source = ts.transpileModule(readFileSync(`src/runtime/${name}.ts`, "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  new Function("require", "module", "exports", source)(
+    () => { throw new Error(`Unexpected runtime dependency from ${name}`); },
+    record,
+    record.exports,
+  );
+  return record.exports;
+}
 function load(name) {
   if (modules.has(name)) return modules.get(name).exports;
   const record = { exports: {} };
@@ -23,7 +38,9 @@ function load(name) {
   new Function("require", "module", "exports", source)(
     path => path === "@capacitor/preferences"
       ? { Preferences: preferences }
-      : load(path.replace(/^\.\//, "")),
+      : path.startsWith("../runtime/")
+        ? loadRuntime(path.replace("../runtime/", ""))
+        : load(path.replace(/^\.\//, "")),
     record,
     record.exports,
   );
@@ -83,6 +100,22 @@ const restoredClinicFinale = await save.loadSaveState(true);
 assert.equal(restoredClinicFinale.worldFlags.clinicCompletionSeen, true,
   "Clinic finale completion must survive normalization/reload and never become eligible to replay");
 console.log("PASS: Clinic finale completion flag survives reload.");
+
+const legacyClinicFinale = {
+  ...restoredAfterStory,
+  worldFlags: { ...restoredAfterStory.worldFlags, clinicCompletionSeen: true },
+};
+delete legacyClinicFinale.worldFlags.act1ChapterFinaleSeen;
+delete legacyClinicFinale.worldFlags.act1ChapterFinaleIndex;
+delete legacyClinicFinale.worldFlags.act1EndCardSeen;
+const migratedLegacyClinicFinale = save.normalizeSaveState(legacyClinicFinale);
+assert.equal(migratedLegacyClinicFinale.worldFlags.act1ChapterFinaleSeen, true,
+  "pre-finale Clinic saves must migrate to an acknowledged Act 1 chapter finale");
+assert.equal(migratedLegacyClinicFinale.worldFlags.act1EndCardSeen, true,
+  "pre-finale Clinic saves must migrate to an acknowledged Act 1 end card");
+assert.equal(migratedLegacyClinicFinale.worldFlags.act1ChapterFinaleIndex, undefined,
+  "acknowledged legacy finale must not retain an in-progress finale index");
+console.log("PASS: pre-finale Clinic save migrates explicitly without replaying the Act 1 ending.");
 
 const autosavedClinicFinale = {
   ...restoredClinicFinale,

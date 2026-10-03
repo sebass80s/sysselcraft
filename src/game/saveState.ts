@@ -1,5 +1,6 @@
 import { initialConstruction, normalizeConstruction, syncConstructionProgression, type ConstructionState } from "./construction";
 import { Preferences } from "@capacitor/preferences";
+import { runSequentialMigrations } from "../runtime/save/migrations";
 import { linusIntroDialogue } from "./dialogues";
 import {
   createEmptyProgression,
@@ -188,25 +189,38 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
     reachedDogReveal ||
     (typeof candidate.dogVisible === "boolean" ? candidate.dogVisible : defaults.dogVisible);
 
-  const clinicCompletionSeen = candidate.worldFlags?.clinicCompletionSeen === true;
   const hasAct1ChapterFinaleState =
     typeof candidate.worldFlags?.act1ChapterFinaleSeen === "boolean"
     || typeof candidate.worldFlags?.act1EndCardSeen === "boolean"
     || (typeof candidate.worldFlags?.act1ChapterFinaleIndex === "number"
       && Number.isInteger(candidate.worldFlags.act1ChapterFinaleIndex));
-
-  // Saves that completed Clinic before the chapter-finale feature existed must
-  // not replay a brand-new Act 1 ending on boot.
-  const legacyAct1ChapterAlreadyAcknowledged = clinicCompletionSeen && !hasAct1ChapterFinaleState;
-  const act1ChapterFinaleSeen =
-    legacyAct1ChapterAlreadyAcknowledged || candidate.worldFlags?.act1ChapterFinaleSeen === true;
-  const act1EndCardSeen =
-    legacyAct1ChapterAlreadyAcknowledged || candidate.worldFlags?.act1EndCardSeen === true;
+  const migratedCandidate = runSequentialMigrations(
+    candidate,
+    hasAct1ChapterFinaleState ? 1 : 0,
+    1,
+    [{
+      from: 0,
+      to: 1,
+      migrate: (legacy) => legacy.worldFlags?.clinicCompletionSeen === true
+        ? {
+            ...legacy,
+            worldFlags: {
+              ...legacy.worldFlags,
+              act1ChapterFinaleSeen: true,
+              act1EndCardSeen: true,
+            },
+          }
+        : legacy,
+    }],
+  ).value;
+  const clinicCompletionSeen = migratedCandidate.worldFlags?.clinicCompletionSeen === true;
+  const act1ChapterFinaleSeen = migratedCandidate.worldFlags?.act1ChapterFinaleSeen === true;
+  const act1EndCardSeen = migratedCandidate.worldFlags?.act1EndCardSeen === true;
   const act1ChapterFinaleIndex =
     !act1ChapterFinaleSeen
-      && typeof candidate.worldFlags?.act1ChapterFinaleIndex === "number"
-      && Number.isInteger(candidate.worldFlags.act1ChapterFinaleIndex)
-      ? Math.max(0, Math.min(200, candidate.worldFlags.act1ChapterFinaleIndex))
+      && typeof migratedCandidate.worldFlags?.act1ChapterFinaleIndex === "number"
+      && Number.isInteger(migratedCandidate.worldFlags.act1ChapterFinaleIndex)
+      ? Math.max(0, Math.min(200, migratedCandidate.worldFlags.act1ChapterFinaleIndex))
       : undefined;
 
   return {
