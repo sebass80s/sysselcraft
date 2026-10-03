@@ -117,6 +117,7 @@ export default function VillagePrototype() {
   const [act2MotorboatPartsOwned, setAct2MotorboatPartsOwned] = useState(false);
   const [act2PurchaseStory, setAct2PurchaseStory] = useState<"dock" | "boathouse" | null>(null);
   const [act2PurchaseStoryIndex, setAct2PurchaseStoryIndex] = useState(0);
+  const [act2PurchaseReturnProject, setAct2PurchaseReturnProject] = useState<"dock" | "boathouse" | "motorboat" | null>(null);
 
   function act2StoryItemInsufficientFundsMessage(price: number) {
     const current = getLatestBackendWallet()?.sysselBux ?? backendWallet?.sysselBux ?? sysselBux;
@@ -206,6 +207,36 @@ export default function VillagePrototype() {
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!saveReady) return;
+    const project = new URLSearchParams(window.location.search).get("act2-purchase");
+    if (project !== "dock" && project !== "boathouse" && project !== "motorboat") return;
+    let cancelled = false;
+    void (async () => {
+      try {
+        const act2 = await loadAct2RuntimeState();
+        if (cancelled) return;
+        setAct2PurchaseReturnProject(project);
+        setAct2JettyLifebuoyNeeded(jettyPurchaseRequired(act2));
+        setAct2JettyLifebuoyOwned(act2.jettyLifebuoyOwned);
+        setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(act2));
+        setAct2BoathouseSteeringWheelOwned(act2.boathouseSteeringWheelOwned);
+        setAct2MotorboatPartsNeeded(motorboatPartsPurchaseRequired(act2));
+        setAct2MotorboatPartsOwned(act2.motorboatPartsOwned);
+        setAct2PurchaseStory(act2.pendingPurchaseStory);
+        setAct2PurchaseStoryIndex(act2.purchaseStoryLineIndex);
+        setShopCurrency("sysselbux");
+        setShopMessage("");
+        setShopPanelOpen(true);
+        gameRef.current?.setConstructionDialogueOpen(true);
+      } catch {
+        if (!cancelled) setShopMessage("Kunde inte öppna Act 2-köpet hos Mira.");
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [saveReady]);
+
 
   useEffect(() => {
     const reloadConstruction = async () => {
@@ -1089,6 +1120,11 @@ export default function VillagePrototype() {
   function closeShop() {
     setShopPanelOpen(false);
     gameRef.current?.setConstructionDialogueOpen(false);
+    if (act2PurchaseReturnProject) {
+      const project = act2PurchaseReturnProject;
+      setAct2PurchaseReturnProject(null);
+      router.push(`/act2?resume=${project}`);
+    }
   }
 
   // Runtime harness stays compiled because regression tests exercise its safety guards.
@@ -1341,7 +1377,7 @@ export default function VillagePrototype() {
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
       <div className="mira-shop-ui">
-        <button className="mira-shop-close" onClick={closeShop} aria-label="Gå tillbaka till byn">← Till byn</button>
+        <button className="mira-shop-close" onClick={closeShop} aria-label={act2PurchaseReturnProject ? "Gå tillbaka till sjön" : "Gå tillbaka till byn"}>{act2PurchaseReturnProject ? "← Tillbaka till sjön" : "← Till byn"}</button>
         <div className="mira-shop-wallet" aria-label="Dina pengar"><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong><strong>💎 {backendWallet?.diamonds ?? diamonds}</strong></div>
         <section className="mira-shop-counter" aria-labelledby="shop-title">
           <h2 id="shop-title" className="sr-only">Miras lanthandel</h2>
