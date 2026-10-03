@@ -1121,7 +1121,7 @@ export default function VillagePrototype() {
     if (childName !== "Test-Ture") return;
     if (!window.confirm("Återställa Test-Ture till precis efter Akt 1? Akt 2-framsteg på den här enheten raderas.")) return;
     await clearAct2RuntimeStateForPairedChild();
-    window.location.href = "/";
+    router.push("/");
   }
 
   function closeShop() {
