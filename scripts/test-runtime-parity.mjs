@@ -344,4 +344,21 @@ assert.ok(
   "Village runtime must not keep a parallel legacy HUD implementation",
 );
 
+
+
+const markerRendererSource = fs.readFileSync(new URL("../src/runtime/interaction/markerRenderer.ts", import.meta.url), "utf8");
+const act2LakeSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
+assert.ok(
+  markerRendererSource.includes('GLYPH_BY_KIND'),
+  "Interaction System must own the canonical marker glyph mapping",
+);
+assert.ok(
+  act2LakeSource.includes('createInteractionMarker(this, {'),
+  "Act 2 must consume the canonical interaction marker renderer",
+);
+assert.ok(
+  !act2LakeSource.includes('const turnInBubble = this.add.circle'),
+  "Act 2 must not keep a local turn-in marker implementation",
+);
+
 console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
