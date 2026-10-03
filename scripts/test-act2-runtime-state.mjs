@@ -677,6 +677,9 @@ assert.ok(act2Route.includes("ChildBackendQuestInbox"), "Act 2 must reuse the sa
 assert.match(act2Route, /<ChildBackendQuestInbox \/>/, "Act 2 route must mount the shared Uppdrag UI");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+assert.ok(village.includes("getChildDisplayName(childId)"), "Test-Ture QA controls must derive identity from the paired backend child, not the local story name");
+assert.ok(village.includes('pairedBackendChildName === "Test-Ture"'), "Test-Ture reset control must be scoped to the backend Test-Ture profile");
+
 assert.ok(village.includes('get("act2-purchase")'), "village must consume Act 2 purchase context instead of dropping the child at an unscoped village");
 assert.ok(village.includes('setShopPanelOpen(true)'), "Act 2 purchase context must open Mira's shop directly");
 assert.ok(village.includes('setShopCurrency("sysselbux")'), "Act 2 purchase context must open the correct SysselBux shelf");
