@@ -20,6 +20,23 @@ Foundation rules now locked:
 The preserved physical save must not be reset. It is a real migration fixture.
 
 
+## Continuous cleanup discipline — LOCKED 2026-10-03
+
+Cleanup is part of implementation.
+
+Whenever a new runtime, UI contract, state model, test harness, route, asset rule or architecture primitive replaces an older one, the same workstream must also remove the superseded residue. Do not defer obvious cleanup to a future “big cleanup”.
+
+Required closeout for replacement work:
+1. remove dead/superseded code, helpers, routes, CSS and debug surfaces;
+2. rename prototype/placeholder identifiers that no longer describe the real runtime;
+3. update tests so they assert behavior/contracts rather than obsolete source-code shape;
+4. remove stale constants, flags, comments, prices, copy and status text;
+5. update canonical MDs and handoff material immediately;
+6. search for the old symbols/phrases/values across the repo;
+7. run the normal verification/CI against that cleaned state.
+
+Exceptions require a concrete reason, such as backward compatibility, persisted migration support or an intentionally retained test fixture. In those cases the old path must be explicitly labeled and covered, not silently left behind.
+
 ## Historical checkpoint — physical iPhone verified 2026-09-21
 
 Canonical workspace: `/Users/karoaa/Developer/sysselcraft`, branch `nova/local-construction-snapshot`.
