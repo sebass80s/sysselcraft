@@ -61,7 +61,7 @@ export const CANONICAL_SYSTEMS: readonly CanonicalSystemRegistration[] = [
     id: SYSTEM_COMPONENT_IDS.questMarker,
     status: "canonical",
     owner: "Interaction System",
-    note: "Canonical shared renderer exists. Act 2 is migrated; Village migration remains pending.",
+    note: "Canonical shared renderer exists and current Act 1/Act 2 quest markers consume it.",
   },
   {
     id: SYSTEM_COMPONENT_IDS.npcAttentionMarker,
