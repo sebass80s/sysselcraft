@@ -963,11 +963,18 @@ assert.ok(
     villageGameSource.includes("this.syncLinusPriorityMarkers();"),
   "Linus priority markers must resync when construction presentation moves a resident",
 );
-assert.equal(
-  (villageGameSource.match(/createInteractionMarker\(this, \{/g) ?? []).length,
-  3,
-  "Village quest sources must all use the canonical interaction marker renderer",
-);
+for (const markerOwner of [
+  "this.linusStoryMarker = createInteractionMarker(this, {",
+  "this.linusQuestMarker = createInteractionMarker(this, {",
+  "this.henningQuestMarker = createInteractionMarker(this, {",
+  "this.noticeboardMarker = createInteractionMarker(this, {",
+  "this.attentionMarker = createInteractionMarker(this, {",
+]) {
+  assert.ok(
+    villageGameSource.includes(markerOwner),
+    `Village marker owner must use the canonical renderer: ${markerOwner}`,
+  );
+}
 assert.ok(
   !villageGameSource.includes("fillCircle(0, 0, 27)"),
   "Village must not retain local quest badge drawing after marker migration",
