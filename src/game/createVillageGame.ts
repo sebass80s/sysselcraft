@@ -3,6 +3,7 @@ import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../runtime/world/worldCamera";
+import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
 import {
   AMBIENT_TEXTURE_KEYS,
@@ -558,7 +559,7 @@ export async function createVillageGame(
       this.dog.x = Phaser.Math.Linear(this.dog.x, this.player.x + offset.x, 0.055);
       this.dog.y = Phaser.Math.Linear(this.dog.y, this.player.y + offset.y, 0.055);
       this.dog.setFlipX(this.dog.x > this.player.x);
-      this.dog.setDepth(1000 + Math.round(this.dog.y));
+      this.dog.setDepth(worldEntityDepth(this.dog.y));
     }
 
     private maybeCompleteWorldInteraction() {
@@ -775,7 +776,7 @@ export async function createVillageGame(
       return this.add.image(x, y, key)
         .setOrigin(0.5, originY)
         .setScale(scale)
-        .setDepth(1000 + Math.round(baseY));
+        .setDepth(worldEntityDepth(baseY));
     }
 
     private placeWorldObjects(objects: WorldObjectDefinition[]) {
@@ -976,7 +977,7 @@ export async function createVillageGame(
       if (this.player && !isWalkable(this.player, this.navigationObstacles)) {
         const safePoint = nearestWalkablePoint(this.player, this.navigationObstacles);
         this.player.setPosition(safePoint.x, safePoint.y)
-          .setDepth(1000 + Math.round(safePoint.y));
+          .setDepth(worldEntityDepth(safePoint.y));
       }
     }
 
@@ -1068,7 +1069,7 @@ export async function createVillageGame(
         this.events.once("shutdown", onShutdown);
         this.tweens.add({
           targets: truck, x: 340, y: 485, duration: 1700, ease: "Sine.Out",
-          onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
+          onUpdate: () => truck.setDepth(worldEntityDepth(truck.y)),
           onComplete: async () => {
             try {
               await commit();
@@ -1076,7 +1077,7 @@ export async function createVillageGame(
               this.tweens.add({ targets: this.linus, y: "-=10", duration: 180, yoyo: true, repeat: 3 });
               this.time.delayedCall(900, () => this.tweens.add({
                 targets: truck, x: 900, y: 490, duration: 1500, ease: "Sine.In",
-                onUpdate: () => truck.setDepth(1000 + Math.round(truck.y)),
+                onUpdate: () => truck.setDepth(worldEntityDepth(truck.y)),
                 onComplete: () => finish(),
               }));
             } catch (error) {
@@ -1103,7 +1104,7 @@ export async function createVillageGame(
       const ny = { x: this.player.x, y: this.player.y + dy };
       if (isWalkable(ny, this.navigationObstacles)) this.player.y = ny.y;
       // Both keyboard and A* steps share this post-movement depth update.
-      this.player.setDepth(1000 + Math.round(this.player.y));
+      this.player.setDepth(worldEntityDepth(this.player.y));
     }
 
     private drawVillage() {
