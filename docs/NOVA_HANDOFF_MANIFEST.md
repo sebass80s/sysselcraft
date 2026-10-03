@@ -797,3 +797,12 @@ Shared engine now decides `disabled | activate | approach` through `resolveInter
 Parity coverage exists for activate, approach and disabled outcomes.
 
 Do not interpret this as Interaction System completion. Continue in short vertical slices, then converge shared world-input authority. Do not start Act 3.
+
+
+## Runtime 1.0 checkpoint — Village joins shared interaction resolution
+
+Second short interaction slice completed on `nova/runtime-architecture-v1`.
+
+Village noticeboard now consumes shared `resolveInteraction()` and has one authored definition for its approach point/radius. Accepted 36 px arrival behavior is parity-covered, including the 37 px outside-boundary case.
+
+Shared resolution is therefore proven in both Lake and Village, but the Interaction System is still incomplete. Remaining local interactions and world-input authority must continue in short parity-backed slices. No Act 3 and no production promotion.
