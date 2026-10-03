@@ -605,28 +605,27 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }
 
   for (const project of ["cabin", "dock", "boathouse", "motorboat"] as const) {
-    const completedCount = state.projects[project].contributions;
-    projectStorySources[project].slice(0, completedCount).forEach((beat) => {
+    if (!state.projects[project].complete) continue;
+    projectStorySources[project].forEach((beat) => {
       historyEntries.push({ group: PROJECT_COPY[project].label, beat });
     });
   }
 
-  if (state.jettyLifebuoyOwned) {
+  if (state.projects.dock.complete && state.jettyLifebuoyOwned) {
     historyEntries.push({ group: "Bryggan", beat: JETTY_LIFEBUOY_BEAT });
   }
-  if (state.boathouseSteeringWheelOwned) {
+  if (state.projects.boathouse.complete && state.boathouseSteeringWheelOwned) {
     historyEntries.push({ group: "Båthuset", beat: BOATHOUSE_STEERING_WHEEL_BEAT });
   }
-  if (state.consumedProjectCompletionIds.includes("dock:completion-reaction")) {
+  if (state.projects.dock.complete && state.consumedProjectCompletionIds.includes("dock:completion-reaction")) {
     historyEntries.push({ group: "Bryggan", beat: JETTY_COMPLETION_REACTION });
   }
 
-  const completedFinaleCount = state.epilogueConsumed
-    ? ACT2_FINALE_BEATS.length
-    : Math.min(state.finaleIndex, ACT2_FINALE_BEATS.length);
-  ACT2_FINALE_BEATS.slice(0, completedFinaleCount).forEach((beat) => {
-    historyEntries.push({ group: "Finalen", beat });
-  });
+  if (state.epilogueConsumed) {
+    ACT2_FINALE_BEATS.forEach((beat) => {
+      historyEntries.push({ group: "Finalen", beat });
+    });
+  }
 
   const historyGroups = historyEntries.reduce<Array<{ label: string; entries: Act2ReplayBeat[] }>>((groups, entry) => {
     const existing = groups.find((group) => group.label === entry.group);
