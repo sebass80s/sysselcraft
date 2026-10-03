@@ -15,6 +15,40 @@ import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 
+const henningPriorityFixtures = [
+  {
+    name: "Henning construction attention outranks backend quest",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: true },
+      { id: "construction-attention", priority: 30, enabled: true },
+    ],
+    expected: "construction-attention",
+  },
+  {
+    name: "Henning backend quest outranks ordinary resident interaction",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: true },
+      { id: "construction-attention", priority: 30, enabled: false },
+    ],
+    expected: "quest-source",
+  },
+  {
+    name: "Henning falls back to ordinary resident interaction",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: false },
+      { id: "construction-attention", priority: 30, enabled: false },
+    ],
+    expected: "resident",
+  },
+];
+
+for (const fixture of henningPriorityFixtures) {
+  assert.equal(resolveInteractionPriority(fixture.candidates)?.id, fixture.expected, fixture.name);
+}
+
 const linusPriorityFixtures = [
   {
     name: "Linus construction attention outranks intro and quest",
@@ -718,4 +752,4 @@ assert.ok(
   "Village must not retain local story-attention bubble drawing",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
