@@ -891,7 +891,7 @@ This prevents later chapters from colliding in History, progression or save migr
 - **DONE:** Village migration to the same Game UI Shell.
 
 ### Not started
-- canonical marker renderer/asset migration;
+- canonical marker renderer established; Act 2 migrated; Village marker migration remains;
 - shared World / Area Engine;
 - versioned Runtime 1.0 Save/Migration adapter;
 - shared progression/gating bridge;
@@ -926,3 +926,13 @@ Both current playable worlds now consume the same actual `GameUiShell` component
 Chapter-specific global header implementations are no longer the dev consumer path.
 
 Remaining UI architecture work is now about centralizing shell visibility/overlay authority and moving any remaining global affordances into shared configuration, not maintaining multiple HUD implementations.
+
+
+### Canonical quest marker migration status
+
+- shared marker renderer: **complete**;
+- Act 2 turn-in marker: **migrated**;
+- Village quest markers: **pending**;
+- NPC-attention marker convergence: **pending**.
+
+The canonical renderer reuses the established Village quest-marker visual language. There is no separate marker asset file in the current repository; do not invent chapter-specific marker files.
