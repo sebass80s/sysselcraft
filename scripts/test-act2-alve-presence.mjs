@@ -68,7 +68,16 @@ class Game {
 const phaser = { Scene, Game, AUTO: 0, Scale: { FIT: 0, CENTER_BOTH: 0 }, Math: {
   Distance: { Between: (x,y,a,b) => Math.hypot(x-a,y-b) },
 } };
-const { createAct2LakeGame } = load("src/game/createAct2LakeGame.ts", { phaser, "./act2VisualAssets": assets });
+const interactionContract = load("src/runtime/interaction/interactionContract.ts");
+const markerRenderer = {
+  createInteractionMarker: (_scene, options) => object("interaction-marker", options.x ?? 0, options.y ?? 0),
+};
+const { createAct2LakeGame } = load("src/game/createAct2LakeGame.ts", {
+  phaser,
+  "./act2VisualAssets": assets,
+  "../runtime/interaction/markerRenderer": markerRenderer,
+  "../runtime/interaction/interactionContract": interactionContract,
+});
 let turnIns = 0;
 const start = () => createAct2LakeGame({ clientWidth: 667, clientHeight: 375 }, 1, { onAlveTurnIn: () => { turnIns++; } });
 let handle = await start();
