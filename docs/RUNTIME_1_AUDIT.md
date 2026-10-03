@@ -99,3 +99,23 @@ Storyline IDs are global engine identifiers and must be chapter-qualified, for e
 Do not use ambiguous local IDs such as `cabin` or `intro`.
 
 Next migration target remains Act 2 story registration. Existing Act 2 story content should be adapted into the registry rather than rewritten.
+
+
+## Checkpoint — real Act 2 registry adapter
+
+Runtime 1.0 now registers the accepted Act 2 story sources without rewriting story content:
+- opening;
+- Stugan 1–16;
+- Bryggan 1–16;
+- Båthuset 1–16;
+- Motorbåten 1–16;
+- livboj purchase beat;
+- steering-wheel purchase beat;
+- Bryggan completion reaction;
+- finale/epilogue.
+
+Act 2-specific completion flags are translated into generic History progress by `act2HistoryProgress()`. The generic Story History engine remains unaware of Act 2 flags.
+
+The parity harness now checks the registry count against the real source arrays and verifies current opening/project spoiler behavior.
+
+Production `Act2Runtime` still uses the legacy History assembly at this checkpoint. No player behavior has changed.
