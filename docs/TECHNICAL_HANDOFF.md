@@ -810,7 +810,7 @@ Rules:
 
 
 
-## Runtime Architecture 1.0 non-negotiables
+## Runtime Architecture 1.0 mandatory rules
 
 The complete contract lives in `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`.
 
@@ -824,3 +824,6 @@ Operational summary:
 - new Acts must not fork HUD, Story Engine, markers, replay/history or generic input logic.
 
 Treat any new Act-specific duplicate of an existing game concept as architecture regression.
+
+
+Improvement rule: when a material architecture/product/UX/reliability improvement is identified, raise it immediately and classify it as required now, safe to defer, or incompatible with the current freeze boundary. Do not sit on useful structural improvements until a later handoff.
