@@ -131,47 +131,29 @@ StoryMoment awaits promise-returning navigation and disables both directions whi
 
 `test:act2-closeout` executes the actual components with an isolated hook host and actual save/load functions with in-memory Preferences. It covers image Previous, duplicate pending navigation, save-failure retry, every epilogue-line restart, child-scoped storage and compatibility with completed legacy saves. Physical WKWebView acceptance remains required.
 
-## 10. Physical Act 2 closeout findings — 2026-10-03
+## 10. Act 2 closeout + gameplay shell — LOCKED 2026-10-03
 
-The story overlay/navigation contract survived the closeout implementation, but physical-save testing exposed two state/presentation boundaries that future UI changes must preserve:
+Physical iPhone testing reached the complete Act 2 ending and established the final presentation boundary.
 
-- A world NPC's visibility must not be inferred from whether a project HUD is visible. `selectedProject=null` is a valid presentation state; Alve remains present at his idle anchor even when the project HUD is absent.
-- A migrated old-ending save may enter directly into the new epilogue. Story UI must render that pending `finaleIndex=5` state exactly like a normal current-run epilogue, including **Föregående**, full-image reveal, HUD/quest suppression and restart persistence.
+### Global gameplay shell
+`src/game/uiShellState.ts` is the pure authority for global gameplay chrome:
+- world not ready → no HUD;
+- blocking Story/Chapter overlay → no HUD;
+- playable world with no blocking overlay → HUD visible;
+- project status is optional and independent of global HUD visibility.
 
-The current migration deliberately replays only the newly added epilogue for an old five-beat-complete save. It does not reopen the already consumed family/veranda beats.
+Therefore a null/finished project, idle NPC state or completed chapter can never implicitly remove the resource/navigation shell.
 
-Physical iPhone acceptance of this migrated-path Story UI is still open.
+### Story overlay ownership
+StoryMoment and chapter cards explicitly publish/supply blocking presentation state. External quest UI and global chrome are suppressed only while those overlays are active. Save-backed navigation remains awaited, transition-locked and retryable.
 
+### Alve/lake boundary
+- During active Act 2, `selectedProject=null` is valid and Alve remains at his idle anchor.
+- After `act2Complete && endCardSeen`, Act 2 is closed and Alve is intentionally absent.
+- The completed HUD keeps village navigation and adds `Till kapitel 3 →`.
 
+### Legacy ending
+A pre-marker five-beat-complete save resumes only the newly added **Över sjön** epilogue once. Already consumed family/veranda beats are not reopened. Current-schema completed saves do not replay.
 
-## Gameplay UI shell contract · LOCKED 2026-10-03
-
-Global gameplay chrome (logo/navigation, wallet/resources and equivalent chapter-level HUD) is **presentation infrastructure**, not quest or project state.
-
-Canonical rule:
-
-- the shell is visible whenever the playable world is ready and no blocking Story/Chapter overlay is active;
-- a selected project may add project-specific status, but may never be required for the global HUD itself;
-- `selectedProject=null`, a completed project, a completed chapter, idle NPC state or future chapter progression must never implicitly hide the global shell;
-- Story Engine/chapter overlays suppress the shell explicitly through presentation state;
-- project status is derived separately from global HUD visibility;
-- future Act 3 runtime must use the same shell contract rather than inventing new visibility chains.
-
-The pure authority is `src/game/uiShellState.ts`; Act 2 consumes it through `deriveGameUiShell`. `scripts/test-ui-shell-state.mjs` protects the lifecycle matrix, including the critical valid-world/no-project case that previously caused the HUD to disappear.
-
-## 2026-10-03 · POST-ACT-2 WORLD + CHAPTER 3 BOUNDARY — LOCKED
-
-Physical iPhone acceptance reached the complete Act 2 ending and exposed the final world-state contract.
-
-**Canonical completed state is `act2Complete === true && endCardSeen === true`.**
-
-At that boundary:
-- Act 2 is finished. The lake must not continue presenting Alve as a quest giver.
-- Alve is removed from the interactive lake world. His presence is now driven explicitly by chapter status via `setAlvePresent`, not indirectly by `selectedProject`.
-- The global gameplay HUD remains visible through the shared UI-shell contract.
-- `← Till byn` remains available.
-- A sibling HUD button `Till kapitel 3 →` appears and routes to `/act3`.
-- `/act3` is currently a **read-only chapter boundary only**. It writes no Act 3 save, owns no progression, and must not clear/replay Act 2.
-- Future Act 3 runtime must take ownership after this route and persist its own intro/entry state. Do not move Act 3 persistence into Act 2.
-
-This supersedes the earlier null-project rule only for **completed chapter state**: before Act 2 completion, `selectedProject=null` still means Alve is visible at `ACT2_ALVE_IDLE_POSITION`; after persisted chapter completion, Alve is intentionally absent.
+### Regression ownership
+The UI-shell state matrix belongs in `scripts/test-ui-shell-state.mjs`. Act 2 closeout tests should cover chapter-specific behavior and must not duplicate brittle regexes for internal shell implementation shape.

@@ -2,13 +2,36 @@
 
 This file exists so a future AI instance can continue Sysselcraft as **Nova**, not restart solved work.
 
-## READ FIRST — CURRENT STATE (2026-09-21)
+## READ FIRST — CURRENT STATE (2026-10-03)
 
-Canonical workspace is `/Users/karoaa/Developer/sysselcraft`; active branch is `nova/local-construction-snapshot`. The previously working `ios/` has been restored and preserved in the canonical repository. Do not regenerate it or run `cap add ios`. Do not resume work in the old OneDrive copies.
+Canonical repo: `sebass80s/sysselcraft`, branch `nova/local-construction-snapshot`. Canonical local workspace: `/Users/karoaa/Developer/sysselcraft`. Repo reality wins: verify branch HEAD and CI before changing anything.
 
-Kalle physically verified the full Recycling slice from a clean save on iPhone: onboarding, Bädda sängen, adult approval, Linus/truck/delivery/stage-1 spawn, stages 2–4 through native test controls, and the completion dialogue mentioning Henning. Force-quit/relaunch preserves completed Recycling and does not replay completion. Adult-mode scrolling and reset also pass.
+### Current product boundary
+- Act 1 is feature-complete except concrete bug/regression work.
+- Act 2 is authored through the six-beat closeout and the physical iPhone test save has reached and acknowledged **SLUT PÅ ANDRA KAPITLET**.
+- Final chain: **Motorbåten 16/16 → Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön → SLUT PÅ ANDRA KAPITLET**.
+- The canonical completed boundary is `act2Complete === true && endCardSeen === true`.
+- Before that boundary, `selectedProject=null` is a valid lake state and Alve remains at `ACT2_ALVE_IDLE_POSITION`.
+- After that boundary, Act 2 is closed: Alve is absent from the interactive lake world and cannot request more quests.
+- The global gameplay HUD is owned by `src/game/uiShellState.ts`. Project selection, quest state and chapter completion must never implicitly remove global chrome.
+- Completed Act 2 keeps `← Till byn` and exposes `Till kapitel 3 →`.
+- `/act3` currently exists only as a read-only chapter boundary. It owns no Act 3 persistence or progression yet.
 
-Bakery pacing can now be designed from the four-stage playtest. Henning has NOT spawned and Bakery is NOT activated. Thresholds and exact arrival remain undecided. See `TECHNICAL_HANDOFF.md` and `IOS_CHECKPOINT.md`.
+### Save safety
+Preserve the existing physical iPhone save. It has already exercised real legacy-finale migration and is valuable regression evidence. Never reset/reinstall it merely to simplify testing. Adam's backend/save remains read-only for tests.
+
+### Architecture direction
+Do not create an Act 3 clone of Act 2. Story Engine and the shared UI-shell contract are established. The next foundation work is the shared World/Area Engine plus explicit versioned save migrations, following `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`.
+
+### Canonical current docs
+Read these before implementation:
+- `docs/NOVA_HANDOFF_MANIFEST.md`
+- `docs/TECHNICAL_HANDOFF.md`
+- `docs/PLAYABLE_ALPHA_READINESS.md`
+- `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`
+- `docs/STATE_OWNERSHIP.md`
+- `docs/STORY_DESIGN.md`
+- `docs/STORY_UI_CONTRACT.md`
 
 ## Historical state (2026-09-15 evening; superseded)
 
@@ -561,143 +584,36 @@ A stale-local-save Clinic recovery bug was patched without mutating Adam's live 
 
 Desired behavior: the next legitimate quest-claim refresh can wake the Clinic progression on a stale device save; later Clinic beats still reveal in authored order rather than jumping directly to completion.
 
-## 2026-10-01 evening — CURRENT ACT 2 HARDENING HANDOFF
+## ACT 2 FINAL HANDOFF — 2026-10-03
 
-Repo/branch remains `sebass80s/sysselcraft` → `nova/local-construction-snapshot`. Canonical local workspace remains `/Users/karoaa/Developer/sysselcraft`.
+Act 2 is now a closed chapter rather than an open construction sandbox after its end card is acknowledged.
 
-Recent runtime changes that must survive handover:
-- `/act2` and `/act2-test` share `src/components/Act2Runtime.tsx`. Never recreate parallel debug story UI.
-- Debug uses isolated, non-persisted Act 2 state while retaining the real saved child identity. The debug toolbar is a state-control surface only.
-- Production Act 2 remains deliberately shipping-locked until physical acceptance.
-- Lake water collision is map-derived from `lake-master` pixel sampling around the player's feet; the earlier guessed shoreline model was removed. Browser testing showed clear improvement, but full shoreline/obstacle acceptance remains open.
-- Stugan “En stund till” is a repeatable completed-cabin revisit until Motorbåten completion. It must not auto-play after 16/16.
-- Story UI invariant: **one card = one nameplate + one reply/narration unit + one click**. Never reduce click count by stacking speakers on a card.
-- First anti-popcorn manuscript pass has been applied across Båthuset, Stugan, Bryggan and Motorbåten. Continue polishing through fewer, more concrete authored replies, not UI batching.
-- The first-crossing scene belongs to Act 3. Act 2 finale ends before a true crossing.
-- Latest full `npm run verify` after the final hardening batch has not yet been reported as passing. Treat verification as OPEN and fix the first real error if one appears.
+### Runtime/state contract
+- Production route: `/act2`, gated by the persisted Act 1 end-card acknowledgement.
+- Shared renderer: `src/components/Act2Runtime.tsx`.
+- Lake runtime: `src/game/createAct2LakeGame.ts`.
+- Story/presentation state is child-scoped and local; backend quests, rewards, wallet and authoritative work evidence remain backend-owned.
+- Legacy five-beat completed saves that predate **Över sjön** resume the new epilogue exactly once via the finale schema migration, without replaying the earlier family/veranda beats.
+- Current-schema completion does not replay.
+- Persisted completion boundary: `act2Complete && endCardSeen`.
 
-Immediate browser QA should exercise Stugan/Bryggan/Båthuset/Motorbåten story rhythm, Cabin revisit behavior, water collision around the full beach/bay, purchase/naming gates and the Motorbåten→family finale transition. Physical iPhone acceptance remains the release gate.
+### Presentation contract
+- Global HUD visibility comes only from `deriveGameUiShell`.
+- Story/chapter overlays explicitly suppress global chrome.
+- Project status is optional detail and never the owner of HUD visibility.
+- Alve presence is explicit: visible during active Act 2 including valid no-project idle state, absent after the persisted chapter-close boundary.
+- Completed lake state keeps navigation to the village and exposes the Chapter 3 transition.
 
-## 2026-10-01 — Act 2 autonomous bug-raid checkpoint
+### Chapter 3 boundary
+`/act3` currently renders only **KAPITEL 3 · På andra sidan sjön** as a read-only boundary. Future Act 3 code must own its own entry/intro persistence and must not clear, mutate or replay Act 2.
 
-The latest completed code verification checkpoint is GitHub Actions **#1461 SUCCESS** at `404be3fc40276257ff4d3b46fcb0386e55d9a2fb`.
+Act 3's locked story direction and Nova's emotional arc live in `docs/STORY_DESIGN.md`. Do not improvise a replacement from old handoff prose.
 
-The audit closed several forms of drift that a future Nova must not reintroduce:
-- canonical visual-stage transitions happen at contributions 4/8/12;
-- Act 2 finale is five beats and ends on the veranda; first crossing is Act 3;
-- Motorbåten 6/16 is post-purchase copy and must not replay wallet/payment implementation text;
-- editorial markers such as `Paus.` are not runtime story cards;
-- Act 2 story-purchase behavior must be reproducible from checked-in Supabase migration SQL;
-- Valpen follows Act 2 walkability/collision;
-- working-branch Vercel Git deploy is paused; GitHub Actions is the routine verification surface.
+### Test policy
+- `test:ui-shell` owns the pure global UI-shell lifecycle matrix.
+- `test:act2-alve` owns real lake Alve presence/interaction behavior.
+- `test:act2-closeout` owns finale migration, save/restart and chapter-close behavior.
+- `test:act2-full-flow` owns the complete 64-contribution authored journey.
+- Act-specific tests should prefer behavior/state contracts over regexes that freeze incidental source-code shape.
 
-Do not infer physical acceptance from CI. Browser/iPhone acceptance remains required for shoreline feel, navigation/camera, purchase return journeys, restart boundaries and the final Motorbåten/family sequence.
-
-## 2026-10-02 — Full Act 2 flow verified
-
-GitHub Actions **#1475 SUCCESS** at `c6e9a20f0a5cb8b2c7ade56090ab24c449c69445`.
-
-The automated full-flow contract now traverses Act 2 from the production entry baseline through opening, bicycle, Alve intro, all four projects, all three Mira story purchases, motorboat naming, exactly 64 authoritative contributions, the five-beat family/veranda finale and the persisted black chapter-end card.
-
-Two transition/recovery bugs were found and fixed during the audit:
-- the disabled production route used to establish `entered/backendClaimBaseline` before showing the shipping lock, which could create latent pre-release backlog;
-- if the first backend read failed, later polling recovered progression but not the missing baseline, leaving Act 2 unable to advance.
-
-Old pre-release baseline residue is now reconciled away at the first legitimate production entry.
-
-Production remains intentionally locked with `ACT2_PRODUCTION_ENABLED = false`; physical browser/iPhone acceptance is still required before unlocking.
-
-## 2026-10-02 — Act 1 chapter-finale handoff checkpoint
-
-Current branch HEAD is `08ec561003d253c97b6fea163f413e6e0c624e5c` and GitHub Actions **#1496 SUCCESS** on that exact commit.
-
-Act 1 now has a real chapter-ending flow after Clinic:
-- Clinic finale completes and persists `clinicCompletionSeen=true`.
-- The new locked ensemble dialogue `act1ChapterFinaleDialogue` begins immediately afterward.
-- Finale progress is persisted with `act1ChapterFinaleIndex` and resumes on restart.
-- Completing the ensemble scene persists `act1ChapterFinaleSeen=true`.
-- A black **SLUT PÅ FÖRSTA KAPITLET** card then appears and is acknowledged with `act1EndCardSeen=true`.
-- Only after that acknowledgement is **Stigen till sjön** visible.
-- Production Act 2 also independently requires `act1EndCardSeen=true`, so direct URL entry cannot bypass the chapter boundary.
-- Old saves that completed Clinic before this feature existed normalize as already having acknowledged the Act 1 finale/end card; they must not suddenly replay new Act 1 story on boot.
-- The current Act 1 finale Story Moment image is intentionally a placeholder: `/assets/village/story-moments/sol-clinic-complete.png`.
-- **Do not generate or replace the final ensemble image until Kalle provides the correct canonical character references.**
-
-Locked Act 1 finale order:
-**Clinic finale → ensemble payoff → black SLUT PÅ FÖRSTA KAPITLET → back to village → Stigen till sjön → /act2 → OPEN-001 Valpen sticker.**
-
-The exact ensemble dialogue is canonical in `src/game/solStory.ts` and `docs/STORY_DESIGN.md`.
-
-Act 2 production remains intentionally shipping-locked with `ACT2_PRODUCTION_ENABLED=false` pending physical acceptance.
-
-Deployment policy remains hard-locked: GitHub Actions for routine code verification; Vercel only for a meaningful acceptance checkpoint or release. `vercel.json` disables routine deployment of `nova/local-construction-snapshot`.
-
-## 2026-10-02 — Handover closeout
-
-Latest branch checkpoint at handover: `32bd71a3fdc776941614c8f4b037b60ce140eedc`, GitHub Actions **#1497 SUCCESS**.
-
-Important: the Act 1 chapter finale is **implemented**, not merely designed. The exact dialogue is in `src/game/solStory.ts`; persisted flow/gating is wired in the village/save/runtime code. The only intentionally temporary part is the visual, which currently reuses `sol-clinic-complete.png` as a placeholder.
-
-Do not regenerate the final Act 1 ensemble image until Kalle supplies the correct character references.
-
-Next work should resume from physical/browser acceptance and visual replacement, not reimplement the chapter-final state machine.
-
-
-## Act 2 closeout — 2026-10-03
-
-This checkpoint supersedes older veranda-only and shipping-lock notes above. Act 2 now includes all six finale beats, the supplied 05/06 images, exact canonical “Över sjön” dialogue, restart-safe epilogue progress and shared Previous/Continue layout. No assets, Act 1 story/gameplay or native settings changed.
-
-Local full verify, TypeScript and isolated browser navigation at 667×375 and 568×320 passed. Completed legacy saves remain completed; ongoing final sequences include the epilogue. Production `/act2` uses its existing entry gate; `/act2-test` is not found in production.
-
-GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
-
-Physical iPhone acceptance is still OPEN. Run the final motorboat contribution through all six finale beats and the end card; verify both landscape directions, actual safe areas, navigation, full-image, HUD/quest suppression and force-quit/relaunch on the intended test child's save. Never mutate Adam. No native sync or Vercel deployment was performed.
-
-Act 3 runtime is absent; persisted `act2Complete && endCardSeen` is its safe future entry boundary. See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for exact implementation and acceptance details.
-
-## 2026-10-03 morning — CURRENT HANDOVER CHECKPOINT
-
-**Verify repo first.** At the start of this handover the latest code checkpoint before documentation-only commits is `dc3c9267abb49b749e2f90f5ce98948a61fde3c4` on `nova/local-construction-snapshot`. GitHub Actions CI run **37107244803 / #1639 SUCCESS** on that exact SHA.
-
-### Act 2 closeout status
-Act 2 code is feature-complete through the six-beat ending:
-**Motorbåten 16/16 → Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön → SLUT PÅ ANDRA KAPITLET**.
-
-Finale art is present:
-- `public/assets/village/story-moments/act2/finale/05-after-motorboat.png`
-- `public/assets/village/story-moments/act2/finale/06-across-the-lake.png`
-
-Physical iPhone testing immediately exposed two save/runtime edge cases after closeout:
-1. **Alve disappeared when `selectedProject === null`**. Fixed in `e9cc096bb78c918c1aacb4f676ae321f7767fd26`: null-project state now uses `ACT2_ALVE_IDLE_POSITION` instead of hiding Alve. Kalle physically confirmed: **Alve is back** and idle interaction works.
-2. **Old five-beat completed saves skipped the new epilogue and fell back to lake idle UI**. Root cause: normalization incorrectly marked `epilogueConsumed=true` for a legacy family-final-complete save. Fixed in `7e25e0d49372df04f12056c89248a50886e8e5b2`; regression coverage added in `dc3c9267abb49b749e2f90f5ce98948a61fde3c4`. Legacy saves that saw the old veranda ending now resume exactly once at `finaleIndex=5`, with the new epilogue pending.
-
-### Next physical step
-Pull latest, run `npm run syssel`, Run in Xcode, and retest the **same existing physical save**. It should enter **Över sjön** rather than idle at the lake. Then verify the black **SLUT PÅ ANDRA KAPITLET** card and restart behavior before/after it.
-
-Do **not** reset/reinstall the physical save. The existing save is valuable migration evidence.
-
-### Act 3 handoff
-Act 3 design is now substantially locked in `STORY_DESIGN.md`. Opening title card:
-**KAPITEL 3 / På andra sidan sjön**.
-
-Act 3 protagonist is **Nova**. The act is built around preparing one increasingly perfect family-day party in a larger Swedish lakeside town. Nova hopes a perfect day will reunite her separated parents. Henning owns food/cake, Linus lighting, Mira furniture/setup, Sol music. The party genuinely succeeds; the parents do not reunite. Nova's subjective visual filter collapses from warm/perfect to cold/grey/humanly imperfect at the handoff line, then settles into a calmer real palette after she releases self-blame.
-
-The canonical emotional resolution is already locked in `STORY_DESIGN.md`. Do not improvise a replacement.
-
-
-## 2026-10-03 · POST-ACT-2 WORLD + CHAPTER 3 BOUNDARY — LOCKED
-
-Physical iPhone acceptance reached the complete Act 2 ending and exposed the final world-state contract.
-
-**Canonical completed state is `act2Complete === true && endCardSeen === true`.**
-
-At that boundary:
-- Act 2 is finished. The lake must not continue presenting Alve as a quest giver.
-- Alve is removed from the interactive lake world. His presence is now driven explicitly by chapter status via `setAlvePresent`, not indirectly by `selectedProject`.
-- The global gameplay HUD remains visible through the shared UI-shell contract.
-- `← Till byn` remains available.
-- A sibling HUD button `Till kapitel 3 →` appears and routes to `/act3`.
-- `/act3` is currently a **read-only chapter boundary only**. It writes no Act 3 save, owns no progression, and must not clear/replay Act 2.
-- Future Act 3 runtime must take ownership after this route and persist its own intro/entry state. Do not move Act 3 persistence into Act 2.
-
-This supersedes the earlier null-project rule only for **completed chapter state**: before Act 2 completion, `selectedProject=null` still means Alve is visible at `ACT2_ALVE_IDLE_POSITION`; after persisted chapter completion, Alve is intentionally absent.
+Do not resurrect superseded five-beat-final, shipping-lock or “physical acceptance still open” instructions from Git history.

@@ -174,34 +174,22 @@ Two recent clarifications are part of the Act 2 ownership contract:
 Water collision is renderer/navigation state derived from the accepted lake-master texture plus authored object footprints. It has no persistence authority and must never become a saved progression signal.
 
 
-## Act 2 closeout — 2026-10-03
+## Act 2 closeout ownership — CURRENT 2026-10-03
 
-Existing child-scoped keys and one-time legacy adoption are unchanged. No new state fields were added.
+Act 2's local state is presentation/story ownership only. The backend remains authoritative for real quest lifecycle, rewards, wallet and earned-work evidence.
 
-- Veranda completion persists `finaleIndex=5`, `finaleLineIndex=0`, `familyFinaleConsumed=true`, `epilogueConsumed=false`, `act2Complete=false`.
-- Epilogue lines persist through the existing `finaleLineIndex`. Only epilogue completion sets `epilogueConsumed` and `act2Complete`.
-- Already completed five-beat saves remain complete, including their existing end-card acknowledgement. The new story is not retroactively replayed.
-- `act2Complete && endCardSeen` is the future Act 3 handoff boundary. Act 3 must own its own intro/entry persistence; current runtime safely remains at the lake.
-- Debug remains non-persistent. Tests execute storage against an in-memory test child only; no real child/backend/device state was modified.
+### Finale migration
+- Current finale schema marker is `finaleSchemaVersion: 2`.
+- A completed pre-marker five-beat save retains all already-consumed project/family history and resumes only **Över sjön** once.
+- During that migration: `finaleIndex=5`, `familyFinaleConsumed=true`, `epilogueConsumed=false`, `act2Complete=false`, `endCardSeen=false`.
+- Finishing the epilogue sets Act 2 complete; acknowledging the chapter card sets the stable handoff boundary `act2Complete && endCardSeen`.
+- Current-schema completed saves stay completed and never replay the epilogue.
 
-GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
-See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for verification and physical acceptance.
+### Renderer-only state
+Alve presence and HUD visibility are not persistence authorities:
+- active Act 2 + `selectedProject=null` means idle Alve is valid;
+- completed Act 2 + `endCardSeen=true` means Alve is absent;
+- global gameplay chrome is derived by `uiShellState.ts` from world readiness and blocking overlay state, never from project selection.
 
-## Act 2 legacy-finale migration correction — 2026-10-03
-
-This section supersedes the earlier closeout statement that already completed five-beat saves remain fully complete and do not receive the new epilogue.
-
-The correct current rule is:
-
-- a child-scoped save that completed the old five-beat family/veranda ending but predates **Över sjön** retains all project/family-finale history;
-- normalization moves it to `finaleIndex=5`;
-- `familyFinaleConsumed=true` remains true;
-- `epilogueConsumed=false`, `act2Complete=false`, and `endCardSeen=false` until the new epilogue is actually consumed;
-- this migration is local presentation/story reconciliation only;
-- it must not mutate backend quest history, wallet, world progression or rewards;
-- after the epilogue is consumed once, normal `act2Complete && endCardSeen` semantics apply.
-
-The physical save that exposed this bug must be preserved for acceptance. Do not reset/reinstall it merely to make the state easier to test.
-
-Alve's idle visibility is renderer state only: `selectedProject=null` does not change persistence authority and must not imply that Alve is absent from the world.
-
+### Act 3 boundary
+The Chapter 3 route is read-only until Act 3 owns a versioned state family. Act 2 must not persist Act 3 entry, clear Act 2, or replay rewards during transition.

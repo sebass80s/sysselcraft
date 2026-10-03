@@ -2,7 +2,25 @@
 
 > Current-state sections and `docs/NOVA_HANDOFF_MANIFEST.md` supersede stale historical assumptions.
 
-## Current checkpoint — physical iPhone verified 2026-09-21
+## Current technical checkpoint — 2026-10-03
+
+Canonical workspace remains `/Users/karoaa/Developer/sysselcraft` on `nova/local-construction-snapshot`. Never regenerate the existing native iOS project.
+
+Act 2 has reached its physical chapter ending on the preserved iPhone test save. The current persisted close boundary is `act2Complete && endCardSeen`.
+
+Foundation rules now locked:
+- `src/game/uiShellState.ts` owns global gameplay chrome visibility. Domain state may say whether the world is ready or a blocking overlay is active, but project/quest selection must not become an accidental HUD kill-switch.
+- `selectedProject=null` is normal during active Act 2. Alve stays visible at his idle anchor then.
+- Once `act2Complete && endCardSeen` is true, Alve is deliberately absent and Act 2 no longer asks for work.
+- Completed Act 2 exposes `← Till byn` plus `Till kapitel 3 →`.
+- `/act3` is currently a read-only boundary only. It must remain free of Act 3 persistence until the Act 3 runtime owns that state.
+- Story Engine remains the canonical story presentation layer. Do not create another act-specific fullscreen story stack.
+- The next architectural extraction before substantial Act 3 runtime work is the World/Area Engine and versioned Save/Migration Engine.
+
+The preserved physical save must not be reset. It is a real migration fixture.
+
+
+## Historical checkpoint — physical iPhone verified 2026-09-21
 
 Canonical workspace: `/Users/karoaa/Developer/sysselcraft`, branch `nova/local-construction-snapshot`.
 The existing `ios/` project has been restored into this workspace and is now preserved in version control. **Never regenerate it or run `cap add ios`.**
@@ -706,48 +724,34 @@ The current Act 1 ensemble Story Moment image is intentionally a placeholder: `/
 Verification: GitHub Actions **#1497 SUCCESS** on `32bd71a3fdc776941614c8f4b037b60ce140eedc`.
 
 
-## Act 2 closeout — 2026-10-03
+## Act 2 final technical boundary — 2026-10-03
 
-Current runtime checkpoint supersedes older five-beat/veranda-only and shipping-lock notes in this document.
+Act 2's canonical closeout is six beats:
+**Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön**,
+followed by the persisted black **SLUT PÅ ANDRA KAPITLET** card.
 
-- Branch: `nova/local-construction-snapshot`; implementation commit: `19c0778b7a915f6e45c3c4f81c72188d914a4719` (based on asset HEAD `ffab328`).
-- The final motorboat contribution leads to Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön → SLUT PÅ ANDRA KAPITLET. Both supplied finale PNGs are wired; all six finale beats require an image. No art or locked dialogue was rewritten.
-- Epilogue uses the existing finale index/line and completion flags; no new save fields, child-key changes or legacy-adoption changes. Veranda completion enters index 5 with `familyFinaleConsumed=true`, `epilogueConsumed=false`, `act2Complete=false`. Only epilogue completion sets the latter two true. Already completed five-beat saves remain completed; they are not retroactively replayed or reset.
-- Shared navigation awaits asynchronous saves, rejects concurrent transitions, supports retry after a failed save, and restores the last dialogue from full-image mode. Both image controls share a safe-area-positioned flex container and 44px minimum height. Chapter cards participate in quest-UI suppression.
-- Local `npm run verify` (including new `test:act2-closeout`) and `npx tsc --noEmit --incremental false` passed. Isolated Chromium debug UI traversed all six beats at 667×375 and 568×320, checked previous/forward, full-image return, end-card acknowledgement and empty local storage. This is browser evidence, not physical iPhone acceptance.
-- `/act2` is enabled behind its existing entry gate; `/act2-test` produces the production not-found page. No Vercel deployment, backend mutation, native sync or physical save mutation was performed.
-- Physical acceptance remains: final motorboat beat → all six finale beats → black end card; both landscape directions and actual safe areas; force-quit/relaunch during veranda, epilogue and before/after end-card acknowledgement; correct art/text; HUD/quest suppression; preserved save and Act 1 regression smoke. Use the intended test child, never inject or mutate Adam's state.
-- Act 3 runtime does not yet exist. The stable future handoff is persisted `act2Complete && endCardSeen` after end-card acknowledgement. Current fallback remains “Fortsätt vid sjön”. Future Act 3 must consume this boundary and independently persist its chapter intro/entry before routing to its own runtime; it must not clear or replay Act 2. No partial Act 3 engine was added.
+### Persistence
+- Act 2 local presentation state is child-scoped.
+- `finaleSchemaVersion: 2` separates current six-beat completion from pre-marker legacy completion.
+- A pre-marker save that had completed the old five-beat ending is normalized to epilogue pending once.
+- Once the epilogue is consumed and the end card acknowledged, `act2Complete && endCardSeen` is stable and does not replay.
+- No migration may fabricate backend quests, rewards, wallet values or authoritative progression.
 
-GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
+### Lake world after completion
+- Alve has an explicit runtime-presence control. Active chapter + no project means idle Alve; completed chapter means no Alve.
+- Cabin revisit and turn-in affordances cannot survive the chapter-close boundary.
+- The global HUD remains because its visibility is presentation infrastructure, not project state.
+- Chapter 3 navigation is exposed from the completed HUD.
 
-## 2026-10-03 morning hotfix checkpoint
+### Chapter 3 ownership
+`/act3` is intentionally a non-persisting boundary page. Act 3 must create and version its own runtime state when implementation begins. Act 2 must never write an Act 3 “entered” flag on the player's behalf.
 
-Latest pre-documentation code checkpoint: `dc3c9267abb49b749e2f90f5ce98948a61fde3c4`. CI **37107244803 / #1639 SUCCESS**.
+### Regression ownership
+Behavioral contracts are split intentionally:
+- UI shell: `scripts/test-ui-shell-state.mjs`
+- Alve world presence/interactions: `scripts/test-act2-alve-presence.mjs`
+- finale migration/restart: `scripts/test-act2-closeout.mjs`
+- full authored journey: `scripts/test-act2-full-flow.mjs`
+- story/UI semantics: `scripts/test-story-ui-contract.mjs`
 
-Two physical-save edge cases were found after the Act 2 closeout and are now fixed:
-
-- **Null active project must not imply NPC absence.** `createAct2LakeGame.ts` now places Alve at `ACT2_ALVE_IDLE_POSITION` when `selectedProject === null`. Project selection still moves him to the per-project work position. `scripts/test-act2-alve-presence.mjs` covers null-at-boot, null-after-reload, all project positions, idle click, turn-in marker/callback/approach and map-derived walkability.
-- **Legacy five-beat completion must resume at the new epilogue once.** A save with Motorbåten complete and the old family/veranda ending consumed, but no true new epilogue consumption, normalizes to `finaleIndex=5`, `familyFinaleConsumed=true`, `epilogueConsumed=false`, `act2Complete=false`, `endCardSeen=false`. It must not be treated as fully Act-2-complete until **Över sjön** is consumed.
-
-This supersedes earlier closeout wording that said all completed five-beat saves remain complete and never replay the newly added epilogue. The current migration rule intentionally gives those saves the newly authored bridge exactly once.
-
-No backend mutation, native regeneration, Act 1 change or asset change was required for either hotfix. Physical validation of the migrated legacy save remains the immediate acceptance gate.
-
-
-## 2026-10-03 · POST-ACT-2 WORLD + CHAPTER 3 BOUNDARY — LOCKED
-
-Physical iPhone acceptance reached the complete Act 2 ending and exposed the final world-state contract.
-
-**Canonical completed state is `act2Complete === true && endCardSeen === true`.**
-
-At that boundary:
-- Act 2 is finished. The lake must not continue presenting Alve as a quest giver.
-- Alve is removed from the interactive lake world. His presence is now driven explicitly by chapter status via `setAlvePresent`, not indirectly by `selectedProject`.
-- The global gameplay HUD remains visible through the shared UI-shell contract.
-- `← Till byn` remains available.
-- A sibling HUD button `Till kapitel 3 →` appears and routes to `/act3`.
-- `/act3` is currently a **read-only chapter boundary only**. It writes no Act 3 save, owns no progression, and must not clear/replay Act 2.
-- Future Act 3 runtime must take ownership after this route and persist its own intro/entry state. Do not move Act 3 persistence into Act 2.
-
-This supersedes the earlier null-project rule only for **completed chapter state**: before Act 2 completion, `selectedProject=null` still means Alve is visible at `ACT2_ALVE_IDLE_POSITION`; after persisted chapter completion, Alve is intentionally absent.
+Do not duplicate these by matching old internal variable names or obsolete inline visibility expressions in unrelated tests.

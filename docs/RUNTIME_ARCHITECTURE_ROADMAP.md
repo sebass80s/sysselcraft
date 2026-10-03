@@ -1,6 +1,6 @@
 # SysselCraft runtime architecture roadmap
 
-**Status: HIGH PRIORITY / canonical architectural direction — locked 2026-10-01**
+**Status: HIGH PRIORITY / canonical architectural direction — updated 2026-10-03**
 
 SysselCraft is no longer a one-act prototype. Act 3, Act 4, Act 5 and later content are expected. New acts must therefore be built on reusable engines rather than by cloning Act-specific page, Phaser, CSS, save and progression logic.
 
@@ -161,15 +161,13 @@ Do not block runtime architecture on an asset-manifest rewrite. A manifest can b
 
 ## Immediate execution order
 
-1. Freeze current Act 2 bugfix checkpoint.
-2. Build Story Engine.
-3. Move Act 2 opening, bicycle, Alve intro, project chooser and standard contribution/reaction/finale dialogue onto it.
-4. Verify browser and iPhone behavior.
-5. Migrate Act 1 standard Story Moments.
-6. Build World / Area Engine.
-7. Introduce explicit save migrations.
-8. Generalize Act 2 progression/gating for future acts.
-9. Start Act 3 only after these foundations are sufficiently stable.
+P0 Story Engine is established and the gameplay UI shell has been extracted. Do not redo them.
+
+1. Keep Story Engine + `uiShellState.ts` stable and migrate remaining legacy Act 1 presentation incrementally only when useful.
+2. Build the shared World / Area Engine from the proven Village/Lake primitives.
+3. Introduce explicit versioned save migrations before Act 3 state grows materially.
+4. Extract/generalize progression/gating only where Act 3 needs it; Quest V2 remains backend authority and is not rewritten.
+5. Build the real Act 3 runtime on those shared foundations. The existing `/act3` page is only the non-persisting chapter boundary.
 
 ## Definition of success before Act 3
 
@@ -192,7 +190,6 @@ V1 components:
 - `src/components/story/StoryMoment.tsx` — shared fullscreen shell, image/tint/input/z-index boundary;
 - `src/components/story/StoryRunner.tsx` — typed standard beat runner;
 - `src/components/story/StoryTranscript.tsx` — multi-line speaker-prefix parser/renderer;
-- `src/components/story/StoryDebugConsole.tsx` — reusable isolated debug navigation.
 
 Locked v1 rules:
 - scene `heading` and character `speaker` are separate concepts;
@@ -217,3 +214,23 @@ Act 2 migration coverage now includes:
 Act 1 has not yet been migrated. Its existing story presentation remains valid until moved incrementally after Act 2 physical acceptance.
 
 Story Engine v1 is the required presentation API for Act 3+; do not introduce a new act-specific Story Moment CSS/JSX stack.
+
+
+## Foundation checkpoint — 2026-10-03
+
+Completed:
+- Story Engine v1 for Act 2;
+- shared story-overlay suppression contract;
+- pure global gameplay UI-shell authority in `src/game/uiShellState.ts`;
+- Act 2 six-beat closeout and legacy-finale migration;
+- explicit completed-chapter Alve presence boundary;
+- read-only `/act3` transition page.
+
+Removed as dead prototype residue:
+- unused `StoryDebugConsole` implementation/type files and their CSS;
+- prototype-era `alvePlaceholder` naming for the canonical runtime Alve entity;
+- duplicate UI-shell source-shape assertions in unrelated Act 2 tests.
+
+Still required before substantial Act 3 runtime expansion:
+- shared World / Area Engine;
+- versioned Save / Migration Engine.

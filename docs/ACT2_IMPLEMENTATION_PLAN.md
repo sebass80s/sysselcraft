@@ -443,93 +443,39 @@ Act 1 bottle-message, room-decoration and dog-home prices are explicitly outside
 - Goal for rewrite: fewer line-by-line volleys, more natural paragraph-length beats, clearer action→reaction→payoff structure, and stronger distinction between narration and spoken dialogue.
 - Do not perform this rewrite during the current Story Engine refactor unless a line is technically malformed or leaks authoring text into runtime.
 
-### Runtime/debug parity, lake collision and Cabin revisit hardening — 2026-10-01
-- Production `/act2` and debug `/act2-test` now render the same shared `Act2Runtime`. The route files are thin wrappers; debug may synthesize isolated state and expose test controls, but it must not own duplicate chooser/story/gate renderers.
-- Debug Act 2 state is intentionally non-persistent. It uses the saved child name but does not write Act 2 runtime progress.
-- The production shipping gate remains closed with `ACT2_PRODUCTION_ENABLED = false` until physical acceptance is complete.
-- Lake water collision no longer uses a guessed straight shoreline. `createAct2LakeGame.ts` samples the accepted `lake-master` texture beneath the player foot area and blocks blue/cyan water pixels while retaining building/world collision.
-- The initial lake spawn was moved back onto accepted land after browser evidence showed the previous spawn inside the lake. The pixel classifier still requires visual/physical acceptance around the full shoreline and is not considered pixel-perfect merely from automated tests.
-- Stugan `16/16` ends normally. `CABIN_WAITING_REACTION` (“En stund till”) is a separate repeatable world revisit: it becomes available by clicking the completed Stugan and remains available until Motorbåten is complete. It does not consume a contribution or auto-open after Stugan completion.
-- Story UI contract is now explicit: one dialogue card always owns one speaker/nameplate and one reply/narration unit. Click reduction belongs in manuscript editing, never multi-speaker card batching.
-- Latest local `npm run verify` result after the final story/runtime hardening has not yet been positively reported. Do not call the current HEAD verify-green until that evidence exists.
+## FINAL ACT 2 STATUS — 2026-10-03
 
-### Autonomous Act 2 bug raid — 2026-10-01
+Act 2 implementation is complete as a chapter. Future work here is bug/regression work, not new progression design, unless Kalle explicitly reopens scope.
 
-A repo/CI/live-backend audit was run without Vercel. Important findings and fixes:
+### Final playable chain
+**Act 1 end-card gate → OPEN-001…005 → bicycle → Alve intro → free choice among Stugan/Bryggan/Båthuset → 3/3 unlocks Motorbåten → exactly 64 contribution beats including story purchase/naming gates → six-beat finale → SLUT PÅ ANDRA KAPITLET.**
 
-- CI had been red behind stale Act 2 assertions even though lint/build and earlier test groups were passing. Stage-boundary tests were corrected to the canonical 4/8/12 transition model used by runtime and authored story data.
-- Finale tests were still based on the superseded six-beat crossing ending. They now match the five-beat family/veranda finale. The first true crossing remains Act 3.
-- The Motorbåten 6/16 story had regressed to replaying the Mira purchase and even exposed implementation prose about the authoritative story-item function. The earlier post-purchase version was recovered from Git history and restored; regression guards now reject purchase implementation prose.
-- Pure editorial runtime cards such as `Paus.` and `Låt återföreningen landa visuellt...` were removed from Act 2 story arrays. The story contract now rejects these as player-facing cards.
-- Repository migration history had drifted behind the live Supabase `purchase_story_item` function. A checked-in additive migration now reproduces the live 200-SysselBux Act 2 lifebuoy, steering-wheel and motorboat-parts support. No live database mutation was needed.
-- Valpen's Act 2 follow movement now respects the same walkability/water/building collision as Barnet instead of interpolating through blocked terrain.
-- `vercel.json` still had routine Git deployment enabled for `nova/local-construction-snapshot`; this was disabled to enforce the GitHub-first/Vercel-sparse policy.
-- Runtime tests were cleaned of stale hardcoded asset assumptions and now follow canonical opening/Alve story sources.
+The six final beats are:
+1. Efter motorbåten
+2. Någon är där
+3. De kom
+4. Min kompis
+5. Det är bättre
+6. Över sjön
 
-Verification checkpoint: GitHub Actions CI **#1461 SUCCESS** on commit `404be3fc40276257ff4d3b46fcb0386e55d9a2fb`, including lint, Next production build, quest regressions, Act 2 visual/story/UI contracts and the full Act 2 runtime-state suite.
+### Current invariants
+- Production Act 2 is enabled behind the persisted Act 1 chapter boundary.
+- Project contribution count remains exactly 16 per project and 64 total.
+- Backend work/reward evidence remains authoritative; local Act 2 state owns only consumed/presented world story.
+- Legacy five-beat completion receives **Över sjön** once through schema migration.
+- Global HUD visibility is owned by the shared UI shell, not by `selectedProject`.
+- `selectedProject=null` keeps idle Alve during an active chapter.
+- `act2Complete && endCardSeen` removes Alve and closes quest-giver behavior.
+- Completed Act 2 exposes the Chapter 3 transition.
+- `/act3` currently writes no Act 3 state.
 
-Still requires human/physical evidence: full shoreline feel, touch/camera behavior, restart on device, story-item round trips, and complete Motorbåten → family/veranda playthrough.
+### Test ownership
+Use the narrow test that owns the contract. Do not add duplicate regex guards for the same internal implementation:
+- `test:act2-runtime`: progression/state invariants
+- `test:act2-full-flow`: complete authored journey
+- `test:act2-closeout`: finale/migration/restart
+- `test:act2-alve`: Alve world entity behavior
+- `test:ui-shell`: global HUD lifecycle
+- `test:story-ui`: shared Story Engine presentation
 
-### Full Act 2 flow verification — 2026-10-02
-
-A complete automated chapter-flow contract now runs in `npm run verify` as `test:act2-full-flow`.
-
-Verified chain:
-**Clinic-complete Act 1 gate → clean production entry/baseline → OPEN-001…005 → bicycle → full Alve intro → project selection → Stugan/Bryggan/Båthuset → all story purchases → Motorbåten unlock → motorboat parts gate → boat naming gate → 64/64 contributions → five-beat family/veranda finale → persisted black “SLUT PÅ ANDRA KAPITLET” card.**
-
-The test also exercises restart/normalization boundaries, village purchase round-trips and recovery after an initial backend sync failure. Pre-release visits to the locked production route can no longer establish a latent Act 2 baseline, and old pre-release baseline residue is discarded on the first legitimate production entry.
-
-Verification checkpoint: GitHub Actions **#1475 SUCCESS** on `c6e9a20f0a5cb8b2c7ade56090ab24c449c69445`.
-
-Important release boundary: `ACT2_PRODUCTION_ENABLED` remains `false`. The real Act 1 → `/act2` route is intentionally shipping-locked until physical acceptance. `/act2-test` renders the same shared runtime for acceptance testing.
-
-### Act 1 chapter boundary dependency — 2026-10-02
-
-The production Act 2 entry contract now includes the explicit Act 1 chapter ending.
-
-Required order:
-**Clinic completion → Act 1 ensemble finale → SLUT PÅ FÖRSTA KAPITLET → acknowledgement → Stigen till sjön → production Act 2 entry/baseline → OPEN-001 Valpen sticker.**
-
-`act1EndCardSeen=true` is therefore part of the production Act 2 access contract. Merely having Clinic stage 4 or `clinicCompletionSeen` is no longer sufficient for newly authored progression. Legacy Clinic-complete saves are migration-compatible and normalize as already acknowledged so old players are not forced through newly inserted story retroactively.
-
-Do not move Act 2 baseline establishment earlier than deliberate path activation. Do not auto-route directly from the Act 1 chapter card into Act 2.
-
-Current Act 1 finale visual is a temporary placeholder only. Final ensemble art remains pending canonical references.
-
-
-## Act 2 closeout — 2026-10-03
-
-This checkpoint supersedes older veranda-only and shipping-lock notes above. Act 2 now includes all six finale beats, the supplied 05/06 images, exact canonical “Över sjön” dialogue, restart-safe epilogue progress and shared Previous/Continue layout. No assets, Act 1 story/gameplay or native settings changed.
-
-Local full verify, TypeScript and isolated browser navigation at 667×375 and 568×320 passed. Completed legacy saves remain completed; ongoing final sequences include the epilogue. Production `/act2` uses its existing entry gate; `/act2-test` is not found in production.
-
-GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
-
-Physical iPhone acceptance is still OPEN. Run the final motorboat contribution through all six finale beats and the end card; verify both landscape directions, actual safe areas, navigation, full-image, HUD/quest suppression and force-quit/relaunch on the intended test child's save. Never mutate Adam. No native sync or Vercel deployment was performed.
-
-Act 3 runtime is absent; persisted `act2Complete && endCardSeen` is its safe future entry boundary. See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for exact implementation and acceptance details.
-
-## 2026-10-03 closeout migration addendum
-
-The six-beat finale and epilogue are implemented. The current final chain is:
-
-**Motorbåten 16/16 → Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön → SLUT PÅ ANDRA KAPITLET**.
-
-Two acceptance-discovered edge cases are now explicit regression requirements:
-
-1. **No-active-project NPC presence**
-   - `selectedProject=null` is valid before project choice and after project completion.
-   - Alve must remain visible at `ACT2_ALVE_IDLE_POSITION`.
-   - Null state must survive reload without hiding Alve.
-   - Project choice must still move Alve to its canonical work position.
-
-2. **Five-beat legacy finale migration**
-   - a save that already consumed the old family/veranda ending but predates the new epilogue must resume once at `finaleIndex=5`;
-   - it must have `epilogueConsumed=false`, `act2Complete=false`, `endCardSeen=false` until the epilogue is actually consumed;
-   - after epilogue completion, normal Act 2 completion/end-card semantics apply;
-   - do not reset the child save or fabricate backend progress to test this.
-
-Automated gates include `test:act2-alve`, `test:act2-closeout`, full Act 2 flow and `npm run verify`. Latest CI evidence before documentation updates: **#1639 SUCCESS** at `dc3c9267abb49b749e2f90f5ce98948a61fde3c4`.
-
-Immediate remaining gate is physical iPhone acceptance of the migrated save through epilogue and chapter-end card, including force-quit/relaunch boundaries.
-
+Physical evidence has reached the complete ending on the preserved iPhone save. Continue to preserve that save for regression work; do not reset it to make tests easier.
