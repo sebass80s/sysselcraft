@@ -1,6 +1,7 @@
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/interactionContract";
+import { resolveDirectMovementIntent } from "../runtime/world/movement";
 import {
   ACT2_ALVE_WORK_POSITIONS,
   ACT2_ALVE_IDLE_POSITION,
@@ -247,29 +248,21 @@ export async function createAct2LakeGame(
     update(_time: number, delta: number) {
       if (!this.player) return;
       if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false })) return;
-      const left = Boolean(this.cursors?.left.isDown || this.wasd?.left.isDown);
-      const right = Boolean(this.cursors?.right.isDown || this.wasd?.right.isDown);
-      const up = Boolean(this.cursors?.up.isDown || this.wasd?.up.isDown);
-      const down = Boolean(this.cursors?.down.isDown || this.wasd?.down.isDown);
-      let dx = Number(right) - Number(left);
-      let dy = Number(down) - Number(up);
+      const movement = resolveDirectMovementIntent(
+        {
+          left: Boolean(this.cursors?.left.isDown || this.wasd?.left.isDown),
+          right: Boolean(this.cursors?.right.isDown || this.wasd?.right.isDown),
+          up: Boolean(this.cursors?.up.isDown || this.wasd?.up.isDown),
+          down: Boolean(this.cursors?.down.isDown || this.wasd?.down.isDown),
+        },
+        { x: this.player.x, y: this.player.y },
+        this.moveTarget,
+        8,
+      );
+      if (movement.clearTarget) this.moveTarget = null;
 
-      if (dx || dy) {
-        this.moveTarget = null;
-      } else if (this.moveTarget) {
-        dx = this.moveTarget.x - this.player.x;
-        dy = this.moveTarget.y - this.player.y;
-        if (Math.hypot(dx, dy) < 8) {
-          this.moveTarget = null;
-          dx = 0;
-          dy = 0;
-        }
-      }
-
-      if (dx || dy) {
-        const length = Math.hypot(dx, dy);
-        dx /= length;
-        dy /= length;
+      if (movement.direction) {
+        const { x: dx, y: dy } = movement.direction;
         const speed = 180 * delta / 1000;
         const nextX = Phaser.Math.Clamp(this.player.x + dx * speed, 37, ACT2_WORLD.width - 37);
         const nextY = Phaser.Math.Clamp(this.player.y + dy * speed, 300, ACT2_WORLD.height - 8);
