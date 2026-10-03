@@ -15,6 +15,46 @@ import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 
+const villagePointerTargetFixtures = [
+  {
+    name: "scene pointer keeps Recycling ahead of overlapping Linus target",
+    candidates: [
+      { id: "ground", priority: 10, enabled: true },
+      { id: "henning", priority: 20, enabled: false },
+      { id: "shop", priority: 30, enabled: false },
+      { id: "linus", priority: 40, enabled: true },
+      { id: "recycling", priority: 50, enabled: true },
+    ],
+    expected: "recycling",
+  },
+  {
+    name: "scene pointer keeps Shop ahead of overlapping Henning target",
+    candidates: [
+      { id: "ground", priority: 10, enabled: true },
+      { id: "henning", priority: 20, enabled: true },
+      { id: "shop", priority: 30, enabled: true },
+      { id: "linus", priority: 40, enabled: false },
+      { id: "recycling", priority: 50, enabled: false },
+    ],
+    expected: "shop",
+  },
+  {
+    name: "scene pointer falls back to ground when no world target is hit",
+    candidates: [
+      { id: "ground", priority: 10, enabled: true },
+      { id: "henning", priority: 20, enabled: false },
+      { id: "shop", priority: 30, enabled: false },
+      { id: "linus", priority: 40, enabled: false },
+      { id: "recycling", priority: 50, enabled: false },
+    ],
+    expected: "ground",
+  },
+];
+
+for (const fixture of villagePointerTargetFixtures) {
+  assert.equal(resolveInteractionPriority(fixture.candidates)?.id, fixture.expected, fixture.name);
+}
+
 const henningPriorityFixtures = [
   {
     name: "Henning construction attention outranks story CTA and backend quest",
@@ -831,4 +871,4 @@ assert.ok(
   "Village must not retain local story-attention bubble drawing",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${villagePointerTargetFixtures.length} pointer-target fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
