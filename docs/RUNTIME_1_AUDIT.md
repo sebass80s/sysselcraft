@@ -214,3 +214,20 @@ Their existing click/navigation behavior remains local for now; this slice centr
 A source sweep confirms the old local 27px quest-badge renderers are gone from `createVillageGame.ts`.
 
 Quest-marker presentation migration is therefore complete across current playable worlds. NPC/story-attention markers remain a separate migration target.
+
+
+## Checkpoint — NPC/story-attention markers converged
+
+Village's remaining story-attention markers now use the shared Interaction System renderer:
+- Linus intro/story attention;
+- construction/resident story attention.
+
+The canonical marker renderer now owns two distinct system concepts:
+- quest markers: brown/yellow badge with `?` or `!`;
+- NPC/story attention: white speech bubble with `•••`.
+
+This preserves semantic and visual distinction while keeping one canonical implementation per concept.
+
+A source sweep confirms the old local speech-bubble drawing code is gone from `createVillageGame.ts`.
+
+Marker-presentation convergence is now complete across current playable worlds. Generic interaction resolution, approach-point ownership and shared world-input authority remain pending.
