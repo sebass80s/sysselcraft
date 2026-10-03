@@ -886,7 +886,7 @@ This prevents later chapters from colliding in History, progression or save migr
 
 ### In progress
 - execute/close the Act 2 History parity checkpoint;
-- replace Act 2 development History consumer with shared Registry/History;
+- **DONE:** Act 2 development History consumer now uses shared Registry/History;
 - migrate both current HUD implementations to the shared Game UI Shell.
 
 ### Not started
@@ -898,3 +898,10 @@ This prevents later chapters from colliding in History, progression or save migr
 - physical Runtime 1.0 acceptance;
 - legacy client deletion;
 - Act 3 content runtime.
+
+
+### Act 2 History consumer migration — complete on dev branch
+
+`Act2Runtime` on `nova/runtime-architecture-v1` now consumes shared Story Registry/History rather than assembling History inline.
+
+Legacy/live behavior remains the oracle. Promotion remains blocked on broader Runtime 1.0 parity and later browser/iPhone acceptance.
