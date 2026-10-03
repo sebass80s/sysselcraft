@@ -231,3 +231,15 @@ This preserves semantic and visual distinction while keeping one canonical imple
 A source sweep confirms the old local speech-bubble drawing code is gone from `createVillageGame.ts`.
 
 Marker-presentation convergence is now complete across current playable worlds. Generic interaction resolution, approach-point ownership and shared world-input authority remain pending.
+
+
+## Handover checkpoint — marker presentation converged
+
+Verified at dev HEAD `959b6fd70c3d0c5015706899e9f2d33e960bb384`:
+- Village and Act 2 both use `GameUiShell`;
+- Act 2 uses shared Story Registry/History;
+- Village contains five `createInteractionMarker()` consumers;
+- the old hand-drawn Linus story bubble is gone;
+- Act 2 uses the same shared marker renderer.
+
+Marker presentation is therefore converged. Next work must target interaction behavior/ownership, not invent another marker layer.
