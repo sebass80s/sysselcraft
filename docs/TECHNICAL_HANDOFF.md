@@ -1161,3 +1161,17 @@ Canonical fallback target priorities:
 The old behavior order is preserved exactly.
 
 Do not remove the object-level Phaser pointer handlers yet. They exist partly because native iOS WebView event ordering has historically been unreliable. A future de-duplication must be acceptance-tested on physical iPhone before retirement.
+
+
+## Runtime 1.0 Interaction checkpoint — Henning arrival + audit
+
+Henning ordinary arrival now uses `resolveInteraction()` with:
+- dynamic current Henning anchor;
+- `HENNING_APPROACH = { x: 370, y: 468 }`;
+- `HENNING_INTERACTION_RADIUS = 95`.
+
+Parity locks 95/96 px behavior.
+
+CI is now configured to run on pushes to `nova/runtime-architecture-v1`, so future runtime commits receive a real `npm run verify` result without relying on Vercel.
+
+Current Interaction System status is **late convergence**, not incomplete-from-scratch. Remaining risky special cases are Linus dual geometry, Shop/Mira multi-approach and Sol resident behavior. Preserve native object-level pointer fallbacks until browser/iPhone acceptance.
