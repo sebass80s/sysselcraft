@@ -992,3 +992,18 @@ Preserved product behavior:
 Parity locks 40 px = activate and 41 px = approach.
 
 No Vercel verification is expected during the current build-rate-limit period. GitHub remains the source of truth for code/checkpoints; do not report a build as run unless an actual Actions run exists.
+
+
+## Runtime 1.0 interaction checkpoint 4 — bottle message
+
+Village bottle message now delegates interaction outcome to shared `resolveInteraction()`.
+
+Preserved:
+- world point x 835 / y 500;
+- 38 px arrival radius;
+- availability gate;
+- existing pathfinding and `onBottleMessageInteract` callback.
+
+Parity locks 38/39 px behavior.
+
+The Interaction System now has four concrete behavior consumers across Lake and Village. Continue with small low-risk consumers before world-input convergence.
