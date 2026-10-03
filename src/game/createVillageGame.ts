@@ -493,14 +493,37 @@ export async function createVillageGame(
       }
 
       const attention = requestedConstruction.attention;
-      if (this.attentionInteractionPending && attention && this.player) {
-        if (distance(this.player, attention.approach) > 32) return;
-        this.attentionInteractionPending = false;
-        this.path = [];
-        this.targetMarker?.setVisible(false);
-        constructionDialogueOpen = true;
-        callbacks.onConstructionInteract(attention.id);
-        return;
+      if (this.attentionInteractionPending && this.player) {
+        const interaction: InteractionDefinition | null = attention ? {
+          id: `village:construction-attention:${attention.id}`,
+          kind: "npc",
+          anchor: attention.approach,
+          approachPoint: attention.approach,
+          interactionRadius: 32,
+          marker: "npc-attention",
+          enabled: true,
+        } : null;
+        const resolution = interaction
+          ? resolveInteraction(
+              [interaction],
+              { interactionId: interaction.id, requestedAt: interaction.anchor },
+              { x: this.player.x, y: this.player.y },
+            )
+          : { status: "disabled" as const };
+        if (resolution.status === "disabled") {
+          this.attentionInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+          return;
+        }
+        if (resolution.status === "activate") {
+          this.attentionInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+          constructionDialogueOpen = true;
+          callbacks.onConstructionInteract(interaction.interaction.id.replace("village:construction-attention:", ""));
+          return;
+        }
       }
 
       if (this.bottleMessageInteractionPending && this.player) {
