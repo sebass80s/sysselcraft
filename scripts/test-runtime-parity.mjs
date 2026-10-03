@@ -536,6 +536,20 @@ assert.ok(
   !villageRuntimeSource.includes('<header className="prototype-header">'),
   "Village runtime must not keep a parallel legacy HUD implementation",
 );
+assert.ok(
+  villageRuntimeSource.includes("const villageBlockingOverlayVisible ="),
+  "Village presentation must derive one blocking-overlay authority",
+);
+for (const stateName of ["dialogueOpen", "mainMenuOpen", "parentMenuOpen", "childPairingOpen", "roomOpen", "dogHomeOpen", "saveError"]) {
+  assert.ok(
+    villageRuntimeSource.includes(stateName),
+    `Village blocking-overlay authority must account for ${stateName}`,
+  );
+}
+assert.ok(
+  !villageRuntimeSource.includes("setConstructionDialogueOpen"),
+  "Village presentation must not manually toggle the retired construction-dialogue input lock",
+);
 
 
 
@@ -570,8 +584,20 @@ assert.ok(
   "Village handle must expose the canonical world-input contract",
 );
 assert.ok(
-  villageGameSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled"),
+  villageGameSource.includes("worldInputEnabled({"),
   "Village movement/input must consume the shared world-input authority",
+);
+assert.ok(
+  villageGameSource.includes("private acceptsWorldInput()"),
+  "Village object interactions must share one world-input guard",
+);
+assert.ok(
+  !villageGameSource.includes("constructionDialogueOpen"),
+  "Village Phaser runtime must not retain the retired local dialogue-lock flag",
+);
+assert.ok(
+  !villageGameSource.includes("setConstructionDialogueOpen"),
+  "Village Phaser handle must not expose the retired dialogue-lock setter",
 );
 assert.equal(
   (villageGameSource.match(/createInteractionMarker\(this, \{/g) ?? []).length,
