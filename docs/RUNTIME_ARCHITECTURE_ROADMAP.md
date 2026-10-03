@@ -1359,3 +1359,35 @@ Current convergence status:
 - generic hotspot semantics: **established** for Recycling and bottle message, but no generic hit-test registry exists yet.
 
 Interaction System is therefore no longer an early extraction. It is in **late convergence**. Do not delete the native/object-level pointer fallbacks until browser + physical iPhone parity is complete.
+
+
+## Runtime 1.0 verified checkpoint — 2026-10-03
+
+The Runtime Architecture branch now runs the canonical GitHub CI workflow on every push.
+
+Verified GitHub Actions run:
+- run: **#1746**
+- result: **SUCCESS**
+- workflow command: `npm run verify`
+- verified branch: `nova/runtime-architecture-v1`
+
+The successful verify includes production build plus all chained regression/contract suites, including:
+- construction and save/reload checks;
+- quest presentation/recovery/turn-in/request-guard;
+- Sol story;
+- Act 2 visual/story/runtime/full-flow/doc-sync/closeout/Alve tests;
+- Game UI Shell and Story UI contracts;
+- final Runtime 1.0 parity harness.
+
+Interaction checkpoint included in this green baseline:
+- Henning ordinary arrival uses shared `resolveInteraction()`, authored approach `{370,468}`, radius 95;
+- Sol ordinary arrival uses shared `resolveInteraction()`, authored approach `{835,485}`, radius 95;
+- parity locks both 95px activation / 96px approach boundaries;
+- canonical marker owners are asserted explicitly rather than through a brittle marker-count test.
+
+The CI repair pass also synchronized stale harness assertions with already-accepted Runtime 1.0 ownership: shared marker renderer, GameUiShell, world-input authority, Story Registry history ownership and shared Interaction dependencies. No production behavior was intentionally reverted to satisfy legacy tests.
+
+Remaining risky Interaction special cases are still:
+- Linus ordinary arrival dual geometry;
+- Shop/Mira multi-approach behavior;
+- deeper object-handler / scene-handler de-duplication, which remains gated on browser + physical iPhone acceptance.
