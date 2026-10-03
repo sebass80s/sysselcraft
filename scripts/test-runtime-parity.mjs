@@ -687,6 +687,15 @@ assert.ok(
   villageGameSource.includes('if (intent === "quest-source")'),
   "Linus priority marker sync must render quest marker only when quest intent wins",
 );
+assert.ok(
+  villageGameSource.includes("this.residents.linus = this.linus;\n      this.syncLinusPriorityMarkers();"),
+  "Linus marker arbitration must initialize immediately after the sprite exists",
+);
+assert.ok(
+  villageGameSource.includes("resident.setPosition(attention.position.x, attention.position.y)") &&
+    villageGameSource.includes("this.syncLinusPriorityMarkers();"),
+  "Linus priority markers must resync when construction presentation moves a resident",
+);
 assert.equal(
   (villageGameSource.match(/createInteractionMarker\(this, \{/g) ?? []).length,
   3,
