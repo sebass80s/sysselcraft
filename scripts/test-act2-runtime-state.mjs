@@ -550,7 +550,12 @@ assert.ok(lakeGameSource.includes('setActiveProject: (project: Act2RestorationPr
 assert.ok(lakeGameSource.includes('setAlveTurnInAvailable: (available: boolean) => void'), "lake runtime must expose pending turn-in marker state");
 assert.ok(lakeGameSource.includes('"/assets/village/reboot/alve-runtime.png"'), "lake runtime must load the canonical standalone Alve asset");
 assert.ok(lakeGameSource.includes('.setDisplaySize(78, 117)'), "Alve runtime art must remain child-scale rather than adult-scale");
-assert.ok(lakeGameSource.includes("distance <= 135"), "Alve quest hand-in must require the child to be physically nearby");
+assert.ok(
+  lakeGameSource.includes('id: "act2:alve-turn-in"')
+    && lakeGameSource.includes("interactionRadius: 135")
+    && lakeGameSource.includes("resolveInteraction("),
+  "Alve quest hand-in must require the child to be physically nearby through shared interaction resolution",
+);
 assert.ok(lakeGameSource.includes("options.onAlveTurnIn?.()"), "nearby Alve interaction must open the Act 2 turn-in");
 assert.ok(lakeGameSource.includes("event.stopPropagation()"), "Alve taps must not fall through to the generic touch-to-move handler");
 assert.ok(lakeGameSource.includes("Tryck på Alve"), "nearby pending turn-in must give explicit world feedback");
