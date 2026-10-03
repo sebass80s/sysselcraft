@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import vm from "node:vm";
+import ts from "typescript";
 import { deriveGameUiShell } from "../src/game/uiShellState.ts";
 import { SYSTEM_ASSETS, SYSTEM_COMPONENT_IDS, CANONICAL_SYSTEMS } from "../src/runtime/systemRegistry.ts";
 import { createStoryRegistry } from "../src/runtime/story/storyRegistry.ts";
 import { historyEntriesFor, resolveReplayRequest } from "../src/runtime/story/storyHistory.ts";
-import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../src/runtime/story/act2StoryRegistry.ts";
 import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
 import { resolveInteraction, worldInputEnabled } from "../src/runtime/interaction/interactionContract.ts";
 import { resolveInteractionPriority } from "../src/runtime/interaction/interactionPriority.ts";
@@ -14,6 +15,36 @@ import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTIO
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
+
+
+function loadTsModule(file, dependencies) {
+  const exports = {};
+  const code = ts.transpileModule(fs.readFileSync(new URL(file, import.meta.url), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  vm.runInNewContext(code, {
+    exports,
+    require(name) {
+      assert.ok(name in dependencies, `Unexpected parity dependency: ${name}`);
+      return dependencies[name];
+    },
+  });
+  return exports;
+}
+
+const {
+  ACT2_STORY_REGISTRY,
+  ACT2_STORYLINE_IDS,
+  act2HistoryProgress,
+} = loadTsModule("../src/runtime/story/act2StoryRegistry.ts", {
+  "../../game/act2OpeningStory": { ACT2_OPENING_BEATS },
+  "../../game/act2CabinStory": { CABIN_CONTRIBUTION_BEATS },
+  "../../game/act2JettyStory": { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT },
+  "../../game/act2BoathouseStory": { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT },
+  "../../game/act2MotorboatStory": { MOTORBOAT_CONTRIBUTION_BEATS },
+  "../../game/act2FinaleStory": { ACT2_FINALE_BEATS },
+  "./storyRegistry": { createStoryRegistry },
+});
 
 const villagePointerTargetFixtures = [
   {
