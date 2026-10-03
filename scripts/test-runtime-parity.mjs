@@ -6,12 +6,71 @@ import { createStoryRegistry } from "../src/runtime/story/storyRegistry.ts";
 import { historyEntriesFor, resolveReplayRequest } from "../src/runtime/story/storyHistory.ts";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../src/runtime/story/act2StoryRegistry.ts";
 import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
+import { resolveInteraction } from "../src/runtime/interaction/interactionContract.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
+
+const interactionFixtures = [
+  {
+    name: "Alve turn-in activates inside accepted legacy radius",
+    playerPosition: { x: 100, y: 100 },
+    interaction: {
+      id: "act2:alve-turn-in",
+      kind: "npc",
+      anchor: { x: 200, y: 100 },
+      approachPoint: { x: 200, y: 158 },
+      interactionRadius: 135,
+      marker: "quest-turn-in",
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Alve turn-in resolves to authored approach point outside radius",
+    playerPosition: { x: 20, y: 20 },
+    interaction: {
+      id: "act2:alve-turn-in",
+      kind: "npc",
+      anchor: { x: 200, y: 200 },
+      approachPoint: { x: 200, y: 258 },
+      interactionRadius: 135,
+      marker: "quest-turn-in",
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 200, y: 258 },
+  },
+  {
+    name: "disabled interaction cannot activate or approach",
+    playerPosition: { x: 200, y: 200 },
+    interaction: {
+      id: "act2:alve-turn-in",
+      kind: "npc",
+      anchor: { x: 200, y: 200 },
+      approachPoint: { x: 200, y: 258 },
+      interactionRadius: 135,
+      marker: "quest-turn-in",
+      enabled: false,
+    },
+    expectedStatus: "disabled",
+  },
+];
+
+for (const fixture of interactionFixtures) {
+  const resolution = resolveInteraction(
+    [fixture.interaction],
+    { interactionId: fixture.interaction.id, requestedAt: fixture.interaction.anchor },
+    fixture.playerPosition,
+  );
+  assert.equal(resolution.status, fixture.expectedStatus, fixture.name);
+  if (fixture.expectedTarget) {
+    assert.deepEqual(resolution.target, fixture.expectedTarget, fixture.name);
+  }
+}
 
 const shellFixtures = [
   {
@@ -386,4 +445,4 @@ assert.ok(
   "Village must not retain local story-attention bubble drawing",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
