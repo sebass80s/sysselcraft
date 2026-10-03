@@ -257,3 +257,18 @@ The migration deliberately keeps chapter/world data local while moving generic b
 Parity fixtures cover all three outcomes. This is the first vertical slice of interaction behavior convergence, not completion of the Interaction System.
 
 Next suitable slices are additional current-world interactions that repeat the same radius/approach decision, followed by shared world-input authority.
+
+
+## Checkpoint — Village noticeboard uses shared resolution
+
+The Village noticeboard is the second real Interaction System behavior consumer.
+
+Its previously separate approach-point/radius rules are now represented by one `InteractionDefinition`, and arrival/enable decisions use shared `resolveInteraction()`.
+
+Preserved behavior:
+- approach point: x 175 / y 430;
+- arrival radius: 36 px;
+- disabled when the backend-derived noticeboard attention is absent;
+- existing Village pathfinding, target marker and callback remain unchanged.
+
+Parity explicitly checks the 36/37 px boundary. This demonstrates the shared contract across both Lake and Village without attempting a flag-day interaction rewrite.
