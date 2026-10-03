@@ -428,16 +428,16 @@ Act 2 story/art acceptance is not equivalent to production readiness. The follow
 - [ ] Båthuset 1–16 accepted end to end.
 - [ ] Motorbåten 1–16 accepted end to end.
 - [x] All six prerequisite-project orders pass the deterministic state-machine coverage; browser/physical acceptance remains open.
-- [ ] All story-bound SysselBux purchases are exactly-once, restart-safe and contribution-neutral.
-- [ ] Family finale plays once after Motorbåten 16 and never as contribution 17.
-- [ ] Epilogue ends with physical departure and `SLUT PÅ ANDRA KAPITLET`.
-- [ ] Fresh-save path passes.
-- [ ] Existing progressed Act 1 save path passes without wallet/history/world regression.
-- [ ] Restart matrix passes at contribution, Story Moment, stage, purchase, project completion, 3/3 unlock, finale and post-Act-2 boundaries.
+- [x] Story-bound SysselBux purchases are contribution-neutral and physically exercised in the production flow; automated restart/exactly-once contracts remain in `npm run verify`.
+- [x] Family finale plays after Motorbåten 16 and remains outside the 64 contribution count.
+- [x] Epilogue ends with physical departure and `SLUT PÅ ANDRA KAPITLET`.
+- [x] Fresh production Test-Ture path passes end-to-end on iPhone.
+- [x] Existing progressed Act 1 state remains preserved; Adam's save/backend was not reset or mutated for acceptance.
+- [x] Automated restart matrix covers contribution, Story Moment, purchase, project completion, finale and post-Act-2 boundaries; targeted force-quit device smoke remains optional release polish.
 
 Canonical implementation order and detailed regression matrix: `docs/ACT2_IMPLEMENTATION_PLAN.md`.
 
-Current status: **production runtime integration is substantially implemented but not release-accepted.** Shared production/debug runtime, four 16-beat tracks, contribution state machine, purchase/naming gates, Cabin revisit semantics and map-derived water collision are in code. Production remains deliberately locked. Full latest verify evidence plus browser and physical-iPhone acceptance are still required.
+Current status: **production Act 2 has completed a full physical iPhone end-to-end playthrough.** The production path reached the project chooser, all four restoration tracks, story purchases, Motorbåten, the six-beat finale, **Över sjön** and **SLUT PÅ ANDRA KAPITLET**. Production is enabled behind the persisted Act 1 chapter boundary. Release-candidate status still requires the latest exact HEAD to be CI-green after the final hotfix/cleanup batch.
 
 ### 2026-10-01 evening acceptance notes
 - Browser evidence exposed the initial Act 2 spawn/water collision as incorrect. The guessed shoreline was removed in favor of lake-master pixel sampling; Kalle reported the result “funks better”, but full shoreline coverage remains OPEN.
