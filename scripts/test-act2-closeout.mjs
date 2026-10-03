@@ -24,7 +24,11 @@ const preferences = {
   set: async ({ key, value }) => { writes.push(key); storage.set(key, value); },
   remove: async ({ key }) => { storage.delete(key); },
 };
-const stateModule = () => load("src/game/act2RuntimeState.ts", { "@capacitor/preferences": { Preferences: preferences } });
+const saveMigrations = load("src/runtime/save/migrations.ts");
+const stateModule = () => load("src/game/act2RuntimeState.ts", {
+  "@capacitor/preferences": { Preferences: preferences },
+  "../runtime/save/migrations": saveMigrations,
+});
 const s = stateModule();
 const story = load("src/game/act2FinaleStory.ts").ACT2_FINALE_BEATS;
 const completeProjects = Object.fromEntries(["cabin", "dock", "boathouse", "motorboat"].map((name) => [name, { contributions: 16 }]));
