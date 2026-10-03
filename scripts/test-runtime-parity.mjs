@@ -312,4 +312,20 @@ const fullyCompletedAct2 = {
 };
 assertAct2HistoryParity("fully completed Act 2",fullyCompletedAct2);
 
+
+
+const act2RuntimeSource = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
+assert.ok(
+  act2RuntimeSource.includes("<GameUiShell"),
+  "Act 2 development runtime must consume the shared GameUiShell",
+);
+assert.ok(
+  !act2RuntimeSource.includes('src="/assets/village/sysselcraft-logo.png"'),
+  "Act 2 runtime must not hardcode the global brand asset once migrated to GameUiShell",
+);
+assert.ok(
+  !act2RuntimeSource.includes('<header className="prototype-header act2-hud-input-shield"'),
+  "Act 2 runtime must not keep a parallel legacy HUD implementation",
+);
+
 console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
