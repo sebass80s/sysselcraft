@@ -543,3 +543,13 @@ export async function saveAct2RuntimeState(state: Act2RuntimeState): Promise<voi
   const key = childId ? childRuntimeKey(childId) : LEGACY_KEY;
   await Preferences.set({ key, value: JSON.stringify(normalizeAct2RuntimeState(state)) });
 }
+
+
+export async function clearAct2RuntimeStateForPairedChild(): Promise<void> {
+  const childId = await getAct2PairedChildId();
+  if (!childId) {
+    await Preferences.remove({ key: LEGACY_KEY });
+    return;
+  }
+  await Preferences.remove({ key: childRuntimeKey(childId) });
+}
