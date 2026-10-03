@@ -496,12 +496,13 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeCompletionPresentation = activeCompletionLine
     ? parseStoryLine(activeCompletionLine, childName)
     : null;
+  const postAct2LakeIdle = state.act2Complete && state.endCardSeen;
   const hudVisible =
     !debug
     && !chapterIntroVisible
     && state.openingComplete
     && state.alveIntroComplete
-    && state.selectedProject !== null
+    && (state.selectedProject !== null || postAct2LakeIdle)
     && !finalePending
     && !completionProject
     && !purchaseRequired
