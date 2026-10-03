@@ -1,7 +1,7 @@
 import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
-import { resolveInteraction, type InteractionDefinition } from "../runtime/interaction/interactionContract";
+import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
 import {
   AMBIENT_TEXTURE_KEYS,
 } from "./worldDecor";
@@ -16,6 +16,7 @@ export type VillageGameHandle = {
   destroy: () => void;
   setConstruction: (presentation: ConstructionPresentation) => void;
   setConstructionDialogueOpen: (open: boolean) => void;
+  setWorldInputEnabled: (enabled: boolean) => void;
   setIntroComplete: (complete: boolean) => void;
   setDogVisible: (visible: boolean) => void;
   setHenningVisible: (visible: boolean) => void;
@@ -94,6 +95,7 @@ export async function createVillageGame(
   const Phaser = await import("phaser");
   let requestedConstruction: ConstructionPresentation = { stages: {}, attention: null };
   let constructionDialogueOpen = false;
+  let requestedWorldInputEnabled = true;
   let requestedIntroComplete = false;
   let requestedDogVisible = false;
   let requestedHenningVisible = false;
@@ -215,7 +217,7 @@ export async function createVillageGame(
         this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
       }
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
-        if (!this.player) return;
+        if (!this.player || !worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: constructionDialogueOpen })) return;
         const recyclingPlacement = VISUAL_PRODUCTION_PLACEMENTS.find((placement) => placement.building === "recycling");
         if (requestedConstruction.stages.recycling === 4 && recyclingPlacement &&
             Phaser.Geom.Rectangle.Contains(
@@ -348,9 +350,22 @@ export async function createVillageGame(
       this.sol?.setVisible(visible);
     }
 
+    setWorldInputEnabled(enabled: boolean) {
+      requestedWorldInputEnabled = enabled;
+      if (!enabled) {
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+      }
+    }
+
     update(_: number, delta: number) {
       if (!this.player) return;
       this.updateDog();
+      if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: constructionDialogueOpen })) {
+        this.path = [];
+        this.targetMarker?.setVisible(false);
+        return;
+      }
       if (isTextControlFocused()) {
         this.attentionInteractionPending = false;
         this.linusInteractionPending = false;
@@ -1121,7 +1136,19 @@ export async function createVillageGame(
 
   return {
     destroy: () => game.destroy(true),
-    setConstructionDialogueOpen: (open) => { constructionDialogueOpen = open; },
+    setConstructionDialogueOpen: (open) => {
+      constructionDialogueOpen = open;
+      requestedWorldInputEnabled = !open;
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setWorldInputEnabled(!open);
+      }
+    },
+    setWorldInputEnabled: (enabled) => {
+      requestedWorldInputEnabled = enabled;
+      if (game.scene.isActive("VillageScene")) {
+        (game.scene.getScene("VillageScene") as VillageScene).setWorldInputEnabled(enabled);
+      }
+    },
     setConstruction: (presentation) => {
       if (game.scene.isActive("VillageScene")) {
         (game.scene.getScene("VillageScene") as VillageScene).setConstruction(presentation);
