@@ -306,7 +306,7 @@ Required finale sequence to preserve during image triage:
 7. preserved cottage memories noticed;
 8. veranda/living-lake payoff: **“Det är inte riktigt som förr.” / “Nej. …Det är bättre.”**
 
-Do not attach an Act 3 reveal directly to this sequence. First true crossing remains Act 3 opening.
+Do not reveal the Act 3 destination in this sequence. After the family payoff, Act 2 continues through the locked **Över sjön** departure/crossing epilogue; Act 3 owns the destination and arrival.
 
 ## Production workflow / gate
 
@@ -1273,23 +1273,15 @@ Scene 4 / departure now includes an explicit friendship payoff before the other-
 
 Exact dialogue lives in `STORY_DESIGN.md` and is authoritative.
 
-### Epilogue Story Moment queue — LOCKED TARGET, ART INCOMPLETE
+### Epilogue Story Moment queue — INTEGRATED
 
-The final departure/Act 3 bridge uses four target images. These are outside the 64 contribution count and after the family payoff:
+The old four-image EPI-001…004 proposal is superseded. The accepted production departure is part of the finale asset family under `public/assets/village/story-moments/act2/finale/`.
 
-| ID | Working filename | Function |
-|---|---|---|
-| EPI-001 | `01-leaving-the-jetty.png` | Leaving the restored lake; carries the gratitude/friendship payoff. Family may appear only far in the background. |
-| EPI-002 | `02-across-the-lake.png` | Freedom/motion on open water; transitions from closure toward curiosity. |
-| EPI-003 | `03-the-other-side.png` | Distant undefined opposite shore; mystery only, no Act 3 destination reveal. |
-| EPI-004 | `04-into-the-unknown.png` | Wide final chapter image; boat continues toward the unknown before black/end card. |
+Current locked departure/crossing assets:
+- `05-after-motorboat.png` — post-Motorbåten departure setup / gratitude bridge.
+- `06-across-the-lake.png` — Barnet and Alve crossing the lake toward an undefined destination.
 
-Target folder when accepted/uploaded:
-`public/assets/village/story-moments/act2/epilogue/`
-
-**Do not claim this folder/assets are complete until repo verification proves it.** Image work was intentionally paused for the night on 2026-09-30.
-
-EPI-001 composition rule from the latest accepted direction: if the motor geometry is hard to preserve, crop/zoom so the whole boat is not shown rather than inventing an incorrect motor placement. Canonical boat reference has the outboard at the stern. Barnet remains rear-facing.
+These beats remain outside the 64 contribution count. They must not reveal or depict the Act 3 destination.
 
 ### Implementation boundary
 Story/art production and production gameplay integration are now separate workstreams. The runtime/state execution order is canonical in `docs/ACT2_IMPLEMENTATION_PLAN.md`. `/act2-test` remains an acceptance lab and must not become production save authority.
