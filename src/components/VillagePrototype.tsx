@@ -205,7 +205,15 @@ export default function VillagePrototype() {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      setDebugToolsEnabled(new URLSearchParams(window.location.search).get("debug") === "tools");
+      const params = new URLSearchParams(window.location.search);
+      setDebugToolsEnabled(params.get("debug") === "tools");
+      if (params.get("menu") === "adult") {
+        setMainMenuOpen(false);
+        setParentMenuOpen(true);
+        params.delete("menu");
+        const query = params.toString();
+        window.history.replaceState(null, "", query ? `/?${query}` : "/");
+      }
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
