@@ -1,6 +1,7 @@
 import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
+import { resolveInteraction, type InteractionDefinition } from "../runtime/interaction/interactionContract";
 import {
   AMBIENT_TEXTURE_KEYS,
 } from "./worldDecor";
@@ -50,6 +51,15 @@ type WorldObjectDefinition = {
 // Keep the marker over the board and approach from the path below it.
 const NOTICEBOARD_MARKER: Point = { x: 150, y: 305 };
 const NOTICEBOARD_APPROACH: Point = { x: 175, y: 430 };
+const NOTICEBOARD_INTERACTION: InteractionDefinition = {
+  id: "village:noticeboard",
+  kind: "quest-source",
+  anchor: NOTICEBOARD_APPROACH,
+  approachPoint: NOTICEBOARD_APPROACH,
+  interactionRadius: 36,
+  marker: "quest-available",
+  enabled: true,
+};
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
 
@@ -436,14 +446,18 @@ export async function createVillageGame(
       }
 
       if (this.noticeboardInteractionPending && this.player) {
-        if (!requestedQuestSourceAttention.noticeboard) {
+        const resolution = resolveInteraction(
+          [{ ...NOTICEBOARD_INTERACTION, enabled: Boolean(requestedQuestSourceAttention.noticeboard) }],
+          { interactionId: NOTICEBOARD_INTERACTION.id, requestedAt: NOTICEBOARD_MARKER },
+          { x: this.player.x, y: this.player.y },
+        );
+        if (resolution.status === "disabled") {
           this.noticeboardInteractionPending = false;
           this.path = [];
           this.targetMarker?.setVisible(false);
           return;
         }
-        const approach = NOTICEBOARD_APPROACH;
-        if (distance(this.player, approach) <= 36) {
+        if (resolution.status === "activate") {
           this.noticeboardInteractionPending = false;
           this.path = [];
           this.targetMarker?.setVisible(false);
@@ -712,7 +726,7 @@ export async function createVillageGame(
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = true;
-        const approach = NOTICEBOARD_APPROACH;
+        const approach = NOTICEBOARD_INTERACTION.approachPoint ?? NOTICEBOARD_INTERACTION.anchor;
         this.path = findPath({ x: this.player.x, y: this.player.y }, approach, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
