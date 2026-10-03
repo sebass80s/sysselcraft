@@ -699,6 +699,11 @@ assert.ok(village.includes('router.push(`/act2?resume=${project}`)'), "contextua
 assert.match(page, /resumeProject === "boathouse" \|\| resumeProject === "dock" \|\| resumeProject === "motorboat"/, "Act 2 must accept contextual return from all three story purchases");
 assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
 assert.ok(page.includes("📖 Historik"), "Act 2 HUD must expose completed story history");
+assert.match(
+  page,
+  /prototype-brand-logo[\s\S]*📖 Historik[\s\S]*← Till byn/,
+  "Act 2 HUD must place Historik directly below the SysselCraft logo and before Till byn",
+);
 assert.ok(
   page.includes("if (!state.projects[project].complete) continue;")
     && page.includes("projectStorySources[project].forEach((beat) =>"),
