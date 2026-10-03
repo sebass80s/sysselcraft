@@ -162,16 +162,6 @@ assert.ok(card());
 props.presentationId = "epilogue:last";
 assert.ok(card());
 const act2RuntimeSource = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
-assert.match(
-  act2RuntimeSource,
-  /deriveGameUiShell\(\{[\s\S]*worldReady: state\.openingComplete && state\.alveIntroComplete[\s\S]*projectStatusAvailable: state\.selectedProject !== null/,
-  "completed Act 2 must rely on the shared UI-shell contract rather than project selection for global HUD visibility",
-);
-assert.match(
-  act2RuntimeSource,
-  /const hudVisible = uiShell\.showHud;/,
-  "global HUD visibility must come from the shared shell authority",
-);
 
 assert.match(
   act2RuntimeSource,

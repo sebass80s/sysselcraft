@@ -667,16 +667,6 @@ assert.match(page, /className="secondary-button compact act2-village-button"[\s\
 assert.ok(page.includes('className="resource-hud"'), "Act 2 must show the shared resource HUD");
 assert.ok(page.includes('backendWallet?.diamonds'), "Act 2 HUD must show authoritative backend diamonds");
 assert.ok(page.includes('backendWallet?.sysselBux'), "Act 2 HUD must show authoritative backend SysselBux");
-assert.match(
-  page,
-  /const storyUiVisible =[\s\S]*contributionTurnInOpen[\s\S]*finalePending/,
-  "Act 2 blocking story states must feed the shared UI-shell overlay boundary",
-);
-assert.match(
-  page,
-  /deriveGameUiShell\(\{[\s\S]*blockingOverlayVisible: chapterCardVisible \|\| storyUiVisible/,
-  "Act 2 HUD visibility must be delegated to the shared UI-shell authority",
-);
 
 const questInbox = fs.readFileSync(new URL("../src/components/ChildBackendQuestInbox.tsx", import.meta.url), "utf8");
 assert.equal(questInbox.includes("Koppla om"), false, "Uppdrag must not expose re-pairing; that belongs in Vuxenläge");

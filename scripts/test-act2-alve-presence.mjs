@@ -75,25 +75,25 @@ let handle = await start();
 handle.setActiveProject(null); // restored save before Phaser finishes loading
 currentGame.boot();
 let scene = currentGame.instance;
-assert.equal(scene.alvePlaceholder.visible, true, "null project must not hide Alve at initial scene creation");
+assert.equal(scene.alveEntity.visible, true, "null project must not hide Alve at initial scene creation");
 const idle = assets.ACT2_ALVE_IDLE_POSITION;
-assert.deepEqual({ x: scene.alvePlaceholder.x, y: scene.alvePlaceholder.y }, { ...idle });
+assert.deepEqual({ x: scene.alveEntity.x, y: scene.alveEntity.y }, { ...idle });
 for (const [project, position] of Object.entries(assets.ACT2_ALVE_WORK_POSITIONS)) {
   handle.setActiveProject(project);
-  assert.equal(scene.alvePlaceholder.visible, true);
-  assert.deepEqual({ x: scene.alvePlaceholder.x, y: scene.alvePlaceholder.y }, { ...position });
+  assert.equal(scene.alveEntity.visible, true);
+  assert.deepEqual({ x: scene.alveEntity.x, y: scene.alveEntity.y }, { ...position });
 }
 handle.setActiveProject(null);
-assert.equal(scene.alvePlaceholder.depth, 1000 + idle.y);
+assert.equal(scene.alveEntity.depth, 1000 + idle.y);
 handle.setAlvePresent(false);
-assert.equal(scene.alvePlaceholder.visible, false, "completed Act 2 must remove Alve from the lake world");
+assert.equal(scene.alveEntity.visible, false, "completed Act 2 must remove Alve from the lake world");
 handle.setAlveTurnInAvailable(true);
 assert.equal(scene.alveTurnInMarker.visible, false, "hidden Alve must never expose a turn-in marker");
 handle.setAlvePresent(true);
-assert.equal(scene.alvePlaceholder.visible, true, "pre-completion idle state must still restore Alve");
+assert.equal(scene.alveEntity.visible, true, "pre-completion idle state must still restore Alve");
 assert.equal(scene.alveTurnInMarker.visible, true);
 handle.setAlveTurnInAvailable(false);
-const hit = scene.alvePlaceholder.value.find((child) => child.interactive);
+const hit = scene.alveEntity.value.find((child) => child.interactive);
 assert.ok(hit, "the existing shared click target must remain attached");
 let stopped = 0;
 const click = () => hit.handlers.pointerdown({}, 0, 0, { stopPropagation: () => { stopped++; } });
@@ -115,15 +115,15 @@ assert.equal(turnIns, 1, "far tap must approach, not consume a quest");
 assert.equal(scene.moveTarget.x, idle.x);
 handle.setAlveTurnInAvailable(false);
 assert.equal(scene.alveTurnInMarker.visible, false);
-assert.equal(scene.alvePlaceholder.visible, true);
+assert.equal(scene.alveEntity.visible, true);
 assert.equal(stopped, 3);
 handle.destroy();
 handle = await start();
 currentGame.boot();
 handle.setActiveProject(null); // restored save after scene creation
 scene = currentGame.instance;
-assert.equal(scene.alvePlaceholder.visible, true, "reload with null project must retain Alve");
-assert.deepEqual({ x: scene.alvePlaceholder.x, y: scene.alvePlaceholder.y }, { ...idle });
+assert.equal(scene.alveEntity.visible, true, "reload with null project must retain Alve");
+assert.deepEqual({ x: scene.alveEntity.x, y: scene.alveEntity.y }, { ...idle });
 
 // Test idle + approach against the actual master pixels and runtime collision method.
 const require = createRequire(import.meta.url);

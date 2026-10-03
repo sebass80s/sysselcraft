@@ -62,7 +62,7 @@ export async function createAct2LakeGame(
     private projectImages = new Map<Act2RestorationProject, GameObjects.Image>();
     private player?: GameObjects.Image;
     private dog?: GameObjects.Image;
-    private alvePlaceholder?: GameObjects.Container;
+    private alveEntity?: GameObjects.Container;
     private alveTurnInMarker?: GameObjects.Container;
     private alveNearbyPrompt?: GameObjects.Container;
     private alveIdlePrompt?: GameObjects.Container;
@@ -134,9 +134,8 @@ export async function createAct2LakeGame(
         .setDisplaySize(66, 55)
         .setDepth(1600);
 
-      // Canonical Alve runtime art. Keep the existing container as the single
-      // interaction owner so active-project positioning, turn-in markers and
-      // nearby interaction behavior stay unchanged when replacing the placeholder.
+      // Canonical Alve runtime entity. The container is the single interaction
+      // owner for positioning, turn-in markers and nearby interaction behavior.
       const alveSprite = this.add.image(0, 0, "act2-alve")
         .setOrigin(0.5, 0.94)
         .setDisplaySize(78, 117);
@@ -179,19 +178,19 @@ export async function createAct2LakeGame(
       }).setOrigin(0.5);
       this.alveIdlePrompt = this.add.container(0, 0, [idlePromptBg, this.alveIdlePromptText]).setVisible(false);
       const alveInteractionArea = this.add.rectangle(0, -90, 150, 310, 0xffffff, 0.001);
-      this.alvePlaceholder = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt, this.alveIdlePrompt, alveInteractionArea])
+      this.alveEntity = this.add.container(0, 0, [alveSprite, alveLabelBg, alveLabel, this.alveTurnInMarker, this.alveNearbyPrompt, this.alveIdlePrompt, alveInteractionArea])
         .setVisible(false);
 
       const handleAlvePointerDown = (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
         event.stopPropagation();
-        if (!this.player || !this.alvePlaceholder || !requestedAlvePresent) return;
+        if (!this.player || !this.alveEntity || !requestedAlvePresent) return;
         if (!requestedAlveTurnInAvailable) {
           this.moveTarget = null;
           this.facePlayerTowardAlve();
           this.showAlveIdleWorldPrompt();
           return;
         }
-        const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.alvePlaceholder.x, this.alvePlaceholder.y);
+        const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.alveEntity.x, this.alveEntity.y);
         if (distance <= 135) {
           this.moveTarget = null;
           this.facePlayerTowardAlve();
@@ -199,8 +198,8 @@ export async function createAct2LakeGame(
           return;
         }
         this.moveTarget = {
-          x: this.alvePlaceholder.x,
-          y: Math.min(ACT2_WORLD.height - 8, this.alvePlaceholder.y + 58),
+          x: this.alveEntity.x,
+          y: Math.min(ACT2_WORLD.height - 8, this.alveEntity.y + 58),
         };
       };
 
@@ -293,14 +292,14 @@ export async function createAct2LakeGame(
     }
 
     private updateAlveInteractionFeedback() {
-      if (!this.player || !this.alvePlaceholder || !this.alveNearbyPrompt) return;
+      if (!this.player || !this.alveEntity || !this.alveNearbyPrompt) return;
       const nearby = requestedAlveTurnInAvailable
-        && this.alvePlaceholder.visible
+        && this.alveEntity.visible
         && Phaser.Math.Distance.Between(
           this.player.x,
           this.player.y,
-          this.alvePlaceholder.x,
-          this.alvePlaceholder.y,
+          this.alveEntity.x,
+          this.alveEntity.y,
         ) <= 135;
       this.alveNearbyPrompt.setVisible(nearby);
       if (nearby && this.moveTarget) {
@@ -318,8 +317,8 @@ export async function createAct2LakeGame(
     }
 
     private facePlayerTowardAlve() {
-      if (!this.player || !this.alvePlaceholder) return;
-      this.player.setFlipX(this.alvePlaceholder.x > this.player.x);
+      if (!this.player || !this.alveEntity) return;
+      this.player.setFlipX(this.alveEntity.x > this.player.x);
     }
 
     private isWalkable(x: number, y: number) {
@@ -392,7 +391,7 @@ export async function createAct2LakeGame(
 
     setAlvePresent(present: boolean) {
       requestedAlvePresent = present;
-      this.alvePlaceholder?.setVisible(present);
+      this.alveEntity?.setVisible(present);
       if (!present) {
         this.alveTurnInMarker?.setVisible(false);
         this.alveNearbyPrompt?.setVisible(false);
@@ -416,9 +415,9 @@ export async function createAct2LakeGame(
     }
 
     private positionAlve(project: Act2RestorationProject | null) {
-      if (!this.alvePlaceholder) return;
+      if (!this.alveEntity) return;
       const position = project ? ACT2_ALVE_WORK_POSITIONS[project] : ACT2_ALVE_IDLE_POSITION;
-      this.alvePlaceholder
+      this.alveEntity
         .setPosition(position.x, position.y)
         .setDepth(1000 + Math.round(position.y))
         .setVisible(requestedAlvePresent);
