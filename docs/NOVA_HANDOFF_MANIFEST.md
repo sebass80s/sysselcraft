@@ -835,3 +835,16 @@ Village construction attention now consumes shared `resolveInteraction()`, prese
 Five concrete interaction consumers now use shared resolution across Lake and Village.
 
 Next recommended architectural slice: audit and converge world-input authority/overlay suppression before touching mixed-priority NPC interactions. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — shared world-input authority established
+
+The Interaction System now owns a real cross-world world-input decision through `worldInputEnabled()`.
+
+Village exposes `setWorldInputEnabled`, its presentation lock drives the explicit flag, and both pointer + movement update obey shared authority. Legacy construction-dialogue overlay state is still retained temporarily as compatibility.
+
+Act 2 Lake now uses the same shared authority for pointer interactions and movement. A real bug was fixed: keyboard movement previously could continue while world input was disabled.
+
+Parity covers enabled/disabled/overlay truth-table behavior and source consumption.
+
+Next recommended slice: map remaining Village overlays/modals into explicit world-input ownership, then remove the legacy compatibility lock only after parity. No Act 3 and no production promotion.
