@@ -284,3 +284,12 @@ Parity covers the accepted 40/41 px boundary. Shared resolution now has consumer
 - Act 2 Lake / Alve turn-in;
 - Village / noticeboard;
 - Village / Recycling hotspot.
+
+
+## Checkpoint — bottle message hotspot uses shared resolution
+
+The Village bottle-message hotspot has been migrated from a local `distance <= 38` rule to the canonical Interaction System.
+
+Its point/radius/enable semantics are now explicit interaction data. Existing story callback and world navigation behavior are preserved.
+
+Parity checks 38 px activate vs 39 px approach.
