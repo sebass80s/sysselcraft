@@ -1064,6 +1064,7 @@ export async function createVillageGame(
         .setDepth(1445)
         .setInteractive({ useHandCursor: true });
       this.residents.linus = this.linus;
+      this.syncLinusPriorityMarkers();
       // Dedicated interaction zone: the painted PNG may contain transparent padding,
       // so onboarding must not depend on the texture's implicit interactive bounds.
       this.linusInteractionZone = this.add.zone(this.linus.x, this.linus.y - 72, 190, 190)
