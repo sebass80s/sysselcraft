@@ -167,3 +167,18 @@ Preserved behavior:
 The Act 2-specific header implementation has been removed from the dev consumer path. Village still uses its legacy inline header and is the next shell migration target.
 
 Frozen live remains unchanged.
+
+
+## Checkpoint — Village migrated to shared Game UI Shell
+
+The development-branch Village runtime now renders the global HUD through the same `GameUiShell` as Act 2.
+
+Preserved Village-specific actions are supplied through shell configuration:
+- Vuxenläge menu action;
+- Mitt rum;
+- dog-home shortcut;
+- backend/local resource fallback values.
+
+The legacy inline Village header has been removed from the dev consumer path.
+
+At this checkpoint both playable worlds use the same actual Game UI Shell component on the architecture branch. Frozen live remains unchanged.
