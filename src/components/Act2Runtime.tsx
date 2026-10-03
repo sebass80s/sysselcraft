@@ -346,6 +346,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     );
   }, [state.projects.cabin.complete, state.projects.motorboat.complete]);
 
+  useEffect(() => {
+    gameRef.current?.setWorldInputEnabled(!(chapterCardVisible || storyUiVisible));
+  }, [chapterCardVisible, storyUiVisible]);
+
   async function commit(next: Act2RuntimeState) {
     if (!debug) await saveAct2RuntimeState(next);
     setState(next);
@@ -635,7 +639,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   };
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
-    {hudVisible && <header className="prototype-header" aria-label="SysselCraft HUD">
+    {hudVisible && <header className="prototype-header act2-hud-input-shield" aria-label="SysselCraft HUD">
       <div className="prototype-brand-row">
         <button
           className="prototype-brand-button"
