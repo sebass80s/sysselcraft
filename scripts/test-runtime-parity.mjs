@@ -799,8 +799,9 @@ assert.ok(
   "Act 2 Lake update loop must remain present for world-input parity coverage",
 );
 assert.ok(
-  markerRendererSource.includes('GLYPH_BY_KIND'),
-  "Interaction System must own the canonical marker glyph mapping",
+  markerRendererSource.includes('options.kind === "quest-turn-in" ? "!" : "?"')
+    && markerRendererSource.includes('options.kind === "npc-attention"'),
+  "Interaction System must own the canonical quest-turn-in, quest-available and NPC-attention marker mapping",
 );
 assert.ok(
   act2LakeSource.includes('createInteractionMarker(this, {'),
