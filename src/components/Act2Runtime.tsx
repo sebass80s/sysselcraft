@@ -775,9 +775,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         >
           <Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="SysselCraft" width={360} height={124} priority />
         </button>
-        <button className="secondary-button compact act2-village-button" type="button" onClick={() => router.push("/")}>
-          ← Till byn
-        </button>
         {historyEntries.length > 0 && <button
           className="secondary-button compact act2-history-button"
           type="button"
@@ -785,6 +782,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         >
           📖 Historik
         </button>}
+        <button className="secondary-button compact act2-village-button" type="button" onClick={() => router.push("/")}>
+          ← Till byn
+        </button>
         {state.act2Complete && state.endCardSeen && <button
           className="secondary-button compact act2-chapter3-button"
           type="button"
