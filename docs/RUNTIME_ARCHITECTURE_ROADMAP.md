@@ -1391,3 +1391,44 @@ Remaining risky Interaction special cases are still:
 - Linus ordinary arrival dual geometry;
 - Shop/Mira multi-approach behavior;
 - deeper object-handler / scene-handler de-duplication, which remains gated on browser + physical iPhone acceptance.
+
+
+## Interaction System late-convergence checkpoint — Linus + Shop/Mira
+
+Verified behavior now locked/migrated:
+
+### Linus dual arrival
+Linus keeps both accepted legacy arrival zones for one canonical interaction:
+- ordinary resident radius: 95 px around the current Linus sprite;
+- authored approach arrival: 18 px around `REQUIRED_APPROACHES.linus = { x: 230, y: 460 }`.
+
+The shared `InteractionDefinition.activationZones` contract expresses the secondary authored zone. Parity locks:
+- 95 px NPC radius => activate;
+- 18 px authored approach radius => activate;
+- outside both zones => continue approach.
+
+### Shop / Mira multi-approach
+Shop interaction now uses shared `resolveInteraction()`.
+
+Canonical authored values:
+- `SHOP_APPROACH = { x: 1130, y: 425 }`;
+- `MIRA_APPROACH = { x: 1050, y: 445 }`;
+- interaction radius: 42 px.
+
+Behavior preserved:
+- closed shop accepts only the Shop approach zone;
+- open shop accepts both Shop and Mira approach zones;
+- direct Mira taps still path to Mira's authored approach;
+- building/Sol-tour taps still path to the Shop approach;
+- callback remains `onShopInteract()` when open and `onAbandonedShopInteract()` when closed.
+
+Parity locks 42/43 px boundaries for closed shop and the open Mira activation zone.
+
+### Resulting Village interaction ownership
+After this migration there are no remaining local `distance(this.player, ...)` arrival checks in `createVillageGame.ts`.
+
+All current Village world-interaction arrival radii now resolve through the shared Interaction System. Entry-point-specific hit testing/path selection remains local where behavior differs, but activation geometry is canonical.
+
+GitHub Actions verification:
+- Linus parity run #1754: SUCCESS.
+- Shop/Mira verify job in run #1757: SUCCESS, including `npm run verify` and `test:runtime-parity`.
