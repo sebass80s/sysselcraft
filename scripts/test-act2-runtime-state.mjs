@@ -709,6 +709,12 @@ const historyReplaySource = page.slice(historyReplayStart, historyReplayEnd);
 assert.equal(historyReplaySource.includes("saveAct2RuntimeState"), false, "history replay must never persist Act 2 state");
 assert.equal(historyReplaySource.includes("withPresentedContribution"), false, "history replay must never consume a contribution");
 assert.equal(historyReplaySource.includes("purchase"), false, "history replay must never execute story purchases");
+assert.ok(
+  page.includes("if (!historyOpen && historyReplay === null) return;")
+    && page.includes("return beginStoryOverlay();"),
+  "history menu and replay must publish shared story-overlay visibility so quest UI is suppressed",
+);
+
 
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay at locked 200 SysselBux");
