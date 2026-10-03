@@ -876,3 +876,12 @@ A shared Interaction System marker renderer now exists and Act 2 consumes it for
 Current Act 1/Act 2 quest markers now consume `createInteractionMarker()`. The previous Village noticeboard/Linus/Henning local badge renderers are removed.
 
 Do not confuse this with full Interaction System completion: NPC/story attention, generic hotspot resolution and shared input authority remain pending.
+
+
+### Runtime 1.0 checkpoint: marker presentation converged
+
+Quest and story/NPC attention marker presentation is now centralized in `src/runtime/interaction/markerRenderer.ts`.
+
+The renderer preserves separate semantics/visuals for quest markers versus dialogue/story attention. Current Village/Act 2 marker presentation consumes the shared implementation.
+
+Full Interaction System completion still requires shared resolution, approach-point ownership and input authority.
