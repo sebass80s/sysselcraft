@@ -737,17 +737,16 @@ assert.ok(
   "village must consume the Act 2 adult-mode menu handoff",
 );
 
+const act2StoryRegistrySource = fs.readFileSync(new URL("../src/runtime/story/act2StoryRegistry.ts", import.meta.url), "utf8");
 assert.ok(
-  page.includes("if (!state.projects[project].complete) continue;")
-    && page.includes("projectStorySources[project].forEach((beat) =>"),
+  act2StoryRegistrySource.includes("if(state.projects[project].complete) completedStorylineIds.add(ACT2_STORYLINE_IDS[project])"),
   "project history must stay hidden until the entire 16/16 storyline is complete",
 );
 assert.ok(
-  page.includes("if (state.epilogueConsumed) {")
-    && page.includes("ACT2_FINALE_BEATS.forEach((beat) =>"),
+  act2StoryRegistrySource.includes("if(state.epilogueConsumed) completedStorylineIds.add(ACT2_STORYLINE_IDS.finale)"),
   "finale history must stay hidden until the complete Act 2 epilogue has been consumed",
 );
-assert.ok(page.includes('group: "Finalen"'), "completed finale beats must be replayable from history");
+assert.ok(page.includes('[ACT2_STORYLINE_IDS.finale]: "Finalen"'), "completed finale beats must be replayable from history");
 assert.ok(page.includes("setHistoryReplay({ beat, lineIndex: 0 })"), "history replay must use isolated local presentation state");
 const historyReplayStart = page.indexOf("function openHistoryReplay");
 const historyReplayEnd = page.indexOf("async function previousFinaleStory");
