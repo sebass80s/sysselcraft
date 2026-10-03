@@ -885,3 +885,64 @@ Quest and story/NPC attention marker presentation is now centralized in `src/run
 The renderer preserves separate semantics/visuals for quest markers versus dialogue/story attention. Current Village/Act 2 marker presentation consumes the shared implementation.
 
 Full Interaction System completion still requires shared resolution, approach-point ownership and input authority.
+
+
+## CURRENT RUNTIME 1.0 STATE — HANDOVER 2026-10-03
+
+Verified development branch:
+- branch: `nova/runtime-architecture-v1`
+- HEAD: `959b6fd70c3d0c5015706899e9f2d33e960bb384`
+- frozen live baseline remains `f9bf552f70f4af3ff7457a86867b323504e39c36`
+- live/release branches must remain untouched by architecture work.
+
+### Completed on development branch
+- Canonical System Registry exists.
+- One shared `GameUiShell` is consumed by both Village/Act 1 and Act 2.
+- Act 2 Historik consumes the shared Story Registry + generic read-only History engine.
+- Act 2 story content is registered through `ACT2_STORY_REGISTRY`.
+- Stable chapter-qualified story IDs are enforced.
+- Parity harness foundation exists in `scripts/test-runtime-parity.mjs`.
+- Act 2 legacy-vs-registry History projection coverage exists for representative states.
+- Shared Interaction contract exists.
+- Shared canonical marker renderer exists.
+- Current quest markers across Act 1/Act 2 use the canonical renderer.
+- Current NPC/story-attention marker presentation is also converged on the shared renderer.
+- Old local Village quest badge renderers and Linus intro story-bubble renderer have been removed from the development consumer path.
+
+### Interaction System status
+Marker **presentation** is converged.
+
+The Interaction System as a whole is NOT complete. Remaining work:
+- shared interaction resolution across current worlds;
+- shared ownership of approach points/radii;
+- shared world-input authority / overlay suppression;
+- generic hotspot semantics where useful;
+- parity coverage for interaction outcomes before deleting legacy navigation/input code.
+
+### Next implementation order
+1. Finish Interaction System behavior convergence, starting with shared resolution/approach-point ownership.
+2. Converge world-input authority/overlay suppression.
+3. Build shared World / Area Engine primitives.
+4. Build versioned Save / Migration adapter and representative legacy-save fixtures.
+5. Generalize progression/gating bridge while Quest V2 remains authoritative.
+6. Port/remove only the legacy Act 1/Act 2 runtime pieces superseded by the new engine.
+7. Run automated parity, browser acceptance and physical iPhone acceptance.
+8. Remove superseded legacy client runtime.
+9. Only then begin substantial Act 3 runtime/content.
+
+### Absolute rules
+- These are rules, not guidelines.
+- One reusable concept = one canonical implementation.
+- UI is constant across chapters.
+- Reusable system assets/components are global, not Act-specific.
+- New content should normally mean story, images, NPC/area config and gates, not new runtime logic.
+- Do not create Act-specific HUD, History, marker, dialogue, interaction or progression implementations.
+- If a shared concept is missing, add it once to the engine.
+- Surface material architecture/product/reliability improvements immediately.
+- Do not mutate Adam's backend/save for development testing.
+- Do not deploy Runtime 1.0 to production before explicit acceptance.
+
+### Verification policy
+Keep work in short batches. Do not trigger Vercel for routine architecture work. Commit/checkpoint at logical slices, keep docs synchronized as work progresses, and update roadmap statuses when milestones close.
+
+The dev branch currently does not auto-run CI on every commit. Use larger verification checkpoints rather than burning build minutes. Before any promotion, full CI + browser + physical iPhone acceptance are mandatory.
