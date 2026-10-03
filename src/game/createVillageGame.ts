@@ -70,7 +70,7 @@ const BOTTLE_MESSAGE_INTERACTION: InteractionDefinition = {
   interactionRadius: 38,
   enabled: true,
 };
-const HENNING_APPROACH: Point = HENNING_APPROACH;
+const HENNING_APPROACH: Point = { x: 370, y: 468 };
 const HENNING_INTERACTION_RADIUS = 95;
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
