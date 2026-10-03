@@ -613,33 +613,47 @@ export default function VillagePrototype() {
     return () => window.clearTimeout(timer);
   }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex, solRuntimeTestActive, recordSolRuntimeDebug]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
+
+  const villageBlockingOverlayVisible =
+    dialogueOpen ||
+    linusStoryReplayIndex !== null ||
+    recyclingDialogueIndex !== null ||
+    constructionDialogueId !== null ||
+    recyclingStoryOpen ||
+    henningStoryIndex !== null ||
+    henningStoryReplayIndex !== null ||
+    henningDialogueOpen ||
+    bakeryStoryIndex !== null ||
+    bakeryStoryReplayIndex !== null ||
+    clinicStoryIndex !== null ||
+    clinicStoryReplayIndex !== null ||
+    act1ChapterFinaleIndex !== null ||
+    miraStoryIndex !== null ||
+    miraStoryReplayIndex !== null ||
+    bottleLetterOpen ||
+    bottleStoryIndex !== null ||
+    solStoryIndex !== null ||
+    solTourStoryStop !== null ||
+    shopPanelOpen ||
+    abandonedShopDialogueIndex !== null ||
+    roomOpen ||
+    roomShowcase ||
+    dogHomeOpen ||
+    dogHomeShowcase ||
+    mainMenuOpen ||
+    parentMenuOpen ||
+    childPairingOpen ||
+    act2PurchaseStory !== null ||
+    solRuntimeTestActive ||
+    solSafeTestOpen ||
+    saveError;
+
   useEffect(() => {
-    // Phaser input locking is presentation state. Derive it from the React UI instead
-    // of relying on every dialogue/cutscene close path to remember to unlock it.
-    // This also self-heals stale locks after story transitions.
-    const villageInputLocked =
-      recyclingDialogueIndex !== null ||
-      constructionDialogueId !== null ||
-      recyclingStoryOpen ||
-      henningStoryIndex !== null ||
-      henningDialogueOpen ||
-      bottleLetterOpen ||
-      bottleStoryIndex !== null ||
-      shopPanelOpen ||
-      abandonedShopDialogueIndex !== null;
-    gameRef.current?.setConstructionDialogueOpen(villageInputLocked);
-    gameRef.current?.setWorldInputEnabled(!villageInputLocked);
-  }, [
-    recyclingDialogueIndex,
-    constructionDialogueId,
-    recyclingStoryOpen,
-    henningStoryIndex,
-    henningDialogueOpen,
-    bottleLetterOpen,
-    bottleStoryIndex,
-    shopPanelOpen,
-    abandonedShopDialogueIndex,
-  ]);
+    // React presentation state is the single authority for whether the Village world
+    // may receive input. Chapter-specific overlays are reduced to one boolean and the
+    // Phaser runtime only consumes the generic enabled/disabled contract.
+    gameRef.current?.setWorldInputEnabled(!villageBlockingOverlayVisible);
+  }, [villageBlockingOverlayVisible]);
 
   async function persistConstruction(next: ConstructionState, revealId?: string) {
     if (constructionWriteRef.current || !latestSaveRef.current || next === constructionRef.current) return;
