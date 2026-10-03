@@ -12,6 +12,7 @@ export type Act2ProjectState = {
 
 export type Act2RuntimeState = {
   version: 1;
+  finaleSchemaVersion: 2;
   entered: boolean;
   productionEntryCommitted: boolean;
   openingIndex: number;
@@ -61,6 +62,7 @@ function emptyProject(): Act2ProjectState {
 export function createDefaultAct2RuntimeState(): Act2RuntimeState {
   return {
     version: 1,
+    finaleSchemaVersion: 2,
     entered: false,
     productionEntryCommitted: false,
     openingIndex: 0,
@@ -161,6 +163,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
 
   const normalized: Act2RuntimeState = {
     version: 1,
+    finaleSchemaVersion: 2,
     entered: candidate.entered === true,
     productionEntryCommitted: candidate.productionEntryCommitted === true,
     openingIndex: Number.isInteger(candidate.openingIndex)
@@ -249,12 +252,20 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     normalized.epilogueConsumed = false;
     normalized.endCardSeen = false;
   } else {
-    // Saves completed under the old five-beat ending have already seen the
-    // family/veranda payoff but not the newly added epilogue. Resume them at
-    // epilogue index 5 instead of treating the new ending as already consumed.
+    // finaleSchemaVersion was introduced after the six-beat ending shipped.
+    // Any completed pre-marker save has only ever completed the old five-beat
+    // family/veranda ending, even if the first six-beat migration accidentally
+    // rewrote it to finaleIndex=5 + epilogueConsumed=true. Resume that real
+    // device state at the newly added epilogue exactly once.
+    const preEpilogueSchemaComplete = candidate.finaleSchemaVersion !== 2
+      && (
+        candidate.familyFinaleConsumed === true
+        || candidate.epilogueConsumed === true
+        || candidate.act2Complete === true
+      );
     const legacyFamilyComplete = candidate.familyFinaleConsumed === true
       && (candidate.finaleIndex ?? 0) < 5;
-    if (legacyFamilyComplete) {
+    if (preEpilogueSchemaComplete || legacyFamilyComplete) {
       normalized.finaleIndex = 5;
       normalized.finaleLineIndex = 0;
       normalized.familyFinaleConsumed = true;

@@ -57,15 +57,41 @@ assert.equal(s.act2FinalePending(state), false);
 assert.equal(JSON.stringify(s.advanceAct2Finale(state)), JSON.stringify(state));
 assert.ok(writes.every((key) => key === "sysselcraft.act2.runtime.v1.isolated-test-child"));
 // Existing five-beat releases have already seen the family/veranda payoff
-// but must resume at the newly added epilogue exactly once.
+// but must resume at the newly added epilogue exactly once. The first six-beat
+// migration could also poison that save by rewriting it to index 5 + consumed,
+// so both pre-marker signatures must recover without resetting the device save.
+const { finaleSchemaVersion: _currentFinaleSchema, ...preFinaleSchemaState } = state;
 for (const endCardSeen of [false, true]) {
-  const legacy = s.normalizeAct2RuntimeState({ ...state, finaleIndex: 4, endCardSeen });
+  const legacy = s.normalizeAct2RuntimeState({
+    ...preFinaleSchemaState,
+    finaleIndex: 4,
+    familyFinaleConsumed: true,
+    epilogueConsumed: true,
+    act2Complete: true,
+    endCardSeen,
+  });
+  assert.equal(legacy.finaleSchemaVersion, 2);
   assert.equal(legacy.finaleIndex, 5);
   assert.equal(legacy.familyFinaleConsumed, true);
   assert.equal(legacy.epilogueConsumed, false);
   assert.equal(legacy.act2Complete, false);
   assert.equal(legacy.endCardSeen, false);
   assert.equal(s.act2FinalePending(legacy), true);
+
+  const poisoned = s.normalizeAct2RuntimeState({
+    ...preFinaleSchemaState,
+    finaleIndex: 5,
+    familyFinaleConsumed: true,
+    epilogueConsumed: true,
+    act2Complete: true,
+    endCardSeen,
+  });
+  assert.equal(poisoned.finaleSchemaVersion, 2);
+  assert.equal(poisoned.finaleIndex, 5);
+  assert.equal(poisoned.epilogueConsumed, false);
+  assert.equal(poisoned.act2Complete, false);
+  assert.equal(poisoned.endCardSeen, false);
+  assert.equal(s.act2FinalePending(poisoned), true);
 }
 // Adoption behavior remains one-time and existing scoped saves always win.
 storage.set("sysselcraft.act2.runtime.v1", JSON.stringify({ ...state, finaleIndex: 0 }));
