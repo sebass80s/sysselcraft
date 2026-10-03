@@ -793,6 +793,16 @@ assert.ok(
   villageGameSource.includes("private resolveHenningIntent()"),
   "Village must centralize Henning base interaction priority",
 );
+assert.ok(
+  villageGameSource.includes('const scenePointerTarget = resolveInteractionPriority(['),
+  "Village scene-level pointer hits must use explicit shared arbitration",
+);
+for (const [id, priority] of [["ground", 10], ["henning", 20], ["shop", 30], ["linus", 40], ["recycling", 50]]) {
+  assert.ok(
+    villageGameSource.includes(`{ id: "${id}", priority: ${priority},`),
+    `Village scene pointer target ${id} must retain priority ${priority}`,
+  );
+}
 assert.equal(
   (villageGameSource.match(/const henningIntent = this\.resolveHenningIntent\(\);/g) ?? []).length,
   2,
