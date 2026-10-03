@@ -680,7 +680,6 @@ export default function VillagePrototype() {
     } catch {
       setConstructionError("Det gick inte att spara. Försök igen.");
       if (revealId && residentAttention(constructionRef.current)?.id === revealId) setConstructionDialogueId(revealId);
-      else 
     } finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
 
