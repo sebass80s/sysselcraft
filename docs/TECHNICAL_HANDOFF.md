@@ -1066,3 +1066,23 @@ All current object-level pointer handlers use the same world-input guard.
 Important maintenance rule: when a new Village modal/story overlay is added, add it to the presentation blocking authority. Do not create another Phaser-local lock.
 
 Parity includes source guards preventing the retired symbols from returning.
+
+
+## Runtime 1.0 interaction-priority checkpoint — Linus
+
+Added `src/runtime/interaction/interactionPriority.ts` with generic `resolveInteractionPriority()`.
+
+Linus base intent priority is now centralized:
+- construction attention: 40;
+- intro: 30;
+- backend quest source: 20;
+- resident: 10.
+
+Consumed by:
+- scene-level Linus hit;
+- Linus interaction zone;
+- Linus sprite.
+
+Do not collapse marker-specific interactions or immediate-vs-approach behavior yet. Those differences are preserved intentionally and need their own parity before convergence.
+
+Parity includes four Linus priority fixtures plus source guards ensuring the base construction-attention check exists only in `resolveLinusIntent()`.
