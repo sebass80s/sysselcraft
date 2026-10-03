@@ -827,3 +827,10 @@ Treat any new Act-specific duplicate of an existing game concept as architecture
 
 
 Improvement rule: when a material architecture/product/UX/reliability improvement is identified, raise it immediately and classify it as required now, safe to defer, or incompatible with the current freeze boundary. Do not sit on useful structural improvements until a later handoff.
+
+
+### Canonical System Registry
+
+Arch 1.0 must expose one central registry/layer for reusable engine concepts and their canonical assets/components. Chapter code should consume quest markers, attention markers, Story UI, HUD/menu primitives and similar shared systems through that layer rather than embedding new asset paths or local component variants.
+
+Where practical, add static/regression checks that flag Act-specific duplicate system assets or direct forks of registered concepts.
