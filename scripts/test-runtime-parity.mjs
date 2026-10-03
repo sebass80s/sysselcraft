@@ -314,6 +314,33 @@ const interactionFixtures = [
     expectedTarget: { x: 835, y: 500 },
   },
   {
+    name: "Village Henning activates at accepted 95px resident radius",
+    playerPosition: { x: 95, y: 0 },
+    interaction: {
+      id: "village:henning",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 370, y: 468 },
+      interactionRadius: 95,
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village Henning keeps approaching outside accepted 95px resident radius",
+    playerPosition: { x: 96, y: 0 },
+    interaction: {
+      id: "village:henning",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 370, y: 468 },
+      interactionRadius: 95,
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 370, y: 468 },
+  },
+  {
     name: "Village construction attention activates within accepted 32px arrival radius",
     playerPosition: { x: 500, y: 532 },
     interaction: {
@@ -792,6 +819,15 @@ assert.ok(
 assert.ok(
   villageGameSource.includes("private resolveHenningIntent()"),
   "Village must centralize Henning base interaction priority",
+);
+assert.ok(
+  villageGameSource.includes('id: "village:henning"') &&
+    villageGameSource.includes("interactionRadius: HENNING_INTERACTION_RADIUS"),
+  "Village Henning arrival must use shared interaction resolution",
+);
+assert.ok(
+  villageGameSource.includes("const HENNING_INTERACTION_RADIUS = 95"),
+  "Village Henning must preserve the accepted 95px interaction radius",
 );
 assert.ok(
   villageGameSource.includes('const scenePointerTarget = resolveInteractionPriority(['),
