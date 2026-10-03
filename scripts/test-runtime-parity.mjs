@@ -7,12 +7,60 @@ import { historyEntriesFor, resolveReplayRequest } from "../src/runtime/story/st
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../src/runtime/story/act2StoryRegistry.ts";
 import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
 import { resolveInteraction, worldInputEnabled } from "../src/runtime/interaction/interactionContract.ts";
+import { resolveInteractionPriority } from "../src/runtime/interaction/interactionPriority.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../src/game/act2BoathouseStory.ts";
 import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
+
+const linusPriorityFixtures = [
+  {
+    name: "Linus construction attention outranks intro and quest",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: true },
+      { id: "intro", priority: 30, enabled: true },
+      { id: "construction-attention", priority: 40, enabled: true },
+    ],
+    expected: "construction-attention",
+  },
+  {
+    name: "Linus intro outranks backend quest before onboarding completes",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: true },
+      { id: "intro", priority: 30, enabled: true },
+      { id: "construction-attention", priority: 40, enabled: false },
+    ],
+    expected: "intro",
+  },
+  {
+    name: "Linus backend quest outranks ordinary resident interaction after intro",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: true },
+      { id: "intro", priority: 30, enabled: false },
+      { id: "construction-attention", priority: 40, enabled: false },
+    ],
+    expected: "quest-source",
+  },
+  {
+    name: "Linus falls back to ordinary resident interaction",
+    candidates: [
+      { id: "resident", priority: 10, enabled: true },
+      { id: "quest-source", priority: 20, enabled: false },
+      { id: "intro", priority: 30, enabled: false },
+      { id: "construction-attention", priority: 40, enabled: false },
+    ],
+    expected: "resident",
+  },
+];
+
+for (const fixture of linusPriorityFixtures) {
+  assert.equal(resolveInteractionPriority(fixture.candidates)?.id, fixture.expected, fixture.name);
+}
 
 const worldInputFixtures = [
   {
@@ -621,4 +669,4 @@ assert.ok(
   "Village must not retain local story-attention bubble drawing",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
