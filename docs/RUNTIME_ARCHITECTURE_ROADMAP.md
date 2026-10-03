@@ -1068,3 +1068,23 @@ Parity locks the accepted boundary:
 - 37 px continues approaching.
 
 Interaction behavior convergence remains **IN PROGRESS**. Do not replace remaining Village interactions wholesale; migrate them in small parity-backed slices.
+
+
+## Interaction behavior checkpoint 3 — Village Recycling
+
+Village Recycling is now the third shared-resolution consumer and the second Village consumer.
+
+The accepted completed-Recycling interaction now expresses:
+- interaction id `village:recycling`;
+- hotspot semantics;
+- the existing visual-placement approach point as both anchor and approach point;
+- accepted arrival radius `40`;
+- enabled state only when Recycling is at stage 4.
+
+Shared `resolveInteraction()` now owns disabled / activate / approach resolution. Existing Village click hit-testing, pathfinding, target marker and callback remain local.
+
+Parity locks the arrival boundary:
+- 40 px activates;
+- 41 px remains approach.
+
+Interaction behavior convergence remains **IN PROGRESS**.
