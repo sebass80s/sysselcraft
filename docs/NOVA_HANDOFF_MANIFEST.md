@@ -1123,3 +1123,22 @@ A source sweep found two remaining copies of the depth formula in `worldDecor.ts
 Authored special/static depth overrides remain unchanged. No Act 3, production deployment, Adam data, native project or iPhone/WebView fallback was touched. This closes the depth slice; it does not authorize collision/pathfinding convergence.
 
 Validation: `npm run verify` passed on the completed slice, including Runtime 1.0 parity. `node scripts/audit-v4-gate0.mjs` passed (12 building stages, 240 directed paths across eight visibility combinations). Its stale image mock was extended to preserve and assert the existing Clinic crop. A source sweep found no remaining inline `1000 + Math.round(...)` implementation under `src`. Physical iPhone acceptance was not rerun for this pure arithmetic extraction.
+
+
+## Save / Migration Engine checkpoint 1 — sequential migrations
+
+Runtime 1.0 now has a canonical pure migration primitive in `src/runtime/save/migrations.ts`.
+
+`runSequentialMigrations()`:
+- applies only explicit N -> N+1 steps;
+- is idempotent when already at the target version;
+- fails closed when a required migration step is missing;
+- contains no storage/backend behavior.
+
+Act 2 is the first real consumer. The existing finale compatibility migration from pre-schema saves to `finaleSchemaVersion: 2` now runs through the shared migration engine before normal invariant repair. Persisted format and accepted legacy behavior are unchanged.
+
+The old inline `preEpilogueSchemaComplete` migration branch has been retired. Existing Act 2 runtime, full-flow, closeout and Alve harnesses now load the shared migration dependency explicitly.
+
+Verification: GitHub Actions #1799, full `npm run verify`, SUCCESS on commit `be24bcebdd434ced23ea35ce06774bcb64e47b46`.
+
+Next safe Save/Migration work should move additional compatibility repairs behind explicit versioned steps. Backend-owned quests, rewards, wallet values and authoritative progression must never be fabricated by migrations.
