@@ -307,6 +307,7 @@ export async function createVillageGame(
       requestedIntroComplete = complete;
       this.introComplete = complete;
       this.syncLinusPriorityMarkers();
+      if (requestedSolTourStop === "linus") this.syncSolTourMarker();
     }
 
     private syncLinusPriorityMarkers() {
@@ -405,12 +406,13 @@ export async function createVillageGame(
       requestedHenningVisible = visible;
       this.henning?.setVisible(visible);
       this.syncHenningPriorityMarker();
-      if (requestedSolTourStop === "bakery") this.setSolTourStop("bakery");
+      if (requestedSolTourStop === "bakery") this.syncSolTourMarker();
     }
 
     setSolVisible(visible: boolean) {
       requestedSolVisible = visible;
       this.sol?.setVisible(visible);
+      if (requestedSolTourStop === "decision") this.syncSolTourMarker();
     }
 
     setWorldInputEnabled(enabled: boolean) {
@@ -723,6 +725,7 @@ export async function createVillageGame(
       if (!this.shop) return;
       this.shop.setTexture(open ? "shop-open" : "shop-abandoned");
       this.mira?.setVisible(open);
+      if (requestedSolTourStop === "shop") this.syncSolTourMarker();
       if (!open) this.shopInteractionPending = false;
     }
 
@@ -730,8 +733,13 @@ export async function createVillageGame(
       requestedSolTourStop = stop;
       this.syncLinusPriorityMarkers();
       this.syncHenningPriorityMarker();
+      this.syncSolTourMarker();
+    }
+
+    private syncSolTourMarker() {
       this.solTourMarker?.destroy();
       this.solTourMarker = undefined;
+      const stop = requestedSolTourStop;
       if (!stop) return;
       const target = stop === "bakery" ? this.henning : stop === "shop" ? this.mira : stop === "decision" ? this.sol : this.linus;
       if (!target || !target.visible) return;
@@ -889,17 +897,20 @@ export async function createVillageGame(
       if (!attention) {
         this.syncLinusPriorityMarkers();
         this.syncHenningPriorityMarker();
+        this.syncSolTourMarker();
         return;
       }
       const resident = this.residents[attention.resident];
       if (!resident) {
         this.syncLinusPriorityMarkers();
         this.syncHenningPriorityMarker();
+        this.syncSolTourMarker();
         return;
       }
       resident.setPosition(attention.position.x, attention.position.y).setDepth(1000 + attention.position.y);
       this.syncLinusPriorityMarkers();
       this.syncHenningPriorityMarker();
+      this.syncSolTourMarker();
       // Construction/story attention is dialogue, not a quest state.
       // Keep MMO semantics reserved: ? = available quest, ! = completed quest turn-in.
       // Anchor the canonical story-attention marker above the resident's actual sprite.
