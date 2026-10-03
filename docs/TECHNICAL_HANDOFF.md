@@ -1007,3 +1007,19 @@ Preserved:
 Parity locks 38/39 px behavior.
 
 The Interaction System now has four concrete behavior consumers across Lake and Village. Continue with small low-risk consumers before world-input convergence.
+
+
+## Runtime 1.0 interaction checkpoint 5 — construction attention
+
+Village construction attention now delegates arrival resolution to shared `resolveInteraction()`.
+
+Preserved:
+- existing authored approach point;
+- 32 px arrival radius;
+- canonical NPC-attention marker role;
+- original `attention.id` passed directly to `onConstructionInteract`;
+- Village pathfinding and dialogue-open state remain local.
+
+Parity locks 32 px = activate and 33 px = approach.
+
+This is the fifth concrete shared-resolution consumer. The simple hotspot/attention slices are now mature enough that the next audit should focus on world-input authority before attempting to generalize mixed-priority NPC interactions such as Linus.
