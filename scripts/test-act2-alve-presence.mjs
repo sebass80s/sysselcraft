@@ -70,6 +70,7 @@ const phaser = { Scene, Game, AUTO: 0, Scale: { FIT: 0, CENTER_BOTH: 0 }, Math: 
 } };
 const interactionContract = load("src/runtime/interaction/interactionContract.ts");
 const movement = load("src/runtime/world/movement.ts");
+const worldCamera = load("src/runtime/world/worldCamera.ts");
 const markerRenderer = {
   createInteractionMarker: (_scene, options) => object("interaction-marker", options.x ?? 0, options.y ?? 0),
 };
@@ -79,6 +80,7 @@ const { createAct2LakeGame } = load("src/game/createAct2LakeGame.ts", {
   "../runtime/interaction/markerRenderer": markerRenderer,
   "../runtime/interaction/interactionContract": interactionContract,
   "../runtime/world/movement": movement,
+  "../runtime/world/worldCamera": worldCamera,
 });
 let turnIns = 0;
 const start = () => createAct2LakeGame({ clientWidth: 667, clientHeight: 375 }, 1, { onAlveTurnIn: () => { turnIns++; } });
