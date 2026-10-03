@@ -1108,3 +1108,19 @@ This fixes two legacy hazards:
 The sync now runs after sprite creation and whenever intro, backend quest attention or construction presentation changes.
 
 Do not reintroduce independent Linus story/quest marker creation paths.
+
+
+## Runtime 1.0 interaction-priority checkpoint — Henning
+
+Shared interaction priority is no longer Linus-specific.
+
+Henning priorities:
+- construction attention: 30;
+- backend bakery quest: 20;
+- resident: 10.
+
+Scene hit and sprite hit both consume `resolveHenningIntent()`.
+
+`syncHenningPriorityMarker()` owns the backend quest marker and shows it only when quest-source is the winning intent. Construction updates resync it so marker position cannot stale after resident movement.
+
+Do not fold the Sol-tour marker into this rule yet. It is an explicit story CTA and needs separate parity/ownership decisions.
