@@ -848,3 +848,22 @@ Act 2 Lake now uses the same shared authority for pointer interactions and movem
 Parity covers enabled/disabled/overlay truth-table behavior and source consumption.
 
 Next recommended slice: map remaining Village overlays/modals into explicit world-input ownership, then remove the legacy compatibility lock only after parity. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — Village input-lock compatibility layer removed
+
+Village world-input convergence has moved from dual-system compatibility to one explicit authority.
+
+Current flow:
+presentation overlays → `villageBlockingOverlayVisible` → `setWorldInputEnabled` → shared `worldInputEnabled`.
+
+Removed from Village:
+- `constructionDialogueOpen`;
+- `setConstructionDialogueOpen`;
+- all manual per-dialogue toggle calls.
+
+All object pointer handlers are gated by one `acceptsWorldInput()`.
+
+Parity prevents the retired lock from returning.
+
+Next Interaction work can return to shared resolution/pointer priority, with Linus still the most complex mixed quest/story case. No Act 3 and no production promotion.
