@@ -6,7 +6,6 @@ import { deriveGameUiShell } from "../src/game/uiShellState.ts";
 import { SYSTEM_ASSETS, SYSTEM_COMPONENT_IDS, CANONICAL_SYSTEMS } from "../src/runtime/systemRegistry.ts";
 import { createStoryRegistry } from "../src/runtime/story/storyRegistry.ts";
 import { historyEntriesFor, resolveReplayRequest } from "../src/runtime/story/storyHistory.ts";
-import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
 import { resolveInteraction, worldInputEnabled } from "../src/runtime/interaction/interactionContract.ts";
 import { resolveInteractionPriority } from "../src/runtime/interaction/interactionPriority.ts";
 import { resolveDirectMovementIntent } from "../src/runtime/world/movement.ts";
@@ -35,6 +34,12 @@ function loadTsModule(file, dependencies) {
   });
   return exports;
 }
+
+const saveMigrationModule = loadTsModule("../src/runtime/save/migrations.ts", {});
+const { createDefaultAct2RuntimeState } = loadTsModule("../src/game/act2RuntimeState.ts", {
+  "@capacitor/preferences": { Preferences: {} },
+  "../runtime/save/migrations": saveMigrationModule,
+});
 
 const {
   ACT2_STORY_REGISTRY,
