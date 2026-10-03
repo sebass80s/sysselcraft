@@ -1023,3 +1023,25 @@ Preserved:
 Parity locks 32 px = activate and 33 px = approach.
 
 This is the fifth concrete shared-resolution consumer. The simple hotspot/attention slices are now mature enough that the next audit should focus on world-input authority before attempting to generalize mixed-priority NPC interactions such as Linus.
+
+
+## Runtime 1.0 world-input checkpoint — shared authority active
+
+Shared world-input authority is now consumed by both playable worlds.
+
+Contract:
+`worldInputEnabled({ enabled, blockingOverlayVisible })`
+
+Village:
+- `VillageGameHandle` exposes `setWorldInputEnabled`;
+- presentation state drives it from the existing village input-lock derivation;
+- pointer movement + keyboard/path movement obey it;
+- `setConstructionDialogueOpen` remains a compatibility overlay signal for now and must not be treated as the final authority.
+
+Act 2 Lake:
+- pointer interactions and movement update obey the same shared authority;
+- keyboard movement no longer bypasses world-input disabling.
+
+Parity includes three truth-table fixtures plus source-contract guards.
+
+Do not delete Village's legacy overlay flag yet. First map the remaining modal/story surfaces so the explicit authority can become the only owner without regressions.
