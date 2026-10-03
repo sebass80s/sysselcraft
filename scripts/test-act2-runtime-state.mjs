@@ -703,7 +703,7 @@ assert.ok(page.includes("historyEntries.push({ group: PROJECT_COPY[project].labe
 assert.ok(page.includes('group: "Finalen"'), "completed finale beats must be replayable from history");
 assert.ok(page.includes("setHistoryReplay({ beat, lineIndex: 0 })"), "history replay must use isolated local presentation state");
 const historyReplayStart = page.indexOf("function openHistoryReplay");
-const historyReplayEnd = page.indexOf("const openStoryDebugLab");
+const historyReplayEnd = page.indexOf("async function previousFinaleStory");
 assert.ok(historyReplayStart >= 0 && historyReplayEnd > historyReplayStart, "history replay implementation must be discoverable for safety audit");
 const historyReplaySource = page.slice(historyReplayStart, historyReplayEnd);
 assert.equal(historyReplaySource.includes("saveAct2RuntimeState"), false, "history replay must never persist Act 2 state");
