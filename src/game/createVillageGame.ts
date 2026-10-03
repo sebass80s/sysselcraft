@@ -1,5 +1,6 @@
 import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
+import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import {
   AMBIENT_TEXTURE_KEYS,
 } from "./worldDecor";
@@ -670,23 +671,15 @@ export async function createVillageGame(
         this.henningQuestMarker?.destroy();
         this.henningQuestMarker = undefined;
         if (active && this.henning?.visible) {
-          const badge = this.add.graphics();
-          badge.fillStyle(0x5b3a1f, 0.94);
-          badge.lineStyle(3, 0xffd83d, 1);
-          badge.fillCircle(0, 0, 27);
-          badge.strokeCircle(0, 0, 27);
-          const label = this.add.text(0, -1, marker ?? "?", {
-            color: "#fff1a8", fontSize: "36px", fontStyle: "bold",
-            stroke: "#8a5a00", strokeThickness: 3,
-            shadow: { color: "#ffcf33", blur: 8, fill: true, stroke: true },
-          }).setOrigin(0.5);
-          this.henningQuestMarker = this.add.container(this.henning.x, this.henning.y - 178, [badge, label])
-            .setDepth(3000).setSize(76, 76).setInteractive({ useHandCursor: true });
+          this.henningQuestMarker = createInteractionMarker(this, {
+            kind: marker === "!" ? "quest-turn-in" : "quest-available",
+            x: this.henning.x,
+            y: this.henning.y - 178,
+          });
           this.henningQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
             event.stopPropagation();
             callbacks.onQuestSourceInteract?.("bakery");
           });
-          this.tweens.add({ targets: this.henningQuestMarker, y: "-=4", duration: 950, yoyo: true, repeat: -1, ease: "Sine.InOut" });
         }
       }
       if (source === "linus") {
@@ -694,22 +687,12 @@ export async function createVillageGame(
         this.linusQuestMarker?.destroy();
         this.linusQuestMarker = undefined;
         if (active && this.linus) {
-          const linusBadge = this.add.graphics();
-          linusBadge.fillStyle(0x5b3a1f, 0.94);
-          linusBadge.lineStyle(3, 0xffd83d, 1);
-          linusBadge.fillCircle(0, 0, 27);
-          linusBadge.strokeCircle(0, 0, 27);
-          const linusLabel = this.add.text(0, -1, marker ?? "?", {
-            color: "#fff1a8",
-            fontSize: "36px",
-            fontStyle: "bold",
-            stroke: "#8a5a00",
-            strokeThickness: 3,
-            shadow: { color: "#ffcf33", blur: 8, fill: true, stroke: true },
-          }).setOrigin(0.5);
-          this.linusQuestMarker = this.add.container(this.linus.x, this.linus.y - 178, [linusBadge, linusLabel])
-            .setDepth(3000).setSize(76, 76).setInteractive({ useHandCursor: true });
-          this.linusQuestMarker?.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+          this.linusQuestMarker = createInteractionMarker(this, {
+            kind: marker === "!" ? "quest-turn-in" : "quest-available",
+            x: this.linus.x,
+            y: this.linus.y - 178,
+          });
+          this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
             event.stopPropagation();
             if (!this.player || constructionDialogueOpen) return;
             this.linusInteractionPending = true;
@@ -717,14 +700,6 @@ export async function createVillageGame(
             const target = this.path.at(-1);
             if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
             else this.maybeCompleteWorldInteraction();
-          });
-          this.tweens.add({
-            targets: this.linusQuestMarker,
-            y: "-=4",
-            duration: 950,
-            yoyo: true,
-            repeat: -1,
-            ease: "Sine.InOut",
           });
         }
         if (!active && this.introComplete && this.linusInteractionPending) {
@@ -736,21 +711,12 @@ export async function createVillageGame(
     }
 
     private createNoticeboardMarker() {
-      const bubble = this.add.graphics();
-      bubble.fillStyle(0x5b3a1f, 0.94);
-      bubble.lineStyle(3, 0xffd83d, 1);
-      bubble.fillCircle(0, 0, 27);
-      bubble.strokeCircle(0, 0, 27);
-      const label = this.add.text(0, -2, "?", {
-        color: "#ffd83d", fontSize: "30px", fontStyle: "bold", fontFamily: "Trebuchet MS",
-        stroke: "#8a5a00", strokeThickness: 4,
-        shadow: { color: "#ffcf33", blur: 12, fill: true, stroke: true },
-      }).setOrigin(0.5);
-      this.noticeboardMarker = this.add.container(NOTICEBOARD_MARKER.x, NOTICEBOARD_MARKER.y, [bubble, label])
-        .setDepth(3000)
-        .setSize(48, 48)
-        .setInteractive({ useHandCursor: true })
-        .setVisible(false);
+      this.noticeboardMarker = createInteractionMarker(this, {
+        kind: "quest-available",
+        x: NOTICEBOARD_MARKER.x,
+        y: NOTICEBOARD_MARKER.y,
+        visible: false,
+      });
       this.noticeboardMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (!this.player || constructionDialogueOpen || !requestedQuestSourceAttention.noticeboard) return;
@@ -762,10 +728,6 @@ export async function createVillageGame(
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
-      });
-      this.tweens.add({
-        targets: [bubble, label], y: "-=3", duration: 1000,
-        yoyo: true, repeat: -1, ease: "Sine.InOut",
       });
     }
 
