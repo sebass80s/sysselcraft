@@ -786,3 +786,14 @@ The Interaction System as a whole is NOT complete. Remaining work:
 Keep work in short batches. Do not trigger Vercel for routine architecture work. Commit/checkpoint at logical slices, keep docs synchronized as work progresses, and update roadmap statuses when milestones close.
 
 The dev branch currently does not auto-run CI on every commit. Use larger verification checkpoints rather than burning build minutes. Before any promotion, full CI + browser + physical iPhone acceptance are mandatory.
+
+
+## Runtime 1.0 checkpoint — shared interaction resolution begins (2026-10-03)
+
+On `nova/runtime-architecture-v1`, Act 2 Lake's Alve turn-in is the first migrated Interaction System behavior consumer.
+
+Shared engine now decides `disabled | activate | approach` through `resolveInteraction()`. The Lake supplies the accepted Alve anchor/radius/approach configuration and retains movement/facing/callback execution for this slice.
+
+Parity coverage exists for activate, approach and disabled outcomes.
+
+Do not interpret this as Interaction System completion. Continue in short vertical slices, then converge shared world-input authority. Do not start Act 3.
