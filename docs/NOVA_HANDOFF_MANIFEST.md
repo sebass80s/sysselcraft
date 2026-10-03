@@ -882,3 +882,16 @@ construction attention > intro > backend quest > ordinary resident.
 Three base pointer entrypoints use that rule. Marker-specific clicks and existing immediate-vs-approach differences remain intentionally untouched until separately parity-covered.
 
 Next recommended Interaction slice: inspect marker-specific Linus priority / pointer arbitration, or move to another mixed NPC only if it provides a cleaner proof. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — Linus marker arbitration centralized
+
+Linus marker UI now follows the same winning intent as interaction priority.
+
+One `syncLinusPriorityMarkers()` owns story/quest markers and suppresses them when construction attention wins. It also resyncs after construction-driven resident movement and immediately after Linus sprite creation.
+
+This removes duplicate/conflicting Linus markers and stale marker positioning.
+
+Parity guards the single creation paths and initialization/resync behavior.
+
+Next recommended Interaction slice: inspect generic pointer hit-target arbitration across overlapping world objects, or apply the priority pattern to Henning if that offers a safer incremental proof. No Act 3 and no production promotion.
