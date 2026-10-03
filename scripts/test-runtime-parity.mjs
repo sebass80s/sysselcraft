@@ -87,6 +87,33 @@ const interactionFixtures = [
     expectedStatus: "approach",
     expectedTarget: { x: 175, y: 430 },
   },
+  {
+    name: "Village Recycling activates within accepted 40px arrival radius",
+    playerPosition: { x: 100, y: 140 },
+    interaction: {
+      id: "village:recycling",
+      kind: "hotspot",
+      anchor: { x: 100, y: 100 },
+      approachPoint: { x: 100, y: 100 },
+      interactionRadius: 40,
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village Recycling keeps approaching outside accepted arrival radius",
+    playerPosition: { x: 100, y: 141 },
+    interaction: {
+      id: "village:recycling",
+      kind: "hotspot",
+      anchor: { x: 100, y: 100 },
+      approachPoint: { x: 100, y: 100 },
+      interactionRadius: 40,
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 100, y: 100 },
+  },
 ];
 
 for (const fixture of interactionFixtures) {
