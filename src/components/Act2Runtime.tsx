@@ -586,9 +586,17 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const historyEntries: Array<{ group: string; beat: Act2ReplayBeat }> = [];
 
   if (state.openingComplete) {
-    for (const beat of ACT2_OPENING_BEATS) {
-      historyEntries.push({ group: "Inledning", beat });
-    }
+    ACT2_OPENING_BEATS.forEach((beat, index) => {
+      historyEntries.push({
+        group: "Inledning",
+        beat: {
+          id: `opening:${String(index + 1).padStart(2, "0")}`,
+          title: beat.title,
+          image: beat.image,
+          body: beat.body,
+        },
+      });
+    });
   }
 
   for (const project of ["cabin", "dock", "boathouse", "motorboat"] as const) {
