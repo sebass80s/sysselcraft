@@ -46,6 +46,10 @@ export const ACT2_ALVE_WORK_POSITIONS: Record<Act2RestorationProject, { x: numbe
   motorboat: { x: 1530, y: 420 },
 };
 
+// Canonical idle anchor: reuse the cottage-side land position near lake spawn.
+// A missing active project is presentation state, never NPC absence.
+export const ACT2_ALVE_IDLE_POSITION = ACT2_ALVE_WORK_POSITIONS.cabin;
+
 const ACT2_RUNTIME_ROOT = "/assets/village/buildings/act 2/runtime";
 
 export const ACT2_VISUAL_ASSETS: Record<Act2RestorationProject, readonly [string, string, string, string]> = {

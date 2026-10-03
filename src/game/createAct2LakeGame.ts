@@ -1,6 +1,7 @@
 import type { GameObjects, Input, Types } from "phaser";
 import {
   ACT2_ALVE_WORK_POSITIONS,
+  ACT2_ALVE_IDLE_POSITION,
   ACT2_VISUAL_ASSETS,
   ACT2_VISUAL_PLACEMENTS,
   ACT2_WORLD,
@@ -400,11 +401,7 @@ export async function createAct2LakeGame(
 
     private positionAlve(project: Act2RestorationProject | null) {
       if (!this.alvePlaceholder) return;
-      if (!project) {
-        this.alvePlaceholder.setVisible(false);
-        return;
-      }
-      const position = ACT2_ALVE_WORK_POSITIONS[project];
+      const position = project ? ACT2_ALVE_WORK_POSITIONS[project] : ACT2_ALVE_IDLE_POSITION;
       this.alvePlaceholder
         .setPosition(position.x, position.y)
         .setDepth(1000 + Math.round(position.y))
