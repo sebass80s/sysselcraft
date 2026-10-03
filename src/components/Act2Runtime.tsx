@@ -347,8 +347,31 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }, [state.projects.cabin.complete, state.projects.motorboat.complete]);
 
   useEffect(() => {
-    gameRef.current?.setWorldInputEnabled(!(chapterCardVisible || storyUiVisible));
-  }, [chapterCardVisible, storyUiVisible]);
+    const completionPending = projectCompletionReactionPending(state, "dock");
+    const chooserVisible =
+      state.alveIntroComplete
+      && !state.selectedProject
+      && !state.projects.motorboat.complete
+      && !completionPending;
+    const purchaseBlocked =
+      (state.selectedProject === "dock" && jettyPurchaseRequired(state))
+      || (state.selectedProject === "boathouse" && boathousePurchaseRequired(state))
+      || (state.selectedProject === "motorboat" && motorboatPartsPurchaseRequired(state));
+    const namingBlocked = state.selectedProject === "motorboat" && motorboatNamingRequired(state);
+    const worldBlocked =
+      chapterCardVisible
+      || !state.openingComplete
+      || (state.openingComplete && !state.bicycleSeen)
+      || (state.bicycleSeen && !state.alveIntroComplete)
+      || chooserVisible
+      || act2FinalePending(state)
+      || completionPending
+      || purchaseBlocked
+      || namingBlocked
+      || contributionTurnInOpen
+      || cabinRevisitOpen;
+    gameRef.current?.setWorldInputEnabled(!worldBlocked);
+  }, [chapterCardVisible, state, contributionTurnInOpen, cabinRevisitOpen]);
 
   async function commit(next: Act2RuntimeState) {
     if (!debug) await saveAct2RuntimeState(next);
