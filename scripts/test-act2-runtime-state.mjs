@@ -637,12 +637,6 @@ assert.ok(
   page.includes('href={boathousePurchaseGate ? "/?act2-purchase=boathouse" : jettyPurchaseGate ? "/?act2-purchase=dock" : "/?act2-purchase=motorboat"}'),
   "story purchase gates must route back to Mira with explicit purchase context",
 );
-assert.ok(village.includes('get("act2-purchase")'), "village must consume Act 2 purchase context instead of dropping the child at an unscoped village");
-assert.ok(village.includes('setShopPanelOpen(true)'), "Act 2 purchase context must open Mira's shop directly");
-assert.ok(village.includes('setShopCurrency("sysselbux")'), "Act 2 purchase context must open the correct SysselBux shelf");
-assert.ok(village.includes('router.push(`/act2?resume=${project}`)'), "contextual Mira close must return to the same Act 2 project");
-assert.match(page, /resumeProject === "boathouse" \|\| resumeProject === "dock" \|\| resumeProject === "motorboat"/, "Act 2 must accept contextual return from all three story purchases");
-
 assert.ok(page.includes("state.contributionLineIndex"), "contribution Story Moments must render from persisted line state");
 
 assert.ok(page.includes("previousOpening()"), "Act 2 opening must support Föregående navigation");
@@ -683,6 +677,11 @@ assert.ok(act2Route.includes("ChildBackendQuestInbox"), "Act 2 must reuse the sa
 assert.match(act2Route, /<ChildBackendQuestInbox \/>/, "Act 2 route must mount the shared Uppdrag UI");
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+assert.ok(village.includes('get("act2-purchase")'), "village must consume Act 2 purchase context instead of dropping the child at an unscoped village");
+assert.ok(village.includes('setShopPanelOpen(true)'), "Act 2 purchase context must open Mira's shop directly");
+assert.ok(village.includes('setShopCurrency("sysselbux")'), "Act 2 purchase context must open the correct SysselBux shelf");
+assert.ok(village.includes('router.push(`/act2?resume=${project}`)'), "contextual Mira close must return to the same Act 2 project");
+assert.match(page, /resumeProject === "boathouse" \|\| resumeProject === "dock" \|\| resumeProject === "motorboat"/, "Act 2 must accept contextual return from all three story purchases");
 assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay at locked 200 SysselBux");
