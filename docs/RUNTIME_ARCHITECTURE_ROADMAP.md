@@ -227,8 +227,8 @@ Completed:
 - read-only `/act3` transition page.
 
 Removed as dead prototype residue:
-- unused `StoryDebugConsole` implementation/type files and their CSS;
-- prototype-era `alvePlaceholder` naming for the canonical runtime Alve entity;
+- unused prototype debug implementation/type files and their CSS;
+- prototype-era placeholder naming for the canonical runtime Alve entity;
 - duplicate UI-shell source-shape assertions in unrelated Act 2 tests.
 
 Still required before substantial Act 3 runtime expansion:
