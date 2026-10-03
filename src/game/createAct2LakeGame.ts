@@ -1,6 +1,6 @@
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
-import { resolveInteraction } from "../runtime/interaction/interactionContract";
+import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/interactionContract";
 import {
   ACT2_ALVE_WORK_POSITIONS,
   ACT2_ALVE_IDLE_POSITION,
@@ -119,7 +119,7 @@ export async function createAct2LakeGame(
         if (project === "cabin") {
           image.setInteractive({ useHandCursor: true });
           image.on("pointerdown", (_pointer: Input.Pointer, _localX: number, _localY: number, event: { stopPropagation: () => void }) => {
-            if (!requestedWorldInputEnabled || !requestedCabinRevisitAvailable) return;
+            if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false }) || !requestedCabinRevisitAvailable) return;
             event.stopPropagation();
             this.moveTarget = null;
             options.onCabinRevisit?.();
@@ -230,7 +230,7 @@ export async function createAct2LakeGame(
       camera.setDeadzone(Math.min(340, viewWidth * 0.32), 180);
 
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
-        if (!requestedWorldInputEnabled || !this.player) return;
+        if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false }) || !this.player) return;
         const target = { x: pointer.worldX, y: pointer.worldY };
         if (!this.isWalkable(target.x, target.y)) return;
         this.moveTarget = target;
@@ -246,6 +246,7 @@ export async function createAct2LakeGame(
 
     update(_time: number, delta: number) {
       if (!this.player) return;
+      if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false })) return;
       const left = Boolean(this.cursors?.left.isDown || this.wasd?.left.isDown);
       const right = Boolean(this.cursors?.right.isDown || this.wasd?.right.isDown);
       const up = Boolean(this.cursors?.up.isDown || this.wasd?.up.isDown);
