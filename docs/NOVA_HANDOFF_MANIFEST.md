@@ -926,3 +926,17 @@ One `syncSolTourMarker()` owns CTA marker presentation. CTA suppresses lower que
 Parity guards priority matrices, CTA marker visibility rules and arrival callback routing.
 
 Next recommended Interaction slice: generic pointer hit-target arbitration across overlapping scene/object handlers. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — Village scene pointer arbitration explicit
+
+The scene fallback pointer handler now selects overlapping targets with shared `resolveInteractionPriority()` instead of implicit branch order.
+
+Priority is locked as:
+Recycling > Linus > Shop > Henning > Ground.
+
+Parity covers overlap and fallback cases and source guards preserve the numeric priorities.
+
+Object-level pointer handlers remain intentionally for native reliability. Do not consolidate them away without browser + physical iPhone parity.
+
+Next recommended Interaction step: assess whether the current shared Interaction System is sufficient for a checkpoint build/parity run before attempting deeper cross-entrypoint de-duplication. No Act 3 and no production promotion.
