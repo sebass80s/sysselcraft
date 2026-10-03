@@ -12,6 +12,7 @@ import { resolveInteractionPriority } from "../src/runtime/interaction/interacti
 import { resolveDirectMovementIntent } from "../src/runtime/world/movement.ts";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../src/runtime/world/worldCamera.ts";
 import { WORLD_ENTITY_DEPTH_BASE, worldEntityDepth } from "../src/runtime/world/worldDepth.ts";
+import { runSequentialMigrations } from "../src/runtime/save/migrations.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
@@ -239,6 +240,47 @@ for (const y of [0, 427.4, 427.5, 427.6, -0.5, -1.5]) {
   }
   placement.baseY = previousBaseY;
 }
+
+const migrationFixtures = [
+  {
+    name: "sequential migration applies every version exactly once",
+    currentVersion: 1,
+    targetVersion: 3,
+    value: { steps: [] },
+    migrations: [
+      { from: 1, to: 2, migrate: (value) => ({ steps: [...value.steps, "1->2"] }) },
+      { from: 2, to: 3, migrate: (value) => ({ steps: [...value.steps, "2->3"] }) },
+    ],
+    expected: { value: { steps: ["1->2", "2->3"] }, version: 3 },
+  },
+  {
+    name: "already-current schema is idempotent",
+    currentVersion: 3,
+    targetVersion: 3,
+    value: { steps: ["stable"] },
+    migrations: [],
+    expected: { value: { steps: ["stable"] }, version: 3 },
+  },
+];
+
+for (const fixture of migrationFixtures) {
+  assert.deepEqual(
+    runSequentialMigrations(
+      fixture.value,
+      fixture.currentVersion,
+      fixture.targetVersion,
+      fixture.migrations,
+    ),
+    fixture.expected,
+    fixture.name,
+  );
+}
+
+assert.throws(
+  () => runSequentialMigrations({}, 1, 2, []),
+  /Missing migration 1 -> 2/,
+  "versioned save migration must fail closed when a sequential step is missing",
+);
 
 const cameraDeadzoneFixtures = [
   { name: "phone-width camera deadzone preserves the accepted 32% width", viewWidth: 667, expected: { width: 213.44, height: 180 } },
