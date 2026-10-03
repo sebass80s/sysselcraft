@@ -875,7 +875,7 @@ export default function VillagePrototype() {
       const nextAct2 = {
         ...withBackendStoryFlags(currentAct2, purchase.worldFlags),
         pendingPurchaseStory: "boathouse" as const,
-        purchaseStoryLineIndex: 14,
+        purchaseStoryLineIndex: 0,
       };
       await saveAct2RuntimeState(nextAct2);
       setAct2BoathouseSteeringWheelOwned(nextAct2.boathouseSteeringWheelOwned);
@@ -907,7 +907,7 @@ export default function VillagePrototype() {
       const nextAct2 = {
         ...withBackendStoryFlags(currentAct2, purchase.worldFlags),
         pendingPurchaseStory: "dock" as const,
-        purchaseStoryLineIndex: 11,
+        purchaseStoryLineIndex: 0,
       };
       await saveAct2RuntimeState(nextAct2);
       setAct2JettyLifebuoyOwned(nextAct2.jettyLifebuoyOwned);
