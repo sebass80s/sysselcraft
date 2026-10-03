@@ -675,7 +675,7 @@ Rules:
 
 
 
-## FUTURE NOVA: ARCHITECTURE RULES ARE NON-NEGOTIABLE
+## FUTURE NOVA: THESE ARE RULES, NOT GUIDELINES
 
 Before writing new gameplay code, read `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`, especially **Runtime Architecture 1.0 master contract**.
 
@@ -693,3 +693,10 @@ If yes, configure/reuse it.
 If no, add it once to the shared engine so all chapters inherit it.
 
 Act 3 is the first consumer of Runtime Architecture 1.0, not an excuse to create Runtime Architecture 2.0 accidentally.
+
+
+## IMPROVEMENT DUTY
+
+If you spot a material improvement to architecture, UX, reliability, maintainability or testing, surface it immediately. Do not wait for Kalle to ask and do not bury it in a later handoff.
+
+Respect the live freeze: propose or implement improvements on the development branch unless an explicit live hotfix is requested.
