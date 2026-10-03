@@ -10,6 +10,7 @@ import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
 import { resolveInteraction, worldInputEnabled } from "../src/runtime/interaction/interactionContract.ts";
 import { resolveInteractionPriority } from "../src/runtime/interaction/interactionPriority.ts";
 import { resolveDirectMovementIntent } from "../src/runtime/world/movement.ts";
+import { WORLD_CAMERA, worldCameraDeadzone } from "../src/runtime/world/worldCamera.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
@@ -194,6 +195,18 @@ const linusPriorityFixtures = [
 
 for (const fixture of linusPriorityFixtures) {
   assert.equal(resolveInteractionPriority(fixture.candidates)?.id, fixture.expected, fixture.name);
+}
+
+const cameraDeadzoneFixtures = [
+  { name: "phone-width camera deadzone preserves the accepted 32% width", viewWidth: 667, expected: { width: 213.44, height: 180 } },
+  { name: "wide camera deadzone preserves the accepted 340px width cap", viewWidth: 1536, expected: { width: 340, height: 180 } },
+];
+
+assert.equal(WORLD_CAMERA.backgroundColor, "#789a68");
+assert.equal(WORLD_CAMERA.followLerpX, 0.08);
+assert.equal(WORLD_CAMERA.followLerpY, 0.08);
+for (const fixture of cameraDeadzoneFixtures) {
+  assert.deepEqual(worldCameraDeadzone(fixture.viewWidth), fixture.expected, fixture.name);
 }
 
 const directMovementFixtures = [
@@ -1028,6 +1041,16 @@ assert.ok(
   "Act 2 Lake must consume the shared World/Area movement-intent primitive",
 );
 assert.ok(
+  act2LakeSource.includes("WORLD_CAMERA.followLerpX")
+    && act2LakeSource.includes("worldCameraDeadzone(viewWidth)"),
+  "Act 2 Lake must consume the shared World/Area camera contract",
+);
+assert.ok(
+  villageGameSource.includes("WORLD_CAMERA.followLerpX")
+    && villageGameSource.includes("worldCameraDeadzone(viewWidth)"),
+  "Village must consume the shared World/Area camera contract",
+);
+assert.ok(
   act2LakeSource.includes("update(_time: number, delta: number)"),
   "Act 2 Lake update loop must remain present for world-input parity coverage",
 );
@@ -1252,4 +1275,4 @@ assert.ok(
   "Village must not retain local story-attention bubble drawing",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${villagePointerTargetFixtures.length} pointer-target fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${directMovementFixtures.length} direct-movement fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${villagePointerTargetFixtures.length} pointer-target fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${cameraDeadzoneFixtures.length} camera fixtures + ${directMovementFixtures.length} direct-movement fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
