@@ -2,6 +2,7 @@ import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
+import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
 import {
   AMBIENT_TEXTURE_KEYS,
 } from "./worldDecor";
@@ -232,15 +233,16 @@ export async function createVillageGame(
         // Resolve NPC taps at scene level too. This avoids depending on Phaser's
         // object-level pointer event ordering in the native iOS WebView.
         if (this.linus && Phaser.Geom.Rectangle.Contains(new Phaser.Geom.Rectangle(this.linus.x - 82, this.linus.y - 155, 164, 180), pointer.worldX, pointer.worldY)) {
-          if (requestedConstruction.attention?.resident === "linus") {
+          const linusIntent = this.resolveLinusIntent();
+          if (linusIntent === "construction-attention") {
             this.approachAttentionResident();
             return;
           }
-          if (!this.introComplete) {
+          if (linusIntent === "intro") {
             callbacks.onLinusInteract();
             return;
           }
-          if (!this.backendLinusAttention) {
+          if (linusIntent === "resident") {
             callbacks.onLinusInteract();
             return;
           }
@@ -337,6 +339,15 @@ export async function createVillageGame(
         enabled: requestedWorldInputEnabled,
         blockingOverlayVisible: false,
       });
+    }
+
+    private resolveLinusIntent() {
+      return resolveInteractionPriority([
+        { id: "resident", priority: 10, enabled: true },
+        { id: "quest-source", priority: 20, enabled: this.introComplete && this.backendLinusAttention },
+        { id: "intro", priority: 30, enabled: !this.introComplete },
+        { id: "construction-attention", priority: 40, enabled: requestedConstruction.attention?.resident === "linus" },
+      ])?.id ?? "resident";
     }
 
     setDogVisible(visible: boolean) {
@@ -1057,11 +1068,12 @@ export async function createVillageGame(
         event.stopPropagation();
         if (!this.acceptsWorldInput()) return;
         if (!this.player) return;
-        if (requestedConstruction.attention?.resident === "linus") {
+        const linusIntent = this.resolveLinusIntent();
+        if (linusIntent === "construction-attention") {
           this.approachAttentionResident();
           return;
         }
-        if (!this.introComplete) {
+        if (linusIntent === "intro") {
           callbacks.onLinusInteract();
           return;
         }
@@ -1080,18 +1092,19 @@ export async function createVillageGame(
       this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
         if (!this.acceptsWorldInput()) return;
-        if (requestedConstruction.attention?.resident === "linus") {
+        if (!this.player) return;
+        const linusIntent = this.resolveLinusIntent();
+        if (linusIntent === "construction-attention") {
           this.approachAttentionResident();
           return;
         }
-        if (!this.player) return;
-        if (!this.introComplete) {
+        if (linusIntent === "intro") {
           callbacks.onLinusInteract();
           return;
         }
-        // A backend quest marker changes what happens once the player reaches Linus,
-        // but must never make Linus himself non-interactive. This keeps ordinary
-        // resident dialogue available after onboarding and between quest batches.
+        // Quest and ordinary resident intents share the same authored approach path.
+        // The callback remains resolved on arrival so backend attention changes during
+        // navigation keep the established live behavior.
         this.linusInteractionPending = true;
         this.path = findPath({ x: this.player.x, y: this.player.y }, REQUIRED_APPROACHES.linus, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
