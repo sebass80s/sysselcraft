@@ -43,6 +43,7 @@ import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
 import { ACT2_OPENING_BEATS } from "../game/act2OpeningStory";
 import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../game/act2AlveStory";
+import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { historyEntriesFor } from "../runtime/story/storyHistory";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
 
@@ -739,47 +740,43 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   };
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
-    {hudVisible && <header className="prototype-header act2-hud-input-shield" aria-label="SysselCraft HUD">
-      <div className="prototype-brand-row">
+    <GameUiShell
+      visible={hudVisible}
+      diamonds={backendWallet?.diamonds ?? "…"}
+      sysselBux={backendWallet?.sysselBux ?? "…"}
+      menuOpen={mainMenuOpen}
+      onMenuToggle={() => setMainMenuOpen((open) => !open)}
+      menuItems={[
+        {
+          id: "adult-mode",
+          label: "🔐 Vuxenläge",
+          onSelect: () => router.push("/?menu=adult"),
+        },
+        {
+          id: "history",
+          label: "📖 Historik",
+          hidden: historyEntries.length === 0,
+          onSelect: () => {
+            setMainMenuOpen(false);
+            setHistoryOpen(true);
+          },
+        },
+        {
+          id: "village",
+          label: "← Till byn",
+          onSelect: () => router.push("/"),
+        },
+      ]}
+      contextualActions={state.act2Complete && state.endCardSeen ? (
         <button
-          className="prototype-brand-button"
-          type="button"
-          onClick={() => setMainMenuOpen((open) => !open)}
-          aria-expanded={mainMenuOpen}
-          aria-haspopup="menu"
-          aria-label="Öppna SysselCraft-menyn"
-        >
-          <Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="SysselCraft" width={360} height={124} priority />
-        </button>
-        {mainMenuOpen && <div className="main-menu-popover" role="menu">
-          <button className="parent-menu-button" role="menuitem" type="button" onClick={() => router.push("/?menu=adult")}>
-            🔐 Vuxenläge
-          </button>
-          {historyEntries.length > 0 && <button
-            className="parent-menu-button"
-            role="menuitem"
-            type="button"
-            onClick={() => { setMainMenuOpen(false); setHistoryOpen(true); }}
-          >
-            📖 Historik
-          </button>}
-          <button className="parent-menu-button" role="menuitem" type="button" onClick={() => router.push("/")}>
-            ← Till byn
-          </button>
-        </div>}
-        {state.act2Complete && state.endCardSeen && <button
           className="secondary-button compact act2-chapter3-button"
           type="button"
           onClick={() => router.push("/act3")}
         >
           Till kapitel 3 →
-        </button>}
-      </div>
-      <div className="resource-hud" aria-label="Resurser">
-        <strong>💎 {backendWallet?.diamonds ?? "…"}</strong>
-        <strong>🪙 {backendWallet?.sysselBux ?? "…"}</strong>
-      </div>
-    </header>}
+        </button>
+      ) : undefined}
+    />
     {historyOpen && <div className="act2-history-overlay" role="dialog" aria-label="Historiska storybeats">
       <section className="act2-history-panel">
         <div className="act2-history-heading">
