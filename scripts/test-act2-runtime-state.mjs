@@ -660,7 +660,10 @@ assert.ok(page.includes('className="act2-project-status"'), "Act 2 must keep a c
 assert.ok(page.includes("Aktivt projekt:"), "Act 2 project status must identify the active project");
 assert.equal(page.includes("Ett klart uppdrag väntar hos Alve."), false, "compact Act 2 project status must not carry quest guidance copy");
 assert.ok(page.includes("← Till byn"), "Act 2 HUD must expose an explicit route back to the village");
-assert.ok(page.includes('className="prototype-header"'), "Act 2 must reuse the village HUD shell");
+assert.ok(
+  page.includes('className="prototype-header act2-hud-input-shield"'),
+  "Act 2 must reuse the village HUD shell and shield the lake canvas from pointer-through",
+);
 assert.match(page, /className="prototype-brand-button"[\s\S]*onClick=\{\(\) => router\.push\("\/"\)\}/, "Act 2 SysselCraft logo must navigate back to the village");
 assert.match(page, /className="secondary-button compact act2-village-button"[\s\S]*← Till byn/, "Act 2 HUD must show an explicit Till byn control");
 
