@@ -367,3 +367,16 @@ Visual outcomes:
 - ordinary resident interaction shows neither.
 
 The sync runs after Linus creation, intro changes, quest-attention changes and construction presentation updates.
+
+
+## Checkpoint — Henning proves shared priority reuse
+
+Henning exposed a real pre-convergence mismatch:
+- scene hit: construction > backend quest > resident;
+- sprite hit: resident path directly.
+
+Both now use `resolveHenningIntent()`, backed by generic `resolveInteractionPriority()`.
+
+Henning quest-marker creation is also centralized and suppressed while construction attention wins.
+
+Sol-tour marker behavior is intentionally unchanged and remains a separate story-entry mechanism pending a dedicated arbitration slice.
