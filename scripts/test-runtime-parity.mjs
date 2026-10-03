@@ -314,6 +314,33 @@ const interactionFixtures = [
     expectedTarget: { x: 835, y: 500 },
   },
   {
+    name: "Village Sol activates at accepted 95px resident radius",
+    playerPosition: { x: 95, y: 0 },
+    interaction: {
+      id: "village:sol",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 835, y: 485 },
+      interactionRadius: 95,
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village Sol keeps approaching outside accepted 95px resident radius",
+    playerPosition: { x: 96, y: 0 },
+    interaction: {
+      id: "village:sol",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 835, y: 485 },
+      interactionRadius: 95,
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 835, y: 485 },
+  },
+  {
     name: "Village Henning activates at accepted 95px resident radius",
     playerPosition: { x: 95, y: 0 },
     interaction: {
@@ -828,6 +855,15 @@ assert.ok(
 assert.ok(
   villageGameSource.includes("const HENNING_INTERACTION_RADIUS = 95"),
   "Village Henning must preserve the accepted 95px interaction radius",
+);
+assert.ok(
+  villageGameSource.includes('id: "village:sol"') &&
+    villageGameSource.includes("interactionRadius: SOL_INTERACTION_RADIUS"),
+  "Village Sol arrival must use shared interaction resolution",
+);
+assert.ok(
+  villageGameSource.includes("const SOL_INTERACTION_RADIUS = 95"),
+  "Village Sol must preserve the accepted 95px interaction radius",
 );
 assert.ok(
   villageGameSource.includes('const scenePointerTarget = resolveInteractionPriority(['),
