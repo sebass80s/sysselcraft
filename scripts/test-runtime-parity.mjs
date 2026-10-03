@@ -722,6 +722,29 @@ assert.ok(
   "Linus priority marker sync must render quest marker only when quest intent wins",
 );
 assert.ok(
+  villageGameSource.includes("private resolveHenningIntent()"),
+  "Village must centralize Henning base interaction priority",
+);
+assert.equal(
+  (villageGameSource.match(/const henningIntent = this\.resolveHenningIntent\(\);/g) ?? []).length,
+  2,
+  "Henning scene and sprite entrypoints must consume the same priority decision",
+);
+assert.equal(
+  (villageGameSource.match(/requestedConstruction\.attention\?\.resident === \"henning\"/g) ?? []).length,
+  1,
+  "Henning base priority must not duplicate construction-attention checks outside resolveHenningIntent",
+);
+assert.ok(
+  villageGameSource.includes("private syncHenningPriorityMarker()"),
+  "Henning quest marker must consume the centralized priority decision",
+);
+assert.equal(
+  (villageGameSource.match(/this\.henningQuestMarker = createInteractionMarker/g) ?? []).length,
+  1,
+  "Henning quest marker must have one canonical creation path",
+);
+assert.ok(
   villageGameSource.includes("this.residents.linus = this.linus;\n      this.syncLinusPriorityMarkers();"),
   "Linus marker arbitration must initialize immediately after the sprite exists",
 );
