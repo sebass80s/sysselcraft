@@ -1,4 +1,5 @@
 import { Preferences } from "@capacitor/preferences";
+import { runSequentialMigrations } from "../runtime/save/migrations";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -54,6 +55,51 @@ function childRuntimeKey(childId: string) {
   return `${LEGACY_KEY}.${childId}`;
 }
 const PROJECTS: Act2Project[] = ["cabin", "dock", "boathouse", "motorboat"];
+const ACT2_FINALE_SCHEMA_VERSION = 2;
+
+type Act2RuntimeCandidate = Partial<Act2RuntimeState> & {
+  selectedProject?: unknown;
+  projects?: Partial<Record<Act2Project, unknown>>;
+};
+
+function migrateAct2RuntimeCandidate(candidate: Act2RuntimeCandidate): Act2RuntimeCandidate {
+  const currentVersion = candidate.finaleSchemaVersion === ACT2_FINALE_SCHEMA_VERSION
+    ? ACT2_FINALE_SCHEMA_VERSION
+    : 1;
+
+  return runSequentialMigrations(
+    candidate,
+    currentVersion,
+    ACT2_FINALE_SCHEMA_VERSION,
+    [
+      {
+        from: 1,
+        to: 2,
+        migrate: (legacy) => {
+          const legacyFinaleComplete =
+            legacy.familyFinaleConsumed === true
+            || legacy.epilogueConsumed === true
+            || legacy.act2Complete === true;
+
+          if (!legacyFinaleComplete) {
+            return { ...legacy, finaleSchemaVersion: ACT2_FINALE_SCHEMA_VERSION };
+          }
+
+          return {
+            ...legacy,
+            finaleSchemaVersion: ACT2_FINALE_SCHEMA_VERSION,
+            finaleIndex: 5,
+            finaleLineIndex: 0,
+            familyFinaleConsumed: true,
+            epilogueConsumed: false,
+            act2Complete: false,
+            endCardSeen: false,
+          };
+        },
+      },
+    ],
+  ).value;
+}
 
 function emptyProject(): Act2ProjectState {
   return { contributions: 0, visibleStage: 0, consumedBeatIds: [], complete: false };
@@ -145,10 +191,7 @@ export function canSelectProject(state: Act2RuntimeState, project: Act2Project) 
 export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
   const defaults = createDefaultAct2RuntimeState();
   if (!value || typeof value !== "object") return defaults;
-  const candidate = value as Partial<Act2RuntimeState> & {
-    selectedProject?: unknown;
-    projects?: Partial<Record<Act2Project, unknown>>;
-  };
+  const candidate = migrateAct2RuntimeCandidate(value as Act2RuntimeCandidate);
 
   const projects = {
     cabin: normalizeProject(candidate.projects?.cabin, "cabin"),
@@ -257,15 +300,9 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     // family/veranda ending, even if the first six-beat migration accidentally
     // rewrote it to finaleIndex=5 + epilogueConsumed=true. Resume that real
     // device state at the newly added epilogue exactly once.
-    const preEpilogueSchemaComplete = candidate.finaleSchemaVersion !== 2
-      && (
-        candidate.familyFinaleConsumed === true
-        || candidate.epilogueConsumed === true
-        || candidate.act2Complete === true
-      );
     const legacyFamilyComplete = candidate.familyFinaleConsumed === true
       && (candidate.finaleIndex ?? 0) < 5;
-    if (preEpilogueSchemaComplete || legacyFamilyComplete) {
+    if (legacyFamilyComplete) {
       normalized.finaleIndex = 5;
       normalized.finaleLineIndex = 0;
       normalized.familyFinaleConsumed = true;
