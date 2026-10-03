@@ -43,6 +43,8 @@ import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
 import { ACT2_OPENING_BEATS } from "../game/act2OpeningStory";
 import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../game/act2AlveStory";
+import { historyEntriesFor } from "../runtime/story/storyHistory";
+import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
 
 
 
@@ -583,50 +585,22 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     ? parseStoryLine(activeCabinRevisitLine, childName)
     : null;
 
-  const projectStorySources = {
-    cabin: CABIN_CONTRIBUTION_BEATS,
-    dock: JETTY_CONTRIBUTION_BEATS,
-    boathouse: BOATHOUSE_CONTRIBUTION_BEATS,
-    motorboat: MOTORBOAT_CONTRIBUTION_BEATS,
-  } as const;
-  const historyEntries: Array<{ group: string; beat: Act2ReplayBeat }> = [];
+  const historyGroupByStoryline: Record<string, string> = {
+    [ACT2_STORYLINE_IDS.opening]: "Inledning",
+    [ACT2_STORYLINE_IDS.cabin]: "Stugan",
+    [ACT2_STORYLINE_IDS.dock]: "Bryggan",
+    [ACT2_STORYLINE_IDS.boathouse]: "Båthuset",
+    [ACT2_STORYLINE_IDS.motorboat]: "Motorbåten",
+    [ACT2_STORYLINE_IDS.finale]: "Finalen",
+  };
 
-  if (state.openingComplete) {
-    ACT2_OPENING_BEATS.forEach((beat, index) => {
-      historyEntries.push({
-        group: "Inledning",
-        beat: {
-          id: `opening:${String(index + 1).padStart(2, "0")}`,
-          title: beat.title,
-          image: beat.image,
-          body: beat.body,
-        },
-      });
-    });
-  }
-
-  for (const project of ["cabin", "dock", "boathouse", "motorboat"] as const) {
-    if (!state.projects[project].complete) continue;
-    projectStorySources[project].forEach((beat) => {
-      historyEntries.push({ group: PROJECT_COPY[project].label, beat });
-    });
-  }
-
-  if (state.projects.dock.complete && state.jettyLifebuoyOwned) {
-    historyEntries.push({ group: "Bryggan", beat: JETTY_LIFEBUOY_BEAT });
-  }
-  if (state.projects.boathouse.complete && state.boathouseSteeringWheelOwned) {
-    historyEntries.push({ group: "Båthuset", beat: BOATHOUSE_STEERING_WHEEL_BEAT });
-  }
-  if (state.projects.dock.complete && state.consumedProjectCompletionIds.includes("dock:completion-reaction")) {
-    historyEntries.push({ group: "Bryggan", beat: JETTY_COMPLETION_REACTION });
-  }
-
-  if (state.epilogueConsumed) {
-    ACT2_FINALE_BEATS.forEach((beat) => {
-      historyEntries.push({ group: "Finalen", beat });
-    });
-  }
+  const historyEntries = historyEntriesFor(
+    ACT2_STORY_REGISTRY,
+    act2HistoryProgress(state),
+  ).map(({ storylineId, beat }) => ({
+    group: historyGroupByStoryline[storylineId] ?? storylineId,
+    beat,
+  }));
 
   const historyGroups = historyEntries.reduce<Array<{ label: string; entries: Act2ReplayBeat[] }>>((groups, entry) => {
     const existing = groups.find((group) => group.label === entry.group);
