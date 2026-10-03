@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import vm from "node:vm";
 import ts from "typescript";
 import {
   ACT2_ALVE_WORK_POSITIONS,
@@ -17,13 +16,11 @@ function loadTsModule(file, dependencies) {
   const code = ts.transpileModule(fs.readFileSync(new URL(file, import.meta.url), "utf8"), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
   }).outputText;
-  vm.runInNewContext(code, {
-    exports,
-    require(name) {
-      assert.ok(name in dependencies, `Unexpected Act 2 runtime dependency: ${name}`);
-      return dependencies[name];
-    },
-  });
+  const requireDependency = (name) => {
+    assert.ok(name in dependencies, `Unexpected Act 2 runtime dependency: ${name}`);
+    return dependencies[name];
+  };
+  new Function("exports", "require", code)(exports, requireDependency);
   return exports;
 }
 
