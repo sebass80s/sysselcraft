@@ -322,3 +322,19 @@ Act 2 Lake:
 Parity covers the pure truth table and static consumer guards.
 
 Next work should map remaining Village overlay/modal surfaces into the explicit input authority before deleting the old construction-dialogue compatibility flag.
+
+
+## Checkpoint — Village legacy dialogue lock removed
+
+The overlay audit found the previous explicit lock list was incomplete. Several real blocking surfaces were not represented, including menus, pairing, room/dog-home surfaces and multiple story/replay paths.
+
+Village now derives one complete `villageBlockingOverlayVisible` from React presentation state and uses it as the only presentation owner of `setWorldInputEnabled`.
+
+Removed:
+- `constructionDialogueOpen`;
+- `setConstructionDialogueOpen`;
+- manual per-dialogue input toggle calls.
+
+All object pointer interactions now share `acceptsWorldInput()` → `worldInputEnabled()`.
+
+This closes the Village compatibility-lock migration. Future overlay additions must extend the presentation blocking authority rather than add local Phaser flags.
