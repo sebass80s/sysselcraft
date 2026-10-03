@@ -1048,3 +1048,23 @@ Preserved accepted Lake configuration:
 Parity coverage now exercises activate / approach / disabled outcomes in `scripts/test-runtime-parity.mjs`.
 
 **Status:** Interaction System behavior convergence is now **IN PROGRESS** rather than untouched. Do not mark the Interaction System complete yet. Village still owns multiple local pending-interaction/radius/approach paths, and shared world-input authority is still pending.
+
+
+## Interaction behavior checkpoint 2 — Village noticeboard
+
+The second shared-resolution consumer is now migrated.
+
+Village noticeboard interaction now has one authored interaction definition for:
+- interaction id `village:noticeboard`;
+- quest-source semantics;
+- approach point `{ x: 175, y: 430 }`;
+- accepted arrival radius `36`;
+- canonical quest-available marker role.
+
+Arrival/enable resolution delegates to shared `resolveInteraction()` rather than a local distance threshold. Existing Village pathfinding and pending-interaction execution remain local for this slice.
+
+Parity locks the accepted boundary:
+- 36 px from the authored arrival anchor activates;
+- 37 px continues approaching.
+
+Interaction behavior convergence remains **IN PROGRESS**. Do not replace remaining Village interactions wholesale; migrate them in small parity-backed slices.
