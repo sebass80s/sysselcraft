@@ -302,3 +302,23 @@ Construction/resident story attention is now another shared Interaction System b
 The migration deliberately keeps authored attention ids and callbacks local. The shared contract receives the authored approach point/radius and decides only whether the interaction should activate or continue approaching.
 
 Accepted 32/33 px boundary is parity-covered.
+
+
+## Checkpoint — shared world-input authority established across Village + Lake
+
+Runtime 1.0 now has a real cross-world input contract rather than only an unused helper.
+
+Village:
+- exposes `setWorldInputEnabled`;
+- React presentation state drives that contract;
+- background pointer input and movement update obey shared `worldInputEnabled()`;
+- existing `constructionDialogueOpen` remains as temporary overlay compatibility, not as the new authority.
+
+Act 2 Lake:
+- pointer interactions use shared `worldInputEnabled()`;
+- movement update uses the same authority;
+- this closes a discovered inconsistency where keyboard movement could continue while world input was disabled.
+
+Parity covers the pure truth table and static consumer guards.
+
+Next work should map remaining Village overlay/modal surfaces into the explicit input authority before deleting the old construction-dialogue compatibility flag.
