@@ -263,24 +263,24 @@ main { min-height: 100dvh; }
 
 .act2-history-overlay {
   position: fixed;
-  inset: 0;
+  top: max(calc(env(safe-area-inset-top) + 5.25rem), 5.75rem);
+  left: max(.5rem, env(safe-area-inset-left));
   z-index: 105;
-  display: grid;
-  place-items: center;
-  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
-  background: rgba(10, 16, 12, .86);
+  width: min(560px, calc(100vw - max(1rem, env(safe-area-inset-left)) - max(1rem, env(safe-area-inset-right))));
+  max-height: calc(100dvh - max(calc(env(safe-area-inset-top) + 6rem), 6.5rem) - max(.6rem, env(safe-area-inset-bottom)));
   pointer-events: auto;
 }
 
 .act2-history-panel {
-  width: min(900px, 100%);
-  max-height: min(760px, calc(100dvh - 2rem));
+  width: 100%;
+  max-height: inherit;
   overflow: auto;
   border-radius: 18px;
   padding: 1rem;
   background: rgba(248, 244, 230, .97);
   color: #2f332c;
   box-shadow: 0 16px 48px rgba(0,0,0,.32);
+  border: 1px solid rgba(47,51,44,.14);
 }
 
 .act2-history-heading {
@@ -363,8 +363,13 @@ main { min-height: 100dvh; }
 }
 
 @media (max-width: 760px) {
-  .act2-history-overlay { padding: max(.55rem, env(safe-area-inset-top)) max(.55rem, env(safe-area-inset-right)) max(.55rem, env(safe-area-inset-bottom)) max(.55rem, env(safe-area-inset-left)); }
-  .act2-history-panel { max-height: calc(100dvh - 1.1rem); padding: .7rem; border-radius: 14px; }
+  .act2-history-overlay {
+    top: max(calc(env(safe-area-inset-top) + 4.6rem), 5rem);
+    left: max(.45rem, env(safe-area-inset-left));
+    width: min(520px, calc(100vw - max(.9rem, env(safe-area-inset-left)) - max(.9rem, env(safe-area-inset-right))));
+    max-height: calc(100dvh - max(calc(env(safe-area-inset-top) + 5.2rem), 5.7rem) - max(.5rem, env(safe-area-inset-bottom)));
+  }
+  .act2-history-panel { max-height: inherit; padding: .7rem; border-radius: 14px; }
   .act2-history-heading { margin: -.7rem -.7rem .65rem; padding: .7rem; }
   .act2-history-heading p { font-size: .74rem; }
   .act2-history-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
