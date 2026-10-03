@@ -16,7 +16,11 @@ function load(file, dependencies = {}) {
   return exports;
 }
 const assets = load("src/game/act2VisualAssets.ts");
-const stateApi = load("src/game/act2RuntimeState.ts", { "@capacitor/preferences": { Preferences: {} } });
+const saveMigrations = load("src/runtime/save/migrations.ts");
+const stateApi = load("src/game/act2RuntimeState.ts", {
+  "@capacitor/preferences": { Preferences: {} },
+  "../runtime/save/migrations": saveMigrations,
+});
 const initial = stateApi.createDefaultAct2RuntimeState();
 assert.equal(initial.selectedProject, null);
 const chosen = stateApi.withSelectedProject(initial, "cabin");
