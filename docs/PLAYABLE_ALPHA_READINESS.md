@@ -479,3 +479,22 @@ GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37
 Physical iPhone acceptance is still OPEN. Run the final motorboat contribution through all six finale beats and the end card; verify both landscape directions, actual safe areas, navigation, full-image, HUD/quest suppression and force-quit/relaunch on the intended test child's save. Never mutate Adam. No native sync or Vercel deployment was performed.
 
 Act 3 runtime is absent; persisted `act2Complete && endCardSeen` is its safe future entry boundary. See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for exact implementation and acceptance details.
+
+## 2026-10-03 morning physical-save follow-up
+
+Latest pre-documentation code checkpoint: `dc3c9267abb49b749e2f90f5ce98948a61fde3c4`. GitHub Actions **37107244803 / #1639 SUCCESS**.
+
+Physical iPhone findings after Act 2 closeout:
+- [x] Alve null-project disappearance reproduced and fixed; Kalle physically confirmed Alve is visible again and idle dialogue responds.
+- [x] Automated coverage added for Alve null/reload/project positions and interaction.
+- [x] Legacy old-ending migration bug fixed: old five-beat family-final-complete saves now resume at the new **Över sjön** epilogue instead of landing at lake idle with no project UI.
+- [x] Regression coverage added for the legacy-save epilogue migration.
+- [ ] Physical retest of that same migrated save through **Över sjön → SLUT PÅ ANDRA KAPITLET**.
+- [ ] Force-quit/relaunch during **Över sjön**.
+- [ ] Force-quit/relaunch before and after chapter-end-card acknowledgement.
+- [ ] Both real iPhone landscape orientations/safe areas through the final sequence.
+
+Important: do not reset or reinstall the physical save before this retest. It is currently the best real migration fixture.
+
+Act 2 is code/CI green but remains **physically not fully accepted** until the above end-of-act migration/restart pass succeeds.
+
