@@ -669,11 +669,14 @@ assert.ok(
   page.includes("<GameUiShell") && page.includes("setWorldInputEnabled(!worldBlocked)"),
   "Act 2 must reuse the shared GameUiShell and gate lake input through explicit world-input authority",
 );
-assert.match(page, /className="prototype-brand-button"[\s\S]*onClick=\{\(\) => router\.push\("\/"\)\}/, "Act 2 SysselCraft logo must navigate back to the village");
 assert.match(
   page,
-  /main-menu-popover[\s\S]*← Till byn/,
-  "Act 2 SysselCraft dropdown must keep an explicit Till byn control",
+  /<GameUiShell[\s\S]*id: "village"[\s\S]*label: "← Till byn"[\s\S]*onSelect: \(\) => router\.push\("\/"\)/,
+  "Act 2 shared GameUiShell must expose a route back to the village",
+);
+assert.ok(
+  page.includes('label: "← Till byn"'),
+  "Act 2 shared menu configuration must keep an explicit Till byn control",
 );
 
 assert.ok(page.includes('className="resource-hud"'), "Act 2 must show the shared resource HUD");
