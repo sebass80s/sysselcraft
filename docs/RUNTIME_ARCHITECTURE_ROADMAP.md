@@ -749,3 +749,90 @@ Rules:
 - regression/static checks should be added where practical to catch duplicate Act-specific system assets or forbidden direct references.
 
 The System Registry is part of the engine/content boundary: engine concepts are registered centrally; chapters only consume them.
+
+
+## Runtime 1.0 implementation strategy — LOCKED 2026-10-03
+
+Runtime Architecture 1.0 will be built as a **clean parallel canonical client runtime**, not as a piecemeal extraction/refactor of the current Act 1/Act 2 client implementations.
+
+This is not a full product rewrite.
+
+### Reuse unchanged
+
+Keep and reuse:
+- Quest V2/backend authority;
+- Supabase integration and data ownership;
+- economy/transaction behavior;
+- accepted story/dialogue content;
+- canonical assets;
+- accepted progression values/thresholds;
+- accepted product/story gates.
+
+### Rebuild cleanly
+
+Build a new canonical client runtime for:
+- Game UI Shell;
+- Canonical System Registry;
+- Story Registry + History;
+- Interaction System;
+- Area/World Engine;
+- Save Adapter / Migration Engine;
+- shared Progression/Gating bridge;
+- runtime orchestration between those systems.
+
+### Migration method
+
+1. Define Runtime 1.0 contracts before porting chapter code.
+2. Build the clean runtime beside the frozen live/legacy runtime.
+3. Port Act 2 first as the primary reference chapter because its complete production journey has physical acceptance.
+4. Port Village/Act 1 next using the same shared systems.
+5. Read legacy saves through an adapter/normalizer; do not mutate Adam's production data during development.
+6. Prove parity through automated comparison plus browser/iPhone acceptance.
+7. Remove the superseded legacy client runtime after parity is proven. Do not keep two permanent engines.
+8. Begin substantial Act 3 runtime only after Runtime 1.0 is accepted.
+
+### Mandatory parity harness
+
+Runtime 1.0 must include an automated **parity harness** for migration verification.
+
+The harness must be able to feed representative fixtures / saved states into both:
+- the frozen legacy runtime logic; and
+- Runtime 1.0;
+
+and compare the important externally observable outcomes.
+
+At minimum, parity coverage should compare where applicable:
+- chapter/area availability;
+- current world/project state;
+- NPC presence;
+- interactable/quest-marker availability;
+- authored story eligibility / next beat;
+- completion/gating state;
+- wallet/resource presentation inputs;
+- persisted story completion semantics;
+- chapter transitions;
+- legacy-save normalization outcomes.
+
+The harness is not required to compare incidental implementation details or DOM/source shape. It compares product behavior/state contracts.
+
+Use fixtures for important lifecycle states, including:
+- fresh/early Act 1;
+- late Act 1 / Clinic boundary;
+- Act 1 completed / Act 2 unopened;
+- active Act 2 at representative project stages;
+- pending story/purchase/naming gates;
+- completed Act 2;
+- relevant legacy migration states.
+
+Parity failure blocks removal of legacy runtime and blocks promotion of Runtime 1.0.
+
+### Success criterion
+
+Runtime 1.0 is accepted only when:
+- shared-engine rules are satisfied;
+- representative legacy saves normalize correctly;
+- parity harness passes;
+- browser acceptance passes;
+- physical iPhone acceptance passes.
+
+The frozen live runtime remains the behavioral oracle until that point.
