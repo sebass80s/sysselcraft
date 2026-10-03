@@ -720,3 +720,17 @@ Current runtime checkpoint supersedes older five-beat/veranda-only and shipping-
 - Act 3 runtime does not yet exist. The stable future handoff is persisted `act2Complete && endCardSeen` after end-card acknowledgement. Current fallback remains “Fortsätt vid sjön”. Future Act 3 must consume this boundary and independently persist its chapter intro/entry before routing to its own runtime; it must not clear or replay Act 2. No partial Act 3 engine was added.
 
 GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
+
+## 2026-10-03 morning hotfix checkpoint
+
+Latest pre-documentation code checkpoint: `dc3c9267abb49b749e2f90f5ce98948a61fde3c4`. CI **37107244803 / #1639 SUCCESS**.
+
+Two physical-save edge cases were found after the Act 2 closeout and are now fixed:
+
+- **Null active project must not imply NPC absence.** `createAct2LakeGame.ts` now places Alve at `ACT2_ALVE_IDLE_POSITION` when `selectedProject === null`. Project selection still moves him to the per-project work position. `scripts/test-act2-alve-presence.mjs` covers null-at-boot, null-after-reload, all project positions, idle click, turn-in marker/callback/approach and map-derived walkability.
+- **Legacy five-beat completion must resume at the new epilogue once.** A save with Motorbåten complete and the old family/veranda ending consumed, but no true new epilogue consumption, normalizes to `finaleIndex=5`, `familyFinaleConsumed=true`, `epilogueConsumed=false`, `act2Complete=false`, `endCardSeen=false`. It must not be treated as fully Act-2-complete until **Över sjön** is consumed.
+
+This supersedes earlier closeout wording that said all completed five-beat saves remain complete and never replay the newly added epilogue. The current migration rule intentionally gives those saves the newly authored bridge exactly once.
+
+No backend mutation, native regeneration, Act 1 change or asset change was required for either hotfix. Physical validation of the migrated legacy save remains the immediate acceptance gate.
+
