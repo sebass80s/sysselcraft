@@ -350,3 +350,63 @@ A chapter transition must **not** change:
 - global z-index/input ownership.
 
 If a future Act needs a one-off HUD implementation, treat that as an architecture failure unless there is an explicit documented product exception.
+
+
+## One canonical implementation per game concept — LOCKED 2026-10-03
+
+SysselCraft must not reimplement the same game concept per chapter, area or feature.
+
+Examples:
+- a quest marker is one canonical asset + one canonical component/interaction contract;
+- an NPC attention marker is one canonical asset/component;
+- a dialogue box is one canonical shared component;
+- a story image shell is one canonical shared component;
+- a hotspot/interactable uses one shared interaction primitive;
+- a purchase gate uses one shared presentation/transaction pattern;
+- Historik uses one shared registry/replay system;
+- global HUD/menu uses one shared Game UI Shell.
+
+New chapters consume those primitives by configuration. They do not copy, fork or redraw them unless there is an explicit product requirement for a genuinely different concept.
+
+### Asset rule
+
+Reusable gameplay assets are global game assets, not Act assets.
+
+For example, if the game has one approved quest-marker graphic, every quest marker in every chapter references that same asset. A new chapter must not add `act3-quest-marker.png`, `lake-quest-marker.png`, etc.
+
+Chapter-specific assets should mostly be:
+- backgrounds/maps;
+- NPC/world art unique to that chapter;
+- building/project stages;
+- Story Moment stills;
+- chapter-specific props that are genuinely content, not UI/system chrome.
+
+### Engine/content boundary
+
+The intended long-term authoring model is:
+
+**Engine provides**
+- UI shell;
+- dialogue/story rendering;
+- history/replay;
+- quest/NPC markers;
+- interaction/hotspot behavior;
+- progression consumption;
+- save/migration mechanics;
+- purchase-gate mechanics;
+- world input/collision primitives;
+- z-index/safe-area/overlay semantics.
+
+**Chapter/content provides**
+- story text;
+- images;
+- maps/backgrounds;
+- NPC definitions and positions;
+- project/questline definitions;
+- authored beat ordering;
+- unlock/gating configuration;
+- chapter-specific assets.
+
+If adding Act 5 requires debugging the HUD, dialogue box, quest marker, replay behavior or generic input semantics again, Runtime Architecture 1.0 has failed.
+
+Target authoring experience: adding a new chapter should feel like **fueling a proven engine**, not manufacturing another vehicle.
