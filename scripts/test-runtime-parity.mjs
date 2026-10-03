@@ -217,6 +217,64 @@ for (const fixture of worldInputFixtures) {
   assert.equal(worldInputEnabled(fixture.state), fixture.expected, fixture.name);
 }
 
+const multiZoneInteractionFixtures = [
+  {
+    name: "interaction activates inside primary resident radius",
+    playerPosition: { x: 95, y: 0 },
+    interaction: {
+      id: "multi-zone",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 230, y: 460 },
+      interactionRadius: 95,
+      activationZones: [{ anchor: { x: 230, y: 460 }, interactionRadius: 18 }],
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "interaction activates inside authored arrival zone",
+    playerPosition: { x: 248, y: 460 },
+    interaction: {
+      id: "multi-zone",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 230, y: 460 },
+      interactionRadius: 95,
+      activationZones: [{ anchor: { x: 230, y: 460 }, interactionRadius: 18 }],
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "interaction keeps approaching outside both activation zones",
+    playerPosition: { x: 249, y: 460 },
+    interaction: {
+      id: "multi-zone",
+      kind: "npc",
+      anchor: { x: 0, y: 0 },
+      approachPoint: { x: 230, y: 460 },
+      interactionRadius: 95,
+      activationZones: [{ anchor: { x: 230, y: 460 }, interactionRadius: 18 }],
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 230, y: 460 },
+  },
+];
+
+for (const fixture of multiZoneInteractionFixtures) {
+  const resolution = resolveInteraction(
+    [fixture.interaction],
+    { interactionId: fixture.interaction.id, requestedAt: fixture.interaction.approachPoint },
+    fixture.playerPosition,
+  );
+  assert.equal(resolution.status, fixture.expectedStatus, fixture.name);
+  if ("expectedTarget" in fixture && resolution.status === "approach") {
+    assert.deepEqual(resolution.target, fixture.expectedTarget, fixture.name);
+  }
+}
+
 const interactionFixtures = [
   {
     name: "Alve turn-in activates inside accepted legacy radius",
