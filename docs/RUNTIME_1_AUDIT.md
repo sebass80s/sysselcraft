@@ -293,3 +293,12 @@ The Village bottle-message hotspot has been migrated from a local `distance <= 3
 Its point/radius/enable semantics are now explicit interaction data. Existing story callback and world navigation behavior are preserved.
 
 Parity checks 38 px activate vs 39 px approach.
+
+
+## Checkpoint — construction attention uses shared resolution
+
+Construction/resident story attention is now another shared Interaction System behavior consumer.
+
+The migration deliberately keeps authored attention ids and callbacks local. The shared contract receives the authored approach point/radius and decides only whether the interaction should activate or continue approaching.
+
+Accepted 32/33 px boundary is parity-covered.
