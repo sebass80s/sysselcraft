@@ -9,6 +9,7 @@ import { historyEntriesFor, resolveReplayRequest } from "../src/runtime/story/st
 import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
 import { resolveInteraction, worldInputEnabled } from "../src/runtime/interaction/interactionContract.ts";
 import { resolveInteractionPriority } from "../src/runtime/interaction/interactionPriority.ts";
+import { resolveDirectMovementIntent } from "../src/runtime/world/movement.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
@@ -193,6 +194,67 @@ const linusPriorityFixtures = [
 
 for (const fixture of linusPriorityFixtures) {
   assert.equal(resolveInteractionPriority(fixture.candidates)?.id, fixture.expected, fixture.name);
+}
+
+const directMovementFixtures = [
+  {
+    name: "keyboard movement clears an existing tap target and normalizes diagonals",
+    input: { left: false, right: true, up: true, down: false },
+    player: { x: 100, y: 100 },
+    target: { x: 300, y: 300 },
+    arrivalRadius: 8,
+    expectedDirection: { x: Math.SQRT1_2, y: -Math.SQRT1_2 },
+    expectedClearTarget: true,
+    expectedTargetReached: false,
+  },
+  {
+    name: "tap target resolves to normalized movement when keyboard is idle",
+    input: { left: false, right: false, up: false, down: false },
+    player: { x: 100, y: 100 },
+    target: { x: 103, y: 104 },
+    arrivalRadius: 4,
+    expectedDirection: { x: 0.6, y: 0.8 },
+    expectedClearTarget: false,
+    expectedTargetReached: false,
+  },
+  {
+    name: "Lake direct movement clears target inside accepted 8px arrival threshold",
+    input: { left: false, right: false, up: false, down: false },
+    player: { x: 100, y: 100 },
+    target: { x: 107, y: 100 },
+    arrivalRadius: 8,
+    expectedDirection: null,
+    expectedClearTarget: true,
+    expectedTargetReached: true,
+  },
+  {
+    name: "Lake direct movement keeps moving at exactly 8px because legacy threshold is strict",
+    input: { left: false, right: false, up: false, down: false },
+    player: { x: 100, y: 100 },
+    target: { x: 108, y: 100 },
+    arrivalRadius: 8,
+    expectedDirection: { x: 1, y: 0 },
+    expectedClearTarget: false,
+    expectedTargetReached: false,
+  },
+];
+
+for (const fixture of directMovementFixtures) {
+  const result = resolveDirectMovementIntent(
+    fixture.input,
+    fixture.player,
+    fixture.target,
+    fixture.arrivalRadius,
+  );
+  assert.equal(result.clearTarget, fixture.expectedClearTarget, fixture.name);
+  assert.equal(result.targetReached, fixture.expectedTargetReached, fixture.name);
+  if (fixture.expectedDirection === null) {
+    assert.equal(result.direction, null, fixture.name);
+  } else {
+    assert.ok(result.direction, fixture.name);
+    assert.ok(Math.abs(result.direction.x - fixture.expectedDirection.x) < 1e-9, fixture.name);
+    assert.ok(Math.abs(result.direction.y - fixture.expectedDirection.y) < 1e-9, fixture.name);
+  }
 }
 
 const worldInputFixtures = [
@@ -962,6 +1024,10 @@ assert.ok(
   "Act 2 Lake must consume the shared world-input authority",
 );
 assert.ok(
+  act2LakeSource.includes("resolveDirectMovementIntent("),
+  "Act 2 Lake must consume the shared World/Area movement-intent primitive",
+);
+assert.ok(
   act2LakeSource.includes("update(_time: number, delta: number)"),
   "Act 2 Lake update loop must remain present for world-input parity coverage",
 );
@@ -1186,4 +1252,4 @@ assert.ok(
   "Village must not retain local story-attention bubble drawing",
 );
 
-console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${villagePointerTargetFixtures.length} pointer-target fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
+console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + ${villagePointerTargetFixtures.length} pointer-target fixtures + ${linusPriorityFixtures.length} Linus-priority fixtures + ${henningPriorityFixtures.length} Henning-priority fixtures + ${directMovementFixtures.length} direct-movement fixtures + ${worldInputFixtures.length} world-input fixtures + ${interactionFixtures.length} interaction fixtures + story/history fixtures)`);
