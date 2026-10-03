@@ -24,9 +24,9 @@ Future acts must not multiply these patterns.
 
 ## Priority order
 
-### P0 — Story Engine
+### P0 — Story Engine / Registry / History
 
-Build first.
+**Status: IN PROGRESS.** Shared presentation is established; Registry/History migration is underway.
 
 Goal: one shared runtime for standard Story Moments and dialogue beats across all acts.
 
@@ -176,13 +176,31 @@ This rule exists to prevent “temporary” parallel systems from becoming perma
 
 ## Immediate execution order
 
-P0 Story Engine is established and the gameplay UI shell has been extracted. Do not redo them.
+Runtime 1.0 is being built as a clean parallel client runtime on `nova/runtime-architecture-v1`. The frozen live runtime remains the behavioral oracle.
 
-1. Keep Story Engine + `uiShellState.ts` stable and migrate remaining legacy Act 1 presentation incrementally only when useful.
-2. Build the shared World / Area Engine from the proven Village/Lake primitives.
-3. Introduce explicit versioned save migrations before Act 3 state grows materially.
-4. Extract/generalize progression/gating only where Act 3 needs it; Quest V2 remains backend authority and is not rewritten.
-5. Build the real Act 3 runtime on those shared foundations. The existing `/act3` page is only the non-persisting chapter boundary.
+Completed foundation pieces:
+- shared Story Engine presentation;
+- pure UI-shell visibility authority;
+- Canonical System Registry;
+- shared `GameUiShell` component skeleton;
+- generic Story Registry;
+- generic read-only Story History/replay contract;
+- generic Interaction contract;
+- stable chapter-qualified story identities;
+- Act 2 Story Registry adapter;
+- initial parity harness and real Act 2 History parity model.
+
+Current execution order:
+1. Finish parity proof for Act 2 Registry/History and then switch the **development runtime** History consumer to the shared engine without changing player behavior.
+2. Converge Village + Act 2 onto one actual `GameUiShell`, with parity coverage before deleting legacy headers.
+3. Implement the canonical marker/Interaction renderer and migrate Act 2/Lake then Village.
+4. Build shared World / Area primitives once UI/story/interaction ownership is stable.
+5. Introduce explicit versioned Save / Migration adapters before Act 3 state grows materially.
+6. Generalize progression/gating behind shared contracts while keeping Quest V2 authoritative.
+7. Port remaining necessary Act 1 surfaces to eliminate parallel systems.
+8. Run automated parity + browser + physical iPhone acceptance.
+9. Remove superseded legacy client runtime.
+10. Only then begin substantial Act 3 runtime content.
 
 ## Definition of success before Act 3
 
@@ -848,3 +866,35 @@ Story beat and storyline identity is global engine identity, not local Act namin
 - titles and labels may change without changing identity.
 
 This prevents later chapters from colliding in History, progression or save migration.
+
+
+## Runtime 1.0 implementation status — 2026-10-03
+
+### Complete
+- live freeze + separate architecture branch;
+- mandatory architecture master contract;
+- one-concept-one-implementation rule;
+- Canonical System Registry contract;
+- shared Game UI Shell component skeleton;
+- generic Story Registry contract;
+- generic Story History/replay contract;
+- generic Interaction contract;
+- chapter-qualified stable story IDs;
+- Act 2 story adapter over accepted canonical source data;
+- parity harness foundation;
+- legacy-vs-registry Act 2 History projection coverage for fresh, partial, special-purchase and completed states.
+
+### In progress
+- execute/close the Act 2 History parity checkpoint;
+- replace Act 2 development History consumer with shared Registry/History;
+- migrate both current HUD implementations to the shared Game UI Shell.
+
+### Not started
+- canonical marker renderer/asset migration;
+- shared World / Area Engine;
+- versioned Runtime 1.0 Save/Migration adapter;
+- shared progression/gating bridge;
+- Act 1 runtime port;
+- physical Runtime 1.0 acceptance;
+- legacy client deletion;
+- Act 3 content runtime.
