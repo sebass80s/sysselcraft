@@ -97,6 +97,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [chapterIntroNameVisible, setChapterIntroNameVisible] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [historyReplay, setHistoryReplay] = useState<Act2ReplayState | null>(null);
+  const [mainMenuOpen, setMainMenuOpen] = useState(false);
 
   const chapterCardVisible = ready && (chapterIntroVisible || (state.act2Complete && !state.endCardSeen));
   useEffect(() => {
@@ -769,22 +770,29 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         <button
           className="prototype-brand-button"
           type="button"
-          onClick={() => router.push("/")}
-          aria-label="Till byn"
-          title="Till byn"
+          onClick={() => setMainMenuOpen((open) => !open)}
+          aria-expanded={mainMenuOpen}
+          aria-haspopup="menu"
+          aria-label="Öppna SysselCraft-menyn"
         >
           <Image className="prototype-brand-logo" src="/assets/village/sysselcraft-logo.png" alt="SysselCraft" width={360} height={124} priority />
         </button>
-        {historyEntries.length > 0 && <button
-          className="secondary-button compact act2-history-button"
-          type="button"
-          onClick={() => setHistoryOpen(true)}
-        >
-          📖 Historik
-        </button>}
-        <button className="secondary-button compact act2-village-button" type="button" onClick={() => router.push("/")}>
-          ← Till byn
-        </button>
+        {mainMenuOpen && <div className="main-menu-popover" role="menu">
+          <button className="parent-menu-button" role="menuitem" type="button" onClick={() => router.push("/?menu=adult")}>
+            🔐 Vuxenläge
+          </button>
+          {historyEntries.length > 0 && <button
+            className="parent-menu-button"
+            role="menuitem"
+            type="button"
+            onClick={() => { setMainMenuOpen(false); setHistoryOpen(true); }}
+          >
+            📖 Historik
+          </button>}
+          <button className="parent-menu-button" role="menuitem" type="button" onClick={() => router.push("/")}>
+            ← Till byn
+          </button>
+        </div>}
         {state.act2Complete && state.endCardSeen && <button
           className="secondary-button compact act2-chapter3-button"
           type="button"
