@@ -2,6 +2,7 @@ import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/interactionContract";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../runtime/world/worldCamera";
+import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveDirectMovementIntent } from "../runtime/world/movement";
 import {
   ACT2_ALVE_WORK_POSITIONS,
@@ -271,7 +272,7 @@ export async function createAct2LakeGame(
         if (this.isWalkable(nextX, this.player.y)) this.player.x = nextX;
         if (this.isWalkable(this.player.x, nextY)) this.player.y = nextY;
         this.player.setFlipX(dx > 0);
-        this.player.setDepth(1000 + Math.round(this.player.y));
+        this.player.setDepth(worldEntityDepth(this.player.y));
       }
 
       this.updateAlveInteractionFeedback();
@@ -284,7 +285,7 @@ export async function createAct2LakeGame(
         const nextDogY = this.dog.y + (desiredY - this.dog.y) * followStep;
         if (this.isWalkable(nextDogX, this.dog.y)) this.dog.x = nextDogX;
         if (this.isWalkable(this.dog.x, nextDogY)) this.dog.y = nextDogY;
-        this.dog.setDepth(1000 + Math.round(this.dog.y));
+        this.dog.setDepth(worldEntityDepth(this.dog.y));
       }
     }
 
@@ -437,7 +438,7 @@ export async function createAct2LakeGame(
       const position = project ? ACT2_ALVE_WORK_POSITIONS[project] : ACT2_ALVE_IDLE_POSITION;
       this.alveEntity
         .setPosition(position.x, position.y)
-        .setDepth(1000 + Math.round(position.y))
+        .setDepth(worldEntityDepth(position.y))
         .setVisible(requestedAlvePresent);
     }
 
