@@ -17,6 +17,20 @@ Canonical repo: `sebass80s/sysselcraft`, branch `nova/local-construction-snapsho
 - Completed Act 2 keeps `← Till byn` and exposes `Till kapitel 3 →`.
 - `/act3` currently exists only as a read-only chapter boundary. It owns no Act 3 persistence or progression yet.
 
+### Continuous cleanup rule — LOCKED
+
+When new implementation replaces old implementation, cleanup is part of the same task, not a later maintenance pass.
+
+Every Nova must, before declaring the change complete:
+- delete superseded code paths, dead helpers, obsolete debug/test surfaces and unused CSS;
+- update or remove tests that freeze the old implementation shape, while preserving behavioral regression coverage;
+- remove stale flags, names, constants, values and comments that no longer describe repo reality;
+- update canonical docs/handoffs so only one current truth is presented;
+- search the repo for the superseded symbols/phrases/values after the change;
+- run CI/verification on the **cleaned final state**, not on an intermediate version that still contains obsolete scaffolding.
+
+Do not keep old code “just in case” once the replacement is proven and covered. Historical context belongs in Git history unless a specific compatibility/migration reason requires it in the current tree.
+
 ### Save safety
 Preserve the existing physical iPhone save. It has already exercised real legacy-finale migration and is valuable regression evidence. Never reset/reinstall it merely to simplify testing. Adam's backend/save remains read-only for tests.
 
