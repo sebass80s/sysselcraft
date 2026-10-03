@@ -540,7 +540,7 @@ Canonical detail lives in `docs/STORY_DESIGN.md`. **Motorbåten 1–16 is fully 
 - **13–16 LOCKED:** longer test stays on their own side of lake. Linus remains ashore so Adam/Alve prove they can handle it. A harmless practical issue in 15 pays off Alve's growth; Adam says **“Inte idag”** about continuing across the lake and Alve calmly repeats it. Contribution 16 is successful homecoming and completes the motorboat story.
 - **Family return payoff LOCKED:** after the homecoming Alve sees signs somebody is inside the supposedly empty cottage, assumes burglars and runs there with Adam. Familiar laughter changes the tone before entry. Family is unpacking/using the cottage, not merely visiting. They intend to stay/use it again. Alve runs into a family embrace. When asked who Adam is, locked answer: **“Det är Adam. …Han är min kompis.”**
 - Family sees preserved height marks, old game and childhood drawing, then the restored living lake from the veranda. Locked final family-arc payoff: **“Det är inte riktigt som förr.” / “Nej. …Det är bättre.”** This pays off Stugan 8 and the core theme: Alve did not recreate the old summer; together they made a new one.
-- Do not immediately reveal Act 3 after the family scene. Let the payoff land. Later Adam+Alve return to the named boat and destination-neutral mystery; the first true crossing is Act 3's opening.
+- Do not reveal the Act 3 destination after the family scene. Let the payoff land. Act 2 then owns the locked **Över sjön** epilogue: Barnet and Alve depart in the restored motorboat toward an undefined opposite shore, followed by **SLUT PÅ ANDRA KAPITLET**. Act 3 owns the destination and arrival, not the crossing itself.
 - Family reveal is **not contribution 17**. It is the Act 2 emotional payoff unlocked by Motorbåten 16.
 
 
@@ -586,7 +586,7 @@ Current boundary:
 - Family finale is outside the 64 contribution count.
 - Act 3 destination remains undefined.
 
-The Act 2 opening five-image sequence is present and consumed by the shared production story path as well as `/act2-test`. The first Alve meeting now uses the canonical existing meeting-alve image progression (`bike` → `first-hello` → `a-lot-of-work` → `new-friend` → `alve-shows` → `new-friend` → `pick`) from `src/game/act2AlveStory.ts`. Family-finale production art is substantially complete. Epilogue image production is still unfinished; do not invent repository assets or claim that final visual bridge is integrated.
+The Act 2 opening five-image sequence is present and consumed by the shared production story path as well as `/act2-test`. The first Alve meeting uses the canonical meeting-alve progression (`bike` → `first-hello` → `a-lot-of-work` → `new-friend` → `alve-shows` → `new-friend` → `pick`) from `src/game/act2AlveStory.ts`. The family finale and locked **Över sjön** epilogue are integrated in production; current finale assets live under `public/assets/village/story-moments/act2/finale/`, including `05-after-motorboat.png` and `06-across-the-lake.png`.
 
 Alve's departure-scene gratitude beat is now locked in `STORY_DESIGN.md`: he explicitly says the outcome would never have happened without Barnet, admits he was **“helt lost”** on the day Barnet found him, explains that he thought fixing enough things would make everything solve itself, thanks Barnet and says he is glad Barnet is his friend.
 
