@@ -888,7 +888,7 @@ This prevents later chapters from colliding in History, progression or save migr
 - execute/close the Act 2 History parity checkpoint;
 - **DONE:** Act 2 development History consumer now uses shared Registry/History;
 - **DONE for Act 2:** development Act 2 now uses the shared Game UI Shell;
-- Village migration to the same Game UI Shell remains pending.
+- **DONE:** Village migration to the same Game UI Shell.
 
 ### Not started
 - canonical marker renderer/asset migration;
@@ -911,7 +911,18 @@ Legacy/live behavior remains the oracle. Promotion remains blocked on broader Ru
 ### Game UI Shell migration status
 
 - Act 2 development runtime: **migrated** to shared `GameUiShell`.
-- Village/Act 1 runtime: **pending**.
+- Village/Act 1 runtime: **migrated**.
 - frozen live runtime: unchanged.
 
 Game UI Shell cannot be considered fully complete until both playable worlds consume the same component and legacy inline header ownership is removed.
+
+
+### Global Game UI Shell milestone — complete on dev branch
+
+Both current playable worlds now consume the same actual `GameUiShell` component:
+- Village / Act 1;
+- Act 2 Lake.
+
+Chapter-specific global header implementations are no longer the dev consumer path.
+
+Remaining UI architecture work is now about centralizing shell visibility/overlay authority and moving any remaining global affordances into shared configuration, not maintaining multiple HUD implementations.
