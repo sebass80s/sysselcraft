@@ -130,3 +130,15 @@ The debug route must not persist its Act 2 runtime state. Its purpose is to driv
 StoryMoment awaits promise-returning navigation and disables both directions while a save is pending. A failed write leaves the current presentation retryable. The image navigation wrapper owns absolute safe-area positioning; both buttons are static flex children with minimum 44px height. Act 2 supplies a per-line presentation id, including opening lines. Chapter title/end cards publish the same overlay boundary as StoryMoment so external quest UI stays suppressed.
 
 `test:act2-closeout` executes the actual components with an isolated hook host and actual save/load functions with in-memory Preferences. It covers image Previous, duplicate pending navigation, save-failure retry, every epilogue-line restart, child-scoped storage and compatibility with completed legacy saves. Physical WKWebView acceptance remains required.
+
+## 10. Physical Act 2 closeout findings — 2026-10-03
+
+The story overlay/navigation contract survived the closeout implementation, but physical-save testing exposed two state/presentation boundaries that future UI changes must preserve:
+
+- A world NPC's visibility must not be inferred from whether a project HUD is visible. `selectedProject=null` is a valid presentation state; Alve remains present at his idle anchor even when the project HUD is absent.
+- A migrated old-ending save may enter directly into the new epilogue. Story UI must render that pending `finaleIndex=5` state exactly like a normal current-run epilogue, including **Föregående**, full-image reveal, HUD/quest suppression and restart persistence.
+
+The current migration deliberately replays only the newly added epilogue for an old five-beat-complete save. It does not reopen the already consumed family/veranda beats.
+
+Physical iPhone acceptance of this migrated-path Story UI is still open.
+
