@@ -1086,3 +1086,25 @@ Consumed by:
 Do not collapse marker-specific interactions or immediate-vs-approach behavior yet. Those differences are preserved intentionally and need their own parity before convergence.
 
 Parity includes four Linus priority fixtures plus source guards ensuring the base construction-attention check exists only in `resolveLinusIntent()`.
+
+
+## Runtime 1.0 Linus marker checkpoint
+
+Linus visual marker arbitration is now tied to the shared priority decision.
+
+Canonical lower-marker sync:
+`syncLinusPriorityMarkers()`
+
+Rules:
+- construction attention: suppress lower markers;
+- intro: show NPC-attention marker;
+- quest source: show ? / ! quest marker;
+- resident: no marker.
+
+This fixes two legacy hazards:
+1. intro + quest markers could coexist;
+2. a construction-driven Linus reposition could leave an old marker behind at stale coordinates.
+
+The sync now runs after sprite creation and whenever intro, backend quest attention or construction presentation changes.
+
+Do not reintroduce independent Linus story/quest marker creation paths.
