@@ -29,8 +29,8 @@ export const ACT2_STORY_REGISTRY = createStoryRegistry([
   ...numbered(BOATHOUSE_CONTRIBUTION_BEATS, ACT2_STORYLINE_IDS.boathouse),
   ...numbered(MOTORBOAT_CONTRIBUTION_BEATS, ACT2_STORYLINE_IDS.motorboat),
   asBeat(JETTY_LIFEBUOY_BEAT, ACT2_STORYLINE_IDS.dock, "act2:dock:lifebuoy", "after-beat-complete"),
-  asBeat(JETTY_COMPLETION_REACTION, ACT2_STORYLINE_IDS.dock, "act2:dock:completion-reaction", "after-beat-complete"),
   asBeat(BOATHOUSE_STEERING_WHEEL_BEAT, ACT2_STORYLINE_IDS.boathouse, "act2:boathouse:steering-wheel", "after-beat-complete"),
+  asBeat(JETTY_COMPLETION_REACTION, ACT2_STORYLINE_IDS.dock, "act2:dock:completion-reaction", "after-beat-complete"),
   ...numbered(ACT2_FINALE_BEATS, ACT2_STORYLINE_IDS.finale),
 ]);
 
