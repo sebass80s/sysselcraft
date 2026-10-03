@@ -375,6 +375,25 @@ export async function createVillageGame(
       ])?.id ?? "resident";
     }
 
+    private syncHenningPriorityMarker() {
+      this.henningQuestMarker?.destroy();
+      this.henningQuestMarker = undefined;
+      if (!this.henning?.visible || this.resolveHenningIntent() !== "quest-source") return;
+      const marker = requestedQuestSourceAttention.bakery;
+      if (!marker) return;
+
+      this.henningQuestMarker = createInteractionMarker(this, {
+        kind: marker === "!" ? "quest-turn-in" : "quest-available",
+        x: this.henning.x,
+        y: this.henning.y - 178,
+      });
+      this.henningQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+        event.stopPropagation();
+        if (!this.acceptsWorldInput() || this.resolveHenningIntent() !== "quest-source") return;
+        callbacks.onQuestSourceInteract?.("bakery");
+      });
+    }
+
     setDogVisible(visible: boolean) {
       requestedDogVisible = visible;
       this.dog?.setVisible(visible);
@@ -383,7 +402,7 @@ export async function createVillageGame(
     setHenningVisible(visible: boolean) {
       requestedHenningVisible = visible;
       this.henning?.setVisible(visible);
-      this.setQuestSourceAttention("bakery", requestedQuestSourceAttention.bakery);
+      this.syncHenningPriorityMarker();
       if (requestedSolTourStop === "bakery") this.setSolTourStop("bakery");
     }
 
@@ -789,20 +808,7 @@ export async function createVillageGame(
       }
       if (source === "bakery") {
         this.backendBakeryAttention = active;
-        this.henningQuestMarker?.destroy();
-        this.henningQuestMarker = undefined;
-        if (active && this.henning?.visible) {
-          this.henningQuestMarker = createInteractionMarker(this, {
-            kind: marker === "!" ? "quest-turn-in" : "quest-available",
-            x: this.henning.x,
-            y: this.henning.y - 178,
-          });
-          this.henningQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
-            event.stopPropagation();
-        if (!this.acceptsWorldInput()) return;
-            callbacks.onQuestSourceInteract?.("bakery");
-          });
-        }
+        this.syncHenningPriorityMarker();
       }
       if (source === "linus") {
         this.backendLinusAttention = active;
@@ -873,15 +879,18 @@ export async function createVillageGame(
       const attention = presentation.attention;
       if (!attention) {
         this.syncLinusPriorityMarkers();
+        this.syncHenningPriorityMarker();
         return;
       }
       const resident = this.residents[attention.resident];
       if (!resident) {
         this.syncLinusPriorityMarkers();
+        this.syncHenningPriorityMarker();
         return;
       }
       resident.setPosition(attention.position.x, attention.position.y).setDepth(1000 + attention.position.y);
       this.syncLinusPriorityMarkers();
+      this.syncHenningPriorityMarker();
       // Construction/story attention is dialogue, not a quest state.
       // Keep MMO semantics reserved: ? = available quest, ! = completed quest turn-in.
       // Anchor the canonical story-attention marker above the resident's actual sprite.
