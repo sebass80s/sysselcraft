@@ -826,3 +826,12 @@ Village bottle-message interaction now uses shared `resolveInteraction()`, prese
 Shared-resolution consumers now total four: Act 2 Alve turn-in, Village noticeboard, Village Recycling and Village bottle message.
 
 No Vercel evidence is required during the current rate-limit period. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — construction attention migrated
+
+Village construction attention now consumes shared `resolveInteraction()`, preserving its authored approach point, 32 px arrival radius and original attention id callback. Parity covers the 32/33 px boundary.
+
+Five concrete interaction consumers now use shared resolution across Lake and Village.
+
+Next recommended architectural slice: audit and converge world-input authority/overlay suppression before touching mixed-priority NPC interactions. No Act 3 and no production promotion.
