@@ -679,9 +679,9 @@ assert.ok(
   "Act 2 shared menu configuration must keep an explicit Till byn control",
 );
 
-assert.ok(page.includes('className="resource-hud"'), "Act 2 must show the shared resource HUD");
-assert.ok(page.includes('backendWallet?.diamonds'), "Act 2 HUD must show authoritative backend diamonds");
-assert.ok(page.includes('backendWallet?.sysselBux'), "Act 2 HUD must show authoritative backend SysselBux");
+assert.ok(page.includes("<GameUiShell"), "Act 2 must render resources through the shared GameUiShell");
+assert.ok(page.includes('diamonds={backendWallet?.diamonds ?? "…"}'), "Act 2 shared HUD must show authoritative backend diamonds");
+assert.ok(page.includes('sysselBux={backendWallet?.sysselBux ?? "…"}'), "Act 2 shared HUD must show authoritative backend SysselBux");
 
 const questInbox = fs.readFileSync(new URL("../src/components/ChildBackendQuestInbox.tsx", import.meta.url), "utf8");
 assert.equal(questInbox.includes("Koppla om"), false, "Uppdrag must not expose re-pairing; that belongs in Vuxenläge");
