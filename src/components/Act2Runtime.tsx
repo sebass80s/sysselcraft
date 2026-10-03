@@ -104,6 +104,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }, [chapterCardVisible]);
 
   useEffect(() => {
+    if (!historyOpen && historyReplay === null) return;
+    return beginStoryOverlay();
+  }, [historyOpen, historyReplay]);
+
+  useEffect(() => {
     stateRef.current = state;
   }, [state]);
 
@@ -794,7 +799,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         <strong>🪙 {backendWallet?.sysselBux ?? "…"}</strong>
       </div>
     </header>}
-    {historyOpen && <div className="act2-history-overlay" role="dialog" aria-modal="true" aria-label="Historiska storybeats">
+    {historyOpen && <div className="act2-history-overlay" role="dialog" aria-label="Historiska storybeats">
       <section className="act2-history-panel">
         <div className="act2-history-heading">
           <div>
