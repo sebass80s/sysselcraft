@@ -32,6 +32,7 @@ import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward,
 import { ACT2_BOATHOUSE_STEERING_WHEEL_PRICE, ACT2_JETTY_LIFEBUOY_PRICE, ACT2_MOTORBOAT_PARTS_PRICE, BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, ROOM_DECOR_PRICES, DOG_HOME_PRICES, commitStoryBeat, purchaseAct2BoathouseSteeringWheel, purchaseAct2JettyLifebuoy, purchaseAct2MotorboatParts, purchaseBottleMessage, purchaseFootballRug, purchaseRoomDecor, purchaseDogHomeUpgrade, type RoomDecorKey } from "../backend/storyShop";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
+import { getChildDisplayName } from "../backend/familyRepository";
 import { clearSaveState, createDefaultSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { chooseDogHomeDialogue, deriveDogHomeStageFromWorldFlags, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
@@ -118,6 +119,7 @@ export default function VillagePrototype() {
   const [act2PurchaseStory, setAct2PurchaseStory] = useState<"dock" | "boathouse" | null>(null);
   const [act2PurchaseStoryIndex, setAct2PurchaseStoryIndex] = useState(0);
   const [act2PurchaseReturnProject, setAct2PurchaseReturnProject] = useState<"dock" | "boathouse" | "motorboat" | null>(null);
+  const [pairedBackendChildName, setPairedBackendChildName] = useState<string | null>(null);
 
   function act2StoryItemInsufficientFundsMessage(price: number) {
     const current = getLatestBackendWallet()?.sysselBux ?? backendWallet?.sysselBux ?? sysselBux;
@@ -207,6 +209,25 @@ export default function VillagePrototype() {
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        const childId = await getPairedChildId();
+        if (!childId) {
+          if (!cancelled) setPairedBackendChildName(null);
+          return;
+        }
+        const displayName = await getChildDisplayName(childId);
+        if (!cancelled) setPairedBackendChildName(displayName);
+      } catch {
+        if (!cancelled) setPairedBackendChildName(null);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
 
   useEffect(() => {
     if (!saveReady) return;
@@ -1118,7 +1139,7 @@ export default function VillagePrototype() {
   }
 
   async function resetTestTureAct2() {
-    if (childName !== "Test-Ture") return;
+    if (pairedBackendChildName !== "Test-Ture") return;
     if (!window.confirm("Återställa Test-Ture till precis efter Akt 1? Akt 2-framsteg på den här enheten raderas.")) return;
     await clearAct2RuntimeStateForPairedChild();
     router.push("/");
@@ -1497,7 +1518,7 @@ export default function VillagePrototype() {
     {storyMomentReplayControl && <div className="parent-profile-card"><span>STORY MOMENT · testvisning</span><button className="secondary-button" type="button" onClick={replayLinusStoryMoment}>🎬 Spela Linus första möte</button><button className="secondary-button" type="button" onClick={replayHenningStoryMoment}>🥖 Spela Hennings ankomst</button><button className="secondary-button" type="button" onClick={replayBakeryStoryMoment}>🥐 Spela färdigt bageri</button><button className="secondary-button" type="button" onClick={replayMiraStoryMoment}>🔧 Spela Miras ankomst</button><small>Spelar bara upp scenerna. Din sparning och progression ändras inte.</small></div>}
     {nativeTestControls && <div className="parent-profile-card"><span>IPHONE TEST · ingen produkttröskel</span>{[2,3,4].map((stage) => <button key={`recycling-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.recycling !== stage - 1 || construction.earned.recycling >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `recycling:${stage}`))}>TEST: tjäna in Recycling stage {stage}</button>)}{[1,2,3,4].map((stage) => <button key={`bakery-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.bakery !== stage - 1 || construction.earned.bakery >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `bakery:${stage}`))}>TEST: tjäna in Bakery stage {stage}</button>)}{[2,3,4].map((stage) => <button key={`clinic-${stage}`} className="secondary-button" disabled={constructionBusy || construction.revealed.clinic !== stage - 1 || construction.earned.clinic >= stage} onClick={() => void persistConstruction(earnConstruction(constructionRef.current, `clinic:${stage}`))}>TEST: tjäna in Clinic stage {stage}</button>)}<a className="secondary-button" href="/?debug=reconciliation">TEST: reconciliation-diagnostik</a><small>Syns endast i den installerade native-appen. Varje steg kräver att föregående reveal är klar.</small>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {storyMomentReplayControl && construction.revealed.clinic >= 4 && <div className="parent-profile-card"><span>STORY MOMENT TEST</span><button className="secondary-button" onClick={replayClinicStoryMoment}>▶ Sol + färdiga kliniken</button></div>}
-    {childName === "Test-Ture" && <div className="parent-menu-footer"><span>TEST-TURE · Act 2 QA</span><button className="secondary-button" type="button" onClick={() => void resetTestTureAct2()}>↺ Återställ till slutet av Akt 1</button></div>}
+    {pairedBackendChildName === "Test-Ture" && <div className="parent-menu-footer"><span>TEST-TURE · Act 2 QA</span><button className="secondary-button" type="button" onClick={() => void resetTestTureAct2()}>↺ Återställ till slutet av Akt 1</button></div>}
     {nativeTestControls && <div className="parent-menu-footer"><span>Debugverktyg · aktiverade med ?debug=tools</span><button className="debug-reset-button" type="button" onClick={resetPrototypeSave} disabled={!saveReady || resettingSave || constructionBusy}>↺ Nollställ testsparning</button></div>}</section></div>}
     </div>
     {solRuntimeTestPhase !== "idle" && (() => {
