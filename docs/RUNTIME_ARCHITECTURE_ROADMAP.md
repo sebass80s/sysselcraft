@@ -719,3 +719,33 @@ The required behavior is:
 - never hide behind “not asked” when a material structural improvement is obvious.
 
 This does not authorize scope creep on frozen live code. Improvements must respect branch, release and architecture rules.
+
+
+### Canonical System Registry — mandatory
+
+Runtime Architecture 1.0 must include a central registry for canonical reusable game-system assets and components.
+
+Purpose:
+- make the approved implementation for a reusable concept discoverable from one place;
+- prevent chapter-local asset/component forks;
+- make architectural violations mechanically easier to detect in code review and tests.
+
+The registry should map canonical concepts to their shared implementation, for example:
+- quest marker asset/component;
+- NPC attention marker asset/component;
+- Story Moment shell;
+- dialogue card;
+- nameplate;
+- global HUD/menu primitives;
+- shared icons;
+- hotspot/interactable primitive;
+- purchase-gate presentation;
+- History/replay entry points.
+
+Rules:
+- chapter code must import/reference canonical system assets/components through the shared system layer rather than hardcoding duplicate paths or implementations;
+- reusable system asset paths must not be redefined inside Act-specific modules;
+- adding a second implementation for an existing canonical concept is an architecture violation unless an explicit product exception is documented first;
+- regression/static checks should be added where practical to catch duplicate Act-specific system assets or forbidden direct references.
+
+The System Registry is part of the engine/content boundary: engine concepts are registered centrally; chapters only consume them.
