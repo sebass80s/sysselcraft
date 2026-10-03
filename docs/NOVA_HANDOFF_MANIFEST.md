@@ -940,3 +940,21 @@ Parity covers overlap and fallback cases and source guards preserve the numeric 
 Object-level pointer handlers remain intentionally for native reliability. Do not consolidate them away without browser + physical iPhone parity.
 
 Next recommended Interaction step: assess whether the current shared Interaction System is sufficient for a checkpoint build/parity run before attempting deeper cross-entrypoint de-duplication. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — Henning shared arrival + CI enabled
+
+Henning ordinary resident arrival now uses the shared Interaction resolver:
+- approach `370,468`;
+- radius 95 px;
+- parity: 95 activates / 96 approaches.
+
+The Runtime Architecture branch has been added to `.github/workflows/ci.yml` push triggers. Each future commit should therefore run GitHub CI (`npm run verify`) automatically.
+
+Interaction System is now in late convergence. Main remaining special cases:
+- Linus dual arrival geometry;
+- Shop/Mira multi-approach behavior;
+- Sol resident interaction;
+- later cross-entrypoint de-duplication after physical acceptance.
+
+No Act 3 and no production promotion.
