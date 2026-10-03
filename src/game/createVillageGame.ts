@@ -266,11 +266,12 @@ export async function createVillageGame(
           return;
         }
         if (this.henning?.visible && this.henning.getBounds().contains(pointer.worldX, pointer.worldY)) {
-          if (requestedConstruction.attention?.resident === "henning") {
+          const henningIntent = this.resolveHenningIntent();
+          if (henningIntent === "construction-attention") {
             this.approachAttentionResident();
             return;
           }
-          if (this.backendBakeryAttention) {
+          if (henningIntent === "quest-source") {
             callbacks.onQuestSourceInteract?.("bakery");
             return;
           }
@@ -363,6 +364,14 @@ export async function createVillageGame(
         { id: "quest-source", priority: 20, enabled: this.introComplete && this.backendLinusAttention },
         { id: "intro", priority: 30, enabled: !this.introComplete },
         { id: "construction-attention", priority: 40, enabled: requestedConstruction.attention?.resident === "linus" },
+      ])?.id ?? "resident";
+    }
+
+    private resolveHenningIntent() {
+      return resolveInteractionPriority([
+        { id: "resident", priority: 10, enabled: true },
+        { id: "quest-source", priority: 20, enabled: this.backendBakeryAttention },
+        { id: "construction-attention", priority: 30, enabled: requestedConstruction.attention?.resident === "henning" },
       ])?.id ?? "resident";
     }
 
@@ -1138,6 +1147,15 @@ export async function createVillageGame(
         event.stopPropagation();
         if (!this.acceptsWorldInput()) return;
         if (!this.player || !this.henning?.visible) return;
+        const henningIntent = this.resolveHenningIntent();
+        if (henningIntent === "construction-attention") {
+          this.approachAttentionResident();
+          return;
+        }
+        if (henningIntent === "quest-source") {
+          callbacks.onQuestSourceInteract?.("bakery");
+          return;
+        }
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
