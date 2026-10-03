@@ -76,6 +76,9 @@ const SOL_APPROACH: Point = { x: 835, y: 485 };
 const SOL_INTERACTION_RADIUS = 95;
 const LINUS_INTERACTION_RADIUS = 95;
 const LINUS_APPROACH_RADIUS = 18;
+const SHOP_APPROACH: Point = { x: 1130, y: 425 };
+const MIRA_APPROACH: Point = { x: 1050, y: 445 };
+const SHOP_INTERACTION_RADIUS = 42;
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
 
@@ -294,7 +297,7 @@ export async function createVillageGame(
           this.henningInteractionPending = false;
           this.attentionInteractionPending = false;
           this.noticeboardInteractionPending = false;
-          this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 1130, y: 425 }, this.navigationObstacles);
+          this.path = findPath({ x: this.player.x, y: this.player.y }, SHOP_APPROACH, this.navigationObstacles);
           const target = this.path.at(-1);
           if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
           else this.maybeCompleteWorldInteraction();
@@ -684,12 +687,23 @@ export async function createVillageGame(
 
 
       if (this.shopInteractionPending && this.player && this.shop?.visible) {
-        const shopApproach = { x: 1130, y: 425 };
-        const miraApproach = { x: 1050, y: 445 };
-        const interactionDistance = requestedShopOpen
-          ? Math.min(distance(this.player, shopApproach), distance(this.player, miraApproach))
-          : distance(this.player, shopApproach);
-        if (interactionDistance > 42) return;
+        const interaction: InteractionDefinition = {
+          id: "village:shop",
+          kind: "hotspot",
+          anchor: SHOP_APPROACH,
+          approachPoint: SHOP_APPROACH,
+          interactionRadius: SHOP_INTERACTION_RADIUS,
+          activationZones: requestedShopOpen
+            ? [{ anchor: MIRA_APPROACH, interactionRadius: SHOP_INTERACTION_RADIUS }]
+            : undefined,
+          enabled: true,
+        };
+        const resolution = resolveInteraction(
+          [interaction],
+          { interactionId: interaction.id, requestedAt: interaction.approachPoint ?? interaction.anchor },
+          { x: this.player.x, y: this.player.y },
+        );
+        if (resolution.status !== "activate") return;
         this.shopInteractionPending = false;
         this.path = [];
         this.targetMarker?.setVisible(false);
@@ -789,7 +803,7 @@ export async function createVillageGame(
         this.henningInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
-        this.path = findPath(this.player, { x: 1130, y: 425 }, this.navigationObstacles);
+        this.path = findPath(this.player, SHOP_APPROACH, this.navigationObstacles);
         const target = this.path.at(-1);
         if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
@@ -835,7 +849,7 @@ export async function createVillageGame(
         if (stop === "linus" && this.resolveLinusIntent() !== "story-cta") return;
         if (stop === "shop") {
           this.shopInteractionPending = true;
-          this.path = findPath(this.player, { x: 1130, y: 425 }, this.navigationObstacles);
+          this.path = findPath(this.player, SHOP_APPROACH, this.navigationObstacles);
         } else if (stop === "bakery") {
           this.henningInteractionPending = true;
           if (!this.henning) return;
@@ -1142,7 +1156,7 @@ export async function createVillageGame(
         this.henningInteractionPending = false;
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
-        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 1050, y: 445 }, this.navigationObstacles);
+        this.path = findPath({ x: this.player.x, y: this.player.y }, MIRA_APPROACH, this.navigationObstacles);
         const target = this.path.at(-1);
         if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
