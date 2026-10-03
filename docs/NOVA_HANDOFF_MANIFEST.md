@@ -648,3 +648,28 @@ First implement the shared-runtime rules in `docs/RUNTIME_ARCHITECTURE_ROADMAP.m
 Important current debt: Act 2 Historik works and is regression-protected, but its catalog is assembled directly from `ACT2_*` modules inside `Act2Runtime.tsx`. This must be generalized before Act 3 so new beats automatically inherit rendering/replay/history semantics rather than requiring another Act-specific implementation.
 
 Architecture success criterion: adding a normal Act 3 beat should require authored data/state configuration, not new code for dialogue UI, history replay, overlay suppression or beat-consumption semantics.
+
+
+## LIVE FREEZE / DEVELOPMENT BRANCH POLICY — LOCKED 2026-10-03
+
+The physically accepted Act 2 production baseline is frozen at:
+
+- source branch: `nova/local-construction-snapshot`
+- immutable release snapshot: `release/act2-live-2026-10-03`
+- frozen SHA: `f9bf552f70f4af3ff7457a86867b323504e39c36`
+- verification: GitHub Actions CI #1720 SUCCESS on that exact SHA.
+
+Do not develop new features, architecture refactors or Act 3 runtime on the frozen live branch.
+
+All forward development now happens on:
+
+`nova/runtime-architecture-v1`
+
+Rules:
+- production/live remains on the frozen baseline until a later candidate is explicitly promoted;
+- architecture work and new gameplay are tested separately on the development branch;
+- do not merge or deploy development work to production merely because CI is green;
+- require explicit browser/iPhone acceptance before promoting a future release candidate;
+- hotfixes to live, if genuinely required during Adam's play, must be deliberate isolated fixes based from the frozen release snapshot and then reconciled back into the development branch;
+- Adam's real save/backend remains protected and must not be reset for development testing.
+
