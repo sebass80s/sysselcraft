@@ -1,10 +1,25 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import ts from "typescript";
 
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { ACT2_ALVE_DIALOGUE } from "../src/game/act2AlveStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
-import {
+function loadTsModule(file, dependencies) {
+  const exports = {};
+  const code = ts.transpileModule(fs.readFileSync(new URL(file, import.meta.url), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  const requireDependency = (name) => {
+    assert.ok(name in dependencies, `Unexpected Act 2 full-flow dependency: ${name}`);
+    return dependencies[name];
+  };
+  new Function("exports", "require", code)(exports, requireDependency);
+  return exports;
+}
+
+const saveMigrations = loadTsModule("../src/runtime/save/migrations.ts", {});
+const {
   act2FinalePending,
   advanceAct2Finale,
   boathousePurchaseRequired,
@@ -25,7 +40,10 @@ import {
   withMotorboatName,
   withPresentedContribution,
   withSelectedProject,
-} from "../src/game/act2RuntimeState.ts";
+} = loadTsModule("../src/game/act2RuntimeState.ts", {
+  "@capacitor/preferences": { Preferences: {} },
+  "../runtime/save/migrations": saveMigrations,
+});
 
 const restart = (state) => normalizeAct2RuntimeState(JSON.parse(JSON.stringify(state)));
 
