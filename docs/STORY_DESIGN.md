@@ -1393,10 +1393,7 @@ En stund senare ligger sjön nästan helt stilla.
 Du och Alve står nere vid bryggan igen. Motorbåten guppar lätt mot kanten.
 
 > **Barnet:** “De kom.”  
-> **Alve:** “Ja.”
-
-Paus.
-
+> **Alve:** “Ja.”  
 > **Alve:** “De kom faktiskt.”
 
 Alve blir tyst en stund.
@@ -1418,10 +1415,7 @@ Alve blir tyst en stund.
 > **Alve:** “Tack.”  
 > **Barnet:** “Det är ju det kompisar gör.”  
 > **Alve:** “Mm.”  
-> **Alve:** “Då är jag glad att du är min kompis.”
-
-Barnet ler.
-
+> **Alve:** “Då är jag glad att du är min kompis.”  
 > **Barnet:** “Ska vi verkligen åka nu?”  
 > **Alve:** “Bara en liten sväng.”  
 > **Barnet:** “Du sa nyss att du fått nog av projekt.”  
