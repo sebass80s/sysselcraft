@@ -114,6 +114,33 @@ const interactionFixtures = [
     expectedStatus: "approach",
     expectedTarget: { x: 100, y: 100 },
   },
+  {
+    name: "Village bottle message activates within accepted 38px arrival radius",
+    playerPosition: { x: 835, y: 538 },
+    interaction: {
+      id: "village:bottle-message",
+      kind: "hotspot",
+      anchor: { x: 835, y: 500 },
+      approachPoint: { x: 835, y: 500 },
+      interactionRadius: 38,
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village bottle message keeps approaching outside accepted arrival radius",
+    playerPosition: { x: 835, y: 539 },
+    interaction: {
+      id: "village:bottle-message",
+      kind: "hotspot",
+      anchor: { x: 835, y: 500 },
+      approachPoint: { x: 835, y: 500 },
+      interactionRadius: 38,
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 835, y: 500 },
+  },
 ];
 
 for (const fixture of interactionFixtures) {
