@@ -251,6 +251,10 @@ main { min-height: 100dvh; }
   box-shadow: 0 4px 14px rgba(0,0,0,.12);
 }
 
+.act2-hud-input-shield {
+  pointer-events: auto;
+}
+
 
 .act2-sync-status {
   position: absolute;
