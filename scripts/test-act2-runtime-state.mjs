@@ -683,11 +683,11 @@ const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx"
 assert.ok(village.includes("getChildDisplayName(childId)"), "Test-Ture QA controls must derive identity from the paired backend child, not the local story name");
 assert.ok(village.includes('pairedBackendChildName === "Test-Ture"'), "Test-Ture reset control must be scoped to the backend Test-Ture profile");
 assert.ok(
-  act2Runtime.includes("const worldBlocked =")
-    && act2Runtime.includes("gameRef.current?.setWorldInputEnabled(!worldBlocked)"),
+  page.includes("const worldBlocked =")
+    && page.includes("gameRef.current?.setWorldInputEnabled(!worldBlocked)"),
   "Act 2 must disable Phaser world input while blocking overlays are active",
 );
-assert.ok(act2Runtime.includes("act2-hud-input-shield"), "Act 2 HUD must render an explicit pointer shield above the lake canvas");
+assert.ok(page.includes("act2-hud-input-shield"), "Act 2 HUD must render an explicit pointer shield above the lake canvas");
 assert.ok(lakeGame.includes("!requestedWorldInputEnabled || !requestedCabinRevisitAvailable"), "cabin hotspot must ignore pointer input while world input is disabled");
 assert.ok(lakeGame.includes("if (!requestedWorldInputEnabled || !this.player) return;"), "lake movement must ignore pointer input while world input is disabled");
 
