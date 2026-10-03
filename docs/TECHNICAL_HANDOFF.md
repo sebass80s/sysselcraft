@@ -852,3 +852,8 @@ Do not remove legacy runtime or promote Runtime 1.0 until parity harness + brows
 On `nova/runtime-architecture-v1`, Act 2 Historik now consumes the shared Story Registry/History contract. The old inline History assembly is no longer the dev consumer path.
 
 This does not affect frozen live. Keep parity coverage around grouped History output before removing further legacy/runtime compatibility code.
+
+
+### Runtime 1.0 checkpoint: Act 2 Game UI Shell
+
+On the architecture branch, Act 2 now consumes the shared `GameUiShell` rather than owning a separate header implementation. Village still uses its legacy header and must migrate next before the global shell milestone is complete.
