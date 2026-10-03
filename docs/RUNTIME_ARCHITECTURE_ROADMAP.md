@@ -1108,3 +1108,23 @@ Parity locks:
 - 39 px remains approach.
 
 Current shared-resolution consumers: Act 2 Alve turn-in, Village noticeboard, Village Recycling, Village bottle message.
+
+
+## Interaction behavior checkpoint 5 — construction attention
+
+Village construction-attention interactions now use shared `resolveInteraction()`.
+
+Preserved authored semantics:
+- dynamic interaction id scoped by the construction attention id;
+- the existing construction attention approach point remains both anchor and approach point;
+- accepted arrival radius remains `32`;
+- canonical marker role remains `npc-attention`;
+- the construction callback still receives the original authored attention id directly.
+
+Shared Runtime 1.0 owns only disabled / activate / approach resolution. Village still owns pathfinding, pending-state cleanup, dialogue-open state and callback execution.
+
+Parity locks:
+- 32 px activates;
+- 33 px remains approach.
+
+Current shared-resolution consumers: Act 2 Alve turn-in, Village noticeboard, Village Recycling, Village bottle message, Village construction attention.
