@@ -8,12 +8,18 @@ export type WorldPoint = {
   y: number;
 };
 
+export type InteractionActivationZone = {
+  anchor: WorldPoint;
+  interactionRadius: number;
+};
+
 export type InteractionDefinition = {
   id: string;
   kind: "npc" | "quest-source" | "hotspot" | "exit";
   anchor: WorldPoint;
   approachPoint?: WorldPoint;
   interactionRadius: number;
+  activationZones?: readonly InteractionActivationZone[];
   marker?: InteractionMarkerKind;
   enabled: boolean;
 };
@@ -48,7 +54,12 @@ export function resolveInteraction(
   if (!interaction) return { status: "unknown" };
   if (!interaction.enabled) return { status: "disabled" };
 
-  if (distance(playerPosition, interaction.anchor) <= interaction.interactionRadius) {
+  const activationZones: readonly InteractionActivationZone[] = [
+    { anchor: interaction.anchor, interactionRadius: interaction.interactionRadius },
+    ...(interaction.activationZones ?? []),
+  ];
+
+  if (activationZones.some((zone) => distance(playerPosition, zone.anchor) <= zone.interactionRadius)) {
     return { status: "activate", interaction };
   }
 
