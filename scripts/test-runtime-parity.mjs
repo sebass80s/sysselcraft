@@ -58,6 +58,35 @@ const interactionFixtures = [
     },
     expectedStatus: "disabled",
   },
+  {
+    name: "Village noticeboard activates within accepted 36px arrival radius",
+    playerPosition: { x: 175, y: 394 },
+    interaction: {
+      id: "village:noticeboard",
+      kind: "quest-source",
+      anchor: { x: 175, y: 430 },
+      approachPoint: { x: 175, y: 430 },
+      interactionRadius: 36,
+      marker: "quest-available",
+      enabled: true,
+    },
+    expectedStatus: "activate",
+  },
+  {
+    name: "Village noticeboard keeps approaching outside accepted arrival radius",
+    playerPosition: { x: 175, y: 393 },
+    interaction: {
+      id: "village:noticeboard",
+      kind: "quest-source",
+      anchor: { x: 175, y: 430 },
+      approachPoint: { x: 175, y: 430 },
+      interactionRadius: 36,
+      marker: "quest-available",
+      enabled: true,
+    },
+    expectedStatus: "approach",
+    expectedTarget: { x: 175, y: 430 },
+  },
 ];
 
 for (const fixture of interactionFixtures) {
