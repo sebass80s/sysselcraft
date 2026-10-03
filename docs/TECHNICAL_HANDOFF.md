@@ -1290,3 +1290,40 @@ Both Lake and Village consume the shared camera contract. Parity locks:
 GitHub Actions #1773: `npm run verify` SUCCESS.
 
 This is intentionally a primitive extraction, not a mega-world rewrite. Area-specific collision, authored world bounds, entity placement and navigation remain local until separately migrated with parity.
+
+
+## Runtime 1.0 World / Area checkpoint — shared dynamic depth ordering
+
+Dynamic Y-based entity depth is now a canonical World / Area primitive:
+
+- implementation: `src/runtime/world/worldDepth.ts`;
+- canonical base depth: `1000`;
+- canonical behavior: `1000 + Math.round(y)`.
+
+Current consumers:
+- Act 2 Lake player;
+- Act 2 Lake dog;
+- Act 2 Lake Alve placement;
+- Village player;
+- Village dog;
+- Village world-image base depth;
+- Village construction truck movement;
+- Village nearest-walkable player repair.
+
+Authored static/special depths were intentionally left local. This migration only replaced existing `1000 + Math.round(...)` behavior and does not reinterpret authored z-order.
+
+Regression coverage:
+- parity locks integer and half-pixel rounding behavior;
+- visual audit now verifies the canonical shared depth contract instead of requiring inline depth arithmetic;
+- Act 2 Alve harness explicitly loads the shared depth primitive.
+
+GitHub Actions #1783: `npm run verify` SUCCESS.
+
+### World / Area Engine status
+
+Runtime 1.0 now has three real, consumed World / Area primitives:
+1. direct movement intent, currently consumed by Lake;
+2. shared camera contract, consumed by Lake + Village;
+3. dynamic depth ordering, consumed by Lake + Village.
+
+Next high-risk work is collision/pathfinding and deeper movement-runtime convergence. Do not migrate that blindly: navigation/input changes still require browser and physical iPhone acceptance. Keep authored world bounds, collision geometry and pathfinding local until that acceptance gate is available.
