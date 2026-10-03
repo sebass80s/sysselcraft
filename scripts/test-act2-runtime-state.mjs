@@ -571,7 +571,7 @@ assert.ok(lakeGameSource.includes("delayedCall(3200"), "idle Alve world prompt s
 assert.ok(lakeGameSource.includes("facePlayerTowardAlve()"), "child should face Alve when the hand-in interaction begins");
 assert.match(
   lakeGameSource,
-  /const turnInBang = this\.add\.text\([^\n]*"!"[\s\S]*this\.alveTurnInMarker = this\.add\.container[\s\S]*setAlveTurnInAvailable\(available: boolean\)[\s\S]*this\.alveTurnInMarker\?\.setVisible\(available\)/,
+  /const turnInBang = this\.add\.text\([^\n]*"!"[\s\S]*this\.alveTurnInMarker = this\.add\.container[\s\S]*setAlveTurnInAvailable\(available: boolean\)[\s\S]*this\.alveTurnInMarker\?\.setVisible\(available && requestedAlvePresent\)/,
   "pending Act 2 turn-in must show a visible world marker on Alve without locking the test to a pixel coordinate",
 );
 assert.match(
