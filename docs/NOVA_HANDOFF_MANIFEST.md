@@ -712,3 +712,16 @@ Do not hardcode a new Act-specific asset path or local implementation for the sa
 Quest marker means the canonical quest marker. Dialogue card means the canonical dialogue card. Global HUD means the canonical Game UI Shell.
 
 Arch 1.0 should add automated/static guards where practical so duplicate system concepts are caught early.
+
+
+## RUNTIME 1.0 BUILD METHOD — RULE
+
+Do not refactor the legacy client piecemeal into the new architecture.
+
+Build a clean canonical Runtime 1.0 in parallel on `nova/runtime-architecture-v1`, reusing the proven backend, economy, story content, assets and accepted progression rules.
+
+Port Act 2 first, then Village/Act 1.
+
+A **parity harness is mandatory** and must compare representative legacy save/state fixtures against Runtime 1.0 product behavior. Legacy client runtime is removed only after automated parity, browser acceptance and physical iPhone acceptance are all proven.
+
+The frozen live runtime is the behavioral oracle until migration acceptance.
