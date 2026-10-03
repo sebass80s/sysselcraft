@@ -542,7 +542,7 @@ for (const project of ["cabin", "dock", "boathouse", "motorboat"]) {
     && position.x <= placement.x + halfW
     && position.y >= placement.baseY - halfH
     && position.y <= placement.baseY + halfH;
-  assert.equal(insideBlockedFootprint, false, `Alve placeholder work positions must remain walkable for ${project}`);
+  assert.equal(insideBlockedFootprint, false, `Alve work positions must remain walkable for ${project}`);
 }
 
 const lakeGameSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
