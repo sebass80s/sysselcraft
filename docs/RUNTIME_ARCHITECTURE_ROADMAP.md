@@ -410,3 +410,296 @@ The intended long-term authoring model is:
 If adding Act 5 requires debugging the HUD, dialogue box, quest marker, replay behavior or generic input semantics again, Runtime Architecture 1.0 has failed.
 
 Target authoring experience: adding a new chapter should feel like **fueling a proven engine**, not manufacturing another vehicle.
+
+
+## Runtime Architecture 1.0 master contract — LOCKED 2026-10-03
+
+This section consolidates the architecture decisions made after Act 2 acceptance. These are not suggestions. They are the operating contract for all forward development.
+
+### Product model
+
+SysselCraft is **one game runtime with chapters/content loaded into it**.
+
+Do not think in terms of “Act 1 app”, “Act 2 app”, “Act 3 app”. A chapter changes world/content/state configuration. It does not redefine core UI, story presentation, marker behavior, replay, progression mechanics or generic interaction semantics.
+
+### Constant global UI
+
+The Game UI Shell is constant across the entire game.
+
+The same shell must frame:
+- Village;
+- Act 2 Lake;
+- Act 3;
+- all later chapters/areas.
+
+The shell owns:
+- SysselCraft logo/menu;
+- resources;
+- Uppdrag;
+- Vuxenläge;
+- Historik;
+- global navigation affordances;
+- safe-area handling;
+- button language/style;
+- z-index;
+- pointer/input shielding;
+- overlay suppression and restoration.
+
+Area/chapter code may only provide contextual state/configuration beneath that shell.
+
+A chapter transition may change:
+- map/world;
+- NPCs/interactables;
+- contextual actions;
+- chapter status;
+- story/content.
+
+A chapter transition must not change:
+- HUD structure;
+- menu structure;
+- quest entry;
+- adult-mode entry;
+- history entry;
+- resource presentation;
+- global spacing/typography;
+- overlay behavior;
+- input ownership.
+
+If Act 5 requires retesting or re-fixing generic HUD behavior, Architecture 1.0 has failed.
+
+### One concept = one implementation
+
+Every reusable game concept has one canonical implementation.
+
+Examples:
+- one quest-marker asset + component + interaction contract;
+- one NPC attention-marker asset/component;
+- one dialogue-card implementation;
+- one Story Moment shell;
+- one hotspot/interactable primitive;
+- one purchase-gate pattern;
+- one History/replay system;
+- one Game UI Shell;
+- one input-priority/overlay contract.
+
+Do not create chapter-specific copies of shared systems.
+
+A new chapter must not add equivalents such as:
+- `act3-quest-marker.png`;
+- an Act-specific dialogue-card JSX stack;
+- a second Historik implementation;
+- chapter-specific quest-marker click logic;
+- a separate HUD/header;
+- duplicate input-lock behavior.
+
+If a concept is genuinely different, document the product reason for the exception before implementing it.
+
+### Asset architecture
+
+Reusable gameplay/system assets are **global assets**.
+
+Canonical examples:
+- quest marker;
+- NPC attention marker;
+- global HUD icons;
+- menu icons;
+- shared story/UI chrome.
+
+All chapters reference the same source asset for the same concept.
+
+Chapter-specific assets should mostly be content:
+- maps/backgrounds;
+- unique NPC art;
+- building/project stages;
+- Story Moment stills;
+- genuinely chapter-specific props.
+
+Do not redraw/re-export the same system asset for each chapter.
+
+### Story Engine + Story Registry
+
+Story Engine owns how story is presented.
+
+Story Registry owns what authored story exists and how it is categorized.
+
+Normal story content must be typed data with metadata such as:
+- id;
+- chapter;
+- storyline/group;
+- title;
+- image;
+- body/dialogue;
+- history/replay policy;
+- unlock/gating metadata where appropriate.
+
+Adding a normal Act 3 beat must not require new code for:
+- dialogue box rendering;
+- nameplates;
+- image shell;
+- next/previous behavior;
+- overlay suppression;
+- replay;
+- History presentation.
+
+Story Engine/Registry are game systems. Acts provide story data.
+
+### Story History
+
+Historik is a shared game-wide read-only system over Story Registry + completed story state.
+
+Rules:
+- replay never mutates progression;
+- replay never grants rewards;
+- replay never performs purchases;
+- replay never changes consumed state;
+- replay never changes authoritative backend state;
+- future storylines normally enter Historik only after the full storyline is completed;
+- spoiler policy is generic metadata/configuration, not Act-specific JSX.
+
+The current Act 2 history catalog in `Act2Runtime.tsx` is migration debt. It must be extracted into the shared Registry/History system **before substantial Act 3 runtime work**.
+
+After that extraction, Act 3 beats must inherit History automatically from registration/configuration.
+
+### Quest / Progression
+
+Quest V2/backend remains authoritative for real-world work and rewards.
+
+The game progression layer consumes authoritative evidence using one shared contract:
+
+backend evidence
+→ next eligible authored beat
+→ present exactly once
+→ commit consumption
+→ evaluate generic gates
+→ expose next eligible beat
+
+Chapter code supplies authored tracks/gates as data/configuration.
+
+Do not create a new claim-consumption model for Act 3.
+
+Replay/History is never part of progression.
+
+### Interaction System
+
+All generic world interaction uses one shared Interaction System.
+
+It owns:
+- quest markers;
+- NPC attention markers;
+- hotspots;
+- approach points;
+- interaction radius;
+- pointer priority;
+- world-input locks;
+- interaction suppression under overlays;
+- generic click/tap behavior.
+
+A quest marker must look and behave the same in every area because it is the same primitive using the same asset.
+
+A new questgiver should be configuration, not a new marker implementation.
+
+### World / Area Engine
+
+Areas remain separate worlds/maps but use one shared world engine.
+
+Shared primitives include:
+- player movement;
+- touch/keyboard input;
+- camera;
+- collision;
+- depth ordering;
+- NPC entities;
+- interactables;
+- markers;
+- exits/transitions;
+- approach-point logic;
+- input-lock semantics.
+
+Do not create `createAct3Game.ts` as a cloned fork of Act 2.
+
+### Save / Migration
+
+Persisted game state must move toward explicit schema/versioned migrations.
+
+Generic state concepts should not be reintroduced per chapter.
+
+Examples:
+- beat consumed;
+- storyline complete;
+- replay eligibility;
+- overlay state;
+- chapter entry/completion.
+
+Migration code must be:
+- deterministic;
+- idempotent;
+- regression-tested;
+- incapable of fabricating backend quests, rewards, wallet values or authoritative progression.
+
+### Engine/content boundary
+
+**Engine owns**
+- Game UI Shell;
+- story rendering;
+- Story Registry;
+- History/replay;
+- markers;
+- generic interactions;
+- input/overlay semantics;
+- progression consumption;
+- save/migration mechanics;
+- purchase-gate mechanics;
+- world primitives.
+
+**Content owns**
+- story text;
+- images;
+- maps/backgrounds;
+- NPC definitions;
+- positions;
+- questline/project definitions;
+- beat ordering;
+- chapter-specific unlock/gate configuration;
+- unique chapter props/art.
+
+Target authoring experience: new chapter work should feel like **feeding content into a proven engine**.
+
+### Reference implementation and migration strategy
+
+Act 2 production behavior is the accepted reference implementation.
+
+Architecture work must preserve:
+- story canon;
+- contribution counts;
+- economy behavior;
+- save ownership;
+- interaction outcomes;
+- physical iPhone behavior.
+
+Refactor structure, not accepted product behavior.
+
+Migration order:
+1. audit remaining Act-specific ownership;
+2. converge Village + Act 2 onto one actual Game UI Shell;
+3. extract Story Registry + shared History;
+4. extract shared Interaction System;
+5. extract World / Area primitives;
+6. establish explicit Save / Migration engine;
+7. generalize progression/gating;
+8. migrate only necessary Act 1 surfaces to eliminate parallel systems;
+9. begin substantial Act 3 runtime only after the shared contracts are proven.
+
+### Architecture acceptance tests
+
+Runtime Architecture 1.0 is not complete until all of these are true:
+
+1. Adding a normal Act 3 story beat requires content/configuration, not new presentation/replay/history code.
+2. Adding a questgiver does not require new marker code or a new marker asset.
+3. Changing the standard dialogue-card appearance requires one shared change.
+4. Changing the global HUD/menu requires one shared change.
+5. Switching areas does not switch HUD implementations.
+6. History/replay behavior is inherited by registered storylines.
+7. Generic input/overlay bugs fixed once are fixed across all areas.
+8. A future Act 5 should not require re-bugtesting stable generic UI/story/marker systems merely because it is Act 5.
+
+Any implementation that violates these principles should be treated as architecture regression and corrected before building further on top of it.
