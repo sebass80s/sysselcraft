@@ -628,6 +628,7 @@ export default function VillagePrototype() {
       shopPanelOpen ||
       abandonedShopDialogueIndex !== null;
     gameRef.current?.setConstructionDialogueOpen(villageInputLocked);
+    gameRef.current?.setWorldInputEnabled(!villageInputLocked);
   }, [
     recyclingDialogueIndex,
     constructionDialogueId,
