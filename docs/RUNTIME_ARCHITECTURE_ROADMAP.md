@@ -1186,3 +1186,33 @@ All object-level Village pointer handlers now pass through one scene-level `acce
 Parity guards the retirement so the legacy lock cannot silently return.
 
 **Status:** Village world-input ownership is now converged onto the explicit shared authority. Remaining Interaction System work should focus on interaction resolution/priority and then World/Area primitives, not another input-lock model.
+
+
+## Interaction priority checkpoint — Linus base intent
+
+Linus is the first mixed-priority NPC migrated to shared priority resolution.
+
+A generic `resolveInteractionPriority()` now lives under Runtime Interaction and knows only:
+- candidate id;
+- numeric priority;
+- enabled state.
+
+Village maps Linus state into four ordered intents:
+1. construction attention — priority 40;
+2. intro/onboarding — priority 30;
+3. backend quest source — priority 20;
+4. ordinary resident interaction — priority 10.
+
+Three Linus base pointer entrypoints now consume one `resolveLinusIntent()`:
+- scene-level Linus hit;
+- dedicated Linus interaction zone;
+- Linus sprite.
+
+Important parity decision:
+- this slice centralizes **which intent wins** only;
+- it deliberately preserves the existing entrypoint difference where scene-level ordinary-resident tap may invoke dialogue immediately while sprite/zone navigation uses the authored approach path;
+- marker-specific entrypoints remain explicit and are not generalized yet.
+
+Parity locks all four priority outcomes and statically guards against reintroducing duplicated construction-attention priority checks.
+
+**Status:** pointer/interaction priority is **IN PROGRESS**, with Linus base priority centralized. Marker-specific priority and generic hit-target arbitration remain pending.
