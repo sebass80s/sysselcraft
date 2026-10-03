@@ -56,12 +56,16 @@ assert.equal(state.endCardSeen, true);
 assert.equal(s.act2FinalePending(state), false);
 assert.equal(JSON.stringify(s.advanceAct2Finale(state)), JSON.stringify(state));
 assert.ok(writes.every((key) => key === "sysselcraft.act2.runtime.v1.isolated-test-child"));
-// Existing completed releases must not be reset or replay the newly added epilogue.
+// Existing five-beat releases have already seen the family/veranda payoff
+// but must resume at the newly added epilogue exactly once.
 for (const endCardSeen of [false, true]) {
   const legacy = s.normalizeAct2RuntimeState({ ...state, finaleIndex: 4, endCardSeen });
-  assert.equal(legacy.act2Complete, true);
-  assert.equal(legacy.endCardSeen, endCardSeen);
-  assert.equal(s.act2FinalePending(legacy), false);
+  assert.equal(legacy.finaleIndex, 5);
+  assert.equal(legacy.familyFinaleConsumed, true);
+  assert.equal(legacy.epilogueConsumed, false);
+  assert.equal(legacy.act2Complete, false);
+  assert.equal(legacy.endCardSeen, false);
+  assert.equal(s.act2FinalePending(legacy), true);
 }
 // Adoption behavior remains one-time and existing scoped saves always win.
 storage.set("sysselcraft.act2.runtime.v1", JSON.stringify({ ...state, finaleIndex: 0 }));
