@@ -772,3 +772,14 @@ Behavioral contracts are split intentionally:
 - story/UI semantics: `scripts/test-story-ui-contract.mjs`
 
 Do not duplicate these by matching old internal variable names or obsolete inline visibility expressions in unrelated tests.
+
+
+## Runtime Architecture v1 decision — 2026-10-03
+
+Before substantial Act 3 runtime work, follow the locked cross-act architecture in `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`.
+
+Key rule: SysselCraft is one runtime with chapters as data. Global HUD/menu ownership, story presentation, story registry/history, interaction markers/input semantics and progression consumption must be shared systems rather than Act-specific implementations.
+
+The current Act 2 Historik feature is intentionally treated as an interim vertical slice: it is safe/read-only and spoiler-gated, but its catalog assembly still lives in `Act2Runtime.tsx`. Extract that into the shared Story Registry/History contract before Act 3 beats are implemented so new chapters inherit replay/history automatically.
+
+Act 2's accepted production behavior is the migration oracle. Refactor structure without changing story canon, contribution counts, economy, save ownership or physical player flow.
