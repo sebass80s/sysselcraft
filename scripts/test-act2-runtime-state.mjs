@@ -699,7 +699,16 @@ assert.ok(village.includes('router.push(`/act2?resume=${project}`)'), "contextua
 assert.match(page, /resumeProject === "boathouse" \|\| resumeProject === "dock" \|\| resumeProject === "motorboat"/, "Act 2 must accept contextual return from all three story purchases");
 assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
 assert.ok(page.includes("📖 Historik"), "Act 2 HUD must expose completed story history");
-assert.ok(page.includes("historyEntries.push({ group: PROJECT_COPY[project].label, beat })"), "history must derive project beats from already completed contribution counts");
+assert.ok(
+  page.includes("if (!state.projects[project].complete) continue;")
+    && page.includes("projectStorySources[project].forEach((beat) =>"),
+  "project history must stay hidden until the entire 16/16 storyline is complete",
+);
+assert.ok(
+  page.includes("if (state.epilogueConsumed) {")
+    && page.includes("ACT2_FINALE_BEATS.forEach((beat) =>"),
+  "finale history must stay hidden until the complete Act 2 epilogue has been consumed",
+);
 assert.ok(page.includes('group: "Finalen"'), "completed finale beats must be replayable from history");
 assert.ok(page.includes("setHistoryReplay({ beat, lineIndex: 0 })"), "history replay must use isolated local presentation state");
 const historyReplayStart = page.indexOf("function openHistoryReplay");
