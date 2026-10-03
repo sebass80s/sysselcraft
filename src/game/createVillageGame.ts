@@ -362,8 +362,9 @@ export async function createVillageGame(
       return resolveInteractionPriority([
         { id: "resident", priority: 10, enabled: true },
         { id: "quest-source", priority: 20, enabled: this.introComplete && this.backendLinusAttention },
-        { id: "intro", priority: 30, enabled: !this.introComplete },
-        { id: "construction-attention", priority: 40, enabled: requestedConstruction.attention?.resident === "linus" },
+        { id: "story-cta", priority: 30, enabled: this.introComplete && requestedSolTourStop === "linus" },
+        { id: "intro", priority: 40, enabled: !this.introComplete },
+        { id: "construction-attention", priority: 50, enabled: requestedConstruction.attention?.resident === "linus" },
       ])?.id ?? "resident";
     }
 
@@ -371,7 +372,8 @@ export async function createVillageGame(
       return resolveInteractionPriority([
         { id: "resident", priority: 10, enabled: true },
         { id: "quest-source", priority: 20, enabled: this.backendBakeryAttention },
-        { id: "construction-attention", priority: 30, enabled: requestedConstruction.attention?.resident === "henning" },
+        { id: "story-cta", priority: 30, enabled: requestedSolTourStop === "bakery" },
+        { id: "construction-attention", priority: 40, enabled: requestedConstruction.attention?.resident === "henning" },
       ])?.id ?? "resident";
     }
 
@@ -650,7 +652,8 @@ export async function createVillageGame(
         this.henningInteractionPending = false;
         this.playerFacing = this.player.x < this.henning.x ? "east" : "west";
         this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
-        callbacks.onHenningInteract();
+        if (this.resolveHenningIntent() === "quest-source") callbacks.onQuestSourceInteract?.("bakery");
+        else callbacks.onHenningInteract();
         return;
       }
 
@@ -663,7 +666,7 @@ export async function createVillageGame(
       this.linusInteractionPending = false;
       this.playerFacing = this.player.x < this.linus.x ? "east" : "west";
       this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
-      if (this.introComplete && this.backendLinusAttention) callbacks.onQuestSourceInteract?.("linus");
+      if (this.resolveLinusIntent() === "quest-source") callbacks.onQuestSourceInteract?.("linus");
       else callbacks.onLinusInteract();
     }
 
@@ -725,11 +728,15 @@ export async function createVillageGame(
 
     setSolTourStop(stop: SolTourStop) {
       requestedSolTourStop = stop;
+      this.syncLinusPriorityMarkers();
+      this.syncHenningPriorityMarker();
       this.solTourMarker?.destroy();
       this.solTourMarker = undefined;
       if (!stop) return;
       const target = stop === "bakery" ? this.henning : stop === "shop" ? this.mira : stop === "decision" ? this.sol : this.linus;
       if (!target || !target.visible) return;
+      if (stop === "bakery" && this.resolveHenningIntent() !== "story-cta") return;
+      if (stop === "linus" && this.resolveLinusIntent() !== "story-cta") return;
       const nextStopLabel = stop === "bakery" ? "Bageriet" : stop === "shop" ? "Mira" : stop === "linus" ? "Linus" : "Sol";
       this.solTourMarker = this.add.text(target.x, target.y - 145, `☀️ ${nextStopLabel}`, {
         fontSize: "22px", fontStyle: "bold", color: "#5b3a1f",
@@ -740,6 +747,8 @@ export async function createVillageGame(
         event.stopPropagation();
         if (!this.acceptsWorldInput()) return;
         if (!this.player || requestedSolTourStop !== stop) return;
+        if (stop === "bakery" && this.resolveHenningIntent() !== "story-cta") return;
+        if (stop === "linus" && this.resolveLinusIntent() !== "story-cta") return;
         if (stop === "shop") {
           this.shopInteractionPending = true;
           this.path = findPath(this.player, { x: 1130, y: 425 }, this.navigationObstacles);
