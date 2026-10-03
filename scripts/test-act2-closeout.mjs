@@ -56,12 +56,6 @@ assert.equal(state.endCardSeen, true);
 assert.equal(s.act2FinalePending(state), false);
 assert.equal(JSON.stringify(s.advanceAct2Finale(state)), JSON.stringify(state));
 assert.ok(writes.every((key) => key === "sysselcraft.act2.runtime.v1.isolated-test-child"));
-await s.clearAct2RuntimeStateForPairedChild();
-state = await stateModule().loadAct2RuntimeState();
-assert.equal(state.entered, false, "scoped Test-Ture-style reset must return Act 2 to a fresh unentered state");
-assert.equal(state.openingComplete, false);
-assert.equal(state.projects.motorboat.contributions, 0);
-
 // Existing five-beat releases have already seen the family/veranda payoff
 // but must resume at the newly added epilogue exactly once. The first six-beat
 // migration could also poison that save by rewriting it to index 5 + consumed,
@@ -107,6 +101,13 @@ storage.delete("sysselcraft.act2.runtime.v1.isolated-test-child");
 await s.loadAct2RuntimeState();
 assert.equal(storage.has("sysselcraft.act2.runtime.v1"), false);
 assert.equal(storage.has("sysselcraft.act2.runtime.v1.isolated-test-child"), true);
+
+// QA reset is destructive by design, so cover it only after all migration/adoption assertions.
+await s.clearAct2RuntimeStateForPairedChild();
+state = await stateModule().loadAct2RuntimeState();
+assert.equal(state.entered, false, "scoped Test-Ture-style reset must return Act 2 to a fresh unentered state");
+assert.equal(state.openingComplete, false);
+assert.equal(state.projects.motorboat.contributions, 0);
 
 let hooks = [], cursor = 0;
 const react = {
