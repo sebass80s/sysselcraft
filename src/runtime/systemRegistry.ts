@@ -65,9 +65,9 @@ export const CANONICAL_SYSTEMS: readonly CanonicalSystemRegistration[] = [
   },
   {
     id: SYSTEM_COMPONENT_IDS.npcAttentionMarker,
-    status: "migration-pending",
+    status: "canonical",
     owner: "Interaction System",
-    note: "NPC attention/turn-in markers must share one engine primitive.",
+    note: "Canonical shared renderer exists and current Village story/NPC attention markers consume it.",
   },
   {
     id: SYSTEM_COMPONENT_IDS.interactable,
