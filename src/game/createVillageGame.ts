@@ -215,7 +215,7 @@ export async function createVillageGame(
         this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
       }
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
-        if (!this.player || !worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false })) return;
+        if (!this.player || !this.acceptsWorldInput()) return;
         const recyclingPlacement = VISUAL_PRODUCTION_PLACEMENTS.find((placement) => placement.building === "recycling");
         if (requestedConstruction.stages.recycling === 4 && recyclingPlacement &&
             Phaser.Geom.Rectangle.Contains(
@@ -318,6 +318,7 @@ export async function createVillageGame(
       });
       this.linusStoryMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player) return;
         if (!this.introComplete) {
           callbacks.onLinusInteract();
@@ -328,6 +329,13 @@ export async function createVillageGame(
         const target = this.path.at(-1);
         if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
+      });
+    }
+
+    private acceptsWorldInput() {
+      return worldInputEnabled({
+        enabled: requestedWorldInputEnabled,
+        blockingOverlayVisible: false,
       });
     }
 
@@ -359,7 +367,7 @@ export async function createVillageGame(
     update(_: number, delta: number) {
       if (!this.player) return;
       this.updateDog();
-      if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false })) {
+      if (!this.acceptsWorldInput()) {
         this.path = [];
         this.targetMarker?.setVisible(false);
         return;
@@ -638,6 +646,7 @@ export async function createVillageGame(
         .setInteractive({ useHandCursor: true, pixelPerfect: false });
       this.shop.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player) return;
         this.shopInteractionPending = true;
         this.linusInteractionPending = false;
@@ -674,6 +683,7 @@ export async function createVillageGame(
       }).setOrigin(0.5).setDepth(3100).setInteractive({ useHandCursor: true });
       this.solTourMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player || requestedSolTourStop !== stop) return;
         if (stop === "shop") {
           this.shopInteractionPending = true;
@@ -711,6 +721,7 @@ export async function createVillageGame(
       }).setOrigin(0.5).setDepth(3000).setVisible(requestedBottleMessageReady).setInteractive({ useHandCursor: true });
       this.bottleMessageMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player || !requestedBottleMessageReady) return;
         this.bottleMessageInteractionPending = true;
         this.shopInteractionPending = false;
@@ -752,6 +763,7 @@ export async function createVillageGame(
           });
           this.henningQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
             event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
             callbacks.onQuestSourceInteract?.("bakery");
           });
         }
@@ -768,6 +780,7 @@ export async function createVillageGame(
           });
           this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
             event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
             if (!this.player) return;
             this.linusInteractionPending = true;
             this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
@@ -793,6 +806,7 @@ export async function createVillageGame(
       });
       this.noticeboardMarker.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player || !requestedQuestSourceAttention.noticeboard) return;
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
@@ -855,6 +869,7 @@ export async function createVillageGame(
       });
       this.attentionMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         this.approachAttentionResident();
       });
     }
@@ -990,6 +1005,7 @@ export async function createVillageGame(
       this.mira.input?.hitArea.setTo(-30, -10, 150, 175);
       this.mira.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player || !requestedShopOpen || !this.mira?.visible) return;
         this.shopInteractionPending = true;
         this.linusInteractionPending = false;
@@ -1015,6 +1031,7 @@ export async function createVillageGame(
       this.sol.input?.hitArea.setTo(-30, -10, 150, 180);
       this.sol.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player || requestedSolTourStop !== "decision" || !this.sol?.visible) return;
         this.solInteractionPending = true;
         this.path = findPath(this.player, { x: 835, y: 485 }, this.navigationObstacles);
@@ -1038,6 +1055,7 @@ export async function createVillageGame(
         .setInteractive({ useHandCursor: true });
       this.linusInteractionZone.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player) return;
         if (requestedConstruction.attention?.resident === "linus") {
           this.approachAttentionResident();
@@ -1061,6 +1079,7 @@ export async function createVillageGame(
       });
       this.linus.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (requestedConstruction.attention?.resident === "linus") {
           this.approachAttentionResident();
           return;
@@ -1098,6 +1117,7 @@ export async function createVillageGame(
       this.residents.henning = this.henning;
       this.henning.on("pointerdown", (_pointer: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
         event.stopPropagation();
+        if (!this.acceptsWorldInput()) return;
         if (!this.player || !this.henning?.visible) return;
         this.linusInteractionPending = false;
         this.attentionInteractionPending = false;
