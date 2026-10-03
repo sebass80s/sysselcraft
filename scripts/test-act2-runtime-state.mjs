@@ -711,6 +711,9 @@ assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira shop must ren
 assert.ok(village.includes("act2PurchaseBeat?.body[act2PurchaseStoryIndex]"), "Mira purchase beats must render their authored body one reply at a time");
 assert.ok(village.includes('pendingPurchaseStory: "dock" as const'), "lifebuoy purchase must persist its canonical story beat");
 assert.ok(village.includes('pendingPurchaseStory: "boathouse" as const'), "steering-wheel purchase must persist its canonical story beat");
+assert.match(village, /pendingPurchaseStory: "dock" as const,\s*purchaseStoryLineIndex: 0/, "lifebuoy purchase must persist the story at the same first line the UI presents");
+assert.match(village, /pendingPurchaseStory: "boathouse" as const,\s*purchaseStoryLineIndex: 0/, "steering-wheel purchase must persist the story at the same first line the UI presents");
+
 assert.ok(JETTY_LIFEBUOY_BEAT.body.length > 0, "canonical lifebuoy economy beat must contain dialogue");
 assert.ok(BOATHOUSE_STEERING_WHEEL_BEAT.body.length > 0, "canonical steering-wheel economy beat must contain dialogue");
 
