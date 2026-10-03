@@ -964,3 +964,16 @@ Parity harness now covers:
 - disabled interaction does not activate or approach.
 
 This is a checkpoint only. Village still has local pending-interaction flags, radii and approach handling. Shared world-input / overlay authority remains the next cross-world concern after further resolution slices.
+
+
+## Runtime 1.0 interaction checkpoint 2 — Village noticeboard
+
+The shared Interaction System now has behavior consumers in both current playable worlds:
+- Act 2 Lake: Alve turn-in;
+- Village: noticeboard quest source.
+
+Village noticeboard now supplies one interaction definition containing its accepted approach point and 36 px arrival radius. Shared `resolveInteraction()` owns enabled/activate/approach resolution, while existing Village pathfinding/callback mechanics remain local.
+
+Parity locks 36 px as activate and 37 px as approach.
+
+Continue with another simple duplicated interaction before tackling world-input authority. Avoid folding Linus' mixed quest/story priority into a generic rewrite until its behavior has explicit parity coverage.
