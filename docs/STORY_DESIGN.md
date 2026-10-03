@@ -6275,3 +6275,50 @@ Series-level shorthand:
 - **Act 3:** people can choose not to remain together without choosing the child away.
 
 The long-term SysselCraft identity should remain: **take the hit, grieve what changed, and keep building forward.**
+
+## 2026-10-03 handover snapshot — Act 2 ending / Act 3 story direction
+
+### Act 2
+The canonical ending now has six runtime beats. The final two supplied images are:
+- `05-after-motorboat.png` for **Efter motorbåten**;
+- `06-across-the-lake.png` for the closing **Över sjön** departure.
+
+The last authored lines remain:
+> **Barnet:** “Är vattnet helt stilla nu då?”  
+> **Alve:** “Inte helt.”  
+> **Alve:** “Men nära nog.”  
+> **Barnet:** “Bra plan.”  
+> **Alve:** “Jag sa ju att jag blivit bättre på planer.”
+
+Then the motor starts, they leave the jetty, and the black **SLUT PÅ ANDRA KAPITLET** card follows.
+
+### Act 3
+Opening title card is locked:
+> **KAPITEL 3**  
+> **På andra sidan sjön**
+
+Do not expand Act 4 yet. Current creative priority after Act 2 acceptance is Act 3.
+
+Act 3 macro-story is locked around **one long family-party preparation arc**, not four unrelated building projects:
+- Henning: food and cake;
+- Linus: lighting;
+- Mira: furniture and practical setup;
+- Sol: music.
+
+Nova believes a perfect recreation of a good family day may reunite her separated parents. The event must genuinely succeed and feel increasingly perfect from Nova's subjective perspective. At the ordinary co-parent handoff, that idealized filter collapses: palette cools, adults look subtly older/tired, and the practical repairs reveal their always-present handmade imperfections. Nothing objectively breaks.
+
+Nova leaves; Barnet follows. Nova must reach the core realization herself:
+> **Nova:** “Jag trodde att om det var mitt fel så kunde jag fixa det.”  
+> **Nova:** “Jag tror bara att jag önskade att det var mitt fel.”  
+> **Nova:** “För då hade jag kunnat göra något åt det.”
+
+Final internal resolution:
+> **Nova:** “Det var deras grej.”  
+> **Barnet:** “Ja.”  
+> **Nova:** “Inte min.”
+
+Her mother then finds her, has understood what Nova was trying to do, and they hug. The mother confirms, but does not cause, Nova's realization. The preferred optional line remains **“Du behöver aldrig laga oss.”**
+
+Visual progression remains locked:
+**nostalgia → cold shower → reality → new calm**.
+
