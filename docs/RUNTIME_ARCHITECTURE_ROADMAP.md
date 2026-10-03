@@ -1027,3 +1027,24 @@ The Interaction System as a whole is NOT complete. Remaining work:
 Keep work in short batches. Do not trigger Vercel for routine architecture work. Commit/checkpoint at logical slices, keep docs synchronized as work progresses, and update roadmap statuses when milestones close.
 
 The dev branch currently does not auto-run CI on every commit. Use larger verification checkpoints rather than burning build minutes. Before any promotion, full CI + browser + physical iPhone acceptance are mandatory.
+
+
+## Interaction behavior checkpoint — 2026-10-03
+
+First Runtime 1.0 behavior slice is migrated.
+
+Act 2 Lake's Alve turn-in now delegates the generic decision:
+- activate immediately when the player is within the interaction radius;
+- otherwise resolve the authored approach point;
+- disabled interactions do neither;
+
+to the shared `resolveInteraction()` contract in `src/runtime/interaction/interactionContract.ts`.
+
+Preserved accepted Lake configuration:
+- Alve turn-in radius: 135 px;
+- approach point: Alve x, Alve y + 58, clamped to the world boundary;
+- Phaser movement, facing and the turn-in callback remain area-runtime responsibilities for this slice.
+
+Parity coverage now exercises activate / approach / disabled outcomes in `scripts/test-runtime-parity.mjs`.
+
+**Status:** Interaction System behavior convergence is now **IN PROGRESS** rather than untouched. Do not mark the Interaction System complete yet. Village still owns multiple local pending-interaction/radius/approach paths, and shared world-input authority is still pending.
