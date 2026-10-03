@@ -249,3 +249,76 @@ Removed as dead prototype residue:
 Still required before substantial Act 3 runtime expansion:
 - shared World / Area Engine;
 - versioned Save / Migration Engine.
+
+
+## SysselCraft Runtime Architecture v1 — LOCKED 2026-10-03
+
+The project must now be treated as **one game runtime with chapters as data**, not as a growing collection of Act-specific mini-games.
+
+This rule exists because Act 2 repeatedly exposed the cost of local fixes: UI placement, overlays, story replay, progression, purchases and interaction behavior became correct only after multiple feature-specific patches. Future work must prefer shared contracts first and chapter data second.
+
+### Cross-game ownership
+
+**Game UI Shell**
+- owns the SysselCraft logo/menu, resources, Vuxenläge, Historik and Uppdrag surfaces;
+- Acts must not invent parallel HUDs;
+- menu placement, z-index, input shielding and overlay suppression are shared behavior;
+- changing a global UI surface should require one implementation change.
+
+**Story Engine + Story Registry**
+- owns story presentation across the entire game;
+- all normal beats use the same dialogue cards, nameplates, typography, navigation, image shell, safe areas, overlay/input rules and replay behavior;
+- Acts register typed story data rather than implement new renderers;
+- beat identity, chapter/group membership and replay/history policy must be explicit metadata.
+
+**Story History**
+- becomes a shared read-only system over the Story Registry;
+- replay must never mutate progression, wallet, rewards, purchases or consumed state;
+- a storyline becomes visible according to a generic history-unlock policy, normally only after the complete storyline is finished;
+- today's Act 2 implementation is an interim vertical slice and is **not** the final cross-act architecture;
+- before substantial Act 3 runtime work, extract Act 2 history collection/replay into the shared Story Registry/History contract so Act 3 beats inherit the feature automatically.
+
+**Quest / Progression bridge**
+- Quest V2/backend remains authoritative for real-world work and rewards;
+- shared progression maps authoritative evidence to the next eligible authored beat exactly once;
+- Acts provide authored tracks/gates as data rather than reimplement claim consumption;
+- replay/history never participates in progression.
+
+**Interaction System**
+- owns NPC interaction markers, quest markers, hotspots, approach points, interaction radius, pointer priority and world-input locks;
+- quest/NPC markers must look and behave consistently across Village, Lake and future areas;
+- new Acts must configure interactions rather than clone marker/input logic.
+
+**Chapter Runtime**
+- should mostly provide configuration: map/background, entities, positions, storylines, contribution tracks, gates, exits and chapter-specific state;
+- generic concepts such as "beat seen", "storyline complete", "replayable", "overlay active" and global HUD visibility must not be reinvented per Act.
+
+**Design system**
+- dialogue boxes, buttons, menus, nameplates, story navigation, markers, spacing and z-index conventions are shared components/tokens;
+- visual changes should propagate globally unless a chapter has an explicit documented exception.
+
+### Required architecture test
+
+Before creating substantial Act 3 gameplay runtime, the codebase must satisfy this test:
+
+> Adding a normal Act 3 story beat must not require new code for how a story beat is rendered, saved as consumed, suppressed under overlays, replayed or exposed in Historik.
+
+Likewise:
+
+> Adding a new questgiver must not require inventing another quest-marker implementation.
+
+And:
+
+> Changing the standard dialogue-card appearance must require changing one shared implementation.
+
+### Execution order before Act 3
+
+1. Audit remaining Act-specific ownership in Village and Act 2.
+2. Define/extract shared Game UI Shell, Story Registry/History and Interaction contracts around the already accepted behavior.
+3. Migrate Act 2 to those contracts without changing story or gameplay behavior.
+4. Migrate only the Act 1 surfaces necessary to prevent parallel systems from surviving.
+5. Keep World / Area Engine and versioned Save / Migration work aligned with the existing roadmap.
+6. Only then begin substantial Act 3 runtime implementation.
+
+Do not use this architecture work to reopen accepted Act 2 content. The physically accepted Act 2 production behavior is the reference implementation to preserve while shared systems are extracted.
+
