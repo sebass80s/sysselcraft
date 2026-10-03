@@ -374,4 +374,16 @@ assert.ok(
   "Village must not retain local quest badge drawing after marker migration",
 );
 
+
+
+assert.equal(
+  (villageGameSource.match(/kind: "npc-attention"/g) ?? []).length,
+  2,
+  "Village story/NPC attention markers must use the canonical npc-attention renderer",
+);
+assert.ok(
+  !villageGameSource.includes("fillRoundedRect(-29, -21, 58, 42, 14)"),
+  "Village must not retain local story-attention bubble drawing",
+);
+
 console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
