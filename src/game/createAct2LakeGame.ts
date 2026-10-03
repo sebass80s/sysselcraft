@@ -1,5 +1,6 @@
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
+import { resolveInteraction } from "../runtime/interaction/interactionContract";
 import {
   ACT2_ALVE_WORK_POSITIONS,
   ACT2_ALVE_IDLE_POSITION,
@@ -191,17 +192,32 @@ export async function createAct2LakeGame(
           this.showAlveIdleWorldPrompt();
           return;
         }
-        const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.alveEntity.x, this.alveEntity.y);
-        if (distance <= 135) {
+        const interaction = {
+          id: "act2:alve-turn-in",
+          kind: "npc" as const,
+          anchor: { x: this.alveEntity.x, y: this.alveEntity.y },
+          approachPoint: {
+            x: this.alveEntity.x,
+            y: Math.min(ACT2_WORLD.height - 8, this.alveEntity.y + 58),
+          },
+          interactionRadius: 135,
+          marker: "quest-turn-in" as const,
+          enabled: requestedAlveTurnInAvailable,
+        };
+        const resolution = resolveInteraction(
+          [interaction],
+          { interactionId: interaction.id, requestedAt: { x: this.alveEntity.x, y: this.alveEntity.y } },
+          { x: this.player.x, y: this.player.y },
+        );
+        if (resolution.status === "activate") {
           this.moveTarget = null;
           this.facePlayerTowardAlve();
           options.onAlveTurnIn?.();
           return;
         }
-        this.moveTarget = {
-          x: this.alveEntity.x,
-          y: Math.min(ACT2_WORLD.height - 8, this.alveEntity.y + 58),
-        };
+        if (resolution.status === "approach") {
+          this.moveTarget = resolution.target;
+        }
       };
 
       alveInteractionArea
