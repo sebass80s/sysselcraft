@@ -867,3 +867,18 @@ All object pointer handlers are gated by one `acceptsWorldInput()`.
 Parity prevents the retired lock from returning.
 
 Next Interaction work can return to shared resolution/pointer priority, with Linus still the most complex mixed quest/story case. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — Linus base priority centralized
+
+The first mixed-priority NPC slice is complete.
+
+Shared generic helper:
+`src/runtime/interaction/interactionPriority.ts`
+
+Village now resolves Linus base intent through one ordered rule:
+construction attention > intro > backend quest > ordinary resident.
+
+Three base pointer entrypoints use that rule. Marker-specific clicks and existing immediate-vs-approach differences remain intentionally untouched until separately parity-covered.
+
+Next recommended Interaction slice: inspect marker-specific Linus priority / pointer arbitration, or move to another mixed NPC only if it provides a cleaner proof. No Act 3 and no production promotion.
