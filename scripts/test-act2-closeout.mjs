@@ -164,13 +164,13 @@ assert.ok(card());
 const act2RuntimeSource = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 assert.match(
   act2RuntimeSource,
-  /const postAct2LakeIdle = state\.act2Complete && state\.endCardSeen;/,
-  "completed Act 2 lake idle must have an explicit HUD recovery state",
+  /deriveGameUiShell\(\{[\s\S]*worldReady: state\.openingComplete && state\.alveIntroComplete[\s\S]*projectStatusAvailable: state\.selectedProject !== null/,
+  "completed Act 2 must rely on the shared UI-shell contract rather than project selection for global HUD visibility",
 );
 assert.match(
   act2RuntimeSource,
-  /\(state\.selectedProject !== null \|\| postAct2LakeIdle\)/,
-  "HUD must remain visible after the end card even though no project is selected",
+  /const hudVisible = uiShell\.showHud;/,
+  "global HUD visibility must come from the shared shell authority",
 );
 
 assert.match(
