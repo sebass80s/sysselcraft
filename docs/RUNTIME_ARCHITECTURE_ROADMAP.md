@@ -1216,3 +1216,30 @@ Important parity decision:
 Parity locks all four priority outcomes and statically guards against reintroducing duplicated construction-attention priority checks.
 
 **Status:** pointer/interaction priority is **IN PROGRESS**, with Linus base priority centralized. Marker-specific priority and generic hit-target arbitration remain pending.
+
+
+## Interaction priority checkpoint 2 — Linus marker arbitration
+
+Linus marker presentation now consumes the same centralized winning intent as base pointer interaction.
+
+`syncLinusPriorityMarkers()` owns the lower-priority Linus marker layer:
+- intro wins => one `npc-attention` story marker;
+- quest-source wins => one `quest-available` / `quest-turn-in` marker;
+- construction-attention wins => no lower Linus story/quest marker;
+- resident wins => no marker.
+
+This removes the previous possibility of simultaneous intro + quest markers and keeps visual affordance aligned with the priority contract.
+
+Additional correctness fix:
+- construction presentation can reposition Linus;
+- Linus story/quest markers are now resynced after resident movement so they do not remain at stale coordinates.
+
+Initialization is also deterministic: marker arbitration runs immediately after the Linus sprite is created.
+
+Parity guards:
+- one canonical story-marker creation path;
+- one canonical quest-marker creation path;
+- retired story-only sync cannot return;
+- marker sync initializes after sprite creation and resyncs around construction presentation.
+
+**Status:** Linus base intent + marker arbitration are centralized. Generic pointer hit-target arbitration and the remaining NPC-specific behavior are still pending.
