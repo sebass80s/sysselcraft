@@ -70,6 +70,8 @@ const BOTTLE_MESSAGE_INTERACTION: InteractionDefinition = {
   interactionRadius: 38,
   enabled: true,
 };
+const HENNING_APPROACH: Point = HENNING_APPROACH;
+const HENNING_INTERACTION_RADIUS = 95;
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
 
@@ -305,7 +307,7 @@ export async function createVillageGame(
             return;
           }
           this.henningInteractionPending = true;
-          this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 370, y: 468 }, this.navigationObstacles);
+          this.path = findPath({ x: this.player.x, y: this.player.y }, HENNING_APPROACH, this.navigationObstacles);
           const target = this.path.at(-1);
           if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
           else this.maybeCompleteWorldInteraction();
@@ -680,7 +682,21 @@ export async function createVillageGame(
       }
 
       if (this.henningInteractionPending && this.player && this.henning?.visible) {
-        if (distance(this.player, this.henning) > 95) return;
+        const interaction: InteractionDefinition = {
+          id: "village:henning",
+          kind: "npc",
+          anchor: { x: this.henning.x, y: this.henning.y },
+          approachPoint: HENNING_APPROACH,
+          interactionRadius: HENNING_INTERACTION_RADIUS,
+          marker: this.backendBakeryAttention ? "quest-available" : undefined,
+          enabled: true,
+        };
+        const resolution = resolveInteraction(
+          [interaction],
+          { interactionId: interaction.id, requestedAt: interaction.approachPoint ?? interaction.anchor },
+          { x: this.player.x, y: this.player.y },
+        );
+        if (resolution.status !== "activate") return;
         this.henningInteractionPending = false;
         this.playerFacing = this.player.x < this.henning.x ? "east" : "west";
         this.setFacing(this.playerFacing === "east" ? 1 : -1, 0);
@@ -1219,7 +1235,7 @@ export async function createVillageGame(
         this.attentionInteractionPending = false;
         this.noticeboardInteractionPending = false;
         this.henningInteractionPending = true;
-        this.path = findPath({ x: this.player.x, y: this.player.y }, { x: 370, y: 468 }, this.navigationObstacles);
+        this.path = findPath({ x: this.player.x, y: this.player.y }, HENNING_APPROACH, this.navigationObstacles);
         const finalPoint = this.path.at(-1);
         if (finalPoint) this.targetMarker?.setPosition(finalPoint.x, finalPoint.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
