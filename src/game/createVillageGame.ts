@@ -434,9 +434,26 @@ export async function createVillageGame(
     private maybeCompleteWorldInteraction() {
       if (this.recyclingInteractionPending && this.player) {
         const recycling = VISUAL_PRODUCTION_PLACEMENTS.find((placement) => placement.building === "recycling");
-        if (!recycling || requestedConstruction.stages.recycling !== 4) {
+        const interaction: InteractionDefinition | null = recycling ? {
+          id: "village:recycling",
+          kind: "hotspot",
+          anchor: recycling.approach,
+          approachPoint: recycling.approach,
+          interactionRadius: 40,
+          enabled: requestedConstruction.stages.recycling === 4,
+        } : null;
+        const resolution = interaction
+          ? resolveInteraction(
+              [interaction],
+              { interactionId: interaction.id, requestedAt: recycling?.approach ?? { x: 0, y: 0 } },
+              { x: this.player.x, y: this.player.y },
+            )
+          : { status: "disabled" as const };
+        if (resolution.status === "disabled") {
           this.recyclingInteractionPending = false;
-        } else if (distance(this.player, recycling.approach) <= 40) {
+          return;
+        }
+        if (resolution.status === "activate") {
           this.recyclingInteractionPending = false;
           this.path = [];
           this.targetMarker?.setVisible(false);
