@@ -887,7 +887,8 @@ This prevents later chapters from colliding in History, progression or save migr
 ### In progress
 - execute/close the Act 2 History parity checkpoint;
 - **DONE:** Act 2 development History consumer now uses shared Registry/History;
-- migrate both current HUD implementations to the shared Game UI Shell.
+- **DONE for Act 2:** development Act 2 now uses the shared Game UI Shell;
+- Village migration to the same Game UI Shell remains pending.
 
 ### Not started
 - canonical marker renderer/asset migration;
@@ -905,3 +906,12 @@ This prevents later chapters from colliding in History, progression or save migr
 `Act2Runtime` on `nova/runtime-architecture-v1` now consumes shared Story Registry/History rather than assembling History inline.
 
 Legacy/live behavior remains the oracle. Promotion remains blocked on broader Runtime 1.0 parity and later browser/iPhone acceptance.
+
+
+### Game UI Shell migration status
+
+- Act 2 development runtime: **migrated** to shared `GameUiShell`.
+- Village/Act 1 runtime: **pending**.
+- frozen live runtime: unchanged.
+
+Game UI Shell cannot be considered fully complete until both playable worlds consume the same component and legacy inline header ownership is removed.
