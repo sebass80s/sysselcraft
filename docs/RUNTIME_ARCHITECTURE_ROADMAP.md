@@ -1026,7 +1026,7 @@ The Interaction System as a whole is NOT complete. Remaining work:
 ### Verification policy
 Keep work in short batches. Do not trigger Vercel for routine architecture work. Commit/checkpoint at logical slices, keep docs synchronized as work progresses, and update roadmap statuses when milestones close.
 
-The dev branch currently does not auto-run CI on every commit. Use larger verification checkpoints rather than burning build minutes. Before any promotion, full CI + browser + physical iPhone acceptance are mandatory.
+The Runtime Architecture development branch auto-runs GitHub CI on every push. Use that signal as the canonical automated verification; Vercel remains unnecessary for routine architecture work. Before any promotion, full CI + browser + physical iPhone acceptance are mandatory.
 
 
 ## Interaction behavior checkpoint — 2026-10-03
@@ -1432,3 +1432,45 @@ All current Village world-interaction arrival radii now resolve through the shar
 GitHub Actions verification:
 - Linus parity run #1754: SUCCESS.
 - Shop/Mira verify job in run #1757: SUCCESS, including `npm run verify` and `test:runtime-parity`.
+
+
+## World / Area Engine checkpoint 1 — movement intent + camera
+
+The first shared World / Area Engine primitives are now active.
+
+### Shared movement intent
+New canonical primitive:
+- `src/runtime/world/movement.ts`
+- `resolveDirectMovementIntent()`
+- `directionalInputVector()`
+
+Act 2 Lake now delegates generic input-to-direction behavior to this primitive while retaining area-owned collision, world bounds, animation/facing and dog follow.
+
+Accepted Lake behavior preserved and parity-locked:
+- keyboard input overrides/clears an existing tap target;
+- diagonal keyboard input normalizes;
+- idle keyboard follows the current tap target;
+- tap target clears only when distance is strictly less than 8 px;
+- exactly 8 px still produces movement.
+
+### Shared camera contract
+Canonical camera values now live in:
+- `src/runtime/world/worldCamera.ts`
+
+The contract owns:
+- background color;
+- follow lerp X/Y;
+- deadzone width ratio;
+- deadzone maximum width;
+- deadzone height.
+
+Both Lake and Village consume the shared camera contract. Parity locks:
+- 667px view width => 32% deadzone width;
+- wide view => 340px deadzone cap;
+- accepted follow lerp remains 0.08 / 0.08;
+- deadzone height remains 180.
+
+### Verification
+GitHub Actions #1773: `npm run verify` SUCCESS.
+
+This is intentionally a primitive extraction, not a mega-world rewrite. Area-specific collision, authored world bounds, entity placement and navigation remain local until separately migrated with parity.
