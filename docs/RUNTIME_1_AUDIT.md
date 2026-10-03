@@ -272,3 +272,15 @@ Preserved behavior:
 - existing Village pathfinding, target marker and callback remain unchanged.
 
 Parity explicitly checks the 36/37 px boundary. This demonstrates the shared contract across both Lake and Village without attempting a flag-day interaction rewrite.
+
+
+## Checkpoint — Recycling uses shared interaction resolution
+
+Completed Recycling interaction has moved its local 40 px arrival test into the shared Interaction System.
+
+The world still owns the authored building placement and pathfinding. The engine now owns the generic question: disabled, activate now, or continue approaching.
+
+Parity covers the accepted 40/41 px boundary. Shared resolution now has consumers in:
+- Act 2 Lake / Alve turn-in;
+- Village / noticeboard;
+- Village / Recycling hotspot.
