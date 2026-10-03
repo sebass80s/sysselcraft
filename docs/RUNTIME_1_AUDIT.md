@@ -149,3 +149,21 @@ The legacy inline Act 2 History assembly has been removed from the development c
 Parity now compares product-visible grouped History output rather than irrelevant cross-group flat-array ordering.
 
 This is a development-branch migration only. Frozen live remains unchanged.
+
+
+## Checkpoint — Act 2 migrated to shared Game UI Shell
+
+The development-branch Act 2 runtime now renders its global HUD through `GameUiShell`.
+
+Preserved behavior:
+- SysselCraft menu;
+- Vuxenläge;
+- Historik visibility;
+- Till byn;
+- resource counters;
+- contextual Till kapitel 3 action;
+- shared HUD visibility authority.
+
+The Act 2-specific header implementation has been removed from the dev consumer path. Village still uses its legacy inline header and is the next shell migration target.
+
+Frozen live remains unchanged.
