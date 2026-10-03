@@ -361,4 +361,17 @@ assert.ok(
   "Act 2 must not keep a local turn-in marker implementation",
 );
 
+
+
+const villageGameSource = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
+assert.equal(
+  (villageGameSource.match(/createInteractionMarker\(this, \{/g) ?? []).length,
+  3,
+  "Village quest sources must all use the canonical interaction marker renderer",
+);
+assert.ok(
+  !villageGameSource.includes("fillCircle(0, 0, 27)"),
+  "Village must not retain local quest badge drawing after marker migration",
+);
+
 console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
