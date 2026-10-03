@@ -724,8 +724,8 @@ assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/,
 assert.ok(page.includes("📖 Historik"), "Act 2 HUD must expose completed story history");
 assert.match(
   page,
-  /aria-label="Öppna SysselCraft-menyn"[\s\S]*🔐 Vuxenläge[\s\S]*📖 Historik[\s\S]*← Till byn/,
-  "Act 2 SysselCraft logo dropdown must order Vuxenläge, Historik, then Till byn",
+  /id: "adult-mode"[\s\S]*label: "🔐 Vuxenläge"[\s\S]*id: "history"[\s\S]*label: "📖 Historik"[\s\S]*id: "village"[\s\S]*label: "← Till byn"/,
+  "Act 2 GameUiShell menu configuration must order Vuxenläge, Historik, then Till byn",
 );
 assert.ok(
   page.includes('router.push("/?menu=adult")'),
