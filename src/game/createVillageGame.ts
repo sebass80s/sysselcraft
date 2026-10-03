@@ -305,33 +305,49 @@ export async function createVillageGame(
     setIntroComplete(complete: boolean) {
       requestedIntroComplete = complete;
       this.introComplete = complete;
-      this.syncLinusStoryMarker();
+      this.syncLinusPriorityMarkers();
     }
 
-    private syncLinusStoryMarker() {
+    private syncLinusPriorityMarkers() {
       this.linusStoryMarker?.destroy();
       this.linusStoryMarker = undefined;
-      if (this.introComplete || !this.linus) return;
+      this.linusQuestMarker?.destroy();
+      this.linusQuestMarker = undefined;
+      if (!this.linus) return;
 
-      this.linusStoryMarker = createInteractionMarker(this, {
-        kind: "npc-attention",
-        x: this.linus.x,
-        y: this.linus.y - 155,
-      });
-      this.linusStoryMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
-        event.stopPropagation();
-        if (!this.acceptsWorldInput()) return;
-        if (!this.player) return;
-        if (!this.introComplete) {
-          callbacks.onLinusInteract();
-          return;
-        }
-        this.linusInteractionPending = true;
-        this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
-        const target = this.path.at(-1);
-        if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
-        else this.maybeCompleteWorldInteraction();
-      });
+      const intent = this.resolveLinusIntent();
+      if (intent === "intro") {
+        this.linusStoryMarker = createInteractionMarker(this, {
+          kind: "npc-attention",
+          x: this.linus.x,
+          y: this.linus.y - 155,
+        });
+        this.linusStoryMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+          event.stopPropagation();
+          if (!this.acceptsWorldInput() || !this.player) return;
+          if (this.resolveLinusIntent() === "intro") callbacks.onLinusInteract();
+        });
+        return;
+      }
+
+      if (intent === "quest-source") {
+        const marker = requestedQuestSourceAttention.linus;
+        if (!marker) return;
+        this.linusQuestMarker = createInteractionMarker(this, {
+          kind: marker === "!" ? "quest-turn-in" : "quest-available",
+          x: this.linus.x,
+          y: this.linus.y - 178,
+        });
+        this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
+          event.stopPropagation();
+          if (!this.acceptsWorldInput() || !this.player || this.resolveLinusIntent() !== "quest-source") return;
+          this.linusInteractionPending = true;
+          this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
+          const target = this.path.at(-1);
+          if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
+          else this.maybeCompleteWorldInteraction();
+        });
+      }
     }
 
     private acceptsWorldInput() {
@@ -781,25 +797,7 @@ export async function createVillageGame(
       }
       if (source === "linus") {
         this.backendLinusAttention = active;
-        this.linusQuestMarker?.destroy();
-        this.linusQuestMarker = undefined;
-        if (active && this.linus) {
-          this.linusQuestMarker = createInteractionMarker(this, {
-            kind: marker === "!" ? "quest-turn-in" : "quest-available",
-            x: this.linus.x,
-            y: this.linus.y - 178,
-          });
-          this.linusQuestMarker.on("pointerdown", (_p: Input.Pointer, _x: number, _y: number, event: Types.Input.EventData) => {
-            event.stopPropagation();
-        if (!this.acceptsWorldInput()) return;
-            if (!this.player) return;
-            this.linusInteractionPending = true;
-            this.path = findPath(this.player, REQUIRED_APPROACHES.linus, this.navigationObstacles);
-            const target = this.path.at(-1);
-            if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
-            else this.maybeCompleteWorldInteraction();
-          });
-        }
+        this.syncLinusPriorityMarkers();
         if (!active && this.introComplete && this.linusInteractionPending) {
           this.linusInteractionPending = false;
           this.path = [];
@@ -864,10 +862,17 @@ export async function createVillageGame(
       this.attentionMarker?.destroy();
       this.attentionMarker = undefined;
       const attention = presentation.attention;
-      if (!attention) return;
+      if (!attention) {
+        this.syncLinusPriorityMarkers();
+        return;
+      }
       const resident = this.residents[attention.resident];
-      if (!resident) return;
+      if (!resident) {
+        this.syncLinusPriorityMarkers();
+        return;
+      }
       resident.setPosition(attention.position.x, attention.position.y).setDepth(1000 + attention.position.y);
+      this.syncLinusPriorityMarkers();
       // Construction/story attention is dialogue, not a quest state.
       // Keep MMO semantics reserved: ? = available quest, ! = completed quest turn-in.
       // Anchor the canonical story-attention marker above the resident's actual sprite.
