@@ -29,8 +29,8 @@ const phaser = {
         image(x, y, key) { const image = imageObject(x, y, key); images.push(image); return image; },
         text: imageObject,
         sprite(x, y, key) { const image = imageObject(x, y, key); images.push(image); return image; },
-        graphics() { return { fillStyle() { return this; }, lineStyle() { return this; }, fillRoundedRect() { return this; }, strokeRoundedRect() { return this; }, fillTriangle() { return this; } }; },
-        container(x, y) { return { x, y, active: true, visible: true, setDepth() { return this; }, setSize() { return this; }, setInteractive() { return this; }, setVisible(visible) { this.visible = visible; return this; }, on() { return this; }, destroy() { this.active = false; } }; },
+        graphics() { return { fillStyle() { return this; }, lineStyle() { return this; }, fillCircle() { return this; }, strokeCircle() { return this; }, fillRoundedRect() { return this; }, strokeRoundedRect() { return this; }, fillTriangle() { return this; } }; },
+        container(x, y) { return { x, y, active: true, visible: true, data: {}, setDepth() { return this; }, setSize() { return this; }, setInteractive() { return this; }, setVisible(visible) { this.visible = visible; return this; }, setData(key, value) { this.data[key] = value; return this; }, on() { return this; }, destroy() { this.active = false; } }; },
       };
       this.events = { once() {}, off() {} };
       this.tweens = { add(tween) { tweens.push(tween); }, killTweensOf() {} };
