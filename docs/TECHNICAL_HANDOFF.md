@@ -946,3 +946,21 @@ The Interaction System as a whole is NOT complete. Remaining work:
 Keep work in short batches. Do not trigger Vercel for routine architecture work. Commit/checkpoint at logical slices, keep docs synchronized as work progresses, and update roadmap statuses when milestones close.
 
 The dev branch currently does not auto-run CI on every commit. Use larger verification checkpoints rather than burning build minutes. Before any promotion, full CI + browser + physical iPhone acceptance are mandatory.
+
+
+## Runtime 1.0 interaction checkpoint — 2026-10-03
+
+Development branch `nova/runtime-architecture-v1` has started Interaction System **behavior** convergence.
+
+First migrated consumer:
+- Act 2 Lake Alve turn-in now calls shared `resolveInteraction()`;
+- accepted 135 px activation radius is preserved;
+- accepted approach point (Alve x, Alve y + 58, world-clamped) is preserved;
+- Lake still owns actual Phaser movement/facing/callback execution in this deliberately small slice.
+
+Parity harness now covers:
+- activate inside radius;
+- resolve authored approach point outside radius;
+- disabled interaction does not activate or approach.
+
+This is a checkpoint only. Village still has local pending-interaction flags, radii and approach handling. Shared world-input / overlay authority remains the next cross-world concern after further resolution slices.
