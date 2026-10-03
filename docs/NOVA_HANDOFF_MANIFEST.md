@@ -654,3 +654,33 @@ GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37
 Physical iPhone acceptance is still OPEN. Run the final motorboat contribution through all six finale beats and the end card; verify both landscape directions, actual safe areas, navigation, full-image, HUD/quest suppression and force-quit/relaunch on the intended test child's save. Never mutate Adam. No native sync or Vercel deployment was performed.
 
 Act 3 runtime is absent; persisted `act2Complete && endCardSeen` is its safe future entry boundary. See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for exact implementation and acceptance details.
+
+## 2026-10-03 morning — CURRENT HANDOVER CHECKPOINT
+
+**Verify repo first.** At the start of this handover the latest code checkpoint before documentation-only commits is `dc3c9267abb49b749e2f90f5ce98948a61fde3c4` on `nova/local-construction-snapshot`. GitHub Actions CI run **37107244803 / #1639 SUCCESS** on that exact SHA.
+
+### Act 2 closeout status
+Act 2 code is feature-complete through the six-beat ending:
+**Motorbåten 16/16 → Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön → SLUT PÅ ANDRA KAPITLET**.
+
+Finale art is present:
+- `public/assets/village/story-moments/act2/finale/05-after-motorboat.png`
+- `public/assets/village/story-moments/act2/finale/06-across-the-lake.png`
+
+Physical iPhone testing immediately exposed two save/runtime edge cases after closeout:
+1. **Alve disappeared when `selectedProject === null`**. Fixed in `e9cc096bb78c918c1aacb4f676ae321f7767fd26`: null-project state now uses `ACT2_ALVE_IDLE_POSITION` instead of hiding Alve. Kalle physically confirmed: **Alve is back** and idle interaction works.
+2. **Old five-beat completed saves skipped the new epilogue and fell back to lake idle UI**. Root cause: normalization incorrectly marked `epilogueConsumed=true` for a legacy family-final-complete save. Fixed in `7e25e0d49372df04f12056c89248a50886e8e5b2`; regression coverage added in `dc3c9267abb49b749e2f90f5ce98948a61fde3c4`. Legacy saves that saw the old veranda ending now resume exactly once at `finaleIndex=5`, with the new epilogue pending.
+
+### Next physical step
+Pull latest, run `npm run syssel`, Run in Xcode, and retest the **same existing physical save**. It should enter **Över sjön** rather than idle at the lake. Then verify the black **SLUT PÅ ANDRA KAPITLET** card and restart behavior before/after it.
+
+Do **not** reset/reinstall the physical save. The existing save is valuable migration evidence.
+
+### Act 3 handoff
+Act 3 design is now substantially locked in `STORY_DESIGN.md`. Opening title card:
+**KAPITEL 3 / På andra sidan sjön**.
+
+Act 3 protagonist is **Nova**. The act is built around preparing one increasingly perfect family-day party in a larger Swedish lakeside town. Nova hopes a perfect day will reunite her separated parents. Henning owns food/cake, Linus lighting, Mira furniture/setup, Sol music. The party genuinely succeeds; the parents do not reunite. Nova's subjective visual filter collapses from warm/perfect to cold/grey/humanly imperfect at the handoff line, then settles into a calmer real palette after she releases self-blame.
+
+The canonical emotional resolution is already locked in `STORY_DESIGN.md`. Do not improvise a replacement.
+
