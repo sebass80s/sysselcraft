@@ -1271,3 +1271,33 @@ The Sol-tour marker remains intentionally separate. It is an explicit story CTA,
 Parity locks the three Henning priority outcomes and guards the two base consumers + single quest-marker creation path.
 
 **Status:** shared interaction priority is now reusable across Linus and Henning. Story-CTA arbitration remains pending.
+
+
+## Interaction priority checkpoint 4 — Sol-tour story CTA arbitration
+
+Explicit story CTAs are now represented inside the same interaction-priority model used by mixed NPCs.
+
+Accepted priority:
+- Linus: construction attention 50 > intro 40 > Sol-tour story CTA 30 > backend quest 20 > resident 10;
+- Henning: construction attention 40 > Sol-tour story CTA 30 > backend quest 20 > resident 10.
+
+Why:
+- React's established `onLinusInteract` / `onHenningInteract` story callbacks already advance the Sol tour before ordinary resident dialogue;
+- the previous runtime could nevertheless route a scene/sprite interaction into backend quest handling first;
+- Sol-tour markers could coexist with lower-priority quest markers.
+
+Runtime changes:
+- both NPC intent resolvers now include `story-cta`;
+- quest markers are suppressed automatically while story CTA wins;
+- `syncSolTourMarker()` is the single CTA marker synchronization path;
+- bakery/Linus CTA markers render only when story CTA is the winning intent;
+- arrival callback resolution re-checks current intent, so a quest callback fires only if quest still wins;
+- construction updates suppress/restore/reposition CTA markers;
+- Linus intro completion can unlock/resync the Linus tour CTA after boot ordering;
+- target visibility changes for Henning/Mira/Sol resync the relevant CTA marker.
+
+Shop and Sol-decision CTA stops remain direct story CTAs because they currently have no competing NPC quest/construction priority contract.
+
+Parity locks both priority matrices and guards CTA marker/arrival routing.
+
+**Status:** NPC priority + explicit Sol-tour CTA arbitration is converged for Linus/Henning. Generic pointer hit-target arbitration remains pending.
