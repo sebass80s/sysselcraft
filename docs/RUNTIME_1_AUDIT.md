@@ -338,3 +338,17 @@ Removed:
 All object pointer interactions now share `acceptsWorldInput()` → `worldInputEnabled()`.
 
 This closes the Village compatibility-lock migration. Future overlay additions must extend the presentation blocking authority rather than add local Phaser flags.
+
+
+## Checkpoint — Linus mixed interaction priority centralized
+
+Linus previously duplicated state priority across several pointer handlers.
+
+Runtime 1.0 now has a generic `resolveInteractionPriority()`. Village's `resolveLinusIntent()` maps current state onto:
+construction attention > intro > backend quest > resident.
+
+The three base Linus entrypoints consume that one decision.
+
+This change intentionally does not normalize movement/activation differences between entrypoints. Scene-level ordinary-resident behavior and sprite/zone approach behavior remain as accepted legacy behavior until separately parity-covered.
+
+Marker-specific story/quest clicks are also left explicit for now.
