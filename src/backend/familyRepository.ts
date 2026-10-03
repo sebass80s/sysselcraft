@@ -397,6 +397,16 @@ export async function redeemChildPairingCode(code: string): Promise<string> {
   return firstRpcId(data, "redeem_child_pairing_code");
 }
 
+export async function getChildDisplayName(childId: string): Promise<string | null> {
+  const { data, error } = await getSupabaseBrowserClient()
+    .from("children")
+    .select("display_name")
+    .eq("id", childId)
+    .maybeSingle();
+  if (error) throw error;
+  return typeof data?.display_name === "string" ? data.display_name : null;
+}
+
 export async function getChildGameState(childId: string): Promise<BackendChildGameState | null> {
   const { data, error } = await getSupabaseBrowserClient()
     .from("child_game_state")
