@@ -200,3 +200,17 @@ Act 2's Alve turn-in marker now uses this shared renderer instead of drawing its
 Village still contains local quest-marker implementations and is the next migration target. No new marker asset was invented because the current game has no separate quest-marker file; the canonical implementation is the shared renderer over the accepted visual design.
 
 Frozen live remains unchanged.
+
+
+## Checkpoint — Village quest markers migrated
+
+Village quest sources now use the same canonical Interaction System renderer as Act 2:
+- noticeboard;
+- Linus;
+- Henning/bakery.
+
+Their existing click/navigation behavior remains local for now; this slice centralizes marker presentation only.
+
+A source sweep confirms the old local 27px quest-badge renderers are gone from `createVillageGame.ts`.
+
+Quest-marker presentation migration is therefore complete across current playable worlds. NPC/story-attention markers remain a separate migration target.
