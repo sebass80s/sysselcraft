@@ -352,3 +352,18 @@ The three base Linus entrypoints consume that one decision.
 This change intentionally does not normalize movement/activation differences between entrypoints. Scene-level ordinary-resident behavior and sprite/zone approach behavior remain as accepted legacy behavior until separately parity-covered.
 
 Marker-specific story/quest clicks are also left explicit for now.
+
+
+## Checkpoint — Linus marker arbitration aligned with interaction priority
+
+Audit found that Linus intro and backend quest markers could be created independently, allowing contradictory simultaneous affordances. Construction attention could also move Linus while lower-priority markers retained stale coordinates.
+
+Village now has one `syncLinusPriorityMarkers()` driven by `resolveLinusIntent()`.
+
+Visual outcomes:
+- construction attention suppresses intro/quest markers;
+- intro shows the story attention marker;
+- quest shows the backend quest marker;
+- ordinary resident interaction shows neither.
+
+The sync runs after Linus creation, intro changes, quest-attention changes and construction presentation updates.
