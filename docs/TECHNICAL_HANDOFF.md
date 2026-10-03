@@ -1045,3 +1045,24 @@ Act 2 Lake:
 Parity includes three truth-table fixtures plus source-contract guards.
 
 Do not delete Village's legacy overlay flag yet. First map the remaining modal/story surfaces so the explicit authority can become the only owner without regressions.
+
+
+## Runtime 1.0 world-input checkpoint 2 — Village legacy lock retired
+
+Village no longer has two input-lock systems.
+
+Canonical flow is now:
+
+React presentation state
+→ `villageBlockingOverlayVisible`
+→ `setWorldInputEnabled(!blocked)`
+→ Phaser `acceptsWorldInput()`
+→ shared `worldInputEnabled()`
+
+The old `constructionDialogueOpen` flag and `setConstructionDialogueOpen()` API have been deleted, along with manual open/close toggles scattered through story/shop callbacks.
+
+All current object-level pointer handlers use the same world-input guard.
+
+Important maintenance rule: when a new Village modal/story overlay is added, add it to the presentation blocking authority. Do not create another Phaser-local lock.
+
+Parity includes source guards preventing the retired symbols from returning.
