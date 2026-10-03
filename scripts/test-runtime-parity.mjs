@@ -328,4 +328,20 @@ assert.ok(
   "Act 2 runtime must not keep a parallel legacy HUD implementation",
 );
 
+
+
+const villageRuntimeSource = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+assert.ok(
+  villageRuntimeSource.includes("<GameUiShell"),
+  "Village development runtime must consume the shared GameUiShell",
+);
+assert.ok(
+  !villageRuntimeSource.includes('src="/assets/village/sysselcraft-logo.png"'),
+  "Village runtime must not hardcode the global brand asset once migrated to GameUiShell",
+);
+assert.ok(
+  !villageRuntimeSource.includes('<header className="prototype-header">'),
+  "Village runtime must not keep a parallel legacy HUD implementation",
+);
+
 console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
