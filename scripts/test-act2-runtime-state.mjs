@@ -699,9 +699,20 @@ assert.ok(
     && page.includes("gameRef.current?.setWorldInputEnabled(!worldBlocked)"),
   "Act 2 must disable Phaser world input while blocking overlays are active",
 );
-assert.ok(page.includes("act2-hud-input-shield"), "Act 2 HUD must render an explicit pointer shield above the lake canvas");
-assert.ok(lakeGameSource.includes("!requestedWorldInputEnabled || !requestedCabinRevisitAvailable"), "cabin hotspot must ignore pointer input while world input is disabled");
-assert.ok(lakeGameSource.includes("if (!requestedWorldInputEnabled || !this.player) return;"), "lake movement must ignore pointer input while world input is disabled");
+assert.ok(
+  page.includes("<GameUiShell") && page.includes("setWorldInputEnabled(!worldBlocked)"),
+  "Act 2 shared shell must pair with explicit lake world-input suppression",
+);
+assert.ok(
+  lakeGameSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled")
+    && lakeGameSource.includes("!requestedCabinRevisitAvailable"),
+  "cabin hotspot must consume shared world-input authority",
+);
+assert.ok(
+  lakeGameSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled")
+    && lakeGameSource.includes("blockingOverlayVisible: false"),
+  "lake movement and pointer input must consume shared world-input authority",
+);
 
 
 assert.ok(village.includes('get("act2-purchase")'), "village must consume Act 2 purchase context instead of dropping the child at an unscoped village");
