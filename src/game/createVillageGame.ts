@@ -60,6 +60,15 @@ const NOTICEBOARD_INTERACTION: InteractionDefinition = {
   marker: "quest-available",
   enabled: true,
 };
+const BOTTLE_MESSAGE_POINT: Point = { x: 835, y: 500 };
+const BOTTLE_MESSAGE_INTERACTION: InteractionDefinition = {
+  id: "village:bottle-message",
+  kind: "hotspot",
+  anchor: BOTTLE_MESSAGE_POINT,
+  approachPoint: BOTTLE_MESSAGE_POINT,
+  interactionRadius: 38,
+  enabled: true,
+};
 // Family house is rendered at x=150 with a 360x300 footprint. The front door sits
 // on the lower-right face of the painted house, so the quest marker belongs here.
 
@@ -494,13 +503,25 @@ export async function createVillageGame(
         return;
       }
 
-      if (this.bottleMessageInteractionPending && this.player && requestedBottleMessageReady) {
-        if (distance(this.player, { x: 835, y: 500 }) > 38) return;
-        this.bottleMessageInteractionPending = false;
-        this.path = [];
-        this.targetMarker?.setVisible(false);
-        callbacks.onBottleMessageInteract();
-        return;
+      if (this.bottleMessageInteractionPending && this.player) {
+        const resolution = resolveInteraction(
+          [{ ...BOTTLE_MESSAGE_INTERACTION, enabled: requestedBottleMessageReady }],
+          { interactionId: BOTTLE_MESSAGE_INTERACTION.id, requestedAt: BOTTLE_MESSAGE_POINT },
+          { x: this.player.x, y: this.player.y },
+        );
+        if (resolution.status === "disabled") {
+          this.bottleMessageInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+          return;
+        }
+        if (resolution.status === "activate") {
+          this.bottleMessageInteractionPending = false;
+          this.path = [];
+          this.targetMarker?.setVisible(false);
+          callbacks.onBottleMessageInteract();
+          return;
+        }
       }
 
       if (this.solInteractionPending && this.player && this.sol?.visible) {
@@ -650,7 +671,7 @@ export async function createVillageGame(
     }
 
     private drawBottleMessageMarker() {
-      this.bottleMessageMarker = this.add.text(835, 500, "🍾", {
+      this.bottleMessageMarker = this.add.text(BOTTLE_MESSAGE_POINT.x, BOTTLE_MESSAGE_POINT.y, "🍾", {
         fontSize: "34px",
         backgroundColor: "#fff2cf",
         padding: { x: 9, y: 5 },
@@ -660,7 +681,7 @@ export async function createVillageGame(
         if (!this.player || constructionDialogueOpen || !requestedBottleMessageReady) return;
         this.bottleMessageInteractionPending = true;
         this.shopInteractionPending = false;
-        this.path = findPath(this.player, { x: 835, y: 500 }, this.navigationObstacles);
+        this.path = findPath(this.player, BOTTLE_MESSAGE_INTERACTION.approachPoint ?? BOTTLE_MESSAGE_INTERACTION.anchor, this.navigationObstacles);
         const target = this.path.at(-1);
         if (target) this.targetMarker?.setPosition(target.x, target.y).setVisible(true);
         else this.maybeCompleteWorldInteraction();
