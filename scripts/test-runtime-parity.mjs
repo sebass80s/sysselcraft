@@ -773,6 +773,34 @@ assert.equal(
   "Henning quest marker must have one canonical creation path",
 );
 assert.ok(
+  villageGameSource.includes('{ id: "story-cta", priority: 30, enabled: this.introComplete && requestedSolTourStop === "linus" }'),
+  "Linus priority must include Sol-tour story CTA after onboarding",
+);
+assert.ok(
+  villageGameSource.includes('{ id: "story-cta", priority: 30, enabled: requestedSolTourStop === "bakery" }'),
+  "Henning priority must include Sol-tour story CTA",
+);
+assert.ok(
+  villageGameSource.includes("private syncSolTourMarker()"),
+  "Sol-tour marker presentation must have one explicit synchronization path",
+);
+assert.ok(
+  villageGameSource.includes('if (stop === "bakery" && this.resolveHenningIntent() !== "story-cta") return;'),
+  "Bakery Sol-tour marker must render only when story CTA wins",
+);
+assert.ok(
+  villageGameSource.includes('if (stop === "linus" && this.resolveLinusIntent() !== "story-cta") return;'),
+  "Linus Sol-tour marker must render only when story CTA wins",
+);
+assert.ok(
+  villageGameSource.includes('if (this.resolveHenningIntent() === "quest-source") callbacks.onQuestSourceInteract?.("bakery");'),
+  "Henning arrival must route to quest callback only when quest intent still wins",
+);
+assert.ok(
+  villageGameSource.includes('if (this.resolveLinusIntent() === "quest-source") callbacks.onQuestSourceInteract?.("linus");'),
+  "Linus arrival must route to quest callback only when quest intent still wins",
+);
+assert.ok(
   villageGameSource.includes("this.residents.linus = this.linus;\n      this.syncLinusPriorityMarkers();"),
   "Linus marker arbitration must initialize immediately after the sprite exists",
 );
