@@ -182,3 +182,21 @@ Preserved Village-specific actions are supplied through shell configuration:
 The legacy inline Village header has been removed from the dev consumer path.
 
 At this checkpoint both playable worlds use the same actual Game UI Shell component on the architecture branch. Frozen live remains unchanged.
+
+
+## Checkpoint — canonical quest marker renderer established
+
+Runtime 1.0 now owns a shared Phaser marker renderer in `src/runtime/interaction/markerRenderer.ts`.
+
+Canonical visual language currently matches the established Village quest marker:
+- brown badge;
+- yellow border/glyph;
+- shared typography/glow;
+- shared animation;
+- marker kind selects only the glyph/semantic role.
+
+Act 2's Alve turn-in marker now uses this shared renderer instead of drawing its own circle/text implementation.
+
+Village still contains local quest-marker implementations and is the next migration target. No new marker asset was invented because the current game has no separate quest-marker file; the canonical implementation is the shared renderer over the accepted visual design.
+
+Frozen live remains unchanged.
