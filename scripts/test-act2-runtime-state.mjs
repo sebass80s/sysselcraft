@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import vm from "node:vm";
+import ts from "typescript";
 import {
   ACT2_ALVE_WORK_POSITIONS,
   ACT2_VISUAL_PLACEMENTS,
@@ -10,7 +12,27 @@ import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../
 import { MOTORBOAT_CONTRIBUTION_BEATS, MOTORBOAT_PARTS_PRICE } from "../src/game/act2MotorboatStory.ts";
 import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 import { parseStoryLine } from "../src/game/storyEngine.ts";
-import {
+function loadTsModule(file, dependencies) {
+  const exports = {};
+  const code = ts.transpileModule(fs.readFileSync(new URL(file, import.meta.url), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  vm.runInNewContext(code, {
+    exports,
+    require(name) {
+      assert.ok(name in dependencies, `Unexpected Act 2 runtime dependency: ${name}`);
+      return dependencies[name];
+    },
+  });
+  return exports;
+}
+
+const saveMigrations = loadTsModule("../src/runtime/save/migrations.ts", {});
+const act2RuntimeModule = loadTsModule("../src/game/act2RuntimeState.ts", {
+  "@capacitor/preferences": { Preferences: {} },
+  "../runtime/save/migrations": saveMigrations,
+});
+const {
   act2FinalePending,
   advanceAct2Finale,
   canSelectProject,
@@ -33,7 +55,7 @@ import {
   withMotorboatName,
   withPresentedContribution,
   withSelectedProject,
-} from "../src/game/act2RuntimeState.ts";
+} = act2RuntimeModule;
 
 const empty = createDefaultAct2RuntimeState();
 assert.equal(empty.openingIndex, 0);
