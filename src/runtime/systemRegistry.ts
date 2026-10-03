@@ -59,9 +59,9 @@ export const CANONICAL_SYSTEMS: readonly CanonicalSystemRegistration[] = [
   },
   {
     id: SYSTEM_COMPONENT_IDS.questMarker,
-    status: "migration-pending",
+    status: "canonical",
     owner: "Interaction System",
-    note: "Legacy quest markers are locally drawn in Phaser and must converge on one canonical renderer/asset.",
+    note: "Canonical shared renderer exists. Act 2 is migrated; Village migration remains pending.",
   },
   {
     id: SYSTEM_COMPONENT_IDS.npcAttentionMarker,
