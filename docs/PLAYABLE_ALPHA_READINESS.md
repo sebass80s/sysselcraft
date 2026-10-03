@@ -465,36 +465,28 @@ Physical acceptance still OPEN:
 - path activation → locked/shared Act 2 opening;
 - final replacement ensemble image once canonical references are supplied.
 
-Do not treat CI-green as physical acceptance. Production Act 2 remains intentionally shipping-locked.
+Do not treat CI-green as a substitute for device behavior. Production Act 2 is now enabled behind the persisted Act 1 chapter boundary.
 
+## Act 2 final readiness state — 2026-10-03
 
-## Act 2 closeout — 2026-10-03
+Act 2 includes the complete six-beat ending and persisted chapter-end acknowledgement.
 
-This checkpoint supersedes older veranda-only and shipping-lock notes above. Act 2 now includes all six finale beats, the supplied 05/06 images, exact canonical “Över sjön” dialogue, restart-safe epilogue progress and shared Previous/Continue layout. No assets, Act 1 story/gameplay or native settings changed.
+Physical iPhone evidence on the preserved migrated save:
+- [x] legacy old-ending save resumed at **Över sjön** rather than skipping it;
+- [x] the save reached **SLUT PÅ ANDRA KAPITLET** and the end card was acknowledged;
+- [x] the post-finale missing-HUD defect was identified and moved onto the shared `uiShellState.ts` contract;
+- [x] completed-chapter semantics are locked: Alve must be absent after `act2Complete && endCardSeen`;
+- [x] completed Act 2 exposes village navigation plus **Till kapitel 3 →**;
+- [x] `/act3` is a read-only boundary and does not mutate Act 2 or create Act 3 progression.
 
-Local full verify, TypeScript and isolated browser navigation at 667×375 and 568×320 passed. Completed legacy saves remain completed; ongoing final sequences include the epilogue. Production `/act2` uses its existing entry gate; `/act2-test` is not found in production.
+Legacy migration law:
+- pre-marker five-beat completion retains its already-consumed family/veranda history;
+- it receives only **Över sjön** once;
+- current-schema completed saves do not replay the epilogue.
 
-GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
+Remaining physical regression checks, when useful before broader release:
+- [ ] force-quit/relaunch during the final epilogue;
+- [ ] force-quit/relaunch immediately before/after end-card acknowledgement;
+- [ ] final safe-area/orientation smoke on the latest UI-shell build.
 
-Physical iPhone acceptance is still OPEN. Run the final motorboat contribution through all six finale beats and the end card; verify both landscape directions, actual safe areas, navigation, full-image, HUD/quest suppression and force-quit/relaunch on the intended test child's save. Never mutate Adam. No native sync or Vercel deployment was performed.
-
-Act 3 runtime is absent; persisted `act2Complete && endCardSeen` is its safe future entry boundary. See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for exact implementation and acceptance details.
-
-## 2026-10-03 morning physical-save follow-up
-
-Latest pre-documentation code checkpoint: `dc3c9267abb49b749e2f90f5ce98948a61fde3c4`. GitHub Actions **37107244803 / #1639 SUCCESS**.
-
-Physical iPhone findings after Act 2 closeout:
-- [x] Alve null-project disappearance reproduced and fixed; Kalle physically confirmed Alve is visible again and idle dialogue responds.
-- [x] Automated coverage added for Alve null/reload/project positions and interaction.
-- [x] Legacy old-ending migration bug fixed: old five-beat family-final-complete saves now resume at the new **Över sjön** epilogue instead of landing at lake idle with no project UI.
-- [x] Regression coverage added for the legacy-save epilogue migration.
-- [ ] Physical retest of that same migrated save through **Över sjön → SLUT PÅ ANDRA KAPITLET**.
-- [ ] Force-quit/relaunch during **Över sjön**.
-- [ ] Force-quit/relaunch before and after chapter-end-card acknowledgement.
-- [ ] Both real iPhone landscape orientations/safe areas through the final sequence.
-
-Important: do not reset or reinstall the physical save before this retest. It is currently the best real migration fixture.
-
-Act 2 is code/CI green but remains **physically not fully accepted** until the above end-of-act migration/restart pass succeeds.
-
+Preserve the existing physical save. Never reset/reinstall it merely to simplify these checks.
