@@ -817,3 +817,12 @@ Village Recycling now delegates disabled / activate / approach resolution to sha
 Current shared-resolution consumers: Act 2 Alve turn-in, Village noticeboard, Village Recycling.
 
 Continue in short slices. Vercel is currently rate-limited and should not be treated as verification evidence. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — bottle message migrated
+
+Village bottle-message interaction now uses shared `resolveInteraction()`, preserving its x835/y500 approach point, 38 px radius and availability gate. Parity covers the 38/39 px boundary.
+
+Shared-resolution consumers now total four: Act 2 Alve turn-in, Village noticeboard, Village Recycling and Village bottle message.
+
+No Vercel evidence is required during the current rate-limit period. No Act 3 and no production promotion.
