@@ -243,3 +243,17 @@ Verified at dev HEAD `959b6fd70c3d0c5015706899e9f2d33e960bb384`:
 - Act 2 uses the same shared marker renderer.
 
 Marker presentation is therefore converged. Next work must target interaction behavior/ownership, not invent another marker layer.
+
+
+## Checkpoint — first shared interaction-resolution consumer
+
+Act 2 Lake's Alve turn-in is now the first real consumer of shared `resolveInteraction()`.
+
+The migration deliberately keeps chapter/world data local while moving generic behavior into Runtime 1.0:
+- local/config data: Alve position, 135 px radius, +58 px approach point;
+- shared engine behavior: resolve disabled vs activate-now vs approach-first;
+- local world behavior retained for now: Phaser movement, facing and callback execution.
+
+Parity fixtures cover all three outcomes. This is the first vertical slice of interaction behavior convergence, not completion of the Interaction System.
+
+Next suitable slices are additional current-world interactions that repeat the same radius/approach decision, followed by shared world-input authority.
