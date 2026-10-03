@@ -4,6 +4,14 @@ import { deriveGameUiShell } from "../src/game/uiShellState.ts";
 import { SYSTEM_ASSETS, SYSTEM_COMPONENT_IDS, CANONICAL_SYSTEMS } from "../src/runtime/systemRegistry.ts";
 import { createStoryRegistry } from "../src/runtime/story/storyRegistry.ts";
 import { historyEntriesFor, resolveReplayRequest } from "../src/runtime/story/storyHistory.ts";
+import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../src/runtime/story/act2StoryRegistry.ts";
+import { createDefaultAct2RuntimeState } from "../src/game/act2RuntimeState.ts";
+import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
+import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
+import { JETTY_CONTRIBUTION_BEATS } from "../src/game/act2JettyStory.ts";
+import { BOATHOUSE_CONTRIBUTION_BEATS } from "../src/game/act2BoathouseStory.ts";
+import { MOTORBOAT_CONTRIBUTION_BEATS } from "../src/game/act2MotorboatStory.ts";
+import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 
 const shellFixtures = [
   {
@@ -157,5 +165,29 @@ assert.throws(
   /must be chapter-qualified/,
   "storyline ids must be globally stable and chapter-qualified",
 );
+
+
+const expectedAct2BeatCount =
+  ACT2_OPENING_BEATS.length + CABIN_CONTRIBUTION_BEATS.length
+  + JETTY_CONTRIBUTION_BEATS.length + BOATHOUSE_CONTRIBUTION_BEATS.length
+  + MOTORBOAT_CONTRIBUTION_BEATS.length + ACT2_FINALE_BEATS.length + 3;
+
+assert.equal(ACT2_STORY_REGISTRY.beats.length, expectedAct2BeatCount, "Act 2 registry must contain every replayable legacy beat exactly once");
+
+const emptyAct2 = createDefaultAct2RuntimeState();
+assert.equal(historyEntriesFor(ACT2_STORY_REGISTRY, act2HistoryProgress(emptyAct2)).length, 0, "fresh Act 2 exposes no History");
+
+const cabinDone = {
+  ...emptyAct2,
+  openingComplete: true,
+  projects: {
+    ...emptyAct2.projects,
+    cabin: { contributions:16, visibleStage:4, consumedBeatIds:CABIN_CONTRIBUTION_BEATS.map((beat)=>beat.id), complete:true },
+  },
+};
+const cabinDoneHistory = historyEntriesFor(ACT2_STORY_REGISTRY, act2HistoryProgress(cabinDone));
+assert.equal(cabinDoneHistory.filter((entry)=>entry.storylineId===ACT2_STORYLINE_IDS.opening).length, ACT2_OPENING_BEATS.length);
+assert.equal(cabinDoneHistory.filter((entry)=>entry.storylineId===ACT2_STORYLINE_IDS.cabin).length, CABIN_CONTRIBUTION_BEATS.length);
+assert.equal(cabinDoneHistory.some((entry)=>entry.storylineId===ACT2_STORYLINE_IDS.dock), false, "unfinished Act 2 projects stay hidden");
 
 console.log(`Runtime 1.0 parity slice PASS (${shellFixtures.length} shell fixtures + story/history fixtures)`);
