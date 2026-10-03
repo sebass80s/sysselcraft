@@ -909,3 +909,20 @@ Scene and sprite entrypoints share one decision. Backend quest marker creation i
 Sol-tour marker remains intentionally outside this arbitration until a dedicated story-CTA slice.
 
 Next recommended work: audit explicit story CTA markers (starting with Sol tour) against NPC/quest priority, or begin generic pointer hit-target arbitration if the CTA rules are first documented. No Act 3 and no production promotion.
+
+
+## Runtime 1.0 checkpoint — Sol-tour CTA arbitration complete for mixed NPCs
+
+Sol-tour is now an explicit `story-cta` priority candidate for Linus and Henning.
+
+Linus:
+construction > intro > story CTA > quest > resident.
+
+Henning:
+construction > story CTA > quest > resident.
+
+One `syncSolTourMarker()` owns CTA marker presentation. CTA suppresses lower quest markers; construction suppresses CTA. Arrival routing re-checks the current winner so backend quest state cannot steal a Sol-tour interaction.
+
+Parity guards priority matrices, CTA marker visibility rules and arrival callback routing.
+
+Next recommended Interaction slice: generic pointer hit-target arbitration across overlapping scene/object handlers. No Act 3 and no production promotion.
