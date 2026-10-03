@@ -661,6 +661,32 @@ assert.equal(
   1,
   "Linus base priority must not duplicate construction-attention checks outside resolveLinusIntent",
 );
+assert.ok(
+  villageGameSource.includes("private syncLinusPriorityMarkers()"),
+  "Linus marker presentation must consume the same centralized priority",
+);
+assert.ok(
+  !villageGameSource.includes("syncLinusStoryMarker"),
+  "Legacy Linus story-only marker sync must remain retired",
+);
+assert.equal(
+  (villageGameSource.match(/this\.linusStoryMarker = createInteractionMarker/g) ?? []).length,
+  1,
+  "Linus story marker must have one canonical creation path",
+);
+assert.equal(
+  (villageGameSource.match(/this\.linusQuestMarker = createInteractionMarker/g) ?? []).length,
+  1,
+  "Linus quest marker must have one canonical creation path",
+);
+assert.ok(
+  villageGameSource.includes('if (intent === "intro")'),
+  "Linus priority marker sync must render onboarding attention only when intro wins",
+);
+assert.ok(
+  villageGameSource.includes('if (intent === "quest-source")'),
+  "Linus priority marker sync must render quest marker only when quest intent wins",
+);
 assert.equal(
   (villageGameSource.match(/createInteractionMarker\(this, \{/g) ?? []).length,
   3,
