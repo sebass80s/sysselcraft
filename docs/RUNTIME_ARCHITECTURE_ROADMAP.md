@@ -1301,3 +1301,29 @@ Shop and Sol-decision CTA stops remain direct story CTAs because they currently 
 Parity locks both priority matrices and guards CTA marker/arrival routing.
 
 **Status:** NPC priority + explicit Sol-tour CTA arbitration is converged for Linus/Henning. Generic pointer hit-target arbitration remains pending.
+
+
+## Interaction priority checkpoint 5 — explicit Village scene hit-target arbitration
+
+The Village scene-level fallback pointer handler no longer relies on implicit `if` statement order to decide which overlapping world target wins.
+
+It now builds explicit hit candidates and resolves them through shared `resolveInteractionPriority()`.
+
+Behavior-preserving target order:
+1. Recycling — 50;
+2. Linus — 40;
+3. Shop — 30;
+4. Henning — 20;
+5. Ground fallback — 10.
+
+This exactly preserves the previous procedural order while making overlap semantics inspectable and parity-testable.
+
+Parity locks:
+- Recycling over overlapping Linus;
+- Shop over overlapping Henning;
+- Ground when no target is hit;
+- source guards for the five canonical scene-target priorities.
+
+Object-level Phaser handlers remain in place as native/WebView reliability fallbacks and continue to stop propagation. This slice only converges the scene-level arbitration decision.
+
+**Status:** pointer priority is now explicit for the Village scene fallback path. Cross-entrypoint de-duplication / a fully generic hit-test registry is still pending and should only follow after browser + iPhone parity.
