@@ -864,3 +864,8 @@ On the architecture branch, Act 2 now consumes the shared `GameUiShell` rather t
 On `nova/runtime-architecture-v1`, both Village and Act 2 now consume the same `GameUiShell` component. This closes the duplicate-HUD implementation milestone on the development branch.
 
 Village-specific room/dog actions and Act 2-specific chapter navigation are passed as shell configuration rather than separate HUD implementations.
+
+
+### Runtime 1.0 checkpoint: canonical quest marker
+
+A shared Interaction System marker renderer now exists and Act 2 consumes it for Alve turn-in. Village marker code is still legacy/local and must migrate before the marker milestone is complete.
