@@ -840,7 +840,7 @@ This index is the canonical checklist for authored Act 2 runtime beats. The deta
 - **Motorbåten 1–16:** Äntligen båten → Samma båt → Linus känner igen den → Inte idag → Det som saknas → Mira beställer två → Paketet kommer → Den lever → Ner i vattnet → Första turen → Tillbaka igen → Vår båt → Det riktiga testet → Vi åker båt → Inte idag → Hem igen.
 - **Motorbåten economy gate:** reservdelspaketet is bought from Mira **between 5/16 and 6/16** for 200 SysselBux and is not itself a contribution. Beat 6 is the post-purchase story continuation.
 - **Motorbåten naming gate:** after 12/16 and before 13/16, the player names the restored boat. Naming is not a contribution.
-- **Act 2 finale:** Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → black **SLUT PÅ ANDRA KAPITLET** end card. The first true crossing belongs to Act 3.
+- **Act 2 finale:** Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön → black **SLUT PÅ ANDRA KAPITLET** end card. Act 3 owns the destination and arrival.
 
 Runtime child-facing copy may receive flow/wording polish, but it must preserve this beat order, narrative event, gate placement and emotional payload. One dialogue card remains one nameplate + one reply/narration unit + one click.
 
@@ -1113,7 +1113,7 @@ The reveal should initially play as an Alve-style “there's someone in the cott
 
 ### Act 2 finale dialogue — family return
 
-This sequence is the locked emotional ending of Act 2. It triggers **after the motorboat restoration is complete** and after the quiet aftermath. It pays off the entire Alve/family arc and ends on the veranda. The first true crossing of the lake belongs to the **Act 3 opening**, not to the Act 2 finale.
+This sequence is the locked emotional ending of Act 2. It triggers **after the motorboat restoration is complete** and after the quiet aftermath. It pays off the entire Alve/family arc on the veranda, followed by the locked “Över sjön” epilogue below and the Act 2 end card.
 
 #### Scene 1 — After the motorboat
 
@@ -1465,7 +1465,7 @@ Then show the black **SLUT PÅ ANDRA KAPITLET** card.
 
 **Subtext lock:** the mother is deliberately referenced only indirectly. A child reader may understand this simply as Alve no longer waiting for the past to return. An adult reader should be able to read that his mother will not come back and that Alve has stopped trying to rebuild the old world exactly as it was. Do not make that loss explicit in child-facing dialogue.
 
-**Single-image art lock:** the entire epilogue uses one still image. It shows **Alve and Barnet on the jetty beside the motorboat on a Swedish summer night**, with the restored cottage glowing warmly in the distance and the boathouse visible in the background. The image should feel calm, safe and forward-looking rather than sad. **Do not author or generate the image prompt until Kalle supplies the required canonical character references.**
+**Single-image art lock:** the entire epilogue uses one still image. Runtime asset accepted 2026-10-03: `/assets/village/story-moments/act2/finale/06-across-the-lake.png`, used throughout the beat. The earlier art brief below is historical; no new image is required. It shows **Alve and Barnet on the jetty beside the motorboat on a Swedish summer night**, with the restored cottage glowing warmly in the distance and the boathouse visible in the background. The image should feel calm, safe and forward-looking rather than sad. **Do not author or generate the image prompt until Kalle supplies the required canonical character references.**
 
 Act 3 owns the destination, the first arrival and whatever exists on the other side. The destination remains deliberately undefined until Act 3 is authored.
 
@@ -5672,7 +5672,7 @@ Alve tittar på dig.
 
 > **Alve:** “Jag tar det.”
 
-**Boundary lock:** beat 16 ends the motorboat project itself. It must **not** begin the cottage/family discovery. The locked Act 2 finale remains a separate post-project Story Moment: quiet aftermath → open cottage / suspected intruders → family return → veranda payoff → **SLUT PÅ ANDRA KAPITLET**. The first true crossing belongs to Act 3.
+**Boundary lock:** beat 16 ends the motorboat project itself. It must **not** begin the cottage/family discovery. The locked Act 2 finale remains a separate post-project Story Moment: quiet aftermath → open cottage / suspected intruders → family return → veranda payoff → Över sjön → **SLUT PÅ ANDRA KAPITLET**. Act 3 owns the destination and arrival.
 
 ### Contributions 13–16: the proper test / Act 2 climax
 The final block adds no new purchase or major repair. It proves that Adam and Alve can use what they restored.

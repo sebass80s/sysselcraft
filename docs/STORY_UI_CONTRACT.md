@@ -121,3 +121,12 @@ Debug mode may alter or synthesize state, expose reset/grant controls, and bypas
 The debug route must not persist its Act 2 runtime state. Its purpose is to drive the real production renderer through isolated test state.
 
 **Rule:** if a story/UI bug can exist in production but not in debug because the two render different components, the debug architecture is wrong.
+
+
+## 9. Act 2 closeout navigation — 2026-10-03
+
+“Föregående” moves within the current authored beat; consumed contributions/finale beats are not reopened. In full-image mode it restores the last dialogue without any persistence or progression change. Returning forward exposes the image again before the next beat.
+
+StoryMoment awaits promise-returning navigation and disables both directions while a save is pending. A failed write leaves the current presentation retryable. The image navigation wrapper owns absolute safe-area positioning; both buttons are static flex children with minimum 44px height. Act 2 supplies a per-line presentation id, including opening lines. Chapter title/end cards publish the same overlay boundary as StoryMoment so external quest UI stays suppressed.
+
+`test:act2-closeout` executes the actual components with an isolated hook host and actual save/load functions with in-memory Preferences. It covers image Previous, duplicate pending navigation, save-failure retry, every epilogue-line restart, child-scoped storage and compatibility with completed legacy saves. Physical WKWebView acceptance remains required.

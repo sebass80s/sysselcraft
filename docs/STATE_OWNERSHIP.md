@@ -172,3 +172,17 @@ Two recent clarifications are part of the Act 2 ownership contract:
 - Stugan's `CABIN_WAITING_REACTION` is repeatable presentation state only. It is eligible when Stugan is complete and Motorbåten is incomplete, opens from a world interaction with the finished cabin, and does not alter project contribution count, backend progression, purchase ownership or automatic completion-reaction ledgers.
 
 Water collision is renderer/navigation state derived from the accepted lake-master texture plus authored object footprints. It has no persistence authority and must never become a saved progression signal.
+
+
+## Act 2 closeout — 2026-10-03
+
+Existing child-scoped keys and one-time legacy adoption are unchanged. No new state fields were added.
+
+- Veranda completion persists `finaleIndex=5`, `finaleLineIndex=0`, `familyFinaleConsumed=true`, `epilogueConsumed=false`, `act2Complete=false`.
+- Epilogue lines persist through the existing `finaleLineIndex`. Only epilogue completion sets `epilogueConsumed` and `act2Complete`.
+- Already completed five-beat saves remain complete, including their existing end-card acknowledgement. The new story is not retroactively replayed.
+- `act2Complete && endCardSeen` is the future Act 3 handoff boundary. Act 3 must own its own intro/entry persistence; current runtime safely remains at the lake.
+- Debug remains non-persistent. Tests execute storage against an in-memory test child only; no real child/backend/device state was modified.
+
+GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
+See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for verification and physical acceptance.

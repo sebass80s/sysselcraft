@@ -704,3 +704,19 @@ Legacy-save rule: saves that had already completed Clinic before this feature ex
 The current Act 1 ensemble Story Moment image is intentionally a placeholder: `/assets/village/story-moments/sol-clinic-complete.png`. Do not generate or replace the final ensemble image until Kalle provides the canonical character references.
 
 Verification: GitHub Actions **#1497 SUCCESS** on `32bd71a3fdc776941614c8f4b037b60ce140eedc`.
+
+
+## Act 2 closeout — 2026-10-03
+
+Current runtime checkpoint supersedes older five-beat/veranda-only and shipping-lock notes in this document.
+
+- Branch: `nova/local-construction-snapshot`; implementation commit: `19c0778b7a915f6e45c3c4f81c72188d914a4719` (based on asset HEAD `ffab328`).
+- The final motorboat contribution leads to Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön → SLUT PÅ ANDRA KAPITLET. Both supplied finale PNGs are wired; all six finale beats require an image. No art or locked dialogue was rewritten.
+- Epilogue uses the existing finale index/line and completion flags; no new save fields, child-key changes or legacy-adoption changes. Veranda completion enters index 5 with `familyFinaleConsumed=true`, `epilogueConsumed=false`, `act2Complete=false`. Only epilogue completion sets the latter two true. Already completed five-beat saves remain completed; they are not retroactively replayed or reset.
+- Shared navigation awaits asynchronous saves, rejects concurrent transitions, supports retry after a failed save, and restores the last dialogue from full-image mode. Both image controls share a safe-area-positioned flex container and 44px minimum height. Chapter cards participate in quest-UI suppression.
+- Local `npm run verify` (including new `test:act2-closeout`) and `npx tsc --noEmit --incremental false` passed. Isolated Chromium debug UI traversed all six beats at 667×375 and 568×320, checked previous/forward, full-image return, end-card acknowledgement and empty local storage. This is browser evidence, not physical iPhone acceptance.
+- `/act2` is enabled behind its existing entry gate; `/act2-test` produces the production not-found page. No Vercel deployment, backend mutation, native sync or physical save mutation was performed.
+- Physical acceptance remains: final motorboat beat → all six finale beats → black end card; both landscape directions and actual safe areas; force-quit/relaunch during veranda, epilogue and before/after end-card acknowledgement; correct art/text; HUD/quest suppression; preserved save and Act 1 regression smoke. Use the intended test child, never inject or mutate Adam's state.
+- Act 3 runtime does not yet exist. The stable future handoff is persisted `act2Complete && endCardSeen` after end-card acknowledgement. Current fallback remains “Fortsätt vid sjön”. Future Act 3 must consume this boundary and independently persist its chapter intro/entry before routing to its own runtime; it must not clear or replay Act 2. No partial Act 3 engine was added.
+
+GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.

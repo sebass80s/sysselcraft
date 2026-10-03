@@ -466,3 +466,16 @@ Physical acceptance still OPEN:
 - final replacement ensemble image once canonical references are supplied.
 
 Do not treat CI-green as physical acceptance. Production Act 2 remains intentionally shipping-locked.
+
+
+## Act 2 closeout — 2026-10-03
+
+This checkpoint supersedes older veranda-only and shipping-lock notes above. Act 2 now includes all six finale beats, the supplied 05/06 images, exact canonical “Över sjön” dialogue, restart-safe epilogue progress and shared Previous/Continue layout. No assets, Act 1 story/gameplay or native settings changed.
+
+Local full verify, TypeScript and isolated browser navigation at 667×375 and 568×320 passed. Completed legacy saves remain completed; ongoing final sequences include the epilogue. Production `/act2` uses its existing entry gate; `/act2-test` is not found in production.
+
+GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37106033030) **SUCCESS** on implementation HEAD `19c0778b7a915f6e45c3c4f81c72188d914a4719`.
+
+Physical iPhone acceptance is still OPEN. Run the final motorboat contribution through all six finale beats and the end card; verify both landscape directions, actual safe areas, navigation, full-image, HUD/quest suppression and force-quit/relaunch on the intended test child's save. Never mutate Adam. No native sync or Vercel deployment was performed.
+
+Act 3 runtime is absent; persisted `act2Complete && endCardSeen` is its safe future entry boundary. See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for exact implementation and acceptance details.
