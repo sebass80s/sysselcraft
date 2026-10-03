@@ -74,6 +74,13 @@ ACT2_ALVE_DIALOGUE.forEach((beat, index) => {
 
 assert.equal(ACT2_FINALE_BEATS.length, 6, "Act 2 finale must include the lake epilogue");
 assert.equal(ACT2_FINALE_BEATS.some((beat) => beat.id === "finale:first-crossing"), false, "Act 2 must not contain the Act 3 crossing");
+const gratitudeBeat = ACT2_FINALE_BEATS.find((beat) => beat.id === "finale:across-the-lake");
+assert.ok(
+  gratitudeBeat?.body.includes("Alve: Det här hade aldrig hänt utan dig.")
+    && gratitudeBeat?.body.includes("Alve: Den dagen du kom var jag helt lost.")
+    && gratitudeBeat?.body.includes("Alve: Då är jag glad att du är min kompis."),
+  "Över sjön must preserve the locked Alve gratitude beat",
+);
 const friendshipBeat = ACT2_FINALE_BEATS.find((beat) => beat.id === "finale:family-embrace");
 assert.ok(friendshipBeat?.body.includes("Alve: Det är {childName}."), "family embrace must name the child before the friend payoff");
 assert.ok(friendshipBeat?.body.includes("Alve: Han är min kompis."), "family embrace must preserve the friend payoff");
