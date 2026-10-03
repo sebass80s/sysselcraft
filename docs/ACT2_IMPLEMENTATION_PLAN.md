@@ -508,3 +508,28 @@ GitHub [CI 37106033030](https://github.com/sebass80s/sysselcraft/actions/runs/37
 Physical iPhone acceptance is still OPEN. Run the final motorboat contribution through all six finale beats and the end card; verify both landscape directions, actual safe areas, navigation, full-image, HUD/quest suppression and force-quit/relaunch on the intended test child's save. Never mutate Adam. No native sync or Vercel deployment was performed.
 
 Act 3 runtime is absent; persisted `act2Complete && endCardSeen` is its safe future entry boundary. See [technical checkpoint](TECHNICAL_HANDOFF.md#act-2-closeout--2026-10-03) for exact implementation and acceptance details.
+
+## 2026-10-03 closeout migration addendum
+
+The six-beat finale and epilogue are implemented. The current final chain is:
+
+**Motorbåten 16/16 → Efter motorbåten → Någon är där → De kom → Min kompis → Det är bättre → Över sjön → SLUT PÅ ANDRA KAPITLET**.
+
+Two acceptance-discovered edge cases are now explicit regression requirements:
+
+1. **No-active-project NPC presence**
+   - `selectedProject=null` is valid before project choice and after project completion.
+   - Alve must remain visible at `ACT2_ALVE_IDLE_POSITION`.
+   - Null state must survive reload without hiding Alve.
+   - Project choice must still move Alve to its canonical work position.
+
+2. **Five-beat legacy finale migration**
+   - a save that already consumed the old family/veranda ending but predates the new epilogue must resume once at `finaleIndex=5`;
+   - it must have `epilogueConsumed=false`, `act2Complete=false`, `endCardSeen=false` until the epilogue is actually consumed;
+   - after epilogue completion, normal Act 2 completion/end-card semantics apply;
+   - do not reset the child save or fabricate backend progress to test this.
+
+Automated gates include `test:act2-alve`, `test:act2-closeout`, full Act 2 flow and `npm run verify`. Latest CI evidence before documentation updates: **#1639 SUCCESS** at `dc3c9267abb49b749e2f90f5ce98948a61fde3c4`.
+
+Immediate remaining gate is physical iPhone acceptance of the migrated save through epilogue and chapter-end card, including force-quit/relaunch boundaries.
+
