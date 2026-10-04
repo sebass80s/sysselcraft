@@ -419,6 +419,11 @@ assert.equal(
   false,
   "Act 1 Linus intro must not retain its parallel legacy fullscreen shell",
 );
+assert.equal(
+  villageRuntime.includes('if (restoredIntroCompleteRef.current) {\n            setLinusStoryReplayIndex(0);'),
+  false,
+  "completed Linus onboarding must never reopen the first-meeting replay from ordinary resident interaction",
+);
 
 assert.ok(
   inlineDialogueCard.includes('<div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label={ariaLabel}>')
