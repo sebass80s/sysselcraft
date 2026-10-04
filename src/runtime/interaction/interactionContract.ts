@@ -29,7 +29,7 @@ type InteractionRequest = {
   requestedAt: WorldPoint;
 };
 
-export type InteractionResolution =
+type InteractionResolution =
   | { status: "disabled" | "unknown" }
   | {
       status: "approach";
