@@ -1,4 +1,4 @@
-export type WorldPoint = {
+type WorldPoint = {
   x: number;
   y: number;
 };
