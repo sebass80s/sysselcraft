@@ -317,6 +317,12 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('speakerTone={clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker === "Linus" ? "linus" : "sol"}')
+    && villageRuntime.includes('speakerTone={clinicStoryReplayLine.speaker === "Barnet" ? "child" : clinicStoryReplayLine.speaker === "Linus" ? "linus" : "sol"}'),
+  "Act 1 Clinic live and replay must preserve accepted child/Linus/Sol speaker tones before shared-tone migration",
+);
+
+assert.ok(
   villageRuntime.includes('{act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <StoryMoment')
     && villageRuntime.includes('image={act1ChapterFinaleImage}')
     && villageRuntime.includes('ariaLabel="Byn lever igen"'),
