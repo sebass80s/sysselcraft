@@ -20,10 +20,10 @@ export const SYSTEM_COMPONENT_IDS = {
   purchaseGate: "purchase-gate",
 } as const;
 
-export type SystemComponentId =
+type SystemComponentId =
   (typeof SYSTEM_COMPONENT_IDS)[keyof typeof SYSTEM_COMPONENT_IDS];
 
-export type CanonicalSystemRegistration = {
+type CanonicalSystemRegistration = {
   id: SystemComponentId;
   status: "canonical";
   owner: string;
