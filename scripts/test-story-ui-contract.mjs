@@ -272,19 +272,27 @@ assert.equal(
 );
 
 assert.ok(
-  villageRuntime.includes('{act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="story-moment" role="presentation"><Image src={act1ChapterFinaleImage}')
-    && villageRuntime.includes('aria-label="Byn lever igen"'),
-  "Act 1 chapter finale dialogue must preserve its canonical image and accessible label",
+  villageRuntime.includes('{act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <StoryMoment')
+    && villageRuntime.includes('image={act1ChapterFinaleImage}')
+    && villageRuntime.includes('ariaLabel="Byn lever igen"'),
+  "Act 1 chapter finale dialogue must preserve its canonical image and accessible label through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker.toLowerCase()')
-    && villageRuntime.includes('{act1ChapterFinaleSpeakerName}</span><p>{act1ChapterFinaleLine.text}</p>'),
-  "Act 1 chapter finale dialogue must preserve speaker identity, tone and line text",
+  villageRuntime.includes('speaker={act1ChapterFinaleSpeakerName}')
+    && villageRuntime.includes('speakerTone={act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker === "Henning" ? "henning" : act1ChapterFinaleLine.speaker === "Mira" ? "mira" : act1ChapterFinaleLine.speaker === "Linus" ? "linus" : "sol"}')
+    && villageRuntime.includes('<p>{act1ChapterFinaleLine.text}</p>'),
+  "Act 1 chapter finale dialogue must preserve all authored speaker presentation through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceAct1ChapterFinale()}')
-    && villageRuntime.includes('act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"'),
-  "Act 1 chapter finale dialogue must preserve busy state, callback and final CTA",
+  villageRuntime.includes('nextDisabled={constructionBusy}')
+    && villageRuntime.includes('onNext={() => void advanceAct1ChapterFinale()}')
+    && villageRuntime.includes('nextLabel={constructionBusy ? "Sparar…" : act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"}'),
+  "Act 1 chapter finale dialogue must preserve busy state, callback and final CTA through Story Engine",
+);
+assert.equal(
+  villageRuntime.includes('{act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 chapter finale dialogue must not retain its parallel legacy story shell",
 );
 
 assert.ok(

@@ -1589,8 +1589,19 @@ export default function VillagePrototype() {
     >
       <p>{clinicStoryLine.text}</p>
     </StoryMoment>}
-    {act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="story-moment" role="presentation"><Image src={act1ChapterFinaleImage} alt="" fill priority sizes="100vw" /></div>}
-    {act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byn lever igen"><span className={`dialogue-speaker henning-story-speaker ${act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker.toLowerCase()}`}>{act1ChapterFinaleSpeakerName}</span><p>{act1ChapterFinaleLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceAct1ChapterFinale()}>{constructionBusy ? "Sparar…" : act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <StoryMoment
+      image={act1ChapterFinaleImage}
+      ariaLabel="Byn lever igen"
+      speaker={act1ChapterFinaleSpeakerName}
+      speakerTone={act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker === "Henning" ? "henning" : act1ChapterFinaleLine.speaker === "Mira" ? "mira" : act1ChapterFinaleLine.speaker === "Linus" ? "linus" : "sol"}
+      nextLabel={constructionBusy ? "Sparar…" : act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"}
+      nextDisabled={constructionBusy}
+      onNext={() => void advanceAct1ChapterFinale()}
+      presentationId={`act1:chapter-finale:${act1ChapterFinaleIndex}`}
+    >
+      <p>{act1ChapterFinaleLine.text}</p>
+      {constructionError && <p role="alert">{constructionError}</p>}
+    </StoryMoment>}
     {act1ChapterFinaleSeen && !act1EndCardSeen && act1ChapterFinaleIndex === null && <div role="dialog" aria-modal="true" aria-label="Slut på första kapitlet" style={{ position:"fixed", inset:0, zIndex:150, display:"grid", placeItems:"center", background:"#050706", color:"white", textAlign:"center", padding:24 }}><div><h1 style={{ margin:0, fontSize:"clamp(2rem, 7vw, 4.5rem)", letterSpacing:".04em" }}>SLUT PÅ FÖRSTA KAPITLET</h1><button className="primary-button" type="button" disabled={constructionBusy} style={{ marginTop:28 }} onClick={() => void acknowledgeAct1EndCard()}>{constructionBusy ? "Sparar…" : "Tillbaka till byn"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></div>}
     {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <StoryMoment
       image={clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"}
