@@ -3,7 +3,7 @@ export type WorldPoint = {
   y: number;
 };
 
-export type DirectionalInput = {
+type DirectionalInput = {
   left: boolean;
   right: boolean;
   up: boolean;
