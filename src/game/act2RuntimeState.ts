@@ -13,7 +13,7 @@ export type Act2ProjectState = {
 
 export type Act2RuntimeState = {
   version: 1;
-  finaleSchemaVersion: 2;
+  finaleSchemaVersion: 3;
   entered: boolean;
   productionEntryCommitted: boolean;
   openingIndex: number;
@@ -55,17 +55,20 @@ function childRuntimeKey(childId: string) {
   return `${LEGACY_KEY}.${childId}`;
 }
 const PROJECTS: Act2Project[] = ["cabin", "dock", "boathouse", "motorboat"];
-const ACT2_FINALE_SCHEMA_VERSION = 2 as const;
+const ACT2_FINALE_SCHEMA_VERSION = 3 as const;
 
-type Act2RuntimeCandidate = Partial<Act2RuntimeState> & {
+type Act2RuntimeCandidate = Omit<Partial<Act2RuntimeState>, "finaleSchemaVersion"> & {
+  finaleSchemaVersion?: unknown;
   selectedProject?: unknown;
   projects?: Partial<Record<Act2Project, unknown>>;
 };
 
 function migrateAct2RuntimeCandidate(candidate: Act2RuntimeCandidate): Act2RuntimeCandidate {
-  const currentVersion = candidate.finaleSchemaVersion === ACT2_FINALE_SCHEMA_VERSION
-    ? ACT2_FINALE_SCHEMA_VERSION
-    : 1;
+  const currentVersion = candidate.finaleSchemaVersion === 2
+    ? 2
+    : candidate.finaleSchemaVersion === ACT2_FINALE_SCHEMA_VERSION
+      ? ACT2_FINALE_SCHEMA_VERSION
+      : 1;
 
   return runSequentialMigrations(
     candidate,
@@ -82,6 +85,32 @@ function migrateAct2RuntimeCandidate(candidate: Act2RuntimeCandidate): Act2Runti
             || legacy.act2Complete === true;
 
           if (!legacyFinaleComplete) {
+            return { ...legacy, finaleSchemaVersion: 2 };
+          }
+
+          return {
+            ...legacy,
+            finaleSchemaVersion: ACT2_FINALE_SCHEMA_VERSION,
+            finaleIndex: 5,
+            finaleLineIndex: 0,
+            familyFinaleConsumed: true,
+            epilogueConsumed: false,
+            act2Complete: false,
+            endCardSeen: false,
+          };
+        },
+      },
+      {
+        from: 2,
+        to: 3,
+        migrate: (legacy) => {
+          const familyFinaleOnly =
+            legacy.familyFinaleConsumed === true
+            && (legacy.finaleIndex ?? 0) < 5
+            && legacy.epilogueConsumed !== true
+            && legacy.act2Complete !== true;
+
+          if (!familyFinaleOnly) {
             return { ...legacy, finaleSchemaVersion: ACT2_FINALE_SCHEMA_VERSION };
           }
 
@@ -108,7 +137,7 @@ function emptyProject(): Act2ProjectState {
 export function createDefaultAct2RuntimeState(): Act2RuntimeState {
   return {
     version: 1,
-    finaleSchemaVersion: 2,
+    finaleSchemaVersion: ACT2_FINALE_SCHEMA_VERSION,
     entered: false,
     productionEntryCommitted: false,
     openingIndex: 0,
@@ -206,7 +235,7 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
 
   const normalized: Act2RuntimeState = {
     version: 1,
-    finaleSchemaVersion: 2,
+    finaleSchemaVersion: ACT2_FINALE_SCHEMA_VERSION,
     entered: candidate.entered === true,
     productionEntryCommitted: candidate.productionEntryCommitted === true,
     openingIndex: Number.isInteger(candidate.openingIndex)
@@ -295,21 +324,9 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     normalized.epilogueConsumed = false;
     normalized.endCardSeen = false;
   } else {
-    // finaleSchemaVersion was introduced after the six-beat ending shipped.
-    // Any completed pre-marker save has only ever completed the old five-beat
-    // family/veranda ending, even if the first six-beat migration accidentally
-    // rewrote it to finaleIndex=5 + epilogueConsumed=true. Resume that real
-    // device state at the newly added epilogue exactly once.
-    const legacyFamilyComplete = candidate.familyFinaleConsumed === true
-      && (candidate.finaleIndex ?? 0) < 5;
-    if (legacyFamilyComplete) {
-      normalized.finaleIndex = 5;
-      normalized.finaleLineIndex = 0;
-      normalized.familyFinaleConsumed = true;
-      normalized.epilogueConsumed = false;
-      normalized.act2Complete = false;
-      normalized.endCardSeen = false;
-    } else if (candidate.epilogueConsumed === true || candidate.act2Complete === true) {
+    // Versioned compatibility repairs run before normalization. From here on,
+    // this branch only enforces canonical completion invariants.
+    if (candidate.epilogueConsumed === true || candidate.act2Complete === true) {
       normalized.finaleIndex = 5;
       normalized.finaleLineIndex = 0;
       normalized.familyFinaleConsumed = true;
