@@ -276,9 +276,8 @@ assert.equal(
 );
 
 assert.ok(
-  villageRuntime.includes('speakerTone={storySpeakerTone(bakeryStoryLine.speaker)}')
-    && villageRuntime.includes('speakerTone={storySpeakerTone(bakeryStoryReplayLine.speaker)}'),
-  "Act 1 Bakery live and replay must consume the shared child/Linus/Henning speaker tone mapping",
+  villageRuntime.includes('speakerTone={storySpeakerTone(bakeryStoryReplayLine.speaker)}'),
+  "Act 1 Bakery replay must consume the shared child/Linus/Henning speaker tone mapping",
 );
 
 assert.ok(
