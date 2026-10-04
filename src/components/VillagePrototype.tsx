@@ -1593,7 +1593,7 @@ export default function VillagePrototype() {
       image={act1ChapterFinaleImage}
       ariaLabel="Byn lever igen"
       speaker={act1ChapterFinaleSpeakerName}
-      speakerTone={act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker === "Henning" ? "henning" : act1ChapterFinaleLine.speaker === "Mira" ? "mira" : act1ChapterFinaleLine.speaker === "Linus" ? "linus" : "sol"}
+      speakerTone={storySpeakerTone(act1ChapterFinaleLine.speaker)}
       nextLabel={constructionBusy ? "Sparar…" : act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"}
       nextDisabled={constructionBusy}
       onNext={() => void advanceAct1ChapterFinale()}

@@ -330,13 +330,13 @@ assert.ok(
 );
 assert.ok(
   villageRuntime.includes('speaker={act1ChapterFinaleSpeakerName}')
-    && villageRuntime.includes('speakerTone={act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker === "Henning" ? "henning" : act1ChapterFinaleLine.speaker === "Mira" ? "mira" : act1ChapterFinaleLine.speaker === "Linus" ? "linus" : "sol"}')
+    && villageRuntime.includes('speakerTone={storySpeakerTone(act1ChapterFinaleLine.speaker)}')
     && villageRuntime.includes('<p>{act1ChapterFinaleLine.text}</p>'),
-  "Act 1 chapter finale dialogue must preserve all authored speaker presentation through Story Engine",
+  "Act 1 chapter finale dialogue must preserve all authored speaker presentation through the shared tone mapping",
 );
 assert.ok(
-  villageRuntime.includes('speakerTone={act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker === "Henning" ? "henning" : act1ChapterFinaleLine.speaker === "Mira" ? "mira" : act1ChapterFinaleLine.speaker === "Linus" ? "linus" : "sol"}'),
-  "Act 1 chapter finale must preserve accepted child/Henning/Mira/Linus/Sol speaker tones before shared-tone migration",
+  villageRuntime.includes('speakerTone={storySpeakerTone(act1ChapterFinaleLine.speaker)}'),
+  "Act 1 chapter finale must consume the shared child/Henning/Mira/Linus/Sol speaker tone mapping",
 );
 assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
