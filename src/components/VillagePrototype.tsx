@@ -1582,7 +1582,7 @@ export default function VillagePrototype() {
       image={clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"}
       ariaLabel="Sols klinik är färdig"
       speaker={clinicSpeakerName}
-      speakerTone={clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker === "Linus" ? "linus" : "sol"}
+      speakerTone={storySpeakerTone(clinicStoryLine.speaker)}
       nextLabel={clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
       onNext={advanceClinicStory}
       presentationId={`act1:clinic-complete:${clinicStoryIndex}`}
@@ -1607,7 +1607,7 @@ export default function VillagePrototype() {
       image={clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"}
       ariaLabel="Testvisning av Sols färdiga klinik"
       speaker={clinicReplaySpeakerName}
-      speakerTone={clinicStoryReplayLine.speaker === "Barnet" ? "child" : clinicStoryReplayLine.speaker === "Linus" ? "linus" : "sol"}
+      speakerTone={storySpeakerTone(clinicStoryReplayLine.speaker)}
       nextLabel={clinicStoryReplayIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
       onNext={advanceClinicStoryReplay}
       presentationId={`act1:clinic-complete-replay:${clinicStoryReplayIndex}`}
