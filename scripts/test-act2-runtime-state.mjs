@@ -786,9 +786,13 @@ assert.ok(
 
 
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
-assert.ok(storyShop.includes('ACT2_JETTY_LIFEBUOY_PRICE = 200'), "jetty lifebuoy price must stay at locked 200 SysselBux");
-assert.ok(storyShop.includes('ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = 200'), "Båthuset steering wheel price must stay at locked 200 SysselBux");
-assert.ok(storyShop.includes('ACT2_MOTORBOAT_PARTS_PRICE = 200'), "Motorbåten parts price must stay at locked 200 SysselBux");
+const act2PurchaseCatalog = fs.readFileSync(new URL("../src/game/act2PurchaseCatalog.ts", import.meta.url), "utf8");
+assert.ok(act2PurchaseCatalog.includes("const DOCK_PRICE = 200"), "jetty lifebuoy display price must stay at locked 200 SysselBux");
+assert.ok(act2PurchaseCatalog.includes("const BOATHOUSE_PRICE = 200"), "Båthuset steering wheel display price must stay at locked 200 SysselBux");
+assert.ok(act2PurchaseCatalog.includes("const MOTORBOAT_PRICE = 200"), "Motorbåten parts display price must stay at locked 200 SysselBux");
+assert.ok(storyShop.includes("ACT2_JETTY_LIFEBUOY_PRICE = ACT2_PURCHASE_CATALOG.dock.price"), "Story Shop compatibility price must derive from canonical Act 2 catalog");
+assert.ok(storyShop.includes("ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = ACT2_PURCHASE_CATALOG.boathouse.price"), "Båthuset compatibility price must derive from canonical Act 2 catalog");
+assert.ok(storyShop.includes("ACT2_MOTORBOAT_PARTS_PRICE = ACT2_PURCHASE_CATALOG.motorboat.price"), "Motorbåten compatibility price must derive from canonical Act 2 catalog");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_jetty_lifebuoy")'), "jetty lifebuoy must use the atomic story purchase RPC");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_boathouse_steering_wheel")'), "Båthuset steering wheel must use the atomic story purchase RPC");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_motorboat_parts")'), "Motorbåten parts must use the atomic story purchase RPC");
@@ -801,11 +805,11 @@ for (const [item, flag] of [
   assert.ok(act2PurchaseMigration.includes(`when '${item}' then v_price:=200`), `${item} must be reproducible from checked-in migration at 200 SysselBux`);
   assert.ok(act2PurchaseMigration.includes(`v_flag_key:='${flag}'`), `${item} migration must persist ${flag}`);
 }
-assert.ok(village.includes("Livboj till bryggan"), "Mira must expose the Act 2 lifebuoy in her real shop");
+assert.ok(act2PurchaseCatalog.includes('title: "Livboj till bryggan"') && village.includes("ACT2_PURCHASE_CATALOG.dock.shop.title"), "Mira must expose the canonical Act 2 lifebuoy presentation");
 assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");
-assert.ok(village.includes("Ratt till lådbilen"), "Mira must expose the Båthuset steering wheel in her real shop");
+assert.ok(act2PurchaseCatalog.includes('title: "Ratt till lådbilen"') && village.includes("ACT2_PURCHASE_CATALOG.boathouse.shop.title"), "Mira must expose the canonical Båthuset steering-wheel presentation");
 assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel stock must derive from Båthuset progress");
-assert.ok(village.includes("Reservdelspaket till motorbåten"), "Mira must expose the Motorbåten parts package");
+assert.ok(act2PurchaseCatalog.includes('title: "Reservdelspaket till motorbåten"') && village.includes("ACT2_PURCHASE_CATALOG.motorboat.shop.title"), "Mira must expose the canonical Motorbåten parts presentation");
 assert.ok(village.includes("motorboatPartsPurchaseRequired(act2)"), "parts stock must derive from Motorbåten progress");
 assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira shop must render the canonical Bryggan lifebuoy story beat");
 assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira shop must render the canonical Båthuset steering-wheel story beat");
