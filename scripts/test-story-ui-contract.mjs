@@ -154,18 +154,27 @@ assert.ok(
 );
 
 assert.ok(
-  villageRuntime.includes('{solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png"'),
-  "Act 1 Sol-arrival legacy oracle must preserve the accepted story image before migration",
+  villageRuntime.includes('{solStoryIndex !== null && <StoryMoment')
+    && villageRuntime.includes('image="/assets/village/story-moments/sol-arrival.png"')
+    && villageRuntime.includes('ariaLabel="Sol kommer till byn"'),
+  "Act 1 Sol arrival must preserve its image and accessible label through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"')
+  villageRuntime.includes('speaker={solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"}')
+    && villageRuntime.includes('speakerTone={solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}')
     && villageRuntime.includes('solArrivalDialogue[solStoryIndex].text'),
-  "Act 1 Sol-arrival legacy oracle must preserve speaker identity and line text",
+  "Act 1 Sol arrival must preserve speaker identity and line text through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceSolStory()}')
-    && villageRuntime.includes('constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"'),
-  "Act 1 Sol-arrival legacy oracle must preserve busy state, callback and CTA labels",
+  villageRuntime.includes('nextDisabled={constructionBusy}')
+    && villageRuntime.includes('onNext={() => void advanceSolStory()}')
+    && villageRuntime.includes('nextLabel={constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}'),
+  "Act 1 Sol arrival must preserve busy state, callback and CTA labels through Story Engine",
+);
+assert.equal(
+  villageRuntime.includes('{solStoryIndex !== null && <div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 Sol arrival must not retain its parallel legacy story shell",
 );
 
 assert.deepEqual(
