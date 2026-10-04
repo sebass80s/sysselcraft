@@ -1542,10 +1542,30 @@ export default function VillagePrototype() {
       <p>{solArrivalDialogue[solStoryIndex].text}</p>
     </StoryMoment>}
     {solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation"><Image src={solTourImage} alt="" fill priority sizes="100vw" /></div><div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol ser sig omkring i byn"><span className={`dialogue-speaker henning-story-speaker ${solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker.toLowerCase()}`}>{solTourSpeakerName}</span><p>{solTourStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolTourStory()}>{constructionBusy ? "Sparar…" : solTourStoryIndex === solTourDialogue[solTourStoryStop].length - 1 ? (solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen") : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></>}
-    {miraStoryIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
-    {miraStoryIndex !== null && miraStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker.toLowerCase()}`}>{miraSpeakerName}</span><p>{miraStoryText}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceMiraStory()}>{constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
-    {miraStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"} alt="" fill priority sizes="100vw" /></div>}
-    {miraStoryReplayIndex !== null && miraStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Mira kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${miraStoryReplayLine.speaker === "Barnet" ? "child" : miraStoryReplayLine.speaker.toLowerCase()}`}>{miraReplaySpeakerName}</span><p>{miraReplayText}</p><button className="primary-button dialogue-next" onClick={advanceMiraStoryReplay}>{miraStoryReplayIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
+    {miraStoryIndex !== null && miraStoryLine && <StoryMoment
+      image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}
+      ariaLabel="Mira kommer till byn"
+      speaker={miraSpeakerName}
+      speakerTone={miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker === "Henning" ? "henning" : miraStoryLine.speaker === "Linus" ? "linus" : "mira"}
+      nextLabel={constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      nextDisabled={constructionBusy}
+      onNext={() => void advanceMiraStory()}
+      presentationId={`act1:mira-arrival:${miraStoryIndex}`}
+    >
+      <p>{miraStoryText}</p>
+      {constructionError && <p role="alert">{constructionError}</p>}
+    </StoryMoment>}
+    {miraStoryReplayIndex !== null && miraStoryReplayLine && <StoryMoment
+      image={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}
+      ariaLabel="Testvisning av Mira kommer till byn"
+      speaker={miraReplaySpeakerName}
+      speakerTone={miraStoryReplayLine.speaker === "Barnet" ? "child" : miraStoryReplayLine.speaker === "Henning" ? "henning" : miraStoryReplayLine.speaker === "Linus" ? "linus" : "mira"}
+      nextLabel={miraStoryReplayIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      onNext={advanceMiraStoryReplay}
+      presentationId={`act1:mira-arrival-replay:${miraStoryReplayIndex}`}
+    >
+      <p>{miraReplayText}</p>
+    </StoryMoment>}
     {clinicStoryIndex !== null && clinicStoryLine && <div className="story-moment" role="presentation"><Image src={clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"} alt="" fill priority sizes="100vw" /></div>}
     {clinicStoryIndex !== null && clinicStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Sols klinik är färdig"><span className={`dialogue-speaker henning-story-speaker ${clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker.toLowerCase()}`}>{clinicSpeakerName}</span><p>{clinicStoryLine.text}</p><button className="primary-button dialogue-next" onClick={advanceClinicStory}>{clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
     {act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="story-moment" role="presentation"><Image src={act1ChapterFinaleImage} alt="" fill priority sizes="100vw" /></div>}
