@@ -37,9 +37,11 @@ function loadTsModule(file, dependencies) {
 }
 
 const saveMigrationModule = loadTsModule("../src/runtime/save/migrations.ts", {});
+const progressionDeltaModule = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const { createDefaultAct2RuntimeState } = loadTsModule("../src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrationModule,
+  "../runtime/progression/authoritativeDelta": progressionDeltaModule,
 });
 
 const {
