@@ -1,17 +1,12 @@
 "use client";
 
 import { getSupabaseBrowserClient } from "./supabaseClient";
-import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 
 export const BOTTLE_MESSAGE_PRICE = 100;
 export const FOOTBALL_RUG_PRICE = 30;
 export const ROOM_DECOR_PRICES = { footballPoster: 20, computerDesk: 80, trophyShelf: 35, stringLights: 25, aquarium: 60 } as const;
 export type RoomDecorKey = keyof typeof ROOM_DECOR_PRICES;
 export const DOG_HOME_PRICES = [40, 25, 30, 35] as const;
-// Compatibility exports. Display-price ownership lives in the pure Act 2 catalog.
-export const ACT2_JETTY_LIFEBUOY_PRICE = ACT2_PURCHASE_CATALOG.dock.price;
-export const ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = ACT2_PURCHASE_CATALOG.boathouse.price;
-export const ACT2_MOTORBOAT_PARTS_PRICE = ACT2_PURCHASE_CATALOG.motorboat.price;
 export type DogHomeUpgradeIndex = 0 | 1 | 2 | 3;
 
 export type StoryItemPurchase = {
