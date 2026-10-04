@@ -1256,3 +1256,22 @@ Act 2 now uses one state-layer story-gate arbitration for contribution blocking 
 Do not mark the full purchase-gate system complete yet. Lake presentation and Mira-shop presentation are still separate consumers, while purchase execution/wallet authority correctly remain backend-owned.
 
 Recommended next slice: audit the Lake → Village shop purchase-gate handoff and extract only a parity-proven presentation contract if one exists. Collision/pathfinding/movement feel/dog follow remain physically acceptance-gated and should not be touched during this progression pass.
+
+
+## Runtime 1.0 purchase handoff update — 2026-10-04
+
+Verified code checkpoint before this documentation sync:
+- `a6747b0df95edd7f9782086063b0341fd30abf9e`;
+- GitHub Actions #1833: full `npm run verify` SUCCESS.
+
+Act 2 Lake and Village no longer independently encode the purchase navigation protocol. `src/game/act2PurchaseHandoff.ts` owns:
+- valid purchase projects;
+- shop-context URL generation;
+- resume URL generation;
+- parsing/rejection of invalid project values.
+
+This is chapter configuration, not a new generic engine abstraction.
+
+Two intermediate CI failures (#1831/#1832) were stale tests that asserted literal inline URL implementation. Build and earlier regressions passed; the source-shape tests were updated after a full sweep. Final #1833 is green.
+
+Next safe Progression/Gating candidate: audit duplicated Act 2 purchase presentation/config (item label, detail copy, displayed price) between Lake and Mira shop. Keep Supabase purchase execution, wallet authority and authoritative world flags in backend Story Shop. Do not touch collision/pathfinding or physical-input-sensitive World work during this pass.

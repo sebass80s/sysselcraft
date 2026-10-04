@@ -792,3 +792,46 @@ That arbitration was converged parity-first:
 This does **not** close the full `purchaseGate` system. Gate arithmetic and Act 2 blocking arbitration are canonical, but purchase presentation still spans Lake UI and Mira's Village shop, and backend Story Shop remains authoritative for purchase execution and wallet mutation.
 
 Next safe Progression / Gating work should audit that cross-area presentation handoff for duplication. Do not pull backend transaction authority into Runtime 1.0 and do not mark `purchaseGate` canonical until both sides consume one explicit presentation/hand-off contract.
+
+
+## Progression / Gating checkpoint 3 — Act 2 purchase handoff contract
+
+The cross-area purchase navigation contract is now chapter-owned instead of duplicated in Lake and Village UI.
+
+New pure Act 2 adapter:
+- `src/game/act2PurchaseHandoff.ts`;
+- `parseAct2PurchaseProject()`;
+- `act2PurchaseShopHref()`;
+- `act2ResumeHref()`;
+- canonical purchase-project set: `dock | boathouse | motorboat`.
+
+Accepted behavior preserved:
+- Lake → Mira: `/?act2-purchase=<project>`;
+- Mira → Lake: `/act2?resume=<project>`;
+- only Dock, Boathouse and Motorboat are valid purchase handoff projects;
+- Cabin and malformed/unknown values are rejected;
+- after a valid resume is consumed, Act 2 still cleans the URL back to `/act2`;
+- existing Boathouse continuity repair remains untouched.
+
+Parity-first history:
+- `e5074ef537769d195ef951d30a80f259a42a72a8` locked the exact legacy parser and URL contract;
+- GitHub Actions #1830: full `npm run verify` SUCCESS before migration;
+- `df5a1673030bd01e5cea51ed5033bbb9f2b25999` migrated Lake + Village to the adapter.
+
+CI #1831 and #1832 exposed only stale source-shape assertions that required literal inline route strings after the behavior had moved behind the adapter. Those assertions were updated to verify canonical ownership rather than obsolete implementation text:
+- `088d19590b999aa1c7fafa6c1d7114aad29c6bfb`;
+- `a6747b0df95edd7f9782086063b0341fd30abf9e`.
+
+Final verification:
+- GitHub Actions #1833: full `npm run verify` SUCCESS on `a6747b0df95edd7f9782086063b0341fd30abf9e`.
+
+### Remaining purchase-gate work
+
+Do not move Story Shop transaction authority into Runtime 1.0. Backend RPCs, wallet mutation and authoritative world flags remain correctly backend-owned.
+
+The remaining safe convergence target is presentation/config drift:
+- Lake purchase copy still contains price/detail text;
+- Village shop owns item cards, labels and displayed prices;
+- backend Story Shop exports the current client-side Act 2 display-price constants.
+
+Audit that catalog boundary parity-first. A neutral shared presentation/config catalog may be justified, but only if it removes real duplication without making Runtime 1.0 the authority for server-side economy.
