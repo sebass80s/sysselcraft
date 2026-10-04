@@ -22,7 +22,7 @@ function normalize(vector: WorldPoint): WorldPoint | null {
   return { x: vector.x / length, y: vector.y / length };
 }
 
-export function directionalInputVector(input: DirectionalInput): WorldPoint {
+function directionalInputVector(input: DirectionalInput): WorldPoint {
   return {
     x: Number(input.right) - Number(input.left),
     y: Number(input.down) - Number(input.up),
