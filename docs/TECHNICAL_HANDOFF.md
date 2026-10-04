@@ -1419,3 +1419,38 @@ Save / Migration Engine status:
 - normalizers now handle canonical invariants after versioned compatibility migration.
 
 Safety boundaries remain unchanged: no production/live promotion, no Adam-data mutation, no backend-owned progression fabrication, no Act 3 feature work, and no iPhone/WebView-sensitive navigation/collision/movement convergence without physical acceptance.
+
+
+## Save / Migration Engine checkpoint 4 — explicit construction compatibility + sweep closeout
+
+The remaining pure local construction compatibility adapter is now an explicit pre-normalization migration.
+
+Implementation:
+- parity commit: `d532dbfc7bcca70c6869240757578fb62e0d8dfd` (`test: lock legacy construction save parity`);
+- implementation commit: `99df1984a2bc088f5715d8f6ef5b112bff8316c7` (`refactor: migrate legacy construction before normalization`);
+- `saveState.ts` now migrates legacy construction shape through `runSequentialMigrations()`;
+- `normalizeConstruction()` no longer accepts or owns `legacyVisible`;
+- the saved envelope remains `version: 1`;
+- deterministic current-state reconstruction such as `construction.pending` remains normalizer-owned.
+
+Parity was locked before implementation across 330 combinations of construction shapes, stage values and progression totals, plus independent Act 1 finale markers. Input immutability and normalized-save idempotence are covered.
+
+The broad compatibility sweep is documented in `docs/SAVE_COMPATIBILITY_AUDIT.md`. It found no additional implicit, pure, ownership-locked legacy compatibility repair that should be moved into Save/Migration Engine now.
+
+Important classification boundaries:
+- invariant repair stays in normalizers;
+- current-domain progression rules stay in domain/progression owners;
+- malformed/current input filtering stays validation;
+- localStorage/Preferences and unscoped/scoped key moves stay storage migration;
+- wallet, quest, purchased flags and claim-baseline recovery stay backend-owned;
+- no migration may fabricate backend-owned state.
+
+Verification:
+- Runtime branch was fast-forwarded cleanly to Codex work, no merge commit;
+- GitHub Actions #1812: full `npm run verify` SUCCESS on exact code HEAD `99df1984a2bc088f5715d8f6ef5b112bff8316c7`.
+
+### Consequence for next Runtime 1.0 work
+
+Do not spend another broad pass trying to manufacture more Save/Migration slices. The safe pure candidates identified by the repo-wide sweep are now exhausted.
+
+Return to the Runtime Architecture roadmap. The next meaningful work is remaining runtime convergence / legacy cleanup, with collision, pathfinding, movement feel, dog-follow and WebView/touch behavior still gated by browser + physical iPhone acceptance. Prefer a small parity-first slice over a broad rewrite.
