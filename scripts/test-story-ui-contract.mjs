@@ -177,6 +177,31 @@ assert.equal(
   "Act 1 Sol arrival must not retain its parallel legacy story shell",
 );
 
+assert.ok(
+  villageRuntime.includes('miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"'),
+  "Act 1 Mira arrival must preserve the accepted two-scene image boundary",
+);
+assert.ok(
+  villageRuntime.includes('miraStoryLine?.speaker === "Barnet" ? childName || "Barnet" : miraStoryLine?.speaker ?? ""')
+    && villageRuntime.includes('miraStoryLine?.text.replace("[barnets namn]", childName || "Barnet") ?? ""'),
+  "Act 1 Mira arrival must preserve child-name speaker resolution and text interpolation",
+);
+assert.ok(
+  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceMiraStory()}')
+    && villageRuntime.includes('constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"'),
+  "Act 1 Mira arrival must preserve busy state, callback and CTA labels",
+);
+assert.ok(
+  villageRuntime.includes('aria-label="Mira kommer till byn"'),
+  "Act 1 Mira arrival must preserve its accessible dialog label",
+);
+assert.ok(
+  villageRuntime.includes('aria-label="Testvisning av Mira kommer till byn"')
+    && villageRuntime.includes('onClick={advanceMiraStoryReplay}')
+    && villageRuntime.includes('miraStoryReplayIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"'),
+  "Act 1 Mira replay must preserve its accessible label, callback and CTA labels",
+);
+
 assert.deepEqual(
   parseStoryLine("Barnet: Hej.", "Testbarn"),
   { text: "Hej.", speaker: "Testbarn", speakerTone: "child" },
