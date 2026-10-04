@@ -8,7 +8,7 @@ export type StoryHistoryProgress = {
   completedStorylineIds: ReadonlySet<string>;
 };
 
-export type StoryHistoryEntry = {
+type StoryHistoryEntry = {
   chapterId: string;
   storylineId: string;
   beat: StoryBeatDefinition;
