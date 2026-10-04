@@ -246,6 +246,26 @@ for (const y of [0, 427.4, 427.5, 427.6, -0.5, -1.5]) {
   placement.baseY = previousBaseY;
 }
 
+const authoritativeDeltaParityFixtures = [
+  { name: "equal authoritative and baseline counts produce zero delta", authoritative: 12, baseline: 12, expected: 0 },
+  { name: "authoritative count above baseline preserves whole contribution delta", authoritative: 17, baseline: 12, expected: 5 },
+  { name: "authoritative count below baseline clamps at zero", authoritative: 8, baseline: 12, expected: 0 },
+  { name: "fractional authoritative values preserve historical floor semantics", authoritative: 14.9, baseline: 10.2, expected: 4 },
+  { name: "negative authoritative values cannot create negative progression", authoritative: -3, baseline: 2, expected: 0 },
+];
+
+function legacyAuthoritativeDelta(authoritative, baseline) {
+  return Math.max(0, Math.floor(authoritative) - Math.floor(baseline));
+}
+
+for (const fixture of authoritativeDeltaParityFixtures) {
+  assert.equal(
+    legacyAuthoritativeDelta(fixture.authoritative, fixture.baseline),
+    fixture.expected,
+    fixture.name,
+  );
+}
+
 const migrationFixtures = [
   {
     name: "sequential migration applies every version exactly once",
