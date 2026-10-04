@@ -1010,3 +1010,51 @@ Do **not** mechanically migrate that remaining Linus naming surface into `Inline
 Speaker-tone note: Linus intro line steps also intentionally retain their accepted legacy `default` tone. Replacing that directly with canonical `storySpeakerTone("Linus")` would be a visual behavior change rather than parity.
 
 No movement, save, backend, progression, quest, wallet, Act 3 or production behavior was changed by the inline-dialogue convergence work.
+
+
+## Legacy cleanup checkpoint — Act 2 purchase aliases retired — 2026-10-04
+
+The three obsolete Act 2 client display-price compatibility aliases in `storyShop.ts` have been removed.
+
+Why they existed:
+- the canonical values had already moved to `src/game/act2PurchaseCatalog.ts`;
+- `storyShop.ts` retained compatibility exports while branch-wide usage was still uncertain.
+
+This session completed the missing ownership check and retired the aliases as dead compatibility surface.
+
+Cleanup sequence:
+- `ee8973f7574d5a6a49ceb517b7c9cfa42a3c9f11` — `refactor: remove retired Act 2 price aliases`;
+- `737602ec1c86f550feeefbf6e99c8a2501f6d8d7` — `test: retire Act 2 price alias contract`;
+- GitHub Actions **#1906** — full `npm run verify` SUCCESS.
+
+Canonical boundary remains unchanged:
+- `act2PurchaseCatalog.ts` owns client presentation/config;
+- `act2PurchaseHandoff.ts` owns Lake↔Village purchase navigation;
+- `storyShop.ts` owns purchase transport;
+- Supabase/backend owns authoritative prices, wallet mutation and world-flag ownership.
+
+No generic purchase engine should be introduced without a second real chapter consumer.
+
+## Session closeout — Story + inline dialogue convergence — 2026-10-04
+
+The Act 1 standard Story Engine migration and ordinary inline-dialogue convergence are now closed for this Runtime 1.0 pass.
+
+Story Engine now owns the standard fullscreen presentation for the remaining Act 1 story surfaces migrated during this session, including Henning arrival, Mira arrival, Sol tour, Bakery completion, Clinic completion, chapter finale, Linus first meeting/replay shell and bottle-message presentation.
+
+`storySpeakerTone()` is canonical for standard speaker-tone mapping. The Linus intro line-step legacy `default` tone remains an explicit exception because changing it to the canonical Linus tone would alter accepted visuals.
+
+`InlineDialogueCard` now owns ordinary compact Village dialogue presentation for recycling, Henning, abandoned shop, construction and Recycling completion.
+
+The remaining local Linus naming/input path is intentionally classified as a special interactive surface and is not ordinary cleanup work.
+
+### Recommended next audit
+
+Runtime 1.0 should now continue with repo-wide **safe legacy cleanup** rather than deeper behavior convergence.
+
+Prefer:
+- retired compatibility aliases/shims;
+- duplicate pure presentation/config values;
+- stale source-shape tests tied to removed implementations;
+- dead debug/runtime scaffolding with proven no-consumer status.
+
+Do not touch collision, pathfinding, movement feel, dog-follow, pointer/touch/WebView fallback behavior or Linus naming-input DOM without an explicit browser + physical iPhone acceptance window.
