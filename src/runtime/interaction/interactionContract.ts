@@ -70,7 +70,7 @@ export function resolveInteraction(
   };
 }
 
-export type WorldInputState = {
+type WorldInputState = {
   enabled: boolean;
   blockingOverlayVisible: boolean;
 };
