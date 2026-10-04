@@ -981,3 +981,32 @@ The remaining major World differences are real product behavior rather than harm
 - pointer/touch/WebView fallback entrypoints.
 
 Do not converge those during ordinary architecture cleanup. They require automated/browser parity plus physical iPhone acceptance because they can alter movement feel or touch reliability.
+
+
+## Inline dialogue closeout — 2026-10-04
+
+Runtime 1.0 now has a shared compact inline dialogue primitive in `src/components/story/InlineDialogueCard.tsx`.
+
+Migrated real Village consumers:
+- recycling conversation with Linus;
+- Henning's ordinary village conversation;
+- abandoned-shop conversation;
+- construction-site conversation;
+- Recycling completion conversation.
+
+The shared primitive now owns the repeated compact dialogue-card structure:
+- dialog/aria contract;
+- speaker nameplate placement;
+- optional speaker tone / extra speaker class;
+- primary CTA text, disabled state and class;
+- optional trailing footer content for secondary actions and error rows.
+
+This closes the ordinary inline-dialogue convergence slice.
+
+One raw `dialogue-card` remains intentionally local in `VillagePrototype.tsx`: the non-fullscreen Linus introduction/naming path. It contains child-name and dog-name text inputs, Enter-key handling, validation, autofocus/mobile keyboard behavior and dog-reveal state. It is a special interactive story surface, not an ordinary inline dialogue.
+
+Do **not** mechanically migrate that remaining Linus naming surface into `InlineDialogueCard`. Any future convergence must preserve the input DOM and mobile/WebView behavior and should be treated as a separate acceptance-sensitive slice.
+
+Speaker-tone note: Linus intro line steps also intentionally retain their accepted legacy `default` tone. Replacing that directly with canonical `storySpeakerTone("Linus")` would be a visual behavior change rather than parity.
+
+No movement, save, backend, progression, quest, wallet, Act 3 or production behavior was changed by the inline-dialogue convergence work.
