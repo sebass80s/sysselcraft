@@ -12,6 +12,7 @@ type InlineDialogueCardProps = {
   nextLabel: string;
   onNext: () => void;
   nextDisabled?: boolean;
+  footer?: ReactNode;
 };
 
 export function InlineDialogueCard({
@@ -23,6 +24,7 @@ export function InlineDialogueCard({
   nextLabel,
   onNext,
   nextDisabled = false,
+  footer,
 }: InlineDialogueCardProps) {
   const extraSpeakerClass = speakerClassName ? ` ${speakerClassName}` : "";
   const speakerToneClass = speakerTone === "default" ? "" : ` ${speakerTone}`;
@@ -31,6 +33,7 @@ export function InlineDialogueCard({
       <span className={`dialogue-speaker${extraSpeakerClass}${speakerToneClass}`}>{speaker}</span>
       {children}
       <button className="primary-button dialogue-next" disabled={nextDisabled} onClick={onNext}>{nextLabel}</button>
+      {footer}
     </div>
   );
 }
