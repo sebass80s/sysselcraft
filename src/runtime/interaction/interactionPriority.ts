@@ -1,4 +1,4 @@
-export type InteractionPriorityCandidate<TId extends string = string> = {
+type InteractionPriorityCandidate<TId extends string = string> = {
   id: TId;
   priority: number;
   enabled: boolean;
