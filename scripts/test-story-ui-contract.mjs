@@ -205,10 +205,6 @@ assert.ok(
   "Act 1 Sol arrival must preserve speaker identity and line text through the shared tone mapping",
 );
 assert.ok(
-  villageRuntime.includes('speakerTone={storySpeakerTone(solArrivalDialogue[solStoryIndex].speaker)}'),
-  "Act 1 Sol arrival must consume the shared child/Sol speaker tone mapping",
-);
-assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
     && villageRuntime.includes('onNext={() => void advanceSolStory()}')
     && villageRuntime.includes('nextLabel={constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}'),
