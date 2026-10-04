@@ -98,6 +98,40 @@ for (const endCardSeen of [false, true]) {
   assert.equal(poisoned.endCardSeen, false);
   assert.equal(s.act2FinalePending(poisoned), true);
 }
+// Schema-2 compatibility must distinguish a family-finale-only legacy save
+// from a save that truly completed the epilogue and chapter end card.
+const schema2FamilyOnly = s.normalizeAct2RuntimeState({
+  ...state,
+  finaleSchemaVersion: 2,
+  finaleIndex: 4,
+  familyFinaleConsumed: true,
+  epilogueConsumed: false,
+  act2Complete: false,
+  endCardSeen: false,
+});
+assert.equal(schema2FamilyOnly.finaleIndex, 5);
+assert.equal(schema2FamilyOnly.familyFinaleConsumed, true);
+assert.equal(schema2FamilyOnly.epilogueConsumed, false);
+assert.equal(schema2FamilyOnly.act2Complete, false);
+assert.equal(schema2FamilyOnly.endCardSeen, false);
+assert.equal(s.act2FinalePending(schema2FamilyOnly), true);
+
+const schema2ActuallyComplete = s.normalizeAct2RuntimeState({
+  ...state,
+  finaleSchemaVersion: 2,
+  finaleIndex: 4,
+  familyFinaleConsumed: true,
+  epilogueConsumed: true,
+  act2Complete: true,
+  endCardSeen: true,
+});
+assert.equal(schema2ActuallyComplete.finaleIndex, 5);
+assert.equal(schema2ActuallyComplete.familyFinaleConsumed, true);
+assert.equal(schema2ActuallyComplete.epilogueConsumed, true);
+assert.equal(schema2ActuallyComplete.act2Complete, true);
+assert.equal(schema2ActuallyComplete.endCardSeen, true);
+assert.equal(s.act2FinalePending(schema2ActuallyComplete), false);
+
 // Adoption behavior remains one-time and existing scoped saves always win.
 storage.set("sysselcraft.act2.runtime.v1", JSON.stringify({ ...state, finaleIndex: 0 }));
 assert.equal((await s.loadAct2RuntimeState()).finaleIndex, 5);
