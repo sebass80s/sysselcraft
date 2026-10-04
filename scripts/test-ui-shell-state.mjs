@@ -20,16 +20,14 @@ const worldWithProject = deriveGameUiShell({
 assert.equal(worldWithProject.showHud, true);
 assert.equal(worldWithProject.showProjectStatus, true);
 
-for (const blockingOverlayVisible of [true]) {
-  const overlay = deriveGameUiShell({
-    worldReady: true,
-    blockingOverlayVisible,
-    projectStatusAvailable: true,
-  });
-  assert.equal(overlay.mode, "overlay");
-  assert.equal(overlay.showHud, false);
-  assert.equal(overlay.showProjectStatus, false);
-}
+const overlay = deriveGameUiShell({
+  worldReady: true,
+  blockingOverlayVisible: true,
+  projectStatusAvailable: true,
+});
+assert.equal(overlay.mode, "overlay");
+assert.equal(overlay.showHud, false);
+assert.equal(overlay.showProjectStatus, false);
 
 const notReady = deriveGameUiShell({
   worldReady: false,
