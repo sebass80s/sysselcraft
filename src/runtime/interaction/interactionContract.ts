@@ -24,7 +24,7 @@ export type InteractionDefinition = {
   enabled: boolean;
 };
 
-export type InteractionRequest = {
+type InteractionRequest = {
   interactionId: string;
   requestedAt: WorldPoint;
 };
