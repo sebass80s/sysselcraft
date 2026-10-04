@@ -202,6 +202,28 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('{bakeryStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png"')
+    && villageRuntime.includes('aria-label="Bageriet är färdigt"'),
+  "Act 1 Bakery completion must preserve its accepted image and accessible label",
+);
+assert.ok(
+  villageRuntime.includes('bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker.toLowerCase()')
+    && villageRuntime.includes('{bakerySpeakerName}</span><p>{bakeryStoryLine.text}</p>'),
+  "Act 1 Bakery completion must preserve speaker identity, tone and line text",
+);
+assert.ok(
+  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceBakeryStory()}')
+    && villageRuntime.includes('constructionBusy ? "Sparar…" : bakeryStoryIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"'),
+  "Act 1 Bakery completion must preserve busy state, callback and CTA labels",
+);
+assert.ok(
+  villageRuntime.includes('{bakeryStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png"')
+    && villageRuntime.includes('aria-label="Testvisning av färdigt bageri"')
+    && villageRuntime.includes('onClick={advanceBakeryStoryReplay}'),
+  "Act 1 Bakery replay must preserve image, accessible label and callback",
+);
+
+assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
     && villageRuntime.includes('image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}')
     && villageRuntime.includes('ariaLabel="Mira kommer till byn"'),
