@@ -224,13 +224,13 @@ assert.ok(
 );
 assert.ok(
   villageRuntime.includes('speaker={solTourSpeakerName}')
-    && villageRuntime.includes('speakerTone={solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker === "Henning" ? "henning" : solTourStoryLine.speaker === "Mira" ? "mira" : solTourStoryLine.speaker === "Linus" ? "linus" : "sol"}')
+    && villageRuntime.includes('speakerTone={storySpeakerTone(solTourStoryLine.speaker)}')
     && villageRuntime.includes('<p>{solTourStoryLine.text}</p>'),
-  "Act 1 Sol tour must preserve child, Henning, Mira, Linus and Sol speaker presentation through Story Engine",
+  "Act 1 Sol tour must preserve child, Henning, Mira, Linus and Sol speaker presentation through the shared tone mapping",
 );
 assert.ok(
-  villageRuntime.includes('speakerTone={solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker === "Henning" ? "henning" : solTourStoryLine.speaker === "Mira" ? "mira" : solTourStoryLine.speaker === "Linus" ? "linus" : "sol"}'),
-  "Act 1 Sol tour must preserve accepted child/Henning/Mira/Linus/Sol speaker tones before shared-tone migration",
+  villageRuntime.includes('speakerTone={storySpeakerTone(solTourStoryLine.speaker)}'),
+  "Act 1 Sol tour must consume the shared child/Henning/Mira/Linus/Sol speaker tone mapping",
 );
 assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')

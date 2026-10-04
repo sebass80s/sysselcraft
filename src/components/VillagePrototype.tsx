@@ -1545,7 +1545,7 @@ export default function VillagePrototype() {
       image={solTourImage}
       ariaLabel="Sol ser sig omkring i byn"
       speaker={solTourSpeakerName}
-      speakerTone={solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker === "Henning" ? "henning" : solTourStoryLine.speaker === "Mira" ? "mira" : solTourStoryLine.speaker === "Linus" ? "linus" : "sol"}
+      speakerTone={storySpeakerTone(solTourStoryLine.speaker)}
       nextLabel={constructionBusy ? "Sparar…" : solTourStoryIndex === solTourDialogue[solTourStoryStop].length - 1 ? (solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen") : "Fortsätt"}
       nextDisabled={constructionBusy}
       onNext={() => void advanceSolTourStory()}
