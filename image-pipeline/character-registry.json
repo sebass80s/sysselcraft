@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "characterSheetRoot": "public/assets/village/character-sheets",
+  "globalRules": [
+    "Use the supplied canonical character sheets as the sole authority for recurring character identity, clothing, proportions and silhouette.",
+    "Do not reinterpret recurring characters from runtime sprites, story images or environment references.",
+    "SysselCraft story moments are photo-like and grounded, not cartoon, anime or 3D-toy styled.",
+    "Do not invent extra people, props, buildings or story events unless explicitly requested by the scene.",
+    "Barnet's face must never be visible. Show Barnet only from behind or rear three-quarter."
+  ],
+  "globalQaChecks": [
+    "Every recurring character matches the supplied canonical character sheet.",
+    "No unrequested characters are present.",
+    "Barnet's face is not visible when Barnet is present.",
+    "No unintended style drift toward cartoon/anime/toy-like rendering."
+  ],
+  "characters": {
+    "alve": {
+      "displayName": "Alve",
+      "characterSheet": "public/assets/village/character-sheets/alve.png"
+    },
+    "barnet": {
+      "displayName": "Barnet",
+      "characterSheet": "public/assets/village/character-sheets/barnet.png"
+    },
+    "henning": {
+      "displayName": "Henning",
+      "characterSheet": "public/assets/village/character-sheets/henning.png"
+    },
+    "linus": {
+      "displayName": "Linus",
+      "characterSheet": "public/assets/village/character-sheets/linus.png"
+    },
+    "mira": {
+      "displayName": "Mira",
+      "characterSheet": "public/assets/village/character-sheets/mira.png"
+    },
+    "nova": {
+      "displayName": "Nova",
+      "characterSheet": "public/assets/village/character-sheets/nova.png"
+    },
+    "puppy": {
+      "displayName": "Valpen",
+      "characterSheet": "public/assets/village/character-sheets/puppy.png"
+    },
+    "sol": {
+      "displayName": "Sol",
+      "characterSheet": "public/assets/village/character-sheets/sol.png"
+    }
+  }
+}
