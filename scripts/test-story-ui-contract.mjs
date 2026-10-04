@@ -172,9 +172,9 @@ assert.ok(
   "Act 1 bottle message must preserve its image and accessible label through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('speakerTone={bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}')
+  villageRuntime.includes('speakerTone={storySpeakerTone(bottleMessageDialogue[bottleStoryIndex].speaker)}')
     && villageRuntime.includes('bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")'),
-  "Act 1 bottle message must preserve speaker tone and dog-name interpolation through Story Engine",
+  "Act 1 bottle message must preserve speaker tone and dog-name interpolation through the shared tone mapping",
 );
 assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
