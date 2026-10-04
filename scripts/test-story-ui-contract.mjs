@@ -205,6 +205,10 @@ assert.ok(
   "Act 1 Sol arrival must preserve speaker identity and line text through Story Engine",
 );
 assert.ok(
+  villageRuntime.includes('speakerTone={solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}'),
+  "Act 1 Sol arrival must preserve accepted child/Sol speaker tones before shared-tone migration",
+);
+assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
     && villageRuntime.includes('onNext={() => void advanceSolStory()}')
     && villageRuntime.includes('nextLabel={constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}'),
