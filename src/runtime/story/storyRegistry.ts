@@ -46,20 +46,3 @@ export function createStoryRegistry(
   return { beats };
 }
 
-export function storyBeatById(
-  registry: StoryRegistry,
-  beatId: string,
-): StoryBeatDefinition | null {
-  return registry.beats.find((beat) => beat.id === beatId) ?? null;
-}
-
-export function storylinesInChapter(
-  registry: StoryRegistry,
-  chapterId: string,
-): readonly string[] {
-  return [...new Set(
-    registry.beats
-      .filter((beat) => beat.chapterId === chapterId)
-      .map((beat) => beat.storylineId),
-  )];
-}
