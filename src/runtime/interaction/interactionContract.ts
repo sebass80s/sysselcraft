@@ -8,7 +8,7 @@ export type WorldPoint = {
   y: number;
 };
 
-export type InteractionActivationZone = {
+type InteractionActivationZone = {
   anchor: WorldPoint;
   interactionRadius: number;
 };
