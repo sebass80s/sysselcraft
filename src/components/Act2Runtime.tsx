@@ -835,7 +835,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
             setChapterIntroVisible(false);
           }}
         >
-          {chapterIntroNameVisible ? "Fortsätt" : "Fortsätt"}
+          Fortsätt
         </button>
       </div>
     </div>}
