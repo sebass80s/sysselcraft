@@ -75,7 +75,7 @@ for (const endCardSeen of [false, true]) {
     act2Complete: true,
     endCardSeen,
   });
-  assert.equal(legacy.finaleSchemaVersion, 2);
+  assert.equal(legacy.finaleSchemaVersion, 3);
   assert.equal(legacy.finaleIndex, 5);
   assert.equal(legacy.familyFinaleConsumed, true);
   assert.equal(legacy.epilogueConsumed, false);
@@ -91,7 +91,7 @@ for (const endCardSeen of [false, true]) {
     act2Complete: true,
     endCardSeen,
   });
-  assert.equal(poisoned.finaleSchemaVersion, 2);
+  assert.equal(poisoned.finaleSchemaVersion, 3);
   assert.equal(poisoned.finaleIndex, 5);
   assert.equal(poisoned.epilogueConsumed, false);
   assert.equal(poisoned.act2Complete, false);
@@ -109,6 +109,7 @@ const schema2FamilyOnly = s.normalizeAct2RuntimeState({
   act2Complete: false,
   endCardSeen: false,
 });
+assert.equal(schema2FamilyOnly.finaleSchemaVersion, 3);
 assert.equal(schema2FamilyOnly.finaleIndex, 5);
 assert.equal(schema2FamilyOnly.familyFinaleConsumed, true);
 assert.equal(schema2FamilyOnly.epilogueConsumed, false);
@@ -125,6 +126,7 @@ const schema2ActuallyComplete = s.normalizeAct2RuntimeState({
   act2Complete: true,
   endCardSeen: true,
 });
+assert.equal(schema2ActuallyComplete.finaleSchemaVersion, 3);
 assert.equal(schema2ActuallyComplete.finaleIndex, 5);
 assert.equal(schema2ActuallyComplete.familyFinaleConsumed, true);
 assert.equal(schema2ActuallyComplete.epilogueConsumed, true);
