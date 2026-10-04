@@ -237,25 +237,38 @@ assert.equal(
 );
 
 assert.ok(
-  villageRuntime.includes('clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"')
-    && villageRuntime.includes('aria-label="Sols klinik är färdig"'),
-  "Act 1 Clinic completion must preserve its two-scene image boundary and accessible label",
+  villageRuntime.includes('{clinicStoryIndex !== null && clinicStoryLine && <StoryMoment')
+    && villageRuntime.includes('image={clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"}')
+    && villageRuntime.includes('ariaLabel="Sols klinik är färdig"'),
+  "Act 1 Clinic completion must preserve its two-scene image boundary and accessible label through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker.toLowerCase()')
-    && villageRuntime.includes('{clinicSpeakerName}</span><p>{clinicStoryLine.text}</p>'),
-  "Act 1 Clinic completion must preserve speaker identity, tone and line text",
+  villageRuntime.includes('speaker={clinicSpeakerName}')
+    && villageRuntime.includes('speakerTone={clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker === "Linus" ? "linus" : "sol"}')
+    && villageRuntime.includes('<p>{clinicStoryLine.text}</p>'),
+  "Act 1 Clinic completion must preserve child, Linus and Sol speaker presentation through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('onClick={advanceClinicStory}')
-    && villageRuntime.includes('clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"'),
-  "Act 1 Clinic completion must preserve callback and CTA labels",
+  villageRuntime.includes('onNext={advanceClinicStory}')
+    && villageRuntime.includes('nextLabel={clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}'),
+  "Act 1 Clinic completion must preserve callback and CTA labels through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"')
-    && villageRuntime.includes('aria-label="Testvisning av Sols färdiga klinik"')
-    && villageRuntime.includes('onClick={advanceClinicStoryReplay}'),
-  "Act 1 Clinic replay must preserve scene image, accessible label and callback",
+  villageRuntime.includes('{clinicStoryReplayIndex !== null && clinicStoryReplayLine && <StoryMoment')
+    && villageRuntime.includes('image={clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"}')
+    && villageRuntime.includes('ariaLabel="Testvisning av Sols färdiga klinik"')
+    && villageRuntime.includes('onNext={advanceClinicStoryReplay}'),
+  "Act 1 Clinic replay must preserve scene image, accessible label and callback through Story Engine",
+);
+assert.equal(
+  villageRuntime.includes('{clinicStoryIndex !== null && clinicStoryLine && <div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 Clinic completion must not retain its parallel legacy story shell",
+);
+assert.equal(
+  villageRuntime.includes('{clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 Clinic replay must not retain its parallel legacy story shell",
 );
 
 assert.ok(

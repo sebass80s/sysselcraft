@@ -1578,13 +1578,31 @@ export default function VillagePrototype() {
     >
       <p>{miraReplayText}</p>
     </StoryMoment>}
-    {clinicStoryIndex !== null && clinicStoryLine && <div className="story-moment" role="presentation"><Image src={clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"} alt="" fill priority sizes="100vw" /></div>}
-    {clinicStoryIndex !== null && clinicStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Sols klinik är färdig"><span className={`dialogue-speaker henning-story-speaker ${clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker.toLowerCase()}`}>{clinicSpeakerName}</span><p>{clinicStoryLine.text}</p><button className="primary-button dialogue-next" onClick={advanceClinicStory}>{clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
+    {clinicStoryIndex !== null && clinicStoryLine && <StoryMoment
+      image={clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"}
+      ariaLabel="Sols klinik är färdig"
+      speaker={clinicSpeakerName}
+      speakerTone={clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker === "Linus" ? "linus" : "sol"}
+      nextLabel={clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      onNext={advanceClinicStory}
+      presentationId={`act1:clinic-complete:${clinicStoryIndex}`}
+    >
+      <p>{clinicStoryLine.text}</p>
+    </StoryMoment>}
     {act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="story-moment" role="presentation"><Image src={act1ChapterFinaleImage} alt="" fill priority sizes="100vw" /></div>}
     {act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byn lever igen"><span className={`dialogue-speaker henning-story-speaker ${act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker.toLowerCase()}`}>{act1ChapterFinaleSpeakerName}</span><p>{act1ChapterFinaleLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceAct1ChapterFinale()}>{constructionBusy ? "Sparar…" : act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {act1ChapterFinaleSeen && !act1EndCardSeen && act1ChapterFinaleIndex === null && <div role="dialog" aria-modal="true" aria-label="Slut på första kapitlet" style={{ position:"fixed", inset:0, zIndex:150, display:"grid", placeItems:"center", background:"#050706", color:"white", textAlign:"center", padding:24 }}><div><h1 style={{ margin:0, fontSize:"clamp(2rem, 7vw, 4.5rem)", letterSpacing:".04em" }}>SLUT PÅ FÖRSTA KAPITLET</h1><button className="primary-button" type="button" disabled={constructionBusy} style={{ marginTop:28 }} onClick={() => void acknowledgeAct1EndCard()}>{constructionBusy ? "Sparar…" : "Tillbaka till byn"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></div>}
-    {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="story-moment" role="presentation"><Image src={clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"} alt="" fill priority sizes="100vw" /></div>}
-    {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Sols färdiga klinik"><span className={`dialogue-speaker henning-story-speaker ${clinicStoryReplayLine.speaker === "Barnet" ? "child" : clinicStoryReplayLine.speaker.toLowerCase()}`}>{clinicReplaySpeakerName}</span><p>{clinicStoryReplayLine.text}</p><button className="primary-button dialogue-next" onClick={advanceClinicStoryReplay}>{clinicStoryReplayIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
+    {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <StoryMoment
+      image={clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"}
+      ariaLabel="Testvisning av Sols färdiga klinik"
+      speaker={clinicReplaySpeakerName}
+      speakerTone={clinicStoryReplayLine.speaker === "Barnet" ? "child" : clinicStoryReplayLine.speaker === "Linus" ? "linus" : "sol"}
+      nextLabel={clinicStoryReplayIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      onNext={advanceClinicStoryReplay}
+      presentationId={`act1:clinic-complete-replay:${clinicStoryReplayIndex}`}
+    >
+      <p>{clinicStoryReplayLine.text}</p>
+    </StoryMoment>}
     {bakeryStoryIndex !== null && bakeryStoryLine && <StoryMoment
       image="/assets/village/story-moments/bakery-completion.png"
       ariaLabel="Bageriet är färdigt"
