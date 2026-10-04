@@ -469,6 +469,14 @@ assert.ok(
     && villageRuntime.includes('onNext={() => advanceHenningDialogue(last)}'),
   "Henning inline dialogue must consume the shared card while preserving its speaker classes and navigation",
 );
+assert.ok(
+  villageRuntime.includes('{recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig">')
+    && villageRuntime.includes('recyclingStoryLine.speaker === "Barnet" ? "child" : ""')
+    && villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}')
+    && villageRuntime.includes('constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"')
+    && villageRuntime.includes('{constructionError && <p role="alert">{constructionError}</p>}</div>}'),
+  "Recycling completion inline dialogue must preserve compact markup, child tone, busy state, CTA and trailing error row before migration",
+);
 
 assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
