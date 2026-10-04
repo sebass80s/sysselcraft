@@ -9,6 +9,7 @@ import type { StorySpeakerTone } from "../../game/storyEngine";
 type StoryMomentProps = {
   image?: string;
   heading?: string;
+  ariaLabel?: string;
   imageFit?: "cover" | "contain";
   speaker?: string;
   speakerTone?: StorySpeakerTone;
@@ -29,6 +30,7 @@ type StoryMomentProps = {
 export function StoryMoment({
   image,
   heading,
+  ariaLabel,
   imageFit = "cover",
   speaker,
   speakerTone = "default",
@@ -89,6 +91,7 @@ export function StoryMoment({
       {!imageOnly && <div className="shared-story-tint" aria-hidden="true" />}
       {!imageOnly && <DialogueCard
         heading={heading}
+        ariaLabel={ariaLabel}
         speaker={speaker}
         speakerTone={speakerTone}
         previousLabel={previousLabel}

@@ -5,6 +5,7 @@ import type { StorySpeakerTone } from "../../game/storyEngine";
 
 type DialogueCardProps = {
   heading?: string;
+  ariaLabel?: string;
   speaker?: string;
   speakerTone?: StorySpeakerTone;
   children: ReactNode;
@@ -19,6 +20,7 @@ type DialogueCardProps = {
 
 export function DialogueCard({
   heading,
+  ariaLabel,
   speaker,
   speakerTone = "default",
   children,
@@ -36,6 +38,7 @@ export function DialogueCard({
       className={`dialogue-card story-moment-dialogue shared-story-dialogue ${className}`.trim()}
       role="dialog"
       aria-modal="true"
+      aria-label={ariaLabel}
     >
       {heading && <h2 className="shared-story-heading">{heading}</h2>}
       {speaker && <span className={`dialogue-speaker${speakerClass}`}>{speaker}</span>}

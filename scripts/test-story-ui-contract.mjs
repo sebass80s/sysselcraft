@@ -75,6 +75,9 @@ assert.match(storyMomentSource, /className="primary-button shared-story-image-co
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
+assert.match(dialogueCard, /ariaLabel\?: string/, "DialogueCard must support an accessible dialog label");
+assert.match(dialogueCard, /aria-label=\{ariaLabel\}/, "DialogueCard must publish its accessible dialog label");
+assert.match(runner, /ariaLabel\?: string/, "StoryRunner must pass accessible labels through Story Engine");
 assert.match(transcript, /showSpeakers\?: boolean/, "StoryTranscript must support explicit nameplate ownership");
 assert.match(transcript, /showSpeakers && parsed\.speaker/, "StoryTranscript must honor nameplate ownership");
 assert.match(runner, /showSpeakers=\{!beat\.speaker\}/, "StoryRunner must prevent duplicate explicit + parsed nameplates");
@@ -124,18 +127,30 @@ assert.equal(
 );
 
 assert.ok(
-  villageRuntime.includes('{bottleStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-message.png"'),
-  "Act 1 bottle-message legacy oracle must preserve its accepted story image before migration",
+  villageRuntime.includes('{bottleStoryIndex !== null && <StoryMoment')
+    && villageRuntime.includes('image="/assets/village/story-moments/bottle-message.png"')
+    && villageRuntime.includes('ariaLabel="Skicka flaskpost"'),
+  "Act 1 bottle message must preserve its image and accessible label through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"')
+  villageRuntime.includes('speakerTone={bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}')
     && villageRuntime.includes('bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")'),
-  "Act 1 bottle-message legacy oracle must preserve speaker tone and dog-name interpolation",
+  "Act 1 bottle message must preserve speaker tone and dog-name interpolation through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceBottleStory()}')
-    && villageRuntime.includes('constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"'),
-  "Act 1 bottle-message legacy oracle must preserve busy state, callback and CTA labels",
+  villageRuntime.includes('nextDisabled={constructionBusy}')
+    && villageRuntime.includes('onNext={() => void advanceBottleStory()}')
+    && villageRuntime.includes('nextLabel={constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}'),
+  "Act 1 bottle message must preserve busy state, callback and CTA labels through Story Engine",
+);
+assert.equal(
+  villageRuntime.includes('{bottleStoryIndex !== null && <div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 bottle message must not retain its parallel legacy story shell",
+);
+assert.ok(
+  villageRuntime.includes('ariaLabel="Brevet i flaskposten"'),
+  "Act 1 bottle letter must preserve its accessible dialog label after migration",
 );
 
 assert.deepEqual(

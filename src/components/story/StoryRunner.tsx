@@ -6,6 +6,7 @@ import type { StoryBeatPresentation } from "../../game/storyEngine";
 
 type StoryRunnerProps = {
   beat: StoryBeatPresentation;
+  ariaLabel?: string;
   onPrevious?: () => void | Promise<void>;
   onNext: () => void | Promise<void>;
   zIndex?: number;
@@ -15,12 +16,13 @@ type StoryRunnerProps = {
   revealImageBeforeNext?: boolean;
 };
 
-export function StoryRunner({ beat, onPrevious, onNext, zIndex, background, dialogueClassName, childName, revealImageBeforeNext = false }: StoryRunnerProps) {
+export function StoryRunner({ beat, ariaLabel, onPrevious, onNext, zIndex, background, dialogueClassName, childName, revealImageBeforeNext = false }: StoryRunnerProps) {
   return (
     <StoryMoment
       image={beat.image}
       imageFit={beat.imageFit}
       heading={beat.heading}
+      ariaLabel={ariaLabel}
       speaker={beat.speaker}
       speakerTone={beat.speakerTone}
       onPrevious={onPrevious}

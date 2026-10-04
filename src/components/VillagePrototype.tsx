@@ -43,6 +43,7 @@ import { parseStoryLine } from "../game/storyEngine";
 import { act2ResumeHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
+import { StoryMoment } from "./story/StoryMoment";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
@@ -1512,11 +1513,22 @@ export default function VillagePrototype() {
         lines: ["Brevet är klart."],
         nextLabel: "Gå till vattnet",
       }}
+      ariaLabel="Brevet i flaskposten"
       onNext={advanceBottleLetter}
       childName={childName || "Barnet"}
     />}
-    {bottleStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-message.png" alt="" fill priority sizes="100vw" /></div>}
-    {bottleStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Skicka flaskpost"><span className={`dialogue-speaker ${bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}`}>{bottleMessageDialogue[bottleStoryIndex].speaker === "Hunden" ? dogName || "Hunden" : childName || "Barnet"}</span><p>{bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBottleStory()}>{constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}</button></div>}
+    {bottleStoryIndex !== null && <StoryMoment
+      image="/assets/village/story-moments/bottle-message.png"
+      ariaLabel="Skicka flaskpost"
+      speaker={bottleMessageDialogue[bottleStoryIndex].speaker === "Hunden" ? dogName || "Hunden" : childName || "Barnet"}
+      speakerTone={bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}
+      nextLabel={constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}
+      nextDisabled={constructionBusy}
+      onNext={() => void advanceBottleStory()}
+      presentationId={`act1:bottle-message:${bottleStoryIndex}`}
+    >
+      <p>{bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")}</p>
+    </StoryMoment>}
     {solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png" alt="" fill priority sizes="100vw" /></div>}
     {solStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}`}>{solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"}</span><p>{solArrivalDialogue[solStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolStory()}>{constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}</button></div>}
     {solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation"><Image src={solTourImage} alt="" fill priority sizes="100vw" /></div><div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol ser sig omkring i byn"><span className={`dialogue-speaker henning-story-speaker ${solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker.toLowerCase()}`}>{solTourSpeakerName}</span><p>{solTourStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolTourStory()}>{constructionBusy ? "Sparar…" : solTourStoryIndex === solTourDialogue[solTourStoryStop].length - 1 ? (solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen") : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></>}
