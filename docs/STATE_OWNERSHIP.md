@@ -179,7 +179,7 @@ Water collision is renderer/navigation state derived from the accepted lake-mast
 Act 2's local state is presentation/story ownership only. The backend remains authoritative for real quest lifecycle, rewards, wallet and earned-work evidence.
 
 ### Finale migration
-- Current finale schema marker is `finaleSchemaVersion: 2`.
+- Current finale schema marker is `finaleSchemaVersion: 3`; legacy compatibility runs explicitly through the sequential `1 -> 2 -> 3` chain before canonical normalization.
 - A completed pre-marker five-beat save retains all already-consumed project/family history and resumes only **Över sjön** once.
 - During that migration: `finaleIndex=5`, `familyFinaleConsumed=true`, `epilogueConsumed=false`, `act2Complete=false`, `endCardSeen=false`.
 - Finishing the epilogue sets Act 2 complete; acknowledging the chapter card sets the stable handoff boundary `act2Complete && endCardSeen`.
@@ -193,3 +193,25 @@ Alve presence and HUD visibility are not persistence authorities:
 
 ### Act 3 boundary
 The Chapter 3 route is read-only until Act 3 owns a versioned state family. Act 2 must not persist Act 3 entry, clear Act 2, or replay rewards during transition.
+
+
+## Save migration ownership closeout — 2026-10-04
+
+Historical local-shape conversion belongs to the Save / Migration Engine only when all required evidence is already inside the local persisted value and the conversion is pure and behavior-locked.
+
+### Construction legacy shape
+The old `worldFlags.recyclingCenterStage` -> canonical `construction` compatibility path is now migrated before construction normalization.
+
+Ownership rule:
+- migration owns the historical shape conversion when canonical `construction` is absent/non-authoritative according to the locked old-save boundary;
+- `normalizeConstruction()` owns current-state invariants such as `earned >= revealed`, deterministic pending reveal reconstruction and accepted completed-story-beat filtering;
+- progression/domain code owns stage derivation from current authoritative progression;
+- backend recovery owns claim baselines, wallet, quest lifecycle and purchased/story flags.
+
+Do not reintroduce a `legacyVisible` parameter or equivalent historical adapter into `normalizeConstruction()`.
+
+### Sweep result
+The repo-wide compatibility audit found no additional pure, local, ownership-locked implicit migration candidate. Validation, invariant repair, storage migration and backend-owned recovery must not be relabeled as migrations merely to reduce special-case counts.
+
+Canonical audit: `docs/SAVE_COMPATIBILITY_AUDIT.md`.
+Verified code checkpoint: `99df1984a2bc088f5715d8f6ef5b112bff8316c7`, GitHub Actions #1812 SUCCESS.
