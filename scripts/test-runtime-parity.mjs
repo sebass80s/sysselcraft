@@ -249,6 +249,29 @@ for (const y of [0, 427.4, 427.5, 427.6, -0.5, -1.5]) {
   placement.baseY = previousBaseY;
 }
 
+const progressGateParityFixtures = [
+  { name: "below threshold stays open", progress: 5, threshold: 6, completion: 16, resolved: false, expected: false },
+  { name: "threshold activates unresolved gate", progress: 6, threshold: 6, completion: 16, resolved: false, expected: true },
+  { name: "mid-arc unresolved gate remains active", progress: 11, threshold: 6, completion: 16, resolved: false, expected: true },
+  { name: "resolved requirement releases active window", progress: 11, threshold: 6, completion: 16, resolved: true, expected: false },
+  { name: "completion boundary retires unresolved gate", progress: 16, threshold: 6, completion: 16, resolved: false, expected: false },
+  { name: "past completion remains retired", progress: 20, threshold: 6, completion: 16, resolved: false, expected: false },
+  { name: "motorboat parts threshold preserves beat five boundary", progress: 5, threshold: 5, completion: 16, resolved: false, expected: true },
+  { name: "motorboat naming threshold preserves beat twelve boundary", progress: 12, threshold: 12, completion: 16, resolved: false, expected: true },
+];
+
+function legacyProgressGateRequired(progress, threshold, completion, resolved) {
+  return progress >= threshold && progress < completion && !resolved;
+}
+
+for (const fixture of progressGateParityFixtures) {
+  assert.equal(
+    legacyProgressGateRequired(fixture.progress, fixture.threshold, fixture.completion, fixture.resolved),
+    fixture.expected,
+    fixture.name,
+  );
+}
+
 const authoritativeDeltaParityFixtures = [
   { name: "equal authoritative and baseline counts produce zero delta", authoritative: 12, baseline: 12, expected: 0 },
   { name: "authoritative count above baseline preserves whole contribution delta", authoritative: 17, baseline: 12, expected: 5 },
