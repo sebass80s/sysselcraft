@@ -439,6 +439,18 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Linus om återvinningen"><span className="dialogue-speaker">{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next"')
+    && villageRuntime.includes('{last ? "Klart" : "Nästa"}</button></div>;'),
+  "Recycling inline dialogue must preserve its compact dialogue-card markup before shared inline-dialogue migration",
+);
+assert.ok(
+  villageRuntime.includes('{abandonedShopDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Den övergivna lanthandeln">')
+    && villageRuntime.includes('abandonedShopDialogueLine.speaker === "Barnet" ? "child" : ""')
+    && villageRuntime.includes('abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"'),
+  "Abandoned-shop inline dialogue must preserve its compact markup, child tone and navigation before shared inline-dialogue migration",
+);
+
+assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
     && villageRuntime.includes('image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}')
     && villageRuntime.includes('ariaLabel="Mira kommer till byn"'),
