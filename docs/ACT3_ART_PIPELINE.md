@@ -1,131 +1,219 @@
 # Act 3 Art Pipeline
 
-Status: **Parked design decision for Act 3 preparation**
+Status: **PREPARED / VEGA-OWNED ART PIPELINE**
+Date: 2026-10-04
 
-This document captures the agreed direction for producing Act 3 story images more efficiently than Act 2.
+This document defines the production method for **all Act 3 art**. It carries forward the proven SysselCraft visual rules from `docs/ART_DIRECTION.md`, but replaces the Act 2 manual reference-upload bottleneck with a connected Runway reference library and a strict no-guess resolver.
 
-## Problem observed in Act 2
+Act 2 is complete and is not to be retrofitted to this pipeline. This document exists so Act 3 can start cleanly.
 
-The main production bottleneck was not writing prompts, but the serial image-generation workflow:
+## Ownership
 
-1. write one prompt,
-2. wait for one image,
-3. save/store the image,
-4. write the next prompt,
-5. repeat.
+**Vega is the Act 3 art agent.**
 
-Because image generation sat on the critical path, runtime and story implementation repeatedly stalled while individual images were being produced, reviewed and corrected.
+Vega owns:
+- canonical reference lookup,
+- image-generation contracts,
+- Runway reference grounding,
+- story-moment generation,
+- environment/master-scene art production,
+- construction/state art production,
+- visual continuity checks,
+- rejection/regeneration of failed art,
+- deterministic finishing where needed,
+- stable output naming and handoff to runtime.
 
-## Agreed Act 3 direction
+Vega does **not** redesign story canon. Story/beat decisions come from the authored Act 3 design/manifest. Vega executes the visual contract.
 
-Act 3 art production should run as a **parallel production line**, separate from the main runtime/story implementation thread.
+## Canonical visual authority
 
-The main SysselCraft thread owns:
+Global visual rules live in:
+- `docs/ART_DIRECTION.md`
 
-- story and beat design,
-- runtime implementation,
-- canonical art rules,
-- image manifest,
-- reference selection,
-- prompt preparation,
-- final visual acceptance.
+Act-specific image requirements will live in the future Act 3 story/image manifest.
 
-A separate art agent / image-generation workflow should own:
+For reusable visual identity, the preferred source is the connected Runway Brand Kit:
 
-- reading the prepared beat list,
-- using the canonical reference material,
-- generating each requested story image,
-- keeping outputs tied to stable image IDs / filenames,
-- progressing autonomously through the queue as far as the tooling allows.
+- Brand Kit: **Syssel**
+- current sections include **Character sheets** and **Environment references**
 
-The art agent should **not redesign the story**. It should execute the authored image manifest.
+The library is a resolver, not merely a gallery. If the user writes a canonical name such as `Nova`, Vega must resolve that name to the corresponding canonical image asset and pass the real asset into the generation request.
 
-## Preferred production model
+## 🔒 NO-GUESS GENERATION RULE
 
-Prepare a machine-readable or highly structured Act 3 manifest before full image production starts.
+**Vega must never generate a SysselCraft production image when doing so would require guessing a canonical identity, environment, building state, prop, orientation, or other locked visual fact.**
+
+If a required source cannot be:
+1. identified unambiguously,
+2. fetched successfully,
+3. and passed into the selected generator as an actual image reference when the contract requires one,
+
+then **do not generate**.
+
+Stop and report exactly what is missing or inaccessible.
+
+A wrong image is not a draft. It is a failed pipeline execution.
+
+## 🔒 Name → asset → generation contract
+
+For every established named character or canonical visual entity:
+
+1. Parse the requested cast/entities from the authored beat or user instruction.
+2. Look up each canonical entity in the Runway **Syssel** library.
+3. Resolve the correct asset by canonical name/role.
+4. Verify that the asset is actually retrievable as a real image URL/reference.
+5. Pass those exact references into the generation call.
+6. Only then generate the scene.
+
+**Name recognition is not grounding.**
+
+Seeing that `nova.png` exists does not count as using Nova. The actual Nova image must be included as a reference input to the renderer.
+
+Likewise, a prose description such as “brown-haired girl named Nova” must never substitute for the canonical Nova reference when one exists.
+
+## Character grounding policy
+
+For every established character in a generated Act 3 image:
+- canonical character sheet/reference is mandatory;
+- all requested established characters must be referenced in the same generation where supported;
+- identity, face, age read, proportions, hair and stable design traits come from the reference;
+- scene prompt controls action, pose, expression, scene-appropriate wardrobe and staging without replacing identity;
+- if a model cannot accept the required number or type of references, use another supported production route or stop. Do not silently drop a character reference.
+
+### Barnet
+The existing locked child rule remains absolute:
+- Barnet's face is never shown in Story Moments/cutscenes;
+- preserve canonical cap, backpack, clothing, proportions and rear-view silhouette;
+- a generator result that reveals/invents the face is rejected.
+
+## Environment grounding policy
+
+When an Act 3 scene has an accepted environment/master reference:
+- fetch and pass the actual environment reference;
+- preserve camera language, geography, light direction, landmark placement and scale;
+- do not invent civilization, structures, roads, props or background activity not authored by the beat;
+- accepted master geometry outranks generator creativity.
+
+For a new Act 3 outdoor area, follow the master-scene method in `ART_DIRECTION.md`:
+**visual brief → one master composition → approve/freeze geometry → derive dynamic states/assets → deterministic validation → runtime handoff.**
+
+## Preferred Runway execution path
+
+For Act 3 character/story images, Runway is the preferred production path because Vega can:
+- read the **Syssel** Brand Kit,
+- retrieve reusable hosted image references,
+- send multiple references into image generation,
+- run distinct prompts as separate image tasks,
+- preserve results as reusable Runway-hosted assets,
+- later support queued/workflow production if useful.
+
+Use another renderer only when it can satisfy the same reference-grounding contract. Switching tools never relaxes the no-guess rule.
+
+## Proof-of-concept requirement
+
+Before full Act 3 art production starts, the pipeline must pass a small identity-grounding proof of concept.
+
+The PoC is successful only if:
+1. Vega receives a natural-language scene request using canonical names only;
+2. Vega resolves those names automatically from **Syssel**;
+3. the actual canonical assets are included in the generation request;
+4. output characters are recognizably the requested canonical characters;
+5. environment/style constraints remain coherent;
+6. no user re-upload of already-library-held canonical references is required.
+
+A generation that merely knows an asset exists, but fails to feed it into the renderer, is a **PoC failure**.
+
+## Act 3 manifest contract
+
+Before large-scale story-image production, each IMAGE/MAJOR beat should define:
+
+- stable beat ID;
+- stable image ID;
+- target runtime filename/path;
+- narrative purpose;
+- exact moment depicted;
+- characters present;
+- canonical Runway reference keys required;
+- environment/master reference required;
+- camera/framing/POV;
+- action and expression;
+- continuity in/out;
+- required props;
+- forbidden elements;
+- lighting/weather/time;
+- orientation/direction constraints;
+- acceptance criteria.
 
 Conceptual example:
 
 ```text
-beat-001
+A3-OPEN-001
   output: act3-opening-001.png
-  prompt: ...
-  references:
-    - child
-    - alve
-    - environment
-
-beat-002
-  output: act3-opening-002.png
-  prompt: ...
-  references:
-    - child
-    - alve
-    - puppy
+  cast:
+    - Barnet -> Syssel/Character sheets/barnet
+    - Alve   -> Syssel/Character sheets/alve
+  environment:
+    - <approved Act 3 master/reference>
+  constraints:
+    - Barnet rear view only
+    - exact travel direction from previous beat
+    - no extra buildings/people
+  acceptance:
+    - both identities grounded from actual refs
+    - child face invisible
+    - environment continuity preserved
 ```
 
-Each beat should define at minimum:
+## Batch / queue production
 
-- stable beat / image ID,
-- target filename,
-- authored scene description,
-- characters present,
-- canonical references to use,
-- camera / POV requirements,
-- continuity constraints,
-- forbidden elements,
-- acceptance criteria.
+Act 3 art should be produced as a queue rather than a one-prompt-at-a-time dependency on the runtime thread.
 
-## Canonical art constraints to carry forward
+For each queued item:
+1. resolve all references;
+2. fail closed if anything is missing;
+3. generate one standalone production image;
+4. inspect identity, continuity and composition;
+5. reject/regenerate internally if the contract fails;
+6. bind accepted output to the stable image ID/filename;
+7. continue to the next beat.
 
-The Act 3 manifest should explicitly encode lessons learned from Act 2, including:
+Do not generate contact sheets or grids as substitutes for final raster assets unless explicitly requested.
 
-- the child's face must not be visible when the scene uses the established child POV,
-- character faces, clothing and proportions must remain consistent,
-- environmental continuity must be preserved,
-- unwanted civilization / background elements must not appear,
-- the puppy should only appear when authored,
-- image direction and object orientation must match the beat,
-- outputs must map cleanly to stable runtime filenames.
+## Acceptance gates
 
-## Tooling direction
+Every generated Act 3 image must pass:
 
-Two promising routes were identified for later evaluation:
+1. **Reference gate** — every required canonical entity was actually supplied as a reference.
+2. **Identity gate** — requested characters visibly retain canonical identity.
+3. **Story gate** — the exact authored beat is depicted, with no invented story facts.
+4. **POV gate** — Barnet/back-view and other camera rules are satisfied.
+5. **Environment gate** — accepted geography/master-scene continuity is preserved.
+6. **Prop/state gate** — only correct project stage and authored props are visible.
+7. **Orientation gate** — vehicles, movement and object direction match canon.
+8. **Style gate** — image belongs to the accepted SysselCraft visual language, with no generic glossy-animation drift.
+9. **Runtime gate** — framing/aspect/output maps cleanly to its intended runtime use.
 
-### Runway
+If any gate fails, the image is rejected and is not canon.
 
-Runway appears particularly suitable for the desired autonomous workflow because it supports:
+## Failure behavior
 
-- image generation from text and references,
-- reusable workflows,
-- API-driven generation,
-- saved workflow execution,
-- multi-step creative pipelines.
+Vega must not “have a go” when the production contract is incomplete.
 
-The intended use is not to request many variants of one prompt, but to process **one distinct prompt per beat** from an Act 3 manifest.
+Examples:
+- Nova requested but Nova reference cannot be retrieved → **stop, do not draw a substitute**.
+- Mira + Nova requested but renderer only receives Nova → **stop or switch route**.
+- environment reference unavailable → **stop if the environment is canonical/locked**.
+- requested object orientation is unclear from canon → **ask/resolve before generation**.
+- reference exists in Runway but cannot be passed to the chosen renderer → **do not pretend it was used**.
 
-### OpenArt
+The user should never need to inspect a finished-looking image to discover that Vega silently guessed.
 
-OpenArt is also available as a ChatGPT integration and supports image generation with reference images and multiple current image models.
+## Production principle
 
-It may be useful for experimentation or direct ChatGPT-driven production, but the preferred direction for a fully queued manifest-driven pipeline is currently Runway/workflow/API unless testing shows otherwise.
-
-## Planned proof of concept
-
-Before committing Act 3 production to this pipeline, run a small proof of concept using approximately **three existing Act 2 scenes**.
-
-The PoC should test whether the chosen art workflow can:
-
-1. load the same canonical reference material,
-2. process several distinct beats without manual prompting between each image,
-3. preserve character and environment continuity,
-4. keep each result associated with its requested beat / filename,
-5. produce quality close enough to the accepted Act 2 visual standard.
-
-If the PoC succeeds, build the full Act 3 art manifest and run art production in parallel with runtime implementation.
-
-## Important boundary
-
-This is an **Act 3 preparation decision only**.
-
-Do not start Act 3 feature implementation or art-pipeline integration as part of Runtime 1.0 cleanup unless explicitly requested. When Act 3 planning resumes, this document is the starting point for the art-production discussion.
+**References define identity.  
+The manifest defines story.  
+The master scene defines geometry.  
+The prompt defines the moment.  
+Generation paints.  
+Vega verifies.  
+If any locked input is missing, Vega does not guess.**
