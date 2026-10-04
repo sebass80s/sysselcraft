@@ -1361,6 +1361,27 @@ Verification: GitHub Actions #1799, full `npm run verify`, SUCCESS on commit `be
 Next safe Save/Migration work should move additional compatibility repairs behind explicit versioned steps. Backend-owned quests, rewards, wallet values and authoritative progression must never be fabricated by migrations.
 
 
+## Save / Migration Engine checkpoint 2 — Act 1 Clinic/finale compatibility
+
+Act 1 now consumes the shared Save / Migration Engine for its legacy chapter-finale compatibility repair.
+
+Historical behavior preserved:
+- old saves may have `worldFlags.clinicCompletionSeen === true`;
+- those saves can predate `act1ChapterFinaleSeen`, `act1ChapterFinaleIndex` and `act1EndCardSeen`;
+- those players must regain Act 2/lake access without replaying the newly introduced Act 1 chapter ending.
+
+The repair now runs explicitly through `runSequentialMigrations()` in `src/game/saveState.ts`. Saves with existing Act 1 chapter-finale state are already current for this compatibility step. Legacy Clinic-complete saves without chapter-finale state migrate to `act1ChapterFinaleSeen: true` and `act1EndCardSeen: true`. Incomplete Clinic/finale states are not fabricated or skipped.
+
+The previous implicit legacy acknowledgement branch was retired. `scripts/test-sol-story.mjs` now guards the migration-engine behavior rather than the removed implementation shape.
+
+Verification:
+- CI #1801 exposed the stale source-shape harness;
+- the harness was updated to canonical migration ownership;
+- CI #1802: full `npm run verify` SUCCESS on `6f6a60a25476d3b3b7e5ed0e2e89d5c235460a5c`.
+
+No backend-owned state, rewards, wallet values, quest progression or authoritative story flags are fabricated by this migration.
+
+
 ## Save / Migration Engine checkpoint 3 — Act 2 finale schema 3
 
 Act 2 finale compatibility now has an explicit sequential schema chain:
@@ -1380,3 +1401,21 @@ Verification:
 - GitHub Actions #1806: full `npm run verify` SUCCESS on `0884fb5359f5b48a46cb9af57f2615908bb8849f`.
 
 No production/live, backend-owned progression, Adam data, Act 3, navigation, collision, iPhone/WebView behavior, story content or economy was changed.
+
+
+## Current Runtime 1.0 verified checkpoint — 2026-10-04
+
+Branch: `nova/runtime-architecture-v1`.
+
+Verified documented HEAD before this documentation sync: `2de79498f9537d356a444656df9d408cfb135cac`.
+
+GitHub Actions #1807 ran full `npm run verify` successfully on that HEAD.
+
+Save / Migration Engine status:
+- canonical sequential migration runner exists;
+- Act 1 Clinic/finale compatibility is explicit;
+- Act 2 finale compatibility is explicit through `1 -> 2 -> 3`;
+- `preEpilogueSchemaComplete` and `legacyFamilyComplete` are no longer normalizer-owned compatibility branches;
+- normalizers now handle canonical invariants after versioned compatibility migration.
+
+Safety boundaries remain unchanged: no production/live promotion, no Adam-data mutation, no backend-owned progression fabrication, no Act 3 feature work, and no iPhone/WebView-sensitive navigation/collision/movement convergence without physical acceptance.
