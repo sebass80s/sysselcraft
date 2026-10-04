@@ -102,16 +102,25 @@ assert.match(act2Runtime, /meeting-alve\/pick\.png/, "Canonical production proje
 assert.match(act2Runtime, /availablePrerequisites\.map/, "Shared runtime must own the first-project chooser");
 
 assert.ok(
-  villageRuntime.includes('{bottleLetterOpen && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-letter.png"'),
-  "Act 1 bottle-letter legacy oracle must preserve the accepted story image before migration",
+  villageRuntime.includes('id: "act1:bottle-letter"')
+    && villageRuntime.includes('image: "/assets/village/story-moments/bottle-letter.png"'),
+  "Act 1 bottle letter must preserve the accepted image through StoryRunner",
 );
 assert.ok(
-  villageRuntime.includes('<span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Brevet är klart.</p>'),
-  "Act 1 bottle-letter legacy oracle must preserve the child nameplate and text",
+  villageRuntime.includes('speaker: childName || "Barnet"')
+    && villageRuntime.includes('speakerTone: "child"')
+    && villageRuntime.includes('lines: ["Brevet är klart."]'),
+  "Act 1 bottle letter must preserve the child nameplate and text through StoryRunner",
 );
 assert.ok(
-  villageRuntime.includes('<button className="primary-button dialogue-next" onClick={advanceBottleLetter}>Gå till vattnet</button>'),
-  "Act 1 bottle-letter legacy oracle must preserve the accepted CTA and callback",
+  villageRuntime.includes('nextLabel: "Gå till vattnet"')
+    && villageRuntime.includes("onNext={advanceBottleLetter}"),
+  "Act 1 bottle letter must preserve the accepted CTA and callback through StoryRunner",
+);
+assert.equal(
+  villageRuntime.includes('{bottleLetterOpen && <div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 bottle letter must not retain its parallel legacy story shell",
 );
 
 assert.deepEqual(
