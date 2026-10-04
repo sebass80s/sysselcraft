@@ -20,23 +20,28 @@ export type ParsedStoryLine = {
 
 export const STORY_SPEAKER_PREFIXES = ["Barnet", "Okänd", "Alve", "Henning", "Mira", "Linus", "Sol", "Pappan", "Storasystern", "Hunden", "Valpen"] as const;
 
+export function storySpeakerTone(speaker: string): StorySpeakerTone {
+  if (speaker === "Barnet") return "child";
+  if (speaker === "Hunden" || speaker === "Valpen") return "dog";
+  if (speaker === "Alve") return "alve";
+  if (speaker === "Henning") return "henning";
+  if (speaker === "Mira") return "mira";
+  if (speaker === "Linus") return "linus";
+  if (speaker === "Sol") return "sol";
+  return "default";
+}
+
 export function parseStoryLine(line: string, childName = "Barnet"): ParsedStoryLine {
   const renderedLine = line.replaceAll("{childName}", childName);
   for (const prefix of STORY_SPEAKER_PREFIXES) {
     const marker = `${prefix}:`;
     if (!renderedLine.startsWith(marker)) continue;
     const text = renderedLine.slice(marker.length).trimStart();
-    if (prefix === "Barnet") return { text, speaker: childName, speakerTone: "child" };
-    if (prefix === "Okänd") return { text, speaker: "Barnet", speakerTone: "default" };
-    if (prefix === "Pappan") return { text, speaker: "Alves Pappa", speakerTone: "default" };
-    if (prefix === "Storasystern") return { text, speaker: "Alves Syster", speakerTone: "default" };
-    if (prefix === "Hunden" || prefix === "Valpen") return { text, speaker: prefix, speakerTone: "dog" };
-    if (prefix === "Alve") return { text, speaker: prefix, speakerTone: "alve" };
-    if (prefix === "Henning") return { text, speaker: prefix, speakerTone: "henning" };
-    if (prefix === "Mira") return { text, speaker: prefix, speakerTone: "mira" };
-    if (prefix === "Linus") return { text, speaker: prefix, speakerTone: "linus" };
-    if (prefix === "Sol") return { text, speaker: prefix, speakerTone: "sol" };
-    return { text, speaker: prefix, speakerTone: "default" };
+    if (prefix === "Barnet") return { text, speaker: childName, speakerTone: storySpeakerTone(prefix) };
+    if (prefix === "Okänd") return { text, speaker: "Barnet", speakerTone: storySpeakerTone(prefix) };
+    if (prefix === "Pappan") return { text, speaker: "Alves Pappa", speakerTone: storySpeakerTone(prefix) };
+    if (prefix === "Storasystern") return { text, speaker: "Alves Syster", speakerTone: storySpeakerTone(prefix) };
+    return { text, speaker: prefix, speakerTone: storySpeakerTone(prefix) };
   }
   return { text: renderedLine };
 }

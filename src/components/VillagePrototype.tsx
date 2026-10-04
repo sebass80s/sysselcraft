@@ -39,7 +39,7 @@ import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
 import { boathousePurchaseRequired, clearAct2RuntimeStateForPairedChild, jettyPurchaseRequired, motorboatPartsPurchaseRequired, loadAct2RuntimeState, saveAct2RuntimeState, withBackendStoryFlags } from "../game/act2RuntimeState";
 import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
-import { parseStoryLine } from "../game/storyEngine";
+import { parseStoryLine, storySpeakerTone } from "../game/storyEngine";
 import { act2ResumeHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
@@ -1558,7 +1558,7 @@ export default function VillagePrototype() {
       image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}
       ariaLabel="Mira kommer till byn"
       speaker={miraSpeakerName}
-      speakerTone={miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker === "Henning" ? "henning" : miraStoryLine.speaker === "Linus" ? "linus" : "mira"}
+      speakerTone={storySpeakerTone(miraStoryLine.speaker)}
       nextLabel={constructionBusy ? "Sparar…" : miraStoryIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}
       nextDisabled={constructionBusy}
       onNext={() => void advanceMiraStory()}
@@ -1571,7 +1571,7 @@ export default function VillagePrototype() {
       image={miraStoryReplayIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}
       ariaLabel="Testvisning av Mira kommer till byn"
       speaker={miraReplaySpeakerName}
-      speakerTone={miraStoryReplayLine.speaker === "Barnet" ? "child" : miraStoryReplayLine.speaker === "Henning" ? "henning" : miraStoryReplayLine.speaker === "Linus" ? "linus" : "mira"}
+      speakerTone={storySpeakerTone(miraStoryReplayLine.speaker)}
       nextLabel={miraStoryReplayIndex === miraArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}
       onNext={advanceMiraStoryReplay}
       presentationId={`act1:mira-arrival-replay:${miraStoryReplayIndex}`}
@@ -1666,7 +1666,7 @@ export default function VillagePrototype() {
       image="/assets/village/story-moments/henning-arrival.png"
       ariaLabel="Testvisning av Henning kommer till byn"
       speaker={henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryReplayIndex].speaker}
-      speakerTone={henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryReplayIndex].speaker === "Linus" ? "linus" : "henning"}
+      speakerTone={storySpeakerTone(henningArrivalDialogue[henningStoryReplayIndex].speaker)}
       nextLabel={henningStoryReplayIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}
       onNext={advanceHenningStoryReplay}
       presentationId={`act1:henning-arrival-replay:${henningStoryReplayIndex}`}
@@ -1677,7 +1677,7 @@ export default function VillagePrototype() {
       image="/assets/village/story-moments/henning-arrival.png"
       ariaLabel="Henning kommer till byn"
       speaker={henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker}
-      speakerTone={henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker === "Linus" ? "linus" : "henning"}
+      speakerTone={storySpeakerTone(henningArrivalDialogue[henningStoryIndex].speaker)}
       nextLabel={constructionBusy ? "Sparar…" : henningStoryIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}
       nextDisabled={constructionBusy}
       onNext={() => void advanceHenningStory()}

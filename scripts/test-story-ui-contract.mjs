@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 
-import { parseStoryLine } from "../src/game/storyEngine.ts";
+import { parseStoryLine, storySpeakerTone } from "../src/game/storyEngine.ts";
 
 const speakerToneFixtures = [
   ["Barnet", "child"],
@@ -35,6 +35,11 @@ for (const [speaker, expectedTone] of speakerToneFixtures) {
     legacyStorySpeakerTone(speaker),
     expectedTone,
     `legacy story speaker tone oracle drifted for ${speaker}`,
+  );
+  assert.equal(
+    storySpeakerTone(speaker),
+    legacyStorySpeakerTone(speaker),
+    `shared story speaker tone parity failed for ${speaker}`,
   );
 }
 
@@ -337,7 +342,7 @@ assert.ok(
 );
 assert.ok(
   villageRuntime.includes('speaker={henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker}')
-    && villageRuntime.includes('speakerTone={henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker === "Linus" ? "linus" : "henning"}'),
+    && villageRuntime.includes('speakerTone={storySpeakerTone(henningArrivalDialogue[henningStoryIndex].speaker)}'),
   "Act 1 Henning arrival must preserve child-name resolution and Henning/Linus/child speaker tones through Story Engine",
 );
 assert.ok(
@@ -418,7 +423,8 @@ assert.ok(
   "Act 1 Mira arrival must preserve speaker resolution and child-name interpolation through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('speakerTone={miraStoryLine.speaker === "Barnet" ? "child" : miraStoryLine.speaker === "Henning" ? "henning" : miraStoryLine.speaker === "Linus" ? "linus" : "mira"}'),
+  villageRuntime.includes('speakerTone={storySpeakerTone(miraStoryLine.speaker)}')
+    && villageRuntime.includes('speakerTone={storySpeakerTone(miraStoryReplayLine.speaker)}'),
   "Act 1 Mira arrival must preserve Mira, Henning, Linus and child nameplate tones",
 );
 assert.ok(
