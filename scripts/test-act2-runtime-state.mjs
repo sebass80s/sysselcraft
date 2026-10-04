@@ -790,9 +790,10 @@ const act2PurchaseCatalog = fs.readFileSync(new URL("../src/game/act2PurchaseCat
 assert.ok(act2PurchaseCatalog.includes("const DOCK_PRICE = 200"), "jetty lifebuoy display price must stay at locked 200 SysselBux");
 assert.ok(act2PurchaseCatalog.includes("const BOATHOUSE_PRICE = 200"), "Båthuset steering wheel display price must stay at locked 200 SysselBux");
 assert.ok(act2PurchaseCatalog.includes("const MOTORBOAT_PRICE = 200"), "Motorbåten parts display price must stay at locked 200 SysselBux");
-assert.ok(storyShop.includes("ACT2_JETTY_LIFEBUOY_PRICE = ACT2_PURCHASE_CATALOG.dock.price"), "Story Shop compatibility price must derive from canonical Act 2 catalog");
-assert.ok(storyShop.includes("ACT2_BOATHOUSE_STEERING_WHEEL_PRICE = ACT2_PURCHASE_CATALOG.boathouse.price"), "Båthuset compatibility price must derive from canonical Act 2 catalog");
-assert.ok(storyShop.includes("ACT2_MOTORBOAT_PARTS_PRICE = ACT2_PURCHASE_CATALOG.motorboat.price"), "Motorbåten compatibility price must derive from canonical Act 2 catalog");
+assert.equal(storyShop.includes("ACT2_PURCHASE_CATALOG"), false, "Story Shop transport must not own or mirror Act 2 presentation prices");
+assert.equal(storyShop.includes("ACT2_JETTY_LIFEBUOY_PRICE"), false, "retired jetty compatibility price alias must stay removed");
+assert.equal(storyShop.includes("ACT2_BOATHOUSE_STEERING_WHEEL_PRICE"), false, "retired boathouse compatibility price alias must stay removed");
+assert.equal(storyShop.includes("ACT2_MOTORBOAT_PARTS_PRICE"), false, "retired motorboat compatibility price alias must stay removed");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_jetty_lifebuoy")'), "jetty lifebuoy must use the atomic story purchase RPC");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_boathouse_steering_wheel")'), "Båthuset steering wheel must use the atomic story purchase RPC");
 assert.ok(storyShop.includes('purchaseStoryItem("act2_motorboat_parts")'), "Motorbåten parts must use the atomic story purchase RPC");
