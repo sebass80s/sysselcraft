@@ -942,7 +942,7 @@ assert.deepEqual(parsedAlve, { text: "Japp.", speaker: "Alve", speakerTone: "alv
 assert.deepEqual(parseStoryLine("Du tittar mot sjön.", "Ture"), { text: "Du tittar mot sjön." });
 
 assert.match(act2PageSource, /<StoryMoment[\s\S]*meeting-alve\/pick\.png/, "project chooser must use the shared Story Engine shell");
-assert.match(act2PageSource, /purchaseRequired && <StoryMoment/, "purchase gates must use the shared Story Engine shell");
+assert.match(act2PageSource, /purchaseRequired && purchaseProject && purchaseGateCopy && <StoryMoment/, "purchase gates must use the shared Story Engine shell with canonical catalog presentation");
 assert.match(act2PageSource, /namingRequired && <StoryMoment/, "naming gate must use the shared Story Engine shell");
 assert.doesNotMatch(act2PageSource, /className="story-moment"/, "Act 2 production must not keep a parallel legacy Story Moment shell");
 assert.match(act2TestPageSource, /<Act2Runtime debug \/>/, "Act 2 test lab must render the exact shared production runtime");
