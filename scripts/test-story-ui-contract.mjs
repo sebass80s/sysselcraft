@@ -48,6 +48,7 @@ const read = (p) => fs.readFileSync(path.join(root, p), "utf8");
 
 const css = read("src/app/globals.css");
 const dialogueCard = read("src/components/story/DialogueCard.tsx");
+const inlineDialogueCard = read("src/components/story/InlineDialogueCard.tsx");
 const transcript = read("src/components/story/StoryTranscript.tsx");
 const runner = read("src/components/story/StoryRunner.tsx");
 const debugPage = read("src/app/act2-test/page.tsx");
@@ -439,15 +440,24 @@ assert.equal(
 );
 
 assert.ok(
-  villageRuntime.includes('return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Linus om återvinningen"><span className="dialogue-speaker">{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next"')
-    && villageRuntime.includes('{last ? "Klart" : "Nästa"}</button></div>;'),
-  "Recycling inline dialogue must preserve its compact dialogue-card markup before shared inline-dialogue migration",
+  inlineDialogueCard.includes('<div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label={ariaLabel}>')
+    && inlineDialogueCard.includes('<span className={`dialogue-speaker${speakerClass}`}>{speaker}</span>')
+    && inlineDialogueCard.includes('<button className="primary-button dialogue-next" disabled={nextDisabled} onClick={onNext}>{nextLabel}</button>'),
+  "shared inline dialogue card must preserve the compact dialogue-card markup contract",
 );
 assert.ok(
-  villageRuntime.includes('{abandonedShopDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Den övergivna lanthandeln">')
-    && villageRuntime.includes('abandonedShopDialogueLine.speaker === "Barnet" ? "child" : ""')
-    && villageRuntime.includes('abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"'),
-  "Abandoned-shop inline dialogue must preserve its compact markup, child tone and navigation before shared inline-dialogue migration",
+  villageRuntime.includes('return <InlineDialogueCard')
+    && villageRuntime.includes('ariaLabel="Prata med Linus om återvinningen"')
+    && villageRuntime.includes('speaker={step.speaker}')
+    && villageRuntime.includes('nextLabel={last ? "Klart" : "Nästa"}'),
+  "Recycling dialogue must consume the shared inline-dialogue card without changing speaker or navigation behavior",
+);
+assert.ok(
+  villageRuntime.includes('{abandonedShopDialogueLine && <InlineDialogueCard')
+    && villageRuntime.includes('ariaLabel="Den övergivna lanthandeln"')
+    && villageRuntime.includes('speakerTone={abandonedShopDialogueLine.speaker === "Barnet" ? "child" : "default"}')
+    && villageRuntime.includes('nextLabel={abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"}'),
+  "Abandoned-shop dialogue must consume the shared inline-dialogue card with its child tone and navigation preserved",
 );
 
 assert.ok(
