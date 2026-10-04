@@ -1,0 +1,112 @@
+{
+  "batchId": "poc-character-sheets-01",
+  "batchSize": 5,
+  "aspectRatio": "landscape",
+  "scenes": [
+    {
+      "id": "POC-MIRA-FRONT",
+      "title": "Mira front",
+      "characters": [
+        "mira"
+      ],
+      "prompt": "Mira stands outdoors in soft natural daylight, full body, facing the camera. Calm neutral expression. Simple natural background with no other people.",
+      "rules": [
+        "Full body visible.",
+        "Front-facing pose.",
+        "Keep clothing exactly canonical."
+      ],
+      "mustNot": [
+        "extra people",
+        "different outfit",
+        "cartoon styling"
+      ],
+      "qaChecks": [
+        "Mira's face, hair, clothes and proportions match mira.png."
+      ]
+    },
+    {
+      "id": "POC-ALVE-PROFILE",
+      "title": "Alve profile",
+      "characters": [
+        "alve"
+      ],
+      "prompt": "Alve stands outdoors in soft natural daylight, full body, clean side profile. Calm expression. Simple natural background with no other people.",
+      "rules": [
+        "Full body visible.",
+        "Clear side profile.",
+        "Keep clothing exactly canonical."
+      ],
+      "mustNot": [
+        "extra people",
+        "different outfit",
+        "adult proportions"
+      ],
+      "qaChecks": [
+        "Alve's face, hair, clothes and proportions match alve.png."
+      ]
+    },
+    {
+      "id": "POC-LINUS-THREEQUARTER",
+      "title": "Linus three-quarter",
+      "characters": [
+        "linus"
+      ],
+      "prompt": "Linus stands outdoors in soft natural daylight, full body, turned three-quarter toward camera. Friendly neutral expression. Simple natural background with no other people.",
+      "rules": [
+        "Full body visible.",
+        "Three-quarter view.",
+        "Keep clothing exactly canonical."
+      ],
+      "mustNot": [
+        "extra people",
+        "different outfit",
+        "cartoon styling"
+      ],
+      "qaChecks": [
+        "Linus's face, hair, clothes and proportions match linus.png."
+      ]
+    },
+    {
+      "id": "POC-HENNING-FRONT",
+      "title": "Henning front",
+      "characters": [
+        "henning"
+      ],
+      "prompt": "Henning stands outdoors in soft natural daylight, full body, facing the camera. Relaxed neutral posture. Simple natural background with no other people.",
+      "rules": [
+        "Full body visible.",
+        "Front-facing pose.",
+        "Keep clothing exactly canonical."
+      ],
+      "mustNot": [
+        "extra people",
+        "different outfit",
+        "cartoon styling"
+      ],
+      "qaChecks": [
+        "Henning's face, hair, clothes and proportions match henning.png."
+      ]
+    },
+    {
+      "id": "POC-NOVA-FRONT",
+      "title": "Nova front",
+      "characters": [
+        "nova"
+      ],
+      "prompt": "Nova stands outdoors in soft natural daylight, full body, facing the camera. Calm neutral expression. Simple natural background with no other people.",
+      "rules": [
+        "Full body visible.",
+        "Front-facing pose.",
+        "Keep clothing exactly canonical."
+      ],
+      "mustNot": [
+        "extra people",
+        "different outfit",
+        "cartoon styling"
+      ],
+      "qaChecks": [
+        "Nova's face, hair, clothes and proportions match nova.png."
+      ]
+    }
+  ]
+}
