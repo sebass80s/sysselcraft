@@ -14,6 +14,7 @@ const runner = read("src/components/story/StoryRunner.tsx");
 const debugPage = read("src/app/act2-test/page.tsx");
 const act2Page = read("src/app/act2/page.tsx");
 const act2Runtime = read("src/components/Act2Runtime.tsx");
+const villageRuntime = read("src/components/VillagePrototype.tsx");
 const storyOverlayBridge = read("src/game/storyOverlayBridge.ts");
 const questInboxSource = read("src/components/ChildBackendQuestInbox.tsx");
 
@@ -99,6 +100,19 @@ assert.match(act2Runtime, /parseStoryLine\(activeFinaleLine, childName\)/, "Act 
 assert.match(act2Runtime, /parseStoryLine\(activeCompletionLine, childName\)/, "Act 2 completion cards must parse speaker and child name centrally");
 assert.match(act2Runtime, /meeting-alve\/pick\.png/, "Canonical production project chooser must live in the shared runtime");
 assert.match(act2Runtime, /availablePrerequisites\.map/, "Shared runtime must own the first-project chooser");
+
+assert.ok(
+  villageRuntime.includes('{bottleLetterOpen && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-letter.png"'),
+  "Act 1 bottle-letter legacy oracle must preserve the accepted story image before migration",
+);
+assert.ok(
+  villageRuntime.includes('<span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Brevet är klart.</p>'),
+  "Act 1 bottle-letter legacy oracle must preserve the child nameplate and text",
+);
+assert.ok(
+  villageRuntime.includes('<button className="primary-button dialogue-next" onClick={advanceBottleLetter}>Gå till vattnet</button>'),
+  "Act 1 bottle-letter legacy oracle must preserve the accepted CTA and callback",
+);
 
 assert.deepEqual(
   parseStoryLine("Barnet: Hej.", "Testbarn"),
