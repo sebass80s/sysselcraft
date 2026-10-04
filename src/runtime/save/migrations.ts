@@ -4,7 +4,7 @@ export type VersionedMigration<T> = {
   migrate: (value: T) => T;
 };
 
-export type MigrationResult<T> = {
+type MigrationResult<T> = {
   value: T;
   version: number;
 };
