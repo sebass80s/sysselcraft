@@ -229,6 +229,10 @@ assert.ok(
   "Act 1 Sol tour must preserve child, Henning, Mira, Linus and Sol speaker presentation through Story Engine",
 );
 assert.ok(
+  villageRuntime.includes('speakerTone={solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker === "Henning" ? "henning" : solTourStoryLine.speaker === "Mira" ? "mira" : solTourStoryLine.speaker === "Linus" ? "linus" : "sol"}'),
+  "Act 1 Sol tour must preserve accepted child/Henning/Mira/Linus/Sol speaker tones before shared-tone migration",
+);
+assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
     && villageRuntime.includes('onNext={() => void advanceSolTourStory()}')
     && villageRuntime.includes('solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen"'),
