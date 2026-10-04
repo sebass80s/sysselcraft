@@ -441,7 +441,7 @@ assert.equal(
 
 assert.ok(
   inlineDialogueCard.includes('<div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label={ariaLabel}>')
-    && inlineDialogueCard.includes('<span className={`dialogue-speaker${speakerClass}`}>{speaker}</span>')
+    && inlineDialogueCard.includes('<span className={`dialogue-speaker${extraSpeakerClass}${speakerToneClass}`}>{speaker}</span>')
     && inlineDialogueCard.includes('<button className="primary-button dialogue-next" disabled={nextDisabled} onClick={onNext}>{nextLabel}</button>'),
   "shared inline dialogue card must preserve the compact dialogue-card markup contract",
 );
@@ -460,8 +460,14 @@ assert.ok(
   "Abandoned-shop dialogue must consume the shared inline-dialogue card with its child tone and navigation preserved",
 );
 assert.ok(
-  villageRuntime.includes('return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Henning"><span className={`dialogue-speaker henning-story-speaker ${step.speaker.toLowerCase()}`}>{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => advanceHenningDialogue(last)}>{last ? "Klart" : "Nästa"}</button></div>;'),
-  "Henning inline dialogue must preserve compact markup, speaker classes and navigation before shared inline-dialogue migration",
+  villageRuntime.includes('return <InlineDialogueCard')
+    && villageRuntime.includes('ariaLabel="Prata med Henning"')
+    && villageRuntime.includes('speaker={step.speaker}')
+    && villageRuntime.includes('speakerClassName="henning-story-speaker"')
+    && villageRuntime.includes('speakerTone={step.speaker === "Linus" ? "linus" : "henning"}')
+    && villageRuntime.includes('nextLabel={last ? "Klart" : "Nästa"}')
+    && villageRuntime.includes('onNext={() => advanceHenningDialogue(last)}'),
+  "Henning inline dialogue must consume the shared card while preserving its speaker classes and navigation",
 );
 
 assert.ok(
