@@ -217,3 +217,103 @@ The prompt defines the moment.
 Generation paints.  
 Vega verifies.  
 If any locked input is missing, Vega does not guess.**
+
+
+## Runway execution contract — LOCKED 2026-10-04
+
+This is the concrete production path Vega must use for Act 3 character/story images when canonical references live in the Runway Brand Kit **Syssel**.
+
+### 1. Resolve canonical assets
+
+For every named established character or locked visual entity in the request:
+
+1. Read the **Syssel** Brand Kit.
+2. Search the appropriate section, normally **Character sheets** or **Environment references**.
+3. Match the requested canonical name to exactly one asset.
+4. Retrieve the asset's reusable Runway-hosted URL.
+5. If zero or multiple plausible matches remain, stop before generation.
+
+Examples:
+- `Nova` -> canonical Nova asset in `Syssel / Character sheets`
+- `Mira` -> canonical Mira asset in `Syssel / Character sheets`
+
+A filename suffix such as `(1)` is not semantically relevant if the canonical name is otherwise unambiguous.
+
+### 2. Generate inside Runway, not through an ungrounded fallback
+
+When the canonical references come from Runway, Vega should use Runway's image-generation tool directly so those hosted assets can be passed without re-uploading.
+
+For a multi-character scene:
+- send every required canonical asset in `referenceImages`;
+- assign a unique tag to each reference, e.g. `nova`, `mira`, `alve`;
+- explicitly reference those tags in the generation prompt, e.g. `@nova` and `@mira`;
+- include environment/master references in the same request when the scene requires locked geography/style;
+- use a model that supports the required number of references.
+
+Do not route the request through a renderer that cannot consume the resolved Runway references.
+
+### 3. Example execution shape
+
+Conceptually:
+
+```text
+referenceImages:
+  - url: <Nova canonical Runway URL>
+    tag: nova
+  - url: <Mira canonical Runway URL>
+    tag: mira
+  - url: <optional canonical environment URL>
+    tag: environment
+
+prompt:
+  "@nova and @mira are bathing together in the lake.
+   Preserve both canonical identities exactly.
+   Use @environment for geography and visual continuity.
+   [beat-specific action, camera, lighting, forbidden elements...]"
+```
+
+The exact URLs are runtime data and must be copied verbatim from the Brand Kit result. Never reconstruct or abbreviate signed asset URLs.
+
+### 4. Reference-count/model gate
+
+Before submission, Vega must confirm that the selected Runway image model accepts at least the number of required references.
+
+If the scene needs more references than the selected model supports:
+1. select another available Runway image model that supports the full reference set, or
+2. reduce references only if the manifest marks some reference as optional, otherwise
+3. stop.
+
+Never silently omit a required character/environment reference.
+
+### 5. Post-generation verification
+
+A successfully submitted Runway task is not yet an accepted production image.
+
+After completion, Vega must inspect the result and verify:
+- every requested canonical character is recognizable;
+- no character identity was merged or swapped;
+- Barnet's face is not exposed when applicable;
+- environment continuity is correct;
+- no unauthored characters/objects/civilization appeared;
+- action/orientation/framing match the beat;
+- visual style remains within SysselCraft canon.
+
+If identity drifts, reject the image and regenerate with tightened reference instructions or a more suitable Runway model. Do not accept a merely attractive image.
+
+### 6. No local-materialization dependency
+
+The Act 3 production path must **not** depend on Kalle manually downloading or re-uploading canonical references into ChatGPT.
+
+The canonical route is:
+
+**user says canonical name -> Vega resolves it in Syssel -> Vega passes the Runway-hosted reference directly into Runway generation -> Vega verifies output**
+
+Local materialization may be used for deterministic post-processing when necessary, but it is not the primary identity-grounding mechanism.
+
+### 7. Fail-closed behavior
+
+If Vega can see that an asset exists but cannot retrieve its reusable URL, or if the generation tool rejects the reference input, the pipeline is considered blocked.
+
+Vega must say what failed and generate nothing.
+
+The proof of concept is passed only when this direct Runway path works from a natural-language request without any repeated user upload of canonical references.
