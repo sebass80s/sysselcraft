@@ -481,6 +481,16 @@ assert.ok(
     && villageRuntime.includes('footer={constructionError ? <p role="alert">{constructionError}</p> : undefined}'),
   "Recycling completion dialogue must consume the shared inline card while preserving speaker, busy state, CTA and trailing error row",
 );
+assert.ok(
+  villageRuntime.includes('{constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal">')
+    && villageRuntime.includes('constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()')
+    && villageRuntime.includes('<button className="primary-button" disabled={constructionBusy}')
+    && villageRuntime.includes('constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"')
+    && villageRuntime.includes('<button className="secondary-button" disabled={constructionBusy}')
+    && villageRuntime.includes('setConstructionDialogueId(null); setConstructionDialogueIndex(0);')
+    && villageRuntime.includes('{constructionError && <p role="alert">{constructionError}</p>}</div>}'),
+  "Construction inline dialogue must preserve speaker class, primary button class, busy state, Later action and trailing error row before migration",
+);
 
 assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
