@@ -12,6 +12,7 @@ import { resolveDirectMovementIntent } from "../src/runtime/world/movement.ts";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../src/runtime/world/worldCamera.ts";
 import { WORLD_ENTITY_DEPTH_BASE, worldEntityDepth } from "../src/runtime/world/worldDepth.ts";
 import { runSequentialMigrations } from "../src/runtime/save/migrations.ts";
+import { authoritativeProgressDelta } from "../src/runtime/progression/authoritativeDelta.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
@@ -263,6 +264,11 @@ for (const fixture of authoritativeDeltaParityFixtures) {
     legacyAuthoritativeDelta(fixture.authoritative, fixture.baseline),
     fixture.expected,
     fixture.name,
+  );
+  assert.equal(
+    authoritativeProgressDelta(fixture.authoritative, fixture.baseline),
+    legacyAuthoritativeDelta(fixture.authoritative, fixture.baseline),
+    `shared authoritative delta parity failed: ${fixture.name}`,
   );
 }
 

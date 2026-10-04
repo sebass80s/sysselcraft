@@ -1,4 +1,5 @@
 import type { ProgressionState } from "./quests";
+import { authoritativeProgressDelta } from "../runtime/progression/authoritativeDelta";
 import { createInitialMvpBuildingStages, deriveRecyclingCenterStage, normalizeBuildingStage, type BuildingStage, type MvpBuildingId, type MvpBuildingStages } from "./worldProgression";
 
 export type ConstructionReveal = {
@@ -87,7 +88,7 @@ export function startClinicConstruction(state: ConstructionState): ConstructionS
 
 export function syncClinicContributionProgress(state: ConstructionState, authoritativeWorldProgression: number, clinicBaseline: number): ConstructionState {
   if (state.revealed.clinic < 1 || state.revealed.clinic >= 4 || state.pending.some(id => id.startsWith("clinic:"))) return state;
-  const contributions = Math.max(0, Math.floor(authoritativeWorldProgression) - Math.floor(clinicBaseline));
+  const contributions = authoritativeProgressDelta(authoritativeWorldProgression, clinicBaseline);
   const target: BuildingStage = contributions >= CLINIC_CONTRIBUTION_THRESHOLDS[3] ? 4 : contributions >= CLINIC_CONTRIBUTION_THRESHOLDS[2] ? 3 : contributions >= CLINIC_CONTRIBUTION_THRESHOLDS[1] ? 2 : 1;
   const nextStage = (state.revealed.clinic + 1) as BuildingStage;
   return target >= nextStage ? earnConstruction(state, `clinic:${nextStage}`) : state;
@@ -172,7 +173,7 @@ export function syncRecyclingContributionProgress(
   recyclingClaimBaselineStage: BuildingStage = 0,
 ): ConstructionState {
   if (state.revealed.recycling >= 4 || state.pending.some(id => id.startsWith("recycling:"))) return state;
-  const claimsSinceBaseline = Math.max(0, Math.floor(authoritativeWorldProgression) - Math.floor(recyclingClaimBaseline));
+  const claimsSinceBaseline = authoritativeProgressDelta(authoritativeWorldProgression, recyclingClaimBaseline);
   const baselineOffset = recyclingClaimBaselineStage <= 0 ? 0 : RECYCLING_CONTRIBUTION_THRESHOLDS[recyclingClaimBaselineStage - 1];
   const effectiveContributions = baselineOffset + claimsSinceBaseline;
   const target = RECYCLING_CONTRIBUTION_THRESHOLDS.reduce<BuildingStage>(
@@ -190,7 +191,7 @@ export function syncBakeryContributionProgress(
   bakeryClaimBaselineStage: BuildingStage = 0,
 ): ConstructionState {
   if (state.revealed.bakery >= 4 || state.pending.some(id => id.startsWith("bakery:"))) return state;
-  const claimsSinceBaseline = Math.max(0, Math.floor(authoritativeWorldProgression) - Math.floor(bakeryClaimBaseline));
+  const claimsSinceBaseline = authoritativeProgressDelta(authoritativeWorldProgression, bakeryClaimBaseline);
   const effectiveContributions = bakeryContributionOffsetForStage(bakeryClaimBaselineStage) + claimsSinceBaseline;
   const target = deriveBakeryStageFromContributions(effectiveContributions);
   const nextStage = (state.revealed.bakery + 1) as BuildingStage;

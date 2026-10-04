@@ -1,5 +1,6 @@
 import { Preferences } from "@capacitor/preferences";
 import { runSequentialMigrations } from "../runtime/save/migrations";
+import { authoritativeProgressDelta } from "../runtime/progression/authoritativeDelta";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -378,7 +379,7 @@ export function pendingBackendContributionCount(state: Act2RuntimeState, worldPr
   const normalized = normalizeAct2RuntimeState(state);
   if (normalized.backendClaimBaseline === null) return 0;
   const authoritative = Number.isFinite(worldProgression) ? Math.max(0, Math.floor(worldProgression)) : 0;
-  return Math.max(0, authoritative - normalized.backendClaimBaseline - totalAct2Contributions(normalized));
+  return Math.max(0, authoritativeProgressDelta(authoritative, normalized.backendClaimBaseline) - totalAct2Contributions(normalized));
 }
 
 export type Act2ContributionCandidate = {
