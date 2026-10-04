@@ -442,7 +442,8 @@ assert.equal(
 assert.ok(
   inlineDialogueCard.includes('<div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label={ariaLabel}>')
     && inlineDialogueCard.includes('<span className={`dialogue-speaker${extraSpeakerClass}${speakerToneClass}`}>{speaker}</span>')
-    && inlineDialogueCard.includes('<button className="primary-button dialogue-next" disabled={nextDisabled} onClick={onNext}>{nextLabel}</button>'),
+    && inlineDialogueCard.includes('<button className="primary-button dialogue-next" disabled={nextDisabled} onClick={onNext}>{nextLabel}</button>')
+    && inlineDialogueCard.includes('{footer}'),
   "shared inline dialogue card must preserve the compact dialogue-card markup contract",
 );
 assert.ok(
@@ -470,12 +471,15 @@ assert.ok(
   "Henning inline dialogue must consume the shared card while preserving its speaker classes and navigation",
 );
 assert.ok(
-  villageRuntime.includes('{recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig">')
-    && villageRuntime.includes('recyclingStoryLine.speaker === "Barnet" ? "child" : ""')
-    && villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}')
-    && villageRuntime.includes('constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"')
-    && villageRuntime.includes('{constructionError && <p role="alert">{constructionError}</p>}</div>}'),
-  "Recycling completion inline dialogue must preserve compact markup, child tone, busy state, CTA and trailing error row before migration",
+  villageRuntime.includes('{recyclingStoryOpen && recyclingStoryLine && <InlineDialogueCard')
+    && villageRuntime.includes('ariaLabel="Återvinningscentralen är färdig"')
+    && villageRuntime.includes('speaker={recyclingSpeakerName}')
+    && villageRuntime.includes('speakerTone={recyclingStoryLine.speaker === "Barnet" ? "child" : "default"}')
+    && villageRuntime.includes('nextDisabled={constructionBusy}')
+    && villageRuntime.includes('onNext={() => void advanceRecyclingStory()}')
+    && villageRuntime.includes('nextLabel={constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}')
+    && villageRuntime.includes('footer={constructionError ? <p role="alert">{constructionError}</p> : undefined}'),
+  "Recycling completion dialogue must consume the shared inline card while preserving speaker, busy state, CTA and trailing error row",
 );
 
 assert.ok(
