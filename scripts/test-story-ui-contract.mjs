@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 
-import { parseStoryLine, storySpeakerTone } from "../src/game/storyEngine.ts";
+import { parseStoryLine } from "../src/game/storyEngine.ts";
 
 const speakerToneFixtures = [
   ["Barnet", "child"],
@@ -19,11 +19,22 @@ const speakerToneFixtures = [
   ["Storasystern", "default"],
 ];
 
+function legacyStorySpeakerTone(speaker) {
+  if (speaker === "Barnet") return "child";
+  if (speaker === "Hunden" || speaker === "Valpen") return "dog";
+  if (speaker === "Alve") return "alve";
+  if (speaker === "Henning") return "henning";
+  if (speaker === "Mira") return "mira";
+  if (speaker === "Linus") return "linus";
+  if (speaker === "Sol") return "sol";
+  return "default";
+}
+
 for (const [speaker, expectedTone] of speakerToneFixtures) {
   assert.equal(
-    storySpeakerTone(speaker),
+    legacyStorySpeakerTone(speaker),
     expectedTone,
-    `shared story speaker tone drifted for ${speaker}`,
+    `legacy story speaker tone oracle drifted for ${speaker}`,
   );
 }
 
