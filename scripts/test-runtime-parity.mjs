@@ -1083,6 +1083,41 @@ assert.equal(
   "Act 2 purchase presentation catalog must not own purchase transport",
 );
 
+const villageInteractionSource = fs.readFileSync(
+  new URL("../src/game/createVillageGame.ts", import.meta.url),
+  "utf8",
+);
+const lakeInteractionSource = fs.readFileSync(
+  new URL("../src/game/createAct2LakeGame.ts", import.meta.url),
+  "utf8",
+);
+
+for (const [label, source] of [
+  ["Village", villageInteractionSource],
+  ["Act 2 Lake", lakeInteractionSource],
+]) {
+  assert.ok(
+    source.includes('from "../runtime/interaction/interactionContract"'),
+    `${label} must consume the canonical Interaction contract`,
+  );
+  assert.ok(
+    source.includes("resolveInteraction("),
+    `${label} must resolve world interactions through the canonical resolver`,
+  );
+  assert.ok(
+    source.includes("worldInputEnabled("),
+    `${label} must consume canonical world-input locking`,
+  );
+  assert.ok(
+    source.includes('from "../runtime/interaction/markerRenderer"'),
+    `${label} must consume the canonical interaction marker renderer`,
+  );
+}
+assert.ok(
+  villageInteractionSource.includes("resolveInteractionPriority("),
+  "Village mixed interaction arbitration must consume canonical priority resolution",
+);
+
 const shellSource = fs.readFileSync(new URL("../src/runtime/ui/GameUiShell.tsx", import.meta.url), "utf8");
 assert.ok(
   shellSource.includes("SYSTEM_ASSETS.brandLogo"),
