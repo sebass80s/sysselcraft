@@ -442,7 +442,8 @@ assert.equal(
 assert.ok(
   inlineDialogueCard.includes('<div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label={ariaLabel}>')
     && inlineDialogueCard.includes('<span className={`dialogue-speaker${extraSpeakerClass}${speakerToneClass}`}>{speaker}</span>')
-    && inlineDialogueCard.includes('<button className="primary-button dialogue-next" disabled={nextDisabled} onClick={onNext}>{nextLabel}</button>')
+    && inlineDialogueCard.includes('<button className={nextClassName} disabled={nextDisabled} onClick={onNext}>{nextLabel}</button>')
+    && inlineDialogueCard.includes('nextClassName = "primary-button dialogue-next"')
     && inlineDialogueCard.includes('{footer}'),
   "shared inline dialogue card must preserve the compact dialogue-card markup contract",
 );
@@ -482,14 +483,17 @@ assert.ok(
   "Recycling completion dialogue must consume the shared inline card while preserving speaker, busy state, CTA and trailing error row",
 );
 assert.ok(
-  villageRuntime.includes('{constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal">')
-    && villageRuntime.includes('constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()')
-    && villageRuntime.includes('<button className="primary-button" disabled={constructionBusy}')
+  villageRuntime.includes('{constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <InlineDialogueCard')
+    && villageRuntime.includes('ariaLabel="Byggplatsens samtal"')
+    && villageRuntime.includes('speaker={constructionSpeakerName}')
+    && villageRuntime.includes('speakerClassName={constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}')
+    && villageRuntime.includes('nextClassName="primary-button"')
+    && villageRuntime.includes('nextDisabled={constructionBusy}')
     && villageRuntime.includes('constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"')
     && villageRuntime.includes('<button className="secondary-button" disabled={constructionBusy}')
     && villageRuntime.includes('setConstructionDialogueId(null); setConstructionDialogueIndex(0);')
-    && villageRuntime.includes('{constructionError && <p role="alert">{constructionError}</p>}</div>}'),
-  "Construction inline dialogue must preserve speaker class, primary button class, busy state, Later action and trailing error row before migration",
+    && villageRuntime.includes('{constructionError && <p role="alert">{constructionError}</p>}</>}'),
+  "Construction dialogue must consume the shared inline card while preserving speaker class, primary button class, busy state, Later action and trailing error row",
 );
 
 assert.ok(
