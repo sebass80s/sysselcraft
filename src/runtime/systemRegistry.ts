@@ -71,9 +71,9 @@ export const CANONICAL_SYSTEMS: readonly CanonicalSystemRegistration[] = [
   },
   {
     id: SYSTEM_COMPONENT_IDS.interactable,
-    status: "migration-pending",
+    status: "canonical",
     owner: "Interaction System",
-    note: "Hotspots, approach points and pointer priority require one shared contract.",
+    note: "Village and Lake share interaction resolution, markers, world-input locking and priority contracts; local pointer/touch entry adapters remain acceptance-gated.",
   },
   {
     id: SYSTEM_COMPONENT_IDS.purchaseGate,

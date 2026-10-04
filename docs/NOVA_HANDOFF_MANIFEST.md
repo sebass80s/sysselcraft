@@ -1298,3 +1298,25 @@ The Runtime System Registry now marks `purchaseGate` canonical. Do not reopen th
 Intermediate CI #1836-#1838 failures were stale source-shape tests following ownership movement; build and type checking were green. #1839 is the verified code checkpoint.
 
 Collision/pathfinding, movement feel, dog follow and WebView/touch fallback remain physical-acceptance-gated and untouched.
+
+
+## Runtime 1.0 Interaction closeout — 2026-10-04
+
+Verified parity checkpoint before registry closeout:
+- `37fb093e745d1df26fa377a79fa9963ad646f079`;
+- GitHub Actions #1841: full `npm run verify` SUCCESS.
+
+The shared Interaction contract is now considered canonical:
+- Village + Act 2 Lake both consume `resolveInteraction()`;
+- both consume `worldInputEnabled()`;
+- both consume the shared marker renderer;
+- Village mixed interaction arbitration consumes `resolveInteractionPriority()`;
+- approach points, activation radius and optional multi-zone activation are shared semantics.
+
+`interactable` is therefore no longer `migration-pending` in the Canonical System Registry.
+
+Important safety boundary: local Phaser pointer/touch handlers remain intentionally area-specific adapters. They are not permission to rewrite/deduplicate iPhone/WebView fallbacks. Pointer propagation, hit areas, scene/sprite fallback entrypoints, Village A*, Lake direct movement and interaction movement feel remain physical-acceptance-gated.
+
+No product gameplay behavior, navigation, collision, backend state, Adam data or live branch was changed by this closeout.
+
+Recommended next Runtime slice: audit remaining World / Area ownership and legacy-runtime duplication for a pure/shared candidate. Prefer camera/depth/config/state contracts over collision/pathfinding/touch changes.

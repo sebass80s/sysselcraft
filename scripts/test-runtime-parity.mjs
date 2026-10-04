@@ -1068,6 +1068,15 @@ assert.equal(
   "purchase gate must be canonical after gate, handoff and presentation convergence",
 );
 
+const interactableRegistration = CANONICAL_SYSTEMS.find(
+  (entry) => entry.id === SYSTEM_COMPONENT_IDS.interactable,
+);
+assert.equal(
+  interactableRegistration?.status,
+  "canonical",
+  "interactable must be canonical once Village and Lake share resolution, markers, input locking and priority contracts",
+);
+
 const act2PurchaseCatalogSource = fs.readFileSync(
   new URL("../src/game/act2PurchaseCatalog.ts", import.meta.url),
   "utf8",

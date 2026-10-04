@@ -876,3 +876,61 @@ The Runtime System Registry can now mark `purchaseGate` canonical. Runtime 1.0 o
 This does **not** move purchase execution into Runtime 1.0. Backend Story Shop and Supabase remain authoritative by design, so their separate ownership is not unfinished purchase-gate migration.
 
 The next Progression/Gating audit should look beyond Act 2 purchase gating rather than continuing to abstract this closed slice. Avoid creating a generic purchase engine without a second real chapter consumer.
+
+
+## Interaction closeout — canonical interactable contract
+
+The Runtime System Registry previously still marked `interactable` as migration-pending even though the development runtime had already converged the reusable Interaction semantics.
+
+Parity-first evidence was added before changing registry status:
+- commit `37fb093e745d1df26fa377a79fa9963ad646f079`;
+- GitHub Actions #1841: full `npm run verify` SUCCESS.
+
+The parity contract now proves both real playable worlds consume the canonical Interaction stack:
+
+Village:
+- `InteractionDefinition`;
+- `resolveInteraction()`;
+- `worldInputEnabled()`;
+- shared interaction marker renderer;
+- `resolveInteractionPriority()` for mixed/overlapping affordances.
+
+Act 2 Lake:
+- `resolveInteraction()`;
+- `worldInputEnabled()`;
+- shared interaction marker renderer;
+- canonical approach-point/radius semantics for Alve turn-in.
+
+Already-converged Interaction behavior documented earlier remains in force:
+- quest and NPC attention marker rendering is shared;
+- overlay/world-input suppression is shared;
+- Linus/Henning intent priority is shared;
+- Sol-tour CTA arbitration participates in shared priority;
+- Village scene fallback priority is explicit rather than source-order implicit;
+- multiple Village arrival paths consume the shared resolution primitive;
+- multi-zone activation supports the Shop/Mira geometry without a second resolver.
+
+### Pointer/touch boundary
+
+The remaining local Phaser pointer handlers are **not** a second Interaction domain model. They are area/platform entry adapters that feed the shared interaction semantics or area movement.
+
+They remain intentionally local because existing iPhone/WebView reliability depends on accepted pointer propagation, duplicate/fallback hit entrypoints and area-specific movement/navigation behavior.
+
+Do **not** deduplicate those handlers merely to make source shape uniform. Any change to:
+- pointer propagation;
+- scene-vs-sprite fallback entrypoints;
+- touch hit areas;
+- WebView fallback behavior;
+- movement after an interaction request;
+- Village A* approach behavior;
+- Lake direct movement;
+
+still requires browser acceptance plus physical iPhone acceptance.
+
+### Registry consequence
+
+`SYSTEM_COMPONENT_IDS.interactable` is now canonical. This closes the generic Interaction ownership slice without changing physical input behavior.
+
+Future chapters should configure Interaction definitions/markers/priority and use the shared resolver. They may still need thin area-specific input adapters where platform behavior requires them.
+
+The next Runtime 1.0 work should move to the remaining World / Area ownership audit or legacy-runtime cleanup. Do not reopen Interaction by refactoring physical-input-sensitive adapters without an explicit acceptance window.
