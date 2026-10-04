@@ -1533,7 +1533,7 @@ export default function VillagePrototype() {
       image="/assets/village/story-moments/sol-arrival.png"
       ariaLabel="Sol kommer till byn"
       speaker={solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"}
-      speakerTone={solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}
+      speakerTone={storySpeakerTone(solArrivalDialogue[solStoryIndex].speaker)}
       nextLabel={constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"}
       nextDisabled={constructionBusy}
       onNext={() => void advanceSolStory()}

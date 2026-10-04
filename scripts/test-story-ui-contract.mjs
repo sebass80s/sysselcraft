@@ -200,13 +200,13 @@ assert.ok(
 );
 assert.ok(
   villageRuntime.includes('speaker={solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"}')
-    && villageRuntime.includes('speakerTone={solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}')
+    && villageRuntime.includes('speakerTone={storySpeakerTone(solArrivalDialogue[solStoryIndex].speaker)}')
     && villageRuntime.includes('solArrivalDialogue[solStoryIndex].text'),
-  "Act 1 Sol arrival must preserve speaker identity and line text through Story Engine",
+  "Act 1 Sol arrival must preserve speaker identity and line text through the shared tone mapping",
 );
 assert.ok(
-  villageRuntime.includes('speakerTone={solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? "child" : "sol"}'),
-  "Act 1 Sol arrival must preserve accepted child/Sol speaker tones before shared-tone migration",
+  villageRuntime.includes('speakerTone={storySpeakerTone(solArrivalDialogue[solStoryIndex].speaker)}'),
+  "Act 1 Sol arrival must consume the shared child/Sol speaker tone mapping",
 );
 assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
