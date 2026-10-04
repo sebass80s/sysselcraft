@@ -13,6 +13,11 @@ import { WORLD_CAMERA, worldCameraDeadzone } from "../src/runtime/world/worldCam
 import { WORLD_ENTITY_DEPTH_BASE, worldEntityDepth } from "../src/runtime/world/worldDepth.ts";
 import { runSequentialMigrations } from "../src/runtime/save/migrations.ts";
 import { authoritativeProgressDelta } from "../src/runtime/progression/authoritativeDelta.ts";
+import {
+  act2PurchaseShopHref,
+  act2ResumeHref,
+  parseAct2PurchaseProject,
+} from "../src/game/act2PurchaseHandoff.ts";
 import { progressGateRequired } from "../src/runtime/progression/progressGate.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
@@ -289,10 +294,17 @@ for (const fixture of act2PurchaseHandoffFixtures) {
     fixture.expected,
     `Act 2 purchase handoff parse oracle failed for ${String(fixture.value)}`,
   );
+  assert.equal(
+    parseAct2PurchaseProject(fixture.value),
+    legacyParseAct2PurchaseProject(fixture.value),
+    `shared Act 2 purchase parser parity failed for ${String(fixture.value)}`,
+  );
 }
 for (const project of ["dock", "boathouse", "motorboat"]) {
   assert.equal(legacyAct2PurchaseShopHref(project), `/?act2-purchase=${project}`);
   assert.equal(legacyAct2ResumeHref(project), `/act2?resume=${project}`);
+  assert.equal(act2PurchaseShopHref(project), legacyAct2PurchaseShopHref(project));
+  assert.equal(act2ResumeHref(project), legacyAct2ResumeHref(project));
 }
 
 function legacyAct2UiStoryGateBlocked(state) {
@@ -1257,6 +1269,11 @@ assertAct2HistoryParity("fully completed Act 2",fullyCompletedAct2);
 
 const act2RuntimeSource = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 assert.ok(
+  act2RuntimeSource.includes("parseAct2PurchaseProject(")
+    && act2RuntimeSource.includes("act2PurchaseShopHref("),
+  "Act 2 Lake must consume the canonical chapter purchase handoff adapter",
+);
+assert.ok(
   act2RuntimeSource.includes("act2ContributionBlockedByStoryGate(candidateState, candidateState.selectedProject)"),
   "Act 2 Alve turn-in visibility must consume canonical state-layer story-gate arbitration",
 );
@@ -1286,6 +1303,16 @@ assert.ok(
 
 
 const villageRuntimeSource = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+assert.ok(
+  villageRuntimeSource.includes("parseAct2PurchaseProject(")
+    && villageRuntimeSource.includes("act2ResumeHref("),
+  "Village shop must consume the canonical Act 2 purchase handoff adapter",
+);
+assert.equal(
+  villageRuntimeSource.includes('project !== "dock" && project !== "boathouse" && project !== "motorboat"'),
+  false,
+  "Village shop must not retain a parallel Act 2 purchase-project whitelist",
+);
 assert.ok(
   villageRuntimeSource.includes("<GameUiShell"),
   "Village development runtime must consume the shared GameUiShell",

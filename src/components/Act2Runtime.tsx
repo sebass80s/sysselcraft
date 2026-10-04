@@ -42,6 +42,7 @@ import { StoryMoment } from "./story/StoryMoment";
 import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
 import { ACT2_OPENING_BEATS } from "../game/act2OpeningStory";
+import { act2PurchaseShopHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
 import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../game/act2AlveStory";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { historyEntriesFor } from "../runtime/story/storyHistory";
@@ -208,11 +209,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
         }
       }
-      const resumeProject = new URLSearchParams(window.location.search).get("resume");
-      if (
-        (resumeProject === "boathouse" || resumeProject === "dock" || resumeProject === "motorboat")
-        && !entered.projects[resumeProject].complete
-      ) {
+      const resumeProject = parseAct2PurchaseProject(
+        new URLSearchParams(window.location.search).get("resume"),
+      );
+      if (resumeProject && !entered.projects[resumeProject].complete) {
         if (
           resumeProject === "boathouse"
           && entered.boathouseSteeringWheelOwned
@@ -249,7 +249,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       setChapterIntroNameVisible(false);
       setState(entered);
       setReady(true);
-      if (resumeProject === "boathouse" || resumeProject === "dock" || resumeProject === "motorboat") {
+      if (resumeProject) {
         router.replace("/act2");
       }
     })();
@@ -1023,7 +1023,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       <p>{purchaseGateCopy.detail}</p>
       <a
         className="primary-button dialogue-next"
-        href={boathousePurchaseGate ? "/?act2-purchase=boathouse" : jettyPurchaseGate ? "/?act2-purchase=dock" : "/?act2-purchase=motorboat"}
+        href={act2PurchaseShopHref(
+          boathousePurchaseGate ? "boathouse" : jettyPurchaseGate ? "dock" : "motorboat",
+        )}
       >
         Till Mira i byn
       </a>

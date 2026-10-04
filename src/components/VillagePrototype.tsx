@@ -40,6 +40,7 @@ import { boathousePurchaseRequired, clearAct2RuntimeStateForPairedChild, jettyPu
 import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { parseStoryLine } from "../game/storyEngine";
+import { act2ResumeHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
 import { StoryRunner } from "./story/StoryRunner";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
@@ -240,8 +241,10 @@ export default function VillagePrototype() {
 
   useEffect(() => {
     if (!saveReady) return;
-    const project = new URLSearchParams(window.location.search).get("act2-purchase");
-    if (project !== "dock" && project !== "boathouse" && project !== "motorboat") return;
+    const project = parseAct2PurchaseProject(
+      new URLSearchParams(window.location.search).get("act2-purchase"),
+    );
+    if (!project) return;
     let cancelled = false;
     void (async () => {
       try {
@@ -1174,7 +1177,7 @@ export default function VillagePrototype() {
     if (act2PurchaseReturnProject) {
       const project = act2PurchaseReturnProject;
       setAct2PurchaseReturnProject(null);
-      router.push(`/act2?resume=${project}`);
+      router.push(act2ResumeHref(project));
     }
   }
 
@@ -1407,7 +1410,7 @@ export default function VillagePrototype() {
     const resumeProject = act2PurchaseStory;
     setAct2PurchaseStory(null);
     setAct2PurchaseStoryIndex(0);
-    router.push(resumeProject ? `/act2?resume=${resumeProject}` : "/act2");
+    router.push(resumeProject ? act2ResumeHref(resumeProject) : "/act2");
   }
 
   if (loadError) return <section className="parent-page"><div className="parent-tool-card" role="alert">
