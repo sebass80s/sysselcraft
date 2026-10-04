@@ -1712,7 +1712,18 @@ export default function VillagePrototype() {
     >
       <p>{abandonedShopDialogueLine.text}</p>
     </InlineDialogueCard>}
-    {constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal"><span className={`dialogue-speaker ${constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}`}>{constructionSpeakerName}</span><p>{constructionDialogueLine.text}</p><button className="primary-button" disabled={constructionBusy} onClick={() => { if (constructionDialogueIndex + 1 < attention.dialogue.length) setConstructionDialogueIndex((index) => index + 1); else void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id); }}>{constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); setConstructionDialogueIndex(0);  }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <InlineDialogueCard
+      ariaLabel="Byggplatsens samtal"
+      speaker={constructionSpeakerName}
+      speakerClassName={constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}
+      nextLabel={constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"}
+      nextDisabled={constructionBusy}
+      nextClassName="primary-button"
+      onNext={() => { if (constructionDialogueIndex + 1 < attention.dialogue.length) setConstructionDialogueIndex((index) => index + 1); else void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id); }}
+      footer={<><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); setConstructionDialogueIndex(0);  }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</>}
+    >
+      <p>{constructionDialogueLine.text}</p>
+    </InlineDialogueCard>}
     {recyclingStoryOpen && recyclingStoryLine && <InlineDialogueCard
       ariaLabel="Återvinningscentralen är färdig"
       speaker={recyclingSpeakerName}
