@@ -1,6 +1,7 @@
 import { Preferences } from "@capacitor/preferences";
 import { runSequentialMigrations } from "../runtime/save/migrations";
 import { authoritativeProgressDelta } from "../runtime/progression/authoritativeDelta";
+import { progressGateRequired } from "../runtime/progression/progressGate";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -426,30 +427,42 @@ export function withBackendStoryFlags(
 
 export function jettyPurchaseRequired(state: Act2RuntimeState) {
   const normalized = normalizeAct2RuntimeState(state);
-  return normalized.projects.dock.contributions >= 6
-    && normalized.projects.dock.contributions < 16
-    && !normalized.jettyLifebuoyOwned;
+  return progressGateRequired(
+    normalized.projects.dock.contributions,
+    6,
+    16,
+    normalized.jettyLifebuoyOwned,
+  );
 }
 
 export function boathousePurchaseRequired(state: Act2RuntimeState) {
   const normalized = normalizeAct2RuntimeState(state);
-  return normalized.projects.boathouse.contributions >= 9
-    && normalized.projects.boathouse.contributions < 16
-    && !normalized.boathouseSteeringWheelOwned;
+  return progressGateRequired(
+    normalized.projects.boathouse.contributions,
+    9,
+    16,
+    normalized.boathouseSteeringWheelOwned,
+  );
 }
 
 export function motorboatPartsPurchaseRequired(state: Act2RuntimeState) {
   const normalized = normalizeAct2RuntimeState(state);
-  return normalized.projects.motorboat.contributions >= 5
-    && normalized.projects.motorboat.contributions < 16
-    && !normalized.motorboatPartsOwned;
+  return progressGateRequired(
+    normalized.projects.motorboat.contributions,
+    5,
+    16,
+    normalized.motorboatPartsOwned,
+  );
 }
 
 export function motorboatNamingRequired(state: Act2RuntimeState) {
   const normalized = normalizeAct2RuntimeState(state);
-  return normalized.projects.motorboat.contributions >= 12
-    && normalized.projects.motorboat.contributions < 16
-    && normalized.motorboatName === null;
+  return progressGateRequired(
+    normalized.projects.motorboat.contributions,
+    12,
+    16,
+    normalized.motorboatName !== null,
+  );
 }
 
 export function act2ContributionBlockedByStoryGate(state: Act2RuntimeState, project: Act2Project) {

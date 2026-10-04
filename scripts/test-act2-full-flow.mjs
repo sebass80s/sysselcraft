@@ -20,6 +20,7 @@ function loadTsModule(file, dependencies) {
 
 const saveMigrations = loadTsModule("../src/runtime/save/migrations.ts", {});
 const progressionDelta = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
+const progressGate = loadTsModule("../src/runtime/progression/progressGate.ts", {});
 const {
   act2FinalePending,
   advanceAct2Finale,
@@ -45,6 +46,7 @@ const {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrations,
   "../runtime/progression/authoritativeDelta": progressionDelta,
+  "../runtime/progression/progressGate": progressGate,
 });
 
 const restart = (state) => normalizeAct2RuntimeState(JSON.parse(JSON.stringify(state)));

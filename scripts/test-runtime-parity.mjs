@@ -13,6 +13,7 @@ import { WORLD_CAMERA, worldCameraDeadzone } from "../src/runtime/world/worldCam
 import { WORLD_ENTITY_DEPTH_BASE, worldEntityDepth } from "../src/runtime/world/worldDepth.ts";
 import { runSequentialMigrations } from "../src/runtime/save/migrations.ts";
 import { authoritativeProgressDelta } from "../src/runtime/progression/authoritativeDelta.ts";
+import { progressGateRequired } from "../src/runtime/progression/progressGate.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
 import { JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT, JETTY_COMPLETION_REACTION } from "../src/game/act2JettyStory.ts";
@@ -38,10 +39,12 @@ function loadTsModule(file, dependencies) {
 
 const saveMigrationModule = loadTsModule("../src/runtime/save/migrations.ts", {});
 const progressionDeltaModule = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
+const progressGateModule = loadTsModule("../src/runtime/progression/progressGate.ts", {});
 const { createDefaultAct2RuntimeState } = loadTsModule("../src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrationModule,
   "../runtime/progression/authoritativeDelta": progressionDeltaModule,
+  "../runtime/progression/progressGate": progressGateModule,
 });
 
 const {
@@ -269,6 +272,11 @@ for (const fixture of progressGateParityFixtures) {
     legacyProgressGateRequired(fixture.progress, fixture.threshold, fixture.completion, fixture.resolved),
     fixture.expected,
     fixture.name,
+  );
+  assert.equal(
+    progressGateRequired(fixture.progress, fixture.threshold, fixture.completion, fixture.resolved),
+    legacyProgressGateRequired(fixture.progress, fixture.threshold, fixture.completion, fixture.resolved),
+    `shared progress gate parity failed: ${fixture.name}`,
   );
 }
 
