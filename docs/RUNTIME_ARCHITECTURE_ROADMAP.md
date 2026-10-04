@@ -1543,3 +1543,24 @@ The old inline `preEpilogueSchemaComplete` migration branch has been retired. Ex
 Verification: GitHub Actions #1799, full `npm run verify`, SUCCESS on commit `be24bcebdd434ced23ea35ce06774bcb64e47b46`.
 
 Next safe Save/Migration work should move additional compatibility repairs behind explicit versioned steps. Backend-owned quests, rewards, wallet values and authoritative progression must never be fabricated by migrations.
+
+
+## Save / Migration Engine checkpoint 3 — Act 2 finale schema 3
+
+Act 2 finale compatibility now has an explicit sequential schema chain:
+
+`1 -> 2 -> 3`
+
+Schema 3 moves the remaining `legacyFamilyComplete` compatibility repair out of `normalizeAct2RuntimeState()` and into the shared Save / Migration Engine.
+
+Behavior is parity-locked for both schema-2 cases:
+- family finale consumed, epilogue not consumed => resume once at epilogue index 5;
+- epilogue and chapter genuinely complete => remain complete, preserve `endCardSeen`, and never resurrect the finale.
+
+Pre-schema saves still pass through the existing 1 -> 2 recovery before 2 -> 3. The canonical normalizer now handles invariants after versioned compatibility work rather than owning this legacy migration branch.
+
+Verification:
+- parity committed before migration;
+- GitHub Actions #1806: full `npm run verify` SUCCESS on `0884fb5359f5b48a46cb9af57f2615908bb8849f`.
+
+No production/live, backend-owned progression, Adam data, Act 3, navigation, collision, iPhone/WebView behavior, story content or economy was changed.
