@@ -133,7 +133,37 @@ assert.deepEqual((await save.loadSaveState()).construction, committed, "retry co
 const legacy = { ...snapshot }; delete legacy.construction;
 assert.equal(save.normalizeSaveState(legacy).construction.revealed.recycling, 1);
 assert.deepEqual(save.normalizeSaveState(legacy).construction.pending, []);
-assert.deepEqual(domain.normalizeConstruction(null, 2).pending, [], "legacy visible stage 2 is not replayed");
+assert.deepEqual(save.normalizeSaveState({ version: 1, construction: null, worldFlags: { recyclingCenterStage: 2 } }).construction.pending, [], "legacy visible stage 2 is not replayed");
+// Lock the accepted legacy shape boundary before moving compatibility ownership.
+for (const construction of [undefined, null, false, true, 0, 2, "old", {}, [], { earned: { recycling: 3 }, revealed: { recycling: 1 } }]) {
+  for (const stage of [undefined, null, -1, 0, 1, 2, 3, 4, 5, "2"]) {
+    for (const orderEnvironment of [0, 0.7, 100]) {
+      const input = { version: 1, construction, progression: { orderEnvironment }, worldFlags: { recyclingCenterStage: stage } };
+      const before = JSON.stringify(input);
+      const result = save.normalizeSaveState(input);
+      const hasCanonical = construction !== null && typeof construction === "object";
+      const visible = hasCanonical ? (construction.revealed?.recycling ?? 0)
+        : Math.max(Number.isInteger(stage) && stage >= 0 && stage <= 4 ? stage : 0, orderEnvironment >= 0.7 ? 1 : 0);
+      assert.equal(result.construction.revealed.recycling, visible);
+      assert.equal(result.construction.earned.recycling, hasCanonical
+        ? Math.max(visible, construction.earned?.recycling ?? 0, orderEnvironment >= 0.7 ? 1 : 0) : visible);
+      const expectedPending = !hasCanonical ? [] : construction.earned?.recycling === 3
+        ? ["recycling:2", "recycling:3"] : orderEnvironment >= 0.7 ? ["recycling:1"] : [];
+      assert.deepEqual(result.construction.pending, expectedPending);
+      assert.equal(result.worldFlags.recyclingCenterStage, visible);
+      assert.equal(JSON.stringify(input), before, "migration must not mutate input");
+      assert.deepEqual(save.normalizeSaveState(result), result, "save normalization is idempotent");
+    }
+  }
+}
+for (const marker of [{}, { act1ChapterFinaleSeen: false }, { act1EndCardSeen: false }, { act1ChapterFinaleIndex: 0 }, { act1ChapterFinaleIndex: 1.5 }, { act1ChapterFinaleSeen: "true" }]) {
+  const input = { version: 1, worldFlags: { clinicCompletionSeen: true, ...marker } };
+  const hasFinale = typeof marker.act1ChapterFinaleSeen === "boolean" || typeof marker.act1EndCardSeen === "boolean" || Number.isInteger(marker.act1ChapterFinaleIndex);
+  const result = save.normalizeSaveState(input);
+  assert.equal(result.worldFlags.act1ChapterFinaleSeen, !hasFinale);
+  assert.equal(result.worldFlags.act1EndCardSeen, !hasFinale);
+  assert.deepEqual(save.normalizeSaveState(result), result);
+}
 // New schema persists its revealed stage independently of the legacy earned-stage field.
 assert.equal(save.normalizeSaveState({ ...snapshot, construction: pending }).construction.revealed.recycling, 1);
 console.log("PASS: stage 1 approval pending/reload/reward invariance/commit; delivery prerequisite; earned/revealed separation; pending reload; duplicate/wrong events; commit reload; failed save + retry; legacy saves; resident placement/navigation; stage 2 footprint.");
