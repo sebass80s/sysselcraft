@@ -1341,3 +1341,108 @@ Parity was green before implementation in #1844. #1843 was an incorrect test fix
 No collision, pathfinding, player movement, dog follow, pointer/touch behavior, WebView fallback, backend state, live branch or parent UI was changed.
 
 World / Area safe-pure cleanup is now close to its natural boundary. Do not force Village and Lake movement/collision into one implementation. The remaining behavioral convergence requires browser + physical iPhone acceptance.
+
+
+## Handover checkpoint — Runtime 1.0 / 2026-10-04 evening
+
+**Active branch:** `nova/runtime-architecture-v1`
+
+**Verified code HEAD before documentation closeout:**
+- `737602ec1c86f550feeefbf6e99c8a2501f6d8d7`
+- `test: retire Act 2 price alias contract`
+- GitHub Actions **#1906**: SUCCESS, full `npm run verify`.
+
+After that verified code checkpoint, documentation-only handover commits may advance branch HEAD. Always re-check repo reality before editing.
+
+### What was completed in this work session
+
+#### Act 1 Story Engine convergence
+Standard fullscreen Act 1 story presentation now uses the shared Story Engine for:
+- Henning arrival + replay;
+- Mira arrival + replay;
+- Sol tour;
+- Bakery completion + replay;
+- Clinic completion + replay;
+- Act 1 chapter-finale dialogue;
+- Linus first meeting + replay presentation shell;
+- bottle-message presentation;
+- earlier bottle-letter / Sol-arrival Story Engine consumers remain canonical.
+
+Linus naming/reveal logic was **not** moved into a generic state machine. Child-name input, dog-name input, reveal state, save/progression callbacks and replay state remain locally owned while Story Engine owns the visual shell.
+
+#### Canonical story speaker tones
+`storySpeakerTone()` is the shared mapping for standard Story Engine consumers.
+
+Migrated consumers include Henning, Mira, Bakery, Clinic, Act 1 finale, Sol tour, Sol arrival and bottle-message presentation.
+
+**Do not automatically convert Linus intro line steps.** Their accepted legacy presentation uses `default` for Linus; canonical `storySpeakerTone("Linus")` would produce `linus` and therefore change visuals.
+
+#### Inline dialogue convergence
+New shared primitive:
+- `src/components/story/InlineDialogueCard.tsx`
+
+Migrated consumers:
+- recycling conversation;
+- Henning ordinary conversation;
+- abandoned-shop conversation;
+- construction-site conversation;
+- Recycling completion conversation.
+
+The only raw compact `dialogue-card` intentionally remaining in Village is the non-fullscreen Linus naming/input path. It is an acceptance-sensitive interactive special surface because of autofocus, Enter handling, mobile keyboard, validation and dog-name reveal behavior.
+
+Do not mechanically migrate it during ordinary cleanup.
+
+#### Act 2 purchase cleanup
+Canonical client purchase ownership remains:
+- `src/game/act2PurchaseCatalog.ts`;
+- `src/game/act2PurchaseHandoff.ts`;
+- `progressGateRequired()`;
+- canonical Act 2 blocker arbitration.
+
+The obsolete `storyShop.ts` Act 2 display-price compatibility aliases were removed after verifying they no longer had real consumers.
+
+Alias cleanup:
+- `ee8973f7574d5a6a49ceb517b7c9cfa42a3c9f11`: remove retired aliases;
+- `737602ec1c86f550feeefbf6e99c8a2501f6d8d7`: retire stale alias test/contract;
+- CI #1906 SUCCESS.
+
+Backend Story Shop / Supabase remain authoritative for purchase execution, wallet debit and ownership flags.
+
+### Act 3 art note
+A parked Act 3 art-production decision was documented during this session: use a separate parallel art agent/workflow driven by a prepared beat manifest + canonical reference package so image production can run while runtime coding continues.
+
+Likely evaluation path:
+- Runway workflow/API as primary candidate;
+- OpenArt as alternate;
+- prove the pipeline first on ~3 accepted Act 2 scenes.
+
+This is **not authorization to begin Act 3 runtime work**.
+
+### Next recommended Runtime 1.0 step
+Continue low-risk legacy cleanup, one parity-first slice at a time.
+
+Start by:
+1. verifying latest branch HEAD and CI;
+2. searching for remaining superseded compatibility aliases, duplicate safe presentation/config ownership or stale source-shape tests;
+3. choosing one real duplicate with at least two consumers or one clearly retired compatibility shim;
+4. locking parity first;
+5. migrating/removing;
+6. stopping at green CI.
+
+Avoid:
+- collision/pathfinding convergence;
+- dog-follow convergence;
+- pointer/touch/WebView handler deduplication;
+- Linus naming DOM changes;
+- generic purchase-engine invention;
+- new Save/Migration work without a real legacy repair;
+- production deploy;
+- Adam data mutation.
+
+These high-risk/input-sensitive areas require browser + physical iPhone acceptance.
+
+### Session safety
+- no production deployment;
+- no live/release branch changes;
+- no Adam backend/save mutation;
+- no Act 3 feature implementation.
