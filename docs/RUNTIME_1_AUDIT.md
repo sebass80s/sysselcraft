@@ -718,3 +718,34 @@ Verification:
 Do not spend another broad pass trying to manufacture more Save/Migration slices. The safe pure candidates identified by the repo-wide sweep are now exhausted.
 
 Return to the Runtime Architecture roadmap. The next meaningful work is remaining runtime convergence / legacy cleanup, with collision, pathfinding, movement feel, dog-follow and WebView/touch behavior still gated by browser + physical iPhone acceptance. Prefer a small parity-first slice over a broad rewrite.
+
+
+## Progression / Gating checkpoint 1 — authoritative baseline delta
+
+The first shared Progression / Gating primitive is now active:
+
+- implementation: `src/runtime/progression/authoritativeDelta.ts`;
+- canonical function: `authoritativeProgressDelta(authoritativeCount, baselineCount)`;
+- behavior: floor both monotonic counts independently, subtract baseline from authoritative count, clamp at zero.
+
+This is deliberately a **small count-arithmetic primitive**, not a claim that the Progression Engine is complete. It does not establish baselines, decide backend authority, consume authored beats, apply purchase/naming gates, mutate saves or award rewards.
+
+Current real consumers:
+- Act 1 Clinic contribution pacing;
+- Act 1 Recycling contribution pacing;
+- Act 1 Bakery contribution pacing;
+- Act 2 pending backend contribution/backlog calculation.
+
+Parity was committed before implementation in `c9aed9dece27646778eed0304b08ece57a144dad` and locks the historical count-delta semantics, including floor behavior and zero-clamping. The implementation then replaced the duplicated arithmetic without changing chapter/domain ownership.
+
+The first implementation CI exposed only stale custom test loaders that enumerated `act2RuntimeState.ts` dependencies. Those harnesses were updated to load the canonical progression primitive explicitly. No product rollback was required.
+
+Verified code checkpoint before this documentation closeout:
+- HEAD: `31643b1e1dde750c9026a8d9226498da7da80575`;
+- GitHub Actions #1823: full `npm run verify` SUCCESS.
+
+Safety boundaries remain unchanged: backend remains authoritative for real quest/reward/progression evidence; local baseline establishment remains with each domain; no live/Adam/Act 3/input/pathfinding/iPhone-sensitive behavior was changed.
+
+### Registry cleanup
+
+The Runtime System Registry had one stale status: Story History still claimed that Act 2 migration was pending even though the development consumer has already used the shared Story Registry/History for multiple verified checkpoints. That status is corrected in the same closeout. Interaction remains migration-pending because special entrypoint/physical-acceptance work still exists; purchase gating remains migration-pending.

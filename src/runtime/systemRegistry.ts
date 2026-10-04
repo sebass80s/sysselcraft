@@ -53,9 +53,9 @@ export const CANONICAL_SYSTEMS: readonly CanonicalSystemRegistration[] = [
   },
   {
     id: SYSTEM_COMPONENT_IDS.storyHistory,
-    status: "migration-pending",
+    status: "canonical",
     owner: "Runtime 1.0",
-    note: "Act 2 history must migrate to the shared Story Registry/History system.",
+    note: "Shared Story Registry/History is canonical and the Act 2 development runtime consumes it.",
   },
   {
     id: SYSTEM_COMPONENT_IDS.questMarker,
