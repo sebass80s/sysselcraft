@@ -289,9 +289,9 @@ assert.ok(
 );
 assert.ok(
   villageRuntime.includes('speaker={clinicSpeakerName}')
-    && villageRuntime.includes('speakerTone={clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker === "Linus" ? "linus" : "sol"}')
+    && villageRuntime.includes('speakerTone={storySpeakerTone(clinicStoryLine.speaker)}')
     && villageRuntime.includes('<p>{clinicStoryLine.text}</p>'),
-  "Act 1 Clinic completion must preserve child, Linus and Sol speaker presentation through Story Engine",
+  "Act 1 Clinic completion must preserve child, Linus and Sol speaker presentation through the shared tone mapping",
 );
 assert.ok(
   villageRuntime.includes('onNext={advanceClinicStory}')
