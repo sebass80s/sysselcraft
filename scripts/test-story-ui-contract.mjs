@@ -2,7 +2,30 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 
-import { parseStoryLine } from "../src/game/storyEngine.ts";
+import { parseStoryLine, storySpeakerTone } from "../src/game/storyEngine.ts";
+
+const speakerToneFixtures = [
+  ["Barnet", "child"],
+  ["Hunden", "dog"],
+  ["Valpen", "dog"],
+  ["Alve", "alve"],
+  ["Henning", "henning"],
+  ["Mira", "mira"],
+  ["Linus", "linus"],
+  ["Sol", "sol"],
+  ["Gubbe", "default"],
+  ["Okänd", "default"],
+  ["Pappan", "default"],
+  ["Storasystern", "default"],
+];
+
+for (const [speaker, expectedTone] of speakerToneFixtures) {
+  assert.equal(
+    storySpeakerTone(speaker),
+    expectedTone,
+    `shared story speaker tone drifted for ${speaker}`,
+  );
+}
 
 const root = process.cwd();
 const read = (p) => fs.readFileSync(path.join(root, p), "utf8");
