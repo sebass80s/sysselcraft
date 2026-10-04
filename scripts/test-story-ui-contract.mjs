@@ -178,23 +178,27 @@ assert.equal(
 );
 
 assert.ok(
-  villageRuntime.includes('solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation">')
-    && villageRuntime.includes('<Image src={solTourImage} alt="" fill priority sizes="100vw" />'),
-  "Act 1 Sol tour must preserve its authored per-stop image through the current presentation path",
+  villageRuntime.includes('{solTourStoryStop && solTourStoryLine && <StoryMoment')
+    && villageRuntime.includes('image={solTourImage}')
+    && villageRuntime.includes('ariaLabel="Sol ser sig omkring i byn"'),
+  "Act 1 Sol tour must preserve its authored per-stop image and accessible label through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker.toLowerCase()')
-    && villageRuntime.includes('{solTourSpeakerName}</span><p>{solTourStoryLine.text}</p>'),
-  "Act 1 Sol tour must preserve speaker identity, tone and line text",
+  villageRuntime.includes('speaker={solTourSpeakerName}')
+    && villageRuntime.includes('speakerTone={solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker === "Henning" ? "henning" : solTourStoryLine.speaker === "Mira" ? "mira" : solTourStoryLine.speaker === "Linus" ? "linus" : "sol"}')
+    && villageRuntime.includes('<p>{solTourStoryLine.text}</p>'),
+  "Act 1 Sol tour must preserve child, Henning, Mira, Linus and Sol speaker presentation through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceSolTourStory()}')
+  villageRuntime.includes('nextDisabled={constructionBusy}')
+    && villageRuntime.includes('onNext={() => void advanceSolTourStory()}')
     && villageRuntime.includes('solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen"'),
-  "Act 1 Sol tour must preserve busy state, callback and stop-specific final CTA",
+  "Act 1 Sol tour must preserve busy state, callback and stop-specific final CTA through Story Engine",
 );
-assert.ok(
-  villageRuntime.includes('aria-label="Sol ser sig omkring i byn"'),
-  "Act 1 Sol tour must preserve its accessible dialog label",
+assert.equal(
+  villageRuntime.includes('solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 Sol tour must not retain its parallel legacy story shell",
 );
 
 assert.ok(

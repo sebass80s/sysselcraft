@@ -1541,7 +1541,19 @@ export default function VillagePrototype() {
     >
       <p>{solArrivalDialogue[solStoryIndex].text}</p>
     </StoryMoment>}
-    {solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation"><Image src={solTourImage} alt="" fill priority sizes="100vw" /></div><div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Sol ser sig omkring i byn"><span className={`dialogue-speaker henning-story-speaker ${solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker.toLowerCase()}`}>{solTourSpeakerName}</span><p>{solTourStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceSolTourStory()}>{constructionBusy ? "Sparar…" : solTourStoryIndex === solTourDialogue[solTourStoryStop].length - 1 ? (solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen") : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></>}
+    {solTourStoryStop && solTourStoryLine && <StoryMoment
+      image={solTourImage}
+      ariaLabel="Sol ser sig omkring i byn"
+      speaker={solTourSpeakerName}
+      speakerTone={solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker === "Henning" ? "henning" : solTourStoryLine.speaker === "Mira" ? "mira" : solTourStoryLine.speaker === "Linus" ? "linus" : "sol"}
+      nextLabel={constructionBusy ? "Sparar…" : solTourStoryIndex === solTourDialogue[solTourStoryStop].length - 1 ? (solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen") : "Fortsätt"}
+      nextDisabled={constructionBusy}
+      onNext={() => void advanceSolTourStory()}
+      presentationId={`act1:sol-tour:${solTourStoryStop}:${solTourStoryIndex}`}
+    >
+      <p>{solTourStoryLine.text}</p>
+      {constructionError && <p role="alert">{constructionError}</p>}
+    </StoryMoment>}
     {miraStoryIndex !== null && miraStoryLine && <StoryMoment
       image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}
       ariaLabel="Mira kommer till byn"
