@@ -272,6 +272,22 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('{act1ChapterFinaleIndex !== null && act1ChapterFinaleLine && <div className="story-moment" role="presentation"><Image src={act1ChapterFinaleImage}')
+    && villageRuntime.includes('aria-label="Byn lever igen"'),
+  "Act 1 chapter finale dialogue must preserve its canonical image and accessible label",
+);
+assert.ok(
+  villageRuntime.includes('act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker.toLowerCase()')
+    && villageRuntime.includes('{act1ChapterFinaleSpeakerName}</span><p>{act1ChapterFinaleLine.text}</p>'),
+  "Act 1 chapter finale dialogue must preserve speaker identity, tone and line text",
+);
+assert.ok(
+  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceAct1ChapterFinale()}')
+    && villageRuntime.includes('act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"'),
+  "Act 1 chapter finale dialogue must preserve busy state, callback and final CTA",
+);
+
+assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
     && villageRuntime.includes('image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}')
     && villageRuntime.includes('ariaLabel="Mira kommer till byn"'),
