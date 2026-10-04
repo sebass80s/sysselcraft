@@ -23,11 +23,9 @@ export const SYSTEM_COMPONENT_IDS = {
 export type SystemComponentId =
   (typeof SYSTEM_COMPONENT_IDS)[keyof typeof SYSTEM_COMPONENT_IDS];
 
-export type CanonicalSystemStatus = "canonical";
-
 export type CanonicalSystemRegistration = {
   id: SystemComponentId;
-  status: CanonicalSystemStatus;
+  status: "canonical";
   owner: string;
   note: string;
 };
