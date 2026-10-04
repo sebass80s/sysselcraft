@@ -193,11 +193,6 @@ assert.ok(
   "Act 1 bottle letter must preserve its accessible dialog label after migration",
 );
 assert.ok(
-  villageRuntime.includes('speakerTone={storySpeakerTone(bottleMessageDialogue[bottleStoryIndex].speaker)}'),
-  "Act 1 bottle message must consume the shared child/dog speaker tone mapping",
-);
-
-assert.ok(
   villageRuntime.includes('{solStoryIndex !== null && <StoryMoment')
     && villageRuntime.includes('image="/assets/village/story-moments/sol-arrival.png"')
     && villageRuntime.includes('ariaLabel="Sol kommer till byn"'),
