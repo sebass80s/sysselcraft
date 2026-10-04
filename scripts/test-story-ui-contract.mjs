@@ -248,9 +248,9 @@ assert.ok(
 );
 assert.ok(
   villageRuntime.includes('speaker={bakerySpeakerName}')
-    && villageRuntime.includes('speakerTone={bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker === "Linus" ? "linus" : "henning"}')
+    && villageRuntime.includes('speakerTone={storySpeakerTone(bakeryStoryLine.speaker)}')
     && villageRuntime.includes('<p>{bakeryStoryLine.text}</p>'),
-  "Act 1 Bakery completion must preserve child, Linus and Henning speaker presentation through Story Engine",
+  "Act 1 Bakery completion must preserve child, Linus and Henning speaker presentation through the shared tone mapping",
 );
 assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
