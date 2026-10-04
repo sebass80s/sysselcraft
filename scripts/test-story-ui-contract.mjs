@@ -191,6 +191,10 @@ assert.ok(
   villageRuntime.includes('ariaLabel="Brevet i flaskposten"'),
   "Act 1 bottle letter must preserve its accessible dialog label after migration",
 );
+assert.ok(
+  villageRuntime.includes('speakerTone={bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}'),
+  "Act 1 bottle message must preserve accepted child/dog speaker tones before shared-tone migration",
+);
 
 assert.ok(
   villageRuntime.includes('{solStoryIndex !== null && <StoryMoment')
