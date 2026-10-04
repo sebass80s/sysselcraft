@@ -276,6 +276,12 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('speakerTone={bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker === "Linus" ? "linus" : "henning"}')
+    && villageRuntime.includes('speakerTone={bakeryStoryReplayLine.speaker === "Barnet" ? "child" : bakeryStoryReplayLine.speaker === "Linus" ? "linus" : "henning"}'),
+  "Act 1 Bakery live and replay must preserve accepted child/Linus/Henning speaker tones before shared-tone migration",
+);
+
+assert.ok(
   villageRuntime.includes('{clinicStoryIndex !== null && clinicStoryLine && <StoryMoment')
     && villageRuntime.includes('image={clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"}')
     && villageRuntime.includes('ariaLabel="Sols klinik är färdig"'),
