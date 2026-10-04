@@ -1585,10 +1585,30 @@ export default function VillagePrototype() {
     {act1ChapterFinaleSeen && !act1EndCardSeen && act1ChapterFinaleIndex === null && <div role="dialog" aria-modal="true" aria-label="Slut på första kapitlet" style={{ position:"fixed", inset:0, zIndex:150, display:"grid", placeItems:"center", background:"#050706", color:"white", textAlign:"center", padding:24 }}><div><h1 style={{ margin:0, fontSize:"clamp(2rem, 7vw, 4.5rem)", letterSpacing:".04em" }}>SLUT PÅ FÖRSTA KAPITLET</h1><button className="primary-button" type="button" disabled={constructionBusy} style={{ marginTop:28 }} onClick={() => void acknowledgeAct1EndCard()}>{constructionBusy ? "Sparar…" : "Tillbaka till byn"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div></div>}
     {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="story-moment" role="presentation"><Image src={clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"} alt="" fill priority sizes="100vw" /></div>}
     {clinicStoryReplayIndex !== null && clinicStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Sols färdiga klinik"><span className={`dialogue-speaker henning-story-speaker ${clinicStoryReplayLine.speaker === "Barnet" ? "child" : clinicStoryReplayLine.speaker.toLowerCase()}`}>{clinicReplaySpeakerName}</span><p>{clinicStoryReplayLine.text}</p><button className="primary-button dialogue-next" onClick={advanceClinicStoryReplay}>{clinicStoryReplayIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
-    {bakeryStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png" alt="" fill priority sizes="100vw" /></div>}
-    {bakeryStoryIndex !== null && bakeryStoryLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Bageriet är färdigt"><span className={`dialogue-speaker henning-story-speaker ${bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker.toLowerCase()}`}>{bakerySpeakerName}</span><p>{bakeryStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBakeryStory()}>{constructionBusy ? "Sparar…" : bakeryStoryIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
-    {bakeryStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bakery-completion.png" alt="" fill priority sizes="100vw" /></div>}
-    {bakeryStoryReplayIndex !== null && bakeryStoryReplayLine && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av färdigt bageri"><span className={`dialogue-speaker henning-story-speaker ${bakeryStoryReplayLine.speaker === "Barnet" ? "child" : bakeryStoryReplayLine.speaker.toLowerCase()}`}>{bakeryReplaySpeakerName}</span><p>{bakeryStoryReplayLine.text}</p><button className="primary-button dialogue-next" onClick={advanceBakeryStoryReplay}>{bakeryStoryReplayIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
+    {bakeryStoryIndex !== null && bakeryStoryLine && <StoryMoment
+      image="/assets/village/story-moments/bakery-completion.png"
+      ariaLabel="Bageriet är färdigt"
+      speaker={bakerySpeakerName}
+      speakerTone={bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker === "Linus" ? "linus" : "henning"}
+      nextLabel={constructionBusy ? "Sparar…" : bakeryStoryIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      nextDisabled={constructionBusy}
+      onNext={() => void advanceBakeryStory()}
+      presentationId={`act1:bakery-complete:${bakeryStoryIndex}`}
+    >
+      <p>{bakeryStoryLine.text}</p>
+      {constructionError && <p role="alert">{constructionError}</p>}
+    </StoryMoment>}
+    {bakeryStoryReplayIndex !== null && bakeryStoryReplayLine && <StoryMoment
+      image="/assets/village/story-moments/bakery-completion.png"
+      ariaLabel="Testvisning av färdigt bageri"
+      speaker={bakeryReplaySpeakerName}
+      speakerTone={bakeryStoryReplayLine.speaker === "Barnet" ? "child" : bakeryStoryReplayLine.speaker === "Linus" ? "linus" : "henning"}
+      nextLabel={bakeryStoryReplayIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      onNext={advanceBakeryStoryReplay}
+      presentationId={`act1:bakery-complete-replay:${bakeryStoryReplayIndex}`}
+    >
+      <p>{bakeryStoryReplayLine.text}</p>
+    </StoryMoment>}
     {recyclingDialogueIndex !== null && (() => {
       const recyclingDialogue = [
         { speaker: "Linus", text: "Här är återvinningen. Jag håller ett öga på den tills vidare." },
