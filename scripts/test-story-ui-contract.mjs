@@ -123,6 +123,21 @@ assert.equal(
   "Act 1 bottle letter must not retain its parallel legacy story shell",
 );
 
+assert.ok(
+  villageRuntime.includes('{bottleStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-message.png"'),
+  "Act 1 bottle-message legacy oracle must preserve its accepted story image before migration",
+);
+assert.ok(
+  villageRuntime.includes('bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"')
+    && villageRuntime.includes('bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")'),
+  "Act 1 bottle-message legacy oracle must preserve speaker tone and dog-name interpolation",
+);
+assert.ok(
+  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceBottleStory()}')
+    && villageRuntime.includes('constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"'),
+  "Act 1 bottle-message legacy oracle must preserve busy state, callback and CTA labels",
+);
+
 assert.deepEqual(
   parseStoryLine("Barnet: Hej.", "Testbarn"),
   { text: "Hej.", speaker: "Testbarn", speakerTone: "child" },
