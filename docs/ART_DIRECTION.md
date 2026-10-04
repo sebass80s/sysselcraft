@@ -631,3 +631,68 @@ Act 2 Story Moments must preserve established character identity. Do not regener
 - Reference images define **identity**; scene prompts define pose, wardrobe appropriate to the scene (e.g. ordinary swimwear), expression and action without replacing identity.
 
 Production gate: **inspect the actual canonical refs → confirm they are available as real image inputs in the active conversation → generate → compare identity/style → reject drift before integrating the asset.**
+
+
+# 🔒 ACT 3 CANONICAL REFERENCE RESOLVER — LOCKED 2026-10-04
+
+This section applies to **Act 3 and future visual production**. It does not require reopening completed Act 2 art.
+
+## Runway canonical library
+
+The preferred persistent visual-reference source is the connected Runway Brand Kit **Syssel**. Established characters and accepted environment references stored there are intended to remove the old requirement that Kalle repeatedly uploads the same canonical images into each art conversation.
+
+Vega is responsible for resolving canonical names to library assets before generation.
+
+### Hard resolver rule
+
+For a named canonical entity, the production chain is:
+
+**name in beat/prompt → resolve canonical asset in Syssel → fetch actual image reference → pass that reference into the generation call → generate → verify identity**
+
+Skipping the middle steps is forbidden.
+
+Merely listing, recognizing or remembering an asset does **not** count as reference grounding. If the real asset is not supplied to the renderer, the generation is ungrounded.
+
+## NO-GUESS GENERATION RULE
+
+**Never generate a SysselCraft production image when a locked visual fact would have to be guessed.**
+
+This includes canonical:
+- character identity;
+- environment/master scene;
+- construction/building state;
+- important story prop;
+- vehicle/object orientation;
+- established wardrobe/design facts;
+- required camera/POV rules.
+
+If a required canonical reference cannot be identified, fetched or passed into the renderer, stop before generation and state the missing dependency.
+
+**Prefer no image over a plausible but invented image.**
+
+## Character reference requirement
+
+Every established character shown in a production image must use their actual canonical reference when available. For multi-character scenes, all established characters must be grounded in the same generation or through an equivalent reference-preserving workflow.
+
+A text description is never a substitute for an available canonical character sheet.
+
+Reference images define identity. Scene instructions may change pose, action, expression and scene-appropriate wardrobe only where canon allows it.
+
+Barnet's existing rear-view rule remains absolute in Story Moments/cutscenes: never invent or expose the child's face.
+
+## Environment reference requirement
+
+When a scene uses an already accepted environment/master composition, the actual environment reference must be supplied where generation could otherwise drift geography, camera, lighting or landmarks.
+
+Accepted master geometry remains visual authority. Generation may paint the authored moment but must not redesign the world.
+
+## Tool independence
+
+Runway is currently the preferred Act 3 route because its connected Brand Kit can provide reusable hosted references directly to image generation. Another renderer may be used only if it satisfies the same grounding contract.
+
+Tool choice never weakens the no-guess rule.
+
+## Operational source
+
+Detailed Act 3 queueing, proof-of-concept, manifest and acceptance rules live in:
+- `docs/ACT3_ART_PIPELINE.md`
