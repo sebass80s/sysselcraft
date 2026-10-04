@@ -1237,3 +1237,22 @@ Verification:
 Do not spend another broad pass trying to manufacture more Save/Migration slices. The safe pure candidates identified by the repo-wide sweep are now exhausted.
 
 Return to the Runtime Architecture roadmap. The next meaningful work is remaining runtime convergence / legacy cleanup, with collision, pathfinding, movement feel, dog-follow and WebView/touch behavior still gated by browser + physical iPhone acceptance. Prefer a small parity-first slice over a broad rewrite.
+
+
+## Runtime 1.0 progression/gating update — 2026-10-04
+
+Current development branch remains `nova/runtime-architecture-v1`.
+
+Verified code checkpoint before this documentation sync:
+- `d4c4cb8c9ee515d1398910527eaa854c9def3ac3`;
+- GitHub Actions #1828: full `npm run verify` SUCCESS.
+
+New canonical pure primitives:
+- `authoritativeProgressDelta()` for backend-monotonic-count minus local baseline arithmetic;
+- `progressGateRequired()` for threshold-to-completion unresolved gate windows.
+
+Act 2 now uses one state-layer story-gate arbitration for contribution blocking and Alve turn-in visibility. The React UI no longer separately decides purchase-vs-naming blockers.
+
+Do not mark the full purchase-gate system complete yet. Lake presentation and Mira-shop presentation are still separate consumers, while purchase execution/wallet authority correctly remain backend-owned.
+
+Recommended next slice: audit the Lake → Village shop purchase-gate handoff and extract only a parity-proven presentation contract if one exists. Collision/pathfinding/movement feel/dog follow remain physically acceptance-gated and should not be touched during this progression pass.

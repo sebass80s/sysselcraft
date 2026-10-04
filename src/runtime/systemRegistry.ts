@@ -79,6 +79,6 @@ export const CANONICAL_SYSTEMS: readonly CanonicalSystemRegistration[] = [
     id: SYSTEM_COMPONENT_IDS.purchaseGate,
     status: "migration-pending",
     owner: "Progression Engine",
-    note: "Existing purchase behavior is reused but presentation/gating becomes shared.",
+    note: "Gate arithmetic and Act 2 blocking arbitration are shared; Lake/Village purchase presentation handoff still needs convergence.",
   },
 ] as const;

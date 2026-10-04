@@ -749,3 +749,46 @@ Safety boundaries remain unchanged: backend remains authoritative for real quest
 ### Registry cleanup
 
 The Runtime System Registry had one stale status: Story History still claimed that Act 2 migration was pending even though the development consumer has already used the shared Story Registry/History for multiple verified checkpoints. That status is corrected in the same closeout. Interaction remains migration-pending because special entrypoint/physical-acceptance work still exists; purchase gating remains migration-pending.
+
+
+## Progression / Gating checkpoint 2 — shared gate window + canonical Act 2 arbitration
+
+Runtime 1.0 now owns a second pure Progression / Gating primitive:
+
+- implementation: `src/runtime/progression/progressGate.ts`;
+- canonical function: `progressGateRequired(progress, threshold, completion, resolved)`;
+- semantics: gate is active from the authored threshold (inclusive) until project completion (exclusive) while the external requirement remains unresolved.
+
+The primitive deliberately does **not** own:
+- chapter thresholds;
+- what resolves a requirement;
+- wallet/economy authority;
+- purchase execution;
+- naming UI;
+- story presentation.
+
+Current Act 2 consumers preserve the accepted authored thresholds:
+- Bryggan livboj at 6/16;
+- Båthuset ratt at 9/16;
+- Motorbåten delar at 5/16;
+- Motorbåten namn at 12/16.
+
+Parity-first history:
+- `5703ac53251cd24b509ade339cf637aed532aa86` locked the generic gate-window oracle before extraction;
+- GitHub Actions #1825: full `npm run verify` SUCCESS;
+- `31c8a1066b86a6aff9b566fafc842cfc532f9450` migrated the four Act 2 gates to the shared primitive;
+- GitHub Actions #1826: full `npm run verify` SUCCESS.
+
+A follow-up audit found a second source of drift: `Act2Runtime.tsx` independently recomposed purchase + naming gates when deciding whether Alve should expose a pending turn-in. The state layer already had canonical `act2ContributionBlockedByStoryGate()`.
+
+That arbitration was converged parity-first:
+- `8bf3466289a10608565eac7e69a95a980a71e2bd` locked UI/state arbitration equivalence across Cabin, Dock, Boathouse and Motorboat gate states;
+- GitHub Actions #1827: full `npm run verify` SUCCESS;
+- `d4c4cb8c9ee515d1398910527eaa854c9def3ac3` removed the parallel UI arbitration and routed Alve turn-in visibility through the canonical state-layer blocker;
+- GitHub Actions #1828: full `npm run verify` SUCCESS.
+
+### Current boundary
+
+This does **not** close the full `purchaseGate` system. Gate arithmetic and Act 2 blocking arbitration are canonical, but purchase presentation still spans Lake UI and Mira's Village shop, and backend Story Shop remains authoritative for purchase execution and wallet mutation.
+
+Next safe Progression / Gating work should audit that cross-area presentation handoff for duplication. Do not pull backend transaction authority into Runtime 1.0 and do not mark `purchaseGate` canonical until both sides consume one explicit presentation/hand-off contract.
