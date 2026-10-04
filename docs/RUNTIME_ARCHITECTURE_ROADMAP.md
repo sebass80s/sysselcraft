@@ -1638,3 +1638,42 @@ Verification:
 Do not spend another broad pass trying to manufacture more Save/Migration slices. The safe pure candidates identified by the repo-wide sweep are now exhausted.
 
 Return to the Runtime Architecture roadmap. The next meaningful work is remaining runtime convergence / legacy cleanup, with collision, pathfinding, movement feel, dog-follow and WebView/touch behavior still gated by browser + physical iPhone acceptance. Prefer a small parity-first slice over a broad rewrite.
+
+
+## Current roadmap checkpoint — 2026-10-04 evening
+
+The historical implementation order above has largely been consumed by Runtime 1.0 work. Do not restart already-closed phases simply because older roadmap text still lists them as future work.
+
+Current canonical/closed development ownership includes:
+- shared Game UI Shell;
+- Story Registry / History development path;
+- standard Story Engine presentation for current normal Story Moments;
+- shared compact `InlineDialogueCard` for ordinary Village inline dialogue;
+- canonical Interaction definitions/resolution/priority/marker rendering/world-input authority;
+- shared camera, viewport and dynamic depth primitives;
+- sequential Save/Migration engine with the current pure compatibility sweep closed;
+- authoritative progression-delta primitive;
+- shared progress-gate window;
+- canonical Act 2 purchase blocker arbitration;
+- canonical Lake↔Village purchase handoff;
+- canonical Act 2 client purchase presentation catalog.
+
+The obsolete Act 2 price compatibility aliases in `storyShop.ts` were retired at verified code HEAD:
+- `737602ec1c86f550feeefbf6e99c8a2501f6d8d7`;
+- GitHub Actions #1906 SUCCESS.
+
+### Next phase
+
+Runtime 1.0 is now in **safe legacy cleanup + acceptance preparation**, not broad subsystem invention.
+
+Continue only with small parity-first removals/extractions where repo evidence shows real superseded duplication or dead compatibility surface.
+
+Keep these boundaries:
+- collision/pathfinding/movement feel/dog-follow are physical-acceptance gated;
+- pointer/touch/WebView adapters remain local until an explicit acceptance window;
+- Linus naming/input remains a special interactive surface;
+- backend economy/Quest V2 authority is not rewritten;
+- do not create generic architecture without a second real consumer;
+- substantial Act 3 runtime remains parked until Runtime 1.0 architecture acceptance.
+
+A separate Act 3 art-production pipeline has been parked for later so image generation can run in parallel when Act 3 begins; it does not change the Runtime 1.0 execution order.
