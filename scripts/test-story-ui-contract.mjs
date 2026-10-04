@@ -296,25 +296,37 @@ assert.equal(
 );
 
 assert.ok(
-  villageRuntime.includes('{henningStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png"')
-    && villageRuntime.includes('aria-label="Henning kommer till byn"'),
-  "Act 1 Henning arrival must preserve its accepted image and accessible label",
+  villageRuntime.includes('{henningStoryIndex !== null && <StoryMoment')
+    && villageRuntime.includes('image="/assets/village/story-moments/henning-arrival.png"')
+    && villageRuntime.includes('ariaLabel="Henning kommer till byn"'),
+  "Act 1 Henning arrival must preserve its accepted image and accessible label through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker.toLowerCase()')
-    && villageRuntime.includes('henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker'),
-  "Act 1 Henning arrival must preserve child-name resolution and speaker tone",
+  villageRuntime.includes('speaker={henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker}')
+    && villageRuntime.includes('speakerTone={henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker === "Linus" ? "linus" : "henning"}'),
+  "Act 1 Henning arrival must preserve child-name resolution and Henning/Linus/child speaker tones through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceHenningStory()}')
-    && villageRuntime.includes('constructionBusy ? "Sparar…" : henningStoryIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"'),
-  "Act 1 Henning arrival must preserve busy state, callback and CTA labels",
+  villageRuntime.includes('nextDisabled={constructionBusy}')
+    && villageRuntime.includes('onNext={() => void advanceHenningStory()}')
+    && villageRuntime.includes('nextLabel={constructionBusy ? "Sparar…" : henningStoryIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}'),
+  "Act 1 Henning arrival must preserve busy state, callback and CTA labels through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('{henningStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png"')
-    && villageRuntime.includes('aria-label="Testvisning av Henning kommer till byn"')
-    && villageRuntime.includes('onClick={advanceHenningStoryReplay}'),
-  "Act 1 Henning replay must preserve image, accessible label and callback",
+  villageRuntime.includes('{henningStoryReplayIndex !== null && <StoryMoment')
+    && villageRuntime.includes('ariaLabel="Testvisning av Henning kommer till byn"')
+    && villageRuntime.includes('onNext={advanceHenningStoryReplay}'),
+  "Act 1 Henning replay must preserve image, accessible label and callback through Story Engine",
+);
+assert.equal(
+  villageRuntime.includes('{henningStoryIndex !== null && <div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 Henning arrival must not retain its parallel legacy story shell",
+);
+assert.equal(
+  villageRuntime.includes('{henningStoryReplayIndex !== null && <div className="story-moment" role="presentation">'),
+  false,
+  "Act 1 Henning replay must not retain its parallel legacy story shell",
 );
 
 assert.ok(

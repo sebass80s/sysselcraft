@@ -1662,10 +1662,30 @@ export default function VillagePrototype() {
       const last = henningDialogueIndex === henningDialogue.length - 1;
       return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Henning"><span className={`dialogue-speaker henning-story-speaker ${step.speaker.toLowerCase()}`}>{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => advanceHenningDialogue(last)}>{last ? "Klart" : "Nästa"}</button></div>;
     })()}
-    {henningStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png" alt="" fill priority sizes="100vw" /></div>}
-    {henningStoryReplayIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Testvisning av Henning kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryReplayIndex].speaker.toLowerCase()}`}>{henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryReplayIndex].speaker}</span><p>{henningArrivalDialogue[henningStoryReplayIndex].text}</p><button className="primary-button dialogue-next" onClick={advanceHenningStoryReplay}>{henningStoryReplayIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button></div>}
-    {henningStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png" alt="" fill priority sizes="100vw" /></div>}
-    {henningStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-live="polite" aria-label="Henning kommer till byn"><span className={`dialogue-speaker henning-story-speaker ${henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker.toLowerCase()}`}>{henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker}</span><p>{henningArrivalDialogue[henningStoryIndex].text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceHenningStory()}>{constructionBusy ? "Sparar…" : henningStoryIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {henningStoryReplayIndex !== null && <StoryMoment
+      image="/assets/village/story-moments/henning-arrival.png"
+      ariaLabel="Testvisning av Henning kommer till byn"
+      speaker={henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryReplayIndex].speaker}
+      speakerTone={henningArrivalDialogue[henningStoryReplayIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryReplayIndex].speaker === "Linus" ? "linus" : "henning"}
+      nextLabel={henningStoryReplayIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      onNext={advanceHenningStoryReplay}
+      presentationId={`act1:henning-arrival-replay:${henningStoryReplayIndex}`}
+    >
+      <p>{henningArrivalDialogue[henningStoryReplayIndex].text}</p>
+    </StoryMoment>}
+    {henningStoryIndex !== null && <StoryMoment
+      image="/assets/village/story-moments/henning-arrival.png"
+      ariaLabel="Henning kommer till byn"
+      speaker={henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker}
+      speakerTone={henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker === "Linus" ? "linus" : "henning"}
+      nextLabel={constructionBusy ? "Sparar…" : henningStoryIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      nextDisabled={constructionBusy}
+      onNext={() => void advanceHenningStory()}
+      presentationId={`act1:henning-arrival:${henningStoryIndex}`}
+    >
+      <p>{henningArrivalDialogue[henningStoryIndex].text}</p>
+      {constructionError && <p role="alert">{constructionError}</p>}
+    </StoryMoment>}
     {((linusStoryMomentOpen && dialogueOpen) || linusStoryReplayIndex !== null) && !recyclingStoryOpen && <div className="story-moment" role="presentation"><Image src={(linusStoryReplayIndex !== null ? linusStoryReplayIndex : dialogueIndex) >= linusIntroDialogue.findIndex((step) => step.kind === "reveal-dog") ? "/assets/village/story-moments/linus-puppy-handover.png" : "/assets/village/story-moments/linus-first-meeting.png"} alt="" fill priority sizes="100vw" /></div>}
     {abandonedShopDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Den övergivna lanthandeln"><span className={`dialogue-speaker ${abandonedShopDialogueLine.speaker === "Barnet" ? "child" : ""}`}>{abandonedShopDialogueLine.speaker === "Barnet" ? childName || "Barnet" : "Linus"}</span><p>{abandonedShopDialogueLine.text}</p><button className="primary-button dialogue-next" onClick={() => { if (abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length) setAbandonedShopDialogueIndex(abandonedShopDialogueIndex + 1); else { setAbandonedShopDialogueIndex(null);  } }}>{abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"}</button></div>}
     {constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal"><span className={`dialogue-speaker ${constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}`}>{constructionSpeakerName}</span><p>{constructionDialogueLine.text}</p><button className="primary-button" disabled={constructionBusy} onClick={() => { if (constructionDialogueIndex + 1 < attention.dialogue.length) setConstructionDialogueIndex((index) => index + 1); else void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id); }}>{constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); setConstructionDialogueIndex(0);  }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
