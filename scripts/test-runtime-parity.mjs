@@ -1124,13 +1124,22 @@ const markerRendererSource = fs.readFileSync(new URL("../src/runtime/interaction
 const act2RuntimeStateSource = fs.readFileSync(new URL("../src/game/act2RuntimeState.ts", import.meta.url), "utf8");
 assert.ok(
   act2RuntimeStateSource.includes("runSequentialMigrations(")
-    && act2RuntimeStateSource.includes("ACT2_FINALE_SCHEMA_VERSION = 2"),
+    && act2RuntimeStateSource.includes("ACT2_FINALE_SCHEMA_VERSION = 3"),
   "Act 2 finale compatibility must run through the shared save migration engine",
 );
 assert.equal(
   act2RuntimeStateSource.includes("const preEpilogueSchemaComplete ="),
   false,
   "Act 2 normalizer must not retain the old inline finale schema migration",
+);
+assert.equal(
+  act2RuntimeStateSource.includes("const legacyFamilyComplete ="),
+  false,
+  "Act 2 normalizer must not retain the old family-finale compatibility branch",
+);
+assert.ok(
+  act2RuntimeStateSource.includes("from: 2") && act2RuntimeStateSource.includes("to: 3"),
+  "Act 2 family-finale compatibility must use the explicit schema migration",
 );
 const act2LakeSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
 assert.ok(
