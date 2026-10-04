@@ -835,3 +835,44 @@ The remaining safe convergence target is presentation/config drift:
 - backend Story Shop exports the current client-side Act 2 display-price constants.
 
 Audit that catalog boundary parity-first. A neutral shared presentation/config catalog may be justified, but only if it removes real duplication without making Runtime 1.0 the authority for server-side economy.
+
+
+## Progression / Gating checkpoint 4 — canonical Act 2 purchase presentation
+
+The remaining Lake/Village purchase presentation drift is closed.
+
+New pure chapter catalog:
+- `src/game/act2PurchaseCatalog.ts`;
+- one presentation entry each for Dock, Boathouse and Motorboat;
+- each entry owns the accepted client display price, Lake gate heading/body/detail and Mira shop icon/title/description/requirement label.
+
+The accepted price remains 200 SysselBux for all three current Act 2 story items. The catalog generates Lake price copy from the same price field that Mira's shop buttons and insufficient-funds feedback consume, so the Lake can no longer say one price while the shop displays another.
+
+Ownership boundary:
+- catalog = client presentation/config only;
+- `storyShop.ts` = purchase transport;
+- checked-in Supabase migration/RPC = authoritative server-side purchase price and world-flag mutation;
+- wallet/reward/ownership authority remains backend-owned.
+
+`storyShop.ts` temporarily retains its three old `ACT2_*_PRICE` exports as compatibility aliases derived from the catalog. They no longer own values. A full branch-wide connector sweep hit the connector call ceiling, so those aliases were deliberately not deleted on incomplete evidence.
+
+Parity-first history:
+- `926a82e6f0ea9b68ec807b69cf9ac0816f6aa02d` locked the accepted presentation strings and 200-SysselBux values before migration;
+- GitHub Actions #1835: full `npm run verify` SUCCESS;
+- `5b6492f1c016b24e10f0d86b440dd35795df1bb3` introduced the pure catalog and migrated Lake + Mira presentation consumers.
+
+CI #1836, #1837 and #1838 exposed stale source-shape assertions in the Act 2 runtime harness. Production build, TypeScript and earlier regressions were green in those runs. The harness was updated to verify canonical catalog ownership rather than literal old constant/copy placement:
+- `953e58644ae1382b9f81d87594400808348852fc`;
+- `84435a87908f53bd18509a558e48900370dff305`;
+- `0ab28298141e7e9c3b37074b8fab7e0a074e78b6`.
+
+Final code verification before this documentation closeout:
+- GitHub Actions #1839: full `npm run verify` SUCCESS on `0ab28298141e7e9c3b37074b8fab7e0a074e78b6`.
+
+### Registry consequence
+
+The Runtime System Registry can now mark `purchaseGate` canonical. Runtime 1.0 owns one gate rule, one Act 2 blocker arbitration, one Lake↔Village handoff contract and one Act 2 purchase presentation catalog.
+
+This does **not** move purchase execution into Runtime 1.0. Backend Story Shop and Supabase remain authoritative by design, so their separate ownership is not unfinished purchase-gate migration.
+
+The next Progression/Gating audit should look beyond Act 2 purchase gating rather than continuing to abstract this closed slice. Avoid creating a generic purchase engine without a second real chapter consumer.

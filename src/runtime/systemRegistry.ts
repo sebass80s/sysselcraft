@@ -77,8 +77,8 @@ export const CANONICAL_SYSTEMS: readonly CanonicalSystemRegistration[] = [
   },
   {
     id: SYSTEM_COMPONENT_IDS.purchaseGate,
-    status: "migration-pending",
+    status: "canonical",
     owner: "Progression Engine",
-    note: "Gate arithmetic, Act 2 blocking arbitration and Lake/Village route handoff are shared; item presentation/config still needs convergence.",
+    note: "Shared gate arithmetic, Act 2 arbitration, cross-area handoff and presentation catalog; backend purchase execution remains separately authoritative.",
   },
 ] as const;

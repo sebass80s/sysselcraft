@@ -1059,6 +1059,30 @@ for (const id of Object.values(SYSTEM_COMPONENT_IDS)) {
   assert.ok(ids.has(id), `canonical system registry must register ${id}`);
 }
 
+const purchaseGateRegistration = CANONICAL_SYSTEMS.find(
+  (entry) => entry.id === SYSTEM_COMPONENT_IDS.purchaseGate,
+);
+assert.equal(
+  purchaseGateRegistration?.status,
+  "canonical",
+  "purchase gate must be canonical after gate, handoff and presentation convergence",
+);
+
+const act2PurchaseCatalogSource = fs.readFileSync(
+  new URL("../src/game/act2PurchaseCatalog.ts", import.meta.url),
+  "utf8",
+);
+assert.equal(
+  act2PurchaseCatalogSource.includes("../backend/"),
+  false,
+  "Act 2 purchase presentation catalog must remain backend-independent",
+);
+assert.equal(
+  act2PurchaseCatalogSource.toLowerCase().includes("supabase"),
+  false,
+  "Act 2 purchase presentation catalog must not own purchase transport",
+);
+
 const shellSource = fs.readFileSync(new URL("../src/runtime/ui/GameUiShell.tsx", import.meta.url), "utf8");
 assert.ok(
   shellSource.includes("SYSTEM_ASSETS.brandLogo"),

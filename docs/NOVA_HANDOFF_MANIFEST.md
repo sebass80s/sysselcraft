@@ -1275,3 +1275,26 @@ This is chapter configuration, not a new generic engine abstraction.
 Two intermediate CI failures (#1831/#1832) were stale tests that asserted literal inline URL implementation. Build and earlier regressions passed; the source-shape tests were updated after a full sweep. Final #1833 is green.
 
 Next safe Progression/Gating candidate: audit duplicated Act 2 purchase presentation/config (item label, detail copy, displayed price) between Lake and Mira shop. Keep Supabase purchase execution, wallet authority and authoritative world flags in backend Story Shop. Do not touch collision/pathfinding or physical-input-sensitive World work during this pass.
+
+
+## Runtime 1.0 purchase presentation closeout — 2026-10-04
+
+Verified code checkpoint before this documentation sync:
+- `0ab28298141e7e9c3b37074b8fab7e0a074e78b6`;
+- GitHub Actions #1839: full `npm run verify` SUCCESS.
+
+Act 2 purchase gating is now canonical across four layers:
+1. shared threshold-window arithmetic;
+2. canonical state-layer story-gate arbitration;
+3. canonical Lake ↔ Mira route handoff;
+4. canonical pure purchase presentation catalog.
+
+`src/game/act2PurchaseCatalog.ts` owns client-facing price/copy/card metadata. Lake and Mira consume it directly. The three old Story Shop price exports remain only as compatibility aliases and derive from the catalog.
+
+Do not move Supabase purchase execution, wallet mutation or authoritative owned flags into Runtime 1.0. That separation is intentional and complete.
+
+The Runtime System Registry now marks `purchaseGate` canonical. Do not reopen this slice merely to generalize it for hypothetical chapters. A new generic abstraction needs a second real consumer.
+
+Intermediate CI #1836-#1838 failures were stale source-shape tests following ownership movement; build and type checking were green. #1839 is the verified code checkpoint.
+
+Collision/pathfinding, movement feel, dog follow and WebView/touch fallback remain physical-acceptance-gated and untouched.
