@@ -43,6 +43,7 @@ import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
 import { ACT2_OPENING_BEATS } from "../game/act2OpeningStory";
 import { act2PurchaseShopHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
+import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../game/act2AlveStory";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { historyEntriesFor } from "../runtime/story/storyHistory";
@@ -507,12 +508,15 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const motorboatPurchaseGate = state.selectedProject === "motorboat" && motorboatPartsPurchaseRequired(state);
   const namingRequired = state.selectedProject === "motorboat" && motorboatNamingRequired(state);
   const purchaseRequired = jettyPurchaseGate || boathousePurchaseGate || motorboatPurchaseGate;
-  const purchaseGateBeat = jettyPurchaseGate ? JETTY_LIFEBUOY_BEAT : boathousePurchaseGate ? BOATHOUSE_STEERING_WHEEL_BEAT : null;
-  const purchaseGateCopy = jettyPurchaseGate
-    ? { title: "Bryggan · nästa steg", text: "Sol vill att ni skaffar en riktig livboj innan arbetet fortsätter.", detail: "Mira kan ordna den i lanthandeln för 200 SysselBux." }
+  const purchaseProject = jettyPurchaseGate
+    ? "dock"
     : boathousePurchaseGate
-      ? { title: "Båthuset · nästa steg", text: "Lådbilen behöver en riktig ratt innan ni kan bygga vidare.", detail: "Mira har en som passar för 200 SysselBux." }
-      : { title: "Motorbåten · nästa steg", text: "Linus har konstaterat att några delar inte går att rädda.", detail: "Mira kan beställa reservdelspaketet för 200 SysselBux." };
+      ? "boathouse"
+      : motorboatPurchaseGate
+        ? "motorboat"
+        : null;
+  const purchaseGateBeat = jettyPurchaseGate ? JETTY_LIFEBUOY_BEAT : boathousePurchaseGate ? BOATHOUSE_STEERING_WHEEL_BEAT : null;
+  const purchaseGateCopy = purchaseProject ? ACT2_PURCHASE_CATALOG[purchaseProject].gate : null;
   const contributionCandidate = backendWorldProgression === null || purchaseRequired || namingRequired
     ? null
     : nextAct2Contribution(state, backendWorldProgression);
@@ -1011,7 +1015,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       zIndex={90}
       background="rgba(9,14,10,.94)"
     />}
-    {purchaseRequired && <StoryMoment
+    {purchaseRequired && purchaseProject && purchaseGateCopy && <StoryMoment
       image={purchaseGateBeat?.image}
       imageFit="contain"
       heading={purchaseGateCopy.title}
@@ -1023,9 +1027,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       <p>{purchaseGateCopy.detail}</p>
       <a
         className="primary-button dialogue-next"
-        href={act2PurchaseShopHref(
-          boathousePurchaseGate ? "boathouse" : jettyPurchaseGate ? "dock" : "motorboat",
-        )}
+        href={act2PurchaseShopHref(purchaseProject)}
       >
         Till Mira i byn
       </a>

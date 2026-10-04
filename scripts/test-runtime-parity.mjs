@@ -18,6 +18,7 @@ import {
   act2ResumeHref,
   parseAct2PurchaseProject,
 } from "../src/game/act2PurchaseHandoff.ts";
+import { ACT2_PURCHASE_CATALOG } from "../src/game/act2PurchaseCatalog.ts";
 import { progressGateRequired } from "../src/runtime/progression/progressGate.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
 import { CABIN_CONTRIBUTION_BEATS } from "../src/game/act2CabinStory.ts";
@@ -301,6 +302,16 @@ for (const [project, item] of Object.entries(legacyAct2PurchaseCatalog)) {
   assert.equal(item.price, 200, `${project} accepted display price must remain 200 SysselBux`);
   assert.ok(item.gateDetail.includes(`${item.price} SysselBux`), `${project} lake gate copy must agree with its display price`);
   assert.ok(item.shopTitle.length > 0 && item.shopDescription.length > 0 && item.shopRequirement.length > 0);
+
+  const shared = ACT2_PURCHASE_CATALOG[project];
+  assert.equal(shared.price, item.price, `${project} shared display price drifted`);
+  assert.equal(shared.gate.title, item.gateTitle, `${project} gate title drifted`);
+  assert.equal(shared.gate.text, item.gateText, `${project} gate text drifted`);
+  assert.equal(shared.gate.detail, item.gateDetail, `${project} gate detail drifted`);
+  assert.equal(shared.shop.icon, item.shopIcon, `${project} shop icon drifted`);
+  assert.equal(shared.shop.title, item.shopTitle, `${project} shop title drifted`);
+  assert.equal(shared.shop.description, item.shopDescription, `${project} shop description drifted`);
+  assert.equal(shared.shop.requirement, item.shopRequirement, `${project} shop requirement drifted`);
 }
 
 const act2PurchaseHandoffFixtures = [

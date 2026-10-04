@@ -29,7 +29,7 @@ import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
 import { act1ChapterFinaleDialogue, bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
-import { ACT2_BOATHOUSE_STEERING_WHEEL_PRICE, ACT2_JETTY_LIFEBUOY_PRICE, ACT2_MOTORBOAT_PARTS_PRICE, BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, ROOM_DECOR_PRICES, DOG_HOME_PRICES, commitStoryBeat, purchaseAct2BoathouseSteeringWheel, purchaseAct2JettyLifebuoy, purchaseAct2MotorboatParts, purchaseBottleMessage, purchaseFootballRug, purchaseRoomDecor, purchaseDogHomeUpgrade, type RoomDecorKey } from "../backend/storyShop";
+import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, ROOM_DECOR_PRICES, DOG_HOME_PRICES, commitStoryBeat, purchaseAct2BoathouseSteeringWheel, purchaseAct2JettyLifebuoy, purchaseAct2MotorboatParts, purchaseBottleMessage, purchaseFootballRug, purchaseRoomDecor, purchaseDogHomeUpgrade, type RoomDecorKey } from "../backend/storyShop";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { getChildDisplayName } from "../backend/familyRepository";
@@ -41,6 +41,7 @@ import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { parseStoryLine } from "../game/storyEngine";
 import { act2ResumeHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
+import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
@@ -885,7 +886,7 @@ export default function VillagePrototype() {
 
   async function buyAct2MotorboatParts() {
     if (shopBusy || act2MotorboatPartsOwned || !act2MotorboatPartsNeeded) return;
-    if (!window.confirm(`Köpa reservdelspaket till motorbåten för ${ACT2_MOTORBOAT_PARTS_PRICE} 🪙?`)) return;
+    if (!window.confirm(`Köpa reservdelspaket till motorbåten för ${ACT2_PURCHASE_CATALOG.motorboat.price} 🪙?`)) return;
     setShopBusy(true); setShopMessage("");
     try {
       const purchase = await purchaseAct2MotorboatParts();
@@ -901,13 +902,13 @@ export default function VillagePrototype() {
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_MOTORBOAT_PARTS_PRICE) : message);
+      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.motorboat.price) : message);
     } finally { setShopBusy(false); }
   }
 
   async function buyAct2BoathouseSteeringWheel() {
     if (shopBusy || act2BoathouseSteeringWheelOwned || !act2BoathouseSteeringWheelNeeded) return;
-    if (!window.confirm(`Köpa ratt till lådbilen för ${ACT2_BOATHOUSE_STEERING_WHEEL_PRICE} 🪙?`)) return;
+    if (!window.confirm(`Köpa ratt till lådbilen för ${ACT2_PURCHASE_CATALOG.boathouse.price} 🪙?`)) return;
     setShopBusy(true); setShopMessage("");
     try {
       const purchase = await purchaseAct2BoathouseSteeringWheel();
@@ -933,13 +934,13 @@ export default function VillagePrototype() {
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_BOATHOUSE_STEERING_WHEEL_PRICE) : message);
+      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.boathouse.price) : message);
     } finally { setShopBusy(false); }
   }
 
   async function buyAct2JettyLifebuoy() {
     if (shopBusy || act2JettyLifebuoyOwned || !act2JettyLifebuoyNeeded) return;
-    if (!window.confirm(`Köpa Livboj till bryggan för ${ACT2_JETTY_LIFEBUOY_PRICE} 🪙?`)) return;
+    if (!window.confirm(`Köpa Livboj till bryggan för ${ACT2_PURCHASE_CATALOG.dock.price} 🪙?`)) return;
     setShopBusy(true); setShopMessage("");
     try {
       const purchase = await purchaseAct2JettyLifebuoy();
@@ -965,7 +966,7 @@ export default function VillagePrototype() {
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_JETTY_LIFEBUOY_PRICE) : message);
+      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.dock.price) : message);
     } finally { setShopBusy(false); }
   }
 
@@ -1463,7 +1464,7 @@ export default function VillagePrototype() {
             {shopCurrency === "diamonds" ? <>
               <div className="mira-shop-grid">{shopRewards.map((reward) => { const pending = pendingDiamondRewardIds.has(reward.id); return <article className="mira-shop-item" key={reward.id}><div><span>🎁</span><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}</div><button className="primary-button" disabled={shopBusy || pending || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>{pending ? "⏳ Väntar på förälder" : `💎 ${reward.diamondPrice} · Köp`}</button></article>; })}</div>
               {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Inga diamantbelöningar på hyllan just nu.</p>}
-            </> : <div className="mira-shop-grid">{(act2MotorboatPartsNeeded || act2MotorboatPartsOwned) && <article className="mira-shop-item"><div><span>📦</span><strong>Reservdelspaket till motorbåten</strong><p>Delarna Linus behöver för att arbetet ska kunna fortsätta.</p><small>⭐ Behövs till Motorbåten</small></div><button className="primary-button" disabled={shopBusy || act2MotorboatPartsOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_MOTORBOAT_PARTS_PRICE} onClick={() => void buyAct2MotorboatParts()}>{act2MotorboatPartsOwned ? "✓ Köpt" : `🪙 ${ACT2_MOTORBOAT_PARTS_PRICE} · Köp`}</button></article>}{(act2BoathouseSteeringWheelNeeded || act2BoathouseSteeringWheelOwned) && <article className="mira-shop-item"><div><span>🛞</span><strong>Ratt till lådbilen</strong><p>Den sista delen Alve behöver för att kunna bygga lådbilen.</p><small>⭐ Behövs till Båthuset</small></div><button className="primary-button" disabled={shopBusy || act2BoathouseSteeringWheelOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_BOATHOUSE_STEERING_WHEEL_PRICE} onClick={() => void buyAct2BoathouseSteeringWheel()}>{act2BoathouseSteeringWheelOwned ? "✓ Köpt" : `🪙 ${ACT2_BOATHOUSE_STEERING_WHEEL_PRICE} · Köp`}</button></article>}{(act2JettyLifebuoyNeeded || act2JettyLifebuoyOwned) && <article className="mira-shop-item"><div><span>🛟</span><strong>Livboj till bryggan</strong><p>Sol vill att badplatsen har en riktig livboj innan ni fortsätter.</p><small>⭐ Behövs till Bryggan</small></div><button className="primary-button" disabled={shopBusy || act2JettyLifebuoyOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_JETTY_LIFEBUOY_PRICE} onClick={() => void buyAct2JettyLifebuoy()}>{act2JettyLifebuoyOwned ? "✓ Köpt" : `🪙 ${ACT2_JETTY_LIFEBUOY_PRICE} · Köp`}</button></article>}{!act1EndCardSeen && <article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p>{!bottleMessagePurchased && <><small>⭐ Nästa steg i berättelsen</small><small>🪙 Du har {backendWallet?.sysselBux ?? sysselBux} / {BOTTLE_MESSAGE_PRICE} SysselBux</small></>}</div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article>}
+            </> : <div className="mira-shop-grid">{(act2MotorboatPartsNeeded || act2MotorboatPartsOwned) && <article className="mira-shop-item"><div><span>{ACT2_PURCHASE_CATALOG.motorboat.shop.icon}</span><strong>{ACT2_PURCHASE_CATALOG.motorboat.shop.title}</strong><p>{ACT2_PURCHASE_CATALOG.motorboat.shop.description}</p><small>{ACT2_PURCHASE_CATALOG.motorboat.shop.requirement}</small></div><button className="primary-button" disabled={shopBusy || act2MotorboatPartsOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_PURCHASE_CATALOG.motorboat.price} onClick={() => void buyAct2MotorboatParts()}>{act2MotorboatPartsOwned ? "✓ Köpt" : `🪙 ${ACT2_PURCHASE_CATALOG.motorboat.price} · Köp`}</button></article>}{(act2BoathouseSteeringWheelNeeded || act2BoathouseSteeringWheelOwned) && <article className="mira-shop-item"><div><span>{ACT2_PURCHASE_CATALOG.boathouse.shop.icon}</span><strong>{ACT2_PURCHASE_CATALOG.boathouse.shop.title}</strong><p>{ACT2_PURCHASE_CATALOG.boathouse.shop.description}</p><small>{ACT2_PURCHASE_CATALOG.boathouse.shop.requirement}</small></div><button className="primary-button" disabled={shopBusy || act2BoathouseSteeringWheelOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_PURCHASE_CATALOG.boathouse.price} onClick={() => void buyAct2BoathouseSteeringWheel()}>{act2BoathouseSteeringWheelOwned ? "✓ Köpt" : `🪙 ${ACT2_PURCHASE_CATALOG.boathouse.price} · Köp`}</button></article>}{(act2JettyLifebuoyNeeded || act2JettyLifebuoyOwned) && <article className="mira-shop-item"><div><span>{ACT2_PURCHASE_CATALOG.dock.shop.icon}</span><strong>{ACT2_PURCHASE_CATALOG.dock.shop.title}</strong><p>{ACT2_PURCHASE_CATALOG.dock.shop.description}</p><small>{ACT2_PURCHASE_CATALOG.dock.shop.requirement}</small></div><button className="primary-button" disabled={shopBusy || act2JettyLifebuoyOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_PURCHASE_CATALOG.dock.price} onClick={() => void buyAct2JettyLifebuoy()}>{act2JettyLifebuoyOwned ? "✓ Köpt" : `🪙 ${ACT2_PURCHASE_CATALOG.dock.price} · Köp`}</button></article>}{!act1EndCardSeen && <article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p>{!bottleMessagePurchased && <><small>⭐ Nästa steg i berättelsen</small><small>🪙 Du har {backendWallet?.sysselBux ?? sysselBux} / {BOTTLE_MESSAGE_PRICE} SysselBux</small></>}</div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article>}
               <article className="mira-shop-item"><div><Image className="mira-shop-item-art" src="/assets/village/shop/thumb-room-rug.svg" alt="" width={72} height={42} /><strong>Fotbollsmatta</strong><p>En mjuk fotbollsplan till golvet i ditt rum.</p></div><button className="primary-button" disabled={shopBusy || footballRugOwned || (backendWallet?.sysselBux ?? sysselBux) < FOOTBALL_RUG_PRICE} onClick={() => void buyFootballRug()}>{footballRugOwned ? "✓ Köpt" : `🪙 ${FOOTBALL_RUG_PRICE} · Köp`}</button></article>
               {([
                 ["footballPoster","Fotbollsposter","thumb-room-poster.svg",1],
