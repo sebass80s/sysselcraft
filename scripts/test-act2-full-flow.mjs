@@ -19,6 +19,7 @@ function loadTsModule(file, dependencies) {
 }
 
 const saveMigrations = loadTsModule("../src/runtime/save/migrations.ts", {});
+const progressionDelta = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const {
   act2FinalePending,
   advanceAct2Finale,
@@ -43,6 +44,7 @@ const {
 } = loadTsModule("../src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrations,
+  "../runtime/progression/authoritativeDelta": progressionDelta,
 });
 
 const restart = (state) => normalizeAct2RuntimeState(JSON.parse(JSON.stringify(state)));

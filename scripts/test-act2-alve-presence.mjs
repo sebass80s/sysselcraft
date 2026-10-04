@@ -17,9 +17,11 @@ function load(file, dependencies = {}) {
 }
 const assets = load("src/game/act2VisualAssets.ts");
 const saveMigrations = load("src/runtime/save/migrations.ts");
+const progressionDelta = load("src/runtime/progression/authoritativeDelta.ts");
 const stateApi = load("src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrations,
+  "../runtime/progression/authoritativeDelta": progressionDelta,
 });
 const initial = stateApi.createDefaultAct2RuntimeState();
 assert.equal(initial.selectedProject, null);

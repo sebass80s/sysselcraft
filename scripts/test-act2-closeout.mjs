@@ -25,9 +25,11 @@ const preferences = {
   remove: async ({ key }) => { storage.delete(key); },
 };
 const saveMigrations = load("src/runtime/save/migrations.ts");
+const progressionDelta = load("src/runtime/progression/authoritativeDelta.ts");
 const stateModule = () => load("src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: preferences },
   "../runtime/save/migrations": saveMigrations,
+  "../runtime/progression/authoritativeDelta": progressionDelta,
 });
 const s = stateModule();
 const story = load("src/game/act2FinaleStory.ts").ACT2_FINALE_BEATS;
