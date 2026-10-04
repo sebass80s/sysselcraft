@@ -330,6 +330,40 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('((linusStoryMomentOpen && dialogueOpen) || linusStoryReplayIndex !== null) && !recyclingStoryOpen && <div className="story-moment" role="presentation">')
+    && villageRuntime.includes('>= linusIntroDialogue.findIndex((step) => step.kind === "reveal-dog") ? "/assets/village/story-moments/linus-puppy-handover.png" : "/assets/village/story-moments/linus-first-meeting.png"'),
+  "Act 1 Linus intro must preserve the puppy-reveal image boundary",
+);
+assert.ok(
+  villageRuntime.includes('dialogueStep.kind === "line"')
+    && villageRuntime.includes('{speakerName}</span><p>{introDialogueText}</p>')
+    && villageRuntime.includes('onClick={advanceDialogue}>Fortsätt</button>'),
+  "Act 1 Linus live line steps must preserve resolved speaker/text and advance callback",
+);
+assert.ok(
+  villageRuntime.includes('placeholder="Skriv ditt namn"')
+    && villageRuntime.includes('onClick={finishChildNaming}')
+    && villageRuntime.includes('disabled={!childNameCanSubmit}')
+    && villageRuntime.includes('maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done"'),
+  "Act 1 Linus child naming must preserve input behavior and validation",
+);
+assert.ok(
+  villageRuntime.includes('placeholder="Skriv ett namn"')
+    && villageRuntime.includes('onClick={finishDogNaming}')
+    && villageRuntime.includes('disabled={!dogNameCanSubmit}')
+    && villageRuntime.includes('setDogVisible(true)'),
+  "Act 1 Linus dog naming must preserve input behavior and reveal state",
+);
+assert.ok(
+  villageRuntime.includes('linusStoryReplayStep.kind === "name-child"')
+    && villageRuntime.includes('linusStoryReplayStep.kind === "reveal-dog"')
+    && villageRuntime.includes('linusStoryReplayStep.kind === "name-dog"')
+    && villageRuntime.includes('onClick={advanceLinusStoryReplay}')
+    && villageRuntime.includes('linusStoryReplayIndex === linusIntroDialogue.length - 1 ? "Klart" : "Fortsätt"'),
+  "Act 1 Linus replay must preserve naming/reveal summaries and replay navigation",
+);
+
+assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
     && villageRuntime.includes('image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}')
     && villageRuntime.includes('ariaLabel="Mira kommer till byn"'),
