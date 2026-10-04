@@ -3,7 +3,7 @@ export type InteractionMarkerKind =
   | "quest-turn-in"
   | "npc-attention";
 
-export type WorldPoint = {
+type WorldPoint = {
   x: number;
   y: number;
 };
