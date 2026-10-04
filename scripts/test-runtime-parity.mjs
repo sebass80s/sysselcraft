@@ -530,6 +530,54 @@ assert.throws(
   "versioned save migration must fail closed when a sequential step is missing",
 );
 
+const worldViewportFixtures = [
+  {
+    name: "phone-ish parent keeps the accepted 960px minimum render width",
+    parentWidth: 667,
+    parentHeight: 375,
+    worldWidth: 1920,
+    expected: 1138,
+  },
+  {
+    name: "portrait-ish parent clamps to the accepted 960px minimum",
+    parentWidth: 375,
+    parentHeight: 667,
+    worldWidth: 1920,
+    expected: 960,
+  },
+  {
+    name: "wide parent caps render width at the authored world width",
+    parentWidth: 1600,
+    parentHeight: 640,
+    worldWidth: 1766,
+    expected: 1766,
+  },
+  {
+    name: "zero-sized parent preserves historical min-one input guards",
+    parentWidth: 0,
+    parentHeight: 0,
+    worldWidth: 1920,
+    expected: 960,
+  },
+];
+
+function legacyWorldViewWidth(parentWidth, parentHeight, worldWidth) {
+  const safeParentWidth = Math.max(parentWidth, 1);
+  const safeParentHeight = Math.max(parentHeight, 1);
+  return Math.min(
+    worldWidth,
+    Math.max(960, Math.round(640 * (safeParentWidth / safeParentHeight))),
+  );
+}
+
+for (const fixture of worldViewportFixtures) {
+  assert.equal(
+    legacyWorldViewWidth(fixture.parentWidth, fixture.parentHeight, fixture.worldWidth),
+    fixture.expected,
+    fixture.name,
+  );
+}
+
 const cameraDeadzoneFixtures = [
   { name: "phone-width camera deadzone preserves the accepted 32% width", viewWidth: 667, expected: { width: 213.44, height: 180 } },
   { name: "wide camera deadzone preserves the accepted 340px width cap", viewWidth: 1536, expected: { width: 340, height: 180 } },
