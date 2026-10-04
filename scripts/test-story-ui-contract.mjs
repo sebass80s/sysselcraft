@@ -459,6 +459,10 @@ assert.ok(
     && villageRuntime.includes('nextLabel={abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"}'),
   "Abandoned-shop dialogue must consume the shared inline-dialogue card with its child tone and navigation preserved",
 );
+assert.ok(
+  villageRuntime.includes('return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Henning"><span className={`dialogue-speaker henning-story-speaker ${step.speaker.toLowerCase()}`}>{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => advanceHenningDialogue(last)}>{last ? "Klart" : "Nästa"}</button></div>;'),
+  "Henning inline dialogue must preserve compact markup, speaker classes and navigation before shared inline-dialogue migration",
+);
 
 assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
