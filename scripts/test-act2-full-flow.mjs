@@ -214,7 +214,7 @@ assert.ok(
   runtime.indexOf("if (!debug && !productionEnabled)") < runtime.indexOf("loadAct2RuntimeState(),"),
   "shipping lock must short-circuit before Act 2 state/baseline can be loaded and mutated",
 );
-assert.match(runtime, /act2-purchase=boathouse[\s\S]*Till Mira i byn/, "story purchase gates must provide a contextual return path to Mira");
+assert.ok(runtime.includes("act2PurchaseShopHref(") && runtime.includes("Till Mira i byn"), "story purchase gates must provide a contextual return path to Mira through the canonical handoff");
 assert.match(runtime, /SLUT PÅ ANDRA KAPITLET/, "Act 2 must render the canonical black chapter-end card");
 assert.match(runtime, /endCardSeen: true/, "chapter-end card must be dismissible without replay");
 assert.match(debugRoute, /<Act2Runtime debug \/>/, "debug flow must use the production runtime");
