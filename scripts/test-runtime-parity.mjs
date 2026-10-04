@@ -40,7 +40,14 @@ function loadTsModule(file, dependencies) {
 const saveMigrationModule = loadTsModule("../src/runtime/save/migrations.ts", {});
 const progressionDeltaModule = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const progressGateModule = loadTsModule("../src/runtime/progression/progressGate.ts", {});
-const { createDefaultAct2RuntimeState } = loadTsModule("../src/game/act2RuntimeState.ts", {
+const {
+  createDefaultAct2RuntimeState,
+  act2ContributionBlockedByStoryGate,
+  jettyPurchaseRequired,
+  boathousePurchaseRequired,
+  motorboatPartsPurchaseRequired,
+  motorboatNamingRequired,
+} = loadTsModule("../src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrationModule,
   "../runtime/progression/authoritativeDelta": progressionDeltaModule,
@@ -250,6 +257,85 @@ for (const y of [0, 427.4, 427.5, 427.6, -0.5, -1.5]) {
     assert.equal(image.y, y);
   }
   placement.baseY = previousBaseY;
+}
+
+function legacyAct2UiStoryGateBlocked(state) {
+  const project = state.selectedProject;
+  if (!project) return false;
+  return (project === "dock" && jettyPurchaseRequired(state))
+    || (project === "boathouse" && boathousePurchaseRequired(state))
+    || (project === "motorboat" && (
+      motorboatPartsPurchaseRequired(state)
+      || motorboatNamingRequired(state)
+    ));
+}
+
+const act2GateArbitrationFixtures = [
+  {
+    name: "cabin never receives a story gate",
+    project: "cabin",
+    contributions: 12,
+    flags: {},
+  },
+  {
+    name: "dock lifebuoy gate wins at contribution six",
+    project: "dock",
+    contributions: 6,
+    flags: {},
+  },
+  {
+    name: "dock ownership releases lifebuoy gate",
+    project: "dock",
+    contributions: 6,
+    flags: { jettyLifebuoyOwned: true },
+  },
+  {
+    name: "boathouse steering-wheel gate wins at contribution nine",
+    project: "boathouse",
+    contributions: 9,
+    flags: {},
+  },
+  {
+    name: "motorboat parts gate wins before naming threshold",
+    project: "motorboat",
+    contributions: 5,
+    flags: {},
+  },
+  {
+    name: "motorboat naming gate remains after parts are owned",
+    project: "motorboat",
+    contributions: 12,
+    flags: { motorboatPartsOwned: true },
+  },
+  {
+    name: "motorboat clears both gates when parts and name are resolved",
+    project: "motorboat",
+    contributions: 12,
+    flags: { motorboatPartsOwned: true, motorboatName: "Alve" },
+  },
+];
+
+for (const fixture of act2GateArbitrationFixtures) {
+  const base = createDefaultAct2RuntimeState();
+  const state = {
+    ...base,
+    selectedProject: fixture.project,
+    ...fixture.flags,
+    projects: {
+      ...base.projects,
+      [fixture.project]: {
+        ...base.projects[fixture.project],
+        contributions: fixture.contributions,
+        visibleStage: Math.min(4, 1 + Math.floor(Math.max(0, fixture.contributions - 1) / 4)),
+        complete: fixture.contributions >= 16,
+      },
+    },
+  };
+  assert.equal(
+    act2ContributionBlockedByStoryGate(state, fixture.project),
+    legacyAct2UiStoryGateBlocked(state),
+    `Act 2 UI/state gate arbitration parity failed: ${fixture.name}`,
+  );
 }
 
 const progressGateParityFixtures = [
