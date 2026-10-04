@@ -10,6 +10,11 @@ import { resolveInteraction, worldInputEnabled } from "../src/runtime/interactio
 import { resolveInteractionPriority } from "../src/runtime/interaction/interactionPriority.ts";
 import { resolveDirectMovementIntent } from "../src/runtime/world/movement.ts";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../src/runtime/world/worldCamera.ts";
+import {
+  WORLD_MIN_VIEW_WIDTH,
+  WORLD_VIEW_HEIGHT,
+  worldViewportSize,
+} from "../src/runtime/world/worldViewport.ts";
 import { WORLD_ENTITY_DEPTH_BASE, worldEntityDepth } from "../src/runtime/world/worldDepth.ts";
 import { runSequentialMigrations } from "../src/runtime/save/migrations.ts";
 import { authoritativeProgressDelta } from "../src/runtime/progression/authoritativeDelta.ts";
@@ -570,11 +575,19 @@ function legacyWorldViewWidth(parentWidth, parentHeight, worldWidth) {
   );
 }
 
+assert.equal(WORLD_VIEW_HEIGHT, 640);
+assert.equal(WORLD_MIN_VIEW_WIDTH, 960);
 for (const fixture of worldViewportFixtures) {
-  assert.equal(
-    legacyWorldViewWidth(fixture.parentWidth, fixture.parentHeight, fixture.worldWidth),
-    fixture.expected,
-    fixture.name,
+  const legacyWidth = legacyWorldViewWidth(
+    fixture.parentWidth,
+    fixture.parentHeight,
+    fixture.worldWidth,
+  );
+  assert.equal(legacyWidth, fixture.expected, fixture.name);
+  assert.deepEqual(
+    worldViewportSize(fixture.parentWidth, fixture.parentHeight, fixture.worldWidth),
+    { width: legacyWidth, height: 640 },
+    `shared viewport parity failed: ${fixture.name}`,
   );
 }
 
@@ -1531,6 +1544,15 @@ assert.ok(
 );
 const act2LakeSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
 assert.ok(
+  act2LakeSource.includes("worldViewportSize(")
+    && act2LakeSource.includes("ACT2_WORLD.width"),
+  "Act 2 Lake must consume the canonical World/Area viewport contract",
+);
+assert.ok(
+  act2LakeSource.includes("backgroundColor: WORLD_CAMERA.backgroundColor"),
+  "Act 2 Lake Phaser config must consume the canonical world background",
+);
+assert.ok(
   act2LakeSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled"),
   "Act 2 Lake must consume the shared world-input authority",
 );
@@ -1570,6 +1592,14 @@ assert.ok(
 
 
 const villageGameSource = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
+assert.ok(
+  villageGameSource.includes("worldViewportSize(parent.clientWidth, parent.clientHeight, WORLD_WIDTH)"),
+  "Village must consume the canonical World/Area viewport contract",
+);
+assert.ok(
+  villageGameSource.includes("backgroundColor: WORLD_CAMERA.backgroundColor"),
+  "Village Phaser config must consume the canonical world background",
+);
 assert.ok(
   villageGameSource.includes("WORLD_CAMERA.followLerpX")
     && villageGameSource.includes("worldCameraDeadzone(viewWidth)"),

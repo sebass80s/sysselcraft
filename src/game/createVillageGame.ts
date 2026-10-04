@@ -3,13 +3,14 @@ import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../runtime/world/worldCamera";
+import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
 import {
   AMBIENT_TEXTURE_KEYS,
 } from "./worldDecor";
 
-import { VIEW_HEIGHT, WORLD_MIN_X, WORLD_MAX_X, WORLD_WIDTH, WORLD_HEIGHT,
+import { WORLD_MIN_X, WORLD_MAX_X, WORLD_WIDTH, WORLD_HEIGHT,
   REQUIRED_APPROACHES, STATIC_OBSTACLES, findPath, isWalkable, nearestWalkablePoint, type Point, type Obstacle } from "./villageNavigation";
 import { preloadVisualProductionBuildings, createVisualProductionBuildings } from "./visualProductionRuntime";
 import { VISUAL_PRODUCTION_PLACEMENTS, getVisualProductionObstacles, type VisualProductionBuilding, type VisualProductionStage } from "./visualProductionAssets";
@@ -115,9 +116,8 @@ export async function createVillageGame(
   let requestedBottleMessageReady = false;
   const requestedQuestSourceAttention: Record<"noticeboard" | "linus" | "bakery", "?" | "!" | null> = { noticeboard: null, linus: null, bakery: null };
 
-  const parentWidth = Math.max(parent.clientWidth, 1);
-  const parentHeight = Math.max(parent.clientHeight, 1);
-  const viewWidth = Math.min(WORLD_WIDTH, Math.max(960, Math.round(VIEW_HEIGHT * (parentWidth / parentHeight))));
+  const viewport = worldViewportSize(parent.clientWidth, parent.clientHeight, WORLD_WIDTH);
+  const viewWidth = viewport.width;
 
   class VillageScene extends Phaser.Scene {
     private player?: GameObjects.Image;
@@ -1296,8 +1296,8 @@ export async function createVillageGame(
     type: Phaser.AUTO,
     parent,
     width: viewWidth,
-    height: VIEW_HEIGHT,
-    backgroundColor: "#789a68",
+    height: viewport.height,
+    backgroundColor: WORLD_CAMERA.backgroundColor,
     pixelArt: false,
     antialias: true,
     roundPixels: false,
@@ -1305,7 +1305,7 @@ export async function createVillageGame(
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
       width: viewWidth,
-      height: VIEW_HEIGHT,
+      height: viewport.height,
     },
     scene: VillageScene,
   });

@@ -2,6 +2,7 @@ import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/interactionContract";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../runtime/world/worldCamera";
+import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveDirectMovementIntent } from "../runtime/world/movement";
 import {
@@ -33,8 +34,6 @@ export type Act2LakeGameOptions = {
 };
 
 const PROJECTS: Act2RestorationProject[] = ["cabin", "boathouse", "dock", "motorboat"];
-const VIEW_HEIGHT = 640;
-
 const ALVE_IDLE_WORLD_PROMPTS = [
   "Gör några uppdrag så kommer vi vidare med bygget!",
   "Vi behöver några uppdrag till innan vi kan fortsätta.",
@@ -58,12 +57,12 @@ export async function createAct2LakeGame(
   let requestedCabinRevisitAvailable = false;
   let requestedWorldInputEnabled = true;
 
-  const parentWidth = Math.max(parent.clientWidth, 1);
-  const parentHeight = Math.max(parent.clientHeight, 1);
-  const viewWidth = Math.min(
+  const viewport = worldViewportSize(
+    parent.clientWidth,
+    parent.clientHeight,
     ACT2_WORLD.width,
-    Math.max(960, Math.round(VIEW_HEIGHT * (parentWidth / parentHeight))),
   );
+  const viewWidth = viewport.width;
 
   class Act2LakeScene extends Phaser.Scene {
     private projectImages = new Map<Act2RestorationProject, GameObjects.Image>();
@@ -457,8 +456,8 @@ export async function createAct2LakeGame(
     type: Phaser.AUTO,
     parent,
     width: viewWidth,
-    height: VIEW_HEIGHT,
-    backgroundColor: "#789a68",
+    height: viewport.height,
+    backgroundColor: WORLD_CAMERA.backgroundColor,
     pixelArt: false,
     antialias: true,
     roundPixels: false,
@@ -466,7 +465,7 @@ export async function createAct2LakeGame(
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
       width: viewWidth,
-      height: VIEW_HEIGHT,
+      height: viewport.height,
     },
     scene: Act2LakeScene,
   });
