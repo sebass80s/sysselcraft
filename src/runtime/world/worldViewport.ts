@@ -1,7 +1,7 @@
 export const WORLD_VIEW_HEIGHT = 640;
 export const WORLD_MIN_VIEW_WIDTH = 960;
 
-export type WorldViewportSize = {
+type WorldViewportSize = {
   width: number;
   height: number;
 };
