@@ -1454,3 +1454,122 @@ Verification:
 Do not spend another broad pass trying to manufacture more Save/Migration slices. The safe pure candidates identified by the repo-wide sweep are now exhausted.
 
 Return to the Runtime Architecture roadmap. The next meaningful work is remaining runtime convergence / legacy cleanup, with collision, pathfinding, movement feel, dog-follow and WebView/touch behavior still gated by browser + physical iPhone acceptance. Prefer a small parity-first slice over a broad rewrite.
+
+
+## Runtime 1.0 handover checkpoint — 2026-10-04 evening
+
+Active development branch:
+- `nova/runtime-architecture-v1`
+
+Verified final code HEAD before this handover:
+- `737602ec1c86f550feeefbf6e99c8a2501f6d8d7`
+- commit: `test: retire Act 2 price alias contract`
+- GitHub Actions **#1906**: full `npm run verify` SUCCESS on that exact SHA.
+
+Do not assume older documented SHAs are still branch HEAD. Repo reality wins.
+
+### Story Engine / Act 1 convergence completed in this session
+
+The remaining standard Act 1 fullscreen story surfaces were migrated to the shared Story Engine while preserving accepted story text, callbacks, CTA semantics and image boundaries.
+
+Completed Story Engine consumers now include:
+- Henning arrival + replay;
+- Mira arrival + replay;
+- Sol tour;
+- Bakery completion + replay;
+- Clinic completion + replay;
+- Act 1 chapter-finale dialogue;
+- Linus first meeting + replay, with naming/reveal state retained locally and Story Engine owning only the presentation shell;
+- bottle-message presentation;
+- previously migrated bottle-letter and Sol-arrival surfaces.
+
+Canonical shared speaker-tone mapping now lives in `storySpeakerTone()` and is consumed by standard Story Engine surfaces including Henning, Mira, Bakery, Clinic, Act 1 finale, Sol tour, Sol arrival and bottle-message presentation.
+
+Important exception:
+- Linus intro line steps intentionally retain their accepted legacy `default` tone.
+- A direct replacement with `storySpeakerTone("Linus")` would change visual behavior, so this is not a parity-safe cleanup.
+
+### Shared compact inline dialogue
+
+New canonical compact primitive:
+- `src/components/story/InlineDialogueCard.tsx`
+
+Migrated Village consumers:
+- recycling conversation with Linus;
+- Henning ordinary conversation;
+- abandoned-shop conversation;
+- construction-site conversation;
+- Recycling completion conversation.
+
+The shared inline card owns:
+- compact dialog/aria shell;
+- speaker/nameplate placement;
+- optional tone and extra speaker class;
+- primary CTA label/disabled/class behavior;
+- optional footer for secondary actions and trailing error rows.
+
+One raw compact `dialogue-card` remains intentionally local:
+- non-fullscreen Linus naming/introduction path.
+
+That special path contains child-name and dog-name text inputs, autofocus, Enter handling, mobile keyboard behavior, validation and dog reveal state. Do not mechanically migrate it without a dedicated browser + physical iPhone/WebView acceptance window.
+
+### Progression / purchase cleanup
+
+Act 2 purchase presentation remains canonical through:
+- `src/game/act2PurchaseCatalog.ts`;
+- `src/game/act2PurchaseHandoff.ts`;
+- shared `progressGateRequired()`;
+- canonical state-layer blocker arbitration.
+
+The three obsolete Act 2 client display-price compatibility aliases in `storyShop.ts` have now been retired after branch-wide usage verification.
+
+Final alias-cleanup sequence:
+- implementation commit: `ee8973f7574d5a6a49ceb517b7c9cfa42a3c9f11` (`refactor: remove retired Act 2 price aliases`);
+- final test/contract commit: `737602ec1c86f550feeefbf6e99c8a2501f6d8d7`;
+- GitHub Actions #1906 SUCCESS.
+
+Backend Story Shop / Supabase remain authoritative for real purchase execution, wallet mutation and world flags. Do not move transaction authority into Runtime 1.0.
+
+### Act 3 art-production note
+
+A separate Act 3 art-pipeline plan was captured during the session. The agreed direction is to use a parallel art-agent/workflow fed by authored beats, canonical references and stable filenames so image generation is no longer on the runtime critical path.
+
+This is parked preparation only. Do not begin Act 3 feature/runtime work until Runtime 1.0 architecture acceptance is complete.
+
+### Current safe boundary
+
+Closed / canonical:
+- Game UI Shell;
+- Story Registry / Story History development ownership;
+- standard Story Engine presentation;
+- ordinary compact inline-dialogue presentation;
+- generic Interaction contract / marker renderer / world-input authority;
+- camera / viewport / dynamic depth shared world primitives;
+- sequential Save/Migration engine and audited pure compatibility repairs;
+- authoritative progression delta;
+- generic progress-gate window;
+- Act 2 purchase handoff and client presentation catalog.
+
+Still acceptance-sensitive / intentionally local:
+- Village A* vs Lake direct movement;
+- collision/pathfinding;
+- dog follow;
+- pointer/touch/WebView fallback entrypoints;
+- Linus naming/input surface;
+- any change that alters physical interaction timing or mobile input DOM.
+
+### Recommended next work
+
+Continue with **small parity-first legacy-cleanup slices** only.
+
+Good next step:
+1. verify branch HEAD + CI again;
+2. perform a repo-wide source/registry audit for remaining superseded Runtime 1.0 compatibility code or duplicated safe presentation/config ownership;
+3. migrate only one proven low-risk duplicate at a time;
+4. stop at green CI.
+
+Do not manufacture more Save/Migration work, reopen canonical Interaction, build a generic purchase engine, or converge collision/pathfinding/dog-follow without an explicit browser + physical iPhone acceptance window.
+
+No production deployment was performed in this session.
+No Adam backend/save data was mutated.
+No live/release branch was touched.
