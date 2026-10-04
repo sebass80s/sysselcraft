@@ -74,3 +74,17 @@ construction suites, ESLint, production build and all story/quest/runtime suites
 The initial build attempt rejected an external node_modules symlink; replacing
 it with a local dependency copy resolved the environment issue without changing
 project configuration. `git diff --check` passed.
+
+
+## Runtime branch integration
+
+The Codex work was verified against repository reality before integration.
+
+- base: `21a3ad907f697a57f4c8860b484f8d4f774a8d3c`;
+- parity first: `d532dbfc7bcca70c6869240757578fb62e0d8dfd`;
+- implementation: `99df1984a2bc088f5715d8f6ef5b112bff8316c7`;
+- branch relation before integration: two commits ahead, zero behind;
+- `nova/runtime-architecture-v1` was fast-forwarded to `99df1984...` without a merge commit;
+- GitHub Actions #1812 completed SUCCESS on that exact code HEAD.
+
+This audit therefore closes the current broad Save/Migration compatibility sweep. Its retained classifications are intentional ownership decisions, not a backlog of migrations waiting to be extracted.
