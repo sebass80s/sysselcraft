@@ -1,4 +1,4 @@
-type InteractionMarkerKind =
+export type InteractionMarkerKind =
   | "quest-available"
   | "quest-turn-in"
   | "npc-attention";
