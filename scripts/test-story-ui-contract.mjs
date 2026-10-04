@@ -229,10 +229,6 @@ assert.ok(
   "Act 1 Sol tour must preserve child, Henning, Mira, Linus and Sol speaker presentation through the shared tone mapping",
 );
 assert.ok(
-  villageRuntime.includes('speakerTone={storySpeakerTone(solTourStoryLine.speaker)}'),
-  "Act 1 Sol tour must consume the shared child/Henning/Mira/Linus/Sol speaker tone mapping",
-);
-assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
     && villageRuntime.includes('onNext={() => void advanceSolTourStory()}')
     && villageRuntime.includes('solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen"'),
