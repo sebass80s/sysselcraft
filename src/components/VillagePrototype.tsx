@@ -1521,7 +1521,7 @@ export default function VillagePrototype() {
       image="/assets/village/story-moments/bottle-message.png"
       ariaLabel="Skicka flaskpost"
       speaker={bottleMessageDialogue[bottleStoryIndex].speaker === "Hunden" ? dogName || "Hunden" : childName || "Barnet"}
-      speakerTone={bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}
+      speakerTone={storySpeakerTone(bottleMessageDialogue[bottleStoryIndex].speaker)}
       nextLabel={constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}
       nextDisabled={constructionBusy}
       onNext={() => void advanceBottleStory()}
