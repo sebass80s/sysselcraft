@@ -264,6 +264,45 @@ for (const y of [0, 427.4, 427.5, 427.6, -0.5, -1.5]) {
   placement.baseY = previousBaseY;
 }
 
+const legacyAct2PurchaseCatalog = {
+  dock: {
+    price: 200,
+    gateTitle: "Bryggan · nästa steg",
+    gateText: "Sol vill att ni skaffar en riktig livboj innan arbetet fortsätter.",
+    gateDetail: "Mira kan ordna den i lanthandeln för 200 SysselBux.",
+    shopIcon: "🛟",
+    shopTitle: "Livboj till bryggan",
+    shopDescription: "Sol vill att badplatsen har en riktig livboj innan ni fortsätter.",
+    shopRequirement: "⭐ Behövs till Bryggan",
+  },
+  boathouse: {
+    price: 200,
+    gateTitle: "Båthuset · nästa steg",
+    gateText: "Lådbilen behöver en riktig ratt innan ni kan bygga vidare.",
+    gateDetail: "Mira har en som passar för 200 SysselBux.",
+    shopIcon: "🛞",
+    shopTitle: "Ratt till lådbilen",
+    shopDescription: "Den sista delen Alve behöver för att kunna bygga lådbilen.",
+    shopRequirement: "⭐ Behövs till Båthuset",
+  },
+  motorboat: {
+    price: 200,
+    gateTitle: "Motorbåten · nästa steg",
+    gateText: "Linus har konstaterat att några delar inte går att rädda.",
+    gateDetail: "Mira kan beställa reservdelspaketet för 200 SysselBux.",
+    shopIcon: "📦",
+    shopTitle: "Reservdelspaket till motorbåten",
+    shopDescription: "Delarna Linus behöver för att arbetet ska kunna fortsätta.",
+    shopRequirement: "⭐ Behövs till Motorbåten",
+  },
+};
+
+for (const [project, item] of Object.entries(legacyAct2PurchaseCatalog)) {
+  assert.equal(item.price, 200, `${project} accepted display price must remain 200 SysselBux`);
+  assert.ok(item.gateDetail.includes(`${item.price} SysselBux`), `${project} lake gate copy must agree with its display price`);
+  assert.ok(item.shopTitle.length > 0 && item.shopDescription.length > 0 && item.shopRequirement.length > 0);
+}
+
 const act2PurchaseHandoffFixtures = [
   { value: "dock", expected: "dock" },
   { value: "boathouse", expected: "boathouse" },
