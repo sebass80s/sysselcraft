@@ -296,6 +296,28 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('{henningStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png"')
+    && villageRuntime.includes('aria-label="Henning kommer till byn"'),
+  "Act 1 Henning arrival must preserve its accepted image and accessible label",
+);
+assert.ok(
+  villageRuntime.includes('henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? "child" : henningArrivalDialogue[henningStoryIndex].speaker.toLowerCase()')
+    && villageRuntime.includes('henningArrivalDialogue[henningStoryIndex].speaker === "Barnet" ? childName || "Barnet" : henningArrivalDialogue[henningStoryIndex].speaker'),
+  "Act 1 Henning arrival must preserve child-name resolution and speaker tone",
+);
+assert.ok(
+  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceHenningStory()}')
+    && villageRuntime.includes('constructionBusy ? "Sparar…" : henningStoryIndex === henningArrivalDialogue.length - 1 ? "Klart" : "Fortsätt"'),
+  "Act 1 Henning arrival must preserve busy state, callback and CTA labels",
+);
+assert.ok(
+  villageRuntime.includes('{henningStoryReplayIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/henning-arrival.png"')
+    && villageRuntime.includes('aria-label="Testvisning av Henning kommer till byn"')
+    && villageRuntime.includes('onClick={advanceHenningStoryReplay}'),
+  "Act 1 Henning replay must preserve image, accessible label and callback",
+);
+
+assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
     && villageRuntime.includes('image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}')
     && villageRuntime.includes('ariaLabel="Mira kommer till byn"'),
