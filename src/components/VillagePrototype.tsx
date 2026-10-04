@@ -1668,7 +1668,16 @@ export default function VillagePrototype() {
       ] as const;
       const step = henningDialogue[henningDialogueIndex];
       const last = henningDialogueIndex === henningDialogue.length - 1;
-      return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Henning"><span className={`dialogue-speaker henning-story-speaker ${step.speaker.toLowerCase()}`}>{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => advanceHenningDialogue(last)}>{last ? "Klart" : "Nästa"}</button></div>;
+      return <InlineDialogueCard
+        ariaLabel="Prata med Henning"
+        speaker={step.speaker}
+        speakerClassName="henning-story-speaker"
+        speakerTone={step.speaker === "Linus" ? "linus" : "henning"}
+        nextLabel={last ? "Klart" : "Nästa"}
+        onNext={() => advanceHenningDialogue(last)}
+      >
+        <p>{step.text}</p>
+      </InlineDialogueCard>;
     })()}
     {henningStoryReplayIndex !== null && <StoryMoment
       image="/assets/village/story-moments/henning-arrival.png"
