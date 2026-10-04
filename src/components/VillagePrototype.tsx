@@ -1713,7 +1713,17 @@ export default function VillagePrototype() {
       <p>{abandonedShopDialogueLine.text}</p>
     </InlineDialogueCard>}
     {constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal"><span className={`dialogue-speaker ${constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}`}>{constructionSpeakerName}</span><p>{constructionDialogueLine.text}</p><button className="primary-button" disabled={constructionBusy} onClick={() => { if (constructionDialogueIndex + 1 < attention.dialogue.length) setConstructionDialogueIndex((index) => index + 1); else void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id); }}>{constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); setConstructionDialogueIndex(0);  }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
-    {recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig"><span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span><p>{recyclingStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>{constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
+    {recyclingStoryOpen && recyclingStoryLine && <InlineDialogueCard
+      ariaLabel="Återvinningscentralen är färdig"
+      speaker={recyclingSpeakerName}
+      speakerTone={recyclingStoryLine.speaker === "Barnet" ? "child" : "default"}
+      nextLabel={constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
+      nextDisabled={constructionBusy}
+      onNext={() => void advanceRecyclingStory()}
+      footer={constructionError ? <p role="alert">{constructionError}</p> : undefined}
+    >
+      <p>{recyclingStoryLine.text}</p>
+    </InlineDialogueCard>}
     {linusStoryReplayStep && linusStoryReplayIndex !== null && !recyclingStoryOpen && <StoryMoment
       image={linusStoryReplayIndex >= linusIntroDialogue.findIndex((step) => step.kind === "reveal-dog") ? "/assets/village/story-moments/linus-puppy-handover.png" : "/assets/village/story-moments/linus-first-meeting.png"}
       ariaLabel="Replay av Linus första möte"
