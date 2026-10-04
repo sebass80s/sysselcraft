@@ -97,3 +97,38 @@ This separation is deliberate. Character sheets are always the sole identity aut
 ```bash
 node scripts/test-image-batch-builder.mjs
 ```
+
+## Generate the batch automatically
+
+The generator reads the built batch JSON, opens every referenced character sheet/environment/anchor from the local checkout, sends one image request per task, and writes one separate PNG per scene.
+
+First build the batch:
+
+```bash
+npm run image:batch:build -- --batch=path/to/batch.json
+```
+
+Then generate a built chunk:
+
+```bash
+export OPENAI_API_KEY="..."
+npm run image:batch:generate -- --input=image-pipeline/out/<batch-id>/scenes-01.json
+```
+
+Useful safe preflight:
+
+```bash
+npm run image:batch:generate -- --input=image-pipeline/out/<batch-id>/scenes-01.json --dry-run
+```
+
+Defaults:
+
+- model: `gpt-image-2.5-sunburst`
+- size: `1536x1024`
+- quality: `high`
+- output: separate PNG files plus `generation-results.json`
+- generation is sequential so a five-image chunk produces five independent API requests and five image files
+
+Override with `--model=`, `--size=`, `--quality=`, or environment variables `SYC_IMAGE_MODEL`, `SYC_IMAGE_SIZE`, and `SYC_IMAGE_QUALITY`.
+
+The OpenAI image edit endpoint accepts multiple source images per request, so each task can carry its own canonical character sheets, environment references and approved anchors. The generator refuses non-canonical character identity paths before making any API request.
