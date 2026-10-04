@@ -178,6 +178,26 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('solTourStoryStop && solTourStoryLine && <><div className="story-moment" role="presentation">')
+    && villageRuntime.includes('<Image src={solTourImage} alt="" fill priority sizes="100vw" />'),
+  "Act 1 Sol tour must preserve its authored per-stop image through the current presentation path",
+);
+assert.ok(
+  villageRuntime.includes('solTourStoryLine.speaker === "Barnet" ? "child" : solTourStoryLine.speaker.toLowerCase()')
+    && villageRuntime.includes('{solTourSpeakerName}</span><p>{solTourStoryLine.text}</p>'),
+  "Act 1 Sol tour must preserve speaker identity, tone and line text",
+);
+assert.ok(
+  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceSolTourStory()}')
+    && villageRuntime.includes('solTourStoryStop === "decision" ? "Vi bygger kliniken!" : "Fortsätt rundturen"'),
+  "Act 1 Sol tour must preserve busy state, callback and stop-specific final CTA",
+);
+assert.ok(
+  villageRuntime.includes('aria-label="Sol ser sig omkring i byn"'),
+  "Act 1 Sol tour must preserve its accessible dialog label",
+);
+
+assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
     && villageRuntime.includes('image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}')
     && villageRuntime.includes('ariaLabel="Mira kommer till byn"'),
