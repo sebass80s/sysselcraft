@@ -1677,3 +1677,43 @@ Keep these boundaries:
 - substantial Act 3 runtime remains parked until Runtime 1.0 architecture acceptance.
 
 A separate Act 3 art-production pipeline has been parked for later so image generation can run in parallel when Act 3 begins; it does not change the Runtime 1.0 execution order.
+
+
+## Runtime 1.0 acceptance-prep checkpoint — 2026-10-04 late evening
+
+Safe legacy cleanup is now closed at code HEAD `5eb73ca432cecd7175d93215bb7a998463c94f7c` with GitHub Actions #1938 SUCCESS on that exact SHA.
+
+The cleanup phase ended after removing only proven dead/internal Runtime surface and stopping when remaining exports represented real contracts or acceptance-sensitive behavior. One attempted removal of `InteractionMarkerKind` failed CI and was explicitly reverted; the public marker-kind contract therefore remains intentional.
+
+### Browser / preview precheck
+
+Latest Vercel preview for branch `nova/runtime-architecture-v1` is READY on the exact cleanup HEAD above.
+
+Non-destructive route precheck against that deployment:
+- `/`: HTTP 200 and renders the SysselCraft HUD / village shell;
+- `/act2`: HTTP 200 and renders the expected client-loading shell (`Laddar sjön…`);
+- `/pair`: HTTP 200 and renders the child-device pairing surface;
+- `/act2-test`: production-mode 404 is intentional because the route explicitly calls `notFound()` when `NODE_ENV === "production"`; this is not a regression.
+
+Vercel runtime-error inspection for the same deployment found no runtime error clusters and no error/warning log entries in the checked window.
+
+This is a browser/server precheck, not full interactive browser acceptance. It proves current preview availability, routing and absence of observed runtime server errors; it does not replace interaction/touch acceptance.
+
+### Remaining Runtime 1.0 acceptance gate
+
+Do not perform more cosmetic safe-cleanup slices unless a concrete defect is found. The next meaningful work is explicit acceptance of the intentionally local, input-sensitive boundary.
+
+Physical iPhone acceptance should be update-in-place against the preserved app/save and must not reinstall/reset or mutate Adam's backend merely to simplify testing.
+
+Minimum physical smoke checklist:
+1. launch the exact audited Runtime 1.0 build update-in-place and confirm existing world/save loads;
+2. Village movement/pathfinding/collision feels unchanged and tapping world targets still routes correctly;
+3. Lake direct movement, shoreline/collision and area navigation remain usable;
+4. object/NPC pointer/touch handlers activate reliably in landscape WebView;
+5. Story Moment / compact dialogue overlays block world input correctly and release it afterward;
+6. Linus naming/input special flow: autofocus, keyboard, Enter handling, validation and reveal behavior remain usable;
+7. dog-follow behavior remains stable across movement and area transitions;
+8. Village ↔ Lake/shop transitions and Act 2 purchase handoff return to the expected area/state;
+9. force-quit/relaunch preserves world/progression/pairing/wallet state and does not replay accepted one-shot story/reward effects.
+
+Only after browser interaction acceptance + this physical iPhone pass should deeper convergence or deletion touch collision/pathfinding, movement feel, dog-follow, pointer/touch/WebView fallbacks or the Linus naming DOM path.
