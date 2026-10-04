@@ -38,7 +38,7 @@ export function historyEntriesFor(
  * History consumes registry data plus already-completed progress. It owns no
  * persistence, rewards, purchases or progression mutations.
  */
-export type StoryReplayRequest = {
+type StoryReplayRequest = {
   beatId: string;
   startLineIndex?: number;
 };
