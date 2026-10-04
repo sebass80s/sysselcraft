@@ -276,9 +276,9 @@ assert.equal(
 );
 
 assert.ok(
-  villageRuntime.includes('speakerTone={bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker === "Linus" ? "linus" : "henning"}')
-    && villageRuntime.includes('speakerTone={bakeryStoryReplayLine.speaker === "Barnet" ? "child" : bakeryStoryReplayLine.speaker === "Linus" ? "linus" : "henning"}'),
-  "Act 1 Bakery live and replay must preserve accepted child/Linus/Henning speaker tones before shared-tone migration",
+  villageRuntime.includes('speakerTone={storySpeakerTone(bakeryStoryLine.speaker)}')
+    && villageRuntime.includes('speakerTone={storySpeakerTone(bakeryStoryReplayLine.speaker)}'),
+  "Act 1 Bakery live and replay must consume the shared child/Linus/Henning speaker tone mapping",
 );
 
 assert.ok(

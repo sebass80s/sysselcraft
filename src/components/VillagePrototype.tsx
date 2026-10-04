@@ -1618,7 +1618,7 @@ export default function VillagePrototype() {
       image="/assets/village/story-moments/bakery-completion.png"
       ariaLabel="Bageriet är färdigt"
       speaker={bakerySpeakerName}
-      speakerTone={bakeryStoryLine.speaker === "Barnet" ? "child" : bakeryStoryLine.speaker === "Linus" ? "linus" : "henning"}
+      speakerTone={storySpeakerTone(bakeryStoryLine.speaker)}
       nextLabel={constructionBusy ? "Sparar…" : bakeryStoryIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
       nextDisabled={constructionBusy}
       onNext={() => void advanceBakeryStory()}
@@ -1631,7 +1631,7 @@ export default function VillagePrototype() {
       image="/assets/village/story-moments/bakery-completion.png"
       ariaLabel="Testvisning av färdigt bageri"
       speaker={bakeryReplaySpeakerName}
-      speakerTone={bakeryStoryReplayLine.speaker === "Barnet" ? "child" : bakeryStoryReplayLine.speaker === "Linus" ? "linus" : "henning"}
+      speakerTone={storySpeakerTone(bakeryStoryReplayLine.speaker)}
       nextLabel={bakeryStoryReplayIndex === bakeryCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}
       onNext={advanceBakeryStoryReplay}
       presentationId={`act1:bakery-complete-replay:${bakeryStoryReplayIndex}`}
