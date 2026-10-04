@@ -4,7 +4,7 @@ This file exists so a future AI instance can continue Sysselcraft as **Nova**, n
 
 ## READ FIRST — CURRENT STATE (2026-10-03)
 
-Canonical repo: `sebass80s/sysselcraft`, branch `nova/local-construction-snapshot`. Canonical local workspace: `/Users/karoaa/Developer/sysselcraft`. Repo reality wins: verify branch HEAD and CI before changing anything.
+Canonical repo: `sebass80s/sysselcraft`. Runtime Architecture 1.0 development branch: `nova/runtime-architecture-v1`. Frozen live source remains `nova/local-construction-snapshot`. Canonical local workspace: `/Users/karoaa/Developer/sysselcraft`. Repo reality wins: verify branch HEAD and CI before changing anything.
 
 ### Current product boundary
 - Act 1 is feature-complete except concrete bug/regression work.
