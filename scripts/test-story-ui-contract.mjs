@@ -153,6 +153,21 @@ assert.ok(
   "Act 1 bottle letter must preserve its accessible dialog label after migration",
 );
 
+assert.ok(
+  villageRuntime.includes('{solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png"'),
+  "Act 1 Sol-arrival legacy oracle must preserve the accepted story image before migration",
+);
+assert.ok(
+  villageRuntime.includes('solArrivalDialogue[solStoryIndex].speaker === "Barnet" ? childName || "Barnet" : "Sol"')
+    && villageRuntime.includes('solArrivalDialogue[solStoryIndex].text'),
+  "Act 1 Sol-arrival legacy oracle must preserve speaker identity and line text",
+);
+assert.ok(
+  villageRuntime.includes('disabled={constructionBusy} onClick={() => void advanceSolStory()}')
+    && villageRuntime.includes('constructionBusy ? "Sparar…" : solStoryIndex === solArrivalDialogue.length - 1 ? "Se dig omkring" : "Fortsätt"'),
+  "Act 1 Sol-arrival legacy oracle must preserve busy state, callback and CTA labels",
+);
+
 assert.deepEqual(
   parseStoryLine("Barnet: Hej.", "Testbarn"),
   { text: "Hej.", speaker: "Testbarn", speakerTone: "child" },
