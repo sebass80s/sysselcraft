@@ -44,6 +44,7 @@ import { act2ResumeHref, parseAct2PurchaseProject } from "../game/act2PurchaseHa
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
 import { StoryMoment } from "./story/StoryMoment";
+import { InlineDialogueCard } from "./story/InlineDialogueCard";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
@@ -1647,7 +1648,14 @@ export default function VillagePrototype() {
       ] as const;
       const step = recyclingDialogue[recyclingDialogueIndex];
       const last = recyclingDialogueIndex === recyclingDialogue.length - 1;
-      return <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Prata med Linus om återvinningen"><span className="dialogue-speaker">{step.speaker}</span><p>{step.text}</p><button className="primary-button dialogue-next" onClick={() => { if (last) { setRecyclingDialogueIndex(null);  } else setRecyclingDialogueIndex((index) => index === null ? null : index + 1); }}>{last ? "Klart" : "Nästa"}</button></div>;
+      return <InlineDialogueCard
+        ariaLabel="Prata med Linus om återvinningen"
+        speaker={step.speaker}
+        nextLabel={last ? "Klart" : "Nästa"}
+        onNext={() => { if (last) { setRecyclingDialogueIndex(null);  } else setRecyclingDialogueIndex((index) => index === null ? null : index + 1); }}
+      >
+        <p>{step.text}</p>
+      </InlineDialogueCard>;
     })()}
     {henningDialogueOpen && (() => {
       const henningDialogue = [
@@ -1686,7 +1694,15 @@ export default function VillagePrototype() {
       <p>{henningArrivalDialogue[henningStoryIndex].text}</p>
       {constructionError && <p role="alert">{constructionError}</p>}
     </StoryMoment>}
-    {abandonedShopDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Den övergivna lanthandeln"><span className={`dialogue-speaker ${abandonedShopDialogueLine.speaker === "Barnet" ? "child" : ""}`}>{abandonedShopDialogueLine.speaker === "Barnet" ? childName || "Barnet" : "Linus"}</span><p>{abandonedShopDialogueLine.text}</p><button className="primary-button dialogue-next" onClick={() => { if (abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length) setAbandonedShopDialogueIndex(abandonedShopDialogueIndex + 1); else { setAbandonedShopDialogueIndex(null);  } }}>{abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"}</button></div>}
+    {abandonedShopDialogueLine && <InlineDialogueCard
+      ariaLabel="Den övergivna lanthandeln"
+      speaker={abandonedShopDialogueLine.speaker === "Barnet" ? childName || "Barnet" : "Linus"}
+      speakerTone={abandonedShopDialogueLine.speaker === "Barnet" ? "child" : "default"}
+      nextLabel={abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length ? "Nästa" : "Klart"}
+      onNext={() => { if (abandonedShopDialogueIndex !== null && abandonedShopDialogueIndex + 1 < abandonedShopDialogue.length) setAbandonedShopDialogueIndex(abandonedShopDialogueIndex + 1); else { setAbandonedShopDialogueIndex(null);  } }}
+    >
+      <p>{abandonedShopDialogueLine.text}</p>
+    </InlineDialogueCard>}
     {constructionDialogueId && attention?.id === constructionDialogueId && constructionDialogueLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Byggplatsens samtal"><span className={`dialogue-speaker ${constructionDialogueLine.speaker === "Barnet" ? "child" : constructionDialogueLine.speaker.toLowerCase()}`}>{constructionSpeakerName}</span><p>{constructionDialogueLine.text}</p><button className="primary-button" disabled={constructionBusy} onClick={() => { if (constructionDialogueIndex + 1 < attention.dialogue.length) setConstructionDialogueIndex((index) => index + 1); else void persistConstruction(commitConstructionReveal(constructionRef.current, attention.id), attention.id); }}>{constructionBusy ? "Sparar…" : constructionDialogueIndex + 1 < attention.dialogue.length ? "Nästa" : "Fortsätt"}</button><button className="secondary-button" disabled={constructionBusy} onClick={() => { setConstructionDialogueId(null); setConstructionDialogueIndex(0);  }}>Senare</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {recyclingStoryOpen && recyclingStoryLine && <div className="dialogue-card" role="dialog" aria-modal="true" aria-live="polite" aria-label="Återvinningscentralen är färdig"><span className={`dialogue-speaker ${recyclingStoryLine.speaker === "Barnet" ? "child" : ""}`}>{recyclingSpeakerName}</span><p>{recyclingStoryLine.text}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceRecyclingStory()}>{constructionBusy ? "Sparar…" : recyclingStoryIndex === recyclingCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"}</button>{constructionError && <p role="alert">{constructionError}</p>}</div>}
     {linusStoryReplayStep && linusStoryReplayIndex !== null && !recyclingStoryOpen && <StoryMoment
