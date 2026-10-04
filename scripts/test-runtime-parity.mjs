@@ -547,7 +547,7 @@ const worldViewportFixtures = [
   },
   {
     name: "wide parent caps render width at the authored world width",
-    parentWidth: 1600,
+    parentWidth: 2000,
     parentHeight: 640,
     worldWidth: 1766,
     expected: 1766,
