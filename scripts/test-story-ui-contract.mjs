@@ -237,6 +237,28 @@ assert.equal(
 );
 
 assert.ok(
+  villageRuntime.includes('clinicStoryLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"')
+    && villageRuntime.includes('aria-label="Sols klinik är färdig"'),
+  "Act 1 Clinic completion must preserve its two-scene image boundary and accessible label",
+);
+assert.ok(
+  villageRuntime.includes('clinicStoryLine.speaker === "Barnet" ? "child" : clinicStoryLine.speaker.toLowerCase()')
+    && villageRuntime.includes('{clinicSpeakerName}</span><p>{clinicStoryLine.text}</p>'),
+  "Act 1 Clinic completion must preserve speaker identity, tone and line text",
+);
+assert.ok(
+  villageRuntime.includes('onClick={advanceClinicStory}')
+    && villageRuntime.includes('clinicStoryIndex === clinicCompletionDialogue.length - 1 ? "Klart" : "Fortsätt"'),
+  "Act 1 Clinic completion must preserve callback and CTA labels",
+);
+assert.ok(
+  villageRuntime.includes('clinicStoryReplayLine.scene === "complete" ? "/assets/village/story-moments/sol-clinic-complete.png" : "/assets/village/story-moments/sol-treats-linus.png"')
+    && villageRuntime.includes('aria-label="Testvisning av Sols färdiga klinik"')
+    && villageRuntime.includes('onClick={advanceClinicStoryReplay}'),
+  "Act 1 Clinic replay must preserve scene image, accessible label and callback",
+);
+
+assert.ok(
   villageRuntime.includes('{miraStoryIndex !== null && miraStoryLine && <StoryMoment')
     && villageRuntime.includes('image={miraStoryIndex >= MIRA_ARRIVAL_SCENE_2_START ? "/assets/village/story-moments/mira-discovers-lanthandel.png" : "/assets/village/story-moments/mira-arrival.png"}')
     && villageRuntime.includes('ariaLabel="Mira kommer till byn"'),
