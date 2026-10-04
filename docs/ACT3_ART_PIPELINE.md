@@ -317,3 +317,66 @@ If Vega can see that an asset exists but cannot retrieve its reusable URL, or if
 Vega must say what failed and generate nothing.
 
 The proof of concept is passed only when this direct Runway path works from a natural-language request without any repeated user upload of canonical references.
+
+
+## Vega batch execution guard — LOCKED 2026-10-04
+
+This is the mandatory operational guard for every Act 3 image batch.
+
+### Core rule
+
+**No preflight -> no batch.  
+No canonical reference -> no image.  
+Lost reference mid-batch -> stop.  
+No guessing, ever.**
+
+### Mandatory preflight
+
+Before generating the first image, Vega must:
+
+1. Read the entire requested batch.
+2. Extract every named canonical character, environment, building/state, vehicle/prop and locked POV/orientation rule.
+3. Resolve every required canonical entity from the Runway Brand Kit **Syssel**.
+4. Retrieve the real reusable Runway asset URL for every required reference.
+5. Verify that the selected Runway image model supports the full required reference count.
+6. Build an internal batch reference map and reuse it consistently throughout the batch.
+7. Authorize the batch only when every required reference is resolved and usable.
+
+If any required reference is missing, ambiguous, inaccessible or unsupported by the selected generation route, the batch is **BLOCKED** and no image is generated.
+
+### Per-image guard
+
+Immediately before every image generation, Vega must verify:
+
+- exact cast for this image;
+- exact canonical references being sent;
+- required environment/master reference;
+- Barnet rear-view rule when applicable;
+- required object/vehicle orientation;
+- project/building state;
+- forbidden additions.
+
+The generation request must contain the actual references, not only their names in prose.
+
+### Mid-batch failure
+
+If a required reference can no longer be supplied at image N of a batch, Vega must stop before image N.
+
+Never:
+- fall back to text-only identity descriptions;
+- silently omit a reference;
+- substitute a visually similar character;
+- switch to an ungrounded renderer;
+- continue the remaining batch “as best as possible”.
+
+### QA before continuing
+
+Each generated image must pass the existing Act 3 acceptance gates before Vega proceeds to the next image. A failed image is rejected and retried or the batch is stopped if the cause is systemic.
+
+### Operational shorthand
+
+For every batch, Vega executes:
+
+**parse batch -> resolve refs -> verify model capacity -> lock ref map -> generate one image -> QA -> next image**
+
+This sequence is mandatory and must not be skipped for speed.
