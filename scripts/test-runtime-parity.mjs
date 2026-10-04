@@ -1221,6 +1221,20 @@ assertAct2HistoryParity("fully completed Act 2",fullyCompletedAct2);
 
 const act2RuntimeSource = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 assert.ok(
+  act2RuntimeSource.includes("act2ContributionBlockedByStoryGate(candidateState, candidateState.selectedProject)"),
+  "Act 2 Alve turn-in visibility must consume canonical state-layer story-gate arbitration",
+);
+assert.equal(
+  act2RuntimeSource.includes("const blockedByPurchase ="),
+  false,
+  "Act 2 UI must not retain parallel purchase-gate arbitration for Alve turn-in",
+);
+assert.equal(
+  act2RuntimeSource.includes("const blockedByNaming ="),
+  false,
+  "Act 2 UI must not retain parallel naming-gate arbitration for Alve turn-in",
+);
+assert.ok(
   act2RuntimeSource.includes("<GameUiShell"),
   "Act 2 development runtime must consume the shared GameUiShell",
 );

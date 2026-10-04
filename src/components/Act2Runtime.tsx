@@ -6,6 +6,7 @@ import type { Act2LakeGameHandle } from "../game/createAct2LakeGame";
 import {
   createDefaultAct2RuntimeState,
   act2FinalePending,
+  act2ContributionBlockedByStoryGate,
   advanceAct2Finale,
   isMotorboatUnlocked,
   loadAct2RuntimeState,
@@ -117,14 +118,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
 
   function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
     if (worldProgression === null || !candidateState.selectedProject) return false;
-    const blockedByPurchase =
-      (candidateState.selectedProject === "dock" && jettyPurchaseRequired(candidateState))
-      || (candidateState.selectedProject === "boathouse" && boathousePurchaseRequired(candidateState))
-      || (candidateState.selectedProject === "motorboat" && motorboatPartsPurchaseRequired(candidateState));
-    const blockedByNaming =
-      candidateState.selectedProject === "motorboat" && motorboatNamingRequired(candidateState);
-    return !blockedByPurchase
-      && !blockedByNaming
+    return !act2ContributionBlockedByStoryGate(candidateState, candidateState.selectedProject)
       && !act2FinalePending(candidateState)
       && nextAct2Contribution(candidateState, worldProgression) !== null;
   }
