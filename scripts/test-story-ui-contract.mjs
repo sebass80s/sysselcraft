@@ -335,6 +335,10 @@ assert.ok(
   "Act 1 chapter finale dialogue must preserve all authored speaker presentation through Story Engine",
 );
 assert.ok(
+  villageRuntime.includes('speakerTone={act1ChapterFinaleLine.speaker === "Barnet" ? "child" : act1ChapterFinaleLine.speaker === "Henning" ? "henning" : act1ChapterFinaleLine.speaker === "Mira" ? "mira" : act1ChapterFinaleLine.speaker === "Linus" ? "linus" : "sol"}'),
+  "Act 1 chapter finale must preserve accepted child/Henning/Mira/Linus/Sol speaker tones before shared-tone migration",
+);
+assert.ok(
   villageRuntime.includes('nextDisabled={constructionBusy}')
     && villageRuntime.includes('onNext={() => void advanceAct1ChapterFinale()}')
     && villageRuntime.includes('nextLabel={constructionBusy ? "Sparar…" : act1ChapterFinaleIndex === act1ChapterFinaleDialogue.length - 1 ? "Avsluta kapitlet" : "Fortsätt"}'),
