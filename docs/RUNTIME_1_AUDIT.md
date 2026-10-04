@@ -934,3 +934,50 @@ still requires browser acceptance plus physical iPhone acceptance.
 Future chapters should configure Interaction definitions/markers/priority and use the shared resolver. They may still need thin area-specific input adapters where platform behavior requires them.
 
 The next Runtime 1.0 work should move to the remaining World / Area ownership audit or legacy-runtime cleanup. Do not reopen Interaction by refactoring physical-input-sensitive adapters without an explicit acceptance window.
+
+
+## World / Area checkpoint — canonical viewport sizing
+
+The next safe World / Area duplication was the shared playable viewport calculation used by both Village and Act 2 Lake.
+
+New pure primitive:
+- `src/runtime/world/worldViewport.ts`;
+- `WORLD_VIEW_HEIGHT = 640`;
+- `WORLD_MIN_VIEW_WIDTH = 960`;
+- `worldViewportSize(parentWidth, parentHeight, worldWidth)`.
+
+The authored area still owns its maximum world width. Runtime 1.0 now owns the identical parent-aspect projection, minimum render width and zero-sized-parent guard used by both current worlds.
+
+Parity-first history:
+- `4afa52849e5078a3d0223fb4a3cc228f6d4aee17` introduced the legacy viewport oracle;
+- GitHub Actions #1843 failed because the wide-screen test fixture itself was wrong: a 1600×640 parent correctly produced 1600 rather than hitting the 1766 world cap;
+- `3f4dcb66bfaa79cc7aa03d43bdda309359144b82` corrected only that fixture to 2000×640;
+- GitHub Actions #1844: full `npm run verify` SUCCESS before implementation.
+
+Implementation:
+- `6da753115f318fa2955eb0983620608e5ab46f81` migrated Village + Lake to `worldViewportSize()`;
+- both Phaser configs now also consume the already-canonical `WORLD_CAMERA.backgroundColor` instead of repeating `#789a68`;
+- no Phaser FIT/CENTER_BOTH behavior was changed;
+- no authored area bounds were changed.
+
+The first implementation CI (#1845) exposed one stale custom Act 2 Lake harness dependency map, not product behavior. Build, TypeScript and earlier regression suites had passed. `a831d13568d8a8be7dda15ddffddb897a2d4554f` wired the pure viewport dependency into that harness.
+
+Final code verification:
+- GitHub Actions #1846: full `npm run verify` SUCCESS on `a831d13568d8a8be7dda15ddffddb897a2d4554f`.
+
+### World / Area boundary after this checkpoint
+
+Current shared primitives:
+- direct movement intent for Lake;
+- camera contract for Village + Lake;
+- dynamic Y-depth for Village + Lake;
+- playable viewport sizing for Village + Lake.
+
+The remaining major World differences are real product behavior rather than harmless duplication:
+- Village A* vs Lake direct target movement;
+- authored obstacle geometry vs Lake shoreline/pixel collision;
+- different movement bounds;
+- different dog-follow behavior;
+- pointer/touch/WebView fallback entrypoints.
+
+Do not converge those during ordinary architecture cleanup. They require automated/browser parity plus physical iPhone acceptance because they can alter movement feel or touch reliability.

@@ -1320,3 +1320,24 @@ Important safety boundary: local Phaser pointer/touch handlers remain intentiona
 No product gameplay behavior, navigation, collision, backend state, Adam data or live branch was changed by this closeout.
 
 Recommended next Runtime slice: audit remaining World / Area ownership and legacy-runtime duplication for a pure/shared candidate. Prefer camera/depth/config/state contracts over collision/pathfinding/touch changes.
+
+
+## Runtime 1.0 World viewport checkpoint — 2026-10-04
+
+Verified code checkpoint before this documentation sync:
+- `a831d13568d8a8be7dda15ddffddb897a2d4554f`;
+- GitHub Actions #1846: full `npm run verify` SUCCESS.
+
+New canonical pure World primitive:
+- `src/runtime/world/worldViewport.ts`;
+- fixed accepted viewport height 640;
+- accepted minimum width 960;
+- shared parent-aspect sizing with area-owned maximum world width.
+
+Village and Act 2 Lake both consume it. Their Phaser config background now also uses `WORLD_CAMERA.backgroundColor` rather than duplicating the same literal.
+
+Parity was green before implementation in #1844. #1843 was an incorrect test fixture, not product drift. Implementation #1845 reached a stale custom Lake loader; the loader was updated and final #1846 is green.
+
+No collision, pathfinding, player movement, dog follow, pointer/touch behavior, WebView fallback, backend state, live branch or parent UI was changed.
+
+World / Area safe-pure cleanup is now close to its natural boundary. Do not force Village and Lake movement/collision into one implementation. The remaining behavioral convergence requires browser + physical iPhone acceptance.
