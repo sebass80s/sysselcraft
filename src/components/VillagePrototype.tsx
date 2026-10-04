@@ -1503,8 +1503,18 @@ export default function VillagePrototype() {
       zIndex={145}
       background="rgba(9,14,10,.94)"
     />}
-    {bottleLetterOpen && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-letter.png" alt="Barnet läser brevet som ska skickas som flaskpost" fill priority sizes="100vw" /></div>}
-    {bottleLetterOpen && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Brevet i flaskposten"><span className="dialogue-speaker child">{childName || "Barnet"}</span><p>Brevet är klart.</p><button className="primary-button dialogue-next" onClick={advanceBottleLetter}>Gå till vattnet</button></div>}
+    {bottleLetterOpen && <StoryRunner
+      beat={{
+        id: "act1:bottle-letter",
+        image: "/assets/village/story-moments/bottle-letter.png",
+        speaker: childName || "Barnet",
+        speakerTone: "child",
+        lines: ["Brevet är klart."],
+        nextLabel: "Gå till vattnet",
+      }}
+      onNext={advanceBottleLetter}
+      childName={childName || "Barnet"}
+    />}
     {bottleStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/bottle-message.png" alt="" fill priority sizes="100vw" /></div>}
     {bottleStoryIndex !== null && <div className="dialogue-card story-moment-dialogue" role="dialog" aria-modal="true" aria-label="Skicka flaskpost"><span className={`dialogue-speaker ${bottleMessageDialogue[bottleStoryIndex].speaker === "Barnet" ? "child" : "dog"}`}>{bottleMessageDialogue[bottleStoryIndex].speaker === "Hunden" ? dogName || "Hunden" : childName || "Barnet"}</span><p>{bottleMessageDialogue[bottleStoryIndex].text.replace("{dogName}", dogName || "kompis")}</p><button className="primary-button dialogue-next" disabled={constructionBusy} onClick={() => void advanceBottleStory()}>{constructionBusy ? "Sparar…" : bottleStoryIndex === bottleMessageDialogue.length - 1 ? "Kasta iväg!" : "Fortsätt"}</button></div>}
     {solStoryIndex !== null && <div className="story-moment" role="presentation"><Image src="/assets/village/story-moments/sol-arrival.png" alt="" fill priority sizes="100vw" /></div>}
