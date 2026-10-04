@@ -259,6 +259,42 @@ for (const y of [0, 427.4, 427.5, 427.6, -0.5, -1.5]) {
   placement.baseY = previousBaseY;
 }
 
+const act2PurchaseHandoffFixtures = [
+  { value: "dock", expected: "dock" },
+  { value: "boathouse", expected: "boathouse" },
+  { value: "motorboat", expected: "motorboat" },
+  { value: "cabin", expected: null },
+  { value: "DOCK", expected: null },
+  { value: "", expected: null },
+  { value: null, expected: null },
+];
+
+function legacyParseAct2PurchaseProject(value) {
+  return value === "dock" || value === "boathouse" || value === "motorboat"
+    ? value
+    : null;
+}
+
+function legacyAct2PurchaseShopHref(project) {
+  return `/?act2-purchase=${project}`;
+}
+
+function legacyAct2ResumeHref(project) {
+  return `/act2?resume=${project}`;
+}
+
+for (const fixture of act2PurchaseHandoffFixtures) {
+  assert.equal(
+    legacyParseAct2PurchaseProject(fixture.value),
+    fixture.expected,
+    `Act 2 purchase handoff parse oracle failed for ${String(fixture.value)}`,
+  );
+}
+for (const project of ["dock", "boathouse", "motorboat"]) {
+  assert.equal(legacyAct2PurchaseShopHref(project), `/?act2-purchase=${project}`);
+  assert.equal(legacyAct2ResumeHref(project), `/act2?resume=${project}`);
+}
+
 function legacyAct2UiStoryGateBlocked(state) {
   const project = state.selectedProject;
   if (!project) return false;
