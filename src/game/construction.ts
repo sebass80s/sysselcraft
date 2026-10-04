@@ -129,11 +129,9 @@ export function initialConstruction(): ConstructionState {
   };
 }
 
-/** Legacy stages were already visible. Never infer later stages from quest totals. */
-export function normalizeConstruction(value: unknown, legacyVisible: BuildingStage = 0): ConstructionState {
+export function normalizeConstruction(value: unknown): ConstructionState {
   const result = initialConstruction();
   if (!value || typeof value !== "object") {
-    result.earned.recycling = result.revealed.recycling = legacyVisible;
     return result;
   }
   const candidate = value as Partial<ConstructionState>;

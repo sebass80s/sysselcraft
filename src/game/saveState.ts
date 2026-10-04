@@ -140,26 +140,65 @@ function normalizeProgression(value: unknown): ProgressionState | null {
   return normalized;
 }
 
+/** Shape revisions are independent: saves may have either newer field family.
+ * Keep the persisted v1 envelope and use the historical object-presence boundary.
+ */
+function migrateConstructionCandidate(candidate: Partial<SaveStateV1>, progression: ProgressionState): Partial<SaveStateV1> {
+  const hasConstruction = Boolean(candidate.construction) && typeof candidate.construction === "object";
+  return runSequentialMigrations(candidate, hasConstruction ? 1 : 0, 1, [{
+    from: 0,
+    to: 1,
+    migrate: (legacy) => {
+      const construction = initialConstruction();
+      // The domain still owns stage derivation. Legacy stages were already visible.
+      const visible = normalizeRecyclingCenterStage(legacy.worldFlags?.recyclingCenterStage, progression);
+      construction.earned.recycling = construction.revealed.recycling = visible;
+      return { ...legacy, construction };
+    },
+  }]).value;
+}
+
+function migrateAct1FinaleCandidate(candidate: Partial<SaveStateV1>): Partial<SaveStateV1> {
+  const hasAct1ChapterFinaleState =
+    typeof candidate.worldFlags?.act1ChapterFinaleSeen === "boolean"
+    || typeof candidate.worldFlags?.act1EndCardSeen === "boolean"
+    || (typeof candidate.worldFlags?.act1ChapterFinaleIndex === "number"
+      && Number.isInteger(candidate.worldFlags.act1ChapterFinaleIndex));
+  return runSequentialMigrations(
+    candidate,
+    hasAct1ChapterFinaleState ? 1 : 0,
+    1,
+    [{
+      from: 0,
+      to: 1,
+      migrate: (legacy) => legacy.worldFlags?.clinicCompletionSeen === true
+        ? {
+            ...legacy,
+            worldFlags: {
+              ...legacy.worldFlags,
+              act1ChapterFinaleSeen: true,
+              act1EndCardSeen: true,
+            },
+          }
+        : legacy,
+    }],
+  ).value;
+}
+
 export function normalizeSaveState(value: unknown): SaveStateV1 | null {
   if (!value || typeof value !== "object") return null;
-  const candidate = value as Partial<SaveStateV1>;
-  if (candidate.version !== 1) return null;
+  const rawCandidate = value as Partial<SaveStateV1>;
+  if (rawCandidate.version !== 1) return null;
 
   const defaults = createDefaultSaveState();
-  const childName = normalizeName(candidate.childName);
-  const dogName = normalizeName(candidate.dogName);
+  const childName = normalizeName(rawCandidate.childName);
+  const dogName = normalizeName(rawCandidate.dogName);
 
-  const progression = normalizeProgression(candidate.progression) ?? createEmptyProgression();
+  const progression = normalizeProgression(rawCandidate.progression) ?? createEmptyProgression();
 
-  const legacyRecyclingStage = normalizeRecyclingCenterStage(
-    candidate.worldFlags?.recyclingCenterStage,
-    progression,
-  );
-
-  // With construction state present, revealed is authoritative. The legacy earned-stage
-  // field must never turn a new pending delivery into an already visible building.
+  const candidate = migrateAct1FinaleCandidate(migrateConstructionCandidate(rawCandidate, progression));
   const construction = syncConstructionProgression(
-    normalizeConstruction(candidate.construction, legacyRecyclingStage), progression,
+    normalizeConstruction(candidate.construction), progression,
   );
   const recyclingCenterStage = construction.revealed.recycling;
 
@@ -189,38 +228,14 @@ export function normalizeSaveState(value: unknown): SaveStateV1 | null {
     reachedDogReveal ||
     (typeof candidate.dogVisible === "boolean" ? candidate.dogVisible : defaults.dogVisible);
 
-  const hasAct1ChapterFinaleState =
-    typeof candidate.worldFlags?.act1ChapterFinaleSeen === "boolean"
-    || typeof candidate.worldFlags?.act1EndCardSeen === "boolean"
-    || (typeof candidate.worldFlags?.act1ChapterFinaleIndex === "number"
-      && Number.isInteger(candidate.worldFlags.act1ChapterFinaleIndex));
-  const migratedCandidate = runSequentialMigrations(
-    candidate,
-    hasAct1ChapterFinaleState ? 1 : 0,
-    1,
-    [{
-      from: 0,
-      to: 1,
-      migrate: (legacy) => legacy.worldFlags?.clinicCompletionSeen === true
-        ? {
-            ...legacy,
-            worldFlags: {
-              ...legacy.worldFlags,
-              act1ChapterFinaleSeen: true,
-              act1EndCardSeen: true,
-            },
-          }
-        : legacy,
-    }],
-  ).value;
-  const clinicCompletionSeen = migratedCandidate.worldFlags?.clinicCompletionSeen === true;
-  const act1ChapterFinaleSeen = migratedCandidate.worldFlags?.act1ChapterFinaleSeen === true;
-  const act1EndCardSeen = migratedCandidate.worldFlags?.act1EndCardSeen === true;
+  const clinicCompletionSeen = candidate.worldFlags?.clinicCompletionSeen === true;
+  const act1ChapterFinaleSeen = candidate.worldFlags?.act1ChapterFinaleSeen === true;
+  const act1EndCardSeen = candidate.worldFlags?.act1EndCardSeen === true;
   const act1ChapterFinaleIndex =
     !act1ChapterFinaleSeen
-      && typeof migratedCandidate.worldFlags?.act1ChapterFinaleIndex === "number"
-      && Number.isInteger(migratedCandidate.worldFlags.act1ChapterFinaleIndex)
-      ? Math.max(0, Math.min(200, migratedCandidate.worldFlags.act1ChapterFinaleIndex))
+      && typeof candidate.worldFlags?.act1ChapterFinaleIndex === "number"
+      && Number.isInteger(candidate.worldFlags.act1ChapterFinaleIndex)
+      ? Math.max(0, Math.min(200, candidate.worldFlags.act1ChapterFinaleIndex))
       : undefined;
 
   return {
