@@ -662,8 +662,8 @@ assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), 
 assert.ok(page.includes("hasPendingAlveTurnIn(latest, backendWorldProgressionRef.current)"), "restart must restore Alve turn-in marker immediately from the latest authoritative progression without recreating the game");
 assert.ok(page.includes("backendWorldProgressionRef.current = backend.progression.worldProgression"), "authoritative progression refreshes must update the restart-safe game bootstrap ref");
 assert.ok(
-  page.includes('href={boathousePurchaseGate ? "/?act2-purchase=boathouse" : jettyPurchaseGate ? "/?act2-purchase=dock" : "/?act2-purchase=motorboat"}'),
-  "story purchase gates must route back to Mira with explicit purchase context",
+  page.includes("act2PurchaseShopHref("),
+  "story purchase gates must route back to Mira through the canonical purchase handoff",
 );
 assert.ok(page.includes("state.contributionLineIndex"), "contribution Story Moments must render from persisted line state");
 
@@ -741,8 +741,8 @@ assert.ok(
 assert.ok(village.includes('get("act2-purchase")'), "village must consume Act 2 purchase context instead of dropping the child at an unscoped village");
 assert.ok(village.includes('setShopPanelOpen(true)'), "Act 2 purchase context must open Mira's shop directly");
 assert.ok(village.includes('setShopCurrency("sysselbux")'), "Act 2 purchase context must open the correct SysselBux shelf");
-assert.ok(village.includes('router.push(`/act2?resume=${project}`)'), "contextual Mira close must return to the same Act 2 project");
-assert.match(page, /resumeProject === "boathouse" \|\| resumeProject === "dock" \|\| resumeProject === "motorboat"/, "Act 2 must accept contextual return from all three story purchases");
+assert.ok(village.includes("router.push(act2ResumeHref(project))"), "contextual Mira close must return through the canonical Act 2 resume handoff");
+assert.ok(page.includes("parseAct2PurchaseProject("), "Act 2 must parse contextual return through the canonical purchase-project whitelist");
 assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
 assert.ok(page.includes("📖 Historik"), "Act 2 HUD must expose completed story history");
 assert.match(
