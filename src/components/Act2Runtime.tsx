@@ -50,6 +50,7 @@ import { deriveChapterRuntimeOverlay } from "../runtime/chapter/chapterRuntimeSh
 import { deriveAct2RuntimeBlockers } from "../game/act2RuntimeAdapter";
 import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
 import { ChapterEndCard, ChapterIntroCard } from "../runtime/chapter/ChapterCards";
+import { StoryHistoryPanel } from "../runtime/story/StoryHistoryPanel";
 import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../runtime/chapter/useChapterRuntimeHost";
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
 
@@ -72,11 +73,6 @@ type Act2ReplayBeat = {
   title: string;
   image?: string;
   body: readonly string[];
-};
-
-type Act2ReplayState = {
-  beat: Act2ReplayBeat;
-  lineIndex: number;
 };
 
 type Act2RuntimeHostContext = {
@@ -275,7 +271,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [cabinRevisitOpen, setCabinRevisitOpen] = useState(false);
   const [cabinRevisitLineIndex, setCabinRevisitLineIndex] = useState(0);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const [historyReplay, setHistoryReplay] = useState<Act2ReplayState | null>(null);
+  const [historyReplayOpen, setHistoryReplayOpen] = useState(false);
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
 
   const chapterCardVisible = deriveChapterCardVisible(ready, chapterIntroVisible, { chapterComplete: state.act2Complete, endCardSeen: state.endCardSeen });
@@ -293,7 +289,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     contributionTurnInOpen,
     cabinRevisitOpen,
     historyOpen,
-    historyReplayOpen: historyReplay !== null,
+    historyReplayOpen,
   });
   const runtimeOverlay = deriveChapterRuntimeOverlay(chapterCardVisible, storyUiVisible);
   const nextChapter = nextChapterDestination("act2", { chapterComplete: state.act2Complete, endCardSeen: state.endCardSeen });
@@ -302,9 +298,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }, [chapterCardVisible]);
 
   useEffect(() => {
-    if (!historyOpen && historyReplay === null) return;
+    if (!historyOpen && !historyReplayOpen) return;
     return beginStoryOverlay();
-  }, [historyOpen, historyReplay]);
+  }, [historyOpen, historyReplayOpen]);
 
   useEffect(() => {
     stateRef.current = state;
@@ -598,33 +594,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     return groups;
   }, []);
 
-  const historyReplayLine = historyReplay
-    ? historyReplay.beat.body[historyReplay.lineIndex] ?? null
-    : null;
-  const historyReplayPresentation = historyReplayLine
-    ? parseStoryLine(historyReplayLine, childName)
-    : null;
-
-  function openHistoryReplay(beat: Act2ReplayBeat) {
-    setHistoryOpen(false);
-    setHistoryReplay({ beat, lineIndex: 0 });
-  }
-
-  function advanceHistoryReplay() {
-    if (!historyReplay) return;
-    if (historyReplay.lineIndex + 1 < historyReplay.beat.body.length) {
-      setHistoryReplay({ ...historyReplay, lineIndex: historyReplay.lineIndex + 1 });
-      return;
-    }
-    setHistoryReplay(null);
-    setHistoryOpen(true);
-  }
-
-  function previousHistoryReplay() {
-    if (!historyReplay || historyReplay.lineIndex <= 0) return;
-    setHistoryReplay({ ...historyReplay, lineIndex: historyReplay.lineIndex - 1 });
-  }
-
   async function previousFinaleStory() {
     if (finaleLineIndex <= 0) return;
     await commit({ ...state, finaleLineIndex: finaleLineIndex - 1 });
@@ -764,52 +733,17 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         </button>
       ) : undefined}
     />
-    {historyOpen && <div className="act2-history-overlay" role="dialog" aria-label="Historiska storybeats">
-      <section className="act2-history-panel">
-        <div className="act2-history-heading">
-          <div>
-            <span>Kapitel 2</span>
-            <h2>Historik</h2>
-            <p>Spela upp redan genomförda storybeats. Replay ändrar inte framsteg eller belöningar.</p>
-          </div>
-          <button className="secondary-button compact" type="button" onClick={() => setHistoryOpen(false)}>Stäng</button>
-        </div>
-        <div className="act2-history-groups">
-          {historyGroups.map((group) => <section className="act2-history-group" key={group.label}>
-            <h3>{group.label}</h3>
-            <div className="act2-history-grid">
-              {group.entries.map((beat) => <button
-                className="act2-history-entry"
-                type="button"
-                key={beat.id}
-                onClick={() => openHistoryReplay(beat)}
-              >
-                <strong>{beat.title}</strong>
-                <span>Spela upp →</span>
-              </button>)}
-            </div>
-          </section>)}
-        </div>
-      </section>
-    </div>}
-    {historyReplay && historyReplayLine && historyReplayPresentation && <StoryRunner
-      beat={{
-        id: `act2:history:${historyReplay.beat.id}:${historyReplay.lineIndex}`,
-        image: historyReplay.beat.image,
-        imageFit: "contain",
-        heading: `Historik · ${historyReplay.beat.title}`,
-        speaker: historyReplayPresentation.speaker,
-        speakerTone: historyReplayPresentation.speakerTone,
-        lines: [historyReplayPresentation.text],
-        nextLabel: historyReplay.lineIndex + 1 < historyReplay.beat.body.length ? "Fortsätt" : "Till historiken",
-      }}
-      onPrevious={historyReplay.lineIndex > 0 ? previousHistoryReplay : undefined}
-      onNext={advanceHistoryReplay}
-      zIndex={110}
-      background="rgba(6,10,8,.96)"
+    <StoryHistoryPanel
+      open={historyOpen}
+      eyebrow="Kapitel 2"
+      title="Historik"
+      description="Spela upp redan genomförda storybeats. Replay ändrar inte framsteg eller belöningar."
+      groups={historyGroups}
       childName={childName}
-      revealImageBeforeNext={historyReplay.lineIndex + 1 >= historyReplay.beat.body.length}
-    />}
+      parseLine={parseStoryLine}
+      onClose={() => setHistoryOpen(false)}
+      onReplayOpenChange={setHistoryReplayOpen}
+    />
     {chapterIntroVisible && <ChapterIntroCard
       chapterLabel="KAPITEL 2"
       title="ALVE"
