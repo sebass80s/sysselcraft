@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { StoryRunner } from "../../components/story/StoryRunner";
+import type { StorySpeakerTone } from "../../game/storyEngine";
 
 export type StoryHistoryReplayBeat = {
   id: string;
@@ -24,7 +25,7 @@ type StoryHistoryPanelProps<TBeat extends StoryHistoryReplayBeat> = {
   childName?: string;
   parseLine: (line: string, childName: string) => {
     speaker?: string;
-    speakerTone?: string;
+    speakerTone?: StorySpeakerTone;
     text: string;
   };
   onClose: () => void;
