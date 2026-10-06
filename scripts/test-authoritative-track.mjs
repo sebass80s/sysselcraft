@@ -103,20 +103,31 @@ assert.equal(
 );
 
 const act2 = fs.readFileSync(new URL("../src/game/act2RuntimeState.ts", import.meta.url), "utf8");
+const projectEngine = fs.readFileSync(new URL("../src/runtime/progression/projectProgressEngine.ts", import.meta.url), "utf8");
 assert.match(
-  act2,
+  projectEngine,
   /pendingAuthoritativeProgressCount\(/,
-  "Act 2 backlog calculation must consume the shared authoritative-track engine",
+  "project engine must compose authoritative backlog through the shared authoritative-track primitive",
+);
+assert.match(
+  projectEngine,
+  /nextAuthoritativeProgressTrackStep\(\{/,
+  "project engine must compose the next authored track step through the shared authoritative-track primitive",
 );
 assert.match(
   act2,
-  /nextAuthoritativeProgressTrackStep\(\{/,
-  "Act 2 contribution presentation must consume the shared authoritative-track engine",
+  /pendingAuthoritativeProjectProgressCount\(\{/,
+  "Act 2 backlog calculation must delegate to the generic project engine",
+);
+assert.match(
+  act2,
+  /nextAuthoritativeProjectProgressStep\(\{/,
+  "Act 2 contribution presentation must delegate to the generic project engine",
 );
 assert.doesNotMatch(
   act2,
-  /authoritativeProgressDelta\(authoritative, normalized\.backendClaimBaseline\)/,
-  "Act 2 must not retain its retired local authoritative backlog arithmetic",
+  /nextAuthoritativeProgressTrackStep\(\{|pendingAuthoritativeProgressCount\(/,
+  "Act 2 must not retain track-level authoritative composition after project-engine extraction",
 );
 
 console.log("PASS: authoritative progress track preserves backlog, gates and authored beat order");
