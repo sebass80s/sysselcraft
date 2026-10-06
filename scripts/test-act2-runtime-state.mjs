@@ -32,6 +32,10 @@ const authoritativeTrack = loadTsModule("../src/runtime/progression/authoritativ
   "./authoritativeDelta": progressionDelta,
   "./progressTrack": progressTrack,
 });
+const projectProgressEngine = loadTsModule("../src/runtime/progression/projectProgressEngine.ts", {
+  "./progressTrack": progressTrack,
+  "./authoritativeTrack": authoritativeTrack,
+});
 const act2RuntimeModule = loadTsModule("../src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrations,
@@ -39,6 +43,7 @@ const act2RuntimeModule = loadTsModule("../src/game/act2RuntimeState.ts", {
   "../runtime/progression/progressGate": progressGate,
   "../runtime/progression/progressTrack": progressTrack,
   "../runtime/progression/authoritativeTrack": authoritativeTrack,
+  "../runtime/progression/projectProgressEngine": projectProgressEngine,
 });
 const {
   act2FinalePending,
