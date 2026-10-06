@@ -407,7 +407,7 @@ export function nextAct2Contribution(
     normalized.projects[project].contributions,
     act2ProjectTrackDefinition(project),
   );
-  if (!next) return null;
+  if (!next || next.visibleStage === 0) return null;
   return {
     project,
     ...next,
