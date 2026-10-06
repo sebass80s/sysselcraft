@@ -1544,3 +1544,23 @@ The extraction did not change persisted Act 2 save shape, backend progression au
 
 This closes the generic contribution-count / stage-normalization part of Runtime 1.1 Progression / Project Engine. Selection policy, chapter-specific project prerequisites and authored completion reactions remain chapter configuration/domain behavior unless a further proven common primitive is identified.
 
+## Verified checkpoint: Chapter Runtime Shell access slice
+
+Verified code HEAD: `387a79021ab46bfc3fab5b50dc718edd17a0168e`
+
+GitHub Actions: **#2014 SUCCESS** on that exact SHA.
+
+Implemented:
+
+- new shared chapter shell primitive: `src/runtime/chapter/chapterRuntimeShell.ts`;
+- `chapterBootMayLoad()` owns the pre-load shipping boundary so a disabled chapter route cannot accidentally establish state/baselines;
+- `deriveChapterRuntimeShell()` owns the generic runtime status: `loading`, `shipping-locked`, `progression-locked` or `active`;
+- Act 2 boot now consumes the shared pre-load boundary;
+- Act 2 early route/render state now consumes the shared shell status rather than duplicate local lock branches;
+- locked-route return navigation uses the canonical chapter registry;
+- `scripts/test-chapter-runtime-shell.mjs` verifies debug bypass, shipping lock, progression lock, loading precedence and the current Act 2 consumer.
+
+This slice does not move Act 2 story/project content into the shell. It establishes the generic chapter boot/access boundary only.
+
+No persisted save shape, backend state, collision, movement, dog-follow, pointer/touch or WebView behavior changed.
+
