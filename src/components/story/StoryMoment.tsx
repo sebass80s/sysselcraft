@@ -13,6 +13,7 @@ export type StoryPresentationVariant =
   | "interaction"
   | "reaction"
   | "finale"
+  | "history"
   | "handoff";
 
 const STORY_PRESENTATION: Record<
@@ -25,6 +26,7 @@ const STORY_PRESENTATION: Record<
   interaction: { zIndex: 80, background: "rgba(9,14,10,.94)" },
   reaction: { zIndex: 92, background: "rgba(9,14,10,.94)" },
   finale: { zIndex: 100, background: "rgba(6,10,8,.96)" },
+  history: { zIndex: 110, background: "rgba(6,10,8,.96)" },
   handoff: { zIndex: 145, background: "rgba(9,14,10,.94)" },
 };
 
