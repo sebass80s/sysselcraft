@@ -2068,3 +2068,35 @@ The audit found remaining P0 engine gaps, including:
 Current status: **Runtime 1.1 fuel-principle incomplete.**
 
 Do not start substantive Act 3 runtime work or treat physical acceptance as the only remaining gate. Close the audit blockers first, prove an empty next chapter can be built without copied engine behavior, then run full automated/browser/physical acceptance.
+
+
+## Runtime 1.1 hard Definition of Done
+
+Runtime 1.1 is **NOT DONE** until all of the following are true:
+
+1. A minimal empty Act 3 can be created primarily from chapter registration, content/story data, progression/project definitions, optional purchase definitions, and world/area data/adapters.
+2. The empty Act 3 does **not** need to copy or reimplement established runtime behavior from Act 1 or Act 2.
+3. Generic chapter boot, access, lifecycle, completion, end-card and next-chapter orchestration are shared engine responsibilities.
+4. Standard Story UI, typography, buttons, overflow, safe areas, z-index and input-blocking behavior are shared and cannot drift by chapter through chapter-named CSS.
+5. Standard linear story sequencing and replay/history presentation are shared engine behavior unless a beat is genuinely unique.
+6. Generic progression mechanics are fully configurable end-to-end, including selection, authoritative backlog consumption, idempotent beat consumption, target clamping, completion, gates and once-only completion reactions. No hidden Act 2 constants may remain in generic progression behavior.
+7. Standard naming/text-input behavior is shared, including autofocus, mobile keyboard semantics, Enter submit, validation and save/busy behavior.
+8. Story purchases are integrated end-to-end through shared definitions and shop/runtime plumbing so a new chapter item is normally registration/data, not new Village UI branching.
+9. Child-scoped chapter persistence, load/save/clear, normalization and migration hosting are shared infrastructure. Chapter-specific persisted fields remain chapter data.
+10. Backend wallet/progression/ownership synchronization uses shared authority/reconciliation infrastructure rather than chapter-local polling loops.
+11. World/Area runtime hosting is shared enough that a new chapter does not need a fresh `createActX...Game.ts` implementation for common scene/player/dog/input/camera/interaction lifecycle. Movement/collision/navigation strategy may remain pluggable area-specific adapters.
+12. Common debug/acceptance tooling is shared and chapter definitions/fixtures extend it instead of recreating hidden launchers and reset harnesses.
+13. The empty-next-chapter proof is committed and regression-covered. If building that proof requires copied engine logic, Runtime 1.1 remains open.
+14. Full automated verification is green after all of the above.
+
+### Physical acceptance sequencing rule
+
+Physical iPhone acceptance is **not** the implementation-completion gate and must not be proposed as the next step while items 1–14 above remain open.
+
+The required sequence is:
+
+`finish Runtime 1.1 engine -> empty Act 3 proof -> full automated/browser verification -> physical iPhone update-in-place acceptance`.
+
+The iPhone pass is the **final regression/acceptance gate after implementation is complete**, not a substitute for missing engine work.
+
+Do not reset or reinstall the preserved child save/backend merely to simplify the final physical acceptance.
