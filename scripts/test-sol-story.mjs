@@ -112,7 +112,7 @@ assert.match(component, /saved\.construction\.revealed\.clinic >= 4 && saved\.wo
 assert.match(component, /clinicCompletionSeen: true,[\s\S]*act1ChapterFinaleSeen: false,[\s\S]*act1ChapterFinaleIndex: 0,[\s\S]*act1EndCardSeen: false/, "Clinic completion must persist the new Act 1 finale as the next restart-safe story");
 assert.match(component, /await saveSaveState\(snapshot, true\);[\s\S]*setClinicCompletionSeen\(true\);[\s\S]*setAct1ChapterFinaleIndex\(0\);[\s\S]*setClinicStoryIndex\(null\)/, "Clinic finale must hand off to the Act 1 chapter finale only after save succeeds");
 assert.match(component, /setClinicCompletionSeen\(saved\.worldFlags\.clinicCompletionSeen === true\)/, "Clinic completion must restore from save");
-assert.match(component, /chapterUnlocked\(act1EndCardSeen\) && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the shared chapter lifecycle confirms the Act 1 end card");
+assert.match(component, /const act1NextChapter = nextChapterDestination\("act1"[\s\S]*act1NextChapter && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the shared next-chapter transition is available");
 const act2Page = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 const act2Runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 assert.match(act2Runtime, /if \(!act1ChapterComplete\)/, "Act 2 access must require the acknowledged Act 1 chapter ending");
