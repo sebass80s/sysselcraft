@@ -123,23 +123,23 @@ assert.doesNotMatch(
 );
 assert.match(
   villageSource,
-  /async function buyAct2StoryItem\(project: Act2PurchaseProject\)/,
-  "Mira Story Shop must dispatch Act 2 catalog items through one purchase path",
+  /async function buyStoryPurchaseItem\([\s\S]*registration: StoryPurchaseRegistration<string>,[\s\S]*target: string/,
+  "Mira Story Shop must dispatch registered chapter items through one generic purchase path",
 );
 assert.match(
   villageSource,
-  /ACT2_PURCHASE_CATALOG\[project\]/,
-  "Mira Story Shop purchase execution must derive id, price and presentation from the catalog",
+  /const item = registration\.catalog\[target\]/,
+  "Mira Story Shop purchase execution must derive item data from the resolved registration catalog",
 );
 assert.match(
   villageSource,
-  /\.map\(\(\{ project, needed, owned \}\) =>/,
-  "Mira Story Shop must render required Act 2 story items from catalog-backed descriptors",
+  /storyPurchaseSources\.flatMap\(\(\{ registration, snapshot \}\) =>/,
+  "Mira Story Shop must render Story Purchase items from all registered chapter sources",
 );
 assert.match(
   villageSource,
-  /onClick=\{\(\) => void buyAct2StoryItem\(project\)\}/,
-  "catalog-rendered Story Shop items must share the generic Act 2 purchase dispatcher",
+  /onClick=\{\(\) => void buyStoryPurchaseItem\(registration, target\)\}/,
+  "registry-rendered Story Purchase items must share the generic purchase dispatcher",
 );
 
 const act2PurchaseAdapterSource = fs.readFileSync(new URL("../src/game/act2StoryPurchaseAdapter.ts", import.meta.url), "utf8");
@@ -155,8 +155,13 @@ assert.match(
 );
 assert.match(
   villageSource,
-  /applyAct2StoryPurchaseResult\(\s*currentAct2,\s*project,\s*purchase\.worldFlags/,
-  "Mira must delegate Act 2 post-purchase mutation to the chapter adapter",
+  /registration\.applyPurchaseResult\(\s*target,\s*purchase\.worldFlags/,
+  "Mira must delegate post-purchase mutation to the resolved chapter registration",
+);
+assert.doesNotMatch(
+  villageSource,
+  /applyAct2StoryPurchaseResult|deriveAct2StoryPurchaseSnapshot|ACT2_PURCHASE_CATALOG/,
+  "Mira must not import Act 2 purchase implementation details after registry migration",
 );
 assert.doesNotMatch(
   villageSource,
@@ -171,8 +176,8 @@ assert.doesNotMatch(
 
 assert.match(
   villageSource,
-  /useState<Act2StoryPurchaseSnapshot \| null>\(null\)/,
-  "Village must keep one Act 2 Story Purchase snapshot instead of separate stock/story React states",
+  /useState<LoadedStoryPurchaseRegistration\[]>\(\[]\)/,
+  "Village must keep registered Story Purchase sources instead of chapter-specific purchase state",
 );
 for (const retiredState of [
   "act2JettyLifebuoyNeeded",
@@ -193,14 +198,15 @@ assert.match(
   /const snapshot = await handoff\.registration\.loadSnapshot\(\);[\s\S]*setStoryPurchaseReturnContext\(handoff\)/,
   "direct Story Purchase handoff must load through the resolved registry entry",
 );
-assert.ok(
-  villageSource.includes("setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot(act2))"),
-  "normal Mira shop open may continue using the Act 2 adapter until the catalog/rendering registry slice",
+assert.match(
+  villageSource,
+  /const storyPurchases = await loadRegisteredStoryPurchases\(\);[\s\S]*setStoryPurchaseSources\(storyPurchases\)/,
+  "normal Mira shop open must load all registered Story Purchase sources",
 );
 assert.match(
   villageSource,
-  /const localStatus = act2StoryPurchaseSnapshot\?\.status\[project\]/,
-  "purchase dispatch must read owned/needed state from the unified adapter snapshot",
+  /const localStatus = source\?\.snapshot\.status\[target\]/,
+  "purchase dispatch must read owned/needed state from the resolved registration snapshot",
 );
 assert.match(
   villageSource,
