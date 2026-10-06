@@ -2192,3 +2192,33 @@ Fuel-principle audit result:
 - chapter-specific authored copy, image choices, beat boundaries, reveal semantics and domain completion callbacks remain valid content/adapters.
 
 Current Runtime 1.1 status remains: **fuel-principle incomplete**, with backlog items 1, 2 and 3 closed.
+
+
+## Verified checkpoint: Generic Story Purchase integration
+
+Verified code HEAD: `13d6f99a29f948b64dc74b2f3b214456cb5e7d74`
+
+GitHub Actions: **#2248 SUCCESS** on that exact SHA.
+
+Runtime 1.1 backlog item 4 is closed.
+
+Implemented:
+- Story Shop transport is generic through `purchaseStoryItem(itemKey)`; future chapter item ids do not require new client wrappers;
+- Story Purchase definitions are content/config through the shared purchase definition contract;
+- Story Purchase registry owns registered chapter purchase catalogs, handoff query keys, target parsing, stock/snapshot loading, post-purchase application, optional purchase-story progression and resume routing;
+- Act 2 is registered through `ACT2_STORY_PURCHASE_REGISTRATION`; its item ids, copy, gates, world-flag mapping, success reactions and purchase-story beats remain chapter data/adapters;
+- Mira loads all registered Story Purchase sources through one registered loader;
+- Mira renders registered Story Purchase items generically from each registration's catalog + snapshot;
+- Mira purchases through one generic Story Purchase path and delegates chapter mutation to the selected registration;
+- contextual shop handoff and close/resume routing are resolved through the registry, not through Act 2 query parsing in Village;
+- optional post-purchase Story Moments are resolved and advanced through the registration, including restart-safe line progress;
+- insufficient-funds feedback uses the selected registered item's canonical price;
+- regression tests prove a future example registration can be resolved without Mira-specific branching.
+
+Fuel-principle audit result:
+- adding a future Act 3 Story Purchase requires registering chapter data/adapter behavior, not adding `if (act3...)`, a new Mira purchase function, a new shop card, a new backend client wrapper, or a new handoff branch;
+- `VillagePrototype` contains no Act 2-specific Story Purchase catalog, purchase-project parser, purchase-story beat, purchase outcome mutation or resume URL dependency;
+- Act 2-specific Story Purchase logic is confined to chapter registration/catalog/adapter modules;
+- ordinary non-story shop inventory (room decor, dog-home items, Act 1 bottle flow, diamond rewards) remains outside this Runtime 1.1 Story Purchase checkpoint by design.
+
+Current Runtime 1.1 status: backlog items 1, 2, 3 and 4 are closed; fuel-principle work continues with item 5.
