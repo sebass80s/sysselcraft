@@ -461,21 +461,25 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }
 
   async function advanceAlve() {
-    const beat = ACT2_ALVE_DIALOGUE[state.alveIntroIndex];
-    const nextIndex = state.alveIntroIndex + 1;
-    if (nextIndex >= ACT2_ALVE_DIALOGUE.length) {
-      await commit({ ...state, alveIntroComplete: true, alveIntroIndex: ACT2_ALVE_DIALOGUE.length - 1 });
+    const step = advanceStoryLine(ACT2_ALVE_DIALOGUE.length, state.alveIntroIndex);
+    if (step.type === "line") {
+      await commit({ ...state, alveIntroIndex: step.index });
       return;
     }
-    await commit({ ...state, alveIntroIndex: nextIndex });
-    if (beat?.nameReveal) {
-      // The next rendered Alve line now uses the permanent Alve nameplate.
-    }
+    await commit({
+      ...state,
+      alveIntroComplete: true,
+      alveIntroIndex: Math.max(0, ACT2_ALVE_DIALOGUE.length - 1),
+    });
   }
 
   async function previousAlve() {
-    if (state.alveIntroIndex <= 0) return;
-    await commit({ ...state, alveIntroIndex: state.alveIntroIndex - 1 });
+    const previous = previousStoryLineIndex(
+      ACT2_ALVE_DIALOGUE.length,
+      state.alveIntroIndex,
+    );
+    if (previous === state.alveIntroIndex) return;
+    await commit({ ...state, alveIntroIndex: previous });
   }
 
   async function chooseProject(project: Act2Project) {
