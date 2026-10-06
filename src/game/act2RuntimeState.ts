@@ -407,10 +407,14 @@ export function nextAct2Contribution(
     normalized.projects[project].contributions,
     act2ProjectTrackDefinition(project),
   );
-  if (!next || next.visibleStage === 0) return null;
+  if (!next) return null;
+  const visibleStage = next.visibleStage;
+  if (visibleStage === 0) return null;
   return {
     project,
-    ...next,
+    number: next.number,
+    beatId: next.beatId,
+    visibleStage,
     backlog,
   };
 }
