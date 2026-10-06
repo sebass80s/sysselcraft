@@ -215,3 +215,20 @@ The repo-wide compatibility audit found no additional pure, local, ownership-loc
 
 Canonical audit: `docs/SAVE_COMPATIBILITY_AUDIT.md`.
 Verified code checkpoint: `99df1984a2bc088f5715d8f6ef5b112bff8316c7`, GitHub Actions #1812 SUCCESS.
+
+
+## Runtime 1.1 next ownership boundary — generic chapter persistence — 2026-10-06
+
+Runtime 1.1 items 1–4 are closed. The next engine item is the generic child-scoped chapter persistence host.
+
+Ownership law for that work:
+- shared persistence infrastructure may own storage I/O, child scoping, key construction, load/save/clear lifecycle, write ordering and generic migration hosting;
+- each chapter owns its versioned state shape, defaults, normalizer, migrations and genuinely chapter-specific persisted fields;
+- backend remains authoritative for quest lifecycle, rewards, wallet and earned-work evidence;
+- local chapter persistence must not invent backend facts;
+- storage migration, invariant repair and backend recovery remain distinct responsibilities;
+- destructive legacy cleanup may occur only after the canonical new write succeeds.
+
+Act 2 is the migration consumer, not the template to copy. The goal is that Act 3 registers a persistence definition rather than creating another independent Preferences implementation.
+
+Canonical current handover: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
