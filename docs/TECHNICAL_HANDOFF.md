@@ -1787,3 +1787,26 @@ The extraction preserved:
 
 The full existing Act 2 runtime, full-flow, closeout, Alve and runtime-parity harnesses were updated to load the real shared engine dependency rather than mock or duplicate it.
 
+## Verified checkpoint: Shared Story Purchase Definition slice
+
+Verified code HEAD: `49b395f5f4150bf72981869164ee4d4594c4abb1`
+
+GitHub Actions: **#2076 SUCCESS** on that exact SHA.
+
+Implemented:
+
+- `src/runtime/purchase/storyPurchaseFlow.ts` now also owns the generic `StoryPurchaseDefinition` contract;
+- shared purchase metadata covers stable purchase id, target/context, currency, price and presentation copy;
+- Act 2's three story purchases are now chapter data typed through the shared contract;
+- Act 2 retains its authored ids, targets, prices and presentation copy;
+- Village and Act 2 consume the shared presentation shape;
+- backend Story Shop / Supabase remains authoritative for actual transaction execution, wallet debit and owned flags;
+- `scripts/test-story-purchase-flow.mjs` verifies both generic purchase metadata and the three current Act 2 definitions;
+- Runtime parity remains green against accepted Act 2 prices/copy.
+
+The Act 2 purchase catalog remains intentionally chapter-owned content. What is no longer Act 2-owned is the purchase-definition schema and post-purchase navigation semantics.
+
+No persisted save shape changed.
+No backend transaction behavior changed.
+No movement, collision, dog-follow, pointer/touch or WebView behavior changed.
+
