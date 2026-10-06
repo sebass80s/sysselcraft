@@ -16,9 +16,11 @@ export type StoryItemPurchase = {
   worldFlags: Record<string, unknown>;
 };
 
-async function purchaseStoryItem(itemKey: "bottle_message" | "room_football_rug" | "room_football_poster" | "room_computer_desk" | "room_trophy_shelf" | "room_string_lights" | "room_aquarium" | "dog_home_bed" | "dog_home_bowls" | "dog_home_toys" | "dog_home_cozy" | "act2_jetty_lifebuoy" | "act2_boathouse_steering_wheel" | "act2_motorboat_parts"): Promise<StoryItemPurchase> {
+export async function purchaseStoryItem(itemKey: string): Promise<StoryItemPurchase> {
+  const normalizedItemKey = itemKey.trim();
+  if (!normalizedItemKey) throw new Error("Story item key saknas.");
   const { data, error } = await getSupabaseBrowserClient().rpc("purchase_story_item", {
-    p_item_key: itemKey,
+    p_item_key: normalizedItemKey,
   });
   if (error) throw error;
   if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("Ogiltigt svar från storyköpet.");
@@ -57,16 +59,3 @@ export async function purchaseDogHomeUpgrade(index: DogHomeUpgradeIndex): Promis
   return purchaseStoryItem(DOG_HOME_ITEM_KEYS[index]);
 }
 
-
-export async function purchaseAct2JettyLifebuoy(): Promise<StoryItemPurchase> {
-  return purchaseStoryItem("act2_jetty_lifebuoy");
-}
-
-
-export async function purchaseAct2BoathouseSteeringWheel(): Promise<StoryItemPurchase> {
-  return purchaseStoryItem("act2_boathouse_steering_wheel");
-}
-
-export async function purchaseAct2MotorboatParts(): Promise<StoryItemPurchase> {
-  return purchaseStoryItem("act2_motorboat_parts");
-}
