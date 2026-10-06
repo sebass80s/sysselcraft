@@ -284,3 +284,36 @@ This slice does not move Act 2 story/project content into the shell. It establis
 
 No persisted save shape, backend state, collision, movement, dog-follow, pointer/touch or WebView behavior changed.
 
+## Verified checkpoint: Chapter Runtime Shell overlay arbitration slice
+
+Verified code HEAD: `3ef18f05d4c2d79ca0efcb03febc5f7a89c27eb4`
+
+GitHub Actions: **#2027 SUCCESS** on that exact SHA.
+
+Implemented:
+
+- `deriveChapterRuntimeOverlay()` in `src/runtime/chapter/chapterRuntimeShell.ts` now owns generic overlay consequences:
+  - `blockingOverlayVisible`;
+  - `worldInputEnabled`;
+- new Act 2 chapter adapter `src/game/act2RuntimeAdapter.ts` owns Act 2-specific blocker/domain decisions:
+  - opening/bicycle/Alve intro;
+  - project chooser;
+  - authored completion reaction;
+  - purchase gates;
+  - motorboat naming;
+  - finale;
+  - contribution turn-in;
+  - Cabin revisit;
+  - history/replay;
+- `Act2Runtime.tsx` no longer keeps a second independent `worldBlocked` calculation;
+- Phaser lake input consumes `runtimeOverlay.worldInputEnabled`;
+- `GameUiShell` consumes `runtimeOverlay.blockingOverlayVisible`;
+- Act 2 HUD routes back to Act 1 through `chapterRoute("act1")`, including the adult-mode handoff;
+- existing source-shape tests were updated to assert the new ownership boundaries instead of retired inline blocker expressions.
+
+Architecture boundary:
+- chapter adapters decide **what** chapter-specific situations are blocking;
+- Chapter Runtime Shell decides **what blocking means** for shared world/UI behavior.
+
+No persisted save shape, backend authority, collision, movement, dog-follow, pointer/touch or WebView behavior changed.
+
