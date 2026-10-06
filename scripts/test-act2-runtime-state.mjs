@@ -814,6 +814,7 @@ assert.ok(
 
 const storyShop = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
 const act2PurchaseCatalog = fs.readFileSync(new URL("../src/game/act2PurchaseCatalog.ts", import.meta.url), "utf8");
+const act2PurchaseAdapter = fs.readFileSync(new URL("../src/game/act2StoryPurchaseAdapter.ts", import.meta.url), "utf8");
 assert.ok(act2PurchaseCatalog.includes("const DOCK_PRICE = 200"), "jetty lifebuoy display price must stay at locked 200 SysselBux");
 assert.ok(act2PurchaseCatalog.includes("const BOATHOUSE_PRICE = 200"), "Båthuset steering wheel display price must stay at locked 200 SysselBux");
 assert.ok(act2PurchaseCatalog.includes("const MOTORBOAT_PRICE = 200"), "Motorbåten parts display price must stay at locked 200 SysselBux");
@@ -850,9 +851,9 @@ assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira shop must render the ca
 assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira shop must render the canonical Båthuset steering-wheel story beat");
 assert.ok(village.includes("act2PurchaseBeat?.body[act2PurchaseStoryIndex]"), "Mira purchase beats must render their authored body one reply at a time");
 assert.match(
-  village,
-  /project === "dock" \|\| project === "boathouse"[\s\S]*pendingPurchaseStory: project,[\s\S]*purchaseStoryLineIndex: 0/,
-  "catalog-driven dock and boathouse purchases must persist their canonical purchase story from the first line",
+  act2PurchaseAdapter,
+  /project === "dock" \|\| project === "boathouse"[\s\S]*pendingPurchaseStory: purchaseStory,[\s\S]*purchaseStoryLineIndex: 0/,
+  "Act 2 purchase adapter must persist dock and boathouse purchase stories from the first line",
 );
 
 assert.ok(JETTY_LIFEBUOY_BEAT.body.length > 0, "canonical lifebuoy economy beat must contain dialogue");
