@@ -11,6 +11,7 @@ import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 
 const storyDesign = fs.readFileSync(new URL("../docs/STORY_DESIGN.md", import.meta.url), "utf8");
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+const act2PurchaseAdapter = fs.readFileSync(new URL("../src/game/act2StoryPurchaseAdapter.ts", import.meta.url), "utf8");
 const runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 
 function assertProject(project, beats) {
@@ -50,9 +51,9 @@ assert.ok(BOATHOUSE_STEERING_WHEEL_BEAT.body.length > 0);
 assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira must play the authored lifebuoy beat");
 assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira must play the authored steering-wheel beat");
 assert.match(
-  village,
-  /project === "dock" \|\| project === "boathouse"[\s\S]*pendingPurchaseStory: project,[\s\S]*purchaseStoryLineIndex: 0/,
-  "dock and boathouse purchase stories must become restart-safe through the catalog-driven purchase dispatcher",
+  act2PurchaseAdapter,
+  /project === "dock" \|\| project === "boathouse"[\s\S]*pendingPurchaseStory: purchaseStory,[\s\S]*purchaseStoryLineIndex: 0/,
+  "dock and boathouse purchase stories must become restart-safe through the Act 2 purchase adapter",
 );
 
 assert.ok(storyDesign.includes("between 5/16 and 6/16"), "Motorboat parts purchase must remain separate from contribution 6");
