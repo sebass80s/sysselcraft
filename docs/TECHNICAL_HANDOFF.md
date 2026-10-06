@@ -2222,3 +2222,36 @@ Fuel-principle audit result:
 - ordinary non-story shop inventory (room decor, dog-home items, Act 1 bottle flow, diamond rewards) remains outside this Runtime 1.1 Story Purchase checkpoint by design.
 
 Current Runtime 1.1 status: backlog items 1, 2, 3 and 4 are closed; fuel-principle work continues with item 5.
+
+
+## Runtime 1.1 technical handover checkpoint — 2026-10-06
+
+Read first: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Verified baseline before this docs closeout:
+- branch `nova/runtime-architecture-v1`;
+- HEAD `eb7df728adea783c676fe697738be62200430fc9`;
+- CI #2252 SUCCESS.
+Latest completed Runtime 1.1 code checkpoint:
+- `13d6f99a29f948b64dc74b2f3b214456cb5e7d74`;
+- CI #2248 SUCCESS.
+
+Runtime 1.1 engine status:
+- Chapter lifecycle/world instance host: CLOSED;
+- Progression/project engine: CLOSED;
+- Story UI/sequencing/input/history/cards/choices: CLOSED;
+- Story Purchase end-to-end registration/shop/handoff: CLOSED;
+- Chapter persistence host: NEXT / OPEN;
+- Backend synchronization host: OPEN;
+- full World/Area runtime host: OPEN;
+- common debug harness: OPEN;
+- empty Act 3 proof: OPEN.
+
+Hard sequencing:
+`persistence -> backend sync -> world/area host -> debug harness -> empty Act 3 -> automated/browser -> physical iPhone`.
+
+Vercel Git auto-deploy remains disabled. Ordinary Runtime work should not deploy to Vercel. Native production is static Next export -> `out` -> Capacitor iOS.
+
+Do not regenerate iOS and never run `npx cap add ios`.
+
+Point 5 persistence work must preserve child scoping, migration ownership, write ordering and successful-write-before-legacy-delete semantics. Backend quest lifecycle, wallet, rewards and earned-work evidence remain backend-authoritative.
