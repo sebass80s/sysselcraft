@@ -741,7 +741,7 @@ assert.ok(
 assert.ok(village.includes('get("act2-purchase")'), "village must consume Act 2 purchase context instead of dropping the child at an unscoped village");
 assert.ok(village.includes('setShopPanelOpen(true)'), "Act 2 purchase context must open Mira's shop directly");
 assert.ok(village.includes('setShopCurrency("sysselbux")'), "Act 2 purchase context must open the correct SysselBux shelf");
-assert.ok(village.includes("router.push(act2ResumeHref(project))"), "contextual Mira close must return through the canonical Act 2 resume handoff");
+assert.ok(village.includes("resolveStoryPurchaseExit(project, purchaseOwned)") && village.includes("router.push(act2ResumeHref(exit.target))"), "contextual Mira close must use shared purchase-flow semantics before returning through the Act 2 handoff");
 assert.ok(page.includes("parseAct2PurchaseProject("), "Act 2 must parse contextual return through the canonical purchase-project whitelist");
 assert.match(village, /chapterUnlocked\(act1EndCardSeen\) && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the shared chapter lifecycle confirms the Act 1 end card");
 assert.ok(page.includes("📖 Historik"), "Act 2 HUD must expose completed story history");
