@@ -9,13 +9,16 @@ import {
   nextChapterId,
 } from "../src/runtime/chapter/chapterRegistry.ts";
 
-assert.deepEqual(CHAPTER_IDS, ["act1", "act2"]);
+assert.deepEqual(CHAPTER_IDS, ["act1", "act2", "act3"]);
 assert.equal(chapterRoute("act1"), "/");
 assert.equal(chapterRoute("act2"), "/act2");
+assert.equal(chapterRoute("act3"), "/act3");
 assert.equal(chapterPredecessor("act1"), null);
 assert.equal(chapterPredecessor("act2"), "act1");
+assert.equal(chapterPredecessor("act3"), "act2");
 assert.equal(nextChapterId("act1"), "act2");
-assert.equal(nextChapterId("act2"), null);
+assert.equal(nextChapterId("act2"), "act3");
+assert.equal(nextChapterId("act3"), null);
 
 for (const id of CHAPTER_IDS) {
   const definition = chapterDefinition(id);
@@ -37,5 +40,9 @@ assert.match(village, /router\.push\(chapterRoute\("act2"\)\)/, "Village -> Act 
 assert.match(act2, /router\.replace\(chapterRoute\("act2"\)\)/, "Act 2 resume cleanup must use the chapter registry");
 assert.match(handoff, /chapterRoute\("act1"\).*act2-purchase/s, "shop handoff must use the registered Act 1 route");
 assert.match(handoff, /chapterRoute\("act2"\).*resume/s, "purchase resume must use the registered Act 2 route");
+assert.match(act2, /const nextChapter = nextChapterId\("act2"\)/, "Act 2 must derive its next chapter from the registry");
+assert.match(act2, /router\.push\(chapterRoute\(nextChapter\)\)/, "Act 2 next-chapter navigation must use the registered route");
+assert.doesNotMatch(act2, /router\.push\("\/act3"\)/, "Act 2 must not hard-code the Act 3 route");
+
 
 console.log("PASS: canonical chapter registry and current navigation consumers");
