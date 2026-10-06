@@ -206,7 +206,7 @@ const prodRoute = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.met
 const debugRoute = fs.readFileSync(new URL("../src/app/act2-test/page.tsx", import.meta.url), "utf8");
 
 assert.match(village, /chapterUnlocked\(act1EndCardSeen\) && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the shared chapter lifecycle confirms the Act 1 end card");
-assert.match(village, /router\.push\("\/act2"\)/, "Act 1 lake path must enter the production Act 2 route");
+assert.match(village, /router\.push\(chapterRoute\("act2"\)\)/, "Act 1 lake path must enter Act 2 through the canonical chapter registry");
 assert.match(
   village,
   /const purchaseOwned =[\s\S]*act2JettyLifebuoyOwned[\s\S]*act2BoathouseSteeringWheelOwned[\s\S]*act2MotorboatPartsOwned[\s\S]*if \(purchaseOwned\) \{[\s\S]*router\.push\(act2ResumeHref\(project\)\)/,
