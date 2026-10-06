@@ -1,4 +1,4 @@
-export const CHAPTER_IDS = ["act1", "act2"] as const;
+export const CHAPTER_IDS = ["act1", "act2", "act3"] as const;
 
 export type ChapterId = (typeof CHAPTER_IDS)[number];
 
@@ -20,6 +20,12 @@ const CHAPTER_REGISTRY: Record<ChapterId, ChapterDefinition> = {
     id: "act2",
     route: "/act2",
     predecessorId: "act1",
+    nextId: "act3",
+  },
+  act3: {
+    id: "act3",
+    route: "/act3",
+    predecessorId: "act2",
     nextId: null,
   },
 };
