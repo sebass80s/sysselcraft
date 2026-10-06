@@ -9,6 +9,18 @@ import {
   nextAuthoritativeProgressTrackStep,
   pendingAuthoritativeProgressCount,
 } from "../runtime/progression/authoritativeTrack";
+import {
+  canSelectProjectProgress,
+  consumeProjectCompletionReaction as consumeSharedProjectCompletionReaction,
+  consumeSelectedProjectProgress,
+  normalizeProjectProgressState,
+  projectCompletionReactionPending as sharedProjectCompletionReactionPending,
+  projectPrerequisitesComplete,
+  selectProjectProgress,
+  totalProjectProgress,
+  type ProjectProgressDefinition,
+  type ProjectProgressState,
+} from "../runtime/progression/projectProgressEngine";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -186,15 +198,15 @@ function normalizeBeatIds(value: unknown) {
   return [...new Set(value.filter((id): id is string => typeof id === "string" && id.length > 0))];
 }
 
-const ACT2_PROJECT_TARGET = 16;
-const ACT2_PROJECT_STAGES = [
+export const ACT2_PROJECT_TARGET = 16;
+export const ACT2_PROJECT_STAGES = [
   { minContributions: 1, stage: 1 },
   { minContributions: 4, stage: 2 },
   { minContributions: 8, stage: 3 },
   { minContributions: 12, stage: 4 },
 ] as const;
 
-function act2ProjectTrackDefinition(
+export function act2ProjectTrackDefinition(
   project: Act2Project,
 ): ProgressTrackDefinition<1 | 2 | 3 | 4> {
   return {
@@ -204,23 +216,64 @@ function act2ProjectTrackDefinition(
   };
 }
 
+const ACT2_PROJECT_PROGRESS_DEFINITION: ProjectProgressDefinition<
+  Act2Project,
+  1 | 2 | 3 | 4
+> = {
+  projects: PROJECTS,
+  track: act2ProjectTrackDefinition,
+  prerequisites: {
+    motorboat: ["cabin", "dock", "boathouse"],
+  },
+  completionReactionId: (project) =>
+    project === "dock" ? `${project}:completion-reaction` : null,
+};
+
 function normalizeProject(value: unknown, project: Act2Project): Act2ProjectState {
   return normalizeProgressTrack(value, act2ProjectTrackDefinition(project));
 }
 
+function projectProgressSnapshot(
+  state: Pick<Act2RuntimeState, "selectedProject" | "projects" | "consumedProjectCompletionIds">,
+): ProjectProgressState<Act2Project, 1 | 2 | 3 | 4> {
+  return {
+    selectedProject: state.selectedProject,
+    projects: state.projects,
+    consumedCompletionReactionIds: state.consumedProjectCompletionIds,
+  };
+}
+
+function applyProjectProgressSnapshot(
+  state: Act2RuntimeState,
+  progress: ProjectProgressState<Act2Project, 1 | 2 | 3 | 4>,
+): Act2RuntimeState {
+  return {
+    ...state,
+    selectedProject: progress.selectedProject,
+    projects: progress.projects,
+    consumedProjectCompletionIds: progress.consumedCompletionReactionIds,
+  };
+}
+
 export function prerequisiteCompletionCount(state: Act2RuntimeState) {
-  return (["cabin", "dock", "boathouse"] as Act2PrerequisiteProject[])
+  return (ACT2_PROJECT_PROGRESS_DEFINITION.prerequisites?.motorboat ?? [])
     .filter((project) => state.projects[project].complete).length;
 }
 
 export function isMotorboatUnlocked(state: Act2RuntimeState) {
-  return prerequisiteCompletionCount(state) === 3;
+  return projectPrerequisitesComplete(
+    projectProgressSnapshot(state),
+    ACT2_PROJECT_PROGRESS_DEFINITION,
+    "motorboat",
+  );
 }
 
 export function canSelectProject(state: Act2RuntimeState, project: Act2Project) {
-  if (state.projects[project].complete) return false;
-  if (project === "motorboat") return isMotorboatUnlocked(state);
-  return true;
+  return canSelectProjectProgress(
+    projectProgressSnapshot(state),
+    ACT2_PROJECT_PROGRESS_DEFINITION,
+    project,
+  );
 }
 
 export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
@@ -298,14 +351,14 @@ export function normalizeAct2RuntimeState(value: unknown): Act2RuntimeState {
     normalized.motorboatPartsOwned = false;
   }
 
-  if (normalized.selectedProject && !canSelectProject(normalized, normalized.selectedProject)) {
-    normalized.selectedProject = null;
-  }
-
-  const validCompletionIds = new Set<string>();
-  if (normalized.projects.dock.complete) validCompletionIds.add(projectCompletionReactionId("dock"));
-  normalized.consumedProjectCompletionIds = normalized.consumedProjectCompletionIds
-    .filter((id) => validCompletionIds.has(id));
+  const normalizedProgress = normalizeProjectProgressState(
+    projectProgressSnapshot(normalized),
+    ACT2_PROJECT_PROGRESS_DEFINITION,
+  );
+  normalized.selectedProject = normalizedProgress.selectedProject;
+  normalized.projects = normalizedProgress.projects;
+  normalized.consumedProjectCompletionIds =
+    normalizedProgress.consumedCompletionReactionIds;
 
   if (
     (normalized.pendingPurchaseStory === "dock" && !normalized.jettyLifebuoyOwned)
@@ -370,7 +423,10 @@ export function prepareAct2ProductionEntry(state: Act2RuntimeState): Act2Runtime
 }
 
 export function totalAct2Contributions(state: Act2RuntimeState) {
-  return PROJECTS.reduce((sum, project) => sum + state.projects[project].contributions, 0);
+  return totalProjectProgress(
+    projectProgressSnapshot(state),
+    ACT2_PROJECT_PROGRESS_DEFINITION,
+  );
 }
 
 export function withBackendClaimBaseline(state: Act2RuntimeState, worldProgression: number): Act2RuntimeState {
@@ -497,14 +553,13 @@ export function projectCompletionReactionId(project: Act2Project) {
   return `${project}:completion-reaction`;
 }
 
-const PROJECTS_WITH_COMPLETION_REACTIONS: readonly Act2Project[] = ["dock"];
-
 export function projectCompletionReactionPending(state: Act2RuntimeState, project: Act2Project) {
   const normalized = normalizeAct2RuntimeState(state);
-  if (!PROJECTS_WITH_COMPLETION_REACTIONS.includes(project)) return false;
-  const id = projectCompletionReactionId(project);
-  return normalized.projects[project].complete
-    && !normalized.consumedProjectCompletionIds.includes(id);
+  return sharedProjectCompletionReactionPending(
+    projectProgressSnapshot(normalized),
+    ACT2_PROJECT_PROGRESS_DEFINITION,
+    project,
+  );
 }
 
 export function consumeProjectCompletionReaction(
@@ -512,13 +567,16 @@ export function consumeProjectCompletionReaction(
   project: Act2Project,
 ): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
-  if (!projectCompletionReactionPending(normalized, project)) return normalized;
-  const id = projectCompletionReactionId(project);
-  return {
-    ...normalized,
-    consumedProjectCompletionIds: [...normalized.consumedProjectCompletionIds, id],
-    completionLineIndex: 0,
-  };
+  const progress = consumeSharedProjectCompletionReaction(
+    projectProgressSnapshot(normalized),
+    ACT2_PROJECT_PROGRESS_DEFINITION,
+    project,
+  );
+  const next = applyProjectProgressSnapshot(normalized, progress);
+  return progress.consumedCompletionReactionIds.length
+    === normalized.consumedProjectCompletionIds.length
+      ? next
+      : { ...next, completionLineIndex: 0 };
 }
 
 export function act2FinalePending(state: Act2RuntimeState) {
@@ -548,38 +606,39 @@ export function advanceAct2Finale(state: Act2RuntimeState): Act2RuntimeState {
 
 export function withSelectedProject(state: Act2RuntimeState, project: Act2Project): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
-  if (normalized.selectedProject && normalized.selectedProject !== project) return normalized;
-  if (!canSelectProject(normalized, project)) return normalized;
-  return { ...normalized, selectedProject: project };
+  return applyProjectProgressSnapshot(
+    normalized,
+    selectProjectProgress(
+      projectProgressSnapshot(normalized),
+      ACT2_PROJECT_PROGRESS_DEFINITION,
+      project,
+    ),
+  );
 }
 
 export function withPresentedContribution(
   state: Act2RuntimeState,
   project: Act2Project,
   beatId: string,
-  visibleStage: 0 | 1 | 2 | 3 | 4,
+  _visibleStage: 0 | 1 | 2 | 3 | 4,
 ): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
-  if (!beatId || normalized.projects[project].complete) return normalized;
-  if (normalized.selectedProject !== project) return normalized;
-  if (project === "motorboat" && !isMotorboatUnlocked(normalized)) return normalized;
-  if (act2ContributionBlockedByStoryGate(normalized, project)) return normalized;
-  const current = normalized.projects[project];
-  if (current.consumedBeatIds.includes(beatId)) return normalized;
-
-  const contributions = Math.min(16, current.contributions + 1);
-  const nextProject: Act2ProjectState = {
-    contributions,
-    visibleStage: Math.max(current.visibleStage, visibleStage) as 0 | 1 | 2 | 3 | 4,
-    consumedBeatIds: [...current.consumedBeatIds, beatId],
-    complete: contributions >= 16,
-  };
-
+  const progress = consumeSelectedProjectProgress(
+    projectProgressSnapshot(normalized),
+    ACT2_PROJECT_PROGRESS_DEFINITION,
+    {
+      project,
+      beatId,
+      blocked: act2ContributionBlockedByStoryGate(normalized, project),
+    },
+  );
+  const next = applyProjectProgressSnapshot(normalized, progress);
+  if (next.projects[project].contributions === normalized.projects[project].contributions) {
+    return normalized;
+  }
   return normalizeAct2RuntimeState({
-    ...normalized,
-    selectedProject: nextProject.complete ? null : project,
+    ...next,
     contributionLineIndex: 0,
-    projects: { ...normalized.projects, [project]: nextProject },
   });
 }
 
