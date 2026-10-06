@@ -41,7 +41,7 @@ import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { parseStoryLine, storySpeakerTone } from "../game/storyEngine";
 import { act2ResumeHref, parseAct2PurchaseProject, type Act2PurchaseProject } from "../game/act2PurchaseHandoff";
-import { applyAct2StoryPurchaseResult, deriveAct2StoryPurchaseStatus } from "../game/act2StoryPurchaseAdapter";
+import { applyAct2StoryPurchaseResult, deriveAct2StoryPurchaseSnapshot, type Act2StoryPurchaseSnapshot } from "../game/act2StoryPurchaseAdapter";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
 import { StoryMoment } from "./story/StoryMoment";
@@ -119,14 +119,7 @@ export default function VillagePrototype() {
   const [pendingDiamondRewardIds, setPendingDiamondRewardIds] = useState<Set<string>>(new Set());
   const [shopBusy, setShopBusy] = useState(false);
   const [shopMessage, setShopMessage] = useState("");
-  const [act2JettyLifebuoyNeeded, setAct2JettyLifebuoyNeeded] = useState(false);
-  const [act2JettyLifebuoyOwned, setAct2JettyLifebuoyOwned] = useState(false);
-  const [act2BoathouseSteeringWheelNeeded, setAct2BoathouseSteeringWheelNeeded] = useState(false);
-  const [act2BoathouseSteeringWheelOwned, setAct2BoathouseSteeringWheelOwned] = useState(false);
-  const [act2MotorboatPartsNeeded, setAct2MotorboatPartsNeeded] = useState(false);
-  const [act2MotorboatPartsOwned, setAct2MotorboatPartsOwned] = useState(false);
-  const [act2PurchaseStory, setAct2PurchaseStory] = useState<"dock" | "boathouse" | null>(null);
-  const [act2PurchaseStoryIndex, setAct2PurchaseStoryIndex] = useState(0);
+  const [act2StoryPurchaseSnapshot, setAct2StoryPurchaseSnapshot] = useState<Act2StoryPurchaseSnapshot | null>(null);
   const [act2PurchaseReturnProject, setAct2PurchaseReturnProject] = useState<"dock" | "boathouse" | "motorboat" | null>(null);
   const [pairedBackendChildName, setPairedBackendChildName] = useState<string | null>(null);
 
@@ -262,14 +255,7 @@ export default function VillagePrototype() {
         const act2 = await loadAct2RuntimeState();
         if (cancelled) return;
         setAct2PurchaseReturnProject(project);
-        setAct2JettyLifebuoyNeeded(jettyPurchaseRequired(act2));
-        setAct2JettyLifebuoyOwned(act2.jettyLifebuoyOwned);
-        setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(act2));
-        setAct2BoathouseSteeringWheelOwned(act2.boathouseSteeringWheelOwned);
-        setAct2MotorboatPartsNeeded(motorboatPartsPurchaseRequired(act2));
-        setAct2MotorboatPartsOwned(act2.motorboatPartsOwned);
-        setAct2PurchaseStory(act2.pendingPurchaseStory);
-        setAct2PurchaseStoryIndex(act2.purchaseStoryLineIndex);
+        setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot(act2));
         setShopCurrency("sysselbux");
         setShopMessage("");
         setShopPanelOpen(true);
@@ -554,14 +540,7 @@ export default function VillagePrototype() {
           void (async () => {
             try {
               const act2 = await loadAct2RuntimeState();
-              setAct2JettyLifebuoyNeeded(jettyPurchaseRequired(act2));
-              setAct2JettyLifebuoyOwned(act2.jettyLifebuoyOwned);
-              setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(act2));
-              setAct2BoathouseSteeringWheelOwned(act2.boathouseSteeringWheelOwned);
-              setAct2MotorboatPartsNeeded(motorboatPartsPurchaseRequired(act2));
-              setAct2MotorboatPartsOwned(act2.motorboatPartsOwned);
-              setAct2PurchaseStory(act2.pendingPurchaseStory);
-              setAct2PurchaseStoryIndex(act2.purchaseStoryLineIndex);
+              setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot(act2));
               const childId = await getPairedChildId();
               if (!childId) throw new Error("Barnets enhet är inte kopplad.");
               const client = getSupabaseBrowserClient();
@@ -893,12 +872,8 @@ export default function VillagePrototype() {
 
   async function buyAct2StoryItem(project: Act2PurchaseProject) {
     const item = ACT2_PURCHASE_CATALOG[project];
-    const localStatus = {
-      dock: { owned: act2JettyLifebuoyOwned, needed: act2JettyLifebuoyNeeded },
-      boathouse: { owned: act2BoathouseSteeringWheelOwned, needed: act2BoathouseSteeringWheelNeeded },
-      motorboat: { owned: act2MotorboatPartsOwned, needed: act2MotorboatPartsNeeded },
-    };
-    if (shopBusy || localStatus[project].owned || !localStatus[project].needed) return;
+    const localStatus = act2StoryPurchaseSnapshot?.status[project];
+    if (shopBusy || !localStatus || localStatus.owned || !localStatus.needed) return;
     if (!window.confirm(`Köpa ${item.presentation.shop.title.toLowerCase()} för ${item.price} 🪙?`)) return;
 
     setShopBusy(true);
@@ -921,17 +896,8 @@ export default function VillagePrototype() {
       );
       await saveAct2RuntimeState(outcome.state);
 
-      const nextStatus = deriveAct2StoryPurchaseStatus(outcome.state);
-      setAct2JettyLifebuoyOwned(nextStatus.dock.owned);
-      setAct2JettyLifebuoyNeeded(nextStatus.dock.needed);
-      setAct2BoathouseSteeringWheelOwned(nextStatus.boathouse.owned);
-      setAct2BoathouseSteeringWheelNeeded(nextStatus.boathouse.needed);
-      setAct2MotorboatPartsOwned(nextStatus.motorboat.owned);
-      setAct2MotorboatPartsNeeded(nextStatus.motorboat.needed);
-
+      setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot(outcome.state));
       setShopMessage(outcome.message);
-      setAct2PurchaseStory(outcome.purchaseStory);
-      setAct2PurchaseStoryIndex(outcome.purchaseStoryLineIndex);
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
@@ -1152,12 +1118,7 @@ export default function VillagePrototype() {
     
     if (act2PurchaseReturnProject) {
       const project = act2PurchaseReturnProject;
-      const purchaseOwned =
-        project === "dock"
-          ? act2JettyLifebuoyOwned
-          : project === "boathouse"
-            ? act2BoathouseSteeringWheelOwned
-            : act2MotorboatPartsOwned;
+      const purchaseOwned = act2StoryPurchaseSnapshot?.status[project].owned === true;
       const exit = resolveStoryPurchaseExit(project, purchaseOwned);
       setAct2PurchaseReturnProject(null);
       if (exit.action === "resume") {
@@ -1364,6 +1325,9 @@ export default function VillagePrototype() {
     <button className="primary-button" onClick={() => window.location.reload()}>Försök igen</button>
   </div></section>;
 
+  const act2PurchaseStory = act2StoryPurchaseSnapshot?.purchaseStory ?? null;
+  const act2PurchaseStoryIndex = act2StoryPurchaseSnapshot?.purchaseStoryLineIndex ?? 0;
+
   const act2PurchaseBeat = act2PurchaseStory === "dock"
     ? JETTY_LIFEBUOY_BEAT
     : act2PurchaseStory === "boathouse"
@@ -1384,7 +1348,11 @@ export default function VillagePrototype() {
         pendingPurchaseStory: act2PurchaseStory,
         purchaseStoryLineIndex: nextIndex,
       });
-      setAct2PurchaseStoryIndex(nextIndex);
+      setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot({
+        ...currentAct2,
+        pendingPurchaseStory: act2PurchaseStory,
+        purchaseStoryLineIndex: nextIndex,
+      }));
       return;
     }
     await saveAct2RuntimeState({
@@ -1393,8 +1361,11 @@ export default function VillagePrototype() {
       purchaseStoryLineIndex: 0,
     });
     const resumeProject = act2PurchaseStory;
-    setAct2PurchaseStory(null);
-    setAct2PurchaseStoryIndex(0);
+    setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot({
+      ...currentAct2,
+      pendingPurchaseStory: null,
+      purchaseStoryLineIndex: 0,
+    }));
     router.push(resumeProject ? act2ResumeHref(resumeProject) : "/act2");
   }
 
@@ -1451,18 +1422,18 @@ export default function VillagePrototype() {
             </> : <div className="mira-shop-grid">{([
                 {
                   project: "motorboat" as const,
-                  needed: act2MotorboatPartsNeeded,
-                  owned: act2MotorboatPartsOwned,
+                  needed: act2StoryPurchaseSnapshot?.status.motorboat.needed,
+                  owned: act2StoryPurchaseSnapshot?.status.motorboat.owned,
                 },
                 {
                   project: "boathouse" as const,
-                  needed: act2BoathouseSteeringWheelNeeded,
-                  owned: act2BoathouseSteeringWheelOwned,
+                  needed: act2StoryPurchaseSnapshot?.status.boathouse.needed,
+                  owned: act2StoryPurchaseSnapshot?.status.boathouse.owned,
                 },
                 {
                   project: "dock" as const,
-                  needed: act2JettyLifebuoyNeeded,
-                  owned: act2JettyLifebuoyOwned,
+                  needed: act2StoryPurchaseSnapshot?.status.dock.needed,
+                  owned: act2StoryPurchaseSnapshot?.status.dock.owned,
                 },
               ]).map(({ project, needed, owned }) => {
                 if (!needed && !owned) return null;
