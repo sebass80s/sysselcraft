@@ -284,3 +284,10 @@ This checks expected files and WebP signatures. It intentionally does **not** cl
 `src/game/productionAssets.ts` owns stable filenames and reserved base points. It is not yet imported into `createVillageGame.ts`. That is deliberate: the current verified quest/approval/truck/material path remains untouched until actual assets exist and pass file QA.
 
 Do not wire missing assets into preload. Do not add fallback old SVGs under the new production keys. Missing new art should be reported as missing.
+
+
+## Current project handover pointer — 2026-10-06
+
+This document remains authoritative for its own domain. Current Runtime Architecture 1.1 execution status and continuation order are tracked in `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Verified Runtime 1.1 docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, GitHub Actions #2252 SUCCESS. Runtime items 1–4 are closed; generic chapter persistence is next. This pointer does not change the domain decisions recorded above.

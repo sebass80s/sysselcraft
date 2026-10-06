@@ -696,3 +696,10 @@ Tool choice never weakens the no-guess rule.
 
 Detailed Act 3 queueing, proof-of-concept, manifest and acceptance rules live in:
 - `docs/ACT3_ART_PIPELINE.md`
+
+
+## Current project handover pointer — 2026-10-06
+
+This document remains authoritative for its own domain. Current Runtime Architecture 1.1 execution status and continuation order are tracked in `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Verified Runtime 1.1 docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, GitHub Actions #2252 SUCCESS. Runtime items 1–4 are closed; generic chapter persistence is next. This pointer does not change the domain decisions recorded above.

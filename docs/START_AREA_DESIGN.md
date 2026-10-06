@@ -79,3 +79,10 @@ The background and dynamic assets should be designed together. The world determi
 Dynamic building locations may visually evolve through construction stages while retaining their world footprint and perspective. The start area therefore acts as the visual proof that Sysselcraft can support a persistent village that changes as the child completes approved real-world quests.
 
 This decision does not yet lock which future expansion opens the next area, the exact exit geometry, or the final topology beyond the start area.
+
+
+## Current project handover pointer — 2026-10-06
+
+This document remains authoritative for its own domain. Current Runtime Architecture 1.1 execution status and continuation order are tracked in `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Verified Runtime 1.1 docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, GitHub Actions #2252 SUCCESS. Runtime items 1–4 are closed; generic chapter persistence is next. This pointer does not change the domain decisions recorded above.

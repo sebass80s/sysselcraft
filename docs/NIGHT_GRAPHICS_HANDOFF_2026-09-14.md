@@ -155,3 +155,10 @@ This ordering tests the riskiest assumption, multi-stage visual registration, be
 ### Begin tomorrow with
 
 If image generation is available: produce and validate the four recycling-centre stages against the fixed contract. If not, continue spellogic independently because this pass did not modify the playable loop.
+
+
+## Current project handover pointer — 2026-10-06
+
+This document remains authoritative for its own domain. Current Runtime Architecture 1.1 execution status and continuation order are tracked in `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Verified Runtime 1.1 docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, GitHub Actions #2252 SUCCESS. Runtime items 1–4 are closed; generic chapter persistence is next. This pointer does not change the domain decisions recorded above.

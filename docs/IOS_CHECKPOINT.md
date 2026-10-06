@@ -52,3 +52,10 @@ Never run `cap add ios`, regenerate the native project, uninstall the app, reset
 Act 1 physical/backend work accumulated well beyond the original Recycling checkpoint, including Quest V2 approval/claim recovery and release smoke, Diamond purchase/delivery, parent quest administration, construction persistence and late-game Clinic restart safety. Treat the detailed dated evidence in `TECHNICAL_HANDOFF.md` as the evidence log.
 
 **Next native production target is Act 2 at the lake.** Prefer isolated harnesses/Test-Ture for destructive progression testing. Adam's existing installation is valuable live progression and must be preserved.
+
+
+## Current project handover pointer — 2026-10-06
+
+This document remains authoritative for its own domain. Current Runtime Architecture 1.1 execution status and continuation order are tracked in `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Verified Runtime 1.1 docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, GitHub Actions #2252 SUCCESS. Runtime items 1–4 are closed; generic chapter persistence is next. This pointer does not change the domain decisions recorded above.
