@@ -123,10 +123,25 @@ assert.match(
   "StoryRunner must expose the clean-image pause for final panels",
 );
 const storyMomentSource = read("src/components/story/StoryMoment.tsx");
+const storyNameInput = read("src/components/story/StoryNameInput.tsx");
 assert.match(storyMomentSource, /setImageOnlyPresentationId\(presentationId\)/, "StoryMoment must hide the dialogue before advancing");
 assert.match(storyMomentSource, /shared-story-image-continue/, "clean image mode must advance from the unobstructed image");
 assert.match(storyMomentSource, /presentationId/, "clean image mode must reset between authored panels");
 assert.match(storyMomentSource, /className="primary-button shared-story-image-continue"[\s\S]*Fortsätt/, "clean image mode must keep a visible Continue button");
+assert.match(storyNameInput, /autoComplete="off"/, "shared naming input must disable autocomplete");
+assert.match(storyNameInput, /autoCorrect="off"/, "shared naming input must disable autocorrect");
+assert.match(storyNameInput, /autoCapitalize="words"/, "shared naming input must use word capitalization");
+assert.match(storyNameInput, /spellCheck=\{false\}/, "shared naming input must disable spellcheck");
+assert.match(storyNameInput, /inputMode="text"/, "shared naming input must request text keyboard");
+assert.match(storyNameInput, /enterKeyHint="done"/, "shared naming input must expose Done keyboard action");
+assert.match(storyNameInput, /event\.key !== "Enter"/, "shared naming input must own Enter-to-submit behavior");
+assert.match(storyNameInput, /currentValue\.trim\(\)\.length > 0/, "shared naming input must own non-empty validation");
+assert.match(css, /\.shared-story-text-input[^}]*width:\s*100%/s, "shared naming input must use canonical Story input styling");
+assert.match(
+  act2Runtime,
+  /<StoryNameInput[\s\S]*placeholder="Skriv båtens namn"[\s\S]*ariaLabel="Båtens namn"[\s\S]*submitLabel="Spara namnet"/,
+  "Act 2 motorboat naming must consume the shared Story naming input",
+);
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
@@ -407,18 +422,20 @@ assert.ok(
   "Act 1 Linus live line steps must preserve resolved speaker/text and advance callback through Story Engine",
 );
 assert.ok(
-  villageRuntime.includes('placeholder="Skriv ditt namn"')
-    && villageRuntime.includes('onClick={finishChildNaming}')
-    && villageRuntime.includes('disabled={!childNameCanSubmit}')
-    && villageRuntime.includes('maxLength={18} autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="words" spellCheck={false} inputMode="text" enterKeyHint="done"'),
-  "Act 1 Linus child naming must preserve input behavior and validation inside Story Engine",
+  villageRuntime.includes('<StoryNameInput ref={childNameInputRef}')
+    && villageRuntime.includes('onCanSubmitChange={setChildNameCanSubmit}')
+    && villageRuntime.includes('onSubmit={finishChildNaming}')
+    && villageRuntime.includes('placeholder="Skriv ditt namn"')
+    && villageRuntime.includes('ariaLabel="Ditt namn"'),
+  "Act 1 Linus child naming must consume the shared Story naming input",
 );
 assert.ok(
-  villageRuntime.includes('placeholder="Skriv ett namn"')
-    && villageRuntime.includes('onClick={finishDogNaming}')
-    && villageRuntime.includes('disabled={!dogNameCanSubmit}')
+  villageRuntime.includes('<StoryNameInput ref={dogNameInputRef}')
+    && villageRuntime.includes('onCanSubmitChange={setDogNameCanSubmit}')
+    && villageRuntime.includes('onSubmit={finishDogNaming}')
+    && villageRuntime.includes('placeholder="Skriv ett namn"')
     && villageRuntime.includes('setDogVisible(true)'),
-  "Act 1 Linus dog naming must preserve input behavior and reveal state inside Story Engine",
+  "Act 1 Linus dog naming must consume the shared Story naming input while preserving reveal state",
 );
 assert.ok(
   villageRuntime.includes('{linusStoryReplayStep && linusStoryReplayIndex !== null && !recyclingStoryOpen && <StoryMoment')
