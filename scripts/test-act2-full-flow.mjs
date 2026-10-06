@@ -222,9 +222,16 @@ assert.match(
 assert.match(runtime, /if \(!act1ChapterComplete\)/, "Act 2 must independently require the acknowledged Act 1 chapter ending");
 assert.match(runtime, /prepareAct2ProductionEntry\(act2\)/, "production entry must reconcile pre-release locked-route residue before setting the baseline");
 assert.match(runtime, /withBackendClaimBaseline\(current, backend\.progression\.worldProgression\)/, "backend polling must recover a missing baseline after transient entry sync failure");
-assert.ok(
-  runtime.indexOf("if (!debug && !productionEnabled)") < runtime.indexOf("loadAct2RuntimeState(),"),
-  "shipping lock must short-circuit before Act 2 state/baseline can be loaded and mutated",
+const chapterHost = fs.readFileSync(new URL("../src/runtime/chapter/useChapterRuntimeHost.ts", import.meta.url), "utf8");
+assert.match(
+  chapterHost,
+  /if \(!chapterBootMayLoad\(\{ debug, productionEnabled \}\)\) \{[\s\S]*return;/,
+  "shared chapter host must short-circuit shipping-locked chapters before invoking the Act 2 boot adapter",
+);
+assert.doesNotMatch(
+  runtime,
+  /if \(!debug && !productionEnabled\)/,
+  "Act 2 must not retain its retired local shipping-lock branch",
 );
 assert.ok(runtime.includes("act2PurchaseShopHref(") && runtime.includes("Till Mira i byn"), "story purchase gates must provide a contextual return path to Mira through the canonical handoff");
 assert.match(runtime, /SLUT PÅ ANDRA KAPITLET/, "Act 2 must render the canonical black chapter-end card");
