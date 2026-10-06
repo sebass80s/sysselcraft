@@ -276,3 +276,15 @@ assert.match(
   /router\.push\(registration\.resumeHref\(exit\.target\)\)/,
   "Mira contextual close must resume through the resolved registration",
 );
+
+const gameRegistrySource = fs.readFileSync(new URL("../src/game/storyPurchaseRegistry.ts", import.meta.url), "utf8");
+assert.match(
+  gameRegistrySource,
+  /export async function loadRegisteredStoryPurchases\(\): Promise<LoadedStoryPurchaseRegistration\[\]>/,
+  "shop composition must expose one loader for all registered Story Purchase chapters",
+);
+assert.match(
+  gameRegistrySource,
+  /snapshot: await registration\.loadSnapshot\(\)/,
+  "registered Story Purchase loader must delegate chapter state loading to each registration",
+);
