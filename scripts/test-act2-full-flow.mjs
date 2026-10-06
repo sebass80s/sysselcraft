@@ -22,6 +22,10 @@ const saveMigrations = loadTsModule("../src/runtime/save/migrations.ts", {});
 const progressionDelta = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const progressGate = loadTsModule("../src/runtime/progression/progressGate.ts", {});
 const progressTrack = loadTsModule("../src/runtime/progression/progressTrack.ts", {});
+const authoritativeTrack = loadTsModule("../src/runtime/progression/authoritativeTrack.ts", {
+  "./authoritativeDelta": progressionDelta,
+  "./progressTrack": progressTrack,
+});
 const {
   act2FinalePending,
   advanceAct2Finale,
@@ -49,6 +53,7 @@ const {
   "../runtime/progression/authoritativeDelta": progressionDelta,
   "../runtime/progression/progressGate": progressGate,
   "../runtime/progression/progressTrack": progressTrack,
+  "../runtime/progression/authoritativeTrack": authoritativeTrack,
 });
 
 const restart = (state) => normalizeAct2RuntimeState(JSON.parse(JSON.stringify(state)));
