@@ -10,7 +10,7 @@
     "production:audit": "node scripts/audit-reboot-production-assets.mjs",
     "construction:completion:test": "node scripts/test-recycling-completion-save.mjs",
     "construction:test": "node scripts/test-construction.mjs && node scripts/test-construction-late-stages.mjs && npm run construction:completion:test",
-    "verify": "npm run visual:audit && npm run construction:test && npm run lint && npm run build && npm run test:quest-presentation && npm run test:quest-recovery && npm run test:quest-turn-in && npm run test:quest-request-guard && npm run test:sol-story && npm run test:diamond-rewards && npm run test:dog-home && npm run test:act2-visual && npm run test:act2-story && npm run test:story-ui && npm run test:ui-shell && npm run test:act2-runtime && npm run test:act2-full-flow && npm run test:act2-doc-sync && npm run test:act2-closeout && npm run test:act2-alve && npm run test:runtime-parity && npm run test:image-batch && npm run test:image-generate",
+    "verify": "npm run visual:audit && npm run construction:test && npm run lint && npm run build && npm run test:quest-presentation && npm run test:quest-recovery && npm run test:quest-turn-in && npm run test:quest-request-guard && npm run test:sol-story && npm run test:diamond-rewards && npm run test:dog-home && npm run test:act2-visual && npm run test:act2-story && npm run test:story-ui && npm run test:ui-shell && npm run test:act2-runtime && npm run test:act2-full-flow && npm run test:act2-doc-sync && npm run test:act2-closeout && npm run test:act2-alve && npm run test:runtime-parity && npm run test:image-batch && npm run test:image-generate && npm run test:chapter-lifecycle",
     "cap:sync": "npx cap sync",
     "cap:copy": "npx cap copy",
     "cap:add:ios": "npx cap add ios",
@@ -40,7 +40,8 @@
     "image:batch:build": "node scripts/build-image-batch.mjs",
     "test:image-batch": "node scripts/test-image-batch-builder.mjs",
     "image:batch:generate": "node scripts/generate-image-batch.mjs",
-    "test:image-generate": "node scripts/test-image-batch-generator.mjs"
+    "test:image-generate": "node scripts/test-image-batch-generator.mjs",
+    "test:chapter-lifecycle": "node --experimental-strip-types scripts/test-chapter-lifecycle.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
