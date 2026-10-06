@@ -844,9 +844,10 @@ assert.ok(
     && village.includes("item.presentation.shop.requirement"),
   "Mira must render canonical Act 2 Story Shop presentation through the selected catalog item",
 );
-assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");
-assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel stock must derive from Båthuset progress");
-assert.ok(village.includes("motorboatPartsPurchaseRequired(act2)"), "parts stock must derive from Motorbåten progress");
+assert.ok(act2PurchaseAdapter.includes("jettyPurchaseRequired(state)"), "Act 2 purchase adapter must derive lifebuoy stock from Act 2 progress");
+assert.ok(act2PurchaseAdapter.includes("boathousePurchaseRequired(state)"), "Act 2 purchase adapter must derive steering-wheel stock from Act 2 progress");
+assert.ok(act2PurchaseAdapter.includes("motorboatPartsPurchaseRequired(state)"), "Act 2 purchase adapter must derive motorboat parts stock from Act 2 progress");
+assert.equal(village.includes("jettyPurchaseRequired("), false, "Mira must not own Act 2 stock gate calculations");
 assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira shop must render the canonical Bryggan lifebuoy story beat");
 assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira shop must render the canonical Båthuset steering-wheel story beat");
 assert.ok(village.includes("act2PurchaseBeat?.body[act2PurchaseStoryIndex]"), "Mira purchase beats must render their authored body one reply at a time");
