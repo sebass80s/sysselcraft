@@ -501,7 +501,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         ? "motorboat"
         : null;
   const purchaseGateBeat = jettyPurchaseGate ? JETTY_LIFEBUOY_BEAT : boathousePurchaseGate ? BOATHOUSE_STEERING_WHEEL_BEAT : null;
-  const purchaseGateCopy = purchaseProject ? ACT2_PURCHASE_CATALOG[purchaseProject].gate : null;
+  const purchaseGateCopy = purchaseProject ? ACT2_PURCHASE_CATALOG[purchaseProject].presentation.gate : null;
   const contributionCandidate = backendWorldProgression === null || purchaseRequired || namingRequired
     ? null
     : nextAct2Contribution(state, backendWorldProgression);
