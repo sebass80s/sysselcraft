@@ -1514,9 +1514,7 @@ export default function VillagePrototype() {
       }}
       onNext={() => void advanceAct2PurchaseStory()}
       childName={childName || "Barnet"}
-      dialogueClassName="act2-dialogue-card"
-      zIndex={145}
-      background="rgba(9,14,10,.94)"
+      variant="handoff"
     />}
     {bottleLetterOpen && <StoryRunner
       beat={{
