@@ -182,6 +182,21 @@ assert.match(
   /advanceStoryLine\(\s*CABIN_WAITING_REACTION\.body\.length,[\s\S]*cabinRevisitLineIndex/,
   "Act 2 cabin revisit must use shared linear sequencing",
 );
+assert.match(
+  act2Runtime,
+  /storyLineAt\(activeContributionBeat\.body, state\.contributionLineIndex\)/,
+  "Act 2 contribution dialogue must use shared safe current-line lookup",
+);
+assert.match(
+  act2Runtime,
+  /advanceStoryLine\(\s*activeContributionBeat\.body\.length,[\s\S]*state\.contributionLineIndex/,
+  "Act 2 contribution dialogue must use shared linear advance semantics",
+);
+assert.match(
+  act2Runtime,
+  /previousStoryLineIndex\(\s*activeContributionBeat\.body\.length,[\s\S]*state\.contributionLineIndex/,
+  "Act 2 contribution dialogue must use shared linear previous semantics",
+);
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
