@@ -335,3 +335,41 @@ The boundary is presentation-only. Access decisions remain owned by the pure `ch
 
 No save shape, backend authority, movement, collision, dog-follow, touch or WebView behavior changed.
 
+## Verified checkpoint: Registered chapter transition + authoritative progress track
+
+Verified code HEAD: `e9d075a2fc9c533411c021ce090b2477c1a83ae1`
+
+GitHub Actions: **#2063 SUCCESS** on that exact SHA.
+
+### Registered chapter transition
+
+- the existing `/act3` boundary/placeholder route is now registered as the next chapter after Act 2 without introducing any Act 3 runtime;
+- `nextChapterDestination()` owns the shared rule that a next chapter is available only after the current chapter is complete and its end card is acknowledged;
+- Village -> Act 2 and Act 2 -> Act 3-boundary transitions consume this shared rule;
+- chapter routes are resolved through the canonical registry rather than hard-coded navigation strings;
+- Act 3 remains a boundary page only. No Act 3 gameplay/runtime has been implemented.
+
+### Authoritative progress track composition
+
+New shared primitive:
+- `src/runtime/progression/authoritativeTrack.ts`.
+
+It composes the already-canonical authoritative counter delta with configurable progress tracks:
+
+- `pendingAuthoritativeProgressCount()` calculates unconsumed authoritative backlog from current backend count, captured baseline and already consumed local progress;
+- `nextAuthoritativeProgressTrackStep()` returns exactly the next authored beat when backlog exists;
+- a chapter/story gate blocks presentation without consuming backlog;
+- resolving the gate resumes at the same next unconsumed beat;
+- large backend backlog never skips authored contribution beats.
+
+Act 2 now consumes this shared primitive for backend quest progression -> restoration contribution presentation.
+
+The extraction preserved:
+- existing Act 2 persisted save shape;
+- 16-contribution / 4-stage Act 2 configuration;
+- backend ownership of progression evidence;
+- authored story-gate thresholds;
+- all movement/collision/touch behavior.
+
+The full existing Act 2 runtime, full-flow, closeout, Alve and runtime-parity harnesses were updated to load the real shared engine dependency rather than mock or duplicate it.
+
