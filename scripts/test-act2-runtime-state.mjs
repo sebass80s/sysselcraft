@@ -834,19 +834,26 @@ for (const [item, flag] of [
   assert.ok(act2PurchaseMigration.includes(`when '${item}' then v_price:=200`), `${item} must be reproducible from checked-in migration at 200 SysselBux`);
   assert.ok(act2PurchaseMigration.includes(`v_flag_key:='${flag}'`), `${item} migration must persist ${flag}`);
 }
-assert.ok(act2PurchaseCatalog.includes('title: "Livboj till bryggan"') && village.includes("ACT2_PURCHASE_CATALOG.dock.presentation.shop.title"), "Mira must expose the canonical Act 2 lifebuoy presentation");
+assert.ok(
+  act2PurchaseCatalog.includes('title: "Livboj till bryggan"')
+    && act2PurchaseCatalog.includes('title: "Ratt till lådbilen"')
+    && act2PurchaseCatalog.includes('title: "Reservdelspaket till motorbåten"')
+    && village.includes("item.presentation.shop.title")
+    && village.includes("item.presentation.shop.description")
+    && village.includes("item.presentation.shop.requirement"),
+  "Mira must render canonical Act 2 Story Shop presentation through the selected catalog item",
+);
 assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");
-assert.ok(act2PurchaseCatalog.includes('title: "Ratt till lådbilen"') && village.includes("ACT2_PURCHASE_CATALOG.boathouse.presentation.shop.title"), "Mira must expose the canonical Båthuset steering-wheel presentation");
 assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel stock must derive from Båthuset progress");
-assert.ok(act2PurchaseCatalog.includes('title: "Reservdelspaket till motorbåten"') && village.includes("ACT2_PURCHASE_CATALOG.motorboat.presentation.shop.title"), "Mira must expose the canonical Motorbåten parts presentation");
 assert.ok(village.includes("motorboatPartsPurchaseRequired(act2)"), "parts stock must derive from Motorbåten progress");
 assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira shop must render the canonical Bryggan lifebuoy story beat");
 assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira shop must render the canonical Båthuset steering-wheel story beat");
 assert.ok(village.includes("act2PurchaseBeat?.body[act2PurchaseStoryIndex]"), "Mira purchase beats must render their authored body one reply at a time");
-assert.ok(village.includes('pendingPurchaseStory: "dock" as const'), "lifebuoy purchase must persist its canonical story beat");
-assert.ok(village.includes('pendingPurchaseStory: "boathouse" as const'), "steering-wheel purchase must persist its canonical story beat");
-assert.match(village, /pendingPurchaseStory: "dock" as const,\s*purchaseStoryLineIndex: 0/, "lifebuoy purchase must persist the story at the same first line the UI presents");
-assert.match(village, /pendingPurchaseStory: "boathouse" as const,\s*purchaseStoryLineIndex: 0/, "steering-wheel purchase must persist the story at the same first line the UI presents");
+assert.match(
+  village,
+  /project === "dock" \|\| project === "boathouse"[\s\S]*pendingPurchaseStory: project,[\s\S]*purchaseStoryLineIndex: 0/,
+  "catalog-driven dock and boathouse purchases must persist their canonical purchase story from the first line",
+);
 
 assert.ok(JETTY_LIFEBUOY_BEAT.body.length > 0, "canonical lifebuoy economy beat must contain dialogue");
 assert.ok(BOATHOUSE_STEERING_WHEEL_BEAT.body.length > 0, "canonical steering-wheel economy beat must contain dialogue");
