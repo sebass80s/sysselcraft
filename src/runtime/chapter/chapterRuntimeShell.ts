@@ -25,3 +25,21 @@ export function deriveChapterRuntimeShell(
   if (!input.debug && !input.accessAllowed) return "progression-locked";
   return "active";
 }
+
+export type ChapterRuntimeOverlayState = {
+  storyUiVisible: boolean;
+  blockingOverlayVisible: boolean;
+  worldInputEnabled: boolean;
+};
+
+export function deriveChapterRuntimeOverlay(
+  chapterCardVisible: boolean,
+  storyUiVisible: boolean,
+): ChapterRuntimeOverlayState {
+  const blockingOverlayVisible = chapterCardVisible || storyUiVisible;
+  return {
+    storyUiVisible,
+    blockingOverlayVisible,
+    worldInputEnabled: !blockingOverlayVisible,
+  };
+}
