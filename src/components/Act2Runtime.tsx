@@ -51,6 +51,7 @@ import { deriveAct2RuntimeBlockers } from "../game/act2RuntimeAdapter";
 import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
 import { ChapterEndCard, ChapterIntroCard } from "../runtime/chapter/ChapterCards";
 import { StoryHistoryPanel } from "../runtime/story/StoryHistoryPanel";
+import { advanceStoryLine, previousStoryLineIndex, storyLineAt } from "../runtime/story/storySequence";
 import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../runtime/chapter/useChapterRuntimeHost";
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
 
@@ -552,7 +553,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeCompletionBeat = completionProject === "dock"
     ? JETTY_COMPLETION_REACTION
     : null;
-  const activeCompletionLine = activeCompletionBeat?.body[state.completionLineIndex] ?? null;
+  const activeCompletionLine = activeCompletionBeat
+    ? storyLineAt(activeCompletionBeat.body, state.completionLineIndex)
+    : null;
   const activeCompletionPresentation = activeCompletionLine
     ? parseStoryLine(activeCompletionLine, childName)
     : null;
@@ -564,7 +567,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   });
   const hudVisible = uiShell.showHud;
   const activeCabinRevisitLine = cabinRevisitOpen
-    ? CABIN_WAITING_REACTION.body[cabinRevisitLineIndex] ?? null
+    ? storyLineAt(CABIN_WAITING_REACTION.body, cabinRevisitLineIndex)
     : null;
   const activeCabinRevisitPresentation = activeCabinRevisitLine
     ? parseStoryLine(activeCabinRevisitLine, childName)
@@ -609,27 +612,41 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }
 
   async function previousCompletionReaction() {
-    if (state.completionLineIndex <= 0) return;
-    await commit({ ...state, completionLineIndex: state.completionLineIndex - 1 });
+    if (!activeCompletionBeat) return;
+    const previous = previousStoryLineIndex(
+      activeCompletionBeat.body.length,
+      state.completionLineIndex,
+    );
+    if (previous === state.completionLineIndex) return;
+    await commit({ ...state, completionLineIndex: previous });
   }
 
   async function advanceCompletionReaction() {
     if (!completionProject || !activeCompletionBeat) return;
-    if (state.completionLineIndex + 1 < activeCompletionBeat.body.length) {
-      await commit({ ...state, completionLineIndex: state.completionLineIndex + 1 });
+    const step = advanceStoryLine(
+      activeCompletionBeat.body.length,
+      state.completionLineIndex,
+    );
+    if (step.type === "line") {
+      await commit({ ...state, completionLineIndex: step.index });
       return;
     }
     await commit(consumeProjectCompletionReaction(state, completionProject));
   }
 
   function previousCabinRevisit() {
-    if (cabinRevisitLineIndex <= 0) return;
-    setCabinRevisitLineIndex((index) => Math.max(0, index - 1));
+    setCabinRevisitLineIndex((index) =>
+      previousStoryLineIndex(CABIN_WAITING_REACTION.body.length, index),
+    );
   }
 
   function advanceCabinRevisit() {
-    if (cabinRevisitLineIndex + 1 < CABIN_WAITING_REACTION.body.length) {
-      setCabinRevisitLineIndex((index) => index + 1);
+    const step = advanceStoryLine(
+      CABIN_WAITING_REACTION.body.length,
+      cabinRevisitLineIndex,
+    );
+    if (step.type === "line") {
+      setCabinRevisitLineIndex(step.index);
       return;
     }
     setCabinRevisitOpen(false);
