@@ -51,6 +51,7 @@ import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "..
 import { chapterAtStart, chapterCardVisible as deriveChapterCardVisible, chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 import { chapterRoute } from "../runtime/chapter/chapterRegistry";
 import { chapterBootMayLoad, deriveChapterRuntimeOverlay, deriveChapterRuntimeShell } from "../runtime/chapter/chapterRuntimeShell";
+import { deriveAct2RuntimeBlockers } from "../game/act2RuntimeAdapter";
 
 
 
@@ -109,6 +110,22 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
 
   const chapterCardVisible = deriveChapterCardVisible(ready, chapterIntroVisible, { chapterComplete: state.act2Complete, endCardSeen: state.endCardSeen });
   const runtimeShellStatus = deriveChapterRuntimeShell({ ready, debug, productionEnabled, accessAllowed: act2AccessAllowed });
+  const {
+    completionProject,
+    projectChooserVisible,
+    jettyPurchaseGate,
+    boathousePurchaseGate,
+    motorboatPurchaseGate,
+    namingRequired,
+    purchaseRequired,
+    finalePending,
+    storyUiVisible,
+  } = deriveAct2RuntimeBlockers(state, {
+    contributionTurnInOpen,
+    cabinRevisitOpen,
+    historyOpen,
+    historyReplayOpen: historyReplay !== null,
+  });
   const runtimeOverlay = deriveChapterRuntimeOverlay(chapterCardVisible, storyUiVisible);
   useEffect(() => {
     if (chapterCardVisible) return beginStoryOverlay();
@@ -479,11 +496,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       : prerequisiteDone === 2
         ? "Två klara. Då är det bara en kvar. Den har väntat länge nog."
         : "Stugan är klar. Bryggan är klar. Båthuset är klart. Det är dags.";
-  const jettyPurchaseGate = state.selectedProject === "dock" && jettyPurchaseRequired(state);
-  const boathousePurchaseGate = state.selectedProject === "boathouse" && boathousePurchaseRequired(state);
-  const motorboatPurchaseGate = state.selectedProject === "motorboat" && motorboatPartsPurchaseRequired(state);
-  const namingRequired = state.selectedProject === "motorboat" && motorboatNamingRequired(state);
-  const purchaseRequired = jettyPurchaseGate || boathousePurchaseGate || motorboatPurchaseGate;
   const purchaseProject = jettyPurchaseGate
     ? "dock"
     : boathousePurchaseGate
@@ -511,15 +523,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeContributionPresentation = activeContributionLine
     ? parseStoryLine(activeContributionLine, childName)
     : null;
-  const finalePending = act2FinalePending(state);
   const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
   const finaleLineIndex = Math.min(state.finaleLineIndex, Math.max(0, (activeFinaleBeat?.body.length ?? 1) - 1));
   const activeFinaleLine = activeFinaleBeat?.body[finaleLineIndex] ?? null;
   const activeFinalePresentation = activeFinaleLine
     ? parseStoryLine(activeFinaleLine, childName)
     : null;
-  const completionProject = (["dock"] as const)
-    .find((project) => projectCompletionReactionPending(state, project)) ?? null;
   const activeCompletionBeat = completionProject === "dock"
     ? JETTY_COMPLETION_REACTION
     : null;
@@ -527,24 +536,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const activeCompletionPresentation = activeCompletionLine
     ? parseStoryLine(activeCompletionLine, childName)
     : null;
-  const projectChooserVisible =
-    state.alveIntroComplete
-    && !state.selectedProject
-    && !state.projects.motorboat.complete
-    && !completionProject;
-  const storyUiVisible =
-    !state.openingComplete
-    || (state.openingComplete && !state.bicycleSeen)
-    || (state.bicycleSeen && !state.alveIntroComplete)
-    || projectChooserVisible
-    || finalePending
-    || Boolean(completionProject)
-    || purchaseRequired
-    || namingRequired
-    || contributionTurnInOpen
-    || cabinRevisitOpen
-    || historyOpen
-    || historyReplay !== null;
   const uiShell = deriveGameUiShell({
     debug,
     worldReady: state.openingComplete && state.alveIntroComplete,
