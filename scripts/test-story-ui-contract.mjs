@@ -132,7 +132,7 @@ assert.match(css, /body\[data-story-overlay-active="true"\] \[data-story-ui="que
 assert.match(debugPage, /<Act2Runtime debug \/>/, "Story Debug must render the shared production runtime");
 assert.match(act2Page, /<Act2Runtime productionEnabled=\{ACT2_PRODUCTION_ENABLED\} \/>/, "Production must render the same shared Act 2 runtime");
 assert.doesNotMatch(debugPage, /StoryMoment|StoryTranscript|project-choice|jumpToProject/, "Debug route must not carry a parallel story renderer");
-assert.match(act2Runtime, /if \(debug\) \{[\s\S]*loadSaveState\(\)/, "Shared runtime debug mode must load the saved child identity");
+assert.match(act2Runtime, /if \(debugMode\) \{[\s\S]*loadSaveState\(\)/, "Act 2 boot adapter must load the saved child identity in shared-host debug mode");
 assert.match(act2Runtime, /if \(!debug\) await saveAct2RuntimeState\(next\)/, "Debug mode must not persist Act 2 runtime state");
 assert.match(act2Runtime, /parseStoryLine\(activeContributionLine, childName\)/, "Act 2 contribution cards must parse speaker and child name centrally");
 assert.doesNotMatch(act2Runtime, /storyCardChunk|activeContributionLines|<StoryTranscript lines=\{activeContributionLines\}/,
