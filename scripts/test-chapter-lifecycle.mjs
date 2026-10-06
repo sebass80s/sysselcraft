@@ -41,7 +41,7 @@ assert.equal(chapterCardVisible(true, false, { chapterComplete: true, endCardSee
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 const act2 = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 
-assert.match(village, /chapterUnlocked\(act1EndCardSeen\)/, "Village must use shared chapter unlock for the Act 2 path");
+assert.match(village, /nextChapterDestination\("act1"/, "Village chapter exit must use the shared registered transition rather than duplicate lifecycle booleans");
 assert.match(act2, /chapterUnlocked\(act1\?\.worldFlags\?\.act1EndCardSeen === true\)/, "Act 2 entry must use shared predecessor unlock semantics");
 assert.match(act2, /deriveChapterCardVisible\(/, "Act 2 chapter-card presentation must use shared lifecycle");
 assert.match(act2, /chapterAtStart\(\{/, "Act 2 fresh-entry detection must use shared lifecycle");
