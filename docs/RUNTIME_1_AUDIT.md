@@ -1058,3 +1058,19 @@ Prefer:
 - dead debug/runtime scaffolding with proven no-consumer status.
 
 Do not touch collision, pathfinding, movement feel, dog-follow, pointer/touch/WebView fallback behavior or Linus naming-input DOM without an explicit browser + physical iPhone acceptance window.
+
+
+## Runtime 1.1 superseding status — 2026-10-06
+
+Runtime 1.0 audit history remains useful for understanding why the current boundaries exist, but active architecture work is Runtime 1.1 under the fuel principle.
+
+Canonical current handover: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+As of the verified Runtime 1.1 baseline:
+- Chapter Runtime Host: closed;
+- Progression/Project Engine: closed;
+- Story UI/sequencing/input/history/cards/choices: closed;
+- Story Purchase integration: closed;
+- persistence/backend-sync/full-area-host/debug/empty-Act3 proof: still open.
+
+Do not use old Runtime 1.0 “safe legacy cleanup” recommendations as permission to skip the Runtime 1.1 engine backlog. Conversely, do not reopen stable Runtime 1.0 domains such as movement feel, collision, dog-follow or native input merely because Runtime 1.1 is open.
