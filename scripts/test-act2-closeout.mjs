@@ -238,8 +238,8 @@ assert.doesNotMatch(
 );
 assert.match(
   act2RuntimeSource,
-  /setAlvePresent\(!\(state\.act2Complete && state\.endCardSeen\)\)/,
-  "Alve lake presence must derive directly from the persisted chapter-close boundary",
+  /world\.setAlvePresent\(!\(latest\.act2Complete && latest\.endCardSeen\)\)/,
+  "Alve lake presence must derive directly from the persisted chapter-close boundary through shared world-host sync",
 );
 
 console.log("PASS: actual save/load restart boundaries, child scoping, legacy completion/adoption, full-image previous, duplicate transition lock and save-failure retry");
