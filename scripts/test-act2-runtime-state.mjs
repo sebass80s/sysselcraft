@@ -160,27 +160,27 @@ assert.equal(acceptedProductionEntry.projects.cabin.contributions, 2, "real prod
 let state = withSelectedProject(empty, "dock");
 assert.equal(state.selectedProject, "dock");
 
-const wrongProject = withPresentedContribution(state, "cabin", "cabin:01", 1);
+const wrongProject = withPresentedContribution(state, "cabin", "cabin:01");
 assert.equal(wrongProject.projects.cabin.contributions, 0, "inactive project must never consume a contribution");
 
-state = withPresentedContribution(state, "dock", "dock:01", 1);
+state = withPresentedContribution(state, "dock", "dock:01");
 assert.equal(state.projects.dock.contributions, 1);
 assert.equal(state.projects.dock.visibleStage, 1);
 assert.deepEqual(state.projects.dock.consumedBeatIds, ["dock:01"]);
 
-const duplicate = withPresentedContribution(state, "dock", "dock:01", 2);
+const duplicate = withPresentedContribution(state, "dock", "dock:01");
 assert.equal(duplicate.projects.dock.contributions, 1, "duplicate beat must not consume a second contribution");
 assert.equal(duplicate.projects.dock.visibleStage, 1, "duplicate beat must not mutate stage");
-const duplicateFromSameSnapshotA = withPresentedContribution(state, "dock", "dock:02", 1);
-const duplicateFromSameSnapshotB = withPresentedContribution(state, "dock", "dock:02", 1);
+const duplicateFromSameSnapshotA = withPresentedContribution(state, "dock", "dock:02");
+const duplicateFromSameSnapshotB = withPresentedContribution(state, "dock", "dock:02");
 assert.deepEqual(duplicateFromSameSnapshotA, duplicateFromSameSnapshotB, "two rapid taps from the same snapshot must resolve to the same idempotent next state");
 
 const midContributionStory = normalizeAct2RuntimeState({ ...state, contributionLineIndex: 7 });
 assert.equal(midContributionStory.contributionLineIndex, 7, "restart must preserve the exact line inside a pending contribution Story Moment");
-const committedAfterResume = withPresentedContribution(midContributionStory, "dock", "dock:02", 1);
+const committedAfterResume = withPresentedContribution(midContributionStory, "dock", "dock:02");
 assert.equal(committedAfterResume.contributionLineIndex, 0, "finishing the resumed contribution beat must reset its persisted line index");
 
-let lockedBoat = withPresentedContribution(empty, "motorboat", "motorboat:01", 1);
+let lockedBoat = withPresentedContribution(empty, "motorboat", "motorboat:01");
 assert.equal(lockedBoat.projects.motorboat.contributions, 0, "motorboat cannot advance before 3/3");
 
 function complete(projectState, project) {
@@ -199,7 +199,7 @@ function complete(projectState, project) {
       current = withMotorboatName(current, "Testbåten");
     }
     const stage = Math.min(4, 1 + Math.floor(i / 4));
-    current = withPresentedContribution(current, project, `${project}:${String(i).padStart(2, "0")}`, stage);
+    current = withPresentedContribution(current, project, `${project}:${String(i).padStart(2, "0")}`);
   }
   return current;
 }
@@ -393,7 +393,7 @@ assert.equal(candidate?.beatId, "dock:01");
 assert.equal(candidate?.visibleStage, 1);
 assert.equal(candidate?.backlog, 3);
 
-bridge = withPresentedContribution(bridge, "dock", candidate.beatId, candidate.visibleStage);
+bridge = withPresentedContribution(bridge, "dock", candidate.beatId);
 assert.equal(totalAct2Contributions(bridge), 1);
 candidate = nextAct2Contribution(bridge, 15);
 assert.equal(candidate?.beatId, "dock:02", "backlog must drain one authored beat at a time");
@@ -424,7 +424,7 @@ let boundary = withSelectedProject(boundaryState, "dock");
 for (let i = 1; i <= 3; i++) {
   const next = nextAct2Contribution(boundary, i);
   assert.equal(next?.visibleStage, 1, `dock beat ${i} must remain visual stage 1`);
-  boundary = withPresentedContribution(boundary, "dock", next.beatId, next.visibleStage);
+  boundary = withPresentedContribution(boundary, "dock", next.beatId);
 }
 let fourth = nextAct2Contribution(boundary, 4);
 assert.equal(fourth?.visibleStage, 2, "dock beat 4 is the authored 1/4→2/4 transition");
@@ -433,13 +433,13 @@ let purchaseGate = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 0);
 purchaseGate = withSelectedProject(purchaseGate, "dock");
 for (let i = 1; i <= 6; i++) {
   const next = nextAct2Contribution(purchaseGate, i);
-  purchaseGate = withPresentedContribution(purchaseGate, "dock", next.beatId, next.visibleStage);
+  purchaseGate = withPresentedContribution(purchaseGate, "dock", next.beatId);
 }
 assert.equal(purchaseGate.projects.dock.contributions, 6);
 assert.equal(jettyPurchaseRequired(purchaseGate), true, "lifebuoy must gate jetty after contribution 6");
 assert.equal(pendingBackendContributionCount(purchaseGate, 8), 2, "backend backlog must remain queued while a story purchase gate is active");
 assert.equal(nextAct2Contribution(purchaseGate, 8), null, "purchase gate must block contribution candidates in the state layer, not only in UI");
-const forcedJettyBeat7 = withPresentedContribution(purchaseGate, "dock", "dock:07", 2);
+const forcedJettyBeat7 = withPresentedContribution(purchaseGate, "dock", "dock:07");
 assert.equal(forcedJettyBeat7.projects.dock.contributions, 6, "direct presentation must not bypass the lifebuoy purchase gate");
 const restartedPurchaseGate = normalizeAct2RuntimeState(JSON.parse(JSON.stringify(purchaseGate)));
 assert.equal(jettyPurchaseRequired(restartedPurchaseGate), true, "restart must preserve an unresolved story purchase gate");
@@ -483,12 +483,12 @@ let boathouseGate = withBackendClaimBaseline(createDefaultAct2RuntimeState(), 0)
 boathouseGate = withSelectedProject(boathouseGate, "boathouse");
 for (let i = 1; i <= 9; i++) {
   const next = nextAct2Contribution(boathouseGate, i);
-  boathouseGate = withPresentedContribution(boathouseGate, "boathouse", next.beatId, next.visibleStage);
+  boathouseGate = withPresentedContribution(boathouseGate, "boathouse", next.beatId);
 }
 assert.equal(boathouseGate.projects.boathouse.contributions, 9);
 assert.equal(boathousePurchaseRequired(boathouseGate), true, "steering wheel must gate Båthuset between 9 and 10");
 assert.equal(nextAct2Contribution(boathouseGate, 11), null, "steering-wheel gate must block the next boathouse contribution");
-assert.equal(withPresentedContribution(boathouseGate, "boathouse", "boathouse:10", 3).projects.boathouse.contributions, 9, "direct presentation must not bypass the steering-wheel gate");
+assert.equal(withPresentedContribution(boathouseGate, "boathouse", "boathouse:10").projects.boathouse.contributions, 9, "direct presentation must not bypass the steering-wheel gate");
 const countBeforeWheel = totalAct2Contributions(boathouseGate);
 boathouseGate = withBackendStoryFlags(boathouseGate, { act2BoathouseSteeringWheelOwned: true });
 assert.equal(boathousePurchaseRequired(boathouseGate), false);
@@ -514,22 +514,22 @@ motorboatGate = complete(motorboatGate, "boathouse");
 motorboatGate = withSelectedProject(motorboatGate, "motorboat");
 for (let i = 1; i <= 5; i++) {
   const next = nextAct2Contribution(motorboatGate, 48 + i);
-  motorboatGate = withPresentedContribution(motorboatGate, "motorboat", next.beatId, next.visibleStage);
+  motorboatGate = withPresentedContribution(motorboatGate, "motorboat", next.beatId);
 }
 assert.equal(motorboatPartsPurchaseRequired(motorboatGate), true);
 assert.equal(nextAct2Contribution(motorboatGate, 54), null, "motorboat parts gate must block the next contribution");
-assert.equal(withPresentedContribution(motorboatGate, "motorboat", "motorboat:06", 2).projects.motorboat.contributions, 5, "direct presentation must not bypass the motorboat parts gate");
+assert.equal(withPresentedContribution(motorboatGate, "motorboat", "motorboat:06").projects.motorboat.contributions, 5, "direct presentation must not bypass the motorboat parts gate");
 const beforeParts = totalAct2Contributions(motorboatGate);
 motorboatGate = withBackendStoryFlags(motorboatGate, { act2MotorboatPartsOwned: true });
 assert.equal(motorboatPartsPurchaseRequired(motorboatGate), false);
 assert.equal(totalAct2Contributions(motorboatGate), beforeParts, "parts purchase must be contribution-neutral");
 for (let i = 6; i <= 12; i++) {
   const next = nextAct2Contribution(motorboatGate, 48 + i);
-  motorboatGate = withPresentedContribution(motorboatGate, "motorboat", next.beatId, next.visibleStage);
+  motorboatGate = withPresentedContribution(motorboatGate, "motorboat", next.beatId);
 }
 assert.equal(motorboatNamingRequired(motorboatGate), true);
 assert.equal(nextAct2Contribution(motorboatGate, 61), null, "boat naming gate must block contribution 13 until a name is saved");
-assert.equal(withPresentedContribution(motorboatGate, "motorboat", "motorboat:13", 4).projects.motorboat.contributions, 12, "direct presentation must not bypass the boat naming gate");
+assert.equal(withPresentedContribution(motorboatGate, "motorboat", "motorboat:13").projects.motorboat.contributions, 12, "direct presentation must not bypass the boat naming gate");
 const beforeName = totalAct2Contributions(motorboatGate);
 motorboatGate = withMotorboatName(motorboatGate, "  Sjöbusen  ");
 assert.equal(motorboatGate.motorboatName, "Sjöbusen");
