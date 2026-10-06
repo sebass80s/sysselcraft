@@ -124,6 +124,7 @@ assert.match(
 );
 const storyMomentSource = read("src/components/story/StoryMoment.tsx");
 const storyNameInput = read("src/components/story/StoryNameInput.tsx");
+const chapterCards = read("src/runtime/chapter/ChapterCards.tsx");
 assert.match(storyMomentSource, /setImageOnlyPresentationId\(presentationId\)/, "StoryMoment must hide the dialogue before advancing");
 assert.match(storyMomentSource, /shared-story-image-continue/, "clean image mode must advance from the unobstructed image");
 assert.match(storyMomentSource, /presentationId/, "clean image mode must reset between authored panels");
@@ -142,6 +143,19 @@ assert.match(
   /<StoryNameInput[\s\S]*placeholder="Skriv båtens namn"[\s\S]*ariaLabel="Båtens namn"[\s\S]*submitLabel="Spara namnet"/,
   "Act 2 motorboat naming must consume the shared Story naming input",
 );
+assert.match(chapterCards, /export function ChapterIntroCard/, "shared runtime must own chapter intro presentation");
+assert.match(chapterCards, /export function ChapterEndCard/, "shared runtime must own chapter end-card presentation");
+assert.match(chapterCards, /revealTitleBeforeContinue = true/, "shared chapter intro must own the canonical two-step title reveal");
+assert.match(css, /\.shared-chapter-card \{[^}]*position:\s*fixed[^}]*z-index:\s*160[^}]*safe-area-inset-top/s,
+  "shared chapter cards must own fullscreen layering and safe-area presentation");
+assert.match(act2Runtime, /<ChapterIntroCard[\s\S]*chapterLabel="KAPITEL 2"[\s\S]*title="ALVE"/,
+  "Act 2 intro must be content/configuration over the shared chapter card");
+assert.match(act2Runtime, /<ChapterEndCard[\s\S]*title="SLUT PÅ ANDRA KAPITLET"[\s\S]*continueLabel="Fortsätt vid sjön"/,
+  "Act 2 end card must be content/configuration over the shared chapter card");
+assert.equal(act2Runtime.includes("act2-chapter-intro"), false,
+  "Act 2 must not retain chapter-local intro presentation markup");
+assert.equal(css.includes(".act2-chapter-intro"), false,
+  "chapter-local intro CSS must not coexist with shared chapter-card styling");
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
