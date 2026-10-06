@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Act2LakeGameHandle } from "../game/createAct2LakeGame";
 import {
@@ -45,9 +45,10 @@ import { historyEntriesFor } from "../runtime/story/storyHistory";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
 import { chapterAtStart, chapterCardVisible as deriveChapterCardVisible, chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 import { chapterRoute, nextChapterDestination } from "../runtime/chapter/chapterRegistry";
-import { chapterBootMayLoad, deriveChapterRuntimeOverlay, deriveChapterRuntimeShell } from "../runtime/chapter/chapterRuntimeShell";
+import { deriveChapterRuntimeOverlay } from "../runtime/chapter/chapterRuntimeShell";
 import { deriveAct2RuntimeBlockers } from "../game/act2RuntimeAdapter";
 import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
+import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../runtime/chapter/useChapterRuntimeHost";
 
 
 
@@ -75,6 +76,22 @@ type Act2ReplayState = {
   lineIndex: number;
 };
 
+type Act2RuntimeHostContext = {
+  childName: string;
+  backendWorldProgression: number | null;
+  backendWallet: { diamonds: number; sysselBux: number } | null;
+  backendSyncError: string;
+};
+
+function createInitialAct2RuntimeHostContext(): Act2RuntimeHostContext {
+  return {
+    childName: "Barnet",
+    backendWorldProgression: null,
+    backendWallet: null,
+    backendSyncError: "",
+  };
+}
+
 const ACT2_DEBUG_LAB_ENABLED = process.env.NODE_ENV !== "production";
 
 export function Act2Runtime({ debug = false, productionEnabled = true }: Act2RuntimeProps) {
@@ -84,28 +101,176 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const debugTapCountRef = useRef(0);
   const debugTapResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gameRef = useRef<Act2LakeGameHandle | null>(null);
-  const [state, setState] = useState<Act2RuntimeState>(createDefaultAct2RuntimeState);
-  const stateRef = useRef(state);
-  const [ready, setReady] = useState(false);
-  const [childName, setChildName] = useState("Barnet");
-  const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
-  const [backendWorldProgression, setBackendWorldProgression] = useState<number | null>(null);
-  const [backendWallet, setBackendWallet] = useState<{ diamonds: number; sysselBux: number } | null>(null);
   const backendWorldProgressionRef = useRef<number | null>(null);
-  const [backendSyncError, setBackendSyncError] = useState("");
+
+  const bootAct2 = useCallback(async ({ debug: debugMode }: ChapterRuntimeBootEnvironment) => {
+    if (debugMode) {
+      const act1 = await loadSaveState();
+      const finalePreview = new URLSearchParams(window.location.search).get("finale") === "1";
+      const defaults = createDefaultAct2RuntimeState();
+      const debugState: Act2RuntimeState = finalePreview
+        ? {
+            ...defaults,
+            entered: true,
+            openingComplete: true,
+            bicycleSeen: true,
+            alveIntroComplete: true,
+            backendClaimBaseline: 0,
+            projects: {
+              cabin: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `cabin:${String(i + 1).padStart(2, "0")}`), complete: true },
+              dock: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `dock:${String(i + 1).padStart(2, "0")}`), complete: true },
+              boathouse: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `boathouse:${String(i + 1).padStart(2, "0")}`), complete: true },
+              motorboat: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `motorboat:${String(i + 1).padStart(2, "0")}`), complete: true },
+            },
+            consumedProjectCompletionIds: ["dock:completion-reaction"],
+            finaleIndex: 0,
+            finaleLineIndex: 0,
+            familyFinaleConsumed: false,
+            epilogueConsumed: false,
+            act2Complete: false,
+            endCardSeen: false,
+          }
+        : {
+            ...defaults,
+            entered: true,
+            backendClaimBaseline: 0,
+          };
+      return {
+        accessAllowed: true,
+        state: debugState,
+        context: {
+          childName: act1?.childName || "Barnet",
+          backendWorldProgression: 999,
+          backendWallet: null,
+          backendSyncError: "",
+        },
+        chapterIntroVisible: !finalePreview,
+      };
+    }
+
+    const [act2, act1, childId] = await Promise.all([
+      loadAct2RuntimeState(),
+      loadSaveState(),
+      getPairedChildId(),
+    ]);
+    const childName = act1?.childName || "Barnet";
+    const act1ChapterComplete = chapterUnlocked(act1?.worldFlags?.act1EndCardSeen === true);
+    if (!act1ChapterComplete) {
+      return {
+        accessAllowed: false,
+        state: act2,
+        context: {
+          childName,
+          backendWorldProgression: null,
+          backendWallet: null,
+          backendSyncError: "",
+        },
+        chapterIntroVisible: false,
+      };
+    }
+
+    let entered = prepareAct2ProductionEntry(act2);
+    let backendWorldProgression: number | null = null;
+    let backendWallet: { diamonds: number; sysselBux: number } | null = null;
+    let backendSyncError = "";
+
+    if (childId) {
+      try {
+        const backend = await getChildGameState(childId);
+        if (backend) {
+          backendWorldProgression = backend.progression.worldProgression;
+          backendWallet = { diamonds: backend.diamonds, sysselBux: backend.sysselBux };
+          entered = withBackendClaimBaseline(entered, backend.progression.worldProgression);
+          entered = withBackendStoryFlags(entered, backend.worldFlags);
+        }
+      } catch {
+        backendSyncError = "Kunde inte läsa questframsteg just nu.";
+      }
+    }
+
+    const resumeProject = parseAct2PurchaseProject(
+      new URLSearchParams(window.location.search).get("resume"),
+    );
+    if (resumeProject && !entered.projects[resumeProject].complete) {
+      if (
+        resumeProject === "boathouse"
+        && entered.boathouseSteeringWheelOwned
+        && entered.projects.boathouse.contributions < 9
+      ) {
+        entered = {
+          ...entered,
+          selectedProject: "boathouse",
+          projects: {
+            ...entered.projects,
+            boathouse: {
+              contributions: 9,
+              visibleStage: 3,
+              consumedBeatIds: [
+                "boathouse:01", "boathouse:02", "boathouse:03",
+                "boathouse:04", "boathouse:05", "boathouse:06",
+                "boathouse:07", "boathouse:08", "boathouse:09",
+              ],
+              complete: false,
+            },
+          },
+        };
+      } else {
+        entered = { ...entered, selectedProject: resumeProject };
+      }
+    }
+
+    await saveAct2RuntimeState(entered);
+    const atChapterStart = chapterAtStart({
+      openingComplete: entered.openingComplete,
+      openingIndex: entered.openingIndex,
+      openingLineIndex: entered.openingLineIndex,
+    });
+
+    return {
+      accessAllowed: true,
+      state: entered,
+      context: {
+        childName,
+        backendWorldProgression,
+        backendWallet,
+        backendSyncError,
+      },
+      chapterIntroVisible: atChapterStart,
+      replaceHref: resumeProject ? chapterRoute("act2") : null,
+    };
+  }, []);
+
+  const {
+    state,
+    setState,
+    context: runtimeContext,
+    setContext: setRuntimeContext,
+    ready,
+    status: runtimeShellStatus,
+    chapterIntroVisible,
+    setChapterIntroVisible,
+    bootError,
+  } = useChapterRuntimeHost<Act2RuntimeState, Act2RuntimeHostContext>({
+    debug,
+    productionEnabled,
+    createInitialState: createDefaultAct2RuntimeState,
+    createInitialContext: createInitialAct2RuntimeHostContext,
+    boot: bootAct2,
+    replaceRoute: router.replace,
+  });
+  const { childName, backendWorldProgression, backendWallet, backendSyncError } = runtimeContext;
+  const stateRef = useRef(state);
+  const [previewProject, setPreviewProject] = useState<Act2Project | null>(null);
   const [motorboatNameDraft, setMotorboatNameDraft] = useState("");
   const [contributionTurnInOpen, setContributionTurnInOpen] = useState(false);
   const [cabinRevisitOpen, setCabinRevisitOpen] = useState(false);
   const [cabinRevisitLineIndex, setCabinRevisitLineIndex] = useState(0);
-  const [act2AccessAllowed, setAct2AccessAllowed] = useState(false);
-  const [chapterIntroVisible, setChapterIntroVisible] = useState(true);
   const [chapterIntroNameVisible, setChapterIntroNameVisible] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [historyReplay, setHistoryReplay] = useState<Act2ReplayState | null>(null);
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
 
   const chapterCardVisible = deriveChapterCardVisible(ready, chapterIntroVisible, { chapterComplete: state.act2Complete, endCardSeen: state.endCardSeen });
-  const runtimeShellStatus = deriveChapterRuntimeShell({ ready, debug, productionEnabled, accessAllowed: act2AccessAllowed });
   const {
     completionProject,
     projectChooserVisible,
@@ -137,6 +302,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     stateRef.current = state;
   }, [state]);
 
+  useEffect(() => {
+    backendWorldProgressionRef.current = backendWorldProgression;
+  }, [backendWorldProgression]);
+
   function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
     if (worldProgression === null || !candidateState.selectedProject) return false;
     return !act2ContributionBlockedByStoryGate(candidateState, candidateState.selectedProject)
@@ -145,137 +314,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }
 
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      // Shipping lock must be a hard side-effect boundary. Merely visiting the
-      // locked production route must never establish Act 2 entry/baseline state,
-      // otherwise quests completed before release can become latent Act 2 backlog.
-      if (!chapterBootMayLoad({ debug, productionEnabled })) {
-        setReady(true);
-        return;
-      }
-
-      if (debug) {
-        const act1 = await loadSaveState();
-        if (cancelled) return;
-        setChildName(act1?.childName || "Barnet");
-        const finalePreview = new URLSearchParams(window.location.search).get("finale") === "1";
-        const defaults = createDefaultAct2RuntimeState();
-        const debugState: Act2RuntimeState = finalePreview
-          ? {
-              ...defaults,
-              entered: true,
-              openingComplete: true,
-              bicycleSeen: true,
-              alveIntroComplete: true,
-              backendClaimBaseline: 0,
-              projects: {
-                cabin: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `cabin:${String(i + 1).padStart(2, "0")}`), complete: true },
-                dock: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `dock:${String(i + 1).padStart(2, "0")}`), complete: true },
-                boathouse: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `boathouse:${String(i + 1).padStart(2, "0")}`), complete: true },
-                motorboat: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `motorboat:${String(i + 1).padStart(2, "0")}`), complete: true },
-              },
-              consumedProjectCompletionIds: ["dock:completion-reaction"],
-              finaleIndex: 0,
-              finaleLineIndex: 0,
-              familyFinaleConsumed: false,
-              epilogueConsumed: false,
-              act2Complete: false,
-              endCardSeen: false,
-            }
-          : {
-              ...defaults,
-              entered: true,
-              backendClaimBaseline: 0,
-            };
-        backendWorldProgressionRef.current = 999;
-        setBackendWorldProgression(999);
-        setAct2AccessAllowed(true);
-        setChapterIntroVisible(!finalePreview);
-        setChapterIntroNameVisible(false);
-        setState(debugState);
-        setReady(true);
-        return;
-      }
-
-      const [act2, act1, childId] = await Promise.all([
-        loadAct2RuntimeState(),
-        loadSaveState(),
-        getPairedChildId(),
-      ]);
-      if (cancelled) return;
-      setChildName(act1?.childName || "Barnet");
-      const act1ChapterComplete = chapterUnlocked(act1?.worldFlags?.act1EndCardSeen === true);
-      if (!act1ChapterComplete) {
-        setAct2AccessAllowed(false);
-        setReady(true);
-        return;
-      }
-      setAct2AccessAllowed(true);
-      let entered: Act2RuntimeState = prepareAct2ProductionEntry(act2);
-      if (childId) {
-        try {
-          const backend = await getChildGameState(childId);
-          if (cancelled) return;
-          if (backend) {
-            backendWorldProgressionRef.current = backend.progression.worldProgression;
-            setBackendWorldProgression(backend.progression.worldProgression);
-            setBackendWallet({ diamonds: backend.diamonds, sysselBux: backend.sysselBux });
-            entered = withBackendClaimBaseline(entered, backend.progression.worldProgression);
-            entered = withBackendStoryFlags(entered, backend.worldFlags);
-          }
-        } catch {
-          if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
-        }
-      }
-      const resumeProject = parseAct2PurchaseProject(
-        new URLSearchParams(window.location.search).get("resume"),
-      );
-      if (resumeProject && !entered.projects[resumeProject].complete) {
-        if (
-          resumeProject === "boathouse"
-          && entered.boathouseSteeringWheelOwned
-          && entered.projects.boathouse.contributions < 9
-        ) {
-          entered = {
-            ...entered,
-            selectedProject: "boathouse",
-            projects: {
-              ...entered.projects,
-              boathouse: {
-                contributions: 9,
-                visibleStage: 3,
-                consumedBeatIds: [
-                  "boathouse:01", "boathouse:02", "boathouse:03",
-                  "boathouse:04", "boathouse:05", "boathouse:06",
-                  "boathouse:07", "boathouse:08", "boathouse:09",
-                ],
-                complete: false,
-              },
-            },
-          };
-        } else {
-          entered = { ...entered, selectedProject: resumeProject };
-        }
-      }
-      await saveAct2RuntimeState(entered);
-      if (cancelled) return;
-      const atChapterStart = chapterAtStart({
-        openingComplete: entered.openingComplete,
-        openingIndex: entered.openingIndex,
-        openingLineIndex: entered.openingLineIndex,
-      });
-      setChapterIntroVisible(atChapterStart);
-      setChapterIntroNameVisible(false);
-      setState(entered);
-      setReady(true);
-      if (resumeProject) {
-        router.replace(chapterRoute("act2"));
-      }
-    })();
-    return () => { cancelled = true; };
-  }, [debug, productionEnabled, router]);
 
   useEffect(() => {
     if (!ready || !state.openingComplete || !hostRef.current) return;
@@ -344,9 +382,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         const backend = await getChildGameState(childId);
         if (!cancelled && backend) {
           backendWorldProgressionRef.current = backend.progression.worldProgression;
-          setBackendWorldProgression(backend.progression.worldProgression);
-          setBackendWallet({ diamonds: backend.diamonds, sysselBux: backend.sysselBux });
-          setBackendSyncError("");
+          setRuntimeContext((current) => ({
+            ...current,
+            backendWorldProgression: backend.progression.worldProgression,
+            backendWallet: { diamonds: backend.diamonds, sysselBux: backend.sysselBux },
+            backendSyncError: "",
+          }));
           const current = await loadAct2RuntimeState();
           let next = withBackendClaimBaseline(current, backend.progression.worldProgression);
           next = withBackendStoryFlags(next, backend.worldFlags);
@@ -361,7 +402,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           }
         }
       } catch {
-        if (!cancelled) setBackendSyncError("Kunde inte läsa questframsteg just nu.");
+        if (!cancelled) setRuntimeContext((current) => ({
+          ...current,
+          backendSyncError: "Kunde inte läsa questframsteg just nu.",
+        }));
       }
     };
     void sync();
@@ -1059,7 +1103,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         </button>
       </div>
     </div>}
-    {backendSyncError && <div role="status" className="act2-sync-status">{backendSyncError}</div>}
+    {(bootError || backendSyncError) && <div role="status" className="act2-sync-status">{bootError || backendSyncError}</div>}
     {uiShell.showProjectStatus && state.selectedProject && <div className="act2-project-status" aria-label="Aktivt projekt">
       <strong>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · {state.projects[state.selectedProject].contributions}/16</strong>
     </div>}
