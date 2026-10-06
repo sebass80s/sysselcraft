@@ -983,8 +983,8 @@ assert.doesNotMatch(act2TestPageSource, /StoryMoment|StoryTranscript|<Image|proj
 
 assert.match(
   act2PageSource,
-  /lines: \[opening\.body\[state\.openingLineIndex\] \?\? opening\.body\[0\]\]/,
-  "Act 2 opening must present one authored line at a time",
+  /lines: \[storyLineAt\(opening\.body, state\.openingLineIndex\) \?\? opening\.body\[0\]\]/,
+  "Act 2 opening must present one authored line at a time through shared sequencing",
 );
 assert.doesNotMatch(
   act2PageSource,
@@ -993,6 +993,6 @@ assert.doesNotMatch(
 );
 assert.match(
   act2PageSource,
-  /lines: \[opening\.body\[state\.openingLineIndex\] \?\? opening\.body\[0\]\]/,
-  "Shared Act 2 runtime must own line-by-line opening presentation for both production and debug",
+  /lines: \[storyLineAt\(opening\.body, state\.openingLineIndex\) \?\? opening\.body\[0\]\]/,
+  "Shared Act 2 runtime must use canonical Story sequencing for line-by-line opening presentation in production and debug",
 );
