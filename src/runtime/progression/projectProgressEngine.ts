@@ -139,7 +139,7 @@ export function consumeSelectedProjectProgress<
     definition: definition.track(input.project),
     beatId: input.beatId,
   });
-  if (next === current) return normalized;
+  if (next.contributions === current.contributions) return normalized;
 
   return {
     ...normalized,
