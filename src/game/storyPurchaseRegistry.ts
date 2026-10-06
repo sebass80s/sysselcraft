@@ -17,7 +17,9 @@ import { JETTY_LIFEBUOY_BEAT } from "./act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "./act2BoathouseStory";
 import {
   defineStoryPurchaseRegistration,
+  resolveStoryPurchaseRegistration,
   type StoryPurchaseBeat,
+  type StoryPurchaseRegistration,
 } from "../runtime/purchase/storyPurchaseRegistry";
 
 function purchaseStoryBeat(target: Act2PurchaseProject): StoryPurchaseBeat | null {
@@ -62,3 +64,15 @@ export const ACT2_STORY_PURCHASE_REGISTRATION = defineStoryPurchaseRegistration(
 export const STORY_PURCHASE_REGISTRATIONS = [
   ACT2_STORY_PURCHASE_REGISTRATION,
 ] as const;
+
+export function resolveRegisteredStoryPurchase(searchParams: URLSearchParams) {
+  return resolveStoryPurchaseRegistration(
+    searchParams,
+    STORY_PURCHASE_REGISTRATIONS as readonly StoryPurchaseRegistration[],
+  );
+}
+
+export function storyPurchaseRegistrationById(id: string) {
+  return (STORY_PURCHASE_REGISTRATIONS as readonly StoryPurchaseRegistration[])
+    .find((registration) => registration.id === id) ?? null;
+}
