@@ -418,8 +418,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
 
   async function advanceOpening() {
     const current = ACT2_OPENING_BEATS[state.openingIndex];
-    if (state.openingLineIndex < current.body.length - 1) {
-      await commit({ ...state, openingLineIndex: state.openingLineIndex + 1 });
+    const step = advanceStoryLine(current.body.length, state.openingLineIndex);
+    if (step.type === "line") {
+      await commit({ ...state, openingLineIndex: step.index });
       return;
     }
     if (state.openingIndex < ACT2_OPENING_BEATS.length - 1) {
@@ -430,8 +431,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }
 
   async function previousOpening() {
-    if (state.openingLineIndex > 0) {
-      await commit({ ...state, openingLineIndex: state.openingLineIndex - 1 });
+    const current = ACT2_OPENING_BEATS[state.openingIndex];
+    const previous = previousStoryLineIndex(current.body.length, state.openingLineIndex);
+    if (previous !== state.openingLineIndex) {
+      await commit({ ...state, openingLineIndex: previous });
       return;
     }
     if (state.openingIndex > 0) {
@@ -838,7 +841,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         id: `act2:opening:${state.openingIndex}:${state.openingLineIndex}`,
         image: opening.image,
         heading: opening.title,
-        lines: [opening.body[state.openingLineIndex] ?? opening.body[0]],
+        lines: [storyLineAt(opening.body, state.openingLineIndex) ?? opening.body[0]],
         nextLabel: state.openingIndex === ACT2_OPENING_BEATS.length - 1 && state.openingLineIndex === opening.body.length - 1 ? "Gå närmare" : "Fortsätt",
       }}
       onPrevious={state.openingIndex > 0 || state.openingLineIndex > 0 ? () => previousOpening() : undefined}
