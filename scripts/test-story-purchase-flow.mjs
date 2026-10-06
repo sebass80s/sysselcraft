@@ -141,3 +141,30 @@ assert.match(
   /onClick=\{\(\) => void buyAct2StoryItem\(project\)\}/,
   "catalog-rendered Story Shop items must share the generic Act 2 purchase dispatcher",
 );
+
+const act2PurchaseAdapterSource = fs.readFileSync(new URL("../src/game/act2StoryPurchaseAdapter.ts", import.meta.url), "utf8");
+assert.match(
+  act2PurchaseAdapterSource,
+  /export function applyAct2StoryPurchaseResult/,
+  "Act 2 must own post-purchase state and reaction behavior behind a chapter adapter",
+);
+assert.match(
+  act2PurchaseAdapterSource,
+  /export function deriveAct2StoryPurchaseStatus/,
+  "Act 2 must expose catalog purchase owned/needed status through its adapter",
+);
+assert.match(
+  villageSource,
+  /applyAct2StoryPurchaseResult\(\s*currentAct2,\s*project,\s*purchase\.worldFlags/,
+  "Mira must delegate Act 2 post-purchase mutation to the chapter adapter",
+);
+assert.doesNotMatch(
+  villageSource,
+  /pendingPurchaseStory:\s*project/,
+  "Mira must not own Act 2 purchase-story persistence details",
+);
+assert.doesNotMatch(
+  villageSource,
+  /Livbojen är er!|Ratten är er!|Reservdelspaketet är beställt!/,
+  "Mira must not own Act 2 purchase success copy",
+);
