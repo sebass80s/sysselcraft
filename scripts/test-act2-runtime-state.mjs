@@ -890,9 +890,15 @@ for (const forbidden of childFacingForbidden) {
 assert.ok(village.includes("function act2StoryItemInsufficientFundsMessage(price: number)"), "Act 2 story purchases must share one insufficient-funds formatter");
 assert.ok(village.includes("Du har ${current} SysselBux. Du behöver ${missing} till."), "insufficient-funds feedback must show current balance and exact shortfall");
 assert.ok(village.includes("Gör några uppdrag och kom tillbaka"), "insufficient-funds feedback must explain the recovery path");
-assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.dock.price)"), "jetty story item must use detailed insufficient-funds feedback from the canonical display price");
-assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.boathouse.price)"), "boathouse story item must use detailed insufficient-funds feedback from the canonical display price");
-assert.ok(village.includes("act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.motorboat.price)"), "motorboat story item must use detailed insufficient-funds feedback from the canonical display price");
+assert.ok(
+  village.includes("act2StoryItemInsufficientFundsMessage(item.price)"),
+  "catalog-driven Act 2 story purchases must use detailed insufficient-funds feedback from the selected item's canonical display price",
+);
+assert.equal(
+  village.includes("act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.dock.price)"),
+  false,
+  "Mira Story Shop must not keep per-item insufficient-funds branches after catalog dispatch",
+);
 
 assert.match(page, /if \(!act1ChapterComplete\)/, "direct /act2 access must require the acknowledged Act 1 chapter ending");
 assert.equal(page.includes("void saveAct2RuntimeState(next);"), false, "backend polling must not persist asynchronously inside a React state setter");
