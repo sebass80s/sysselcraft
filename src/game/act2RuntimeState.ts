@@ -2,6 +2,11 @@ import { Preferences } from "@capacitor/preferences";
 import { runSequentialMigrations } from "../runtime/save/migrations";
 import { authoritativeProgressDelta } from "../runtime/progression/authoritativeDelta";
 import { progressGateRequired } from "../runtime/progression/progressGate";
+import {
+  nextProgressTrackStep,
+  normalizeProgressTrack,
+  type ProgressTrackDefinition,
+} from "../runtime/progression/progressTrack";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -179,29 +184,26 @@ function normalizeBeatIds(value: unknown) {
   return [...new Set(value.filter((id): id is string => typeof id === "string" && id.length > 0))];
 }
 
-function visibleStageForContributions(contributions: number): 0 | 1 | 2 | 3 | 4 {
-  if (contributions <= 0) return 0;
-  return Math.min(4, 1 + Math.floor(contributions / 4)) as 1 | 2 | 3 | 4;
-}
+const ACT2_PROJECT_TARGET = 16;
+const ACT2_PROJECT_STAGES = [
+  { minContributions: 1, stage: 1 },
+  { minContributions: 4, stage: 2 },
+  { minContributions: 8, stage: 3 },
+  { minContributions: 12, stage: 4 },
+] as const;
 
-function canonicalConsumedBeatIds(project: Act2Project, contributions: number) {
-  return Array.from(
-    { length: contributions },
-    (_, index) => `${project}:${String(index + 1).padStart(2, "0")}`,
-  );
+function act2ProjectTrackDefinition(
+  project: Act2Project,
+): ProgressTrackDefinition<1 | 2 | 3 | 4> {
+  return {
+    targetCount: ACT2_PROJECT_TARGET,
+    stages: ACT2_PROJECT_STAGES,
+    beatId: (number) => `${project}:${String(number).padStart(2, "0")}`,
+  };
 }
 
 function normalizeProject(value: unknown, project: Act2Project): Act2ProjectState {
-  const candidate = value && typeof value === "object" ? value as Partial<Act2ProjectState> : {};
-  const contributions = Number.isInteger(candidate.contributions)
-    ? Math.max(0, Math.min(16, candidate.contributions as number))
-    : 0;
-  return {
-    contributions,
-    visibleStage: visibleStageForContributions(contributions),
-    consumedBeatIds: canonicalConsumedBeatIds(project, contributions),
-    complete: contributions >= 16,
-  };
+  return normalizeProgressTrack(value, act2ProjectTrackDefinition(project));
 }
 
 export function prerequisiteCompletionCount(state: Act2RuntimeState) {
@@ -401,13 +403,14 @@ export function nextAct2Contribution(
   if (act2ContributionBlockedByStoryGate(normalized, project)) return null;
   const backlog = pendingBackendContributionCount(normalized, worldProgression);
   if (backlog < 1) return null;
-  const number = normalized.projects[project].contributions + 1;
-  if (number > 16) return null;
+  const next = nextProgressTrackStep(
+    normalized.projects[project].contributions,
+    act2ProjectTrackDefinition(project),
+  );
+  if (!next) return null;
   return {
     project,
-    number,
-    beatId: `${project}:${String(number).padStart(2, "0")}`,
-    visibleStage: Math.min(4, 1 + Math.floor(number / 4)) as 1 | 2 | 3 | 4,
+    ...next,
     backlog,
   };
 }
@@ -430,7 +433,7 @@ export function jettyPurchaseRequired(state: Act2RuntimeState) {
   return progressGateRequired(
     normalized.projects.dock.contributions,
     6,
-    16,
+    ACT2_PROJECT_TARGET,
     normalized.jettyLifebuoyOwned,
   );
 }
@@ -440,7 +443,7 @@ export function boathousePurchaseRequired(state: Act2RuntimeState) {
   return progressGateRequired(
     normalized.projects.boathouse.contributions,
     9,
-    16,
+    ACT2_PROJECT_TARGET,
     normalized.boathouseSteeringWheelOwned,
   );
 }
@@ -450,7 +453,7 @@ export function motorboatPartsPurchaseRequired(state: Act2RuntimeState) {
   return progressGateRequired(
     normalized.projects.motorboat.contributions,
     5,
-    16,
+    ACT2_PROJECT_TARGET,
     normalized.motorboatPartsOwned,
   );
 }
@@ -460,7 +463,7 @@ export function motorboatNamingRequired(state: Act2RuntimeState) {
   return progressGateRequired(
     normalized.projects.motorboat.contributions,
     12,
-    16,
+    ACT2_PROJECT_TARGET,
     normalized.motorboatName !== null,
   );
 }
