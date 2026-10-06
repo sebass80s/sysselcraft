@@ -49,6 +49,7 @@ import { deriveChapterRuntimeOverlay } from "../runtime/chapter/chapterRuntimeSh
 import { deriveAct2RuntimeBlockers } from "../game/act2RuntimeAdapter";
 import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
 import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../runtime/chapter/useChapterRuntimeHost";
+import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
 
 
 
@@ -92,6 +93,13 @@ function createInitialAct2RuntimeHostContext(): Act2RuntimeHostContext {
   };
 }
 
+function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
+  if (worldProgression === null || !candidateState.selectedProject) return false;
+  return !act2ContributionBlockedByStoryGate(candidateState, candidateState.selectedProject)
+    && !act2FinalePending(candidateState)
+    && nextAct2Contribution(candidateState, worldProgression) !== null;
+}
+
 const ACT2_DEBUG_LAB_ENABLED = process.env.NODE_ENV !== "production";
 
 export function Act2Runtime({ debug = false, productionEnabled = true }: Act2RuntimeProps) {
@@ -100,7 +108,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const debugHoldTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const debugTapCountRef = useRef(0);
   const debugTapResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const gameRef = useRef<Act2LakeGameHandle | null>(null);
   const backendWorldProgressionRef = useRef<number | null>(null);
 
   const bootAct2 = useCallback(async ({ debug: debugMode }: ChapterRuntimeBootEnvironment) => {
@@ -306,71 +313,61 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     backendWorldProgressionRef.current = backendWorldProgression;
   }, [backendWorldProgression]);
 
-  function hasPendingAlveTurnIn(candidateState: Act2RuntimeState, worldProgression: number | null) {
-    if (worldProgression === null || !candidateState.selectedProject) return false;
-    return !act2ContributionBlockedByStoryGate(candidateState, candidateState.selectedProject)
-      && !act2FinalePending(candidateState)
-      && nextAct2Contribution(candidateState, worldProgression) !== null;
-  }
-
-
-
-  useEffect(() => {
-    if (!ready || !state.openingComplete || !hostRef.current) return;
-    let disposed = false;
-    import("../game/createAct2LakeGame").then(async ({ createAct2LakeGame }) => {
-      if (disposed || !hostRef.current) return;
-      gameRef.current = await createAct2LakeGame(hostRef.current, 1, {
-        onAlveTurnIn: () => setContributionTurnInOpen(true),
-        onCabinRevisit: () => {
-          setCabinRevisitLineIndex(0);
-          setCabinRevisitOpen(true);
-        },
-      });
-      const latest = debug ? stateRef.current : await loadAct2RuntimeState();
-      gameRef.current.setActiveProject(latest.selectedProject);
-      gameRef.current.setAlvePresent(!(latest.act2Complete && latest.endCardSeen));
-      gameRef.current.setProjectStages({
-        cabin: latest.projects.cabin.visibleStage,
-        dock: latest.projects.dock.visibleStage,
-        boathouse: latest.projects.boathouse.visibleStage,
-        motorboat: latest.projects.motorboat.visibleStage,
-      });
-      gameRef.current.setAlveTurnInAvailable(
-        hasPendingAlveTurnIn(latest, backendWorldProgressionRef.current),
-      );
-      gameRef.current.setCabinRevisitAvailable(
-        latest.projects.cabin.complete && !latest.projects.motorboat.complete,
-      );
+  const mountAct2World = useCallback(async (): Promise<Act2LakeGameHandle | null> => {
+    const parent = hostRef.current;
+    if (!parent) return null;
+    const { createAct2LakeGame } = await import("../game/createAct2LakeGame");
+    if (!hostRef.current) return null;
+    return createAct2LakeGame(parent, 1, {
+      onAlveTurnIn: () => setContributionTurnInOpen(true),
+      onCabinRevisit: () => {
+        setCabinRevisitLineIndex(0);
+        setCabinRevisitOpen(true);
+      },
     });
-    return () => {
-      disposed = true;
-      gameRef.current?.destroy();
-      gameRef.current = null;
-    };
-  }, [ready, state.openingComplete, debug]);
+  }, []);
 
-  useEffect(() => {
-    gameRef.current?.setProjectStages({
-      cabin: state.projects.cabin.visibleStage,
-      dock: state.projects.dock.visibleStage,
-      boathouse: state.projects.boathouse.visibleStage,
-      motorboat: state.projects.motorboat.visibleStage,
+  const syncAct2World = useCallback((
+    world: Act2LakeGameHandle,
+    snapshot: {
+      state: Act2RuntimeState;
+      backendWorldProgression: number | null;
+      worldInputEnabled: boolean;
+    },
+  ) => {
+    const latest = snapshot.state;
+    world.setActiveProject(latest.selectedProject);
+    world.setAlvePresent(!(latest.act2Complete && latest.endCardSeen));
+    world.setProjectStages({
+      cabin: latest.projects.cabin.visibleStage,
+      dock: latest.projects.dock.visibleStage,
+      boathouse: latest.projects.boathouse.visibleStage,
+      motorboat: latest.projects.motorboat.visibleStage,
     });
-  }, [
-    state.projects.cabin.visibleStage,
-    state.projects.dock.visibleStage,
-    state.projects.boathouse.visibleStage,
-    state.projects.motorboat.visibleStage,
-  ]);
+    world.setAlveTurnInAvailable(
+      hasPendingAlveTurnIn(latest, snapshot.backendWorldProgression),
+    );
+    world.setCabinRevisitAvailable(
+      latest.projects.cabin.complete && !latest.projects.motorboat.complete,
+    );
+    world.setWorldInputEnabled(snapshot.worldInputEnabled);
+  }, []);
 
-  useEffect(() => {
-    gameRef.current?.setActiveProject(state.selectedProject);
-  }, [state.selectedProject]);
+  const destroyAct2World = useCallback((world: Act2LakeGameHandle) => {
+    world.destroy();
+  }, []);
 
-  useEffect(() => {
-    gameRef.current?.setAlvePresent(!(state.act2Complete && state.endCardSeen));
-  }, [state.act2Complete, state.endCardSeen]);
+  const gameRef = useChapterWorldHost({
+    active: ready && state.openingComplete,
+    snapshot: {
+      state,
+      backendWorldProgression,
+      worldInputEnabled: runtimeOverlay.worldInputEnabled,
+    },
+    mount: mountAct2World,
+    sync: syncAct2World,
+    destroy: destroyAct2World,
+  });
 
   useEffect(() => {
     if (!ready || debug) return;
@@ -415,21 +412,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       window.clearInterval(timer);
     };
   }, [ready, debug]);
-
-  useEffect(() => {
-    const pending = hasPendingAlveTurnIn(state, backendWorldProgression);
-    gameRef.current?.setAlveTurnInAvailable(pending);
-  }, [state, backendWorldProgression]);
-
-  useEffect(() => {
-    gameRef.current?.setCabinRevisitAvailable(
-      state.projects.cabin.complete && !state.projects.motorboat.complete,
-    );
-  }, [state.projects.cabin.complete, state.projects.motorboat.complete]);
-
-  useEffect(() => {
-    gameRef.current?.setWorldInputEnabled(runtimeOverlay.worldInputEnabled);
-  }, [runtimeOverlay.worldInputEnabled]);
 
   async function commit(next: Act2RuntimeState) {
     if (!debug) await saveAct2RuntimeState(next);
