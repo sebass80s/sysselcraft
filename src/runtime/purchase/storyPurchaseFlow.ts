@@ -16,3 +16,34 @@ export function resolveStoryPurchaseExit<TTarget>(
     ? { action: "resume", target }
     : { action: "stay" };
 }
+
+
+export type StoryPurchaseCurrency = "sysselbux" | "diamonds";
+
+export type StoryPurchasePresentation = {
+  gate: {
+    title: string;
+    text: string;
+    detail: string;
+  };
+  shop: {
+    icon: string;
+    title: string;
+    description: string;
+    requirement: string;
+  };
+};
+
+export type StoryPurchaseDefinition<TTarget, TId extends string = string> = {
+  id: TId;
+  target: TTarget;
+  currency: StoryPurchaseCurrency;
+  price: number;
+  presentation: StoryPurchasePresentation;
+};
+
+export function defineStoryPurchase<TTarget, TId extends string>(
+  definition: StoryPurchaseDefinition<TTarget, TId>,
+) {
+  return definition;
+}
