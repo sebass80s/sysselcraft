@@ -188,9 +188,14 @@ for (const retiredState of [
     `Village must not retain separate React state for ${retiredState}`,
   );
 }
+assert.match(
+  villageSource,
+  /const snapshot = await handoff\.registration\.loadSnapshot\(\);[\s\S]*setStoryPurchaseReturnContext\(handoff\)/,
+  "direct Story Purchase handoff must load through the resolved registry entry",
+);
 assert.ok(
-  (villageSource.match(/setAct2StoryPurchaseSnapshot\(deriveAct2StoryPurchaseSnapshot\(act2\)\)/g) ?? []).length >= 2,
-  "direct purchase resume and normal Mira shop open must load through the same Act 2 purchase snapshot adapter",
+  villageSource.includes("setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot(act2))"),
+  "normal Mira shop open may continue using the Act 2 adapter until the catalog/rendering registry slice",
 );
 assert.match(
   villageSource,
