@@ -204,28 +204,6 @@ main { min-height: 100dvh; }
 .dog-home .story-moment-dialogue { z-index:38; }
 
 
-/* Act 2 uses denser cinematic dialogue than the village cards.
-   Keep speaker labels/buttons unchanged and reduce only body copy. */
-.act2-dialogue-card p {
-  font-size: 0.82rem;
-  line-height: 1.32;
-}
-
-.dialogue-card.story-moment-dialogue.act2-dialogue-card {
-  left: max(1rem, env(safe-area-inset-left));
-  right: max(1rem, env(safe-area-inset-right));
-  width: auto;
-  max-width: 900px;
-  margin-inline: auto;
-  transform: none;
-  max-height: calc(100dvh - max(.8rem, env(safe-area-inset-top)) - max(.8rem, env(safe-area-inset-bottom)) - 1.6rem);
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
-}
-
-
 .act2-project-status {
   position: absolute;
   right: max(16px, env(safe-area-inset-right));
@@ -427,6 +405,25 @@ body[data-story-overlay-active="true"] [data-story-ui="quest-overlay"] {
 }
 .shared-story-dialogue {
   z-index: 2;
+}
+
+.dialogue-card.story-moment-dialogue.shared-story-dialogue {
+  left: max(1rem, env(safe-area-inset-left));
+  right: max(1rem, env(safe-area-inset-right));
+  width: auto;
+  max-width: 900px;
+  margin-inline: auto;
+  transform: none;
+  max-height: calc(100dvh - max(.8rem, env(safe-area-inset-top)) - max(.8rem, env(safe-area-inset-bottom)) - 1.6rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+.shared-story-dialogue .shared-story-body p {
+  font-size: 1rem;
+  line-height: 1.35;
 }
 .shared-story-navigation {
   display: flex;
