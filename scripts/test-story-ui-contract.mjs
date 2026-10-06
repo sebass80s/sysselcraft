@@ -124,6 +124,7 @@ assert.match(
 );
 const storyMomentSource = read("src/components/story/StoryMoment.tsx");
 const storyNameInput = read("src/components/story/StoryNameInput.tsx");
+const storyChoiceGroup = read("src/components/story/StoryChoiceGroup.tsx");
 const chapterCards = read("src/runtime/chapter/ChapterCards.tsx");
 const storyHistoryPanel = read("src/runtime/story/StoryHistoryPanel.tsx");
 const storySequence = read("src/runtime/story/storySequence.ts");
@@ -271,6 +272,20 @@ assert.match(
   villageRuntime,
   /variant="handoff"/,
   "cross-chapter shop handoff must use the shared high-priority Story presentation variant",
+);
+assert.match(storyChoiceGroup, /export function StoryChoiceGroup/, "shared Story UI must own standard choice layout");
+assert.match(storyChoiceGroup, /aria-pressed=\{selected === option\.value\}/, "shared Story choices must expose canonical selected state");
+assert.match(css, /\.shared-story-choice-options \{[^}]*display:\s*flex[^}]*flex-wrap:\s*wrap[^}]*justify-content:\s*center/s,
+  "shared Story choices must own wrapping and spacing");
+assert.match(
+  act2Runtime,
+  /<StoryChoiceGroup[\s\S]*selected=\{previewProject\}[\s\S]*onSelect=\{setPreviewProject\}/,
+  "Act 2 project selection must consume the shared choice component",
+);
+assert.doesNotMatch(
+  act2Runtime,
+  /display:\s*"flex", gap:\s*8, flexWrap:\s*"wrap", justifyContent:\s*"center"/,
+  "Act 2 must not retain inline standard choice layout",
 );
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
