@@ -40,7 +40,7 @@ import { boathousePurchaseRequired, clearAct2RuntimeStateForPairedChild, jettyPu
 import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { parseStoryLine, storySpeakerTone } from "../game/storyEngine";
-import { act2ResumeHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
+import { act2ResumeHref, parseAct2PurchaseProject, type Act2PurchaseProject } from "../game/act2PurchaseHandoff";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
 import { StoryMoment } from "./story/StoryMoment";
@@ -890,34 +890,25 @@ export default function VillagePrototype() {
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
 
-  async function buyAct2MotorboatParts() {
-    if (shopBusy || act2MotorboatPartsOwned || !act2MotorboatPartsNeeded) return;
-    if (!window.confirm(`Köpa reservdelspaket till motorbåten för ${ACT2_PURCHASE_CATALOG.motorboat.price} 🪙?`)) return;
-    setShopBusy(true); setShopMessage("");
-    try {
-      const purchase = await purchaseStoryItem(ACT2_PURCHASE_CATALOG.motorboat.id);
-      const currentWallet = getLatestBackendWallet() ?? backendWallet;
-      const wallet: BackendWalletSnapshot = { diamonds: currentWallet?.diamonds ?? diamonds, sysselBux: purchase.sysselBux };
-      setBackendWallet(wallet); publishBackendWallet(wallet);
-      const currentAct2 = await loadAct2RuntimeState();
-      const nextAct2 = withBackendStoryFlags(currentAct2, purchase.worldFlags);
-      await saveAct2RuntimeState(nextAct2);
-      setAct2MotorboatPartsOwned(nextAct2.motorboatPartsOwned);
-      setAct2MotorboatPartsNeeded(motorboatPartsPurchaseRequired(nextAct2));
-      setShopMessage("Reservdelspaketet är beställt! Tillbaka till motorbåten. 📦");
-      window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.motorboat.price) : message);
-    } finally { setShopBusy(false); }
-  }
+  async function buyAct2StoryItem(project: Act2PurchaseProject) {
+    const item = ACT2_PURCHASE_CATALOG[project];
+    const ownedByProject: Record<Act2PurchaseProject, boolean> = {
+      dock: act2JettyLifebuoyOwned,
+      boathouse: act2BoathouseSteeringWheelOwned,
+      motorboat: act2MotorboatPartsOwned,
+    };
+    const neededByProject: Record<Act2PurchaseProject, boolean> = {
+      dock: act2JettyLifebuoyNeeded,
+      boathouse: act2BoathouseSteeringWheelNeeded,
+      motorboat: act2MotorboatPartsNeeded,
+    };
+    if (shopBusy || ownedByProject[project] || !neededByProject[project]) return;
+    if (!window.confirm(`Köpa ${item.presentation.shop.title.toLowerCase()} för ${item.price} 🪙?`)) return;
 
-  async function buyAct2BoathouseSteeringWheel() {
-    if (shopBusy || act2BoathouseSteeringWheelOwned || !act2BoathouseSteeringWheelNeeded) return;
-    if (!window.confirm(`Köpa ratt till lådbilen för ${ACT2_PURCHASE_CATALOG.boathouse.price} 🪙?`)) return;
-    setShopBusy(true); setShopMessage("");
+    setShopBusy(true);
+    setShopMessage("");
     try {
-      const purchase = await purchaseStoryItem(ACT2_PURCHASE_CATALOG.boathouse.id);
+      const purchase = await purchaseStoryItem(item.id);
       const currentWallet = getLatestBackendWallet() ?? backendWallet;
       const wallet: BackendWalletSnapshot = {
         diamonds: currentWallet?.diamonds ?? diamonds,
@@ -925,55 +916,47 @@ export default function VillagePrototype() {
       };
       setBackendWallet(wallet);
       publishBackendWallet(wallet);
-      const currentAct2 = await loadAct2RuntimeState();
-      const nextAct2 = {
-        ...withBackendStoryFlags(currentAct2, purchase.worldFlags),
-        pendingPurchaseStory: "boathouse" as const,
-        purchaseStoryLineIndex: 0,
-      };
-      await saveAct2RuntimeState(nextAct2);
-      setAct2BoathouseSteeringWheelOwned(nextAct2.boathouseSteeringWheelOwned);
-      setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(nextAct2));
-      setShopMessage("Ratten är er! Nu kan lådbilen byggas klart. 🛞");
-      setAct2PurchaseStory("boathouse");
-      setAct2PurchaseStoryIndex(0);
-      window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.boathouse.price) : message);
-    } finally { setShopBusy(false); }
-  }
 
-  async function buyAct2JettyLifebuoy() {
-    if (shopBusy || act2JettyLifebuoyOwned || !act2JettyLifebuoyNeeded) return;
-    if (!window.confirm(`Köpa Livboj till bryggan för ${ACT2_PURCHASE_CATALOG.dock.price} 🪙?`)) return;
-    setShopBusy(true); setShopMessage("");
-    try {
-      const purchase = await purchaseStoryItem(ACT2_PURCHASE_CATALOG.dock.id);
-      const currentWallet = getLatestBackendWallet() ?? backendWallet;
-      const wallet: BackendWalletSnapshot = {
-        diamonds: currentWallet?.diamonds ?? diamonds,
-        sysselBux: purchase.sysselBux,
-      };
-      setBackendWallet(wallet);
-      publishBackendWallet(wallet);
       const currentAct2 = await loadAct2RuntimeState();
-      const nextAct2 = {
-        ...withBackendStoryFlags(currentAct2, purchase.worldFlags),
-        pendingPurchaseStory: "dock" as const,
-        purchaseStoryLineIndex: 0,
-      };
+      const withFlags = withBackendStoryFlags(currentAct2, purchase.worldFlags);
+      const nextAct2 = project === "dock" || project === "boathouse"
+        ? {
+            ...withFlags,
+            pendingPurchaseStory: project,
+            purchaseStoryLineIndex: 0,
+          }
+        : withFlags;
       await saveAct2RuntimeState(nextAct2);
+
       setAct2JettyLifebuoyOwned(nextAct2.jettyLifebuoyOwned);
       setAct2JettyLifebuoyNeeded(jettyPurchaseRequired(nextAct2));
-      setShopMessage("Livbojen är er! Ta med den tillbaka till bryggan. 🛟");
-      setAct2PurchaseStory("dock");
-      setAct2PurchaseStoryIndex(0);
+      setAct2BoathouseSteeringWheelOwned(nextAct2.boathouseSteeringWheelOwned);
+      setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(nextAct2));
+      setAct2MotorboatPartsOwned(nextAct2.motorboatPartsOwned);
+      setAct2MotorboatPartsNeeded(motorboatPartsPurchaseRequired(nextAct2));
+
+      if (project === "dock") {
+        setShopMessage("Livbojen är er! Ta med den tillbaka till bryggan. 🛟");
+        setAct2PurchaseStory("dock");
+        setAct2PurchaseStoryIndex(0);
+      } else if (project === "boathouse") {
+        setShopMessage("Ratten är er! Nu kan lådbilen byggas klart. 🛞");
+        setAct2PurchaseStory("boathouse");
+        setAct2PurchaseStoryIndex(0);
+      } else {
+        setShopMessage("Reservdelspaketet är beställt! Tillbaka till motorbåten. 📦");
+      }
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
-      setShopMessage(message.includes("insufficient sysselbux") ? act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.dock.price) : message);
-    } finally { setShopBusy(false); }
+      setShopMessage(
+        message.includes("insufficient sysselbux")
+          ? act2StoryItemInsufficientFundsMessage(item.price)
+          : message,
+      );
+    } finally {
+      setShopBusy(false);
+    }
   }
 
   async function buyBottleMessage() {
@@ -1479,7 +1462,41 @@ export default function VillagePrototype() {
             {shopCurrency === "diamonds" ? <>
               <div className="mira-shop-grid">{shopRewards.map((reward) => { const pending = pendingDiamondRewardIds.has(reward.id); return <article className="mira-shop-item" key={reward.id}><div><span>🎁</span><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}</div><button className="primary-button" disabled={shopBusy || pending || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>{pending ? "⏳ Väntar på förälder" : `💎 ${reward.diamondPrice} · Köp`}</button></article>; })}</div>
               {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Inga diamantbelöningar på hyllan just nu.</p>}
-            </> : <div className="mira-shop-grid">{(act2MotorboatPartsNeeded || act2MotorboatPartsOwned) && <article className="mira-shop-item"><div><span>{ACT2_PURCHASE_CATALOG.motorboat.presentation.shop.icon}</span><strong>{ACT2_PURCHASE_CATALOG.motorboat.presentation.shop.title}</strong><p>{ACT2_PURCHASE_CATALOG.motorboat.presentation.shop.description}</p><small>{ACT2_PURCHASE_CATALOG.motorboat.presentation.shop.requirement}</small></div><button className="primary-button" disabled={shopBusy || act2MotorboatPartsOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_PURCHASE_CATALOG.motorboat.price} onClick={() => void buyAct2MotorboatParts()}>{act2MotorboatPartsOwned ? "✓ Köpt" : `🪙 ${ACT2_PURCHASE_CATALOG.motorboat.price} · Köp`}</button></article>}{(act2BoathouseSteeringWheelNeeded || act2BoathouseSteeringWheelOwned) && <article className="mira-shop-item"><div><span>{ACT2_PURCHASE_CATALOG.boathouse.presentation.shop.icon}</span><strong>{ACT2_PURCHASE_CATALOG.boathouse.presentation.shop.title}</strong><p>{ACT2_PURCHASE_CATALOG.boathouse.presentation.shop.description}</p><small>{ACT2_PURCHASE_CATALOG.boathouse.presentation.shop.requirement}</small></div><button className="primary-button" disabled={shopBusy || act2BoathouseSteeringWheelOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_PURCHASE_CATALOG.boathouse.price} onClick={() => void buyAct2BoathouseSteeringWheel()}>{act2BoathouseSteeringWheelOwned ? "✓ Köpt" : `🪙 ${ACT2_PURCHASE_CATALOG.boathouse.price} · Köp`}</button></article>}{(act2JettyLifebuoyNeeded || act2JettyLifebuoyOwned) && <article className="mira-shop-item"><div><span>{ACT2_PURCHASE_CATALOG.dock.presentation.shop.icon}</span><strong>{ACT2_PURCHASE_CATALOG.dock.presentation.shop.title}</strong><p>{ACT2_PURCHASE_CATALOG.dock.presentation.shop.description}</p><small>{ACT2_PURCHASE_CATALOG.dock.presentation.shop.requirement}</small></div><button className="primary-button" disabled={shopBusy || act2JettyLifebuoyOwned || (backendWallet?.sysselBux ?? sysselBux) < ACT2_PURCHASE_CATALOG.dock.price} onClick={() => void buyAct2JettyLifebuoy()}>{act2JettyLifebuoyOwned ? "✓ Köpt" : `🪙 ${ACT2_PURCHASE_CATALOG.dock.price} · Köp`}</button></article>}{!act1EndCardSeen && <article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p>{!bottleMessagePurchased && <><small>⭐ Nästa steg i berättelsen</small><small>🪙 Du har {backendWallet?.sysselBux ?? sysselBux} / {BOTTLE_MESSAGE_PRICE} SysselBux</small></>}</div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article>}
+            </> : <div className="mira-shop-grid">{([
+                {
+                  project: "motorboat" as const,
+                  needed: act2MotorboatPartsNeeded,
+                  owned: act2MotorboatPartsOwned,
+                },
+                {
+                  project: "boathouse" as const,
+                  needed: act2BoathouseSteeringWheelNeeded,
+                  owned: act2BoathouseSteeringWheelOwned,
+                },
+                {
+                  project: "dock" as const,
+                  needed: act2JettyLifebuoyNeeded,
+                  owned: act2JettyLifebuoyOwned,
+                },
+              ]).map(({ project, needed, owned }) => {
+                if (!needed && !owned) return null;
+                const item = ACT2_PURCHASE_CATALOG[project];
+                return <article className="mira-shop-item" key={item.id}>
+                  <div>
+                    <span>{item.presentation.shop.icon}</span>
+                    <strong>{item.presentation.shop.title}</strong>
+                    <p>{item.presentation.shop.description}</p>
+                    <small>{item.presentation.shop.requirement}</small>
+                  </div>
+                  <button
+                    className="primary-button"
+                    disabled={shopBusy || owned || (backendWallet?.sysselBux ?? sysselBux) < item.price}
+                    onClick={() => void buyAct2StoryItem(project)}
+                  >
+                    {owned ? "✓ Köpt" : `🪙 ${item.price} · Köp`}
+                  </button>
+                </article>;
+              })}{!act1EndCardSeen && <article className="mira-shop-item"><div><span>🍾</span><strong>Flaskpost</strong><p>Skriv ett meddelande till någon där ute. Vem vet vem som hittar det?</p>{!bottleMessagePurchased && <><small>⭐ Nästa steg i berättelsen</small><small>🪙 Du har {backendWallet?.sysselBux ?? sysselBux} / {BOTTLE_MESSAGE_PRICE} SysselBux</small></>}</div><button className="primary-button" disabled={shopBusy || bottleMessagePurchased || (backendWallet?.sysselBux ?? sysselBux) < BOTTLE_MESSAGE_PRICE} onClick={() => void buyBottleMessage()}>{bottleMessagePurchased ? "✓ Köpt" : `🪙 ${BOTTLE_MESSAGE_PRICE} · Köp`}</button></article>}
               <article className="mira-shop-item"><div><Image className="mira-shop-item-art" src="/assets/village/shop/thumb-room-rug.svg" alt="" width={72} height={42} /><strong>Fotbollsmatta</strong><p>En mjuk fotbollsplan till golvet i ditt rum.</p></div><button className="primary-button" disabled={shopBusy || footballRugOwned || (backendWallet?.sysselBux ?? sysselBux) < FOOTBALL_RUG_PRICE} onClick={() => void buyFootballRug()}>{footballRugOwned ? "✓ Köpt" : `🪙 ${FOOTBALL_RUG_PRICE} · Köp`}</button></article>
               {([
                 ["footballPoster","Fotbollsposter","thumb-room-poster.svg",1],
