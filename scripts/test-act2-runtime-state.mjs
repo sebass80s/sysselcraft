@@ -724,13 +724,14 @@ const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx"
 assert.ok(village.includes("getChildDisplayName(childId)"), "Test-Ture QA controls must derive identity from the paired backend child, not the local story name");
 assert.ok(village.includes('pairedBackendChildName === "Test-Ture"'), "Test-Ture reset control must be scoped to the backend Test-Ture profile");
 assert.ok(
-  page.includes("const worldBlocked =")
-    && page.includes("gameRef.current?.setWorldInputEnabled(!worldBlocked)"),
-  "Act 2 must disable Phaser world input while blocking overlays are active",
+  page.includes("deriveChapterRuntimeOverlay(chapterCardVisible, storyUiVisible)")
+    && page.includes("gameRef.current?.setWorldInputEnabled(runtimeOverlay.worldInputEnabled)"),
+  "Act 2 must disable Phaser world input through shared chapter overlay arbitration",
 );
 assert.ok(
-  page.includes("<GameUiShell") && page.includes("setWorldInputEnabled(!worldBlocked)"),
-  "Act 2 shared shell must pair with explicit lake world-input suppression",
+  page.includes("<GameUiShell")
+    && page.includes("blockingOverlayVisible: runtimeOverlay.blockingOverlayVisible"),
+  "Act 2 shared GameUiShell must consume the same chapter overlay authority as lake input",
 );
 assert.ok(
   lakeGameSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled")
