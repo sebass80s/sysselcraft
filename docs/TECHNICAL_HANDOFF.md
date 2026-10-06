@@ -1810,3 +1810,71 @@ No persisted save shape changed.
 No backend transaction behavior changed.
 No movement, collision, dog-follow, pointer/touch or WebView behavior changed.
 
+## Runtime Architecture 1.1 code-complete checkpoint
+
+Verified code HEAD before documentation closeout: `c951702512e0794997716c56983ef05893d81120`
+
+GitHub Actions: **#2084 SUCCESS** on that exact SHA.
+
+### Final shared purchase-handoff slice
+
+New canonical primitive:
+- `src/runtime/purchase/storyPurchaseHandoff.ts`.
+
+It owns:
+- whitelist parsing of story-purchase targets;
+- chapter-registry based shop-route construction;
+- chapter-registry based resume-route construction;
+- URL encoding of handoff query keys/targets.
+
+`src/game/act2PurchaseHandoff.ts` is now a thin Act 2 adapter only:
+- allowed Act 2 targets;
+- Act 1 as shop host;
+- `act2-purchase` as current query key;
+- Act 2 as resume chapter.
+
+Future chapters must reuse the shared handoff primitive rather than introduce copied `actXPurchaseHandoff` mechanics.
+
+### Runtime 1.1 code status
+
+The planned engine layers are now present and consumed by current gameplay:
+
+- Chapter Lifecycle;
+- Chapter Registry / next-chapter navigation;
+- Chapter Runtime Shell;
+- shared Chapter Runtime Boundary presentation;
+- configurable Progress Track;
+- Authoritative Progress Track composition;
+- shared progress gates;
+- shared Story Purchase Flow semantics;
+- shared Story Purchase Definition metadata;
+- shared Story Purchase Handoff;
+- Story Engine / History / UI Shell / Interaction / Save-Migration foundations from Runtime 1.0;
+- Act 2 adapters/data sitting above the shared engine.
+
+The final source audit found no remaining clear generic chapter-engine responsibility that should be extracted from Act 2 before acceptance. Remaining Act 2 code is currently chapter/domain/world-specific, including:
+- authored story and dialogue;
+- project names/order/prerequisites;
+- exact purchase gate thresholds;
+- Alve behavior;
+- completion reactions;
+- Lake world/render/collision/movement details;
+- debug-lab route;
+- Act 2-specific save compatibility fields.
+
+Do not continue extracting merely to reduce filenames containing `Act2`.
+
+### Acceptance status
+
+**Runtime 1.1 is code-complete, not yet acceptance-complete.**
+
+Before beginning real Act 3 runtime work:
+1. browser/preview interaction smoke on the exact 1.1 checkpoint;
+2. physical iPhone update-in-place using the preserved save;
+3. verify Village movement/touch/pathfinding, Lake movement/collision, dog follow, overlays/input blocking, Linus naming/input, chapter transition, purchase insufficient-funds escape, successful purchase resume, restart/save continuity and Act 2 -> Act 3 boundary;
+4. do not reset Adam's save/backend for convenience.
+
+No persisted save schema was changed by the final purchase-definition/handoff slices.
+Backend/Supabase remains authoritative for transactions, wallet and owned story-item flags.
+No collision, movement, dog-follow, pointer/touch or WebView implementation was generalized during Runtime 1.1.
+
