@@ -94,8 +94,7 @@ export function StoryHistoryPanel<TBeat extends StoryHistoryReplayBeat>({
         }}
         onPrevious={replay.lineIndex > 0 ? previousReplay : undefined}
         onNext={advanceReplay}
-        zIndex={110}
-        background="rgba(6,10,8,.96)"
+        variant="history"
         childName={childName}
         revealImageBeforeNext={replay.lineIndex + 1 >= replay.beat.body.length}
       />
