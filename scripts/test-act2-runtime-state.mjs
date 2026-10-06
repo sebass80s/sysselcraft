@@ -894,13 +894,13 @@ assert.ok(village.includes("function storyItemInsufficientFundsMessage(price: nu
 assert.ok(village.includes("Du har ${current} SysselBux. Du behöver ${missing} till."), "insufficient-funds feedback must show current balance and exact shortfall");
 assert.ok(village.includes("Gör några uppdrag och kom tillbaka"), "insufficient-funds feedback must explain the recovery path");
 assert.ok(
-  village.includes("act2StoryItemInsufficientFundsMessage(item.price)"),
-  "catalog-driven Act 2 story purchases must use detailed insufficient-funds feedback from the selected item's canonical display price",
+  village.includes("storyItemInsufficientFundsMessage(item.price)"),
+  "registered Story Purchases must use detailed insufficient-funds feedback from the selected item's canonical display price",
 );
 assert.equal(
-  village.includes("act2StoryItemInsufficientFundsMessage(ACT2_PURCHASE_CATALOG.dock.price)"),
+  village.includes("act2StoryItemInsufficientFundsMessage("),
   false,
-  "Mira Story Shop must not keep per-item insufficient-funds branches after catalog dispatch",
+  "Mira Story Shop must not retain the retired Act 2-specific insufficient-funds formatter",
 );
 
 assert.match(page, /if \(!act1ChapterComplete\)/, "direct /act2 access must require the acknowledged Act 1 chapter ending");
