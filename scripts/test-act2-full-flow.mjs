@@ -137,7 +137,7 @@ function runProject(current, project) {
     assert.ok(candidate, `${project} ${number}/16 must become available after one real quest contribution`);
     assert.equal(candidate.number, number, `${project} must not skip contribution ${number}`);
     assert.equal(candidate.beatId, `${project}:${String(number).padStart(2, "0")}`);
-    current = withPresentedContribution(current, project, candidate.beatId, candidate.visibleStage);
+    current = withPresentedContribution(current, project, candidate.beatId);
     assert.equal(current.projects[project].contributions, number);
     if (number % 4 === 0 && number < 16) current = restart(current);
   }
