@@ -470,3 +470,21 @@ body[data-story-overlay-active="true"] [data-story-ui="quest-overlay"] {
   background: #fffdf4;
   color: #702b22;
 }
+
+.shared-story-choice-group {
+  display: grid;
+  gap: .65rem;
+  justify-items: center;
+}
+.shared-story-choice-options {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.shared-story-choice-option[aria-pressed="true"] {
+  box-shadow: 0 0 0 3px rgba(71,122,63,.18);
+}
+.shared-story-choice-confirm {
+  margin-top: .1rem;
+}
