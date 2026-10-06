@@ -41,7 +41,7 @@ assert.ok(ACT2_ALVE_DIALOGUE.some((beat) => beat.text.includes("Jag heter {child
 assert.ok(storyDesign.includes("Jag heter {childName}."), "canonical Alve doc must use saved child identity");
 
 assert.ok(CABIN_WAITING_REACTION.body.length > 0);
-assert.ok(runtime.includes("CABIN_WAITING_REACTION.body[cabinRevisitLineIndex]"), "Cabin revisit beat must be playable");
+assert.ok(runtime.includes("storyLineAt(CABIN_WAITING_REACTION.body, cabinRevisitLineIndex)"), "Cabin revisit beat must be playable through shared Story sequencing");
 assert.ok(JETTY_COMPLETION_REACTION.body.length > 0);
 assert.ok(runtime.includes("JETTY_COMPLETION_REACTION"), "Jetty completion payoff must be playable");
 
