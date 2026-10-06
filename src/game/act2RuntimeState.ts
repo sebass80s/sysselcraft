@@ -629,7 +629,6 @@ export function withPresentedContribution(
   state: Act2RuntimeState,
   project: Act2Project,
   beatId: string,
-  _visibleStage: 0 | 1 | 2 | 3 | 4,
 ): Act2RuntimeState {
   const normalized = normalizeAct2RuntimeState(state);
   const progress = consumeSelectedProjectProgress(
