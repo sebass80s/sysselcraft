@@ -53,21 +53,43 @@ assert.deepEqual(
 );
 
 const act2 = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
+const runtimeHost = fs.readFileSync(new URL("../src/runtime/chapter/useChapterRuntimeHost.ts", import.meta.url), "utf8");
+const worldHost = fs.readFileSync(new URL("../src/runtime/chapter/useChapterWorldHost.ts", import.meta.url), "utf8");
 
 assert.match(
-  act2,
+  runtimeHost,
   /chapterBootMayLoad\(\{ debug, productionEnabled \}\)/,
-  "Act 2 boot side-effect boundary must use the shared chapter shell",
+  "shared chapter host must own the shipping-lock side-effect boundary",
+);
+assert.match(
+  runtimeHost,
+  /deriveChapterRuntimeShell\(\{[\s\S]*ready,[\s\S]*debug,[\s\S]*productionEnabled,[\s\S]*accessAllowed/,
+  "shared chapter host must derive canonical loading/shipping/progression/active status",
 );
 assert.match(
   act2,
-  /deriveChapterRuntimeShell\(\{ ready, debug, productionEnabled, accessAllowed: act2AccessAllowed \}\)/,
-  "Act 2 route rendering must derive its shell status centrally",
+  /useChapterRuntimeHost<Act2RuntimeState, Act2RuntimeHostContext>/,
+  "Act 2 must consume the shared chapter runtime host instead of owning boot status state",
 );
 assert.doesNotMatch(
   act2,
-  /if \(!debug && !productionEnabled\)/,
-  "Act 2 must not retain the retired local shipping-lock decision",
+  /const \[ready, setReady\]/,
+  "Act 2 must not retain local ready-state ownership",
+);
+assert.doesNotMatch(
+  act2,
+  /act2AccessAllowed/,
+  "Act 2 must not retain local access-state ownership",
+);
+assert.doesNotMatch(
+  act2,
+  /chapterBootMayLoad\(/,
+  "Act 2 must not duplicate the host shipping-lock boundary",
+);
+assert.doesNotMatch(
+  act2,
+  /deriveChapterRuntimeShell\(/,
+  "Act 2 must not derive shell status outside the shared host",
 );
 assert.match(
   act2,
@@ -79,11 +101,6 @@ assert.match(
   /returnHref=\{chapterRoute\("act1"\)\}/,
   "Act 2 access boundary must return through the canonical chapter registry",
 );
-assert.doesNotMatch(
-  act2,
-  /return <main className="parent-page"><p>Laddar sjön/,
-  "Act 2 must not retain a local loading boundary",
-);
 assert.match(
   act2,
   /deriveChapterRuntimeOverlay\(chapterCardVisible, storyUiVisible\)/,
@@ -91,13 +108,23 @@ assert.match(
 );
 assert.match(
   act2,
-  /setWorldInputEnabled\(runtimeOverlay\.worldInputEnabled\)/,
-  "Phaser world input must consume the same shared overlay result as runtime UI",
+  /useChapterWorldHost\(\{/,
+  "Act 2 must delegate world mount/sync/destroy lifecycle to the shared world host",
+);
+assert.match(
+  worldHost,
+  /destroy\(world\)/,
+  "shared world host must own world cleanup",
+);
+assert.match(
+  act2,
+  /world\.setWorldInputEnabled\(snapshot\.worldInputEnabled\)/,
+  "Act 2 world adapter must consume shared overlay authority through the world host snapshot",
 );
 assert.match(
   act2,
   /blockingOverlayVisible: runtimeOverlay\.blockingOverlayVisible/,
-  "GameUiShell must consume the same shared overlay result as Phaser world input",
+  "GameUiShell must consume the same shared overlay result as the world adapter",
 );
 assert.doesNotMatch(
   act2,
@@ -105,4 +132,4 @@ assert.doesNotMatch(
   "Act 2 must not retain a second local world-block calculation",
 );
 
-console.log("PASS: shared chapter runtime shell owns boot/access status for Act 2");
+console.log("PASS: shared chapter runtime hosts own boot/access and world lifecycle for Act 2");
