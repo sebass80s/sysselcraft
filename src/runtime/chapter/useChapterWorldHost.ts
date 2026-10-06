@@ -22,7 +22,10 @@ export function useChapterWorldHost<TWorld, TSnapshot>(
   const { active, snapshot, mount, sync, destroy } = options;
   const worldRef = useRef<TWorld | null>(null);
   const snapshotRef = useRef(snapshot);
-  snapshotRef.current = snapshot;
+
+  useEffect(() => {
+    snapshotRef.current = snapshot;
+  }, [snapshot]);
 
   useEffect(() => {
     if (!active) return;
