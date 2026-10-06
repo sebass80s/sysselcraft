@@ -47,6 +47,10 @@ const saveMigrationModule = loadTsModule("../src/runtime/save/migrations.ts", {}
 const progressionDeltaModule = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const progressGateModule = loadTsModule("../src/runtime/progression/progressGate.ts", {});
 const progressTrackModule = loadTsModule("../src/runtime/progression/progressTrack.ts", {});
+const authoritativeTrackModule = loadTsModule("../src/runtime/progression/authoritativeTrack.ts", {
+  "./authoritativeDelta": progressionDeltaModule,
+  "./progressTrack": progressTrackModule,
+});
 const chapterRegistryModule = loadTsModule("../src/runtime/chapter/chapterRegistry.ts", {});
 const {
   act2PurchaseShopHref,
@@ -68,6 +72,7 @@ const {
   "../runtime/progression/authoritativeDelta": progressionDeltaModule,
   "../runtime/progression/progressGate": progressGateModule,
   "../runtime/progression/progressTrack": progressTrackModule,
+  "../runtime/progression/authoritativeTrack": authoritativeTrackModule,
 });
 
 const {
