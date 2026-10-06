@@ -4,6 +4,10 @@ import {
   type ProgressTrackDefinition,
   type ProgressTrackState,
 } from "./progressTrack";
+import {
+  nextAuthoritativeProgressTrackStep,
+  pendingAuthoritativeProgressCount,
+} from "./authoritativeTrack";
 
 export type ProjectProgressDefinition<
   TProject extends string,
@@ -210,5 +214,55 @@ export function consumeProjectCompletionReaction<
       ...normalized.consumedCompletionReactionIds,
       id,
     ],
+  };
+}
+
+
+export function pendingAuthoritativeProjectProgressCount<
+  TProject extends string,
+  TStage extends number,
+>(input: {
+  state: ProjectProgressState<TProject, TStage>;
+  definition: ProjectProgressDefinition<TProject, TStage>;
+  authoritativeCount: number;
+  baselineCount: number;
+}) {
+  const normalized = normalizeProjectProgressState(input.state, input.definition);
+  return pendingAuthoritativeProgressCount(
+    input.authoritativeCount,
+    input.baselineCount,
+    totalProjectProgress(normalized, input.definition),
+  );
+}
+
+export function nextAuthoritativeProjectProgressStep<
+  TProject extends string,
+  TStage extends number,
+>(input: {
+  state: ProjectProgressState<TProject, TStage>;
+  definition: ProjectProgressDefinition<TProject, TStage>;
+  authoritativeCount: number;
+  baselineCount: number;
+  blocked?: (project: TProject) => boolean;
+}) {
+  const normalized = normalizeProjectProgressState(input.state, input.definition);
+  const project = normalized.selectedProject;
+  if (!project || !canSelectProjectProgress(normalized, input.definition, project)) {
+    return null;
+  }
+
+  const next = nextAuthoritativeProgressTrackStep({
+    authoritativeCount: input.authoritativeCount,
+    baselineCount: input.baselineCount,
+    consumedCount: totalProjectProgress(normalized, input.definition),
+    trackContributions: normalized.projects[project].contributions,
+    definition: input.definition.track(project),
+    blocked: input.blocked?.(project) ?? false,
+  });
+  if (!next) return null;
+
+  return {
+    project,
+    ...next,
   };
 }
