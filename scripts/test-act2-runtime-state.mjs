@@ -731,8 +731,9 @@ assert.ok(village.includes("getChildDisplayName(childId)"), "Test-Ture QA contro
 assert.ok(village.includes('pairedBackendChildName === "Test-Ture"'), "Test-Ture reset control must be scoped to the backend Test-Ture profile");
 assert.ok(
   page.includes("deriveChapterRuntimeOverlay(chapterCardVisible, storyUiVisible)")
-    && page.includes("gameRef.current?.setWorldInputEnabled(runtimeOverlay.worldInputEnabled)"),
-  "Act 2 must disable Phaser world input through shared chapter overlay arbitration",
+    && page.includes("worldInputEnabled: runtimeOverlay.worldInputEnabled")
+    && page.includes("world.setWorldInputEnabled(snapshot.worldInputEnabled)"),
+  "Act 2 must disable Phaser world input through shared chapter overlay arbitration and world-host sync",
 );
 assert.ok(
   page.includes("<GameUiShell")
