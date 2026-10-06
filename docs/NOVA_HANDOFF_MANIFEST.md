@@ -1483,3 +1483,22 @@ No persisted save shape changed.
 No backend authority changed.
 No collision, movement, dog-follow, pointer/touch or WebView behavior changed.
 
+## Verified checkpoint: Chapter Registry + Navigation slice
+
+Verified code HEAD: `1c65a04440de5631f53e1a58767060ece9b7b8a0`
+
+GitHub Actions: **#1984 SUCCESS** on that exact SHA.
+
+Implemented:
+
+- new canonical registry: `src/runtime/chapter/chapterRegistry.ts`;
+- current registered chapters are `act1` and `act2`;
+- the registry owns current route, predecessor and next-chapter relationships;
+- Village -> Act 2 navigation consumes `chapterRoute("act2")`;
+- Act 2 resume cleanup consumes the registered Act 2 route;
+- Act 2 shop handoff/resume derives Village/Act 2 base routes from the registry;
+- `scripts/test-chapter-registry.mjs` verifies registry topology and current consumers;
+- runtime parity harness now injects the registry dependency when testing purchase handoff.
+
+The registry contains no speculative Act 3 entry. Act 3 must only be registered when a real route/chapter exists.
+
