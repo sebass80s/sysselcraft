@@ -46,7 +46,6 @@ import { StoryRunner } from "./story/StoryRunner";
 import { StoryMoment } from "./story/StoryMoment";
 import { InlineDialogueCard } from "./story/InlineDialogueCard";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
-import { chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 import { nextChapterDestination } from "../runtime/chapter/chapterRegistry";
 import { purchaseShortfall, resolveStoryPurchaseExit } from "../runtime/purchase/storyPurchaseFlow";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
