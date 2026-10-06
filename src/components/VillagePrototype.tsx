@@ -36,15 +36,10 @@ import { getChildDisplayName } from "../backend/familyRepository";
 import { clearSaveState, createDefaultSaveState, loadSaveState, saveSaveState, withConstructionState, type SaveStateV1 } from "../game/saveState";
 import { chooseDogHomeDialogue, deriveDogHomeStageFromWorldFlags, dogHomeDialogues, dogHomeUpgradeDialogues } from "../game/dogHome";
 import { CHILD_PAIRING_OPEN_EVENT } from "../game/childPairingBridge";
-import { clearAct2RuntimeStateForPairedChild, loadAct2RuntimeState, saveAct2RuntimeState } from "../game/act2RuntimeState";
-import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
-import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
+import { clearAct2RuntimeStateForPairedChild } from "../game/act2RuntimeState";
 import { parseStoryLine, storySpeakerTone } from "../game/storyEngine";
-import { act2ResumeHref, type Act2PurchaseProject } from "../game/act2PurchaseHandoff";
-import { resolveRegisteredStoryPurchase } from "../game/storyPurchaseRegistry";
+import { loadRegisteredStoryPurchases, resolveRegisteredStoryPurchase, type LoadedStoryPurchaseRegistration } from "../game/storyPurchaseRegistry";
 import type { StoryPurchaseRegistration } from "../runtime/purchase/storyPurchaseRegistry";
-import { applyAct2StoryPurchaseResult, deriveAct2StoryPurchaseSnapshot, type Act2StoryPurchaseSnapshot } from "../game/act2StoryPurchaseAdapter";
-import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
 import { StoryMoment } from "./story/StoryMoment";
 import { StoryNameInput } from "./story/StoryNameInput";
@@ -121,14 +116,14 @@ export default function VillagePrototype() {
   const [pendingDiamondRewardIds, setPendingDiamondRewardIds] = useState<Set<string>>(new Set());
   const [shopBusy, setShopBusy] = useState(false);
   const [shopMessage, setShopMessage] = useState("");
-  const [act2StoryPurchaseSnapshot, setAct2StoryPurchaseSnapshot] = useState<Act2StoryPurchaseSnapshot | null>(null);
+  const [storyPurchaseSources, setStoryPurchaseSources] = useState<LoadedStoryPurchaseRegistration[]>([]);
   const [storyPurchaseReturnContext, setStoryPurchaseReturnContext] = useState<{
     registration: StoryPurchaseRegistration<string>;
     target: string;
   } | null>(null);
   const [pairedBackendChildName, setPairedBackendChildName] = useState<string | null>(null);
 
-  function act2StoryItemInsufficientFundsMessage(price: number) {
+  function storyItemInsufficientFundsMessage(price: number) {
     const current = getLatestBackendWallet()?.sysselBux ?? backendWallet?.sysselBux ?? sysselBux;
     const missing = purchaseShortfall(current, price);
     return `Du har ${current} SysselBux. Du behöver ${missing} till. Gör några uppdrag och kom tillbaka när du har sparat ihop till den.`;
@@ -260,7 +255,10 @@ export default function VillagePrototype() {
         const snapshot = await handoff.registration.loadSnapshot();
         if (cancelled) return;
         setStoryPurchaseReturnContext(handoff);
-        setAct2StoryPurchaseSnapshot(snapshot as Act2StoryPurchaseSnapshot);
+        setStoryPurchaseSources((sources) => [
+          ...sources.filter((source) => source.registration.id !== handoff.registration.id),
+          { registration: handoff.registration, snapshot },
+        ]);
         setShopCurrency("sysselbux");
         setShopMessage("");
         setShopPanelOpen(true);
@@ -543,8 +541,8 @@ export default function VillagePrototype() {
            setShopPanelOpen(true); setShopCurrency(act1EndCardSeen || flags?.bottleMessagePurchased ? "diamonds" : "sysselbux"); setShopMessage("");
           void (async () => {
             try {
-              const act2 = await loadAct2RuntimeState();
-              setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot(act2));
+              const storyPurchases = await loadRegisteredStoryPurchases();
+              setStoryPurchaseSources(storyPurchases);
               const childId = await getPairedChildId();
               if (!childId) throw new Error("Barnets enhet är inte kopplad.");
               const client = getSupabaseBrowserClient();
@@ -608,8 +606,10 @@ export default function VillagePrototype() {
   }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex, solRuntimeTestActive, recordSolRuntimeDebug]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
 
-  const act2PurchaseStory = act2StoryPurchaseSnapshot?.purchaseStory ?? null;
-  const act2PurchaseStoryIndex = act2StoryPurchaseSnapshot?.purchaseStoryLineIndex ?? 0;
+  const storyPurchaseStorySource =
+    storyPurchaseSources.find((source) => source.snapshot.purchaseStory !== null) ?? null;
+  const storyPurchaseStory = storyPurchaseStorySource?.snapshot.purchaseStory ?? null;
+  const storyPurchaseStoryIndex = storyPurchaseStorySource?.snapshot.purchaseStoryLineIndex ?? 0;
 
   const villageBlockingOverlayVisible =
     dialogueOpen ||
@@ -640,7 +640,7 @@ export default function VillagePrototype() {
     mainMenuOpen ||
     parentMenuOpen ||
     childPairingOpen ||
-    act2PurchaseStory !== null ||
+    storyPurchaseStory !== null ||
     solRuntimeTestActive ||
     solSafeTestOpen ||
     saveError;
@@ -877,10 +877,16 @@ export default function VillagePrototype() {
     finally { constructionWriteRef.current = false; setConstructionBusy(false); }
   }
 
-  async function buyAct2StoryItem(project: Act2PurchaseProject) {
-    const item = ACT2_PURCHASE_CATALOG[project];
-    const localStatus = act2StoryPurchaseSnapshot?.status[project];
-    if (shopBusy || !localStatus || localStatus.owned || !localStatus.needed) return;
+  async function buyStoryPurchaseItem(
+    registration: StoryPurchaseRegistration<string>,
+    target: string,
+  ) {
+    const item = registration.catalog[target];
+    const source = storyPurchaseSources.find(
+      (candidate) => candidate.registration.id === registration.id,
+    );
+    const localStatus = source?.snapshot.status[target];
+    if (!item || shopBusy || !localStatus || localStatus.owned || !localStatus.needed) return;
     if (!window.confirm(`Köpa ${item.presentation.shop.title.toLowerCase()} för ${item.price} 🪙?`)) return;
 
     setShopBusy(true);
@@ -895,22 +901,21 @@ export default function VillagePrototype() {
       setBackendWallet(wallet);
       publishBackendWallet(wallet);
 
-      const currentAct2 = await loadAct2RuntimeState();
-      const outcome = applyAct2StoryPurchaseResult(
-        currentAct2,
-        project,
+      const outcome = await registration.applyPurchaseResult(
+        target,
         purchase.worldFlags,
       );
-      await saveAct2RuntimeState(outcome.state);
-
-      setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot(outcome.state));
+      setStoryPurchaseSources((sources) => [
+        ...sources.filter((candidate) => candidate.registration.id !== registration.id),
+        { registration, snapshot: outcome.snapshot },
+      ]);
       setShopMessage(outcome.message);
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
       setShopMessage(
         message.includes("insufficient sysselbux")
-          ? act2StoryItemInsufficientFundsMessage(item.price)
+          ? storyItemInsufficientFundsMessage(item.price)
           : message,
       );
     } finally {
@@ -1333,45 +1338,38 @@ export default function VillagePrototype() {
     <button className="primary-button" onClick={() => window.location.reload()}>Försök igen</button>
   </div></section>;
 
-  const act2PurchaseBeat = act2PurchaseStory === "dock"
-    ? JETTY_LIFEBUOY_BEAT
-    : act2PurchaseStory === "boathouse"
-      ? BOATHOUSE_STEERING_WHEEL_BEAT
+  const storyPurchaseBeat =
+    storyPurchaseStorySource && storyPurchaseStory
+      ? storyPurchaseStorySource.registration.purchaseStoryBeat(storyPurchaseStory)
       : null;
-  const act2PurchaseLine = act2PurchaseBeat?.body[act2PurchaseStoryIndex] ?? null;
-  const act2PurchasePresentation = act2PurchaseLine
-    ? parseStoryLine(act2PurchaseLine, childName || "Barnet")
+  const storyPurchaseLine =
+    storyPurchaseBeat?.body[storyPurchaseStoryIndex] ?? null;
+  const storyPurchasePresentation = storyPurchaseLine
+    ? parseStoryLine(storyPurchaseLine, childName || "Barnet")
     : null;
 
-  async function advanceAct2PurchaseStory() {
-    if (!act2PurchaseBeat) return;
-    const currentAct2 = await loadAct2RuntimeState();
-    if (act2PurchaseStoryIndex + 1 < act2PurchaseBeat.body.length) {
-      const nextIndex = act2PurchaseStoryIndex + 1;
-      await saveAct2RuntimeState({
-        ...currentAct2,
-        pendingPurchaseStory: act2PurchaseStory,
-        purchaseStoryLineIndex: nextIndex,
-      });
-      setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot({
-        ...currentAct2,
-        pendingPurchaseStory: act2PurchaseStory,
-        purchaseStoryLineIndex: nextIndex,
-      }));
+  async function advanceStoryPurchaseStory() {
+    if (!storyPurchaseStorySource || !storyPurchaseStory || !storyPurchaseBeat) return;
+    const { registration } = storyPurchaseStorySource;
+    if (storyPurchaseStoryIndex + 1 < storyPurchaseBeat.body.length) {
+      const nextIndex = storyPurchaseStoryIndex + 1;
+      const snapshot = await registration.savePurchaseStoryProgress(
+        storyPurchaseStory,
+        nextIndex,
+      );
+      setStoryPurchaseSources((sources) => [
+        ...sources.filter((source) => source.registration.id !== registration.id),
+        { registration, snapshot },
+      ]);
       return;
     }
-    await saveAct2RuntimeState({
-      ...currentAct2,
-      pendingPurchaseStory: null,
-      purchaseStoryLineIndex: 0,
-    });
-    const resumeProject = act2PurchaseStory;
-    setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot({
-      ...currentAct2,
-      pendingPurchaseStory: null,
-      purchaseStoryLineIndex: 0,
-    }));
-    router.push(resumeProject ? act2ResumeHref(resumeProject) : "/act2");
+
+    const snapshot = await registration.savePurchaseStoryProgress(null, 0);
+    setStoryPurchaseSources((sources) => [
+      ...sources.filter((source) => source.registration.id !== registration.id),
+      { registration, snapshot },
+    ]);
+    router.push(registration.resumeHref(storyPurchaseStory));
   }
 
   if (loadError) return <section className="parent-page"><div className="parent-tool-card" role="alert">
@@ -1424,26 +1422,18 @@ export default function VillagePrototype() {
             {shopCurrency === "diamonds" ? <>
               <div className="mira-shop-grid">{shopRewards.map((reward) => { const pending = pendingDiamondRewardIds.has(reward.id); return <article className="mira-shop-item" key={reward.id}><div><span>🎁</span><strong>{reward.title}</strong>{reward.description && <p>{reward.description}</p>}</div><button className="primary-button" disabled={shopBusy || pending || (backendWallet?.diamonds ?? diamonds) < reward.diamondPrice} onClick={() => void buyDiamondReward(reward)}>{pending ? "⏳ Väntar på förälder" : `💎 ${reward.diamondPrice} · Köp`}</button></article>; })}</div>
               {shopRewards.length === 0 && !shopMessage && <p className="mira-shop-empty">Inga diamantbelöningar på hyllan just nu.</p>}
-            </> : <div className="mira-shop-grid">{([
-                {
-                  project: "motorboat" as const,
-                  needed: act2StoryPurchaseSnapshot?.status.motorboat.needed,
-                  owned: act2StoryPurchaseSnapshot?.status.motorboat.owned,
-                },
-                {
-                  project: "boathouse" as const,
-                  needed: act2StoryPurchaseSnapshot?.status.boathouse.needed,
-                  owned: act2StoryPurchaseSnapshot?.status.boathouse.owned,
-                },
-                {
-                  project: "dock" as const,
-                  needed: act2StoryPurchaseSnapshot?.status.dock.needed,
-                  owned: act2StoryPurchaseSnapshot?.status.dock.owned,
-                },
-              ]).map(({ project, needed, owned }) => {
-                if (!needed && !owned) return null;
-                const item = ACT2_PURCHASE_CATALOG[project];
-                return <article className="mira-shop-item" key={item.id}>
+            </> : <div className="mira-shop-grid">{storyPurchaseSources.flatMap(({ registration, snapshot }) =>
+                registration.targets.map((target) => ({
+                  registration,
+                  target,
+                  item: registration.catalog[target],
+                  status: snapshot.status[target],
+                })),
+              ).map(({ registration, target, item, status }) => {
+                const needed = status?.needed === true;
+                const owned = status?.owned === true;
+                if (!item || (!needed && !owned)) return null;
+                return <article className="mira-shop-item" key={`${registration.id}:${item.id}`}>
                   <div>
                     <span>{item.presentation.shop.icon}</span>
                     <strong>{item.presentation.shop.title}</strong>
@@ -1453,7 +1443,7 @@ export default function VillagePrototype() {
                   <button
                     className="primary-button"
                     disabled={shopBusy || owned || (backendWallet?.sysselBux ?? sysselBux) < item.price}
-                    onClick={() => void buyAct2StoryItem(project)}
+                    onClick={() => void buyStoryPurchaseItem(registration, target)}
                   >
                     {owned ? "✓ Köpt" : `🪙 ${item.price} · Köp`}
                   </button>
@@ -1480,18 +1470,18 @@ export default function VillagePrototype() {
         </section>
       </div>
     </div>}
-    {act2PurchaseBeat && act2PurchaseLine && <StoryRunner
+    {storyPurchaseBeat && storyPurchaseLine && <StoryRunner
       beat={{
-        id: `act2:shop-purchase:${act2PurchaseStory}:${act2PurchaseStoryIndex}`,
-        image: act2PurchaseBeat.image,
+        id: `act2:shop-purchase:${storyPurchaseStory}:${storyPurchaseStoryIndex}`,
+        image: storyPurchaseBeat.image,
         imageFit: "contain",
-        heading: act2PurchaseBeat.title,
-        speaker: act2PurchasePresentation?.speaker,
-        speakerTone: act2PurchasePresentation?.speakerTone,
-        lines: act2PurchasePresentation ? [act2PurchasePresentation.text] : [],
-        nextLabel: act2PurchaseStoryIndex + 1 < act2PurchaseBeat.body.length ? "Fortsätt" : "Tillbaka till sjön",
+        heading: storyPurchaseBeat.title,
+        speaker: storyPurchasePresentation?.speaker,
+        speakerTone: storyPurchasePresentation?.speakerTone,
+        lines: storyPurchasePresentation ? [storyPurchasePresentation.text] : [],
+        nextLabel: storyPurchaseStoryIndex + 1 < storyPurchaseBeat.body.length ? "Fortsätt" : "Tillbaka till sjön",
       }}
-      onNext={() => void advanceAct2PurchaseStory()}
+      onNext={() => void advanceStoryPurchaseStory()}
       childName={childName || "Barnet"}
       variant="handoff"
     />}
