@@ -19,11 +19,13 @@ const assets = load("src/game/act2VisualAssets.ts");
 const saveMigrations = load("src/runtime/save/migrations.ts");
 const progressionDelta = load("src/runtime/progression/authoritativeDelta.ts");
 const progressGate = load("src/runtime/progression/progressGate.ts");
+const progressTrack = load("src/runtime/progression/progressTrack.ts");
 const stateApi = load("src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrations,
   "../runtime/progression/authoritativeDelta": progressionDelta,
   "../runtime/progression/progressGate": progressGate,
+  "../runtime/progression/progressTrack": progressTrack,
 });
 const initial = stateApi.createDefaultAct2RuntimeState();
 assert.equal(initial.selectedProject, null);
