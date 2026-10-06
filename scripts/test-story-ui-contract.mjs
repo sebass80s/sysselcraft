@@ -227,6 +227,21 @@ assert.match(
   /previousStoryLineIndex\(\s*activeFinaleBeat\.body\.length,[\s\S]*finaleLineIndex/,
   "Act 2 finale dialogue must use shared linear previous semantics within each beat",
 );
+assert.match(
+  act2Runtime,
+  /advanceStoryLine\(ACT2_ALVE_DIALOGUE\.length, state\.alveIntroIndex\)/,
+  "Act 2 Alve intro must use shared linear advance semantics",
+);
+assert.match(
+  act2Runtime,
+  /previousStoryLineIndex\(\s*ACT2_ALVE_DIALOGUE\.length,[\s\S]*state\.alveIntroIndex/,
+  "Act 2 Alve intro must use shared linear previous semantics",
+);
+assert.equal(
+  css.includes(".act2-history-button"),
+  false,
+  "retired chapter-local history CSS must not remain after shared History migration",
+);
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
