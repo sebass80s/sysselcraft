@@ -29,7 +29,7 @@ import { bakeryCompletionDialogue } from "../game/bakeryStory";
 import { MIRA_ARRIVAL_SCENE_2_START, miraArrivalDialogue } from "../game/miraStory";
 import { act1ChapterFinaleDialogue, bottleMessageDialogue, clinicCompletionDialogue, solArrivalDialogue, solTourDialogue, type SolTourStop } from "../game/solStory";
 import { listDiamondRewards, listPendingDiamondRewardIds, purchaseDiamondReward, type DiamondRewardDefinition } from "../backend/diamondRewards";
-import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, ROOM_DECOR_PRICES, DOG_HOME_PRICES, commitStoryBeat, purchaseAct2BoathouseSteeringWheel, purchaseAct2JettyLifebuoy, purchaseAct2MotorboatParts, purchaseBottleMessage, purchaseFootballRug, purchaseRoomDecor, purchaseDogHomeUpgrade, type RoomDecorKey } from "../backend/storyShop";
+import { BOTTLE_MESSAGE_PRICE, FOOTBALL_RUG_PRICE, ROOM_DECOR_PRICES, DOG_HOME_PRICES, commitStoryBeat, purchaseStoryItem, purchaseBottleMessage, purchaseFootballRug, purchaseRoomDecor, purchaseDogHomeUpgrade, type RoomDecorKey } from "../backend/storyShop";
 import { CHILD_BINDING_CHANGED, getPairedChildId } from "../backend/childDeviceBinding";
 import { getSupabaseBrowserClient } from "../backend/supabaseClient";
 import { getChildDisplayName } from "../backend/familyRepository";
@@ -895,7 +895,7 @@ export default function VillagePrototype() {
     if (!window.confirm(`Köpa reservdelspaket till motorbåten för ${ACT2_PURCHASE_CATALOG.motorboat.price} 🪙?`)) return;
     setShopBusy(true); setShopMessage("");
     try {
-      const purchase = await purchaseAct2MotorboatParts();
+      const purchase = await purchaseStoryItem(ACT2_PURCHASE_CATALOG.motorboat.id);
       const currentWallet = getLatestBackendWallet() ?? backendWallet;
       const wallet: BackendWalletSnapshot = { diamonds: currentWallet?.diamonds ?? diamonds, sysselBux: purchase.sysselBux };
       setBackendWallet(wallet); publishBackendWallet(wallet);
@@ -917,7 +917,7 @@ export default function VillagePrototype() {
     if (!window.confirm(`Köpa ratt till lådbilen för ${ACT2_PURCHASE_CATALOG.boathouse.price} 🪙?`)) return;
     setShopBusy(true); setShopMessage("");
     try {
-      const purchase = await purchaseAct2BoathouseSteeringWheel();
+      const purchase = await purchaseStoryItem(ACT2_PURCHASE_CATALOG.boathouse.id);
       const currentWallet = getLatestBackendWallet() ?? backendWallet;
       const wallet: BackendWalletSnapshot = {
         diamonds: currentWallet?.diamonds ?? diamonds,
@@ -949,7 +949,7 @@ export default function VillagePrototype() {
     if (!window.confirm(`Köpa Livboj till bryggan för ${ACT2_PURCHASE_CATALOG.dock.price} 🪙?`)) return;
     setShopBusy(true); setShopMessage("");
     try {
-      const purchase = await purchaseAct2JettyLifebuoy();
+      const purchase = await purchaseStoryItem(ACT2_PURCHASE_CATALOG.dock.id);
       const currentWallet = getLatestBackendWallet() ?? backendWallet;
       const wallet: BackendWalletSnapshot = {
         diamonds: currentWallet?.diamonds ?? diamonds,
