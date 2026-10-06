@@ -40,7 +40,8 @@ import { clearAct2RuntimeStateForPairedChild, loadAct2RuntimeState, saveAct2Runt
 import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { parseStoryLine, storySpeakerTone } from "../game/storyEngine";
-import { act2ResumeHref, parseAct2PurchaseProject, type Act2PurchaseProject } from "../game/act2PurchaseHandoff";
+import { act2ResumeHref, type Act2PurchaseProject } from "../game/act2PurchaseHandoff";
+import { resolveRegisteredStoryPurchase, type STORY_PURCHASE_REGISTRATIONS } from "../game/storyPurchaseRegistry";
 import { applyAct2StoryPurchaseResult, deriveAct2StoryPurchaseSnapshot, type Act2StoryPurchaseSnapshot } from "../game/act2StoryPurchaseAdapter";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
@@ -120,7 +121,10 @@ export default function VillagePrototype() {
   const [shopBusy, setShopBusy] = useState(false);
   const [shopMessage, setShopMessage] = useState("");
   const [act2StoryPurchaseSnapshot, setAct2StoryPurchaseSnapshot] = useState<Act2StoryPurchaseSnapshot | null>(null);
-  const [act2PurchaseReturnProject, setAct2PurchaseReturnProject] = useState<"dock" | "boathouse" | "motorboat" | null>(null);
+  const [storyPurchaseReturnContext, setStoryPurchaseReturnContext] = useState<{
+    registration: (typeof STORY_PURCHASE_REGISTRATIONS)[number];
+    target: string;
+  } | null>(null);
   const [pairedBackendChildName, setPairedBackendChildName] = useState<string | null>(null);
 
   function act2StoryItemInsufficientFundsMessage(price: number) {
@@ -245,23 +249,22 @@ export default function VillagePrototype() {
 
   useEffect(() => {
     if (!saveReady) return;
-    const project = parseAct2PurchaseProject(
-      new URLSearchParams(window.location.search).get("act2-purchase"),
+    const handoff = resolveRegisteredStoryPurchase(
+      new URLSearchParams(window.location.search),
     );
-    if (!project) return;
+    if (!handoff) return;
     let cancelled = false;
     void (async () => {
       try {
-        const act2 = await loadAct2RuntimeState();
+        const snapshot = await handoff.registration.loadSnapshot();
         if (cancelled) return;
-        setAct2PurchaseReturnProject(project);
-        setAct2StoryPurchaseSnapshot(deriveAct2StoryPurchaseSnapshot(act2));
+        setStoryPurchaseReturnContext(handoff);
+        setAct2StoryPurchaseSnapshot(snapshot as Act2StoryPurchaseSnapshot);
         setShopCurrency("sysselbux");
         setShopMessage("");
         setShopPanelOpen(true);
-        
       } catch {
-        if (!cancelled) setShopMessage("Kunde inte öppna Act 2-köpet hos Mira.");
+        if (!cancelled) setShopMessage("Kunde inte öppna berättelseköpet hos Mira.");
       }
     })();
     return () => { cancelled = true; };
@@ -1116,16 +1119,17 @@ export default function VillagePrototype() {
     router.push("/");
   }
 
-  function closeShop() {
+  async function closeShop() {
     setShopPanelOpen(false);
-    
-    if (act2PurchaseReturnProject) {
-      const project = act2PurchaseReturnProject;
-      const purchaseOwned = act2StoryPurchaseSnapshot?.status[project].owned === true;
-      const exit = resolveStoryPurchaseExit(project, purchaseOwned);
-      setAct2PurchaseReturnProject(null);
+
+    if (storyPurchaseReturnContext) {
+      const { registration, target } = storyPurchaseReturnContext;
+      const snapshot = await registration.loadSnapshot();
+      const purchaseOwned = snapshot.status[target]?.owned === true;
+      const exit = resolveStoryPurchaseExit(target, purchaseOwned);
+      setStoryPurchaseReturnContext(null);
       if (exit.action === "resume") {
-        router.push(act2ResumeHref(exit.target));
+        router.push(registration.resumeHref(exit.target));
       }
     }
   }
@@ -1407,7 +1411,7 @@ export default function VillagePrototype() {
     {shopPanelOpen && <div className="mira-shop" role="dialog" aria-modal="true" aria-labelledby="shop-title">
       <Image className="mira-shop-scene" src="/assets/village/mira-shop-interior.png" alt="" fill priority sizes="100vw" />
       <div className="mira-shop-ui">
-        <button className="mira-shop-close" onClick={closeShop} aria-label={act2PurchaseReturnProject ? "Gå tillbaka till sjön" : "Gå tillbaka till byn"}>{act2PurchaseReturnProject ? "← Tillbaka till sjön" : "← Till byn"}</button>
+        <button className="mira-shop-close" onClick={closeShop} aria-label={storyPurchaseReturnContext ? "Gå tillbaka till berättelsen" : "Gå tillbaka till byn"}>{storyPurchaseReturnContext ? "← Tillbaka" : "← Till byn"}</button>
         <div className="mira-shop-wallet" aria-label="Dina pengar"><strong>🪙 {backendWallet?.sysselBux ?? sysselBux}</strong><strong>💎 {backendWallet?.diamonds ?? diamonds}</strong></div>
         <section className="mira-shop-counter" aria-labelledby="shop-title">
           <h2 id="shop-title" className="sr-only">Miras lanthandel</h2>
