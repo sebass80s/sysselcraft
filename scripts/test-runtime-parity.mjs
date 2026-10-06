@@ -51,6 +51,10 @@ const authoritativeTrackModule = loadTsModule("../src/runtime/progression/author
   "./authoritativeDelta": progressionDeltaModule,
   "./progressTrack": progressTrackModule,
 });
+const projectProgressEngineModule = loadTsModule("../src/runtime/progression/projectProgressEngine.ts", {
+  "./progressTrack": progressTrackModule,
+  "./authoritativeTrack": authoritativeTrackModule,
+});
 const chapterRegistryModule = loadTsModule("../src/runtime/chapter/chapterRegistry.ts", {});
 const storyPurchaseHandoffModule = loadTsModule("../src/runtime/purchase/storyPurchaseHandoff.ts", {
   "../chapter/chapterRegistry": chapterRegistryModule,
@@ -76,6 +80,7 @@ const {
   "../runtime/progression/progressGate": progressGateModule,
   "../runtime/progression/progressTrack": progressTrackModule,
   "../runtime/progression/authoritativeTrack": authoritativeTrackModule,
+  "../runtime/progression/projectProgressEngine": projectProgressEngineModule,
 });
 
 const {
