@@ -68,19 +68,16 @@ export function useChapterRuntimeHost<TState, TContext>(
   useEffect(() => {
     let cancelled = false;
 
-    setReady(false);
-    setBootError("");
+    void Promise.resolve().then(async () => {
+      if (cancelled) return;
 
-    if (!chapterBootMayLoad({ debug, productionEnabled })) {
-      setAccessAllowed(false);
-      setChapterIntroVisible(false);
-      setReady(true);
-      return () => {
-        cancelled = true;
-      };
-    }
+      if (!chapterBootMayLoad({ debug, productionEnabled })) {
+        setAccessAllowed(false);
+        setChapterIntroVisible(false);
+        setReady(true);
+        return;
+      }
 
-    void (async () => {
       try {
         const result = await boot({ debug, productionEnabled });
         if (cancelled) return;
@@ -88,6 +85,7 @@ export function useChapterRuntimeHost<TState, TContext>(
         setState(result.state);
         setContext(result.context);
         setChapterIntroVisible(result.chapterIntroVisible);
+        setBootError("");
         setReady(true);
         if (result.replaceHref && replaceRoute) replaceRoute(result.replaceHref);
       } catch {
@@ -96,7 +94,7 @@ export function useChapterRuntimeHost<TState, TContext>(
         setAccessAllowed(false);
         setReady(true);
       }
-    })();
+    });
 
     return () => {
       cancelled = true;
