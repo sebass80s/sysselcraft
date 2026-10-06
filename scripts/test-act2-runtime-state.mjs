@@ -930,7 +930,7 @@ assert.match(act2PageSource, /act2:alve-intro:/, "Act 2 Alve intro must use the 
 assert.match(act2PageSource, /act2:finale:/, "Act 2 finale must use the shared Story Engine");
 assert.match(act2PageSource, /act2:completion:/, "Act 2 completion reactions must use the shared Story Engine");
 assert.match(act2PageSource, /<StoryMoment[\s\S]*advanceContributionStory/, "Act 2 contribution dialogue must use the shared Story Engine shell");
-assert.match(act2PageSource, /dialogueClassName="act2-dialogue-card"/, "Act 2 Story Engine migration must preserve the accepted smaller dialogue typography");
+assert.doesNotMatch(act2PageSource, /dialogueClassName="act2-dialogue-card"/, "Act 2 must not retain chapter-specific Story typography overrides");
 
 
 const storyEngineSource = fs.readFileSync(new URL("../src/game/storyEngine.ts", import.meta.url), "utf8");
