@@ -94,3 +94,29 @@ export function nextProgressTrackStep<TStage extends number>(
     visibleStage: progressTrackVisibleStage(number, definition.stages),
   };
 }
+
+
+export function consumeProgressTrackStep<TStage extends number>(input: {
+  state: ProgressTrackState<TStage>;
+  definition: ProgressTrackDefinition<TStage>;
+  beatId: string;
+}): ProgressTrackState<TStage> {
+  const current = normalizeProgressTrack(input.state, input.definition);
+  if (!input.beatId || current.complete) return current;
+  if (current.consumedBeatIds.includes(input.beatId)) return current;
+
+  const next = nextProgressTrackStep(current.contributions, input.definition);
+  if (!next || next.beatId !== input.beatId) return current;
+
+  const contributions = normalizeProgressContributionCount(
+    current.contributions + 1,
+    input.definition.targetCount,
+  );
+
+  return {
+    contributions,
+    visibleStage: progressTrackVisibleStage(contributions, input.definition.stages),
+    consumedBeatIds: canonicalProgressBeatIds(contributions, input.definition),
+    complete: contributions >= safeTargetCount(input.definition.targetCount),
+  };
+}
