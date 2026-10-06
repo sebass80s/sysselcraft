@@ -48,6 +48,7 @@ import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../game/act2AlveStory
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { historyEntriesFor } from "../runtime/story/storyHistory";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
+import { chapterAtStart, chapterCardVisible as deriveChapterCardVisible, chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 
 
 
@@ -104,7 +105,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [historyReplay, setHistoryReplay] = useState<Act2ReplayState | null>(null);
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
 
-  const chapterCardVisible = ready && (chapterIntroVisible || (state.act2Complete && !state.endCardSeen));
+  const chapterCardVisible = deriveChapterCardVisible(ready, chapterIntroVisible, { chapterComplete: state.act2Complete, endCardSeen: state.endCardSeen });
   useEffect(() => {
     if (chapterCardVisible) return beginStoryOverlay();
   }, [chapterCardVisible]);
@@ -187,7 +188,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       ]);
       if (cancelled) return;
       setChildName(act1?.childName || "Barnet");
-      const act1ChapterComplete = act1?.worldFlags?.act1EndCardSeen === true;
+      const act1ChapterComplete = chapterUnlocked(act1?.worldFlags?.act1EndCardSeen === true);
       if (!act1ChapterComplete) {
         setAct2AccessAllowed(false);
         setReady(true);
@@ -242,10 +243,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       }
       await saveAct2RuntimeState(entered);
       if (cancelled) return;
-      const atChapterStart =
-        !entered.openingComplete
-        && entered.openingIndex === 0
-        && entered.openingLineIndex === 0;
+      const atChapterStart = chapterAtStart({
+        openingComplete: entered.openingComplete,
+        openingIndex: entered.openingIndex,
+        openingLineIndex: entered.openingLineIndex,
+      });
       setChapterIntroVisible(atChapterStart);
       setChapterIntroNameVisible(false);
       setState(entered);
