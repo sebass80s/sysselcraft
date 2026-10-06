@@ -205,7 +205,7 @@ const runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", imp
 const prodRoute = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 const debugRoute = fs.readFileSync(new URL("../src/app/act2-test/page.tsx", import.meta.url), "utf8");
 
-assert.match(village, /act1EndCardSeen && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the Act 1 end card is acknowledged");
+assert.match(village, /chapterUnlocked\(act1EndCardSeen\) && <button[^>]*[\s\S]*Stigen till sjön/, "the lake path must render only after the shared chapter lifecycle confirms the Act 1 end card");
 assert.match(village, /router\.push\("\/act2"\)/, "Act 1 lake path must enter the production Act 2 route");
 assert.match(
   village,
