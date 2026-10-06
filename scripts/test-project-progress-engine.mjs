@@ -1,16 +1,42 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import ts from "typescript";
 
-import {
+function loadTsModule(file, dependencies) {
+  const exports = {};
+  const code = ts.transpileModule(fs.readFileSync(new URL(file, import.meta.url), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  const requireDependency = (name) => {
+    assert.ok(name in dependencies, `Unexpected project-progress dependency: ${name}`);
+    return dependencies[name];
+  };
+  new Function("exports", "require", code)(exports, requireDependency);
+  return exports;
+}
+
+const progressTrack = loadTsModule("../src/runtime/progression/progressTrack.ts", {});
+const authoritativeDelta = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
+const authoritativeTrack = loadTsModule("../src/runtime/progression/authoritativeTrack.ts", {
+  "./authoritativeDelta": authoritativeDelta,
+  "./progressTrack": progressTrack,
+});
+const {
   canSelectProjectProgress,
   consumeProjectCompletionReaction,
   consumeSelectedProjectProgress,
+  nextAuthoritativeProjectProgressStep,
   nextPendingProjectCompletionReaction,
   normalizeProjectProgressState,
+  pendingAuthoritativeProjectProgressCount,
   projectCompletionReactionPending,
   projectPrerequisitesComplete,
   selectProjectProgress,
   totalProjectProgress,
-} from "../src/runtime/progression/projectProgressEngine.ts";
+} = loadTsModule("../src/runtime/progression/projectProgressEngine.ts", {
+  "./progressTrack": progressTrack,
+  "./authoritativeTrack": authoritativeTrack,
+});
 
 const definition = {
   projects: ["alpha", "beta"],
@@ -126,4 +152,59 @@ assert.equal(state.selectedProject, null);
 assert.equal(totalProjectProgress(state, definition), 5);
 assert.equal(nextPendingProjectCompletionReaction(state, definition), null);
 
-console.log("PASS: generic project-progress engine handles non-16 targets, prerequisites, idempotent consumption and exactly-once reactions");
+let authoritativeState = normalizeProjectProgressState({
+  selectedProject: "alpha",
+  projects: {
+    alpha: emptyTrack(),
+    beta: emptyTrack(),
+  },
+  consumedCompletionReactionIds: [],
+}, definition);
+
+assert.equal(
+  pendingAuthoritativeProjectProgressCount({
+    state: authoritativeState,
+    definition,
+    authoritativeCount: 14,
+    baselineCount: 10,
+  }),
+  4,
+  "project engine must compose authoritative backlog from total consumed project progress",
+);
+assert.deepEqual(
+  nextAuthoritativeProjectProgressStep({
+    state: authoritativeState,
+    definition,
+    authoritativeCount: 14,
+    baselineCount: 10,
+  }),
+  { project: "alpha", number: 1, beatId: "alpha:1", visibleStage: 1, backlog: 4 },
+  "project engine must select exactly the next authored beat for the active non-16 track",
+);
+assert.equal(
+  nextAuthoritativeProjectProgressStep({
+    state: authoritativeState,
+    definition,
+    authoritativeCount: 14,
+    baselineCount: 10,
+    blocked: () => true,
+  }),
+  null,
+  "project-level story gates must block presentation without consuming backlog",
+);
+authoritativeState = consumeSelectedProjectProgress(authoritativeState, definition, {
+  project: "alpha",
+  beatId: "alpha:1",
+});
+assert.deepEqual(
+  nextAuthoritativeProjectProgressStep({
+    state: authoritativeState,
+    definition,
+    authoritativeCount: 14,
+    baselineCount: 10,
+  }),
+  { project: "alpha", number: 2, beatId: "alpha:2", visibleStage: 1, backlog: 3 },
+  "authoritative backlog must resume at the same unconsumed sequence after one beat is consumed",
+);
+
+console.log("PASS: generic project-progress engine handles non-16 targets, prerequisites, authoritative backlog, idempotent consumption and exactly-once reactions");
