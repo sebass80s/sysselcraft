@@ -693,13 +693,15 @@ assert.ok(page.includes("Aktivt projekt:"), "Act 2 project status must identify 
 assert.equal(page.includes("Ett klart uppdrag väntar hos Alve."), false, "compact Act 2 project status must not carry quest guidance copy");
 assert.ok(page.includes("← Till byn"), "Act 2 HUD must expose an explicit route back to the village");
 assert.ok(
-  page.includes("<GameUiShell") && page.includes("setWorldInputEnabled(!worldBlocked)"),
-  "Act 2 must reuse the shared GameUiShell and gate lake input through explicit world-input authority",
+  page.includes("<GameUiShell")
+    && page.includes("setWorldInputEnabled(runtimeOverlay.worldInputEnabled)")
+    && page.includes("blockingOverlayVisible: runtimeOverlay.blockingOverlayVisible"),
+  "Act 2 must reuse one shared Chapter Runtime overlay result for GameUiShell and lake world-input authority",
 );
 assert.match(
   page,
-  /<GameUiShell[\s\S]*id: "village"[\s\S]*label: "← Till byn"[\s\S]*onSelect: \(\) => router\.push\("\/"\)/,
-  "Act 2 shared GameUiShell must expose a route back to the village",
+  /<GameUiShell[\s\S]*id: "village"[\s\S]*label: "← Till byn"[\s\S]*onSelect: \(\) => router\.push\(chapterRoute\("act1"\)\)/,
+  "Act 2 shared GameUiShell must route back through the canonical Act 1 chapter registry entry",
 );
 assert.ok(
   page.includes('label: "← Till byn"'),
@@ -755,7 +757,7 @@ assert.match(
   "Act 2 GameUiShell menu configuration must order Vuxenläge, Historik, then Till byn",
 );
 assert.ok(
-  page.includes('router.push("/?menu=adult")'),
+  page.includes('router.push(`${chapterRoute("act1")}?menu=adult`)'),
   "Act 2 Vuxenläge menu item must route to the canonical village adult-mode panel",
 );
 assert.ok(
