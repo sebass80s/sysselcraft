@@ -621,6 +621,7 @@ assert.ok(lakeGameSource.includes('this.add.image(815, 515, "act2-child")'), "Ac
 
 
 const page = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
+const act2RuntimeAdapterSource = fs.readFileSync(new URL("../src/game/act2RuntimeAdapter.ts", import.meta.url), "utf8");
 const act2OpeningStorySource = fs.readFileSync(new URL("../src/game/act2OpeningStory.ts", import.meta.url), "utf8");
 const act2AlveStorySource = fs.readFileSync(new URL("../src/game/act2AlveStory.ts", import.meta.url), "utf8");
 for (const required of [
@@ -649,7 +650,8 @@ assert.ok(act2AlveStorySource.includes('{ speaker: "alve", text: "Okej, {childNa
 assert.ok(act2AlveStorySource.includes('{ speaker: "unknown", text: "Varför?" }'), "unknown Alve must own the pre-introduction Varför line");
 assert.ok(page.includes('🔒 Motorbåten'), "motorboat must remain visible while locked");
 assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector must derive 0/3→3/3 from canonical state");
-assert.ok(page.includes('(["dock"] as const)'), "production route must keep only the authored automatic completion reaction");
+assert.ok(page.includes("deriveAct2RuntimeBlockers(state"), "production route must consume the Act 2 blocker adapter instead of duplicating blocker rules");
+assert.ok(act2RuntimeAdapterSource.includes('(["dock"] as const)'), "Act 2 chapter adapter must keep only the authored automatic completion reaction");
 assert.ok(page.includes("CABIN_WAITING_REACTION"), "production route must present the canonical Cabin revisit scene");
 assert.ok(page.includes("state.projects.cabin.complete && !state.projects.motorboat.complete"), "Cabin revisit must exist only after Cabin completion and before Motorboat completion");
 assert.ok(page.includes("onCabinRevisit"), "Cabin revisit must open from a real world Cabin interaction");
@@ -657,7 +659,7 @@ assert.ok(page.includes("JETTY_COMPLETION_REACTION"), "production route must pre
 assert.ok(page.includes("CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Cabin contribution track");
 assert.ok(page.includes("BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Båthuset contribution track");
 assert.ok(page.includes("MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Motorbåten contribution track");
-assert.ok(page.includes("motorboatNamingRequired(state)"), "Motorbåten naming gate must be persisted and contribution-neutral");
+assert.ok(act2RuntimeAdapterSource.includes("motorboatNamingRequired(state)"), "Act 2 chapter adapter must preserve the persisted contribution-neutral Motorbåten naming gate");
 assert.ok(page.includes("ACT2_FINALE_BEATS[state.finaleIndex]"), "production route must resume the persisted Act 2 finale");
 assert.ok(page.includes("setActiveProject(state.selectedProject)"), "production route must move Alve when the active project changes");
 assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), "Alve interaction must explicitly arm the pending contribution Story Moment");
