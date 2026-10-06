@@ -49,6 +49,7 @@ import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { historyEntriesFor } from "../runtime/story/storyHistory";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
 import { chapterAtStart, chapterCardVisible as deriveChapterCardVisible, chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
+import { chapterRoute } from "../runtime/chapter/chapterRegistry";
 
 
 
@@ -253,7 +254,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       setState(entered);
       setReady(true);
       if (resumeProject) {
-        router.replace("/act2");
+        router.replace(chapterRoute("act2"));
       }
     })();
     return () => { cancelled = true; };
