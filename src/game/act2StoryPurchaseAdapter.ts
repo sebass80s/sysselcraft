@@ -12,6 +12,12 @@ export type Act2StoryPurchaseStatus = Record<
   { owned: boolean; needed: boolean }
 >;
 
+export type Act2StoryPurchaseSnapshot = {
+  status: Act2StoryPurchaseStatus;
+  purchaseStory: "dock" | "boathouse" | null;
+  purchaseStoryLineIndex: number;
+};
+
 export type Act2StoryPurchaseOutcome = {
   state: Act2RuntimeState;
   message: string;
@@ -35,6 +41,16 @@ export function deriveAct2StoryPurchaseStatus(
       owned: state.motorboatPartsOwned,
       needed: motorboatPartsPurchaseRequired(state),
     },
+  };
+}
+
+export function deriveAct2StoryPurchaseSnapshot(
+  state: Act2RuntimeState,
+): Act2StoryPurchaseSnapshot {
+  return {
+    status: deriveAct2StoryPurchaseStatus(state),
+    purchaseStory: state.pendingPurchaseStory,
+    purchaseStoryLineIndex: state.purchaseStoryLineIndex,
   };
 }
 
