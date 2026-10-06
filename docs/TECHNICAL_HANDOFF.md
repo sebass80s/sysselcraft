@@ -1636,3 +1636,22 @@ Implemented:
 
 The registry contains no speculative Act 3 entry. Act 3 must only be registered when a real route/chapter exists.
 
+## Verified checkpoint: Shared Story Purchase Flow slice
+
+Verified code HEAD: `6a162a7e51c10d317517b32b3b8b864071a4d94e`
+
+GitHub Actions: **#1993 SUCCESS** on that exact SHA.
+
+Implemented:
+
+- new shared runtime primitive: `src/runtime/purchase/storyPurchaseFlow.ts`;
+- `purchaseShortfall()` owns normalized price-vs-balance shortfall calculation;
+- `resolveStoryPurchaseExit()` owns the global required-purchase exit invariant;
+- an unowned/failed required purchase resolves to `stay`, never forced story resume;
+- an owned required purchase resolves to `resume` with its caller-owned target;
+- Village/Act 2 now consumes these semantics when closing Mira's contextual story shop;
+- `scripts/test-story-purchase-flow.mjs` locks the insufficient-funds loop invariant;
+- existing Act 2 regression contracts now assert shared purchase-flow usage rather than the retired local `if (purchaseOwned)` implementation.
+
+Backend Story Shop / Supabase remains authoritative for purchase execution, wallet debit and ownership flags. The runtime flow only decides presentation/navigation after authoritative ownership state is known.
+
