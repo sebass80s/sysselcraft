@@ -1460,3 +1460,26 @@ The generic system must preserve these semantics:
 - a required purchase must never trap the child in a forced shop/story navigation loop.
 
 The recent livboj bug is the concrete reason this invariant is now explicit: the shop previously returned to Act 2 even when the required item was not owned, which re-opened the same purchase gate indefinitely.
+
+## Verified checkpoint: Chapter Lifecycle slice
+
+Verified code HEAD: `e5198656c212e23c166b51a116538e52c0ed215e`
+
+GitHub Actions: **#1973 SUCCESS** on that exact SHA.
+
+Implemented:
+
+- new shared primitive: `src/runtime/chapter/chapterLifecycle.ts`;
+- `chapterUnlocked()` now owns predecessor-end-card unlock semantics;
+- `chapterAtStart()` owns fresh chapter-entry detection;
+- `chapterEndCardPending()` owns complete-but-unacknowledged end-card semantics;
+- `chapterCardVisible()` owns chapter intro/end-card presentation visibility;
+- Village consumes shared unlock semantics for the path to Act 2;
+- Act 2 consumes shared unlock, fresh-entry and chapter-card semantics;
+- `scripts/test-chapter-lifecycle.mjs` locks the engine contract and current consumers;
+- stale source-shape assertions in Act 1/Act 2 regression tests were updated to assert the shared engine contract rather than the retired inline boolean expression.
+
+No persisted save shape changed.
+No backend authority changed.
+No collision, movement, dog-follow, pointer/touch or WebView behavior changed.
+
