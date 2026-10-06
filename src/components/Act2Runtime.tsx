@@ -50,7 +50,7 @@ import { historyEntriesFor } from "../runtime/story/storyHistory";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
 import { chapterAtStart, chapterCardVisible as deriveChapterCardVisible, chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 import { chapterRoute } from "../runtime/chapter/chapterRegistry";
-import { chapterBootMayLoad, deriveChapterRuntimeShell } from "../runtime/chapter/chapterRuntimeShell";
+import { chapterBootMayLoad, deriveChapterRuntimeOverlay, deriveChapterRuntimeShell } from "../runtime/chapter/chapterRuntimeShell";
 
 
 
@@ -109,6 +109,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
 
   const chapterCardVisible = deriveChapterCardVisible(ready, chapterIntroVisible, { chapterComplete: state.act2Complete, endCardSeen: state.endCardSeen });
   const runtimeShellStatus = deriveChapterRuntimeShell({ ready, debug, productionEnabled, accessAllowed: act2AccessAllowed });
+  const runtimeOverlay = deriveChapterRuntimeOverlay(chapterCardVisible, storyUiVisible);
   useEffect(() => {
     if (chapterCardVisible) return beginStoryOverlay();
   }, [chapterCardVisible]);
@@ -369,33 +370,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }, [state.projects.cabin.complete, state.projects.motorboat.complete]);
 
   useEffect(() => {
-    const completionPending = projectCompletionReactionPending(state, "dock");
-    const chooserVisible =
-      state.alveIntroComplete
-      && !state.selectedProject
-      && !state.projects.motorboat.complete
-      && !completionPending;
-    const purchaseBlocked =
-      (state.selectedProject === "dock" && jettyPurchaseRequired(state))
-      || (state.selectedProject === "boathouse" && boathousePurchaseRequired(state))
-      || (state.selectedProject === "motorboat" && motorboatPartsPurchaseRequired(state));
-    const namingBlocked = state.selectedProject === "motorboat" && motorboatNamingRequired(state);
-    const worldBlocked =
-      chapterCardVisible
-      || !state.openingComplete
-      || (state.openingComplete && !state.bicycleSeen)
-      || (state.bicycleSeen && !state.alveIntroComplete)
-      || chooserVisible
-      || act2FinalePending(state)
-      || completionPending
-      || purchaseBlocked
-      || namingBlocked
-      || contributionTurnInOpen
-      || cabinRevisitOpen
-      || historyOpen
-      || historyReplay !== null;
-    gameRef.current?.setWorldInputEnabled(!worldBlocked);
-  }, [chapterCardVisible, state, contributionTurnInOpen, cabinRevisitOpen, historyOpen, historyReplay]);
+    gameRef.current?.setWorldInputEnabled(runtimeOverlay.worldInputEnabled);
+  }, [runtimeOverlay.worldInputEnabled]);
 
   async function commit(next: Act2RuntimeState) {
     if (!debug) await saveAct2RuntimeState(next);
@@ -572,7 +548,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const uiShell = deriveGameUiShell({
     debug,
     worldReady: state.openingComplete && state.alveIntroComplete,
-    blockingOverlayVisible: chapterCardVisible || storyUiVisible,
+    blockingOverlayVisible: runtimeOverlay.blockingOverlayVisible,
     projectStatusAvailable: state.selectedProject !== null,
   });
   const hudVisible = uiShell.showHud;
