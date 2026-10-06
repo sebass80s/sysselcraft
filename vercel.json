@@ -1,9 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
-    "deploymentEnabled": {
-      "nova/local-construction-snapshot": false,
-      "nova/runtime-*": false
-    }
+    "deploymentEnabled": false
   }
 }
