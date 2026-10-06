@@ -78,8 +78,12 @@ main { min-height: 100dvh; }
 .dialogue-speaker.linus { background: #315f8c; }
 .dialogue-speaker.sol { background: #9a6a16; }
 .dialogue-next { float: right; min-width: 110px; }
-.dog-name-input { width: 100%; border: 2px solid #b9a47d; border-radius: 10px; padding: .55rem .7rem; background: #fffef9; color: #282219; outline: none; margin-bottom: .5rem; }
-.dog-name-input:focus { border-color: #477a3f; box-shadow: 0 0 0 3px rgba(71,122,63,.14); }
+.dog-name-input,
+.shared-story-text-input { width: 100%; border: 2px solid #b9a47d; border-radius: 10px; padding: .55rem .7rem; background: #fffef9; color: #282219; outline: none; margin-bottom: .5rem; }
+.dog-name-input:focus,
+.shared-story-text-input:focus { border-color: #477a3f; box-shadow: 0 0 0 3px rgba(71,122,63,.14); }
+.shared-story-name-input { display: grid; gap: .45rem; }
+.shared-story-name-input .dialogue-next { justify-self: end; }
 .parent-menu-backdrop { position: absolute; inset: 0; z-index: 45; display: grid; place-items: center; padding: max(.7rem, env(safe-area-inset-top)) max(.7rem, env(safe-area-inset-right)) max(.7rem, env(safe-area-inset-bottom)) max(.7rem, env(safe-area-inset-left)); background: rgba(24,31,25,.5); backdrop-filter: blur(3px); }
 .parent-menu-panel { position: relative; width: min(620px, 100%); max-height: calc(100dvh - 1.4rem); overflow: auto; background: #fffdf4; border: 3px solid #5d5037; border-radius: 20px; padding: 1rem; box-shadow: 0 24px 80px rgba(24,31,25,.36); }
 .parent-menu-panel h2 { margin: .25rem 0 .2rem; font-size: 1.45rem; }
