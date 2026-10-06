@@ -845,3 +845,33 @@ Fuel-principle audit result:
 - ordinary non-story shop inventory (room decor, dog-home items, Act 1 bottle flow, diamond rewards) remains outside this Runtime 1.1 Story Purchase checkpoint by design.
 
 Current Runtime 1.1 status: backlog items 1, 2, 3 and 4 are closed; fuel-principle work continues with item 5.
+
+
+## Runtime 1.1 closeout handover checkpoint — 2026-10-06
+
+Canonical handover: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Verified baseline before this documentation closeout:
+- branch: `nova/runtime-architecture-v1`;
+- docs baseline HEAD: `eb7df728adea783c676fe697738be62200430fc9`;
+- GitHub Actions #2252: SUCCESS;
+- latest verified code checkpoint for completed item 4: `13d6f99a29f948b64dc74b2f3b214456cb5e7d74`, CI #2248 SUCCESS.
+
+Runtime 1.1 completed:
+1. Shared Chapter Runtime Host ✅
+2. Generic Progression / Project Engine ✅
+3. Shared Story UI / sequencing / inputs / history / cards / choices ✅
+4. Generic Story Purchase integration ✅
+
+Runtime 1.1 remains OPEN. Continue in this exact order:
+5. generic child-scoped chapter persistence host;
+6. shared backend synchronization/reconciliation;
+7. full World/Area Runtime Host beyond mount/sync/destroy;
+8. common chapter debug/acceptance harness;
+9. empty Act 3 skeleton proof;
+10. full automated + browser verification;
+11. physical iPhone update-in-place acceptance last.
+
+Do not start Act 3 gameplay before the empty-Act3 fuel proof. Do not propose physical iPhone acceptance before engine + empty Act 3 + automated/browser closeout are complete.
+
+Point 5 is next. The first persistence slice should audit/define the generic storage contract and ownership boundary before moving code out of `act2RuntimeState.ts`. Preserve the rules in `STATE_OWNERSHIP.md` and `SAVE_COMPATIBILITY_AUDIT.md`.
