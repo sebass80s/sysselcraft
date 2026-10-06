@@ -1,0 +1,103 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+import {
+  nextAuthoritativeProgressTrackStep,
+  pendingAuthoritativeProgressCount,
+} from "../src/runtime/progression/authoritativeTrack.ts";
+
+const definition = {
+  targetCount: 4,
+  stages: [
+    { minContributions: 1, stage: 1 },
+    { minContributions: 3, stage: 2 },
+  ],
+  beatId: (number) => `demo:${number}`,
+};
+
+assert.equal(
+  pendingAuthoritativeProgressCount(14, 10, 0),
+  4,
+  "authoritative progress since baseline must become local backlog",
+);
+assert.equal(
+  pendingAuthoritativeProgressCount(14, 10, 2),
+  2,
+  "already consumed local progress must be subtracted exactly once",
+);
+assert.equal(
+  pendingAuthoritativeProgressCount(9, 10, 0),
+  0,
+  "authoritative counters below baseline must never create negative backlog",
+);
+
+assert.deepEqual(
+  nextAuthoritativeProgressTrackStep({
+    authoritativeCount: 14,
+    baselineCount: 10,
+    consumedCount: 0,
+    trackContributions: 0,
+    definition,
+    blocked: false,
+  }),
+  { number: 1, beatId: "demo:1", visibleStage: 1, backlog: 4 },
+  "large backend backlog must still present exactly the next authored beat",
+);
+
+assert.equal(
+  nextAuthoritativeProgressTrackStep({
+    authoritativeCount: 14,
+    baselineCount: 10,
+    consumedCount: 1,
+    trackContributions: 1,
+    definition,
+    blocked: true,
+  }),
+  null,
+  "story gates must block presentation without consuming authoritative backlog",
+);
+
+assert.deepEqual(
+  nextAuthoritativeProgressTrackStep({
+    authoritativeCount: 14,
+    baselineCount: 10,
+    consumedCount: 1,
+    trackContributions: 1,
+    definition,
+    blocked: false,
+  }),
+  { number: 2, beatId: "demo:2", visibleStage: 1, backlog: 3 },
+  "resolving a story gate must resume at the same unconsumed next beat",
+);
+
+assert.equal(
+  nextAuthoritativeProgressTrackStep({
+    authoritativeCount: 14,
+    baselineCount: 10,
+    consumedCount: 4,
+    trackContributions: 4,
+    definition,
+    blocked: false,
+  }),
+  null,
+  "fully consumed authoritative progress must not manufacture another step",
+);
+
+const act2 = fs.readFileSync(new URL("../src/game/act2RuntimeState.ts", import.meta.url), "utf8");
+assert.match(
+  act2,
+  /pendingAuthoritativeProgressCount\(/,
+  "Act 2 backlog calculation must consume the shared authoritative-track engine",
+);
+assert.match(
+  act2,
+  /nextAuthoritativeProgressTrackStep\(\{/,
+  "Act 2 contribution presentation must consume the shared authoritative-track engine",
+);
+assert.doesNotMatch(
+  act2,
+  /authoritativeProgressDelta\(authoritative, normalized\.backendClaimBaseline\)/,
+  "Act 2 must not retain its retired local authoritative backlog arithmetic",
+);
+
+console.log("PASS: authoritative progress track preserves backlog, gates and authored beat order");
