@@ -1913,3 +1913,24 @@ Before any change:
 4. do not invent more Runtime 1.1 extraction work before physical acceptance;
 5. keep changes small, testable and checkpointed.
 
+
+
+## Runtime 1.1 fuel-principle status correction
+
+Canonical audit: `docs/RUNTIME_1_1_FUEL_AUDIT.md`.
+
+Runtime 1.1 must be judged by the fuel principle: future acts should primarily add content/configuration/world-specific adapters to an already-working engine. The earlier `code-complete` label covered the narrower extraction plan and is superseded as an Act 3 readiness claim.
+
+The audit found remaining P0 engine gaps, including:
+- chapter runtime orchestration still concentrated in `Act2Runtime.tsx`;
+- progression consumption still contains hard-coded Act 2 target logic;
+- generic project selection/completion-reaction mechanics are not fully shared;
+- Act 2-specific Story UI/CSS can still change fonts/layout;
+- naming/input behavior is duplicated rather than canonical;
+- Story Purchase primitives do not yet make Village shop integration data-driven;
+- chapter persistence load/save hosting remains Act 2-specific;
+- World/Area runtime hosting is not yet sufficient to prevent a new `createAct3...Game.ts` fork.
+
+Current status: **Runtime 1.1 fuel-principle incomplete.**
+
+Do not start substantive Act 3 runtime work or treat physical acceptance as the only remaining gate. Close the audit blockers first, prove an empty next chapter can be built without copied engine behavior, then run full automated/browser/physical acceptance.
