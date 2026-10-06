@@ -357,7 +357,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     world.destroy();
   }, []);
 
-  const gameRef = useChapterWorldHost({
+  useChapterWorldHost({
     active: ready && state.openingComplete,
     snapshot: {
       state,
