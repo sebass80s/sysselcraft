@@ -71,8 +71,18 @@ assert.doesNotMatch(
 );
 assert.match(
   act2,
-  /runtimeShellStatus === "shipping-locked" \|\| runtimeShellStatus === "progression-locked"/,
-  "shared locked shell states must own the Act 2 locked route presentation",
+  /runtimeShellStatus !== "active"[\s\S]*<ChapterRuntimeBoundary/,
+  "Act 2 loading/lock presentation must render through the shared chapter access boundary",
+);
+assert.match(
+  act2,
+  /returnHref=\{chapterRoute\("act1"\)\}/,
+  "Act 2 access boundary must return through the canonical chapter registry",
+);
+assert.doesNotMatch(
+  act2,
+  /return <main className="parent-page"><p>Laddar sjön/,
+  "Act 2 must not retain a local loading boundary",
 );
 assert.match(
   act2,
