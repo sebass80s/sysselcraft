@@ -791,18 +791,23 @@ assert.ok(
   "finale history must stay hidden until the complete Act 2 epilogue has been consumed",
 );
 assert.ok(page.includes('[ACT2_STORYLINE_IDS.finale]: "Finalen"'), "completed finale beats must be replayable from history");
-assert.ok(page.includes("setHistoryReplay({ beat, lineIndex: 0 })"), "history replay must use isolated local presentation state");
-const historyReplayStart = page.indexOf("function openHistoryReplay");
-const historyReplayEnd = page.indexOf("async function previousFinaleStory");
-assert.ok(historyReplayStart >= 0 && historyReplayEnd > historyReplayStart, "history replay implementation must be discoverable for safety audit");
-const historyReplaySource = page.slice(historyReplayStart, historyReplayEnd);
-assert.equal(historyReplaySource.includes("saveAct2RuntimeState"), false, "history replay must never persist Act 2 state");
-assert.equal(historyReplaySource.includes("withPresentedContribution"), false, "history replay must never consume a contribution");
-assert.equal(historyReplaySource.includes("purchase"), false, "history replay must never execute story purchases");
+const sharedHistorySource = fs.readFileSync(new URL("../src/runtime/story/StoryHistoryPanel.tsx", import.meta.url), "utf8");
 assert.ok(
-  page.includes("if (!historyOpen && historyReplay === null) return;")
+  sharedHistorySource.includes("setReplayState({ beat, lineIndex: 0 })"),
+  "history replay must use isolated shared presentation state",
+);
+assert.equal(sharedHistorySource.includes("saveAct2RuntimeState"), false, "shared history replay must never persist Act 2 state");
+assert.equal(sharedHistorySource.includes("withPresentedContribution"), false, "shared history replay must never consume a contribution");
+assert.equal(sharedHistorySource.includes("purchaseAct2"), false, "shared history replay must never execute chapter purchases");
+assert.ok(
+  page.includes("if (!historyOpen && !historyReplayOpen) return;")
     && page.includes("return beginStoryOverlay();"),
   "history menu and replay must publish shared story-overlay visibility so quest UI is suppressed",
+);
+assert.ok(
+  page.includes("<StoryHistoryPanel")
+    && page.includes("onReplayOpenChange={setHistoryReplayOpen}"),
+  "Act 2 must delegate replay presentation to shared Story History while retaining overlay arbitration",
 );
 
 
