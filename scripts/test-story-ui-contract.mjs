@@ -125,6 +125,7 @@ assert.match(
 const storyMomentSource = read("src/components/story/StoryMoment.tsx");
 const storyNameInput = read("src/components/story/StoryNameInput.tsx");
 const chapterCards = read("src/runtime/chapter/ChapterCards.tsx");
+const storyHistoryPanel = read("src/runtime/story/StoryHistoryPanel.tsx");
 assert.match(storyMomentSource, /setImageOnlyPresentationId\(presentationId\)/, "StoryMoment must hide the dialogue before advancing");
 assert.match(storyMomentSource, /shared-story-image-continue/, "clean image mode must advance from the unobstructed image");
 assert.match(storyMomentSource, /presentationId/, "clean image mode must reset between authored panels");
@@ -156,6 +157,17 @@ assert.equal(act2Runtime.includes("act2-chapter-intro"), false,
   "Act 2 must not retain chapter-local intro presentation markup");
 assert.equal(css.includes(".act2-chapter-intro"), false,
   "chapter-local intro CSS must not coexist with shared chapter-card styling");
+assert.match(storyHistoryPanel, /export function StoryHistoryPanel/, "shared Story Engine must own history panel and replay shell");
+assert.match(storyHistoryPanel, /<StoryRunner/, "shared Story History must replay beats through the canonical Story runner");
+assert.match(storyHistoryPanel, /onReplayOpenChange/, "shared history shell must expose replay-open state for runtime input arbitration");
+assert.match(act2Runtime, /<StoryHistoryPanel[\s\S]*groups=\{historyGroups\}[\s\S]*parseLine=\{parseStoryLine\}/,
+  "Act 2 must provide only history data and parsing to the shared history UI");
+assert.equal(act2Runtime.includes("act2-history-overlay"), false,
+  "Act 2 must not retain chapter-local history presentation markup");
+assert.equal(css.includes(".act2-history-overlay"), false,
+  "chapter-local history CSS must not coexist with shared Story History styling");
+assert.match(css, /\.shared-story-history-overlay \{[^}]*safe-area-inset-top[^}]*z-index:\s*105/s,
+  "shared Story History must own safe-area placement and layering");
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
