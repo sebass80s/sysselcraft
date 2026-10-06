@@ -6,15 +6,13 @@ import {
   type ProgressTrackDefinition,
 } from "../runtime/progression/progressTrack";
 import {
-  nextAuthoritativeProgressTrackStep,
-  pendingAuthoritativeProgressCount,
-} from "../runtime/progression/authoritativeTrack";
-import {
   canSelectProjectProgress,
   consumeProjectCompletionReaction as consumeSharedProjectCompletionReaction,
   consumeSelectedProjectProgress,
+  nextAuthoritativeProjectProgressStep,
   nextPendingProjectCompletionReaction,
   normalizeProjectProgressState,
+  pendingAuthoritativeProjectProgressCount,
   projectCompletionReactionPending as sharedProjectCompletionReactionPending,
   projectPrerequisitesComplete,
   selectProjectProgress,
@@ -440,11 +438,12 @@ export function withBackendClaimBaseline(state: Act2RuntimeState, worldProgressi
 export function pendingBackendContributionCount(state: Act2RuntimeState, worldProgression: number) {
   const normalized = normalizeAct2RuntimeState(state);
   if (normalized.backendClaimBaseline === null) return 0;
-  return pendingAuthoritativeProgressCount(
-    worldProgression,
-    normalized.backendClaimBaseline,
-    totalAct2Contributions(normalized),
-  );
+  return pendingAuthoritativeProjectProgressCount({
+    state: projectProgressSnapshot(normalized),
+    definition: ACT2_PROJECT_PROGRESS_DEFINITION,
+    authoritativeCount: worldProgression,
+    baselineCount: normalized.backendClaimBaseline,
+  });
 }
 
 export type Act2ContributionCandidate = {
@@ -463,17 +462,17 @@ export function nextAct2Contribution(
   const project = normalized.selectedProject;
   if (!project || !canSelectProject(normalized, project)) return null;
   if (normalized.backendClaimBaseline === null) return null;
-  const next = nextAuthoritativeProgressTrackStep({
+  const next = nextAuthoritativeProjectProgressStep({
+    state: projectProgressSnapshot(normalized),
+    definition: ACT2_PROJECT_PROGRESS_DEFINITION,
     authoritativeCount: worldProgression,
     baselineCount: normalized.backendClaimBaseline,
-    consumedCount: totalAct2Contributions(normalized),
-    trackContributions: normalized.projects[project].contributions,
-    definition: act2ProjectTrackDefinition(project),
-    blocked: act2ContributionBlockedByStoryGate(normalized, project),
+    blocked: (candidateProject) =>
+      act2ContributionBlockedByStoryGate(normalized, candidateProject),
   });
   if (!next || next.visibleStage === 0) return null;
   return {
-    project,
+    project: next.project,
     number: next.number,
     beatId: next.beatId,
     visibleStage: next.visibleStage,
