@@ -4,7 +4,7 @@ import {
   jettyPurchaseRequired,
   motorboatNamingRequired,
   motorboatPartsPurchaseRequired,
-  projectCompletionReactionPending,
+  pendingProjectCompletionReaction,
   type Act2RuntimeState,
 } from "./act2RuntimeState";
 
@@ -19,8 +19,7 @@ export function deriveAct2RuntimeBlockers(
   state: Act2RuntimeState,
   flags: Act2RuntimeUiFlags,
 ) {
-  const completionProject = (["dock"] as const)
-    .find((project) => projectCompletionReactionPending(state, project)) ?? null;
+  const completionProject = pendingProjectCompletionReaction(state);
   const projectChooserVisible =
     state.alveIntroComplete
     && !state.selectedProject
