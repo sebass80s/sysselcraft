@@ -204,8 +204,8 @@ assert.match(
 );
 assert.match(
   villageSource,
-  /const purchaseOwned = act2StoryPurchaseSnapshot\?\.status\[project\]\.owned === true/,
-  "shop exit/resume must read ownership from the unified adapter snapshot",
+  /const snapshot = await registration\.loadSnapshot\(\);[\s\S]*const purchaseOwned = snapshot\.status\[target\]\?\.owned === true/,
+  "contextual shop exit must refresh ownership through the resolved registry entry",
 );
 
 const storyPurchaseRegistry = loadTsModule("../src/runtime/purchase/storyPurchaseRegistry.ts", {});
