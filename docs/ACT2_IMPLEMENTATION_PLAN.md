@@ -479,3 +479,20 @@ Use the narrow test that owns the contract. Do not add duplicate regex guards fo
 - `test:story-ui`: shared Story Engine presentation
 
 Physical evidence has reached the complete ending on the preserved iPhone save. Continue to preserve that save for regression work; do not reset it to make tests easier.
+
+
+## Runtime 1.1 architecture-consumer note — 2026-10-06
+
+Act 2 remains content-complete. Do not reopen its progression/story design as part of Runtime 1.1 unless a real regression requires it.
+
+Act 2's current role is architectural pressure-test consumer:
+- it now consumes shared chapter lifecycle;
+- generic progression/project mechanics;
+- shared Story UI/sequencing/input/history/cards/choices;
+- generic Story Purchase registration/shop/handoff.
+
+Next Runtime work is NOT more Act 2 content. It is the generic chapter persistence host, followed by backend sync, full World/Area hosting, common debug harness and the empty Act 3 proof.
+
+Preserve all Act 2 invariants and authored beats while moving generic mechanics outward.
+
+Canonical Runtime continuation: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
