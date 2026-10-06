@@ -2028,3 +2028,33 @@ Still deliberately outside this checkpoint:
 - empty Act 3 proof remains the final architectural proof before acceptance.
 
 Current Runtime 1.1 status remains: **fuel-principle incomplete**, with backlog items 1 and 2 now closed.
+
+
+## Verified checkpoint: Shared Story UI and sequencing
+
+Verified code HEAD: `4d6fef7f89e64223a986ab164feddf48a3d388d9`
+
+GitHub Actions: **#2200 SUCCESS** on that exact SHA.
+
+Runtime 1.1 backlog item 3 is closed.
+
+Implemented:
+- canonical Story dialogue typography, safe-area layout, scrolling, buttons and overlay presentation are shared;
+- chapter-named dialogue overrides such as `.act2-dialogue-card` are removed, including the cross-chapter Village shop handoff;
+- Story presentation uses semantic variants instead of raw chapter-provided `zIndex` / `background` values;
+- standard naming/text input is shared, including autofocus, mobile keyboard hints, Enter submit, trimming/validation and canonical styling;
+- chapter intro and end-card presentation are shared;
+- Story History panel, grouping UI and replay shell are shared and replay through the canonical Story runner;
+- ordinary linear Story sequencing is shared through safe current-line, previous and advance/complete primitives;
+- Act 2 opening, Alve intro, contribution dialogue, completion reactions, Cabin revisit and finale all consume the shared sequencing primitives;
+- standard choice layout is shared through `StoryChoiceGroup`; Act 2 project selection supplies options, selected value, labels and domain callbacks only;
+- regression guards reject chapter-local Story typography/history/choice layout and raw Story presentation controls.
+
+Fuel-principle audit result:
+- no Act 2-specific dialogue typography or history presentation remains;
+- no raw Story `zIndex`, background or chapter-specific dialogue class remains in Act 2 Story surfaces;
+- no standard project-choice inline layout remains in Act 2;
+- remaining line-index `+1` checks in Act 2 are presentation-only lookahead for labels/image reveal/final-line display, not state navigation or sequencing mechanics;
+- chapter-specific authored copy, image choices, beat boundaries, reveal semantics and domain completion callbacks remain valid content/adapters.
+
+Current Runtime 1.1 status remains: **fuel-principle incomplete**, with backlog items 1, 2 and 3 closed.
