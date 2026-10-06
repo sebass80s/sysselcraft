@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import ts from "typescript";
 
 import {
   defineStoryPurchase,
@@ -7,6 +8,51 @@ import {
   resolveStoryPurchaseExit,
 } from "../src/runtime/purchase/storyPurchaseFlow.ts";
 import { ACT2_PURCHASE_CATALOG } from "../src/game/act2PurchaseCatalog.ts";
+
+
+function loadTsModule(file, dependencies) {
+  const exports = {};
+  const code = ts.transpileModule(fs.readFileSync(new URL(file, import.meta.url), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  new Function("exports", "require", code)(exports, (name) => {
+    assert.ok(name in dependencies, `Unexpected purchase transport dependency: ${name}`);
+    return dependencies[name];
+  });
+  return exports;
+}
+
+let rpcArgs = null;
+const storyShop = loadTsModule("../src/backend/storyShop.ts", {
+  "./supabaseClient": {
+    getSupabaseBrowserClient: () => ({
+      rpc: async (name, args) => {
+        rpcArgs = { name, args };
+        return {
+          data: {
+            child_id: "child-1",
+            syssel_bux: 125,
+            already_owned: false,
+            world_flags: { demo_owned: true },
+          },
+          error: null,
+        };
+      },
+    }),
+  },
+});
+
+await storyShop.purchaseStoryItem("act3_demo_item");
+assert.deepEqual(
+  rpcArgs,
+  { name: "purchase_story_item", args: { p_item_key: "act3_demo_item" } },
+  "generic Story Shop transport must accept future catalog item ids without chapter-specific client wrappers",
+);
+await assert.rejects(
+  () => storyShop.purchaseStoryItem("   "),
+  /Story item key saknas/,
+  "generic Story Shop transport must reject empty item ids before RPC",
+);
 
 assert.equal(purchaseShortfall(50, 200), 150);
 assert.equal(purchaseShortfall(200, 200), 0);
@@ -60,4 +106,11 @@ assert.deepEqual(
     motorboat: { id: "act2_motorboat_parts", target: "motorboat", currency: "sysselbux", price: 200 },
   },
   "Act 2 purchase metadata must be chapter data using the shared story-purchase definition",
+);
+
+const storyShopSource = fs.readFileSync(new URL("../src/backend/storyShop.ts", import.meta.url), "utf8");
+assert.doesNotMatch(
+  storyShopSource,
+  /purchaseAct2JettyLifebuoy|purchaseAct2BoathouseSteeringWheel|purchaseAct2MotorboatParts/,
+  "Story Shop transport must not require chapter-specific Act 2 purchase wrappers",
 );
