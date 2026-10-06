@@ -41,7 +41,8 @@ import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { parseStoryLine, storySpeakerTone } from "../game/storyEngine";
 import { act2ResumeHref, type Act2PurchaseProject } from "../game/act2PurchaseHandoff";
-import { resolveRegisteredStoryPurchase, type STORY_PURCHASE_REGISTRATIONS } from "../game/storyPurchaseRegistry";
+import { resolveRegisteredStoryPurchase } from "../game/storyPurchaseRegistry";
+import type { StoryPurchaseRegistration } from "../runtime/purchase/storyPurchaseRegistry";
 import { applyAct2StoryPurchaseResult, deriveAct2StoryPurchaseSnapshot, type Act2StoryPurchaseSnapshot } from "../game/act2StoryPurchaseAdapter";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
@@ -122,7 +123,7 @@ export default function VillagePrototype() {
   const [shopMessage, setShopMessage] = useState("");
   const [act2StoryPurchaseSnapshot, setAct2StoryPurchaseSnapshot] = useState<Act2StoryPurchaseSnapshot | null>(null);
   const [storyPurchaseReturnContext, setStoryPurchaseReturnContext] = useState<{
-    registration: (typeof STORY_PURCHASE_REGISTRATIONS)[number];
+    registration: StoryPurchaseRegistration<string>;
     target: string;
   } | null>(null);
   const [pairedBackendChildName, setPairedBackendChildName] = useState<string | null>(null);
