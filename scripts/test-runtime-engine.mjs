@@ -40,6 +40,16 @@ function loadTsModule(file, dependencies) {
   return exports;
 }
 
+const chapterRegistryModule = loadTsModule("../src/runtime/chapter/chapterRegistry.ts", {});
+const storyPurchaseHandoffModule = loadTsModule("../src/runtime/purchase/storyPurchaseHandoff.ts", {
+  "../chapter/chapterRegistry": chapterRegistryModule,
+});
+const {
+  parseStoryPurchaseTarget,
+  storyPurchaseResumeHref,
+  storyPurchaseShopHref,
+} = storyPurchaseHandoffModule;
+
 const authoritativeDelta = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const progressTrackModule = loadTsModule("../src/runtime/progression/progressTrack.ts", {});
 const {
@@ -192,7 +202,32 @@ const destination = nextChapterDestination("act2", persistedLifecycle);
 assert.deepEqual(destination, { id: "act3", route: "/act3" });
 assert.equal(chapterRoute(destination.id), destination.route);
 
-// 9. Final registered chapter does not invent another act.
+// 9. Generic story-purchase handoff is reusable by any registered chapter.
+assert.equal(
+  parseStoryPurchaseTarget("alpha", ["alpha", "beta"]),
+  "alpha",
+);
+assert.equal(
+  parseStoryPurchaseTarget("gamma", ["alpha", "beta"]),
+  null,
+);
+assert.equal(
+  storyPurchaseShopHref({
+    shopChapterId: "act1",
+    queryKey: "demo-purchase",
+    target: "alpha",
+  }),
+  "/?demo-purchase=alpha",
+);
+assert.equal(
+  storyPurchaseResumeHref({
+    chapterId: "act2",
+    target: "alpha",
+  }),
+  "/act2?resume=alpha",
+);
+
+// 10. Final registered chapter does not invent another act.
 assert.equal(
   nextChapterDestination("act3", { chapterComplete: true, endCardSeen: true }),
   null,
