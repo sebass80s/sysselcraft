@@ -1,6 +1,6 @@
 "use client";
 
-import { StoryMoment } from "./StoryMoment";
+import { StoryMoment, type StoryPresentationVariant } from "./StoryMoment";
 import { StoryTranscript } from "./StoryTranscript";
 import type { StoryBeatPresentation } from "../../game/storyEngine";
 
@@ -9,14 +9,12 @@ type StoryRunnerProps = {
   ariaLabel?: string;
   onPrevious?: () => void | Promise<void>;
   onNext: () => void | Promise<void>;
-  zIndex?: number;
-  background?: string;
-  dialogueClassName?: string;
+  variant?: StoryPresentationVariant;
   childName?: string;
   revealImageBeforeNext?: boolean;
 };
 
-export function StoryRunner({ beat, ariaLabel, onPrevious, onNext, zIndex, background, dialogueClassName, childName, revealImageBeforeNext = false }: StoryRunnerProps) {
+export function StoryRunner({ beat, ariaLabel, onPrevious, onNext, variant = "default", childName, revealImageBeforeNext = false }: StoryRunnerProps) {
   return (
     <StoryMoment
       image={beat.image}
@@ -28,9 +26,7 @@ export function StoryRunner({ beat, ariaLabel, onPrevious, onNext, zIndex, backg
       onPrevious={onPrevious}
       nextLabel={beat.nextLabel}
       onNext={onNext}
-      zIndex={zIndex}
-      background={background}
-      dialogueClassName={dialogueClassName}
+      variant={variant}
       revealImageBeforeNext={revealImageBeforeNext}
       presentationId={beat.id}
     >
