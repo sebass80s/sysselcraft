@@ -27,11 +27,13 @@ function loadTsModule(file, dependencies) {
 const saveMigrations = loadTsModule("../src/runtime/save/migrations.ts", {});
 const progressionDelta = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const progressGate = loadTsModule("../src/runtime/progression/progressGate.ts", {});
+const progressTrack = loadTsModule("../src/runtime/progression/progressTrack.ts", {});
 const act2RuntimeModule = loadTsModule("../src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrations,
   "../runtime/progression/authoritativeDelta": progressionDelta,
   "../runtime/progression/progressGate": progressGate,
+  "../runtime/progression/progressTrack": progressTrack,
 });
 const {
   act2FinalePending,
