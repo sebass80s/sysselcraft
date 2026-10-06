@@ -604,6 +604,9 @@ export default function VillagePrototype() {
   }, [saveReady, bottleMessageSent, solArrivalSeen, bottleLetterOpen, bottleStoryIndex, solStoryIndex, solRuntimeTestActive, recordSolRuntimeDebug]);
   useEffect(() => { gameRef.current?.setConstruction(constructionPresentation(construction)); }, [construction]);
 
+  const act2PurchaseStory = act2StoryPurchaseSnapshot?.purchaseStory ?? null;
+  const act2PurchaseStoryIndex = act2StoryPurchaseSnapshot?.purchaseStoryLineIndex ?? 0;
+
   const villageBlockingOverlayVisible =
     dialogueOpen ||
     linusStoryReplayIndex !== null ||
@@ -1324,9 +1327,6 @@ export default function VillagePrototype() {
     <h1>Byn kunde inte startas</h1><p>Din sparning finns kvar. Försök öppna byn igen.</p>
     <button className="primary-button" onClick={() => window.location.reload()}>Försök igen</button>
   </div></section>;
-
-  const act2PurchaseStory = act2StoryPurchaseSnapshot?.purchaseStory ?? null;
-  const act2PurchaseStoryIndex = act2StoryPurchaseSnapshot?.purchaseStoryLineIndex ?? 0;
 
   const act2PurchaseBeat = act2PurchaseStory === "dock"
     ? JETTY_LIFEBUOY_BEAT
