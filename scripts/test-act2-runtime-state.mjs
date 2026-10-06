@@ -818,11 +818,11 @@ for (const [item, flag] of [
   assert.ok(act2PurchaseMigration.includes(`when '${item}' then v_price:=200`), `${item} must be reproducible from checked-in migration at 200 SysselBux`);
   assert.ok(act2PurchaseMigration.includes(`v_flag_key:='${flag}'`), `${item} migration must persist ${flag}`);
 }
-assert.ok(act2PurchaseCatalog.includes('title: "Livboj till bryggan"') && village.includes("ACT2_PURCHASE_CATALOG.dock.shop.title"), "Mira must expose the canonical Act 2 lifebuoy presentation");
+assert.ok(act2PurchaseCatalog.includes('title: "Livboj till bryggan"') && village.includes("ACT2_PURCHASE_CATALOG.dock.presentation.shop.title"), "Mira must expose the canonical Act 2 lifebuoy presentation");
 assert.ok(village.includes("jettyPurchaseRequired(act2)"), "Mira stock must derive from Act 2 progress, not a permanent global item");
-assert.ok(act2PurchaseCatalog.includes('title: "Ratt till lådbilen"') && village.includes("ACT2_PURCHASE_CATALOG.boathouse.shop.title"), "Mira must expose the canonical Båthuset steering-wheel presentation");
+assert.ok(act2PurchaseCatalog.includes('title: "Ratt till lådbilen"') && village.includes("ACT2_PURCHASE_CATALOG.boathouse.presentation.shop.title"), "Mira must expose the canonical Båthuset steering-wheel presentation");
 assert.ok(village.includes("boathousePurchaseRequired(act2)"), "steering wheel stock must derive from Båthuset progress");
-assert.ok(act2PurchaseCatalog.includes('title: "Reservdelspaket till motorbåten"') && village.includes("ACT2_PURCHASE_CATALOG.motorboat.shop.title"), "Mira must expose the canonical Motorbåten parts presentation");
+assert.ok(act2PurchaseCatalog.includes('title: "Reservdelspaket till motorbåten"') && village.includes("ACT2_PURCHASE_CATALOG.motorboat.presentation.shop.title"), "Mira must expose the canonical Motorbåten parts presentation");
 assert.ok(village.includes("motorboatPartsPurchaseRequired(act2)"), "parts stock must derive from Motorbåten progress");
 assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira shop must render the canonical Bryggan lifebuoy story beat");
 assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira shop must render the canonical Båthuset steering-wheel story beat");
