@@ -50,6 +50,7 @@ import { historyEntriesFor } from "../runtime/story/storyHistory";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
 import { chapterAtStart, chapterCardVisible as deriveChapterCardVisible, chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 import { chapterRoute } from "../runtime/chapter/chapterRegistry";
+import { chapterBootMayLoad, deriveChapterRuntimeShell } from "../runtime/chapter/chapterRuntimeShell";
 
 
 
@@ -107,6 +108,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
 
   const chapterCardVisible = deriveChapterCardVisible(ready, chapterIntroVisible, { chapterComplete: state.act2Complete, endCardSeen: state.endCardSeen });
+  const runtimeShellStatus = deriveChapterRuntimeShell({ ready, debug, productionEnabled, accessAllowed: act2AccessAllowed });
   useEffect(() => {
     if (chapterCardVisible) return beginStoryOverlay();
   }, [chapterCardVisible]);
@@ -134,7 +136,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       // Shipping lock must be a hard side-effect boundary. Merely visiting the
       // locked production route must never establish Act 2 entry/baseline state,
       // otherwise quests completed before release can become latent Act 2 backlog.
-      if (!debug && !productionEnabled) {
+      if (!chapterBootMayLoad({ debug, productionEnabled })) {
         setReady(true);
         return;
       }
@@ -466,19 +468,14 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     setPreviewProject(null);
   }
 
-  if (!ready) return <main className="parent-page"><p>Laddar sjön…</p></main>;
-  if (!debug && !productionEnabled) {
-    return <main className="parent-page">
-      <h1>Stigen är inte öppen än</h1>
-      <p>Det finns mer att göra i byn innan vägen mot sjön öppnas.</p>
-      <a className="primary-button" href="/">Tillbaka till byn</a>
-    </main>;
+  if (runtimeShellStatus === "loading") {
+    return <main className="parent-page"><p>Laddar sjön…</p></main>;
   }
-  if (!debug && !act2AccessAllowed) {
+  if (runtimeShellStatus === "shipping-locked" || runtimeShellStatus === "progression-locked") {
     return <main className="parent-page">
       <h1>Stigen är inte öppen än</h1>
       <p>Det finns mer att göra i byn innan vägen mot sjön öppnas.</p>
-      <a className="primary-button" href="/">Tillbaka till byn</a>
+      <a className="primary-button" href={chapterRoute("act1")}>Tillbaka till byn</a>
     </main>;
   }
 
