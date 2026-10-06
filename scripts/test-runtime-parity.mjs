@@ -52,12 +52,15 @@ const authoritativeTrackModule = loadTsModule("../src/runtime/progression/author
   "./progressTrack": progressTrackModule,
 });
 const chapterRegistryModule = loadTsModule("../src/runtime/chapter/chapterRegistry.ts", {});
+const storyPurchaseHandoffModule = loadTsModule("../src/runtime/purchase/storyPurchaseHandoff.ts", {
+  "../chapter/chapterRegistry": chapterRegistryModule,
+});
 const {
   act2PurchaseShopHref,
   act2ResumeHref,
   parseAct2PurchaseProject,
 } = loadTsModule("../src/game/act2PurchaseHandoff.ts", {
-  "../runtime/chapter/chapterRegistry": chapterRegistryModule,
+  "../runtime/purchase/storyPurchaseHandoff": storyPurchaseHandoffModule,
 });
 const {
   createDefaultAct2RuntimeState,
