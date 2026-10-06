@@ -2088,3 +2088,35 @@ Fuel-principle audit result:
 - ordinary non-story shop inventory (room decor, dog-home items, Act 1 bottle flow, diamond rewards) remains outside this Runtime 1.1 Story Purchase checkpoint by design.
 
 Current Runtime 1.1 status: backlog items 1, 2, 3 and 4 are closed; fuel-principle work continues with item 5.
+
+
+## NOVA HANDOVER — Runtime 1.1 checkpoint 2026-10-06
+
+The canonical handover for the next instance is now:
+`docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Start there, then verify repo reality.
+
+Baseline when the handover was prepared:
+- branch `nova/runtime-architecture-v1`;
+- HEAD `eb7df728adea783c676fe697738be62200430fc9`;
+- GitHub Actions #2252 SUCCESS;
+- latest completed engine-code checkpoint `13d6f99a29f948b64dc74b2f3b214456cb5e7d74`, CI #2248 SUCCESS.
+
+DO NOT restart Runtime 1.1 from old audit findings. Items 1–4 are closed:
+1. Shared Chapter Runtime Host ✅
+2. Generic Progression / Project Engine ✅
+3. Shared Story UI/sequencing/input/history/cards/choices ✅
+4. Generic Story Purchase integration ✅
+
+NEXT: item 5, generic chapter persistence host.
+
+Then:
+6 backend sync;
+7 full World/Area Runtime Host;
+8 common debug harness;
+9 empty Act 3 skeleton proof;
+then full automated/browser verification;
+then physical iPhone acceptance last.
+
+Work in small green slices. Do not build Act 3 gameplay yet. Do not use Vercel for routine Runtime verification. Repo reality wins over this manifest.
