@@ -49,6 +49,7 @@ import { chapterRoute, nextChapterDestination } from "../runtime/chapter/chapter
 import { deriveChapterRuntimeOverlay } from "../runtime/chapter/chapterRuntimeShell";
 import { deriveAct2RuntimeBlockers } from "../game/act2RuntimeAdapter";
 import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
+import { ChapterEndCard, ChapterIntroCard } from "../runtime/chapter/ChapterCards";
 import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../runtime/chapter/useChapterRuntimeHost";
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
 
@@ -273,7 +274,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const [contributionTurnInOpen, setContributionTurnInOpen] = useState(false);
   const [cabinRevisitOpen, setCabinRevisitOpen] = useState(false);
   const [cabinRevisitLineIndex, setCabinRevisitLineIndex] = useState(0);
-  const [chapterIntroNameVisible, setChapterIntroNameVisible] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [historyReplay, setHistoryReplay] = useState<Act2ReplayState | null>(null);
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
@@ -810,25 +810,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       childName={childName}
       revealImageBeforeNext={historyReplay.lineIndex + 1 >= historyReplay.beat.body.length}
     />}
-    {chapterIntroVisible && <div className="act2-chapter-intro" role="dialog" aria-modal="true" aria-label="Kapitel 2 · Alve">
-      <div className="act2-chapter-intro-title">
-        <span>KAPITEL 2</span>
-        <strong className={chapterIntroNameVisible ? "is-visible" : ""}>ALVE</strong>
-        <button
-          className="primary-button act2-chapter-intro-next"
-          type="button"
-          onClick={() => {
-            if (!chapterIntroNameVisible) {
-              setChapterIntroNameVisible(true);
-              return;
-            }
-            setChapterIntroVisible(false);
-          }}
-        >
-          Fortsätt
-        </button>
-      </div>
-    </div>}
+    {chapterIntroVisible && <ChapterIntroCard
+      chapterLabel="KAPITEL 2"
+      title="ALVE"
+      ariaLabel="Kapitel 2 · Alve"
+      onContinue={() => setChapterIntroVisible(false)}
+    />}
     {debug && <div style={{
       position: "fixed", top: "max(8px, env(safe-area-inset-top))", right: 10, zIndex: 150,
       display: "flex", gap: 6, padding: 7, borderRadius: 10, background: "rgba(22,28,22,.88)",
@@ -1046,34 +1033,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     >
       <p>{activeContributionPresentation?.text}</p>
     </StoryMoment>}
-    {state.act2Complete && !state.endCardSeen && <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Slut på andra kapitlet"
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 140,
-        display: "grid",
-        placeItems: "center",
-        background: "#050706",
-        color: "white",
-        textAlign: "center",
-        padding: 24,
-      }}
-    >
-      <div>
-        <h1 style={{ margin: 0, fontSize: "clamp(2rem, 7vw, 4.5rem)", letterSpacing: ".04em" }}>SLUT PÅ ANDRA KAPITLET</h1>
-        <button
-          className="primary-button"
-          type="button"
-          style={{ marginTop: 28 }}
-          onClick={() => void commit({ ...state, endCardSeen: true })}
-        >
-          Fortsätt vid sjön
-        </button>
-      </div>
-    </div>}
+    {state.act2Complete && !state.endCardSeen && <ChapterEndCard
+      title="SLUT PÅ ANDRA KAPITLET"
+      ariaLabel="Slut på andra kapitlet"
+      continueLabel="Fortsätt vid sjön"
+      onContinue={() => commit({ ...state, endCardSeen: true })}
+    />}
     {(bootError || backendSyncError) && <div role="status" className="act2-sync-status">{bootError || backendSyncError}</div>}
     {uiShell.showProjectStatus && state.selectedProject && <div className="act2-project-status" aria-label="Aktivt projekt">
       <strong>Aktivt projekt: {PROJECT_COPY[state.selectedProject].label} · {state.projects[state.selectedProject].contributions}/16</strong>
