@@ -488,3 +488,148 @@ This is a server/browser precheck only. It does **not** prove touch, WebView, mo
 Remaining Runtime 1.1 acceptance gate:
 - physical iPhone update-in-place using the preserved child save/backend state.
 
+## Handover checkpoint — Runtime Architecture 1.1 / 2026-10-06
+
+### Verified repository reality before handover
+
+Active branch:
+- `nova/runtime-architecture-v1`
+
+Latest verified branch HEAD before this handover documentation:
+- `6c402869784e1e96409210cec4239223038e54ea`
+- GitHub Actions **#2091 SUCCESS**
+
+Verified Runtime 1.1 code-complete checkpoint:
+- `c951702512e0794997716c56983ef05893d81120`
+- GitHub Actions **#2084 SUCCESS**
+
+Commits after that code checkpoint are documentation / browser-precheck closeout. Do not infer a new code delta from the later docs HEAD.
+
+### Runtime 1.1 status
+
+Runtime Architecture 1.1 is **code-complete**.
+
+Shared engine layers now consumed by current gameplay:
+- Chapter Lifecycle;
+- Chapter Registry and next-chapter navigation;
+- Chapter Runtime Shell;
+- shared Chapter Runtime Boundary presentation;
+- configurable Progress Track;
+- Authoritative Progress Track composition;
+- shared progress gates;
+- shared Story Purchase Flow semantics;
+- shared Story Purchase Definition contract;
+- shared Story Purchase Handoff;
+- Runtime 1.0 Story / History / UI Shell / Interaction / Save-Migration foundations.
+
+Act 2 now sits above these layers primarily as chapter/domain/world-specific data and adapters.
+
+The final audit found no remaining clear generic chapter-engine responsibility that should be extracted before acceptance. Do **not** continue refactoring merely because a file/type still contains `Act2`.
+
+### What intentionally remains chapter-specific
+
+Keep local unless a real future consumer proves otherwise:
+- authored Act 2 story/dialogue/beats/assets;
+- Act 2 project names/order/prerequisites;
+- exact purchase-gate thresholds;
+- Alve-specific behavior;
+- authored completion reactions;
+- Lake world placement/rendering;
+- collision, shoreline/water detection and direct movement;
+- debug lab;
+- Act 2 save-compatibility fields.
+
+Physical-input-sensitive systems remain intentionally unconverged:
+- Village A* vs Lake direct movement;
+- collision/pathfinding;
+- dog follow;
+- pointer/touch/WebView fallbacks;
+- Linus naming/input DOM path.
+
+### Browser / preview status
+
+A non-destructive preview precheck has already been performed against:
+- deployment `dpl_AuSxbCsnocZ8w2KXKqJMmGpfJUrk`
+- `sysselcraft-n70l21j43-yourmovegame.vercel.app`
+
+Verified HTTP 200 / expected shell:
+- `/`
+- `/act2`
+- `/act3`
+- `/pair`
+
+No matching deployment-specific error/warning logs were found in the checked window.
+
+This is **not** physical interaction acceptance.
+
+### Remaining acceptance gate before real Act 3 runtime
+
+Next meaningful step is a physical iPhone update-in-place acceptance pass using the preserved child save/backend state.
+
+Minimum acceptance:
+1. existing save/world/pairing loads without reset;
+2. Village movement, A*, collision and touch still feel correct;
+3. Lake movement, shoreline/collision and touch still work;
+4. dog-follow remains stable;
+5. Story/dialogue overlays block and release world input correctly;
+6. Linus naming/input still handles autofocus, keyboard, Enter, validation and reveal;
+7. Village <-> Act 2 transitions work;
+8. Act 2 purchase insufficient-funds case exits safely to the Village instead of looping;
+9. successful Act 2 purchase resumes the correct project;
+10. force-quit/relaunch preserves progression, wallet, world and chapter state;
+11. Act 2 completion exposes the registered `/act3` boundary without any Act 3 gameplay being implied.
+
+Do **not** reset/reinstall or mutate Adam's backend/save merely to simplify acceptance.
+
+### Adam branch / live bug fix status
+
+Separate branch:
+- `nova/local-construction-snapshot`
+
+Latest verified HEAD:
+- `9af8821a1adc177b33c969b5e9a45fa7ff2d3bcd`
+- GitHub Actions **#1959 SUCCESS**
+
+That branch contains the fix for the Act 2 required-purchase infinite loop:
+- failed/insufficient-funds purchase does not force return to the blocked Act 2 project;
+- successful owned purchase may resume the project.
+
+Do not assume Adam's physical phone has been updated merely because the branch is green.
+
+### Act 3 status
+
+`/act3` is only a registered boundary/placeholder.
+There is **no Act 3 gameplay/runtime** yet.
+
+Do not start Act 3 by copying:
+- `Act2Runtime.tsx`;
+- `act2Purchase...` mechanics;
+- Act 2 project-state machinery wholesale.
+
+Future Act 3 should consume the shared Runtime 1.1 engine and add chapter-specific data/adapters only where the new design actually needs them.
+
+### Act 3 image-production warning
+
+Character-sheet assets exist under:
+- `public/assets/village/character-sheets/`
+
+However, no reliable workflow has been verified that automatically takes repo-hosted sheets and injects them as actual reference images into ChatGPT image generation without manual attachment/session handling.
+
+The attempted external API/image-batch route is not the desired production workflow and should not be represented as solved.
+
+Current honest status:
+- recurring-character image consistency is still an Act 3 production blocker;
+- do not claim a repo-to-chat reference bridge exists;
+- do not promise that a generated batch used canonical sheets unless those sheets were actually supplied to the image-generation call.
+
+### Working rule for the next instance
+
+Repo reality wins over this handover.
+
+Before any change:
+1. verify branch + HEAD;
+2. verify latest CI on the exact HEAD;
+3. read `docs/RUNTIME_ARCHITECTURE_1_1.md`, `docs/TECHNICAL_HANDOFF.md`, `docs/NOVA_HANDOFF_MANIFEST.md` and `docs/RUNTIME_ARCHITECTURE_ROADMAP.md`;
+4. do not invent more Runtime 1.1 extraction work before physical acceptance;
+5. keep changes small, testable and checkpointed.
+
