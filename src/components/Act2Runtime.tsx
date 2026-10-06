@@ -37,6 +37,7 @@ import { StoryMoment } from "./story/StoryMoment";
 import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
 import { StoryNameInput } from "./story/StoryNameInput";
+import { StoryChoiceGroup } from "./story/StoryChoiceGroup";
 import { ACT2_OPENING_BEATS } from "../game/act2OpeningStory";
 import { act2PurchaseShopHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
@@ -898,17 +899,23 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       speaker="Alve"
     >
       <p>{previewProject === "motorboat" ? motorboatPreview : previewProject ? PROJECT_COPY[previewProject].preview : selectionPrompt}</p>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
-        {availablePrerequisites.map((project) =>
-          <button key={project} className="secondary-button" onClick={() => setPreviewProject(project)}>{PROJECT_COPY[project].label}</button>
-        )}
-        <button className="secondary-button" onClick={() => setPreviewProject("motorboat")}>
-          {motorboatUnlocked ? "Motorbåten" : "🔒 Motorbåten"}
-        </button>
-      </div>
-      {previewProject && (previewProject !== "motorboat" || motorboatUnlocked) && <button className="primary-button dialogue-next" onClick={() => void chooseProject(previewProject)}>
-        Laga {PROJECT_COPY[previewProject].object}
-      </button>}
+      <StoryChoiceGroup
+        options={[
+          ...availablePrerequisites.map((project) => ({
+            value: project,
+            label: PROJECT_COPY[project].label,
+          })),
+          {
+            value: "motorboat",
+            label: motorboatUnlocked ? "Motorbåten" : "🔒 Motorbåten",
+          },
+        ]}
+        selected={previewProject}
+        onSelect={setPreviewProject}
+        canConfirm={(project) => project !== "motorboat" || motorboatUnlocked}
+        confirmLabel={previewProject ? `Laga ${PROJECT_COPY[previewProject].object}` : undefined}
+        onConfirm={(project) => chooseProject(project)}
+      />
     </StoryMoment>}
 
     {finalePending && activeFinaleBeat && activeFinaleLine && <StoryRunner
