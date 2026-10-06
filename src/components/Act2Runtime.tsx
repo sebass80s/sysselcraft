@@ -862,7 +862,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onNext={() => advanceOpening()}
       revealImageBeforeNext={state.openingLineIndex === opening.body.length - 1}
       childName={childName}
-      background="#111"
+      variant="opening"
     />}
 
     {state.openingComplete && !state.bicycleSeen && <StoryRunner
@@ -925,8 +925,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onPrevious={finaleLineIndex > 0 ? () => previousFinaleStory() : undefined}
       onNext={() => advanceFinaleStory()}
       revealImageBeforeNext={finaleLineIndex + 1 >= activeFinaleBeat.body.length}
-      zIndex={100}
-      background="rgba(6,10,8,.96)"
+      variant="finale"
     />}
     {cabinRevisitOpen && activeCabinRevisitLine && !state.projects.motorboat.complete && <StoryRunner
       beat={{
@@ -942,8 +941,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onPrevious={cabinRevisitLineIndex > 0 ? previousCabinRevisit : undefined}
       onNext={advanceCabinRevisit}
       revealImageBeforeNext={cabinRevisitLineIndex + 1 >= CABIN_WAITING_REACTION.body.length}
-      zIndex={92}
-      background="rgba(9,14,10,.94)"
+      variant="reaction"
     />}
     {completionProject && activeCompletionBeat && activeCompletionLine && <StoryRunner
       beat={{
@@ -959,15 +957,13 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onPrevious={state.completionLineIndex > 0 ? () => previousCompletionReaction() : undefined}
       onNext={() => advanceCompletionReaction()}
       revealImageBeforeNext={state.completionLineIndex + 1 >= activeCompletionBeat.body.length}
-      zIndex={90}
-      background="rgba(9,14,10,.94)"
+      variant="reaction"
     />}
     {purchaseRequired && purchaseProject && purchaseGateCopy && <StoryMoment
       image={purchaseGateBeat?.image}
       imageFit="contain"
       heading={purchaseGateCopy.title}
-      zIndex={78}
-      background="rgba(9,14,10,.94)"
+      variant="gate"
     >
       <p>{purchaseGateCopy.text}</p>
       <p>{purchaseGateCopy.detail}</p>
@@ -980,8 +976,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     </StoryMoment>}
     {namingRequired && <StoryMoment
       speaker="Alve"
-      zIndex={85}
-      background="rgba(9,14,10,.94)"
+      variant="interaction"
     >
       <p>Den behöver ett namn.</p>
       <StoryNameInput
@@ -1005,8 +1000,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onNext={() => advanceContributionStory()}
       revealImageBeforeNext={state.contributionLineIndex + 1 >= activeContributionBeat.body.length}
       presentationId={`${activeContributionBeat.id}:${state.contributionLineIndex}`}
-      zIndex={80}
-      background="rgba(9,14,10,.94)"
+      variant="interaction"
     >
       <p>{activeContributionPresentation?.text}</p>
     </StoryMoment>}
