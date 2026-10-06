@@ -36,6 +36,7 @@ import { deriveGameUiShell } from "../game/uiShellState";
 import { StoryMoment } from "./story/StoryMoment";
 import { parseStoryLine } from "../game/storyEngine";
 import { StoryRunner } from "./story/StoryRunner";
+import { StoryNameInput } from "./story/StoryNameInput";
 import { ACT2_OPENING_BEATS } from "../game/act2OpeningStory";
 import { act2PurchaseShopHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
@@ -1019,16 +1020,15 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       background="rgba(9,14,10,.94)"
     >
       <p>Den behöver ett namn.</p>
-      <input
+      <StoryNameInput
         value={motorboatNameDraft}
-        onChange={(event) => setMotorboatNameDraft(event.target.value)}
+        onValueChange={setMotorboatNameDraft}
         maxLength={24}
         placeholder="Skriv båtens namn"
-        aria-label="Båtens namn"
+        ariaLabel="Båtens namn"
+        submitLabel="Spara namnet"
+        onSubmit={() => commit(withMotorboatName(state, motorboatNameDraft))}
       />
-      <button className="primary-button dialogue-next" disabled={!motorboatNameDraft.trim()} onClick={() => void commit(withMotorboatName(state, motorboatNameDraft))}>
-        Spara namnet
-      </button>
     </StoryMoment>}
     {contributionTurnInOpen && contributionCandidate && activeContributionBeat && activeContributionLine && <StoryMoment
       image={activeContributionBeat.image}
