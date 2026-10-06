@@ -709,7 +709,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         {
           id: "adult-mode",
           label: "🔐 Vuxenläge",
-          onSelect: () => router.push("/?menu=adult"),
+          onSelect: () => router.push(`${chapterRoute("act1")}?menu=adult`),
         },
         {
           id: "history",
@@ -723,7 +723,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         {
           id: "village",
           label: "← Till byn",
-          onSelect: () => router.push("/"),
+          onSelect: () => router.push(chapterRoute("act1")),
         },
       ]}
       contextualActions={state.act2Complete && state.endCardSeen ? (
