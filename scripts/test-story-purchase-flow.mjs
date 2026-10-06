@@ -202,3 +202,56 @@ assert.match(
   /const purchaseOwned = act2StoryPurchaseSnapshot\?\.status\[project\]\.owned === true/,
   "shop exit/resume must read ownership from the unified adapter snapshot",
 );
+
+const storyPurchaseRegistry = loadTsModule("../src/runtime/purchase/storyPurchaseRegistry.ts", {});
+const demoRegistration = storyPurchaseRegistry.defineStoryPurchaseRegistration({
+  id: "act3-demo",
+  queryKey: "act3-purchase",
+  targets: ["bridge"],
+  catalog: {
+    bridge: {
+      id: "act3_bridge_parts",
+      target: "bridge",
+      currency: "sysselbux",
+      price: 125,
+      presentation: {
+        gate: { title: "Bridge", text: "Need parts", detail: "Go to shop" },
+        shop: { icon: "🧰", title: "Bridge parts", description: "Parts", requirement: "Needed" },
+      },
+    },
+  },
+  parseTarget: (value) => value === "bridge" ? "bridge" : null,
+  loadSnapshot: async () => ({ status: { bridge: { owned: false, needed: true } }, purchaseStory: null, purchaseStoryLineIndex: 0 }),
+  applyPurchaseResult: async () => ({ snapshot: { status: { bridge: { owned: true, needed: false } }, purchaseStory: null, purchaseStoryLineIndex: 0 }, message: "Bought" }),
+  savePurchaseStoryProgress: async () => ({ status: { bridge: { owned: true, needed: false } }, purchaseStory: null, purchaseStoryLineIndex: 0 }),
+  purchaseStoryBeat: () => null,
+  resumeHref: (target) => `/act3/?resume=${target}`,
+});
+assert.equal(
+  storyPurchaseRegistry.resolveStoryPurchaseRegistration(
+    new URLSearchParams("act3-purchase=bridge"),
+    [demoRegistration],
+  )?.target,
+  "bridge",
+  "generic Story Purchase registry must resolve future chapter handoffs without Mira-specific branching",
+);
+
+const act2StoryPurchaseRegistrySource = fs.readFileSync(new URL("../src/game/storyPurchaseRegistry.ts", import.meta.url), "utf8");
+for (const required of [
+  "ACT2_PURCHASE_CATALOG",
+  "loadSnapshot",
+  "applyPurchaseResult",
+  "savePurchaseStoryProgress",
+  "purchaseStoryBeat",
+  "resumeHref: act2ResumeHref",
+]) {
+  assert.ok(
+    act2StoryPurchaseRegistrySource.includes(required),
+    `Act 2 Story Purchase registration must own ${required}`,
+  );
+}
+assert.match(
+  act2StoryPurchaseRegistrySource,
+  /export const STORY_PURCHASE_REGISTRATIONS = \[[\s\S]*ACT2_STORY_PURCHASE_REGISTRATION/,
+  "shared shop registry composition must expose registered chapter purchase adapters",
+);
