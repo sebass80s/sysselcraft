@@ -74,8 +74,8 @@ assert.deepEqual(
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 assert.match(village, /purchaseShortfall\(current, price\)/, "Act 2 insufficient-funds copy must use shared shortfall calculation");
-assert.match(village, /resolveStoryPurchaseExit\(project, purchaseOwned\)/, "Act 2 shop close must use shared purchase exit semantics");
-assert.match(village, /exit\.action === "resume"[\s\S]*act2ResumeHref\(exit\.target\)/, "only shared resume decisions may navigate back to the blocked Act 2 story");
+assert.match(village, /resolveStoryPurchaseExit\(target, purchaseOwned\)/, "Mira shop close must use shared purchase exit semantics");
+assert.match(village, /exit\.action === "resume"[\s\S]*registration\.resumeHref\(exit\.target\)/, "only the resolved Story Purchase registration may navigate back to the blocked story");
 
 console.log("PASS: shared story purchase flow prevents forced insufficient-funds loops");
 
@@ -254,4 +254,20 @@ assert.match(
   act2StoryPurchaseRegistrySource,
   /export const STORY_PURCHASE_REGISTRATIONS = \[[\s\S]*ACT2_STORY_PURCHASE_REGISTRATION/,
   "shared shop registry composition must expose registered chapter purchase adapters",
+);
+
+assert.match(
+  villageSource,
+  /resolveRegisteredStoryPurchase\(\s*new URLSearchParams\(window\.location\.search\)/,
+  "Mira must resolve contextual Story Purchase handoffs through the registry",
+);
+assert.doesNotMatch(
+  villageSource,
+  /get\("act2-purchase"\)|parseAct2PurchaseProject\(/,
+  "Mira must not know Act 2 Story Purchase query parsing",
+);
+assert.match(
+  villageSource,
+  /router\.push\(registration\.resumeHref\(exit\.target\)\)/,
+  "Mira contextual close must resume through the resolved registration",
 );
