@@ -48,6 +48,7 @@ import { InlineDialogueCard } from "./story/InlineDialogueCard";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 import { chapterRoute } from "../runtime/chapter/chapterRegistry";
+import { purchaseShortfall, resolveStoryPurchaseExit } from "../runtime/purchase/storyPurchaseFlow";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
   QUEST_PRESENTATION_EVENT,
@@ -130,7 +131,7 @@ export default function VillagePrototype() {
 
   function act2StoryItemInsufficientFundsMessage(price: number) {
     const current = getLatestBackendWallet()?.sysselBux ?? backendWallet?.sysselBux ?? sysselBux;
-    const missing = Math.max(0, price - current);
+    const missing = purchaseShortfall(current, price);
     return `Du har ${current} SysselBux. Du behöver ${missing} till. Gör några uppdrag och kom tillbaka när du har sparat ihop till den.`;
   }
   const roomStage = !footballRugOwned ? 0 : !roomDecorOwned.footballPoster ? 1 : !roomDecorOwned.computerDesk ? 2 : !roomDecorOwned.trophyShelf ? 3 : !roomDecorOwned.stringLights ? 4 : !roomDecorOwned.aquarium ? 5 : 6;
@@ -1184,9 +1185,10 @@ export default function VillagePrototype() {
           : project === "boathouse"
             ? act2BoathouseSteeringWheelOwned
             : act2MotorboatPartsOwned;
+      const exit = resolveStoryPurchaseExit(project, purchaseOwned);
       setAct2PurchaseReturnProject(null);
-      if (purchaseOwned) {
-        router.push(act2ResumeHref(project));
+      if (exit.action === "resume") {
+        router.push(act2ResumeHref(exit.target));
       }
     }
   }
