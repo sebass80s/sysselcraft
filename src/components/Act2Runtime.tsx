@@ -897,7 +897,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onNext={() => advanceOpening()}
       revealImageBeforeNext={state.openingLineIndex === opening.body.length - 1}
       childName={childName}
-      dialogueClassName="act2-dialogue-card"
       background="#111"
     />}
 
@@ -913,7 +912,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onPrevious={() => previousBicycle()}
       onNext={() => commit({ ...state, bicycleSeen: true })}
       revealImageBeforeNext
-      dialogueClassName="act2-dialogue-card"
     />}
 
     {state.bicycleSeen && !state.alveIntroComplete && <StoryRunner
@@ -928,13 +926,11 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onPrevious={state.alveIntroIndex > 0 ? () => previousAlve() : undefined}
       onNext={() => advanceAlve()}
       revealImageBeforeNext={alveImageComplete}
-      dialogueClassName="act2-dialogue-card"
     />}
 
     {projectChooserVisible && <StoryMoment
       image="/assets/village/story-moments/act2/meeting-alve/pick.png"
       speaker="Alve"
-      dialogueClassName="act2-dialogue-card"
     >
       <p>{previewProject === "motorboat" ? motorboatPreview : previewProject ? PROJECT_COPY[previewProject].preview : selectionPrompt}</p>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
@@ -964,7 +960,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onPrevious={finaleLineIndex > 0 ? () => previousFinaleStory() : undefined}
       onNext={() => advanceFinaleStory()}
       revealImageBeforeNext={finaleLineIndex + 1 >= activeFinaleBeat.body.length}
-      dialogueClassName="act2-dialogue-card"
       zIndex={100}
       background="rgba(6,10,8,.96)"
     />}
@@ -982,7 +977,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onPrevious={cabinRevisitLineIndex > 0 ? previousCabinRevisit : undefined}
       onNext={advanceCabinRevisit}
       revealImageBeforeNext={cabinRevisitLineIndex + 1 >= CABIN_WAITING_REACTION.body.length}
-      dialogueClassName="act2-dialogue-card"
       zIndex={92}
       background="rgba(9,14,10,.94)"
     />}
@@ -1000,7 +994,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       onPrevious={state.completionLineIndex > 0 ? () => previousCompletionReaction() : undefined}
       onNext={() => advanceCompletionReaction()}
       revealImageBeforeNext={state.completionLineIndex + 1 >= activeCompletionBeat.body.length}
-      dialogueClassName="act2-dialogue-card"
       zIndex={90}
       background="rgba(9,14,10,.94)"
     />}
@@ -1010,7 +1003,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       heading={purchaseGateCopy.title}
       zIndex={78}
       background="rgba(9,14,10,.94)"
-      dialogueClassName="act2-dialogue-card"
     >
       <p>{purchaseGateCopy.text}</p>
       <p>{purchaseGateCopy.detail}</p>
@@ -1025,7 +1017,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       speaker="Alve"
       zIndex={85}
       background="rgba(9,14,10,.94)"
-      dialogueClassName="act2-dialogue-card"
     >
       <p>Den behöver ett namn.</p>
       <input
@@ -1052,7 +1043,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       presentationId={`${activeContributionBeat.id}:${state.contributionLineIndex}`}
       zIndex={80}
       background="rgba(9,14,10,.94)"
-      dialogueClassName="act2-dialogue-card"
     >
       <p>{activeContributionPresentation?.text}</p>
     </StoryMoment>}
