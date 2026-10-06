@@ -411,7 +411,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [ready, debug]);
+  }, [ready, debug, setRuntimeContext, setState]);
 
   async function commit(next: Act2RuntimeState) {
     if (!debug) await saveAct2RuntimeState(next);
