@@ -22,6 +22,15 @@ Recent regressions demonstrate the cost:
 
 Future acts must not multiply these patterns.
 
+## Runtime 1.1 fuel principle
+
+The architectural success criterion is not helper extraction. Future chapters must be primarily content/configuration over a finished runtime. A new chapter must not reimplement established UI, typography, overlays, input blocking, lifecycle, progression, purchases, save/resume, standard input patterns or other already-solved cross-chapter behavior.
+
+Before declaring Runtime 1.1 ready for Act 3, run an empty-next-chapter readiness audit: identify everything a minimal new chapter would have to implement. If any required code reproduces an established game behavior rather than supplying genuinely new content/world mechanics, that responsibility still belongs in the shared engine.
+
+Canonical detail: `docs/RUNTIME_ARCHITECTURE_1_1.md` section **Runtime 1.1 product law: the fuel principle**.
+
+
 ## Priority order
 
 ### P0 — Story Engine / Registry / History
