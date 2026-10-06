@@ -27,11 +27,13 @@ const preferences = {
 const saveMigrations = load("src/runtime/save/migrations.ts");
 const progressionDelta = load("src/runtime/progression/authoritativeDelta.ts");
 const progressGate = load("src/runtime/progression/progressGate.ts");
+const progressTrack = load("src/runtime/progression/progressTrack.ts");
 const stateModule = () => load("src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: preferences },
   "../runtime/save/migrations": saveMigrations,
   "../runtime/progression/authoritativeDelta": progressionDelta,
   "../runtime/progression/progressGate": progressGate,
+  "../runtime/progression/progressTrack": progressTrack,
 });
 const s = stateModule();
 const story = load("src/game/act2FinaleStory.ts").ACT2_FINALE_BEATS;
