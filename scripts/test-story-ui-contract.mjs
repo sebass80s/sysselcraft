@@ -89,8 +89,23 @@ assert.match(css, /\.dialogue-speaker \{[^}]*max-width:\s*100%[^}]*white-space:\
 
 assert.match(
   css,
-  /\.dialogue-card\.story-moment-dialogue\.act2-dialogue-card \{[^}]*left:\s*max\(1rem, env\(safe-area-inset-left\)\)[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*max-height:[^}]*overflow-y:\s*auto/s,
-  "Act 2 story cards must honor side safe areas and retain a scroll recovery path",
+  /\.dialogue-card\.story-moment-dialogue\.shared-story-dialogue \{[^}]*left:\s*max\(1rem, env\(safe-area-inset-left\)\)[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*max-height:[^}]*overflow-y:\s*auto/s,
+  "All shared Story cards must honor side safe areas and retain a scroll recovery path",
+);
+assert.match(
+  css,
+  /\.shared-story-dialogue \.shared-story-body p \{[^}]*font-size:\s*1rem[^}]*line-height:\s*1\.35/s,
+  "Shared Story Engine must own canonical dialogue body typography",
+);
+assert.equal(
+  css.includes(".act2-dialogue-card"),
+  false,
+  "chapter-named Story CSS must not be allowed to override canonical dialogue presentation",
+);
+assert.equal(
+  act2Runtime.includes('dialogueClassName="act2-dialogue-card"'),
+  false,
+  "Act 2 must consume canonical shared Story presentation without chapter-named dialogue classes",
 );
 assert.match(css, /\.act2-project-status \{[^}]*pointer-events:\s*none/s,
   "Act 2 project status must not steal gameplay taps");
