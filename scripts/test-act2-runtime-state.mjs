@@ -651,7 +651,8 @@ for (const required of [
   "ACT2_OPENING_BEATS",
   "ACT2_ALVE_DIALOGUE",
   "Vad börjar vi med?",
-  "Laga {PROJECT_COPY[previewProject].object}",
+  "<StoryChoiceGroup",
+  "confirmLabel={previewProject ? `Laga ${PROJECT_COPY[previewProject].object}` : undefined}",
 ]) assert.ok(page.includes(required), `missing shared Act 2 runtime contract: ${required}`);
 
 assert.ok(act2AlveStorySource.includes('{ speaker: "unknown", text: "Alve.", nameReveal: true }'), "Alve nameplate must still be Barnet on his name reveal line");
