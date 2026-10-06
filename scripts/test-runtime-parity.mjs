@@ -1500,10 +1500,13 @@ assert.ok(
 
 
 const villageRuntimeSource = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+const storyPurchaseRegistrySource = fs.readFileSync(new URL("../src/game/storyPurchaseRegistry.ts", import.meta.url), "utf8");
 assert.ok(
-  villageRuntimeSource.includes("parseAct2PurchaseProject(")
-    && villageRuntimeSource.includes("act2ResumeHref("),
-  "Village shop must consume the canonical Act 2 purchase handoff adapter",
+  villageRuntimeSource.includes("resolveRegisteredStoryPurchase(")
+    && villageRuntimeSource.includes("registration.resumeHref(exit.target)")
+    && storyPurchaseRegistrySource.includes("parseTarget: parseAct2PurchaseProject")
+    && storyPurchaseRegistrySource.includes("resumeHref: act2ResumeHref"),
+  "Village shop must consume registered Story Purchase handoff adapters without chapter-specific routing",
 );
 assert.equal(
   villageRuntimeSource.includes('project !== "dock" && project !== "boathouse" && project !== "motorboat"'),
