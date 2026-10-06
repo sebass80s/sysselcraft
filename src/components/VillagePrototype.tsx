@@ -41,6 +41,7 @@ import { JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
 import { parseStoryLine, storySpeakerTone } from "../game/storyEngine";
 import { act2ResumeHref, parseAct2PurchaseProject, type Act2PurchaseProject } from "../game/act2PurchaseHandoff";
+import { applyAct2StoryPurchaseResult, deriveAct2StoryPurchaseStatus } from "../game/act2StoryPurchaseAdapter";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { StoryRunner } from "./story/StoryRunner";
 import { StoryMoment } from "./story/StoryMoment";
@@ -892,17 +893,12 @@ export default function VillagePrototype() {
 
   async function buyAct2StoryItem(project: Act2PurchaseProject) {
     const item = ACT2_PURCHASE_CATALOG[project];
-    const ownedByProject: Record<Act2PurchaseProject, boolean> = {
-      dock: act2JettyLifebuoyOwned,
-      boathouse: act2BoathouseSteeringWheelOwned,
-      motorboat: act2MotorboatPartsOwned,
+    const localStatus = {
+      dock: { owned: act2JettyLifebuoyOwned, needed: act2JettyLifebuoyNeeded },
+      boathouse: { owned: act2BoathouseSteeringWheelOwned, needed: act2BoathouseSteeringWheelNeeded },
+      motorboat: { owned: act2MotorboatPartsOwned, needed: act2MotorboatPartsNeeded },
     };
-    const neededByProject: Record<Act2PurchaseProject, boolean> = {
-      dock: act2JettyLifebuoyNeeded,
-      boathouse: act2BoathouseSteeringWheelNeeded,
-      motorboat: act2MotorboatPartsNeeded,
-    };
-    if (shopBusy || ownedByProject[project] || !neededByProject[project]) return;
+    if (shopBusy || localStatus[project].owned || !localStatus[project].needed) return;
     if (!window.confirm(`Köpa ${item.presentation.shop.title.toLowerCase()} för ${item.price} 🪙?`)) return;
 
     setShopBusy(true);
@@ -918,34 +914,24 @@ export default function VillagePrototype() {
       publishBackendWallet(wallet);
 
       const currentAct2 = await loadAct2RuntimeState();
-      const withFlags = withBackendStoryFlags(currentAct2, purchase.worldFlags);
-      const nextAct2 = project === "dock" || project === "boathouse"
-        ? {
-            ...withFlags,
-            pendingPurchaseStory: project,
-            purchaseStoryLineIndex: 0,
-          }
-        : withFlags;
-      await saveAct2RuntimeState(nextAct2);
+      const outcome = applyAct2StoryPurchaseResult(
+        currentAct2,
+        project,
+        purchase.worldFlags,
+      );
+      await saveAct2RuntimeState(outcome.state);
 
-      setAct2JettyLifebuoyOwned(nextAct2.jettyLifebuoyOwned);
-      setAct2JettyLifebuoyNeeded(jettyPurchaseRequired(nextAct2));
-      setAct2BoathouseSteeringWheelOwned(nextAct2.boathouseSteeringWheelOwned);
-      setAct2BoathouseSteeringWheelNeeded(boathousePurchaseRequired(nextAct2));
-      setAct2MotorboatPartsOwned(nextAct2.motorboatPartsOwned);
-      setAct2MotorboatPartsNeeded(motorboatPartsPurchaseRequired(nextAct2));
+      const nextStatus = deriveAct2StoryPurchaseStatus(outcome.state);
+      setAct2JettyLifebuoyOwned(nextStatus.dock.owned);
+      setAct2JettyLifebuoyNeeded(nextStatus.dock.needed);
+      setAct2BoathouseSteeringWheelOwned(nextStatus.boathouse.owned);
+      setAct2BoathouseSteeringWheelNeeded(nextStatus.boathouse.needed);
+      setAct2MotorboatPartsOwned(nextStatus.motorboat.owned);
+      setAct2MotorboatPartsNeeded(nextStatus.motorboat.needed);
 
-      if (project === "dock") {
-        setShopMessage("Livbojen är er! Ta med den tillbaka till bryggan. 🛟");
-        setAct2PurchaseStory("dock");
-        setAct2PurchaseStoryIndex(0);
-      } else if (project === "boathouse") {
-        setShopMessage("Ratten är er! Nu kan lådbilen byggas klart. 🛞");
-        setAct2PurchaseStory("boathouse");
-        setAct2PurchaseStoryIndex(0);
-      } else {
-        setShopMessage("Reservdelspaketet är beställt! Tillbaka till motorbåten. 📦");
-      }
+      setShopMessage(outcome.message);
+      setAct2PurchaseStory(outcome.purchaseStory);
+      setAct2PurchaseStoryIndex(outcome.purchaseStoryLineIndex);
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
     } catch (error) {
       const message = error instanceof Error ? error.message : "Köpet misslyckades.";
