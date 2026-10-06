@@ -207,4 +207,32 @@ assert.deepEqual(
   "authoritative backlog must resume at the same unconsumed sequence after one beat is consumed",
 );
 
+const act2Source = fs.readFileSync(new URL("../src/game/act2RuntimeState.ts", import.meta.url), "utf8");
+const engineSource = fs.readFileSync(new URL("../src/runtime/progression/projectProgressEngine.ts", import.meta.url), "utf8");
+assert.doesNotMatch(
+  engineSource,
+  /\b16\b|Math\.min\(16|contributions\s*>=\s*16/,
+  "generic project engine must never acquire Act 2's 16-contribution rule",
+);
+assert.doesNotMatch(
+  act2Source,
+  /Math\.min\(16|contributions\s*>=\s*16/,
+  "Act 2 consumption/completion must derive from its configured track target, not local hard-coded 16 logic",
+);
+assert.match(
+  act2Source,
+  /ACT2_PROJECT_TARGET = 16/,
+  "Act 2 may retain 16 only as authored project configuration",
+);
+assert.match(
+  act2Source,
+  /consumeSelectedProjectProgress\(/,
+  "Act 2 must delegate contribution consumption to the shared project engine",
+);
+assert.match(
+  act2Source,
+  /nextAuthoritativeProjectProgressStep\(/,
+  "Act 2 must delegate authoritative backlog sequencing to the shared project engine",
+);
+
 console.log("PASS: generic project-progress engine handles non-16 targets, prerequisites, authoritative backlog, idempotent consumption and exactly-once reactions");
