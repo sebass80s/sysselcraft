@@ -1521,3 +1521,26 @@ Implemented:
 
 Backend Story Shop / Supabase remains authoritative for purchase execution, wallet debit and ownership flags. The runtime flow only decides presentation/navigation after authoritative ownership state is known.
 
+## Verified checkpoint: Configurable Progress Track slice
+
+Verified code HEAD: `337be0a5eb3239fda114fbd26efe5bf7d92a65b4`
+
+GitHub Actions: **#2007 SUCCESS** on that exact SHA.
+
+Implemented and verified:
+
+- new shared progression primitive: `src/runtime/progression/progressTrack.ts`;
+- target contribution count is configuration, not an Act 2 engine constant;
+- visual-stage thresholds are configuration, not globally hard-coded;
+- canonical contribution beat IDs are derived through the shared track definition;
+- `normalizeProgressTrack()` owns generic contribution-count / stage / completion normalization;
+- `nextProgressTrackStep()` owns generic next-step derivation;
+- Act 2 now consumes the shared progress-track primitive from `act2RuntimeState.ts`;
+- Act 2 retains its authored configuration: 16 contributions, four visible stages, project names and project ordering;
+- `scripts/test-progress-track.mjs` proves parity for all 0..16 Act 2 contribution counts;
+- all manual Act 2 state test harnesses now load the real shared progress-track dependency.
+
+The extraction did not change persisted Act 2 save shape, backend progression authority, story gates, collision, movement, dog-follow, pointer/touch or WebView behavior.
+
+This closes the generic contribution-count / stage-normalization part of Runtime 1.1 Progression / Project Engine. Selection policy, chapter-specific project prerequisites and authored completion reactions remain chapter configuration/domain behavior unless a further proven common primitive is identified.
+
