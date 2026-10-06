@@ -656,7 +656,10 @@ assert.ok(act2AlveStorySource.includes('{ speaker: "unknown", text: "Varför?" }
 assert.ok(page.includes('🔒 Motorbåten'), "motorboat must remain visible while locked");
 assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector must derive 0/3→3/3 from canonical state");
 assert.ok(page.includes("deriveAct2RuntimeBlockers(state"), "production route must consume the Act 2 blocker adapter instead of duplicating blocker rules");
-assert.ok(act2RuntimeAdapterSource.includes('(["dock"] as const)'), "Act 2 chapter adapter must keep only the authored automatic completion reaction");
+assert.ok(
+  act2RuntimeAdapterSource.includes("pendingProjectCompletionReaction(state)"),
+  "Act 2 blocker adapter must consume the shared project engine's configured completion-reaction selection",
+);
 assert.ok(page.includes("CABIN_WAITING_REACTION"), "production route must present the canonical Cabin revisit scene");
 assert.ok(page.includes("latest.projects.cabin.complete && !latest.projects.motorboat.complete"), "Cabin revisit must remain gated by Cabin completion and Motorboat incompletion through the shared world-host snapshot");
 assert.ok(page.includes("onCabinRevisit"), "Cabin revisit must open from a real world Cabin interaction");
