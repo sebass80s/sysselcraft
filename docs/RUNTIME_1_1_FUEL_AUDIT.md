@@ -476,3 +476,34 @@ Fuel-principle audit result:
 - ordinary non-story shop inventory (room decor, dog-home items, Act 1 bottle flow, diamond rewards) remains outside this Runtime 1.1 Story Purchase checkpoint by design.
 
 Current Runtime 1.1 status: backlog items 1, 2, 3 and 4 are closed; fuel-principle work continues with item 5.
+
+
+## Current execution status — handover 2026-10-06
+
+Canonical continuation guide: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Verified baseline:
+- `eb7df728adea783c676fe697738be62200430fc9`;
+- CI #2252 SUCCESS.
+Latest completed engine code checkpoint:
+- `13d6f99a29f948b64dc74b2f3b214456cb5e7d74`;
+- CI #2248 SUCCESS.
+
+Closed fuel-principle backlog items:
+- item 1 Shared Chapter Runtime Host;
+- item 2 Generic Progression / Project Engine;
+- item 3 Shared Story UI/sequencing/input/history/cards/choices;
+- item 4 Generic Story Purchase integration.
+
+Open fuel-principle backlog, in required order:
+- item 5 generic child-scoped chapter persistence host;
+- item 6 shared backend game-state synchronization/reconciliation;
+- item 7 sufficiently complete World/Area Runtime Host;
+- item 8 common chapter debug/acceptance harness;
+- item 9 empty Act 3 skeleton proof.
+
+After item 9: full automated/browser regression, then physical iPhone update-in-place acceptance.
+
+The empty-next-chapter answer is now substantially better than at audit creation, but it is still **not yet “fuel only”** because persistence, backend sync, full area hosting and debug tooling remain chapter-local enough to force new engine work.
+
+Do not reopen items 1–4 without concrete repo evidence of a regression or an empty-Act3 proof exposing a missing generic responsibility.
