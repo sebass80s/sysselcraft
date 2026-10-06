@@ -1744,3 +1744,27 @@ No persisted save schema was changed by the final purchase-definition/handoff sl
 Backend/Supabase remains authoritative for transactions, wallet and owned story-item flags.
 No collision, movement, dog-follow, pointer/touch or WebView implementation was generalized during Runtime 1.1.
 
+## Runtime 1.1 browser / preview precheck
+
+Runtime 1.1 browser precheck was performed against Vercel preview deployment:
+
+- deployment: `dpl_AuSxbCsnocZ8w2KXKqJMmGpfJUrk`;
+- URL: `sysselcraft-n70l21j43-yourmovegame.vercel.app`;
+- Vercel commit SHA: `9a4e168b68b08f1eb0a45c4969d2acaf7f0081af`;
+- that documentation commit sits directly above verified Runtime 1.1 code checkpoint `c951702512e0794997716c56983ef05893d81120`.
+
+Verified non-destructive route responses:
+- `/`: HTTP 200, Village/HUD shell renders;
+- `/act2`: HTTP 200, Act 2 loading shell renders;
+- `/act3`: HTTP 200, chapter-boundary placeholder renders;
+- `/pair`: HTTP 200, child pairing surface renders.
+
+Deployment-specific Vercel runtime-log check for error/warning level over the available recent 30-minute window returned no matching logs.
+
+The aggregated runtime-error endpoint timed out, so no stronger claim is made from that endpoint. The deployment-specific log query succeeded.
+
+This is a server/browser precheck only. It does **not** prove touch, WebView, movement, collision, dog-follow, naming/input or update-in-place save behavior.
+
+Remaining Runtime 1.1 acceptance gate:
+- physical iPhone update-in-place using the preserved child save/backend state.
+
