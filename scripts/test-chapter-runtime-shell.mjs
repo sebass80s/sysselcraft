@@ -3,6 +3,7 @@ import fs from "node:fs";
 
 import {
   chapterBootMayLoad,
+  deriveChapterRuntimeOverlay,
   deriveChapterRuntimeShell,
 } from "../src/runtime/chapter/chapterRuntimeShell.ts";
 
@@ -36,6 +37,21 @@ assert.equal(
   "debug runtime intentionally bypasses shipping and progression access locks",
 );
 
+assert.deepEqual(
+  deriveChapterRuntimeOverlay(false, false),
+  { storyUiVisible: false, blockingOverlayVisible: false, worldInputEnabled: true },
+);
+assert.deepEqual(
+  deriveChapterRuntimeOverlay(true, false),
+  { storyUiVisible: false, blockingOverlayVisible: true, worldInputEnabled: false },
+  "chapter intro/end card must block world input even when chapter story UI is otherwise idle",
+);
+assert.deepEqual(
+  deriveChapterRuntimeOverlay(false, true),
+  { storyUiVisible: true, blockingOverlayVisible: true, worldInputEnabled: false },
+  "chapter-specific story UI must block world input through the shared shell",
+);
+
 const act2 = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 
 assert.match(
@@ -57,6 +73,26 @@ assert.match(
   act2,
   /runtimeShellStatus === "shipping-locked" \|\| runtimeShellStatus === "progression-locked"/,
   "shared locked shell states must own the Act 2 locked route presentation",
+);
+assert.match(
+  act2,
+  /deriveChapterRuntimeOverlay\(chapterCardVisible, storyUiVisible\)/,
+  "Act 2 must derive blocking overlay and world-input authority through the shared chapter shell",
+);
+assert.match(
+  act2,
+  /setWorldInputEnabled\(runtimeOverlay\.worldInputEnabled\)/,
+  "Phaser world input must consume the same shared overlay result as runtime UI",
+);
+assert.match(
+  act2,
+  /blockingOverlayVisible: runtimeOverlay\.blockingOverlayVisible/,
+  "GameUiShell must consume the same shared overlay result as Phaser world input",
+);
+assert.doesNotMatch(
+  act2,
+  /const worldBlocked =/,
+  "Act 2 must not retain a second local world-block calculation",
 );
 
 console.log("PASS: shared chapter runtime shell owns boot/access status for Act 2");
