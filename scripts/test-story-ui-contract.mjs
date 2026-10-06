@@ -197,6 +197,21 @@ assert.match(
   /previousStoryLineIndex\(\s*activeContributionBeat\.body\.length,[\s\S]*state\.contributionLineIndex/,
   "Act 2 contribution dialogue must use shared linear previous semantics",
 );
+assert.match(
+  act2Runtime,
+  /storyLineAt\(opening\.body, state\.openingLineIndex\)/,
+  "Act 2 opening dialogue must use shared safe current-line lookup",
+);
+assert.match(
+  act2Runtime,
+  /advanceStoryLine\(current\.body\.length, state\.openingLineIndex\)/,
+  "Act 2 opening dialogue must use shared linear advance semantics within each beat",
+);
+assert.match(
+  act2Runtime,
+  /previousStoryLineIndex\(current\.body\.length, state\.openingLineIndex\)/,
+  "Act 2 opening dialogue must use shared linear previous semantics within each beat",
+);
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
