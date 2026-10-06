@@ -221,8 +221,8 @@ assert.match(village, /const act1NextChapter = nextChapterDestination\("act1"[\s
 assert.match(village, /router\.push\(act1NextChapter\.route\)/, "Act 1 lake path must enter the registered next chapter through the shared transition");
 assert.match(
   village,
-  /const purchaseOwned = act2StoryPurchaseSnapshot\?\.status\[project\]\.owned === true;[\s\S]*resolveStoryPurchaseExit\(project, purchaseOwned\)[\s\S]*exit\.action === "resume"[\s\S]*router\.push\(act2ResumeHref\(exit\.target\)\)/,
-  "closing Mira's Act 2 shop must delegate snapshot ownership through the shared purchase flow",
+  /const \{ registration, target \} = storyPurchaseReturnContext;[\s\S]*const snapshot = await registration\.loadSnapshot\(\);[\s\S]*resolveStoryPurchaseExit\(target, purchaseOwned\)[\s\S]*router\.push\(registration\.resumeHref\(exit\.target\)\)/,
+  "closing Mira's contextual Story Purchase must delegate ownership and resume routing to the resolved registration",
 );
 assert.match(runtime, /if \(!act1ChapterComplete\)/, "Act 2 must independently require the acknowledged Act 1 chapter ending");
 assert.match(runtime, /prepareAct2ProductionEntry\(act2\)/, "production entry must reconcile pre-release locked-route residue before setting the baseline");
