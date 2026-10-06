@@ -168,3 +168,37 @@ assert.doesNotMatch(
   /Livbojen är er!|Ratten är er!|Reservdelspaketet är beställt!/,
   "Mira must not own Act 2 purchase success copy",
 );
+
+assert.match(
+  villageSource,
+  /useState<Act2StoryPurchaseSnapshot \| null>\(null\)/,
+  "Village must keep one Act 2 Story Purchase snapshot instead of separate stock/story React states",
+);
+for (const retiredState of [
+  "act2JettyLifebuoyNeeded",
+  "act2JettyLifebuoyOwned",
+  "act2BoathouseSteeringWheelNeeded",
+  "act2BoathouseSteeringWheelOwned",
+  "act2MotorboatPartsNeeded",
+  "act2MotorboatPartsOwned",
+]) {
+  assert.equal(
+    villageSource.includes(`const [${retiredState},`),
+    false,
+    `Village must not retain separate React state for ${retiredState}`,
+  );
+}
+assert.ok(
+  (villageSource.match(/setAct2StoryPurchaseSnapshot\(deriveAct2StoryPurchaseSnapshot\(act2\)\)/g) ?? []).length >= 2,
+  "direct purchase resume and normal Mira shop open must load through the same Act 2 purchase snapshot adapter",
+);
+assert.match(
+  villageSource,
+  /const localStatus = act2StoryPurchaseSnapshot\?\.status\[project\]/,
+  "purchase dispatch must read owned/needed state from the unified adapter snapshot",
+);
+assert.match(
+  villageSource,
+  /const purchaseOwned = act2StoryPurchaseSnapshot\?\.status\[project\]\.owned === true/,
+  "shop exit/resume must read ownership from the unified adapter snapshot",
+);
