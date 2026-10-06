@@ -218,8 +218,18 @@ const act2RuntimeSource = fs.readFileSync(new URL("../src/components/Act2Runtime
 
 assert.match(
   act2RuntimeSource,
-  /contextualActions=\{state\.act2Complete && state\.endCardSeen \? \([\s\S]*router\.push\("\/act3"\)[\s\S]*Till kapitel 3/,
-  "completed Act 2 must expose the explicit chapter 3 transition through the shared GameUiShell",
+  /const nextChapter = nextChapterId\("act2"\)/,
+  "completed Act 2 must derive the next chapter from the canonical registry",
+);
+assert.match(
+  act2RuntimeSource,
+  /contextualActions=\{state\.act2Complete && state\.endCardSeen && nextChapter \? \([\s\S]*router\.push\(chapterRoute\(nextChapter\)\)[\s\S]*Till kapitel 3/,
+  "completed Act 2 must expose the registered next-chapter transition through the shared GameUiShell",
+);
+assert.doesNotMatch(
+  act2RuntimeSource,
+  /router\.push\("\/act3"\)/,
+  "Act 2 closeout must not hard-code the Act 3 route",
 );
 assert.match(
   act2RuntimeSource,
