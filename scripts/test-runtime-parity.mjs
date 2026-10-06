@@ -46,6 +46,7 @@ function loadTsModule(file, dependencies) {
 const saveMigrationModule = loadTsModule("../src/runtime/save/migrations.ts", {});
 const progressionDeltaModule = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const progressGateModule = loadTsModule("../src/runtime/progression/progressGate.ts", {});
+const progressTrackModule = loadTsModule("../src/runtime/progression/progressTrack.ts", {});
 const chapterRegistryModule = loadTsModule("../src/runtime/chapter/chapterRegistry.ts", {});
 const {
   act2PurchaseShopHref,
@@ -66,6 +67,7 @@ const {
   "../runtime/save/migrations": saveMigrationModule,
   "../runtime/progression/authoritativeDelta": progressionDeltaModule,
   "../runtime/progression/progressGate": progressGateModule,
+  "../runtime/progression/progressTrack": progressTrackModule,
 });
 
 const {
