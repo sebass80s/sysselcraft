@@ -1573,3 +1573,24 @@ Do not manufacture more Save/Migration work, reopen canonical Interaction, build
 No production deployment was performed in this session.
 No Adam backend/save data was mutated.
 No live/release branch was touched.
+
+## Purchase architecture decision — Act 3 trigger
+
+Current state:
+- backend Story Shop / Supabase owns real purchase execution, wallet debit and owned world flags;
+- Act 2 story-purchase presentation/handoff is consolidated but still chapter-specific through `src/game/act2PurchaseCatalog.ts` and `src/game/act2PurchaseHandoff.ts`;
+- the insufficient-funds loop was fixed so closing Mira's shop only resumes Act 2 when the required story item is actually owned.
+
+Forward architecture rule:
+- do **not** create `act3PurchaseCatalog.ts`, `act3PurchaseHandoff.ts` or equivalent copied chapter-specific purchase flow;
+- the first real Act 3 story purchase is the explicit trigger to extract the proven Act 2 pattern into a shared SysselCraft purchase-flow layer;
+- that shared layer should own generic story-purchase metadata, insufficient-funds escape behavior, shop handoff/return targeting and post-purchase resume semantics;
+- backend Story Shop / Supabase must remain authoritative for transaction execution, balances and ownership flags.
+
+Reason:
+Runtime 1.0 deliberately avoided inventing a generic purchase engine with only one real chapter consumer. Act 3 becomes the second consumer and is therefore the correct point to generalize from observed behavior rather than speculation.
+
+Acceptance invariant for the future shared system:
+- successful required purchase -> resume the correct story/project;
+- failed/insufficient-funds purchase -> remain in the playable world/shop context so the child can earn currency and retry later;
+- never create a forced story->shop->story->shop loop.
