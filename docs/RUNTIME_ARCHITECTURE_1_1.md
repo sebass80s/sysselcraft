@@ -675,3 +675,19 @@ Before any change:
 4. do not invent more Runtime 1.1 extraction work before physical acceptance;
 5. keep changes small, testable and checkpointed.
 
+
+
+## Fuel-principle audit correction
+
+The earlier Runtime 1.1 **code-complete** checkpoint described completion of the narrower extraction plan. It is not the final product-readiness claim.
+
+The canonical fuel-principle audit is:
+- `docs/RUNTIME_1_1_FUEL_AUDIT.md`
+
+That audit found multiple remaining engine responsibilities that a future Act 3 would otherwise have to reimplement, including chapter runtime orchestration, end-to-end progression consumption, project/completion mechanics, chapter-local Story UI/CSS drift, standard naming/input, story-shop integration, chapter persistence hosting, backend sync, world/area runtime hosting and debug plumbing.
+
+Current canonical status:
+
+**Runtime 1.1 is fuel-principle incomplete.**
+
+Do not begin substantive Act 3 runtime implementation until the P0 blockers in the audit are closed and an empty-next-chapter proof demonstrates that a new chapter can be built primarily from content/configuration/adapters.
