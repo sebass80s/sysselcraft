@@ -821,9 +821,10 @@ assert.equal(storyShop.includes("ACT2_PURCHASE_CATALOG"), false, "Story Shop tra
 assert.equal(storyShop.includes("ACT2_JETTY_LIFEBUOY_PRICE"), false, "retired jetty compatibility price alias must stay removed");
 assert.equal(storyShop.includes("ACT2_BOATHOUSE_STEERING_WHEEL_PRICE"), false, "retired boathouse compatibility price alias must stay removed");
 assert.equal(storyShop.includes("ACT2_MOTORBOAT_PARTS_PRICE"), false, "retired motorboat compatibility price alias must stay removed");
-assert.ok(storyShop.includes('purchaseStoryItem("act2_jetty_lifebuoy")'), "jetty lifebuoy must use the atomic story purchase RPC");
-assert.ok(storyShop.includes('purchaseStoryItem("act2_boathouse_steering_wheel")'), "Båthuset steering wheel must use the atomic story purchase RPC");
-assert.ok(storyShop.includes('purchaseStoryItem("act2_motorboat_parts")'), "Motorbåten parts must use the atomic story purchase RPC");
+assert.ok(storyShop.includes('export async function purchaseStoryItem(itemKey: string)'), "Story Shop transport must expose the generic atomic story purchase RPC");
+assert.ok(page.includes("purchaseStoryItem(ACT2_PURCHASE_CATALOG.dock.id)"), "jetty lifebuoy must use catalog-driven generic Story Shop transport");
+assert.ok(page.includes("purchaseStoryItem(ACT2_PURCHASE_CATALOG.boathouse.id)"), "Båthuset steering wheel must use catalog-driven generic Story Shop transport");
+assert.ok(page.includes("purchaseStoryItem(ACT2_PURCHASE_CATALOG.motorboat.id)"), "Motorbåten parts must use catalog-driven generic Story Shop transport");
 const act2PurchaseMigration = fs.readFileSync(new URL("../supabase/migrations/20261001_sync_act2_story_item_purchase.sql", import.meta.url), "utf8");
 for (const [item, flag] of [
   ["act2_jetty_lifebuoy", "act2JettyLifebuoyOwned"],
