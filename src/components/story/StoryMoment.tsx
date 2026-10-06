@@ -6,6 +6,28 @@ import { beginStoryOverlay } from "../../game/storyOverlayBridge";
 import { DialogueCard } from "./DialogueCard";
 import type { StorySpeakerTone } from "../../game/storyEngine";
 
+export type StoryPresentationVariant =
+  | "default"
+  | "opening"
+  | "gate"
+  | "interaction"
+  | "reaction"
+  | "finale"
+  | "handoff";
+
+const STORY_PRESENTATION: Record<
+  StoryPresentationVariant,
+  { zIndex: number; background: string }
+> = {
+  default: { zIndex: 20, background: "#1d281f" },
+  opening: { zIndex: 20, background: "#111" },
+  gate: { zIndex: 78, background: "rgba(9,14,10,.94)" },
+  interaction: { zIndex: 80, background: "rgba(9,14,10,.94)" },
+  reaction: { zIndex: 92, background: "rgba(9,14,10,.94)" },
+  finale: { zIndex: 100, background: "rgba(6,10,8,.96)" },
+  handoff: { zIndex: 145, background: "rgba(9,14,10,.94)" },
+};
+
 type StoryMomentProps = {
   image?: string;
   heading?: string;
@@ -20,9 +42,7 @@ type StoryMomentProps = {
   onNext?: () => void | Promise<void>;
   nextDisabled?: boolean;
   footer?: ReactNode;
-  zIndex?: number;
-  background?: string;
-  dialogueClassName?: string;
+  variant?: StoryPresentationVariant;
   revealImageBeforeNext?: boolean;
   presentationId?: string;
 };
@@ -41,9 +61,7 @@ export function StoryMoment({
   onNext,
   nextDisabled = false,
   footer,
-  zIndex = 20,
-  background = "#1d281f",
-  dialogueClassName = "",
+  variant = "default",
   revealImageBeforeNext = false,
   presentationId = "",
 }: StoryMomentProps) {
@@ -71,7 +89,13 @@ export function StoryMoment({
 
   useEffect(() => beginStoryOverlay(), []);
 
-  const style: CSSProperties = { position: "absolute", inset: 0, zIndex, background };
+  const presentation = STORY_PRESENTATION[variant];
+  const style: CSSProperties = {
+    position: "absolute",
+    inset: 0,
+    zIndex: presentation.zIndex,
+    background: presentation.background,
+  };
   const handleNext = onNext
     ? () => {
         if (revealImageBeforeNext && image && !imageOnly) {
@@ -100,7 +124,7 @@ export function StoryMoment({
         onNext={handleNext}
         nextDisabled={nextDisabled || pending}
         footer={footer}
-        className={dialogueClassName}
+        className=""
       >
         {children}
       </DialogueCard>}
