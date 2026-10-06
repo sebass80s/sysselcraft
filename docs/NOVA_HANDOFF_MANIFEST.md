@@ -1597,3 +1597,21 @@ Architecture boundary:
 
 No persisted save shape, backend authority, collision, movement, dog-follow, pointer/touch or WebView behavior changed.
 
+## Verified checkpoint: Chapter Runtime Boundary presentation slice
+
+Verified code HEAD: `cd0e72e21e09fef52dbf2fced4b6debffd1b5c8e`
+
+GitHub Actions: **#2033 SUCCESS** on that exact SHA.
+
+Implemented:
+
+- new shared React boundary: `src/runtime/chapter/ChapterRuntimeBoundary.tsx`;
+- loading, shipping-locked and progression-locked chapter presentation now renders through one shared boundary;
+- Act 2 no longer owns duplicate loading/locked page markup;
+- return navigation from a locked chapter uses the canonical chapter registry;
+- `scripts/test-chapter-runtime-shell.mjs` now verifies that Act 2 consumes the shared boundary.
+
+The boundary is presentation-only. Access decisions remain owned by the pure `chapterRuntimeShell.ts` engine; chapter-specific progression rules remain adapters.
+
+No save shape, backend authority, movement, collision, dog-follow, touch or WebView behavior changed.
+
