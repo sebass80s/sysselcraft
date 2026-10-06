@@ -24,6 +24,10 @@ const authoritativeTrack = load("src/runtime/progression/authoritativeTrack.ts",
   "./authoritativeDelta": progressionDelta,
   "./progressTrack": progressTrack,
 });
+const projectProgressEngine = load("src/runtime/progression/projectProgressEngine.ts", {
+  "./progressTrack": progressTrack,
+  "./authoritativeTrack": authoritativeTrack,
+});
 const stateApi = load("src/game/act2RuntimeState.ts", {
   "@capacitor/preferences": { Preferences: {} },
   "../runtime/save/migrations": saveMigrations,
@@ -31,6 +35,7 @@ const stateApi = load("src/game/act2RuntimeState.ts", {
   "../runtime/progression/progressGate": progressGate,
   "../runtime/progression/progressTrack": progressTrack,
   "../runtime/progression/authoritativeTrack": authoritativeTrack,
+  "../runtime/progression/projectProgressEngine": projectProgressEngine,
 });
 const initial = stateApi.createDefaultAct2RuntimeState();
 assert.equal(initial.selectedProject, null);
