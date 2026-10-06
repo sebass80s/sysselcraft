@@ -47,6 +47,7 @@ import { chapterAtStart, chapterCardVisible as deriveChapterCardVisible, chapter
 import { chapterRoute } from "../runtime/chapter/chapterRegistry";
 import { chapterBootMayLoad, deriveChapterRuntimeOverlay, deriveChapterRuntimeShell } from "../runtime/chapter/chapterRuntimeShell";
 import { deriveAct2RuntimeBlockers } from "../game/act2RuntimeAdapter";
+import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
 
 
 
@@ -456,15 +457,15 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     setPreviewProject(null);
   }
 
-  if (runtimeShellStatus === "loading") {
-    return <main className="parent-page"><p>Laddar sjön…</p></main>;
-  }
-  if (runtimeShellStatus === "shipping-locked" || runtimeShellStatus === "progression-locked") {
-    return <main className="parent-page">
-      <h1>Stigen är inte öppen än</h1>
-      <p>Det finns mer att göra i byn innan vägen mot sjön öppnas.</p>
-      <a className="primary-button" href={chapterRoute("act1")}>Tillbaka till byn</a>
-    </main>;
+  if (runtimeShellStatus !== "active") {
+    return <ChapterRuntimeBoundary
+      status={runtimeShellStatus}
+      loadingText="Laddar sjön…"
+      lockedTitle="Stigen är inte öppen än"
+      lockedBody="Det finns mer att göra i byn innan vägen mot sjön öppnas."
+      returnHref={chapterRoute("act1")}
+      returnLabel="Tillbaka till byn"
+    />;
   }
 
   const opening = ACT2_OPENING_BEATS[state.openingIndex];
