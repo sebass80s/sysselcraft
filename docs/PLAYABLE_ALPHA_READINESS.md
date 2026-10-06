@@ -490,3 +490,30 @@ Remaining physical regression checks, when useful before broader release:
 - [ ] final safe-area/orientation smoke on the latest UI-shell build.
 
 Preserve the existing physical save. Never reset/reinstall it merely to simplify these checks.
+
+
+## Runtime 1.1 readiness gate update — 2026-10-06
+
+Do not schedule the next broad physical iPhone acceptance yet.
+
+The current architecture gate is:
+`finish remaining Runtime 1.1 engine -> empty Act 3 proof -> full automated/browser verification -> physical iPhone update-in-place acceptance`.
+
+Runtime 1.1 closed:
+- Chapter Runtime Host;
+- Progression/Project Engine;
+- Story UI/sequencing/input/history/cards/choices;
+- Story Purchase integration.
+
+Still open:
+- generic chapter persistence;
+- shared backend synchronization;
+- full World/Area Runtime Host;
+- common debug harness;
+- empty Act 3 proof.
+
+The preserved iPhone save remains valuable final regression evidence. Do not reset/reinstall merely to simplify acceptance.
+
+Verified docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, CI #2252 SUCCESS.
+
+Canonical handover: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
