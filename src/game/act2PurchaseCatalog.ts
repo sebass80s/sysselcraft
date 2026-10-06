@@ -1,5 +1,5 @@
 import type { Act2PurchaseProject } from "./act2PurchaseHandoff";
-import { defineStoryPurchase, type StoryPurchaseDefinition } from "../runtime/purchase/storyPurchaseFlow";
+import type { StoryPurchaseDefinition } from "../runtime/purchase/storyPurchaseFlow";
 
 export type Act2StoryPurchaseId =
   | "act2_jetty_lifebuoy"
@@ -20,7 +20,7 @@ const MOTORBOAT_PRICE = 200;
  * mutation and owned world flags.
  */
 export const ACT2_PURCHASE_CATALOG: Record<Act2PurchaseProject, Act2PurchaseItem> = {
-  dock: defineStoryPurchase({
+  dock: {
     id: "act2_jetty_lifebuoy",
     target: "dock",
     currency: "sysselbux",
@@ -38,8 +38,8 @@ export const ACT2_PURCHASE_CATALOG: Record<Act2PurchaseProject, Act2PurchaseItem
         requirement: "⭐ Behövs till Bryggan",
       },
     },
-  }),
-  boathouse: defineStoryPurchase({
+  },
+  boathouse: {
     id: "act2_boathouse_steering_wheel",
     target: "boathouse",
     currency: "sysselbux",
@@ -57,8 +57,8 @@ export const ACT2_PURCHASE_CATALOG: Record<Act2PurchaseProject, Act2PurchaseItem
         requirement: "⭐ Behövs till Båthuset",
       },
     },
-  }),
-  motorboat: defineStoryPurchase({
+  },
+  motorboat: {
     id: "act2_motorboat_parts",
     target: "motorboat",
     currency: "sysselbux",
@@ -76,5 +76,5 @@ export const ACT2_PURCHASE_CATALOG: Record<Act2PurchaseProject, Act2PurchaseItem
         requirement: "⭐ Behövs till Motorbåten",
       },
     },
-  }),
+  },
 };
