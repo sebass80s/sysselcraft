@@ -46,6 +46,7 @@ import { StoryRunner } from "./story/StoryRunner";
 import { StoryMoment } from "./story/StoryMoment";
 import { InlineDialogueCard } from "./story/InlineDialogueCard";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
+import { chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 import { BACKEND_WALLET_EVENT, getLatestBackendWallet, publishBackendWallet, type BackendWalletSnapshot } from "../game/backendWalletBridge";
 import {
   QUEST_PRESENTATION_EVENT,
@@ -1448,7 +1449,7 @@ export default function VillagePrototype() {
         {dogName && <button className="dog-hud-button" type="button" onClick={openDogHome} aria-label={`Besök ${dogName}`} title={`Besök ${dogName}`}>🐶</button>}
       </>}
     />
-    <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>{act1EndCardSeen && <button type="button" className="secondary-button" style={{ position:"absolute", right:16, bottom:54, zIndex:25 }} onClick={() => router.push("/act2")}>🌲 Stigen till sjön</button>}
+    <div className="game-wrap"><div ref={hostRef} id="sysselcraft-game" aria-label="Sysselcraft village prototype" /><div className="game-hint">{attention ? `${attention.residentName} vill prata med dig` : introComplete ? "Tryck i byn för att gå · tryck på personer och questmarkörer för att interagera" : "Tryck på Linus för att gå fram och hälsa"}</div>{chapterUnlocked(act1EndCardSeen) && <button type="button" className="secondary-button" style={{ position:"absolute", right:16, bottom:54, zIndex:25 }} onClick={() => router.push("/act2")}>🌲 Stigen till sjön</button>}
     {!solRuntimeTestActive && <>
     {dogHomeOpen && (() => { const special=dogHomePendingReaction ? dogHomeUpgradeDialogues[dogHomePendingReaction] : null; const lines=special ?? dogHomeDialogues[dogHomeDialogue]; const line=lines[dogHomeLine]; return <div className="dog-home" role="dialog" aria-modal="true" aria-label={`${dogName || "Hundens"} plats`} onClick={dogHomeShowcase ? () => { setDogHomeShowcase(false); setDogHomeOpen(false); } : undefined}><Image className="dog-home-scene" src={`/assets/village/story-moments/dog/dog-home-${dogHomeStage}.png`} alt="" fill priority sizes="100vw" /><button className="house-room-close" type="button" onClick={(event) => { event.stopPropagation(); setDogHomeShowcase(false); setDogHomeOpen(false); }}>← Till byn</button>{!dogHomeShowcase && line && <div className="dialogue-card story-moment-dialogue"><span className={`dialogue-speaker ${line.speaker==="Barnet"?"child":"dog"}`}>{line.speaker==="Barnet"?(childName||"Barnet"):(dogName||"Hunden")}</span><p>{line.text}</p><button className="primary-button dialogue-next" onClick={() => void advanceDogHomeDialogue()}>{dogHomeLine+1<lines.length?"Nästa":"Visa mig!"}</button></div>}</div>; })()}
     {roomOpen && <div className="house-room" role="dialog" aria-modal="true" aria-label="Mitt rum" onClick={() => { if (roomShowcase) { setRoomShowcase(false); setRoomOpen(false); } }}>
