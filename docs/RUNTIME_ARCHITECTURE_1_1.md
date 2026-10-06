@@ -723,3 +723,31 @@ The required sequence is:
 The iPhone pass is the **final regression/acceptance gate after implementation is complete**, not a substitute for missing engine work.
 
 Do not reset or reinstall the preserved child save/backend merely to simplify the final physical acceptance.
+
+
+## Verified checkpoint: Shared Chapter Runtime Host
+
+Verified code HEAD: `c926c7a518e6b40b07acd3f7cf8285af1150962e`
+
+GitHub Actions: **#2121 SUCCESS** on that exact SHA.
+
+Runtime 1.1 backlog item 1 is closed at its intended engine boundary.
+
+Implemented:
+- new generic `useChapterRuntimeHost` owns chapter boot cancellation, shipping-lock side-effect boundary, ready/access state, canonical shell status, initial runtime state/context hydration, chapter-intro visibility and optional canonical route replacement;
+- Act 2 consumes the shared host through an Act 2 boot adapter instead of owning its own ready/access/shell lifecycle;
+- new generic `useChapterWorldHost` owns chapter-world mount, latest-snapshot sync, cancellation and destroy lifecycle;
+- Act 2 Lake now supplies only its area-specific mount/sync/destroy adapter and no longer owns a parallel world-instance lifecycle;
+- the same shared overlay result drives both GameUiShell blocking and Lake world-input authority through the world-host snapshot;
+- stale source-shape tests were migrated to assert the shared host contracts rather than retired Act 2-local effects.
+
+Deliberately **not** claimed by this checkpoint:
+- backend polling/reconciliation remains Runtime 1.1 backlog item 10;
+- chapter persistence hosting remains backlog item 9;
+- progression/project engine completion remains item 2;
+- Story sequencing/UI/history/title/end-card/input remain later Story-engine items;
+- purchase/shop integration remains item 8;
+- full World/Area Engine remains item 11. The shared world lifecycle host here only removes common mount/sync/destroy ownership from the chapter component;
+- debug harness remains item 12.
+
+Fuel-principle result: a future chapter no longer needs to recreate generic boot/access/status or React-to-world instance lifecycle. It still must not be started until the remaining hard DoD items are closed.
