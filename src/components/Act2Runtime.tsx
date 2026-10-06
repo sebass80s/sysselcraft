@@ -548,8 +548,12 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     ? parseStoryLine(activeContributionLine, childName)
     : null;
   const activeFinaleBeat = finalePending ? ACT2_FINALE_BEATS[state.finaleIndex] ?? null : null;
-  const finaleLineIndex = Math.min(state.finaleLineIndex, Math.max(0, (activeFinaleBeat?.body.length ?? 1) - 1));
-  const activeFinaleLine = activeFinaleBeat?.body[finaleLineIndex] ?? null;
+  const finaleLineIndex = activeFinaleBeat
+    ? previousStoryLineIndex(activeFinaleBeat.body.length, state.finaleLineIndex + 1)
+    : 0;
+  const activeFinaleLine = activeFinaleBeat
+    ? storyLineAt(activeFinaleBeat.body, finaleLineIndex)
+    : null;
   const activeFinalePresentation = activeFinaleLine
     ? parseStoryLine(activeFinaleLine, childName)
     : null;
@@ -601,14 +605,20 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }, []);
 
   async function previousFinaleStory() {
-    if (finaleLineIndex <= 0) return;
-    await commit({ ...state, finaleLineIndex: finaleLineIndex - 1 });
+    if (!activeFinaleBeat) return;
+    const previous = previousStoryLineIndex(
+      activeFinaleBeat.body.length,
+      finaleLineIndex,
+    );
+    if (previous === finaleLineIndex) return;
+    await commit({ ...state, finaleLineIndex: previous });
   }
 
   async function advanceFinaleStory() {
     if (!activeFinaleBeat) return;
-    if (finaleLineIndex + 1 < activeFinaleBeat.body.length) {
-      await commit({ ...state, finaleLineIndex: finaleLineIndex + 1 });
+    const step = advanceStoryLine(activeFinaleBeat.body.length, finaleLineIndex);
+    if (step.type === "line") {
+      await commit({ ...state, finaleLineIndex: step.index });
       return;
     }
     await commit(advanceAct2Finale(state));
