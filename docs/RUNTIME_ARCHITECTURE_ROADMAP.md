@@ -1717,3 +1717,20 @@ Minimum physical smoke checklist:
 9. force-quit/relaunch preserves world/progression/pairing/wallet state and does not replay accepted one-shot story/reward effects.
 
 Only after browser interaction acceptance + this physical iPhone pass should deeper convergence or deletion touch collision/pathfinding, movement feel, dog-follow, pointer/touch/WebView fallbacks or the Linus naming DOM path.
+
+### Purchase generalization trigger
+
+Do not generalize the current Act 2 purchase flow merely for architectural symmetry. The current Act 2 catalog/handoff remains the proven first consumer.
+
+When Act 3 introduces its **first real story-gated purchase**, stop before adding chapter-specific purchase files and extract a shared SysselCraft purchase-flow layer instead.
+
+The shared layer should cover:
+- generic story-purchase metadata/configuration;
+- shop handoff and return target;
+- owned-state-aware resume behavior;
+- insufficient-funds escape without looping;
+- reuse by Act 2, Act 3 and later chapters.
+
+Transaction authority stays in backend Story Shop / Supabase. The shared runtime layer must not become the wallet or ownership source of truth.
+
+This decision follows the existing roadmap rule: do not create generic architecture without a second real consumer. Act 3 is that second consumer.
