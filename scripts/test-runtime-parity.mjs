@@ -18,11 +18,6 @@ import {
 import { WORLD_ENTITY_DEPTH_BASE, worldEntityDepth } from "../src/runtime/world/worldDepth.ts";
 import { runSequentialMigrations } from "../src/runtime/save/migrations.ts";
 import { authoritativeProgressDelta } from "../src/runtime/progression/authoritativeDelta.ts";
-import {
-  act2PurchaseShopHref,
-  act2ResumeHref,
-  parseAct2PurchaseProject,
-} from "../src/game/act2PurchaseHandoff.ts";
 import { ACT2_PURCHASE_CATALOG } from "../src/game/act2PurchaseCatalog.ts";
 import { progressGateRequired } from "../src/runtime/progression/progressGate.ts";
 import { ACT2_OPENING_BEATS } from "../src/game/act2OpeningStory.ts";
@@ -51,6 +46,14 @@ function loadTsModule(file, dependencies) {
 const saveMigrationModule = loadTsModule("../src/runtime/save/migrations.ts", {});
 const progressionDeltaModule = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const progressGateModule = loadTsModule("../src/runtime/progression/progressGate.ts", {});
+const chapterRegistryModule = loadTsModule("../src/runtime/chapter/chapterRegistry.ts", {});
+const {
+  act2PurchaseShopHref,
+  act2ResumeHref,
+  parseAct2PurchaseProject,
+} = loadTsModule("../src/game/act2PurchaseHandoff.ts", {
+  "../runtime/chapter/chapterRegistry": chapterRegistryModule,
+});
 const {
   createDefaultAct2RuntimeState,
   act2ContributionBlockedByStoryGate,
