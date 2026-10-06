@@ -13,6 +13,7 @@ import {
   canSelectProjectProgress,
   consumeProjectCompletionReaction as consumeSharedProjectCompletionReaction,
   consumeSelectedProjectProgress,
+  nextPendingProjectCompletionReaction,
   normalizeProjectProgressState,
   projectCompletionReactionPending as sharedProjectCompletionReactionPending,
   projectPrerequisitesComplete,
@@ -559,6 +560,14 @@ export function projectCompletionReactionPending(state: Act2RuntimeState, projec
     projectProgressSnapshot(normalized),
     ACT2_PROJECT_PROGRESS_DEFINITION,
     project,
+  );
+}
+
+export function pendingProjectCompletionReaction(state: Act2RuntimeState) {
+  const normalized = normalizeAct2RuntimeState(state);
+  return nextPendingProjectCompletionReaction(
+    projectProgressSnapshot(normalized),
+    ACT2_PROJECT_PROGRESS_DEFINITION,
   );
 }
 
