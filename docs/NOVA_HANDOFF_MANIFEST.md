@@ -1994,3 +1994,37 @@ Deliberately **not** claimed by this checkpoint:
 - debug harness remains item 12.
 
 Fuel-principle result: a future chapter no longer needs to recreate generic boot/access/status or React-to-world instance lifecycle. It still must not be started until the remaining hard DoD items are closed.
+
+
+## Verified checkpoint: Generic Progression / Project Engine
+
+Verified code HEAD: `4bfec68e695b15c3925c077b62a66db27787702b`
+
+GitHub Actions: **#2149 SUCCESS** on that exact SHA.
+
+Runtime 1.1 backlog item 2 is closed, including the generic selection/completion-reaction mechanics that the fuel audit had previously listed separately.
+
+Implemented:
+- `consumeProgressTrackStep()` now owns sequential beat consumption, idempotency, configured target clamping, stage derivation, canonical consumed beat IDs and completion;
+- new `projectProgressEngine.ts` owns generic project selection, prerequisite enforcement, active-project locking, auto-deselect on completion, total consumed project progress and exactly-once completion reactions;
+- the project engine also composes authoritative backend backlog with the selected configured track through `pendingAuthoritativeProjectProgressCount()` and `nextAuthoritativeProjectProgressStep()`;
+- Act 2 now supplies project IDs, target/stage definitions, Motorboat prerequisites, story-gate blocking and the authored Dock completion-reaction ID as chapter configuration/adapters;
+- Act 2 no longer performs local contribution increment/clamp/completion arithmetic, no longer accepts a caller-provided visible stage, and no longer hard-codes completion-reaction selection in its UI adapter;
+- regression coverage includes tracks with targets **3 and 2**, prerequisites, out-of-order rejection, duplicate/idempotent consumption, story-gate blocking, authoritative backlog resume and exactly-once completion reactions;
+- a fuel-principle source guard prevents `Math.min(16)` / `contributions >= 16` from returning to Act 2 consumption or the generic engine.
+
+Fuel-principle audit result:
+- shared progression engine files contain **zero Act 2-specific `16` rules**;
+- the only project target value `16` remains in Act 2 as `ACT2_PROJECT_TARGET = 16`, where it is authored configuration;
+- a future chapter can choose different project targets, stage thresholds, prerequisites and completion reactions without implementing new project-engine mechanics.
+
+Still deliberately outside this checkpoint:
+- chapter persistence hosting remains Runtime 1.1 backlog item 9;
+- Story UI/sequencing/history/title/end-card/naming remain later Story-engine work;
+- Story Purchase shop integration remains item 8;
+- backend polling/reconciliation host remains item 10;
+- full World/Area Engine remains item 11;
+- common debug harness remains item 12;
+- empty Act 3 proof remains the final architectural proof before acceptance.
+
+Current Runtime 1.1 status remains: **fuel-principle incomplete**, with backlog items 1 and 2 now closed.
