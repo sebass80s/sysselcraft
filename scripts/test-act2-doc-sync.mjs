@@ -12,6 +12,7 @@ import { ACT2_FINALE_BEATS } from "../src/game/act2FinaleStory.ts";
 const storyDesign = fs.readFileSync(new URL("../docs/STORY_DESIGN.md", import.meta.url), "utf8");
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 const act2PurchaseAdapter = fs.readFileSync(new URL("../src/game/act2StoryPurchaseAdapter.ts", import.meta.url), "utf8");
+const storyPurchaseRegistry = fs.readFileSync(new URL("../src/game/storyPurchaseRegistry.ts", import.meta.url), "utf8");
 const runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
 
 function assertProject(project, beats) {
@@ -48,8 +49,9 @@ assert.ok(runtime.includes("JETTY_COMPLETION_REACTION"), "Jetty completion payof
 
 assert.ok(JETTY_LIFEBUOY_BEAT.body.length > 0);
 assert.ok(BOATHOUSE_STEERING_WHEEL_BEAT.body.length > 0);
-assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira must play the authored lifebuoy beat");
-assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira must play the authored steering-wheel beat");
+assert.ok(storyPurchaseRegistry.includes("JETTY_LIFEBUOY_BEAT"), "Act 2 Story Purchase registration must expose the authored lifebuoy beat");
+assert.ok(storyPurchaseRegistry.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Act 2 Story Purchase registration must expose the authored steering-wheel beat");
+assert.ok(village.includes("registration.purchaseStoryBeat(storyPurchaseStory)"), "Mira must play purchase stories through the active Story Purchase registration");
 assert.match(
   act2PurchaseAdapter,
   /project === "dock" \|\| project === "boathouse"[\s\S]*pendingPurchaseStory: purchaseStory,[\s\S]*purchaseStoryLineIndex: 0/,
