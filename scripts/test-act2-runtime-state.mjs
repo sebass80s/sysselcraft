@@ -823,7 +823,7 @@ assert.equal(storyShop.includes("ACT2_JETTY_LIFEBUOY_PRICE"), false, "retired je
 assert.equal(storyShop.includes("ACT2_BOATHOUSE_STEERING_WHEEL_PRICE"), false, "retired boathouse compatibility price alias must stay removed");
 assert.equal(storyShop.includes("ACT2_MOTORBOAT_PARTS_PRICE"), false, "retired motorboat compatibility price alias must stay removed");
 assert.ok(storyShop.includes('export async function purchaseStoryItem(itemKey: string)'), "Story Shop transport must expose the generic atomic story purchase RPC");
-assert.ok(village.includes("const item = ACT2_PURCHASE_CATALOG[project]"), "Mira Story Shop must resolve the selected Act 2 item from the catalog");
+assert.ok(village.includes("const item = registration.catalog[target]"), "Mira Story Shop must resolve Story Purchase items through the active registry entry");
 assert.ok(village.includes("purchaseStoryItem(item.id)"), "Mira Story Shop must send the selected catalog id through generic Story Shop transport");
 assert.equal(village.includes("purchaseStoryItem(ACT2_PURCHASE_CATALOG.dock.id)"), false, "Mira Story Shop must not keep per-item transport calls after catalog dispatch");
 const act2PurchaseMigration = fs.readFileSync(new URL("../supabase/migrations/20261001_sync_act2_story_item_purchase.sql", import.meta.url), "utf8");
@@ -848,9 +848,10 @@ assert.ok(act2PurchaseAdapter.includes("jettyPurchaseRequired(state)"), "Act 2 p
 assert.ok(act2PurchaseAdapter.includes("boathousePurchaseRequired(state)"), "Act 2 purchase adapter must derive steering-wheel stock from Act 2 progress");
 assert.ok(act2PurchaseAdapter.includes("motorboatPartsPurchaseRequired(state)"), "Act 2 purchase adapter must derive motorboat parts stock from Act 2 progress");
 assert.equal(village.includes("jettyPurchaseRequired("), false, "Mira must not own Act 2 stock gate calculations");
-assert.ok(village.includes("JETTY_LIFEBUOY_BEAT"), "Mira shop must render the canonical Bryggan lifebuoy story beat");
-assert.ok(village.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Mira shop must render the canonical Båthuset steering-wheel story beat");
-assert.ok(village.includes("act2PurchaseBeat?.body[act2PurchaseStoryIndex]"), "Mira purchase beats must render their authored body one reply at a time");
+const storyPurchaseRegistrySource = fs.readFileSync(new URL("../src/game/storyPurchaseRegistry.ts", import.meta.url), "utf8");
+assert.ok(storyPurchaseRegistrySource.includes("JETTY_LIFEBUOY_BEAT"), "Act 2 Story Purchase registration must expose the canonical Bryggan purchase beat");
+assert.ok(storyPurchaseRegistrySource.includes("BOATHOUSE_STEERING_WHEEL_BEAT"), "Act 2 Story Purchase registration must expose the canonical Båthuset purchase beat");
+assert.ok(village.includes("storyPurchaseBeat?.body[storyPurchaseStoryIndex]"), "Mira purchase beats must render their authored body one reply at a time through the registry");
 assert.match(
   act2PurchaseAdapter,
   /project === "dock" \|\| project === "boathouse"[\s\S]*pendingPurchaseStory: purchaseStory,[\s\S]*purchaseStoryLineIndex: 0/,
@@ -889,7 +890,7 @@ const childFacingForbidden = [
 for (const forbidden of childFacingForbidden) {
   assert.equal(childFacingStorySources.some((source) => source.includes(forbidden)), false, `runtime story source leaked internal text: ${forbidden}`);
 }
-assert.ok(village.includes("function act2StoryItemInsufficientFundsMessage(price: number)"), "Act 2 story purchases must share one insufficient-funds formatter");
+assert.ok(village.includes("function storyItemInsufficientFundsMessage(price: number)"), "Act 2 story purchases must share one insufficient-funds formatter");
 assert.ok(village.includes("Du har ${current} SysselBux. Du behöver ${missing} till."), "insufficient-funds feedback must show current balance and exact shortfall");
 assert.ok(village.includes("Gör några uppdrag och kom tillbaka"), "insufficient-funds feedback must explain the recovery path");
 assert.ok(
