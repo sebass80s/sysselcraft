@@ -658,7 +658,7 @@ assert.ok(page.includes('prerequisiteCompletionCount(state)'), "project selector
 assert.ok(page.includes("deriveAct2RuntimeBlockers(state"), "production route must consume the Act 2 blocker adapter instead of duplicating blocker rules");
 assert.ok(act2RuntimeAdapterSource.includes('(["dock"] as const)'), "Act 2 chapter adapter must keep only the authored automatic completion reaction");
 assert.ok(page.includes("CABIN_WAITING_REACTION"), "production route must present the canonical Cabin revisit scene");
-assert.ok(page.includes("state.projects.cabin.complete && !state.projects.motorboat.complete"), "Cabin revisit must exist only after Cabin completion and before Motorboat completion");
+assert.ok(page.includes("latest.projects.cabin.complete && !latest.projects.motorboat.complete"), "Cabin revisit must remain gated by Cabin completion and Motorboat incompletion through the shared world-host snapshot");
 assert.ok(page.includes("onCabinRevisit"), "Cabin revisit must open from a real world Cabin interaction");
 assert.ok(page.includes("JETTY_COMPLETION_REACTION"), "production route must present the canonical jetty completion reaction");
 assert.ok(page.includes("CABIN_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Cabin contribution track");
@@ -666,9 +666,9 @@ assert.ok(page.includes("BOATHOUSE_CONTRIBUTION_BEATS[contributionCandidate.numb
 assert.ok(page.includes("MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1]"), "production route must consume the canonical Motorbåten contribution track");
 assert.ok(act2RuntimeAdapterSource.includes("motorboatNamingRequired(state)"), "Act 2 chapter adapter must preserve the persisted contribution-neutral Motorbåten naming gate");
 assert.ok(page.includes("ACT2_FINALE_BEATS[state.finaleIndex]"), "production route must resume the persisted Act 2 finale");
-assert.ok(page.includes("setActiveProject(state.selectedProject)"), "production route must move Alve when the active project changes");
+assert.ok(page.includes("world.setActiveProject(latest.selectedProject)"), "production route must move Alve when the shared world-host snapshot changes active project");
 assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), "Alve interaction must explicitly arm the pending contribution Story Moment");
-assert.ok(page.includes("hasPendingAlveTurnIn(latest, backendWorldProgressionRef.current)"), "restart must restore Alve turn-in marker immediately from the latest authoritative progression without recreating the game");
+assert.ok(page.includes("hasPendingAlveTurnIn(latest, snapshot.backendWorldProgression)"), "shared world-host sync must restore Alve turn-in availability from the latest authoritative progression without recreating the game");
 assert.ok(page.includes("backendWorldProgressionRef.current = backend.progression.worldProgression"), "authoritative progression refreshes must update the restart-safe game bootstrap ref");
 assert.ok(
   page.includes("act2PurchaseShopHref("),
