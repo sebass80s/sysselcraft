@@ -492,30 +492,33 @@ body[data-story-overlay-active="true"] [data-story-ui="quest-overlay"] {
 
 
 
-/* Chapter 2 title card: brief cinematic bridge from the village into Act 2. */
-.act2-chapter-intro {
+/* Shared chapter cards */
+.shared-chapter-card {
   position: fixed;
   inset: 0;
   z-index: 160;
   display: grid;
   place-items: center;
+  padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
   background: #050706;
   color: #fff;
   text-align: center;
   pointer-events: auto;
 }
-.act2-chapter-intro-title {
+.shared-chapter-end {
+  z-index: 140;
+}
+.shared-chapter-card-content {
   display: grid;
   gap: .7rem;
   justify-items: center;
-  padding: 1.5rem;
 }
-.act2-chapter-intro-title span {
+.shared-chapter-label {
   font-size: clamp(.95rem, 2.4vw, 1.35rem);
   font-weight: 800;
   letter-spacing: .18em;
 }
-.act2-chapter-intro-title strong {
+.shared-chapter-title {
   min-height: 1em;
   font-size: clamp(2.4rem, 8vw, 5rem);
   line-height: 1;
@@ -524,11 +527,16 @@ body[data-story-overlay-active="true"] [data-story-ui="quest-overlay"] {
   transform: translateY(8px);
   transition: opacity .8s ease, transform .8s ease;
 }
-.act2-chapter-intro-title strong.is-visible {
+.shared-chapter-title.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
-.act2-chapter-intro-next {
+.shared-chapter-end-title {
+  margin: 0;
+  font-size: clamp(2rem, 7vw, 4.5rem);
+  letter-spacing: .04em;
+}
+.shared-chapter-card-action {
   margin-top: 1.15rem;
 }
 
