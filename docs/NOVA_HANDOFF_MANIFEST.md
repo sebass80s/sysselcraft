@@ -1446,3 +1446,17 @@ These high-risk/input-sensitive areas require browser + physical iPhone acceptan
 - no live/release branch changes;
 - no Adam backend/save mutation;
 - no Act 3 feature implementation.
+
+### Purchase architecture rule for future Act 3
+
+The Act 2 purchase flow is consolidated but still Act 2-specific. That is intentional for now.
+
+**Hard rule for future Act 3 work:** the first real Act 3 story purchase must trigger extraction of the proven Act 2 purchase pattern into a generic SysselCraft purchase-flow system. Do not copy the current files into new `act3Purchase...` variants.
+
+The generic system must preserve these semantics:
+- backend Story Shop / Supabase owns debit + ownership flags;
+- successful purchase may resume the blocked story/project;
+- insufficient funds or failed purchase must leave the player free to remain in the world and earn currency;
+- a required purchase must never trap the child in a forced shop/story navigation loop.
+
+The recent livboj bug is the concrete reason this invariant is now explicit: the shop previously returned to Act 2 even when the required item was not owned, which re-opened the same purchase gate indefinitely.
