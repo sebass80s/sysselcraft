@@ -57,7 +57,7 @@ const handoff = fs.readFileSync(new URL("../src/game/act2PurchaseHandoff.ts", im
 const sharedPurchaseHandoff = fs.readFileSync(new URL("../src/runtime/purchase/storyPurchaseHandoff.ts", import.meta.url), "utf8");
 
 assert.match(village, /const act1NextChapter = nextChapterDestination\("act1"[\s\S]*router\.push\(act1NextChapter\.route\)/, "Village -> Act 2 transition must use the shared next-chapter destination");
-assert.match(act2, /router\.replace\(chapterRoute\("act2"\)\)/, "Act 2 resume cleanup must use the chapter registry");
+assert.match(act2, /replaceHref: resumeProject \? chapterRoute\("act2"\) : null/, "Act 2 resume cleanup must resolve its canonical route through the chapter registry before handing navigation to the shared host");
 assert.match(handoff, /storyPurchaseShopHref\(\{[\s\S]*shopChapterId: "act1"[\s\S]*queryKey: "act2-purchase"/, "Act 2 shop handoff must delegate its registered Act 1 target to the shared purchase handoff");
 assert.match(handoff, /storyPurchaseResumeHref\(\{[\s\S]*chapterId: "act2"/, "Act 2 purchase resume must delegate its registered Act 2 target to the shared purchase handoff");
 assert.match(sharedPurchaseHandoff, /chapterRoute\(input\.shopChapterId\)/, "shared purchase handoff must resolve shop routes through the chapter registry");
