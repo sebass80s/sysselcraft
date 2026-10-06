@@ -88,3 +88,32 @@ The Codex work was verified against repository reality before integration.
 - GitHub Actions #1812 completed SUCCESS on that exact code HEAD.
 
 This audit therefore closes the current broad Save/Migration compatibility sweep. Its retained classifications are intentional ownership decisions, not a backlog of migrations waiting to be extracted.
+
+
+## Runtime 1.1 persistence-host continuation rule — 2026-10-06
+
+This audit remains authoritative input to Runtime 1.1 backlog item 5.
+
+The next generic chapter persistence host must preserve the classifications in this document:
+- pure historical local-shape conversion may be hosted as migration;
+- current-state invariant repair remains normalization;
+- localStorage/Preferences key moves remain storage migration;
+- backend reconciliation remains backend-owned recovery;
+- validation stays validation.
+
+Do not centralize code by relabeling these responsibilities.
+
+Required generic capabilities for item 5:
+- child-scoped chapter keying;
+- chapter id/version registration;
+- default-state creation;
+- parse/validate/normalize;
+- sequential migration hosting;
+- ordered save/load/clear;
+- safe legacy-key migration where applicable;
+- successful canonical write before legacy deletion;
+- failure/retry semantics that preserve durable state.
+
+The host must be proven with Act 2 and be reusable by an empty Act 3 without a new storage implementation.
+
+Canonical continuation: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
