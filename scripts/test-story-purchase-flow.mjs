@@ -114,3 +114,30 @@ assert.doesNotMatch(
   /purchaseAct2JettyLifebuoy|purchaseAct2BoathouseSteeringWheel|purchaseAct2MotorboatParts/,
   "Story Shop transport must not require chapter-specific Act 2 purchase wrappers",
 );
+
+const villageSource = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
+assert.doesNotMatch(
+  villageSource,
+  /buyAct2MotorboatParts|buyAct2BoathouseSteeringWheel|buyAct2JettyLifebuoy/,
+  "Mira Story Shop must not keep one purchase function per Act 2 catalog item",
+);
+assert.match(
+  villageSource,
+  /async function buyAct2StoryItem\(project: Act2PurchaseProject\)/,
+  "Mira Story Shop must dispatch Act 2 catalog items through one purchase path",
+);
+assert.match(
+  villageSource,
+  /ACT2_PURCHASE_CATALOG\[project\]/,
+  "Mira Story Shop purchase execution must derive id, price and presentation from the catalog",
+);
+assert.match(
+  villageSource,
+  /\.map\(\(\{ project, needed, owned \}\) =>/,
+  "Mira Story Shop must render required Act 2 story items from catalog-backed descriptors",
+);
+assert.match(
+  villageSource,
+  /onClick=\{\(\) => void buyAct2StoryItem\(project\)\}/,
+  "catalog-rendered Story Shop items must share the generic Act 2 purchase dispatcher",
+);
