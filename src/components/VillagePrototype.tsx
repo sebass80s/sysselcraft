@@ -1158,8 +1158,16 @@ export default function VillagePrototype() {
     gameRef.current?.setConstructionDialogueOpen(false);
     if (act2PurchaseReturnProject) {
       const project = act2PurchaseReturnProject;
+      const purchaseOwned =
+        project === "dock"
+          ? act2JettyLifebuoyOwned
+          : project === "boathouse"
+            ? act2BoathouseSteeringWheelOwned
+            : act2MotorboatPartsOwned;
       setAct2PurchaseReturnProject(null);
-      router.push(`/act2?resume=${project}`);
+      if (purchaseOwned) {
+        router.push(`/act2?resume=${project}`);
+      }
     }
   }
 
