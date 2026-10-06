@@ -681,7 +681,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       state,
       contributionCandidate.project,
       contributionCandidate.beatId,
-      contributionCandidate.visibleStage,
     );
     await commit(next);
     if (next.projects.motorboat.complete) {
