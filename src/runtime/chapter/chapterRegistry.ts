@@ -45,3 +45,12 @@ export function chapterPredecessor(id: ChapterId) {
 export function nextChapterId(id: ChapterId) {
   return chapterDefinition(id).nextId;
 }
+
+export function nextChapterDestination(
+  id: ChapterId,
+  state: { chapterComplete: boolean; endCardSeen: boolean },
+) {
+  if (!state.chapterComplete || !state.endCardSeen) return null;
+  const nextId = nextChapterId(id);
+  return nextId ? { id: nextId, route: chapterRoute(nextId) } : null;
+}
