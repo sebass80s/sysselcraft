@@ -67,6 +67,48 @@ Area/world adapters
   future Act 3 world
 ```
 
+
+## Runtime 1.1 product law: the fuel principle
+
+Runtime 1.1 is not complete merely because generic helpers exist or because Act 2 can be expressed through shared primitives.
+
+The product goal is that Act 3, Act 4, Act 5, Act 6 and later chapters are primarily **new content on top of a finished engine**.
+
+A new chapter should bring the equivalent of fuel:
+- authored story, dialogue, beats and assets;
+- chapter-specific characters, locations and world data;
+- chapter-specific project names, prerequisites and content configuration;
+- genuinely new mechanics that do not already exist in the game.
+
+A new chapter should **not** rebuild the car. It should not need its own implementations of established cross-chapter behavior such as:
+- Story UI, typography, dialogue cards, buttons or fullscreen overlays;
+- HUD visibility, z-index, input blocking or pointer/touch arbitration;
+- chapter lifecycle, entry, completion, end-card or next-chapter routing;
+- progression consumption, backlog, gates, save/restart continuity or completion semantics;
+- story purchases, shop handoff, insufficient-funds escape or successful resume;
+- standard naming/input behavior when the interaction pattern already exists;
+- common save/migration behavior;
+- common debug/acceptance hooks for established runtime behavior.
+
+Historical Act 2 regressions define the failure mode this architecture must prevent: a future chapter must not accidentally acquire different fonts, different Story UI behavior, unclickable Continue buttons, incompatible shop items, incorrect HUD layering, divergent resume logic or other chapter-local versions of systems that already exist.
+
+### Readiness test
+
+Before Runtime 1.1 may be declared complete for future chapter development, perform an **empty-next-chapter test**:
+
+> What code must be written to create a minimal new chapter using only new content and chapter/world configuration?
+
+Any required new code that reproduces an already-established game behavior is evidence of missing engine ownership and remains Runtime 1.1 work.
+
+The desired Act 3 shape is therefore:
+- thin chapter definition/configuration;
+- content/story data;
+- world/area adapter or data for genuinely chapter-specific geography/behavior;
+- optional adapters for genuinely unique mechanics;
+- shared runtime engines for everything already solved.
+
+This principle overrides a narrower interpretation of "code-complete". CI green and successful extraction of helpers are necessary, but not sufficient.
+
 ## Runtime 1.1 slices
 
 ### 1. Chapter Lifecycle
