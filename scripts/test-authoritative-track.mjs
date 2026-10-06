@@ -1,10 +1,29 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import ts from "typescript";
 
-import {
+function loadTsModule(file, dependencies) {
+  const exports = {};
+  const code = ts.transpileModule(fs.readFileSync(new URL(file, import.meta.url), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  const requireDependency = (name) => {
+    assert.ok(name in dependencies, `Unexpected authoritative-track dependency: ${name}`);
+    return dependencies[name];
+  };
+  new Function("exports", "require", code)(exports, requireDependency);
+  return exports;
+}
+
+const authoritativeDelta = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
+const progressTrack = loadTsModule("../src/runtime/progression/progressTrack.ts", {});
+const {
   nextAuthoritativeProgressTrackStep,
   pendingAuthoritativeProgressCount,
-} from "../src/runtime/progression/authoritativeTrack.ts";
+} = loadTsModule("../src/runtime/progression/authoritativeTrack.ts", {
+  "./authoritativeDelta": authoritativeDelta,
+  "./progressTrack": progressTrack,
+});
 
 const definition = {
   targetCount: 4,
