@@ -242,6 +242,36 @@ assert.equal(
   false,
   "retired chapter-local history CSS must not remain after shared History migration",
 );
+assert.match(
+  storyMomentSource,
+  /export type StoryPresentationVariant =/,
+  "shared Story presentation must expose semantic variants",
+);
+assert.match(
+  storyMomentSource,
+  /finale: \{ zIndex: 100, background: "rgba\(6,10,8,.96\)" \}/,
+  "shared Story presentation must own finale layering and background",
+);
+assert.doesNotMatch(
+  storyMomentSource,
+  /zIndex\?: number|background\?: string|dialogueClassName\?: string/,
+  "shared Story API must not expose raw visual drift controls",
+);
+assert.doesNotMatch(
+  act2Runtime,
+  /\bzIndex=|\bbackground="/,
+  "Act 2 Story surfaces must use semantic presentation variants instead of raw layering or backgrounds",
+);
+assert.doesNotMatch(
+  villageRuntime,
+  /dialogueClassName="act2-dialogue-card"/,
+  "Village shop handoff must not resurrect Act 2-specific dialogue styling",
+);
+assert.match(
+  villageRuntime,
+  /variant="handoff"/,
+  "cross-chapter shop handoff must use the shared high-priority Story presentation variant",
+);
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
