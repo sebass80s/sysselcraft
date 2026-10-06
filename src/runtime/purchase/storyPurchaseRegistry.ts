@@ -14,7 +14,7 @@ export type StoryPurchaseSnapshot<TTarget extends string> = {
 };
 
 export type StoryPurchaseBeat = {
-  image: string;
+  image?: string;
   title: string;
   body: readonly string[];
 };
