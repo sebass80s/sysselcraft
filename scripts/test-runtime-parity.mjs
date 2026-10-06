@@ -320,13 +320,13 @@ for (const [project, item] of Object.entries(legacyAct2PurchaseCatalog)) {
 
   const shared = ACT2_PURCHASE_CATALOG[project];
   assert.equal(shared.price, item.price, `${project} shared display price drifted`);
-  assert.equal(shared.gate.title, item.gateTitle, `${project} gate title drifted`);
-  assert.equal(shared.gate.text, item.gateText, `${project} gate text drifted`);
-  assert.equal(shared.gate.detail, item.gateDetail, `${project} gate detail drifted`);
-  assert.equal(shared.shop.icon, item.shopIcon, `${project} shop icon drifted`);
-  assert.equal(shared.shop.title, item.shopTitle, `${project} shop title drifted`);
-  assert.equal(shared.shop.description, item.shopDescription, `${project} shop description drifted`);
-  assert.equal(shared.shop.requirement, item.shopRequirement, `${project} shop requirement drifted`);
+  assert.equal(shared.presentation.gate.title, item.gateTitle, `${project} gate title drifted`);
+  assert.equal(shared.presentation.gate.text, item.gateText, `${project} gate text drifted`);
+  assert.equal(shared.presentation.gate.detail, item.gateDetail, `${project} gate detail drifted`);
+  assert.equal(shared.presentation.shop.icon, item.shopIcon, `${project} shop icon drifted`);
+  assert.equal(shared.presentation.shop.title, item.shopTitle, `${project} shop title drifted`);
+  assert.equal(shared.presentation.shop.description, item.shopDescription, `${project} shop description drifted`);
+  assert.equal(shared.presentation.shop.requirement, item.shopRequirement, `${project} shop requirement drifted`);
 }
 
 const act2PurchaseHandoffFixtures = [
