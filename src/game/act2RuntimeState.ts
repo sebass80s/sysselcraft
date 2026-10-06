@@ -1,12 +1,14 @@
 import { Preferences } from "@capacitor/preferences";
 import { runSequentialMigrations } from "../runtime/save/migrations";
-import { authoritativeProgressDelta } from "../runtime/progression/authoritativeDelta";
 import { progressGateRequired } from "../runtime/progression/progressGate";
 import {
-  nextProgressTrackStep,
   normalizeProgressTrack,
   type ProgressTrackDefinition,
 } from "../runtime/progression/progressTrack";
+import {
+  nextAuthoritativeProgressTrackStep,
+  pendingAuthoritativeProgressCount,
+} from "../runtime/progression/authoritativeTrack";
 
 export type Act2Project = "cabin" | "dock" | "boathouse" | "motorboat";
 export type Act2PrerequisiteProject = Exclude<Act2Project, "motorboat">;
@@ -381,8 +383,11 @@ export function withBackendClaimBaseline(state: Act2RuntimeState, worldProgressi
 export function pendingBackendContributionCount(state: Act2RuntimeState, worldProgression: number) {
   const normalized = normalizeAct2RuntimeState(state);
   if (normalized.backendClaimBaseline === null) return 0;
-  const authoritative = Number.isFinite(worldProgression) ? Math.max(0, Math.floor(worldProgression)) : 0;
-  return Math.max(0, authoritativeProgressDelta(authoritative, normalized.backendClaimBaseline) - totalAct2Contributions(normalized));
+  return pendingAuthoritativeProgressCount(
+    worldProgression,
+    normalized.backendClaimBaseline,
+    totalAct2Contributions(normalized),
+  );
 }
 
 export type Act2ContributionCandidate = {
@@ -400,22 +405,22 @@ export function nextAct2Contribution(
   const normalized = normalizeAct2RuntimeState(state);
   const project = normalized.selectedProject;
   if (!project || !canSelectProject(normalized, project)) return null;
-  if (act2ContributionBlockedByStoryGate(normalized, project)) return null;
-  const backlog = pendingBackendContributionCount(normalized, worldProgression);
-  if (backlog < 1) return null;
-  const next = nextProgressTrackStep(
-    normalized.projects[project].contributions,
-    act2ProjectTrackDefinition(project),
-  );
-  if (!next) return null;
-  const visibleStage = next.visibleStage;
-  if (visibleStage === 0) return null;
+  if (normalized.backendClaimBaseline === null) return null;
+  const next = nextAuthoritativeProgressTrackStep({
+    authoritativeCount: worldProgression,
+    baselineCount: normalized.backendClaimBaseline,
+    consumedCount: totalAct2Contributions(normalized),
+    trackContributions: normalized.projects[project].contributions,
+    definition: act2ProjectTrackDefinition(project),
+    blocked: act2ContributionBlockedByStoryGate(normalized, project),
+  });
+  if (!next || next.visibleStage === 0) return null;
   return {
     project,
     number: next.number,
     beatId: next.beatId,
-    visibleStage,
-    backlog,
+    visibleStage: next.visibleStage,
+    backlog: next.backlog,
   };
 }
 
