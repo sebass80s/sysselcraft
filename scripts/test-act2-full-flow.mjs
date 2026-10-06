@@ -26,6 +26,10 @@ const authoritativeTrack = loadTsModule("../src/runtime/progression/authoritativ
   "./authoritativeDelta": progressionDelta,
   "./progressTrack": progressTrack,
 });
+const projectProgressEngine = loadTsModule("../src/runtime/progression/projectProgressEngine.ts", {
+  "./progressTrack": progressTrack,
+  "./authoritativeTrack": authoritativeTrack,
+});
 const {
   act2FinalePending,
   advanceAct2Finale,
@@ -54,6 +58,7 @@ const {
   "../runtime/progression/progressGate": progressGate,
   "../runtime/progression/progressTrack": progressTrack,
   "../runtime/progression/authoritativeTrack": authoritativeTrack,
+  "../runtime/progression/projectProgressEngine": projectProgressEngine,
 });
 
 const restart = (state) => normalizeAct2RuntimeState(JSON.parse(JSON.stringify(state)));
