@@ -238,11 +238,6 @@ main { min-height: 100dvh; }
 }
 
 
-.act2-history-button {
-  min-height: 40px;
-  white-space: nowrap;
-}
-
 .shared-story-history-overlay {
   position: fixed;
   top: max(calc(env(safe-area-inset-top) + 5.25rem), 5.75rem);
