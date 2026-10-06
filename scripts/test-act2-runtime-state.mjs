@@ -699,9 +699,10 @@ assert.equal(page.includes("Ett klart uppdrag väntar hos Alve."), false, "compa
 assert.ok(page.includes("← Till byn"), "Act 2 HUD must expose an explicit route back to the village");
 assert.ok(
   page.includes("<GameUiShell")
-    && page.includes("setWorldInputEnabled(runtimeOverlay.worldInputEnabled)")
+    && page.includes("worldInputEnabled: runtimeOverlay.worldInputEnabled")
+    && page.includes("world.setWorldInputEnabled(snapshot.worldInputEnabled)")
     && page.includes("blockingOverlayVisible: runtimeOverlay.blockingOverlayVisible"),
-  "Act 2 must reuse one shared Chapter Runtime overlay result for GameUiShell and lake world-input authority",
+  "Act 2 must reuse one shared Chapter Runtime overlay result for GameUiShell and shared-host lake world-input authority",
 );
 assert.match(
   page,
