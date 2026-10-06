@@ -538,8 +538,8 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         : contributionCandidate?.project === "motorboat"
           ? MOTORBOAT_CONTRIBUTION_BEATS[contributionCandidate.number - 1] ?? null
           : null;
-  const activeContributionLine = contributionTurnInOpen
-    ? activeContributionBeat?.body[state.contributionLineIndex] ?? null
+  const activeContributionLine = contributionTurnInOpen && activeContributionBeat
+    ? storyLineAt(activeContributionBeat.body, state.contributionLineIndex)
     : null;
   const activeContributionPresentation = activeContributionLine
     ? parseStoryLine(activeContributionLine, childName)
@@ -654,14 +654,23 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   }
 
   async function previousContributionStory() {
-    if (state.contributionLineIndex <= 0) return;
-    await commit({ ...state, contributionLineIndex: state.contributionLineIndex - 1 });
+    if (!activeContributionBeat) return;
+    const previous = previousStoryLineIndex(
+      activeContributionBeat.body.length,
+      state.contributionLineIndex,
+    );
+    if (previous === state.contributionLineIndex) return;
+    await commit({ ...state, contributionLineIndex: previous });
   }
 
   async function advanceContributionStory() {
     if (!contributionCandidate || !activeContributionBeat) return;
-    if (state.contributionLineIndex + 1 < activeContributionBeat.body.length) {
-      await commit({ ...state, contributionLineIndex: state.contributionLineIndex + 1 });
+    const step = advanceStoryLine(
+      activeContributionBeat.body.length,
+      state.contributionLineIndex,
+    );
+    if (step.type === "line") {
+      await commit({ ...state, contributionLineIndex: step.index });
       return;
     }
     const next = withPresentedContribution(
