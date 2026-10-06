@@ -126,6 +126,7 @@ const storyMomentSource = read("src/components/story/StoryMoment.tsx");
 const storyNameInput = read("src/components/story/StoryNameInput.tsx");
 const chapterCards = read("src/runtime/chapter/ChapterCards.tsx");
 const storyHistoryPanel = read("src/runtime/story/StoryHistoryPanel.tsx");
+const storySequence = read("src/runtime/story/storySequence.ts");
 assert.match(storyMomentSource, /setImageOnlyPresentationId\(presentationId\)/, "StoryMoment must hide the dialogue before advancing");
 assert.match(storyMomentSource, /shared-story-image-continue/, "clean image mode must advance from the unobstructed image");
 assert.match(storyMomentSource, /presentationId/, "clean image mode must reset between authored panels");
@@ -168,6 +169,19 @@ assert.equal(css.includes(".act2-history-overlay"), false,
   "chapter-local history CSS must not coexist with shared Story History styling");
 assert.match(css, /\.shared-story-history-overlay \{[^}]*safe-area-inset-top[^}]*z-index:\s*105/s,
   "shared Story History must own safe-area placement and layering");
+assert.match(storySequence, /export function advanceStoryLine/, "shared Story Engine must own ordinary linear advance semantics");
+assert.match(storySequence, /export function previousStoryLineIndex/, "shared Story Engine must own ordinary linear previous semantics");
+assert.match(storySequence, /export function storyLineAt/, "shared Story Engine must own safe current-line lookup");
+assert.match(
+  act2Runtime,
+  /advanceStoryLine\(\s*activeCompletionBeat\.body\.length,[\s\S]*state\.completionLineIndex/,
+  "Act 2 completion reactions must use shared linear sequencing",
+);
+assert.match(
+  act2Runtime,
+  /advanceStoryLine\(\s*CABIN_WAITING_REACTION\.body\.length,[\s\S]*cabinRevisitLineIndex/,
+  "Act 2 cabin revisit must use shared linear sequencing",
+);
 assert.match(css, /\.shared-story-image-navigation \{[^}]*right:\s*max\(1rem, env\(safe-area-inset-right\)\)[^}]*bottom:\s*max\(1rem, env\(safe-area-inset-bottom\)\)/s,
   "clean image Continue button must stay in the safe bottom-right corner");
 
