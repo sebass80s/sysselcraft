@@ -76,3 +76,19 @@ export function storyPurchaseRegistrationById(id: string) {
   return (STORY_PURCHASE_REGISTRATIONS as readonly StoryPurchaseRegistration[])
     .find((registration) => registration.id === id) ?? null;
 }
+
+export type LoadedStoryPurchaseRegistration = {
+  registration: StoryPurchaseRegistration<string>;
+  snapshot: Awaited<ReturnType<StoryPurchaseRegistration<string>["loadSnapshot"]>>;
+};
+
+export async function loadRegisteredStoryPurchases(): Promise<LoadedStoryPurchaseRegistration[]> {
+  return Promise.all(
+    (STORY_PURCHASE_REGISTRATIONS as readonly StoryPurchaseRegistration<string>[]).map(
+      async (registration) => ({
+        registration,
+        snapshot: await registration.loadSnapshot(),
+      }),
+    ),
+  );
+}
