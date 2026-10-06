@@ -1957,3 +1957,28 @@ Before any change:
 4. do not invent more Runtime 1.1 extraction work before physical acceptance;
 5. keep changes small, testable and checkpointed.
 
+
+
+## Roadmap status update — Runtime 1.1 handover 2026-10-06
+
+Runtime 1.1 is not complete, but four major engine gaps are now closed and verified:
+- Shared Chapter Runtime Host;
+- Generic Progression / Project Engine;
+- Shared Story UI/sequencing/input/history/cards/choices;
+- Generic Story Purchase integration.
+
+Verified docs baseline: `eb7df728adea783c676fe697738be62200430fc9`, CI #2252 SUCCESS.
+Latest completed engine code checkpoint: `13d6f99a29f948b64dc74b2f3b214456cb5e7d74`, CI #2248 SUCCESS.
+
+Remaining roadmap before Act 3 gameplay:
+1. generic chapter persistence host;
+2. shared backend synchronization/reconciliation;
+3. full World/Area Runtime Host;
+4. common debug/acceptance harness;
+5. empty Act 3 architectural proof;
+6. automated/browser closeout;
+7. preserved-save physical iPhone acceptance.
+
+The prior advice in older roadmap sections to move to physical acceptance after narrower 1.1 extraction is superseded by the fuel-principle DoD. Physical iPhone acceptance is last, after the empty Act 3 proof.
+
+Canonical continuation: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
