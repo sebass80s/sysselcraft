@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import {
   createBackendAuthoritySnapshot,
   startBackendSyncLoop,
@@ -67,7 +68,8 @@ const loop = startBackendSyncLoop({
     loadCalls += 1;
     return firstLoad.promise;
   },
-  onSnapshot: snapshot => {
+  onSnapshot: (snapshot, control) => {
+    assert.equal(control.isActive(), true);
     snapshots.push(snapshot);
   },
   onError: error => {
@@ -104,8 +106,14 @@ const errorLoop = startBackendSyncLoop({
     if (mode === "error") return errorLoad.promise;
     return { id: "recovered" };
   },
-  onSnapshot: snapshot => snapshots.push(snapshot),
-  onError: error => errors.push(error),
+  onSnapshot: (snapshot, control) => {
+    assert.equal(control.isActive(), true);
+    snapshots.push(snapshot);
+  },
+  onError: (error, control) => {
+    assert.equal(control.isActive(), true);
+    errors.push(error);
+  },
 });
 errorLoad.reject(new Error("network down"));
 await assert.rejects(errorLoad.promise, /network down/);
@@ -127,7 +135,10 @@ const staleLoop = startBackendSyncLoop({
     clearInterval(handle) { staleCleared = handle; },
   },
   loadSnapshot: async () => staleLoad.promise,
-  onSnapshot: snapshot => staleSnapshots.push(snapshot),
+  onSnapshot: (snapshot, control) => {
+    assert.equal(control.isActive(), true);
+    staleSnapshots.push(snapshot);
+  },
 });
 staleLoop.stop();
 staleLoad.resolve({ id: "too-late" });
@@ -144,4 +155,9 @@ await loop.refresh();
 assert.equal(loadCalls, 1,
   "manual refresh after stop must not restart a stopped sync loop");
 
-console.log("PASS: shared backend sync owns authority snapshots, polling lifecycle, in-flight serialization, error recovery and stale-response cancellation.");
+const act2RuntimeSource = readFileSync("src/components/Act2Runtime.tsx", "utf8");
+assert.match(act2RuntimeSource, /startBackendSyncLoop\(\{/, "Act 2 must consume the shared backend sync lifecycle");
+assert.match(act2RuntimeSource, /createBackendAuthoritySnapshot\(backend\)/, "Act 2 must consume the shared backend authority snapshot");
+assert.doesNotMatch(act2RuntimeSource, /const timer = window\.setInterval|let cancelled = false/, "Act 2 must not retain a parallel polling/cancellation loop");
+
+console.log("PASS: shared backend sync owns authority snapshots, polling lifecycle, in-flight serialization, error recovery, stale-response cancellation and the Act 2 polling boundary.");
