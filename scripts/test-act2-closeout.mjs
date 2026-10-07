@@ -24,6 +24,9 @@ const preferences = {
   set: async ({ key, value }) => { writes.push(key); storage.set(key, value); },
   remove: async ({ key }) => { storage.delete(key); },
 };
+const chapterPersistence = load("src/runtime/save/chapterPersistence.ts", {
+  "@capacitor/preferences": { Preferences: preferences },
+});
 const saveMigrations = load("src/runtime/save/migrations.ts");
 const progressionDelta = load("src/runtime/progression/authoritativeDelta.ts");
 const progressGate = load("src/runtime/progression/progressGate.ts");
@@ -37,7 +40,7 @@ const projectProgressEngine = load("src/runtime/progression/projectProgressEngin
   "./authoritativeTrack": authoritativeTrack,
 });
 const stateModule = () => load("src/game/act2RuntimeState.ts", {
-  "@capacitor/preferences": { Preferences: preferences },
+  "../runtime/save/chapterPersistence": chapterPersistence,
   "../runtime/save/migrations": saveMigrations,
   "../runtime/progression/authoritativeDelta": progressionDelta,
   "../runtime/progression/progressGate": progressGate,
