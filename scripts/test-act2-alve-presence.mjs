@@ -16,6 +16,13 @@ function load(file, dependencies = {}) {
   return exports;
 }
 const assets = load("src/game/act2VisualAssets.ts");
+const chapterPersistence = {
+  createChapterPersistenceHost: () => ({
+    load: async () => { throw new Error("persistence I/O is outside Alve presence tests"); },
+    save: async () => { throw new Error("persistence I/O is outside Alve presence tests"); },
+    clear: async () => { throw new Error("persistence I/O is outside Alve presence tests"); },
+  }),
+};
 const saveMigrations = load("src/runtime/save/migrations.ts");
 const progressionDelta = load("src/runtime/progression/authoritativeDelta.ts");
 const progressGate = load("src/runtime/progression/progressGate.ts");
@@ -29,7 +36,7 @@ const projectProgressEngine = load("src/runtime/progression/projectProgressEngin
   "./authoritativeTrack": authoritativeTrack,
 });
 const stateApi = load("src/game/act2RuntimeState.ts", {
-  "@capacitor/preferences": { Preferences: {} },
+  "../runtime/save/chapterPersistence": chapterPersistence,
   "../runtime/save/migrations": saveMigrations,
   "../runtime/progression/authoritativeDelta": progressionDelta,
   "../runtime/progression/progressGate": progressGate,
