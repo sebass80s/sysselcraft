@@ -13,7 +13,7 @@ export type WorldWasdKeys = Record<"up" | "down" | "left" | "right", WorldInputK
 
 export type WorldKeyboardAdapter = {
   createCursorKeys: () => WorldCursorKeys;
-  addKeys: (keys: { up: string; down: string; left: string; right: string }) => WorldWasdKeys;
+  addKeys: (keys: { up: string; down: string; left: string; right: string }) => unknown;
 };
 
 export type WorldDirectionalInput = {
@@ -34,7 +34,7 @@ export function createWorldDirectionalInput(
   if (!keyboard) return null;
   return {
     cursors: keyboard.createCursorKeys(),
-    wasd: keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }),
+    wasd: keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as WorldWasdKeys,
   };
 }
 
