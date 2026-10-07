@@ -2,7 +2,8 @@ import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
-import { configureWorldCamera, WORLD_CAMERA_BACKGROUND_COLOR } from "../runtime/world/worldCameraHost";
+import { configureWorldCamera } from "../runtime/world/worldCameraHost";
+import { createWorldGame } from "../runtime/world/worldGameHost";
 import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
@@ -1292,23 +1293,12 @@ export async function createVillageGame(
     }
   }
 
-  const game = new Phaser.Game({
-    type: Phaser.AUTO,
+  const game = createWorldGame(
+    Phaser,
     parent,
-    width: viewWidth,
-    height: viewport.height,
-    backgroundColor: WORLD_CAMERA_BACKGROUND_COLOR,
-    pixelArt: false,
-    antialias: true,
-    roundPixels: false,
-    scale: {
-      mode: Phaser.Scale.FIT,
-      autoCenter: Phaser.Scale.CENTER_BOTH,
-      width: viewWidth,
-      height: viewport.height,
-    },
-    scene: VillageScene,
-  });
+    { width: viewWidth, height: viewport.height },
+    VillageScene,
+  );
 
   return {
     destroy: () => game.destroy(true),
