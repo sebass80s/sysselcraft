@@ -55,7 +55,8 @@ import { StoryHistoryPanel } from "../runtime/story/StoryHistoryPanel";
 import { advanceStoryLine, previousStoryLineIndex, storyLineAt } from "../runtime/story/storySequence";
 import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../runtime/chapter/useChapterRuntimeHost";
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
-import { createBackendAuthoritySnapshot, startBackendSyncLoop } from "../runtime/backend/backendSync";
+import { createBackendAuthoritySnapshot } from "../runtime/backend/backendSync";
+import { useBackendSyncHost } from "../runtime/backend/useBackendSyncHost";
 
 
 
@@ -369,51 +370,44 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     destroy: destroyAct2World,
   });
 
-  useEffect(() => {
-    if (!ready || debug) return;
-    const syncLoop = startBackendSyncLoop({
-      scheduler: {
-        setInterval: (callback, intervalMs) => window.setInterval(callback, intervalMs),
-        clearInterval: (handle) => window.clearInterval(handle as number),
-      },
-      loadSnapshot: async () => {
-        const childId = await getPairedChildId();
-        if (!childId) return null;
-        const backend = await getChildGameState(childId);
-        return backend ? createBackendAuthoritySnapshot(backend) : null;
-      },
-      onSnapshot: async (backend, control) => {
-        if (!control.isActive()) return;
-        backendWorldProgressionRef.current = backend.progression.worldProgression;
-        setRuntimeContext((current) => ({
-          ...current,
-          backendWorldProgression: backend.progression.worldProgression,
-          backendWallet: backend.wallet,
-          backendSyncError: "",
-        }));
-        const current = await loadAct2RuntimeState();
-        let next = withBackendClaimBaseline(current, backend.progression.worldProgression);
-        next = withBackendStoryFlags(next, backend.worldFlags);
-        const stateChanged =
-          next.backendClaimBaseline !== current.backendClaimBaseline
-          || next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
-          || next.boathouseSteeringWheelOwned !== current.boathouseSteeringWheelOwned
-          || next.motorboatPartsOwned !== current.motorboatPartsOwned;
-        if (stateChanged) {
-          await saveAct2RuntimeState(next);
-          if (control.isActive()) setState(next);
-        }
-      },
-      onError: (_error, control) => {
-        if (!control.isActive()) return;
-        setRuntimeContext((current) => ({
-          ...current,
-          backendSyncError: "Kunde inte läsa questframsteg just nu.",
-        }));
-      },
-    });
-    return () => syncLoop.stop();
-  }, [ready, debug, setRuntimeContext, setState]);
+  useBackendSyncHost({
+    active: ready && !debug,
+    loadSnapshot: async () => {
+      const childId = await getPairedChildId();
+      if (!childId) return null;
+      const backend = await getChildGameState(childId);
+      return backend ? createBackendAuthoritySnapshot(backend) : null;
+    },
+    onSnapshot: async (backend, control) => {
+      if (!control.isActive()) return;
+      backendWorldProgressionRef.current = backend.progression.worldProgression;
+      setRuntimeContext((current) => ({
+        ...current,
+        backendWorldProgression: backend.progression.worldProgression,
+        backendWallet: backend.wallet,
+        backendSyncError: "",
+      }));
+      const current = await loadAct2RuntimeState();
+      let next = withBackendClaimBaseline(current, backend.progression.worldProgression);
+      next = withBackendStoryFlags(next, backend.worldFlags);
+      const stateChanged =
+        next.backendClaimBaseline !== current.backendClaimBaseline
+        || next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
+        || next.boathouseSteeringWheelOwned !== current.boathouseSteeringWheelOwned
+        || next.motorboatPartsOwned !== current.motorboatPartsOwned;
+      if (stateChanged) {
+        await saveAct2RuntimeState(next);
+        if (control.isActive()) setState(next);
+      }
+    },
+    onError: (_error, control) => {
+      if (!control.isActive()) return;
+      setRuntimeContext((current) => ({
+        ...current,
+        backendSyncError: "Kunde inte läsa questframsteg just nu.",
+      }));
+    },
+  });
 
   async function commit(next: Act2RuntimeState) {
     if (!debug) await saveAct2RuntimeState(next);
