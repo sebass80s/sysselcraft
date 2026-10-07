@@ -360,7 +360,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           const reconciliation = reconcileAct2BackendSnapshot(current, backend);
           return reconciliation.changed ? reconciliation.state : null;
         },
-        { isActive: control.isActive },
+        {
+          isActive: control.isActive,
+          expectedChildId: backend.childId,
+        },
       );
       if (control.isActive()) setState(reconciled);
     },
