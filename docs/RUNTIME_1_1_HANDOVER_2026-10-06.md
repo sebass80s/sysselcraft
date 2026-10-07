@@ -9,9 +9,9 @@ Branch: `nova/runtime-architecture-v1`
 
 Senast verifierade kodcheckpoint:
 
-`f1e3136fbac4ac8fe54c3c474de5818c71916755`
+`c224761399e057a681d241a2b7541df74cc887c2`
 
-GitHub Actions **#2343: SUCCESS** på exakt den SHA:n.
+GitHub Actions **#2359: SUCCESS** på exakt den SHA:n.
 
 Den senaste verifierade kodcheckpointen före docs-closeout är:
 
@@ -202,17 +202,24 @@ Medvetet area-specifikt och **inte** ett öppet motorhål:
 
 Fuel-gränsen är att ett framtida område får behöva world/area-data och movement/collision-adapter, men inte kopiera etablerad Phaser bootstrap, camera, actor eller directional-input plumbing.
 
-### 8. Common chapter debug / acceptance harness
+### 8. Common chapter debug / acceptance harness — STÄNGD ✅
 
-Nuvarande debugverktyg är för chapter-specifika.
+Verifierad kodcheckpoint:
+- `c224761399e057a681d241a2b7541df74cc887c2`
+- GitHub Actions **#2359 SUCCESS** på exakt den SHA:n.
 
-Shared harness ska kunna konfigureras med chapter fixtures och standard actions:
-- launch/reset;
-- synthetic progress/wallet where safe;
-- state inspection;
-- standard chapter jumps/probes.
+Shared debug/acceptance runtime äger nu:
+- chapter fixture-kontrakt för launch/session;
+- reset state;
+- standard state inspection;
+- standard/extended probes;
+- shared hidden hold/five-tap launcher;
+- shared debug panel/chrome;
+- chapter-specific debug actions som extensions.
 
-Unika chapter-probes får vara extensions.
+Act 2 konsumerar shared harnessen genom `ACT2_DEBUG_FIXTURE`. Synthetic debug progression/finale-preview ligger som fixture-data, inte i den generiska motorn, och debug-state persistieras inte som ny backend authority.
+
+Fuel-proofen använder dessutom en neutral framtida chapter-fixture för launch/reset/inspection/probes utan Act 2-speciallogik.
 
 ### 9. Empty Act 3 skeleton proof
 
@@ -329,8 +336,8 @@ Undvik att lägga fem regex-guards för samma implementation i fem filer.
 5. Punkt 5 är stängd på `6f0acedd335e4b97913cc096b9d6ebd8c1300059` / CI #2275 SUCCESS.
 6. Punkt 6 är stängd på `9c6b0661879374ed85e166b2b314a202eb685751` / CI #2300 SUCCESS.
 7. Punkt 7 är stängd på `f1e3136fbac4ac8fe54c3c474de5818c71916755` / CI #2343 SUCCESS.
-8. Starta Runtime 1.1 punkt 8: Common chapter debug / acceptance harness.
-9. Därefter punkt 9 Empty Act 3 skeleton proof -> automated/browser -> fysisk iPhone.
+8. Punkt 8 är stängd på `c224761399e057a681d241a2b7541df74cc887c2` / CI #2359 SUCCESS.
+9. Starta punkt 9: Empty Act 3 skeleton proof, endast arkitekturproof utan gameplay. Därefter automated/browser -> fysisk iPhone.
 
 ## Slutstatus
 
@@ -344,9 +351,9 @@ Stängt:
 - 5 Generic chapter persistence host ✅
 - 6 Shared backend synchronization/reconciliation ✅
 - 7 Full World/Area Runtime Host ✅
+- 8 Common debug/acceptance harness ✅
 
 Öppet:
-- 8 Common debug/acceptance harness
 - 9 Empty Act 3 proof
 - full automated/browser closeout
 - final physical iPhone update-in-place acceptance
