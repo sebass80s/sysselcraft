@@ -10,7 +10,7 @@
     "production:audit": "node scripts/audit-reboot-production-assets.mjs",
     "construction:completion:test": "node scripts/test-recycling-completion-save.mjs",
     "construction:test": "node scripts/test-construction.mjs && node scripts/test-construction-late-stages.mjs && npm run construction:completion:test",
-    "verify": "npm run visual:audit && npm run construction:test && npm run lint && npm run build && npm run test:quest-presentation && npm run test:quest-recovery && npm run test:quest-turn-in && npm run test:quest-request-guard && npm run test:sol-story && npm run test:diamond-rewards && npm run test:dog-home && npm run test:act2-visual && npm run test:act2-story && npm run test:story-ui && npm run test:ui-shell && npm run test:act2-runtime && npm run test:act2-full-flow && npm run test:act2-doc-sync && npm run test:act2-closeout && npm run test:act2-alve && npm run test:runtime-parity && npm run test:image-batch && npm run test:image-generate && npm run test:chapter-lifecycle && npm run test:chapter-registry && npm run test:story-purchase-flow && npm run test:progress-track && npm run test:chapter-runtime-shell && npm run test:chapter-persistence && npm run test:backend-sync && npm run test:world-camera-host && npm run test:authoritative-track && npm run test:runtime-engine && npm run test:project-progress-engine",
+    "verify": "npm run visual:audit && npm run construction:test && npm run lint && npm run build && npm run test:quest-presentation && npm run test:quest-recovery && npm run test:quest-turn-in && npm run test:quest-request-guard && npm run test:sol-story && npm run test:diamond-rewards && npm run test:dog-home && npm run test:act2-visual && npm run test:act2-story && npm run test:story-ui && npm run test:ui-shell && npm run test:act2-runtime && npm run test:act2-full-flow && npm run test:act2-doc-sync && npm run test:act2-closeout && npm run test:act2-alve && npm run test:runtime-parity && npm run test:image-batch && npm run test:image-generate && npm run test:chapter-lifecycle && npm run test:chapter-registry && npm run test:story-purchase-flow && npm run test:progress-track && npm run test:chapter-runtime-shell && npm run test:chapter-persistence && npm run test:backend-sync && npm run test:world-camera-host && npm run test:world-game-host && npm run test:authoritative-track && npm run test:runtime-engine && npm run test:project-progress-engine",
     "cap:sync": "npx cap sync",
     "cap:copy": "npx cap copy",
     "cap:add:ios": "npx cap add ios",
@@ -51,7 +51,8 @@
     "test:project-progress-engine": "node --experimental-strip-types scripts/test-project-progress-engine.mjs",
     "test:chapter-persistence": "node --experimental-strip-types scripts/test-chapter-persistence.mjs",
     "test:backend-sync": "node --experimental-strip-types scripts/test-backend-sync.mjs",
-    "test:world-camera-host": "node --experimental-strip-types scripts/test-world-camera-host.mjs"
+    "test:world-camera-host": "node --experimental-strip-types scripts/test-world-camera-host.mjs",
+    "test:world-game-host": "node --experimental-strip-types scripts/test-world-game-host.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
