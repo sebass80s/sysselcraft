@@ -686,6 +686,9 @@ const page = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import
 const act2DebugFixtureSource = fs.readFileSync(new URL("../src/game/act2DebugFixture.ts", import.meta.url), "utf8");
 assert.match(page, /launchChapterDebug\(\s*ACT2_DEBUG_FIXTURE/, "Act 2 debug boot must delegate launch/session ownership to the shared chapter debug harness");
 assert.match(page, /resetChapterDebugState\(ACT2_DEBUG_FIXTURE\)/, "Act 2 debug reset must delegate to the shared chapter debug harness");
+assert.match(page, /<ChapterDebugPanel/, "Act 2 debug controls must render through the shared debug panel");
+assert.match(page, /<ChapterDebugLauncher/, "Act 2 hidden debug entry must render through the shared launcher");
+assert.doesNotMatch(page, /debugHoldTimerRef|debugTapCountRef|debugTapResetRef/, "Act 2 runtime must not own hidden debug gesture timers after shared launcher migration");
 assert.match(act2DebugFixtureSource, /chapterId: "act2"/, "Act 2 debug-specific state must live in a registered fixture rather than the shared harness");
 assert.match(act2DebugFixtureSource, /backendWorldProgression: 999/, "Act 2 synthetic debug progression must remain fixture-owned");
 const act2RuntimeAdapterSource = fs.readFileSync(new URL("../src/game/act2RuntimeAdapter.ts", import.meta.url), "utf8");
