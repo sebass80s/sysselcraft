@@ -2120,3 +2120,31 @@ then full automated/browser verification;
 then physical iPhone acceptance last.
 
 Work in small green slices. Do not build Act 3 gameplay yet. Do not use Vercel for routine Runtime verification. Repo reality wins over this manifest.
+
+
+## NOVA HANDOVER — Runtime 1.1 persistence closed 2026-10-07
+
+Canonical continuation remains:
+`docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Latest verified engine checkpoint:
+- `6f0acedd335e4b97913cc096b9d6ebd8c1300059`
+- GitHub Actions **#2275 SUCCESS**
+
+Closed:
+1. Shared Chapter Runtime Host ✅
+2. Generic Progression / Project Engine ✅
+3. Shared Story UI/sequencing/input/history/cards/choices ✅
+4. Generic Story Purchase integration ✅
+5. Generic chapter persistence host ✅
+
+NEXT: item 6, shared backend synchronization/reconciliation.
+
+Then:
+7. Full World/Area Runtime Host
+8. Common debug/acceptance harness
+9. Empty Act 3 skeleton proof
+10. Full automated/browser closeout
+11. Physical iPhone update-in-place acceptance
+
+Repo reality wins. Verify current HEAD and CI before work. Preserve backend authority. No Vercel for routine Runtime 1.1 work and no Act 3 gameplay yet.
