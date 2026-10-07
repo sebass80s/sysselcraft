@@ -13,6 +13,7 @@ export type ChapterPersistenceDefinition<T> = {
 
 export type ChapterPersistenceOperationGuard = {
   isActive?: () => boolean;
+  expectedChildId?: string | null;
 };
 
 export type ChapterPersistenceHost<T> = {
@@ -93,6 +94,15 @@ export function createChapterPersistenceHost<T>(
     assertGuardActive(guard);
     const currentChildId = await pairedChildId();
     assertGuardActive(guard);
+    if (
+      guard
+      && "expectedChildId" in guard
+      && guard.expectedChildId !== target.childId
+    ) {
+      throw new Error(
+        `Stale chapter persistence identity for ${definition.chapterId}`,
+      );
+    }
     if (currentChildId !== target.childId) {
       throw new Error(
         `Stale chapter persistence identity for ${definition.chapterId}`,
@@ -164,7 +174,21 @@ export function createChapterPersistenceHost<T>(
     }
 
     await assertTargetCurrent(target, guard);
+    const previous = await Preferences.get({ key: target.key });
+    await assertTargetCurrent(target, guard);
     await Preferences.set({ key: target.key, value: JSON.stringify(normalized) });
+
+    try {
+      await assertTargetCurrent(target, guard);
+    } catch (error) {
+      if (previous.value === null) {
+        await Preferences.remove({ key: target.key });
+      } else {
+        await Preferences.set({ key: target.key, value: previous.value });
+      }
+      throw error;
+    }
+
     return normalized;
   }
 
