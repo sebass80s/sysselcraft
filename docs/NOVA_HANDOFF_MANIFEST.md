@@ -2170,3 +2170,19 @@ Point 8, **Common chapter debug / acceptance harness**, is closed at:
 - GitHub Actions **#2359 SUCCESS**.
 
 Next item is point 9, **Empty Act 3 skeleton proof**. This is an architecture/fuel proof only. Do not author Act 3 gameplay, story, progression or real mechanics.
+
+
+## Runtime 1.1 automated/browser closeout — 2026-10-07
+
+Canonical continuation remains:
+`docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Point 10, **Full automated/browser closeout**, is closed at:
+- code checkpoint `98e8950c227cbf215ccab91b885fb3b03b9c2ae1`;
+- GitHub Actions **#2388 SUCCESS**;
+- Runtime Browser Closeout **#12 SUCCESS**.
+
+All Runtime 1.1 architecture/fuel items 1–10 are now closed.
+
+Only remaining gate:
+11. **Physical iPhone update-in-place acceptance**, preserving the current save/backend. Do not reset/reinstall the phone and do not start Act 3 gameplay yet.
