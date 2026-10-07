@@ -228,3 +228,20 @@ Default process:
 
 Do not hide reusable gameplay inside an Act-specific runtime merely because that is where the idea first appeared. The first chapter that uses a mechanic is a consumer, not automatically its owner.
 
+## Pre-Act-3 integrity audit closeout
+
+The pre-Act-3 engine integrity audit originally found three P0 gaps. They are all closed before Act 3 gameplay:
+
+1. unknown/future Act 2 save schemas are rejected instead of normalized as legacy;
+2. chapter persistence operations are child-identity/lifecycle safe, including in-flight rollback;
+3. backend reconciliation uses atomic shared persistence `update()` so older sync cannot overwrite newer Story progress.
+
+Verification:
+- final code/test HEAD `28deb6176e69b0af409e3ee117e24ea7abb0d2c2`;
+- GitHub Actions CI **#2417 SUCCESS**;
+- Runtime Browser Closeout **#18 SUCCESS** on runtime-equivalent checkpoint `060cda1d517183d825f2adb9705a2aa58c75e553`.
+
+Audit result: **PASS**.
+
+Physical iPhone update-in-place acceptance remains the only gate before real Act 3 gameplay.
+
