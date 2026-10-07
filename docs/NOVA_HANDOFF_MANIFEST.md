@@ -2161,3 +2161,12 @@ Runtime 1.1 point 7, **Full World / Area Runtime Host**, is closed at:
 Current next item is point 8, **Common chapter debug / acceptance harness**.
 
 Do not begin Act 3 gameplay. After point 8 comes the empty Act 3 architecture proof, then full automated/browser verification, then physical iPhone update-in-place acceptance.
+
+
+## Runtime 1.1 debug harness checkpoint — 2026-10-07
+
+Point 8, **Common chapter debug / acceptance harness**, is closed at:
+- `c224761399e057a681d241a2b7541df74cc887c2`;
+- GitHub Actions **#2359 SUCCESS**.
+
+Next item is point 9, **Empty Act 3 skeleton proof**. This is an architecture/fuel proof only. Do not author Act 3 gameplay, story, progression or real mechanics.
