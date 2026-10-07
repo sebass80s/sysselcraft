@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import path from "node:path";
 import ts from "typescript";
 
 // Run the actual domain/save modules. Only platform storage is replaced with an in-memory adapter.
@@ -43,7 +44,15 @@ const phaser = {
   },
 };
 const modules = new Map();
-function load(name) {
+function normalizeModuleName(name) {
+  return path.posix.normalize(name).replace(/^\.\//, "");
+}
+function resolveModuleName(fromName, request) {
+  if (!request.startsWith(".")) return request;
+  return normalizeModuleName(path.posix.join(path.posix.dirname(fromName), request));
+}
+function load(requestedName) {
+  const name = normalizeModuleName(requestedName);
   if (modules.has(name)) return modules.get(name).exports;
   const record = { exports: {} };
   modules.set(name, record);
@@ -51,14 +60,10 @@ function load(name) {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
   new Function("require", "module", "exports", source)(
-    path => {
-      if (path === "phaser") return phaser;
-      if (path === "@capacitor/preferences") return { Preferences: preferences };
-      if (path.startsWith("./") && name.includes("/")) {
-        const base = name.slice(0, name.lastIndexOf("/") + 1);
-        return load(`${base}${path.slice(2)}`);
-      }
-      return load(path.replace(/^\.\//, ""));
+    request => {
+      if (request === "phaser") return phaser;
+      if (request === "@capacitor/preferences") return { Preferences: preferences };
+      return load(resolveModuleName(name, request));
     },
     record,
     record.exports,
