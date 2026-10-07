@@ -250,7 +250,7 @@ try {
     const nextChapter = page.getByRole("button", { name: "Till kapitel 3 →", exact: true });
     await nextChapter.waitFor();
     await nextChapter.click();
-    await page.waitForURL("**/act3");
+    await page.waitForURL("**/act3/");
     await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
     const persistedBeforeReload = await page.evaluate(() => localStorage.getItem("CapacitorStorage.sysselcraft.act2.runtime.v1"));
     await page.reload();
