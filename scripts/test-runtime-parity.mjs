@@ -1577,9 +1577,9 @@ assert.ok(
   "Act 2 Lake must consume the canonical World/Area viewport contract",
 );
 assert.ok(
-  act2LakeSource.includes("backgroundColor: WORLD_CAMERA_BACKGROUND_COLOR")
+  act2LakeSource.includes("createWorldGame(")
     && act2LakeSource.includes("configureWorldCamera("),
-  "Act 2 Lake must route canonical background and camera setup through the shared world camera host",
+  "Act 2 Lake must route Phaser bootstrap and camera setup through shared world hosts",
 );
 assert.ok(
   act2LakeSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled"),
@@ -1620,15 +1620,23 @@ assert.ok(
 
 
 
+const worldGameHostSource = fs.readFileSync(new URL("../src/runtime/world/worldGameHost.ts", import.meta.url), "utf8");
+assert.ok(
+  worldGameHostSource.includes("backgroundColor: WORLD_CAMERA_BACKGROUND_COLOR")
+    && worldGameHostSource.includes("pixelArt: false")
+    && worldGameHostSource.includes("antialias: true")
+    && worldGameHostSource.includes("roundPixels: false"),
+  "shared World Game Host must own canonical renderer/background bootstrap",
+);
 const villageGameSource = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
 assert.ok(
   villageGameSource.includes("worldViewportSize(parent.clientWidth, parent.clientHeight, WORLD_WIDTH)"),
   "Village must consume the canonical World/Area viewport contract",
 );
 assert.ok(
-  villageGameSource.includes("backgroundColor: WORLD_CAMERA_BACKGROUND_COLOR")
+  villageGameSource.includes("createWorldGame(")
     && villageGameSource.includes("configureWorldCamera("),
-  "Village must route canonical background and camera setup through the shared world camera host",
+  "Village must route Phaser bootstrap and camera setup through shared world hosts",
 );
 assert.ok(
   !villageGameSource.includes("WORLD_CAMERA.followLerpX")
