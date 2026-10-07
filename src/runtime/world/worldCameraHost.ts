@@ -13,7 +13,7 @@ export type WorldCameraTarget = {
 };
 
 export type WorldCameraAdapter = {
-  setBackgroundColor: (color: number) => unknown;
+  setBackgroundColor: (color: number | string) => unknown;
   setBounds: (x: number, y: number, width: number, height: number) => unknown;
   centerOn: (x: number, y: number) => unknown;
   startFollow: (target: WorldCameraTarget, roundPixels: boolean, lerpX: number, lerpY: number) => unknown;
