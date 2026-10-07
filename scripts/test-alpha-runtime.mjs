@@ -146,7 +146,7 @@ async function pageSetup(noConfig=false,native=false){
  assert.equal(reads,focusReads+1,'rebind leaves only one focus listener');
  // Verify actual timer cadence and cleanup with a browser clock (no real 30 s wait).
  await page.clock.install();
- await page.getByRole('button',{name:/📜 Uppdrag/}).click(); // installs closed timer under fake clock
+ await page.getByRole('button',{name:'Stäng uppdrag',exact:true}).click(); // installs closed timer under fake clock
  const closedReads=reads;await page.clock.fastForward(30_000);await until(()=>reads>closedReads);await page.waitForTimeout(150);assert.equal(reads,closedReads+1,"one closed poll at 30 s");
  await page.getByRole('button',{name:/📜 Uppdrag/}).click(); // replaces it with open timer
  const openReads=reads;await page.clock.fastForward(15_000);await until(()=>reads>openReads);await page.waitForTimeout(150);assert.equal(reads,openReads+1,"one open poll at 15 s");
