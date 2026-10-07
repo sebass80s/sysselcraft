@@ -3,6 +3,7 @@ import fs from "node:fs";
 
 const source = fs.readFileSync("src/game/act2VisualAssets.ts", "utf8");
 const runtime = fs.readFileSync("src/game/createAct2LakeGame.ts", "utf8");
+const worldActorHost = fs.readFileSync("src/runtime/world/worldActorHost.ts", "utf8");
 
 const required = [
   'width: 1983',
@@ -37,9 +38,16 @@ for (const token of [
   "getAct2DisplaySize(project)",
   ".setOrigin(placement.origin.x, placement.origin.y)",
   ".setDepth(1000 + placement.baseY)",
-  ".setDisplaySize(74, 118)",
 ]) {
   if (!runtime.includes(token)) throw new Error(`Act 2 runtime contract drifted: missing ${token}`);
+}
+
+for (const token of [
+  "width: 74",
+  "height: 118",
+  "originY: 0.94",
+]) {
+  if (!worldActorHost.includes(token)) throw new Error(`Shared world player visual contract drifted: missing ${token}`);
 }
 
 if (/stage.*threshold|threshold.*stage/i.test(source)) {
