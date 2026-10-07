@@ -199,3 +199,16 @@ If implementation reveals that an ordinary beat, project, quest gate, purchase, 
 
 This rule applies to Act 3 and all later acts. Shipping chapter progress is never more important than preserving one shared engine.
 
+## New gameplay belongs in the engine first
+
+When a new gameplay mechanic is invented for Act 3 or any later act, treat it as an engine capability first, not as chapter-local implementation.
+
+Default process:
+1. Define the mechanic generically at engine level.
+2. Give it a reusable contract/config surface.
+3. Add the smallest focused regression test for that mechanic.
+4. Let the chapter consume it through content/config/adapters.
+5. Keep only truly unique narrative/content behavior in the chapter.
+
+Do not hide reusable gameplay inside an Act-specific runtime merely because that is where the idea first appeared. The first chapter that uses a mechanic is a consumer, not automatically its owner.
+
