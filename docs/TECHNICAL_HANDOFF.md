@@ -2317,3 +2317,13 @@ Shared runtime ownership:
 Area adapters still own maps/assets/placements, collision geometry, world bounds, Village A* vs Lake direct movement, movement feel/dog-follow tuning and unique interactions.
 
 Next Runtime 1.1 item: **Common chapter debug / acceptance harness**. Do not begin Act 3 gameplay.
+
+
+## Runtime 1.1 common debug / acceptance closeout — 2026-10-07
+
+Verified code checkpoint: `c224761399e057a681d241a2b7541df74cc887c2`  
+GitHub Actions: **#2359 SUCCESS**
+
+Runtime 1.1 point 8 is closed. Shared launch/reset/state inspection/probes and debug launcher/panel are fixture-driven; Act 2 uses `ACT2_DEBUG_FIXTURE` and keeps only unique debug data/actions as extensions.
+
+Next item: point 9 Empty Act 3 skeleton architecture proof. No Act 3 gameplay.
