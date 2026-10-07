@@ -156,8 +156,11 @@ assert.equal(loadCalls, 1,
   "manual refresh after stop must not restart a stopped sync loop");
 
 const act2RuntimeSource = readFileSync("src/components/Act2Runtime.tsx", "utf8");
-assert.match(act2RuntimeSource, /startBackendSyncLoop\(\{/, "Act 2 must consume the shared backend sync lifecycle");
+const backendSyncHostSource = readFileSync("src/runtime/backend/useBackendSyncHost.ts", "utf8");
+assert.match(backendSyncHostSource, /startBackendSyncLoop<T>\(\{/, "shared React host must own the backend sync loop lifecycle");
+assert.match(backendSyncHostSource, /return \(\) => loop\.stop\(\)/, "shared React host must stop polling on lifecycle cleanup");
+assert.match(act2RuntimeSource, /useBackendSyncHost\(\{/, "Act 2 must consume the shared backend sync React host");
 assert.match(act2RuntimeSource, /createBackendAuthoritySnapshot\(backend\)/, "Act 2 must consume the shared backend authority snapshot");
-assert.doesNotMatch(act2RuntimeSource, /const timer = window\.setInterval|let cancelled = false/, "Act 2 must not retain a parallel polling/cancellation loop");
+assert.doesNotMatch(act2RuntimeSource, /startBackendSyncLoop|window\.setInterval|window\.clearInterval|let cancelled = false/, "Act 2 must not retain a parallel polling/cancellation lifecycle");
 
 console.log("PASS: shared backend sync owns authority snapshots, polling lifecycle, in-flight serialization, error recovery, stale-response cancellation and the Act 2 polling boundary.");
