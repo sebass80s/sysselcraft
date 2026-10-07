@@ -157,10 +157,15 @@ assert.equal(loadCalls, 1,
 
 const act2RuntimeSource = readFileSync("src/components/Act2Runtime.tsx", "utf8");
 const backendSyncHostSource = readFileSync("src/runtime/backend/useBackendSyncHost.ts", "utf8");
+const pairedAuthoritySource = readFileSync("src/runtime/backend/pairedBackendAuthority.ts", "utf8");
 assert.match(backendSyncHostSource, /startBackendSyncLoop<T>\(\{/, "shared React host must own the backend sync loop lifecycle");
 assert.match(backendSyncHostSource, /return \(\) => loop\.stop\(\)/, "shared React host must stop polling on lifecycle cleanup");
 assert.match(act2RuntimeSource, /useBackendSyncHost\(\{/, "Act 2 must consume the shared backend sync React host");
-assert.match(act2RuntimeSource, /createBackendAuthoritySnapshot\(backend\)/, "Act 2 must consume the shared backend authority snapshot");
+assert.match(pairedAuthoritySource, /getPairedChildId\(\)/, "shared backend authority source must own paired-child lookup");
+assert.match(pairedAuthoritySource, /getChildGameState\(childId\)/, "shared backend authority source must own backend game-state loading");
+assert.match(pairedAuthoritySource, /createBackendAuthoritySnapshot\(backend\)/, "shared backend authority source must create the canonical authority snapshot");
+assert.match(act2RuntimeSource, /loadPairedBackendAuthoritySnapshot/, "Act 2 boot and polling must consume the shared backend authority source");
+assert.doesNotMatch(act2RuntimeSource, /getPairedChildId|getChildGameState|createBackendAuthoritySnapshot/, "Act 2 must not own backend transport or snapshot construction");
 assert.doesNotMatch(act2RuntimeSource, /startBackendSyncLoop|window\.setInterval|window\.clearInterval|let cancelled = false/, "Act 2 must not retain a parallel polling/cancellation lifecycle");
 
 console.log("PASS: shared backend sync owns authority snapshots, polling lifecycle, in-flight serialization, error recovery, stale-response cancellation and the Act 2 polling boundary.");
