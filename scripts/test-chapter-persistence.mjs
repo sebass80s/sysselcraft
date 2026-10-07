@@ -6,6 +6,7 @@ const values = new Map();
 const writes = [];
 let failScopedWrite = false;
 let holdNextWrite = null;
+let notifyHeldWriteStarted = null;
 
 const preferences = {
   async get({ key }) {
@@ -15,6 +16,8 @@ const preferences = {
     if (holdNextWrite) {
       const wait = holdNextWrite;
       holdNextWrite = null;
+      notifyHeldWriteStarted?.();
+      notifyHeldWriteStarted = null;
       await wait;
     }
     if (failScopedWrite && key.includes(".child-a")) throw new Error("storage full");
@@ -140,6 +143,103 @@ values.set("sysselcraft.backend.childId", "   ");
 values.set("sysselcraft.chapter.test.legacy", JSON.stringify({ version: 1, seen: true, counter: 7 }));
 assert.deepEqual(await host().load(), { version: 1, seen: true, counter: 7 },
   "unpaired compatibility reads the declared legacy key");
+
+// Unknown/future schema bytes must be preserved exactly.
+values.clear();
+writes.length = 0;
+values.set("sysselcraft.backend.childId", "child-a");
+const unsupportedRaw = JSON.stringify({ version: 99, seen: true, counter: 42 });
+values.set("sysselcraft.chapter.test.v1.child-a", unsupportedRaw);
+await assert.rejects(host().load(), /Unsupported persisted chapter state/);
+assert.equal(
+  values.get("sysselcraft.chapter.test.v1.child-a"),
+  unsupportedRaw,
+  "unsupported persisted bytes must remain untouched",
+);
+assert.equal(
+  writes.length,
+  0,
+  "unsupported state must never be normalized and written back",
+);
+
+// A queued operation is bound to the child identity from invocation time.
+values.clear();
+writes.length = 0;
+values.set("sysselcraft.backend.childId", "child-a");
+const identityHost = host();
+let releaseIdentityWrite;
+let markIdentityWriteStarted;
+const identityWriteStarted = new Promise(resolve => { markIdentityWriteStarted = resolve; });
+holdNextWrite = new Promise(resolve => { releaseIdentityWrite = resolve; });
+notifyHeldWriteStarted = markIdentityWriteStarted;
+const inFlightForA = identityHost.save({ version: 1, seen: false, counter: 1 });
+await identityWriteStarted;
+const queuedForA = identityHost.save({ version: 1, seen: true, counter: 2 });
+values.set("sysselcraft.backend.childId", "child-b");
+releaseIdentityWrite();
+await inFlightForA;
+await assert.rejects(
+  queuedForA,
+  /Stale chapter persistence identity/,
+  "a save queued for child A must not retarget itself to child B",
+);
+assert.equal(
+  values.has("sysselcraft.chapter.test.v1.child-b"),
+  false,
+  "identity changes must never receive a queued save from the previous child",
+);
+
+// Lifecycle guards cancel queued async persistence before it mutates storage.
+values.set("sysselcraft.backend.childId", "child-a");
+let releaseGuardWrite;
+let markGuardWriteStarted;
+const guardWriteStarted = new Promise(resolve => { markGuardWriteStarted = resolve; });
+holdNextWrite = new Promise(resolve => { releaseGuardWrite = resolve; });
+notifyHeldWriteStarted = markGuardWriteStarted;
+const guardBlocker = identityHost.save({ version: 1, seen: false, counter: 3 });
+await guardWriteStarted;
+let active = true;
+const guarded = identityHost.save(
+  { version: 1, seen: true, counter: 4 },
+  { isActive: () => active },
+);
+active = false;
+releaseGuardWrite();
+await guardBlocker;
+await assert.rejects(
+  guarded,
+  /Stale chapter persistence operation/,
+  "stopped runtime work must not land a queued persistence write",
+);
+
+// update() owns read -> transform -> write as one ordered operation.
+values.clear();
+writes.length = 0;
+values.set("sysselcraft.backend.childId", "child-a");
+values.set(
+  "sysselcraft.chapter.test.v1.child-a",
+  JSON.stringify({ version: 1, seen: false, counter: 1 }),
+);
+const atomicHost = host();
+let releaseUpdate;
+let markUpdateStarted;
+const updateStarted = new Promise(resolve => { markUpdateStarted = resolve; });
+const updateGate = new Promise(resolve => { releaseUpdate = resolve; });
+const olderReconciliation = atomicHost.update(async current => {
+  assert.equal(current.counter, 1);
+  markUpdateStarted();
+  await updateGate;
+  return { ...current, counter: 2 };
+});
+await updateStarted;
+const newerStorySave = atomicHost.save({ version: 1, seen: true, counter: 4 });
+releaseUpdate();
+await Promise.all([olderReconciliation, newerStorySave]);
+assert.deepEqual(
+  JSON.parse(values.get("sysselcraft.chapter.test.v1.child-a")),
+  { version: 1, seen: true, counter: 4 },
+  "atomic update ordering must prevent an older reconciliation from overwriting a newer Story save",
+);
 
 // Fuel proof: a brand-new chapter supplies only data/domain rules.
 // Shared persistence must provide migration, child scoping, save/load and clear.
