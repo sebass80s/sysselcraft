@@ -84,6 +84,23 @@ const {
   withSelectedProject,
 } = act2RuntimeModule;
 
+assert.throws(
+  () => normalizeAct2RuntimeState({
+    ...createDefaultAct2RuntimeState(),
+    version: 99,
+  }),
+  /Unsupported Act 2 runtime version/,
+  "future Act 2 runtime versions must be rejected instead of normalized into current state",
+);
+assert.throws(
+  () => normalizeAct2RuntimeState({
+    ...createDefaultAct2RuntimeState(),
+    finaleSchemaVersion: 99,
+  }),
+  /Unsupported Act 2 finale schema version/,
+  "future Act 2 finale schemas must be rejected instead of replayed as legacy v1",
+);
+
 const backendSyncFixture = {
   childId: "child-a",
   wallet: { diamonds: 7, sysselBux: 222 },
