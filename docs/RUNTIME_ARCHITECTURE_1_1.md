@@ -175,3 +175,11 @@ Only physical iPhone update-in-place acceptance remains.
 Preserve existing save/backend. Do not reset/reinstall just to simplify testing.
 
 After that gate is closed, Act 3 gameplay can begin using this architecture.
+
+## Act 3 implementation guardrail
+
+When implementing ordinary Act 3 beats, construction projects, quest-count gates, Story moments or registered purchases, the expected work is **content/config plus narrow adapters** on the shared Runtime 1.1 engine.
+
+If a normal beat or normal building/project requires new chapter-local engine plumbing, do **not** simply implement the special case. Stop and determine why the shared engine cannot express it. If the behavior is genuinely reusable, fix or extend the shared owner and add the smallest regression test at that ownership boundary. Only truly unique gameplay belongs in chapter-specific engine code.
+
+This rule exists specifically to prevent Act 3 from recreating the same beat-specific and project-specific bug surface that Runtime 1.1 was built to eliminate.
