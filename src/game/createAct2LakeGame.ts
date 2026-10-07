@@ -1,7 +1,8 @@
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/interactionContract";
-import { configureWorldCamera, WORLD_CAMERA_BACKGROUND_COLOR } from "../runtime/world/worldCameraHost";
+import { configureWorldCamera } from "../runtime/world/worldCameraHost";
+import { createWorldGame } from "../runtime/world/worldGameHost";
 import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveDirectMovementIntent } from "../runtime/world/movement";
@@ -452,23 +453,12 @@ export async function createAct2LakeGame(
     }
   }
 
-  const gameInstance = new Phaser.Game({
-    type: Phaser.AUTO,
+  const gameInstance = createWorldGame(
+    Phaser,
     parent,
-    width: viewWidth,
-    height: viewport.height,
-    backgroundColor: WORLD_CAMERA_BACKGROUND_COLOR,
-    pixelArt: false,
-    antialias: true,
-    roundPixels: false,
-    scale: {
-      mode: Phaser.Scale.FIT,
-      autoCenter: Phaser.Scale.CENTER_BOTH,
-      width: viewWidth,
-      height: viewport.height,
-    },
-    scene: Act2LakeScene,
-  });
+    { width: viewWidth, height: viewport.height },
+    Act2LakeScene,
+  );
 
   return {
     destroy: () => gameInstance.destroy(true),
