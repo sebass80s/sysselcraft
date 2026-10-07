@@ -30,6 +30,16 @@ const projectProgressEngine = loadTsModule("../src/runtime/progression/projectPr
   "./progressTrack": progressTrack,
   "./authoritativeTrack": authoritativeTrack,
 });
+const chapterPersistence = loadTsModule("../src/runtime/save/chapterPersistence.ts", {
+  "@capacitor/preferences": {
+    Preferences: {
+      async get() { return { value: null }; },
+      async set() {},
+      async remove() {},
+    },
+  },
+});
+
 const {
   act2FinalePending,
   advanceAct2Finale,
@@ -52,7 +62,7 @@ const {
   withPresentedContribution,
   withSelectedProject,
 } = loadTsModule("../src/game/act2RuntimeState.ts", {
-  "@capacitor/preferences": { Preferences: {} },
+  "../runtime/save/chapterPersistence": chapterPersistence,
   "../runtime/save/migrations": saveMigrations,
   "../runtime/progression/authoritativeDelta": progressionDelta,
   "../runtime/progression/progressGate": progressGate,
