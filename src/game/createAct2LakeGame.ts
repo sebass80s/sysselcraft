@@ -3,6 +3,7 @@ import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/interactionContract";
 import { configureWorldCamera } from "../runtime/world/worldCameraHost";
 import { createWorldGame } from "../runtime/world/worldGameHost";
+import { createWorldDog, createWorldPlayer } from "../runtime/world/worldActorHost";
 import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveDirectMovementIntent } from "../runtime/world/movement";
@@ -130,14 +131,18 @@ export async function createAct2LakeGame(
 
       // Acceptance spawn only. Story entry/exit points remain deliberately undefined
       // until the authored Act 2 transition is wired.
-      this.player = this.add.image(815, 515, "act2-child")
-        .setOrigin(0.5, 0.94)
-        .setDisplaySize(74, 118)
-        .setDepth(1585);
-      this.dog = this.add.image(755, 532, "act2-dog")
-        .setOrigin(0.5, 0.88)
-        .setDisplaySize(66, 55)
-        .setDepth(1600);
+      this.player = createWorldPlayer(this, {
+        x: 815,
+        y: 515,
+        texture: "act2-child",
+        depth: 1585,
+      });
+      this.dog = createWorldDog(this, {
+        x: 755,
+        y: 532,
+        texture: "act2-dog",
+        depth: 1600,
+      });
 
       // Canonical Alve runtime entity. The container is the single interaction
       // owner for positioning, turn-in markers and nearby interaction behavior.
