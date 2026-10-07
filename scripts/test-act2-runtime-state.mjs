@@ -37,7 +37,13 @@ const projectProgressEngine = loadTsModule("../src/runtime/progression/projectPr
   "./authoritativeTrack": authoritativeTrack,
 });
 const act2RuntimeModule = loadTsModule("../src/game/act2RuntimeState.ts", {
-  "@capacitor/preferences": { Preferences: {} },
+  "../runtime/save/chapterPersistence": {
+    createChapterPersistenceHost: () => ({
+      load: async () => { throw new Error("persistence I/O is outside this domain-state test"); },
+      save: async () => { throw new Error("persistence I/O is outside this domain-state test"); },
+      clear: async () => { throw new Error("persistence I/O is outside this domain-state test"); },
+    }),
+  },
   "../runtime/save/migrations": saveMigrations,
   "../runtime/progression/authoritativeDelta": progressionDelta,
   "../runtime/progression/progressGate": progressGate,
