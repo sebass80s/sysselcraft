@@ -51,6 +51,14 @@ const act2RuntimeModule = loadTsModule("../src/game/act2RuntimeState.ts", {
   "../runtime/progression/authoritativeTrack": authoritativeTrack,
   "../runtime/progression/projectProgressEngine": projectProgressEngine,
 });
+const act2BackendSyncAdapter = loadTsModule("../src/game/act2BackendSyncAdapter.ts", {
+  "./act2RuntimeState": act2RuntimeModule,
+});
+const {
+  reconcileAct2BackendSnapshot,
+  selectAct2BackendContext,
+} = act2BackendSyncAdapter;
+
 const {
   act2FinalePending,
   advanceAct2Finale,
@@ -75,6 +83,39 @@ const {
   withPresentedContribution,
   withSelectedProject,
 } = act2RuntimeModule;
+
+const backendSyncFixture = {
+  childId: "child-a",
+  wallet: { diamonds: 7, sysselBux: 222 },
+  progression: {
+    orderEnvironment: 0,
+    knowledgeCreativity: 0,
+    wellbeingRoutine: 0,
+    movementActivity: 0,
+    community: 0,
+    worldProgression: 41,
+  },
+  worldFlags: {
+    act2JettyLifebuoyOwned: true,
+    act2BoathouseSteeringWheelOwned: true,
+    act2MotorboatPartsOwned: false,
+  },
+  updatedAt: "2026-10-07T05:00:00Z",
+};
+assert.deepEqual(
+  selectAct2BackendContext(backendSyncFixture),
+  { worldProgression: 41, wallet: { diamonds: 7, sysselBux: 222 } },
+  "Act 2 adapter selects only the shared backend context needed by presentation",
+);
+const backendReconciled = reconcileAct2BackendSnapshot(createDefaultAct2RuntimeState(), backendSyncFixture);
+assert.equal(backendReconciled.changed, true);
+assert.equal(backendReconciled.state.backendClaimBaseline, 41);
+assert.equal(backendReconciled.state.jettyLifebuoyOwned, true);
+assert.equal(backendReconciled.state.boathouseSteeringWheelOwned, true);
+assert.equal(backendReconciled.state.motorboatPartsOwned, false);
+const backendReconciledAgain = reconcileAct2BackendSnapshot(backendReconciled.state, backendSyncFixture);
+assert.equal(backendReconciledAgain.changed, false,
+  "reapplying the same authoritative snapshot must be reconciliation-idempotent");
 
 const empty = createDefaultAct2RuntimeState();
 assert.equal(empty.openingIndex, 0);
