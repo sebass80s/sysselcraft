@@ -4,6 +4,7 @@ import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/in
 import { configureWorldCamera } from "../runtime/world/worldCameraHost";
 import { createWorldGame } from "../runtime/world/worldGameHost";
 import { createWorldDog, createWorldPlayer } from "../runtime/world/worldActorHost";
+import { createWorldDirectionalInput, readWorldDirection, type WorldDirectionalInput } from "../runtime/world/worldDirectionalInput";
 import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveDirectMovementIntent } from "../runtime/world/movement";
@@ -78,8 +79,7 @@ export async function createAct2LakeGame(
     private alveIdlePromptHide?: Phaser.Time.TimerEvent;
     private lastAlveIdlePromptIndex = -1;
     private moveTarget: { x: number; y: number } | null = null;
-    private cursors?: Types.Input.Keyboard.CursorKeys;
-    private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
+    private directionalInput: WorldDirectionalInput | null = null;
 
     constructor() {
       super("Act2LakeScene");
@@ -245,24 +245,14 @@ export async function createAct2LakeGame(
         this.moveTarget = target;
       });
 
-      if (this.input.keyboard) {
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.wasd = this.input.keyboard.addKeys({
-          up: "W", down: "S", left: "A", right: "D",
-        }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
-      }
+      this.directionalInput = createWorldDirectionalInput(this.input.keyboard);
     }
 
     update(_time: number, delta: number) {
       if (!this.player) return;
       if (!worldInputEnabled({ enabled: requestedWorldInputEnabled, blockingOverlayVisible: false })) return;
       const movement = resolveDirectMovementIntent(
-        {
-          left: Boolean(this.cursors?.left.isDown || this.wasd?.left.isDown),
-          right: Boolean(this.cursors?.right.isDown || this.wasd?.right.isDown),
-          up: Boolean(this.cursors?.up.isDown || this.wasd?.up.isDown),
-          down: Boolean(this.cursors?.down.isDown || this.wasd?.down.isDown),
-        },
+        readWorldDirection(this.directionalInput),
         { x: this.player.x, y: this.player.y },
         this.moveTarget,
         8,
