@@ -232,3 +232,30 @@ Ownership law for that work:
 Act 2 is the migration consumer, not the template to copy. The goal is that Act 3 registers a persistence definition rather than creating another independent Preferences implementation.
 
 Canonical current handover: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+
+## Runtime 1.1 chapter persistence ownership — CLOSED 2026-10-07
+
+Verified checkpoint: `6f0acedd335e4b97913cc096b9d6ebd8c1300059`, GitHub Actions #2275 SUCCESS.
+
+The generic chapter persistence boundary is now implemented and consumed by Act 2.
+
+Shared persistence owns:
+- Preferences I/O;
+- paired-child scoping and key construction;
+- ordered load/save/clear;
+- strict unreadable/unsupported-state failure;
+- legacy storage-key migration mechanics;
+- successful canonical write before destructive legacy cleanup;
+- invocation of chapter-supplied migration and normalization.
+
+Each chapter still owns:
+- its persisted state shape and version meaning;
+- defaults;
+- pure historical shape migrations;
+- current-state normalizer/invariant repair;
+- genuinely chapter-specific persisted fields.
+
+Backend authority is unchanged. Quest lifecycle, rewards, wallet, earned-work/progression evidence and backend story ownership are not fabricated or max-merged by local chapter persistence.
+
+Next ownership boundary: shared backend synchronization/reconciliation. The shared layer may own polling/subscription lifecycle, cancellation, stale-response safety and canonical backend snapshots. Chapter adapters continue to own chapter-specific selectors and reconciliation policy.
