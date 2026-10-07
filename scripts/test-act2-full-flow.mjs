@@ -224,6 +224,7 @@ assert.equal(state.endCardSeen, true, "dismissed chapter-end card must not repla
 
 const village = fs.readFileSync(new URL("../src/components/VillagePrototype.tsx", import.meta.url), "utf8");
 const runtime = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
+const backendSyncAdapter = fs.readFileSync(new URL("../src/game/act2BackendSyncAdapter.ts", import.meta.url), "utf8");
 const prodRoute = fs.readFileSync(new URL("../src/app/act2/page.tsx", import.meta.url), "utf8");
 const debugRoute = fs.readFileSync(new URL("../src/app/act2-test/page.tsx", import.meta.url), "utf8");
 
@@ -236,7 +237,9 @@ assert.match(
 );
 assert.match(runtime, /if \(!act1ChapterComplete\)/, "Act 2 must independently require the acknowledged Act 1 chapter ending");
 assert.match(runtime, /prepareAct2ProductionEntry\(act2\)/, "production entry must reconcile pre-release locked-route residue before setting the baseline");
-assert.match(runtime, /withBackendClaimBaseline\(current, backend\.progression\.worldProgression\)/, "backend polling must recover a missing baseline after transient entry sync failure");
+assert.match(runtime, /reconcileAct2BackendSnapshot\(current, backend\)/, "backend polling must delegate missing-baseline recovery to the Act 2 reconciliation adapter");
+assert.match(backendSyncAdapter, /withBackendClaimBaseline\(current, snapshot\.progression\.worldProgression\)/, "Act 2 reconciliation adapter must recover a missing baseline from authoritative progression");
+assert.match(backendSyncAdapter, /withBackendStoryFlags\(next, snapshot\.worldFlags\)/, "Act 2 reconciliation adapter must project authoritative story ownership flags");
 const chapterHost = fs.readFileSync(new URL("../src/runtime/chapter/useChapterRuntimeHost.ts", import.meta.url), "utf8");
 assert.match(
   chapterHost,
