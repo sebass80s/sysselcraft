@@ -603,3 +603,28 @@ The earlier chapter-specific debug plumbing gap is closed at the engine boundary
 Shared debug ownership now includes fixture-driven launch/session state, reset, inspection, probes, hidden hold/five-tap launch UI and common panel chrome. Chapter-specific synthetic state and one-off debug actions stay in chapter fixtures/extensions rather than the engine.
 
 Next fuel gate: **Empty Act 3 skeleton proof**. It must be architecture-only and must not introduce Act 3 gameplay.
+
+
+## 2026-10-07 Runtime 1.1 update — Empty Act 3 fuel proof CLOSED
+
+Verified code checkpoint:
+- `860f5856f1d6574c71b183a0d75ef146c5865953`
+- GitHub Actions **#2370 SUCCESS** on that exact SHA.
+
+Runtime 1.1 fuel-principle item 9 is closed.
+
+The empty Act 3 proof now consists of:
+- canonical chapter registration;
+- minimal versioned chapter state hosted by shared persistence;
+- shared chapter runtime host/boundary;
+- shared debug/acceptance fixture and UI;
+- production and dev-only debug routes mounting the same empty skeleton;
+- focused `test:act3-empty-skeleton` coverage included in full `npm run verify`.
+
+Fuel result: the proof did not require a new Preferences owner, backend polling loop, Phaser bootstrap, progression engine, purchase transport/handoff, or chapter-specific debug engine.
+
+No Act 3 gameplay/content has been implemented.
+
+Remaining Runtime 1.1 gates:
+1. full automated + browser closeout;
+2. final physical iPhone update-in-place acceptance with preserved save/backend.
