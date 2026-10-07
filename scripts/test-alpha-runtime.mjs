@@ -94,6 +94,7 @@ async function pageSetup(noConfig=false,native=false){
    result=args.p_child_id==='child-two'?[row('other-day','child-two','available')]:[row('day-one','child-one',state),...(nextDay?[row('day-two','child-one','available')]:[])];
    if(holdNext){holdNext=false;held=true;await new Promise(resolve=>releaseOld=resolve);}
   } else if(u.pathname.endsWith('/child_game_state')) result={child_id:'child-one',diamonds:reward,syssel_bux:reward?3:0,progression:{},world_flags:{}};
+   else if(u.pathname.endsWith('/children')) result={display_name:'Alpha child'};
   else throw Error('Unexpected backend operation: '+u.pathname);
   await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(result)});
  });
