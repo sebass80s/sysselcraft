@@ -43,6 +43,13 @@ function loadTsModule(file, dependencies) {
   return exports;
 }
 
+const chapterPersistenceModule = {
+  createChapterPersistenceHost: () => ({
+    load: async () => { throw new Error("persistence I/O is outside parity domain tests"); },
+    save: async () => { throw new Error("persistence I/O is outside parity domain tests"); },
+    clear: async () => { throw new Error("persistence I/O is outside parity domain tests"); },
+  }),
+};
 const saveMigrationModule = loadTsModule("../src/runtime/save/migrations.ts", {});
 const progressionDeltaModule = loadTsModule("../src/runtime/progression/authoritativeDelta.ts", {});
 const progressGateModule = loadTsModule("../src/runtime/progression/progressGate.ts", {});
@@ -74,7 +81,7 @@ const {
   motorboatPartsPurchaseRequired,
   motorboatNamingRequired,
 } = loadTsModule("../src/game/act2RuntimeState.ts", {
-  "@capacitor/preferences": { Preferences: {} },
+  "../runtime/save/chapterPersistence": chapterPersistenceModule,
   "../runtime/save/migrations": saveMigrationModule,
   "../runtime/progression/authoritativeDelta": progressionDeltaModule,
   "../runtime/progression/progressGate": progressGateModule,
