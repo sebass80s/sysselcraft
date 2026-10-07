@@ -2339,3 +2339,20 @@ Runtime 1.1 point 9 is closed. `/act3` is an intentionally empty architecture pr
 No Act 3 gameplay has been started.
 
 Next required gate: **full automated + browser verification**. After that, and only after that, perform the final physical iPhone update-in-place acceptance while preserving the existing save/backend.
+
+
+## Runtime 1.1 automated/browser closeout — 2026-10-07
+
+Verified code checkpoint:
+- `98e8950c227cbf215ccab91b885fb3b03b9c2ae1`
+- GitHub Actions **#2388 SUCCESS**
+- Runtime Browser Closeout **#12 SUCCESS**
+
+Runtime 1.1 points 1–10 are closed.
+
+Browser closeout proves the legacy alpha runtime regression plus Runtime 1.1 Story/HUD blocking, world/HUD/input mount, Mira Story Purchase handoff, completed Act 2 -> Act 3 transition, reload persistence and empty Act 3 production/debug skeleton.
+
+The browser workflow now also triggers for `src/**` changes so runtime/UI source changes cannot bypass the browser gate.
+
+NEXT / ONLY REMAINING GATE:
+**11. Physical iPhone update-in-place acceptance**, preserving the existing save/backend. No reinstall/reset. Do not begin Act 3 gameplay before this final native acceptance is complete.
