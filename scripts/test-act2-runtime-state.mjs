@@ -95,7 +95,7 @@ assert.doesNotMatch(act2RuntimeSource, /@capacitor\/preferences/, "Act 2 domain 
 assert.doesNotMatch(act2RuntimeSource, /CHILD_ID_KEY|childRuntimeKey|getAct2PairedChildId/, "Act 2 domain state must not duplicate paired-child storage plumbing");
 const chapterPersistenceSource = fs.readFileSync(new URL("../src/runtime/save/chapterPersistence.ts", import.meta.url), "utf8");
 const childBindingSource = fs.readFileSync(new URL("../src/backend/childDeviceBinding.ts", import.meta.url), "utf8");
-assert.match(chapterPersistenceSource, /CHILD_ID_KEY = "sysselcraft\.backend\.childId"/, "shared chapter persistence must read the canonical paired-child preference key");
+assert.match(chapterPersistenceSource, /DEFAULT_CHILD_ID_STORAGE_KEY = "sysselcraft\.backend\.childId"/, "shared chapter persistence must read the canonical paired-child preference key");
 assert.match(childBindingSource, /CHILD_ID_KEY = "sysselcraft\.backend\.childId"/, "pairing and shared chapter persistence must stay on the same paired-child preference key");
 
 const restored = normalizeAct2RuntimeState({
