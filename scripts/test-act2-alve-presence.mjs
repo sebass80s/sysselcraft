@@ -98,6 +98,9 @@ const phaser = { Scene, Game, AUTO: 0, Scale: { FIT: 0, CENTER_BOTH: 0 }, Math: 
 const interactionContract = load("src/runtime/interaction/interactionContract.ts");
 const movement = load("src/runtime/world/movement.ts");
 const worldCamera = load("src/runtime/world/worldCamera.ts");
+const worldCameraHost = load("src/runtime/world/worldCameraHost.ts", {
+  "./worldCamera": worldCamera,
+});
 const worldDepth = load("src/runtime/world/worldDepth.ts");
 const worldViewport = load("src/runtime/world/worldViewport.ts");
 const markerRenderer = {
@@ -109,7 +112,7 @@ const { createAct2LakeGame } = load("src/game/createAct2LakeGame.ts", {
   "../runtime/interaction/markerRenderer": markerRenderer,
   "../runtime/interaction/interactionContract": interactionContract,
   "../runtime/world/movement": movement,
-  "../runtime/world/worldCamera": worldCamera,
+  "../runtime/world/worldCameraHost": worldCameraHost,
   "../runtime/world/worldDepth": worldDepth,
   "../runtime/world/worldViewport": worldViewport,
 });
