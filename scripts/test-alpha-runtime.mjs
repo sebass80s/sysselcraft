@@ -50,6 +50,7 @@ async function pageSetup(noConfig=false,native=false){
  else if(u.includes('/rpc/get_bound_child_id'))result=null;
  else if(u.includes('/rpc/is_bound_child'))result=true;
  else if(u.includes('/child_game_state'))result={child_id:'test-child',diamonds:0,syssel_bux:0,progression:{},world_flags:{}};
+ else if(u.includes('/rest/v1/children'))result={display_name:'Alpha Barn'};
  else if(u.includes('/rpc/list_child_quests')){reads++;result=[{instance_id:'test-instance',quest_id:'test-quest',household_id:'test-household',child_id:'test-child',title:'Alpha test quest',description:'Mock only',progression_class:'community',reward_diamonds:1,reward_syssel_bux:1,state:'available',created_at:new Date().toISOString()}];}
  else throw new Error('Unexpected mock API path '+new URL(u).pathname);
  await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(result)});
