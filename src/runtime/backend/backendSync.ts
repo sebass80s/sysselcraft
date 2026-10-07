@@ -31,10 +31,14 @@ export type BackendSyncScheduler = {
   clearInterval: (handle: unknown) => void;
 };
 
+export type BackendSyncControl = {
+  isActive: () => boolean;
+};
+
 export type BackendSyncLoopOptions<T> = {
   loadSnapshot: () => Promise<T | null>;
-  onSnapshot: (snapshot: T) => void | Promise<void>;
-  onError?: (error: unknown) => void | Promise<void>;
+  onSnapshot: (snapshot: T, control: BackendSyncControl) => void | Promise<void>;
+  onError?: (error: unknown, control: BackendSyncControl) => void | Promise<void>;
   intervalMs?: number;
   scheduler: BackendSyncScheduler;
 };
@@ -54,6 +58,9 @@ export function startBackendSyncLoop<T>(
 
   let stopped = false;
   let inFlight: Promise<void> | null = null;
+  const control: BackendSyncControl = {
+    isActive: () => !stopped,
+  };
 
   async function runOnce(): Promise<void> {
     if (stopped || inFlight) return;
@@ -62,10 +69,10 @@ export function startBackendSyncLoop<T>(
       try {
         const snapshot = await options.loadSnapshot();
         if (stopped || snapshot === null) return;
-        await options.onSnapshot(snapshot);
+        await options.onSnapshot(snapshot, control);
       } catch (error) {
         if (stopped) return;
-        await options.onError?.(error);
+        await options.onError?.(error, control);
       }
     })();
 
