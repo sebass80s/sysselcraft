@@ -199,3 +199,19 @@ When implementing ordinary Act 3 beats, construction projects, quest-count gates
 If a normal beat or normal building/project requires new chapter-local engine plumbing, do **not** simply implement the special case. Stop and determine why the shared engine cannot express it. If the behavior is genuinely reusable, fix or extend the shared owner and add the smallest regression test at that ownership boundary. Only truly unique gameplay belongs in chapter-specific engine code.
 
 This rule exists specifically to prevent Act 3 from recreating the same beat-specific and project-specific bug surface that Runtime 1.1 was built to eliminate.
+
+## Stop-the-line engine rule
+
+During Act 3 and every later chapter, missing shared-engine capability has priority over chapter progress.
+
+If implementation reveals that an ordinary beat, project, quest gate, purchase, transition, persistence flow, backend reconciliation, world interaction, Story flow, UI/runtime behavior or debug need cannot be expressed cleanly through Runtime 1.1:
+
+1. **Say so immediately.** Do not hide the gap behind a chapter-local workaround.
+2. **Stop chapter implementation at that boundary.**
+3. Decide whether the behavior is genuinely unique gameplay or a missing reusable engine capability.
+4. If reusable, fix/extend the shared engine first and add the smallest regression test that owns the contract.
+5. Re-run the relevant verification gates.
+6. Resume chapter content only after the engine gap is closed and verified.
+
+This rule applies to Act 3 and all later acts. Shipping chapter progress is never more important than preserving one shared engine.
+
