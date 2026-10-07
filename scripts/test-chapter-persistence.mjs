@@ -43,6 +43,26 @@ new Function("require", "module", "exports", source)(
 
 const { createChapterPersistenceHost } = moduleRecord.exports;
 
+const fuelProofSourceText = readFileSync("scripts/fixtures/chapter-persistence-fuel-proof.ts", "utf8");
+assert.doesNotMatch(
+  fuelProofSourceText,
+  /@capacitor\/preferences|\bPreferences\b/,
+  "a new chapter persistence definition must not own storage I/O",
+);
+const fuelProofSource = ts.transpileModule(
+  fuelProofSourceText,
+  { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } },
+).outputText;
+const fuelProofRecord = { exports: {} };
+new Function("require", "module", "exports", fuelProofSource)(
+  path => {
+    throw new Error(`Fuel-proof definition must not require runtime storage dependency: ${path}`);
+  },
+  fuelProofRecord,
+  fuelProofRecord.exports,
+);
+const { FUEL_PROOF_CHAPTER_PERSISTENCE } = fuelProofRecord.exports;
+
 function normalize(value) {
   if (!value || typeof value !== "object") return null;
   if (value.version !== 1) return null;
@@ -121,4 +141,36 @@ values.set("sysselcraft.chapter.test.legacy", JSON.stringify({ version: 1, seen:
 assert.deepEqual(await host().load(), { version: 1, seen: true, counter: 7 },
   "unpaired compatibility reads the declared legacy key");
 
-console.log("PASS: shared chapter persistence owns child scoping, ordered I/O, strict decoding and safe legacy-key migration.");
+// Fuel proof: a brand-new chapter supplies only data/domain rules.
+// Shared persistence must provide migration, child scoping, save/load and clear.
+values.clear();
+writes.length = 0;
+values.set("sysselcraft.backend.childId", "future-child");
+values.set(
+  "sysselcraft.chapter.fuel-proof.legacy",
+  JSON.stringify({ version: 0, opened: true, storyIndex: 5 }),
+);
+const fuelProofHost = createChapterPersistenceHost(FUEL_PROOF_CHAPTER_PERSISTENCE);
+assert.deepEqual(
+  await fuelProofHost.load(),
+  { version: 1, introSeen: true, localStoryIndex: 5 },
+  "new chapter definitions can migrate legacy state through the shared host",
+);
+assert.equal(values.has("sysselcraft.chapter.fuel-proof.legacy"), false,
+  "fuel-proof legacy bytes are removed only after canonical scoped write");
+assert.deepEqual(
+  JSON.parse(values.get("sysselcraft.chapter.fuel-proof.v1.future-child")),
+  { version: 1, introSeen: true, localStoryIndex: 5 },
+  "fuel-proof migration writes canonical child-scoped state without chapter storage code",
+);
+await fuelProofHost.save({ version: 1, introSeen: true, localStoryIndex: 8 });
+assert.deepEqual(
+  await fuelProofHost.load(),
+  { version: 1, introSeen: true, localStoryIndex: 8 },
+  "new chapter definitions reuse shared save/load without a storage implementation",
+);
+await fuelProofHost.clear();
+assert.equal(values.has("sysselcraft.chapter.fuel-proof.v1.future-child"), false,
+  "new chapter definitions reuse shared clear without a storage implementation");
+
+console.log("PASS: shared chapter persistence owns child scoping, ordered I/O, strict decoding, safe legacy-key migration and new-chapter fuel proof.");
