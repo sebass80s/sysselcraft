@@ -726,7 +726,7 @@ assert.ok(page.includes("ACT2_FINALE_BEATS[state.finaleIndex]"), "production rou
 assert.ok(page.includes("world.setActiveProject(latest.selectedProject)"), "production route must move Alve when the shared world-host snapshot changes active project");
 assert.ok(page.includes("onAlveTurnIn: () => setContributionTurnInOpen(true)"), "Alve interaction must explicitly arm the pending contribution Story Moment");
 assert.ok(page.includes("hasPendingAlveTurnIn(latest, snapshot.backendWorldProgression)"), "shared world-host sync must restore Alve turn-in availability from the latest authoritative progression without recreating the game");
-assert.ok(page.includes("backendWorldProgressionRef.current = backend.progression.worldProgression"), "authoritative progression refreshes must update the restart-safe game bootstrap ref");
+assert.ok(page.includes("backendWorldProgressionRef.current = selected.worldProgression"), "authoritative progression refreshes selected by the Act 2 backend adapter must update the restart-safe game bootstrap ref");
 assert.ok(
   page.includes("act2PurchaseShopHref("),
   "story purchase gates must route back to Mira through the canonical purchase handoff",
