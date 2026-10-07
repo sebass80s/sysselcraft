@@ -1,5 +1,7 @@
 import { WORLD_CAMERA, worldCameraDeadzone } from "./worldCamera";
 
+export const WORLD_CAMERA_BACKGROUND_COLOR = WORLD_CAMERA.backgroundColor;
+
 export type WorldCameraBounds = {
   x: number;
   y: number;
