@@ -38,6 +38,7 @@ import { ACT2_OPENING_BEATS } from "../game/act2OpeningStory";
 import { act2PurchaseShopHref, parseAct2PurchaseProject } from "../game/act2PurchaseHandoff";
 import { ACT2_PURCHASE_CATALOG } from "../game/act2PurchaseCatalog";
 import { ACT2_ALVE_DIALOGUE, act2AlveImageForIndex } from "../game/act2AlveStory";
+import { ACT2_DEBUG_FIXTURE } from "../game/act2DebugFixture";
 import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { historyEntriesFor } from "../runtime/story/storyHistory";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
@@ -53,6 +54,7 @@ import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../ru
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
 import { loadPairedBackendAuthoritySnapshot } from "../runtime/backend/pairedBackendAuthority";
 import { useBackendSyncHost } from "../runtime/backend/useBackendSyncHost";
+import { launchChapterDebug, resetChapterDebugState } from "../runtime/debug/chapterDebugHarness";
 import {
   reconcileAct2BackendSnapshot,
   selectAct2BackendContext,
@@ -115,45 +117,18 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
   const bootAct2 = useCallback(async ({ debug: debugMode }: ChapterRuntimeBootEnvironment) => {
     if (debugMode) {
       const act1 = await loadSaveState();
-      const finalePreview = new URLSearchParams(window.location.search).get("finale") === "1";
-      const defaults = createDefaultAct2RuntimeState();
-      const debugState: Act2RuntimeState = finalePreview
-        ? {
-            ...defaults,
-            entered: true,
-            openingComplete: true,
-            bicycleSeen: true,
-            alveIntroComplete: true,
-            backendClaimBaseline: 0,
-            projects: {
-              cabin: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `cabin:${String(i + 1).padStart(2, "0")}`), complete: true },
-              dock: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `dock:${String(i + 1).padStart(2, "0")}`), complete: true },
-              boathouse: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `boathouse:${String(i + 1).padStart(2, "0")}`), complete: true },
-              motorboat: { contributions: 16, visibleStage: 4, consumedBeatIds: Array.from({ length: 16 }, (_, i) => `motorboat:${String(i + 1).padStart(2, "0")}`), complete: true },
-            },
-            consumedProjectCompletionIds: ["dock:completion-reaction"],
-            finaleIndex: 0,
-            finaleLineIndex: 0,
-            familyFinaleConsumed: false,
-            epilogueConsumed: false,
-            act2Complete: false,
-            endCardSeen: false,
-          }
-        : {
-            ...defaults,
-            entered: true,
-            backendClaimBaseline: 0,
-          };
+      const session = launchChapterDebug(
+        ACT2_DEBUG_FIXTURE,
+        new URLSearchParams(window.location.search),
+      );
       return {
         accessAllowed: true,
-        state: debugState,
+        state: session.state,
         context: {
-          childName: act1?.childName || "Barnet",
-          backendWorldProgression: 999,
-          backendWallet: null,
-          backendSyncError: "",
+          ...session.context,
+          childName: act1?.childName || session.context.childName,
         },
-        chapterIntroVisible: !finalePreview,
+        chapterIntroVisible: session.chapterIntroVisible,
       };
     }
 
@@ -783,12 +758,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       display: "flex", gap: 6, padding: 7, borderRadius: 10, background: "rgba(22,28,22,.88)",
     }}>
       <button className="secondary-button compact" type="button" onClick={() => {
-        const reset: Act2RuntimeState = {
-          ...createDefaultAct2RuntimeState(),
-          entered: true,
-          backendClaimBaseline: 0,
-        };
-        setState(reset);
+        setState(resetChapterDebugState(ACT2_DEBUG_FIXTURE));
         setPreviewProject(null);
         setContributionTurnInOpen(false);
         setCabinRevisitOpen(false);
