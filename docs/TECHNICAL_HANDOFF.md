@@ -2296,3 +2296,24 @@ Required order:
 `world/area host -> debug harness -> empty Act 3 proof -> automated/browser -> physical iPhone`.
 
 Do not generalize map/assets/collision/navigation strategy merely for symmetry.
+
+
+## Runtime 1.1 World / Area Host closeout — 2026-10-07
+
+Verified code checkpoint: `f1e3136fbac4ac8fe54c3c474de5818c71916755`  
+GitHub Actions: **#2343 SUCCESS**
+
+Runtime 1.1 point 7 is closed.
+
+Shared runtime ownership:
+- chapter-world mount/sync/destroy;
+- Phaser game/bootstrap config;
+- camera background/bounds/follow/deadzone;
+- player/dog creation and canonical visual footprint;
+- cursor/WASD binding + direction snapshots;
+- viewport/depth;
+- interaction resolution/markers/world-input authority.
+
+Area adapters still own maps/assets/placements, collision geometry, world bounds, Village A* vs Lake direct movement, movement feel/dog-follow tuning and unique interactions.
+
+Next Runtime 1.1 item: **Common chapter debug / acceptance harness**. Do not begin Act 3 gameplay.
