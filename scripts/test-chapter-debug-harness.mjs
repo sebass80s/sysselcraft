@@ -58,6 +58,15 @@ assert.deepEqual(runChapterDebugProbe(neutralFixture, "missing", neutral.state, 
   details: { reason: "unknown-probe", probeId: "missing" },
 });
 
+const debugLauncherSource = fs.readFileSync(new URL("../src/runtime/debug/ChapterDebugLauncher.tsx", import.meta.url), "utf8");
+const debugPanelSource = fs.readFileSync(new URL("../src/runtime/debug/ChapterDebugPanel.tsx", import.meta.url), "utf8");
+assert.match(debugLauncherSource, /setTimeout\(open, 650\)/, "shared debug launcher must preserve the accepted hold gesture");
+assert.match(debugLauncherSource, /tapCountRef\.current >= 5/, "shared debug launcher must preserve the accepted five-tap gesture");
+assert.match(debugLauncherSource, /}, 1800\)/, "shared debug launcher must own the tap reset window");
+assert.match(debugPanelSource, /State inspection/, "shared debug panel must expose standard state inspection");
+assert.match(debugPanelSource, /actions\.map/, "shared debug panel must support chapter-specific actions as extensions");
+assert.match(debugPanelSource, /probes\.map/, "shared debug panel must render standard/extended probe results");
+
 const act2FixtureSource = fs.readFileSync(new URL("../src/game/act2DebugFixture.ts", import.meta.url), "utf8");
 assert.match(act2FixtureSource, /chapterId: "act2"/, "Act 2 must register a chapter debug fixture");
 assert.match(act2FixtureSource, /debugRoute: "\/act2-test"/, "Act 2 fixture must own its debug route metadata");
