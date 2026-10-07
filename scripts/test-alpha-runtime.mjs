@@ -14,7 +14,7 @@ try {
 async function pageSetup(noConfig=false,native=false){
  const page=await browser.newPage({viewport:{width:844,height:390},hasTouch:true});const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.route('**/*',async route=>{const u=route.request().url();if(u.startsWith(base)){
-  if(noConfig&&u.endsWith('.js')){let body=readFileSync('out'+new URL(u).pathname,'utf8');for(const v of [url,key])if(v)body=body.split(JSON.stringify(v)).join('""');await route.fulfill({status:200,contentType:'application/javascript',body});}else await route.continue();
+  if(noConfig&&u.endsWith('.js')){let body=readFileSync('out'+new URL(u).pathname,'utf8');for(const v of [url,key])if(v){body=body.split(JSON.stringify(v)).join('""');body=body.split(v).join('');}await route.fulfill({status:200,contentType:'application/javascript',body});}else await route.continue();
  }else await route.fulfill({status:503,contentType:'application/json',body:'{"message":"offline test"}'});});
  if(native)await page.addInitScript(()=>{window.CapacitorCustomPlatform={name:'ios'};});
  return {page,errors};
@@ -38,7 +38,7 @@ async function pageSetup(noConfig=false,native=false){
  console.log('PASS autosave failure: visible error, retry persists without reset/reload');await page.unrouteAll({behavior:'wait'});await page.close();
 }
 {
- const {page,errors}=await pageSetup(true);await page.goto(base+'/parent/');await page.getByText('Supabase is not configured.',{exact:false}).waitFor();assert.deepEqual(errors,[]);await page.getByRole('link',{name:'← Tillbaka till byn'}).click();await page.getByRole('button',{name:'Öppna vuxenläge',exact:true}).waitFor();console.log('PASS missing config parent route: visible error, no crash, return to village');await page.unrouteAll({behavior:'wait'});await page.close();
+ const {page,errors}=await pageSetup(true);await page.goto(base+'/parent/');await page.getByText('Supabase is not configured.',{exact:false}).waitFor();assert.deepEqual(errors,[]);await page.getByRole('link',{name:'← Tillbaka till byn'}).click();await page.getByLabel('SysselCraft HUD').waitFor();await page.getByRole('button',{name:'Öppna SysselCraft-menyn',exact:true}).click();await page.getByRole('menuitem',{name:'🔐 Vuxenläge',exact:true}).waitFor();console.log('PASS missing config parent route: visible error, no crash, return to village HUD');await page.unrouteAll({behavior:'wait'});await page.close();
 }
 {
  assert(url,'public config required for mocked pairing test');const {page,errors}=await pageSetup(false,true);
