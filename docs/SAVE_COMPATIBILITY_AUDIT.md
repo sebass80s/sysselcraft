@@ -117,3 +117,25 @@ Required generic capabilities for item 5:
 The host must be proven with Act 2 and be reusable by an empty Act 3 without a new storage implementation.
 
 Canonical continuation: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+
+## Runtime 1.1 persistence-host closeout — 2026-10-07
+
+Verified checkpoint: `6f0acedd335e4b97913cc096b9d6ebd8c1300059`, GitHub Actions #2275 SUCCESS.
+
+The generic persistence host required by this audit is now implemented and regression-covered.
+
+Verified capabilities:
+- child-scoped chapter keying;
+- chapter id/version/default/normalizer/migration definition;
+- strict parse/normalize behavior;
+- ordered save/load/clear;
+- safe legacy-key migration;
+- canonical write before legacy deletion;
+- failed-write preservation of durable legacy state;
+- Act 2 migration to shared storage ownership;
+- neutral new-chapter fuel proof without chapter-owned Preferences code.
+
+The classification rules in this audit remain unchanged: historical local-shape conversion is migration, current invariant repair is normalization, storage-key movement is storage migration, and backend reconciliation remains backend-owned recovery.
+
+Next Runtime 1.1 work must not reuse the persistence host as an excuse to merge backend authority into local state.
