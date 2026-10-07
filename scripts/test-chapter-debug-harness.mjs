@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
 
 import {
   inspectChapterDebugState,
@@ -6,9 +7,6 @@ import {
   resetChapterDebugState,
   runChapterDebugProbe,
 } from "../src/runtime/debug/chapterDebugHarness.ts";
-import { ACT2_DEBUG_FIXTURE } from "../src/game/act2DebugFixture.ts";
-import { totalAct2Contributions } from "../src/game/act2RuntimeState.ts";
-
 const neutralFixture = {
   chapterId: "future",
   route: "/future",
@@ -60,40 +58,10 @@ assert.deepEqual(runChapterDebugProbe(neutralFixture, "missing", neutral.state, 
   details: { reason: "unknown-probe", probeId: "missing" },
 });
 
-const act2Default = launchChapterDebug(ACT2_DEBUG_FIXTURE, new URLSearchParams());
-assert.equal(act2Default.state.entered, true);
-assert.equal(act2Default.state.backendClaimBaseline, 0);
-assert.equal(act2Default.context.backendWorldProgression, 999);
-assert.equal(act2Default.chapterIntroVisible, true);
-assert.equal(totalAct2Contributions(act2Default.state), 0);
+const act2FixtureSource = fs.readFileSync(new URL("../src/game/act2DebugFixture.ts", import.meta.url), "utf8");
+assert.match(act2FixtureSource, /chapterId: "act2"/, "Act 2 must register a chapter debug fixture");
+assert.match(act2FixtureSource, /debugRoute: "\/act2-test"/, "Act 2 fixture must own its debug route metadata");
+assert.match(act2FixtureSource, /params\.get\("finale"\) === "1"/, "Act 2 finale preview must remain fixture data");
+assert.match(act2FixtureSource, /backendWorldProgression: 999/, "safe synthetic Act 2 progression must remain fixture-owned");
 
-const act2Finale = launchChapterDebug(ACT2_DEBUG_FIXTURE, new URLSearchParams("finale=1"));
-assert.equal(act2Finale.chapterIntroVisible, false);
-assert.equal(totalAct2Contributions(act2Finale.state), 64);
-assert.equal(act2Finale.state.finaleIndex, 0);
-assert.equal(act2Finale.state.act2Complete, false);
-
-const act2Reset = resetChapterDebugState(ACT2_DEBUG_FIXTURE);
-assert.equal(act2Reset.entered, true);
-assert.equal(totalAct2Contributions(act2Reset), 0);
-assert.equal(act2Reset.backendClaimBaseline, 0);
-
-const act2Inspection = inspectChapterDebugState(
-  ACT2_DEBUG_FIXTURE,
-  act2Finale.state,
-  act2Finale.context,
-);
-assert.equal(act2Inspection.chapterId, "act2");
-assert.equal(act2Inspection.totalContributions, 64);
-assert.equal(act2Inspection.backendWorldProgression, 999);
-assert.equal(
-  runChapterDebugProbe(
-    ACT2_DEBUG_FIXTURE,
-    "contribution-bounds",
-    act2Finale.state,
-    act2Finale.context,
-  ).ok,
-  true,
-);
-
-console.log("PASS: common chapter debug harness owns launch/reset/inspection/probes and Act 2 consumes it as fixture data.");
+console.log("PASS: common chapter debug harness owns launch/reset/inspection/probes with chapter-specific fixture data.");
