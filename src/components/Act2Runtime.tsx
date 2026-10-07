@@ -15,6 +15,7 @@ import {
   prerequisiteCompletionCount,
   prepareAct2ProductionEntry,
   saveAct2RuntimeState,
+  updateAct2RuntimeState,
   withMotorboatName,
   withPresentedContribution,
   withSelectedProject,
@@ -354,12 +355,14 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
         backendWallet: selected.wallet,
         backendSyncError: "",
       }));
-      const current = await loadAct2RuntimeState();
-      const reconciliation = reconcileAct2BackendSnapshot(current, backend);
-      if (reconciliation.changed) {
-        await saveAct2RuntimeState(reconciliation.state);
-        if (control.isActive()) setState(reconciliation.state);
-      }
+      const reconciled = await updateAct2RuntimeState(
+        (current) => {
+          const reconciliation = reconcileAct2BackendSnapshot(current, backend);
+          return reconciliation.changed ? reconciliation.state : null;
+        },
+        { isActive: control.isActive },
+      );
+      if (control.isActive()) setState(reconciled);
     },
     onError: (_error, control) => {
       if (!control.isActive()) return;
