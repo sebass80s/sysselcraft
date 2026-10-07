@@ -51,7 +51,18 @@ function load(name) {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
   new Function("require", "module", "exports", source)(
-    path => path === "phaser" ? phaser : path === "@capacitor/preferences" ? { Preferences: preferences } : load(path.replace(/^\.\//, "")), record, record.exports);
+    path => {
+      if (path === "phaser") return phaser;
+      if (path === "@capacitor/preferences") return { Preferences: preferences };
+      if (path.startsWith("./") && name.includes("/")) {
+        const base = name.slice(0, name.lastIndexOf("/") + 1);
+        return load(`${base}${path.slice(2)}`);
+      }
+      return load(path.replace(/^\.\//, ""));
+    },
+    record,
+    record.exports,
+  );
   return record.exports;
 }
 const domain = load("construction");
