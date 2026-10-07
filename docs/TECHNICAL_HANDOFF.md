@@ -2255,3 +2255,28 @@ Vercel Git auto-deploy remains disabled. Ordinary Runtime work should not deploy
 Do not regenerate iOS and never run `npx cap add ios`.
 
 Point 5 persistence work must preserve child scoping, migration ownership, write ordering and successful-write-before-legacy-delete semantics. Backend quest lifecycle, wallet, rewards and earned-work evidence remain backend-authoritative.
+
+
+## Runtime 1.1 persistence checkpoint — 2026-10-07
+
+Verified code checkpoint:
+- `6f0acedd335e4b97913cc096b9d6ebd8c1300059`
+- GitHub Actions **#2275 SUCCESS**
+
+Runtime 1.1 status:
+- Shared Chapter Runtime Host: CLOSED;
+- Generic Progression / Project Engine: CLOSED;
+- Shared Story UI/sequencing/input/history/cards/choices: CLOSED;
+- Generic Story Purchase integration: CLOSED;
+- Generic chapter persistence host: CLOSED;
+- Shared backend synchronization/reconciliation: **NEXT / OPEN**;
+- Full World/Area Runtime Host: OPEN;
+- Common debug/acceptance harness: OPEN;
+- Empty Act 3 skeleton proof: OPEN.
+
+Persistence now has one shared child-scoped I/O owner. Act 2 is a consumer, and the neutral fuel-proof demonstrates that another chapter can migrate/load/save/clear by supplying only its persistence definition/domain rules.
+
+Required next order:
+`backend sync -> world/area host -> debug harness -> empty Act 3 proof -> automated/browser -> physical iPhone`.
+
+Do not start Act 3 gameplay, use Vercel for routine verification, or alter backend authority while extracting the backend synchronization host.
