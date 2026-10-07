@@ -1577,8 +1577,9 @@ assert.ok(
   "Act 2 Lake must consume the canonical World/Area viewport contract",
 );
 assert.ok(
-  act2LakeSource.includes("backgroundColor: WORLD_CAMERA.backgroundColor"),
-  "Act 2 Lake Phaser config must consume the canonical world background",
+  act2LakeSource.includes("backgroundColor: WORLD_CAMERA_BACKGROUND_COLOR")
+    && act2LakeSource.includes("configureWorldCamera("),
+  "Act 2 Lake must route canonical background and camera setup through the shared world camera host",
 );
 assert.ok(
   act2LakeSource.includes("worldInputEnabled({ enabled: requestedWorldInputEnabled"),
@@ -1589,9 +1590,9 @@ assert.ok(
   "Act 2 Lake must consume the shared World/Area movement-intent primitive",
 );
 assert.ok(
-  act2LakeSource.includes("WORLD_CAMERA.followLerpX")
-    && act2LakeSource.includes("worldCameraDeadzone(viewWidth)"),
-  "Act 2 Lake must consume the shared World/Area camera contract",
+  !act2LakeSource.includes("WORLD_CAMERA.followLerpX")
+    && !act2LakeSource.includes("worldCameraDeadzone(viewWidth)"),
+  "Act 2 Lake must not retain local camera tuning after shared-host migration",
 );
 assert.ok(
   act2LakeSource.includes("worldEntityDepth(this.player.y)")
@@ -1625,13 +1626,14 @@ assert.ok(
   "Village must consume the canonical World/Area viewport contract",
 );
 assert.ok(
-  villageGameSource.includes("backgroundColor: WORLD_CAMERA.backgroundColor"),
-  "Village Phaser config must consume the canonical world background",
+  villageGameSource.includes("backgroundColor: WORLD_CAMERA_BACKGROUND_COLOR")
+    && villageGameSource.includes("configureWorldCamera("),
+  "Village must route canonical background and camera setup through the shared world camera host",
 );
 assert.ok(
-  villageGameSource.includes("WORLD_CAMERA.followLerpX")
-    && villageGameSource.includes("worldCameraDeadzone(viewWidth)"),
-  "Village must consume the shared World/Area camera contract",
+  !villageGameSource.includes("WORLD_CAMERA.followLerpX")
+    && !villageGameSource.includes("worldCameraDeadzone(viewWidth)"),
+  "Village must not retain local camera tuning after shared-host migration",
 );
 assert.ok(
   villageGameSource.includes("worldEntityDepth(this.player.y)")
