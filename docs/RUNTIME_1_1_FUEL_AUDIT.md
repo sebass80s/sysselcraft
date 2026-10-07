@@ -536,3 +536,21 @@ Open fuel-principle backlog, in required order:
 - item 9 empty Act 3 skeleton proof;
 - then full automated/browser closeout;
 - physical iPhone update-in-place acceptance last.
+
+
+## Verified checkpoint: Shared backend synchronization/reconciliation — 2026-10-07
+
+Verified code HEAD: `9c6b0661879374ed85e166b2b314a202eb685751`
+
+GitHub Actions: **#2300 SUCCESS** on that exact SHA.
+
+Runtime 1.1 fuel-principle item 6 is closed.
+
+Shared runtime now owns canonical backend authority snapshots, paired-child/backend loading, polling lifecycle, in-flight serialization, React cleanup and stale-response cancellation. Act 2 consumes the shared source/host and keeps only chapter-specific selectors and reconciliation policy.
+
+Fuel-principle result:
+- a future chapter does not implement a second pairing lookup + backend poll loop;
+- wallet/progression/world ownership enters chapter code through one shared snapshot boundary;
+- chapter code decides only how its own presentation state reacts to that authoritative snapshot.
+
+Next: item 7, Full World/Area Runtime Host.
