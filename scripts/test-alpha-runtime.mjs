@@ -78,7 +78,7 @@ async function pageSetup(noConfig=false,native=false){
   localStorage.setItem('CapacitorStorage.sysselcraft.backend.childId','child-one');
   window.CapacitorCustomPlatform={name:'ios'};
  },{storageKey,token,exp});
- let state='available', reward=0, nextDay=false, submissions=0, reads=0, holdNext=false, releaseOld, held;
+ let state='active', reward=0, nextDay=false, submissions=0, reads=0, holdNext=false, releaseOld, held;
  const childReads=[];
  const row=(id,child,state)=>({instance_id:id,quest_id:'daily-definition',household_id:'household',child_id:child,title:child==='child-two'?'Second child quest':'Daily alpha quest',description:'Mock occurrence',progression_class:'community',reward_diamonds:2,reward_syssel_bux:3,state,created_at:new Date().toISOString()});
  await page.route(url+'/**',async route=>{
@@ -91,7 +91,7 @@ async function pageSetup(noConfig=false,native=false){
    submissions++;assert.equal(args.p_instance_id,'day-one');state='pending';result=null;
   } else if(u.pathname.endsWith('/list_child_quests')) {
    reads++;childReads.push(args.p_child_id);
-   result=args.p_child_id==='child-two'?[row('other-day','child-two','available')]:[row('day-one','child-one',state),...(nextDay?[row('day-two','child-one','available')]:[])];
+   result=args.p_child_id==='child-two'?[row('other-day','child-two','available')]:[row('day-one','child-one',state),...(nextDay?[row('day-two','child-one','active')]:[])];
    if(holdNext){holdNext=false;held=true;await new Promise(resolve=>releaseOld=resolve);}
   } else if(u.pathname.endsWith('/child_game_state')) result={child_id:'child-one',diamonds:reward,syssel_bux:reward?3:0,progression:{},world_flags:{}};
    else if(u.pathname.endsWith('/children')) result={display_name:'Alpha child'};
