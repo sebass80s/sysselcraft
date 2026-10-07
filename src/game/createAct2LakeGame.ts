@@ -1,4 +1,4 @@
-import type { GameObjects, Input, Types } from "phaser";
+import type { GameObjects, Input } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled } from "../runtime/interaction/interactionContract";
 import { configureWorldCamera } from "../runtime/world/worldCameraHost";
