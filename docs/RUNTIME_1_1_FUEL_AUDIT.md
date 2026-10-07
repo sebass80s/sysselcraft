@@ -507,3 +507,32 @@ After item 9: full automated/browser regression, then physical iPhone update-in-
 The empty-next-chapter answer is now substantially better than at audit creation, but it is still **not yet “fuel only”** because persistence, backend sync, full area hosting and debug tooling remain chapter-local enough to force new engine work.
 
 Do not reopen items 1–4 without concrete repo evidence of a regression or an empty-Act3 proof exposing a missing generic responsibility.
+
+
+## Verified checkpoint: Generic chapter persistence host — 2026-10-07
+
+Verified code HEAD: `6f0acedd335e4b97913cc096b9d6ebd8c1300059`
+
+GitHub Actions: **#2275 SUCCESS** on that exact SHA.
+
+Runtime 1.1 fuel-principle item 5 is closed.
+
+Implemented and verified:
+- `src/runtime/save/chapterPersistence.ts` owns child-scoped Preferences I/O, canonical key construction, ordered load/save/clear, strict decode, safe legacy-key migration and generic migration/normalization hosting;
+- destructive legacy cleanup occurs only after a successful canonical scoped write;
+- failed canonical writes preserve durable legacy bytes;
+- Act 2 delegates persistence plumbing to the shared host while retaining chapter-owned state shape, defaults, normalizer, finale/schema migrations and domain invariants;
+- stale Act 2 test harnesses were migrated from direct `@capacitor/preferences` assumptions to the shared persistence boundary;
+- a neutral future-chapter fixture proves migrate/load/save/clear without chapter-owned storage code or a `Preferences` import.
+
+Fuel-principle result:
+- a future chapter supplies persistence definition/config plus chapter-domain state rules;
+- it does not implement another `loadActXRuntimeState/saveActXRuntimeState` storage engine.
+
+Open fuel-principle backlog, in required order:
+- item 6 shared backend synchronization/reconciliation;
+- item 7 full World/Area Runtime Host;
+- item 8 common debug/acceptance harness;
+- item 9 empty Act 3 skeleton proof;
+- then full automated/browser closeout;
+- physical iPhone update-in-place acceptance last.
