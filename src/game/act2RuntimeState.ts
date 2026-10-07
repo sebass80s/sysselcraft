@@ -1,4 +1,7 @@
-import { createChapterPersistenceHost } from "../runtime/save/chapterPersistence";
+import {
+  createChapterPersistenceHost,
+  type ChapterPersistenceOperationGuard,
+} from "../runtime/save/chapterPersistence";
 import { runSequentialMigrations } from "../runtime/save/migrations";
 import { progressGateRequired } from "../runtime/progression/progressGate";
 import {
@@ -662,6 +665,15 @@ const act2Persistence = createChapterPersistenceHost<Act2RuntimeState>({
   normalize: normalizeAct2RuntimeState,
 });
 
-export const loadAct2RuntimeState = () => act2Persistence.load();
-export const saveAct2RuntimeState = (state: Act2RuntimeState) => act2Persistence.save(state);
-export const clearAct2RuntimeStateForPairedChild = () => act2Persistence.clear();
+export const loadAct2RuntimeState = (guard?: ChapterPersistenceOperationGuard) =>
+  act2Persistence.load(guard);
+export const saveAct2RuntimeState = (
+  state: Act2RuntimeState,
+  guard?: ChapterPersistenceOperationGuard,
+) => act2Persistence.save(state, guard);
+export const updateAct2RuntimeState = (
+  updater: (state: Act2RuntimeState) => Act2RuntimeState | null | Promise<Act2RuntimeState | null>,
+  guard?: ChapterPersistenceOperationGuard,
+) => act2Persistence.update(updater, guard);
+export const clearAct2RuntimeStateForPairedChild = (guard?: ChapterPersistenceOperationGuard) =>
+  act2Persistence.clear(guard);
