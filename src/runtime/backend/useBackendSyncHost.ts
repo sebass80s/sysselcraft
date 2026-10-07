@@ -25,9 +25,11 @@ export function useBackendSyncHost<T>({
   const onSnapshotRef = useRef(onSnapshot);
   const onErrorRef = useRef(onError);
 
-  loadSnapshotRef.current = loadSnapshot;
-  onSnapshotRef.current = onSnapshot;
-  onErrorRef.current = onError;
+  useEffect(() => {
+    loadSnapshotRef.current = loadSnapshot;
+    onSnapshotRef.current = onSnapshot;
+    onErrorRef.current = onError;
+  }, [loadSnapshot, onSnapshot, onError]);
 
   useEffect(() => {
     if (!active) return;
