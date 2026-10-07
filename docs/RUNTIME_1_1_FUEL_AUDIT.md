@@ -554,3 +554,39 @@ Fuel-principle result:
 - chapter code decides only how its own presentation state reacts to that authoritative snapshot.
 
 Next: item 7, Full World/Area Runtime Host.
+
+
+## 2026-10-07 Runtime 1.1 update — World / Area Runtime Host CLOSED
+
+Verified code checkpoint:
+- `f1e3136fbac4ac8fe54c3c474de5818c71916755`
+- GitHub Actions **#2343 SUCCESS** on that exact SHA.
+
+The earlier P0 World / Area gap is now closed at the engine boundary.
+
+Shared/common runtime ownership now includes:
+- chapter-world mount/sync/destroy lifecycle;
+- Phaser game/bootstrap/config;
+- canonical camera setup;
+- canonical player/dog creation and visual footprint;
+- cursor/WASD binding and normalized direction snapshots;
+- shared viewport/depth primitives;
+- shared interaction resolution/markers/world-input authority.
+
+Village and Lake both consume these common primitives.
+
+Intentionally area-specific, and therefore valid fuel/adapters rather than engine duplication:
+- world maps, assets and placements;
+- collision geometry;
+- Village A* versus Lake direct movement;
+- authored world bounds;
+- movement feel and dog-follow tuning;
+- unique NPC/world interactions.
+
+This means a future area may still provide an area adapter and movement/collision strategy, but must not recreate established Phaser bootstrap, camera, actor or directional-input plumbing.
+
+Runtime 1.1 remains incomplete because the next fuel blockers are:
+1. common chapter debug / acceptance harness;
+2. empty Act 3 skeleton proof;
+3. full automated/browser closeout;
+4. final physical iPhone update-in-place acceptance.
