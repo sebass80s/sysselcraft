@@ -57,6 +57,10 @@ import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../ru
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
 import { createBackendAuthoritySnapshot } from "../runtime/backend/backendSync";
 import { useBackendSyncHost } from "../runtime/backend/useBackendSyncHost";
+import {
+  reconcileAct2BackendSnapshot,
+  selectAct2BackendContext,
+} from "../game/act2BackendSyncAdapter";
 
 
 
@@ -380,24 +384,19 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     },
     onSnapshot: async (backend, control) => {
       if (!control.isActive()) return;
-      backendWorldProgressionRef.current = backend.progression.worldProgression;
+      const selected = selectAct2BackendContext(backend);
+      backendWorldProgressionRef.current = selected.worldProgression;
       setRuntimeContext((current) => ({
         ...current,
-        backendWorldProgression: backend.progression.worldProgression,
-        backendWallet: backend.wallet,
+        backendWorldProgression: selected.worldProgression,
+        backendWallet: selected.wallet,
         backendSyncError: "",
       }));
       const current = await loadAct2RuntimeState();
-      let next = withBackendClaimBaseline(current, backend.progression.worldProgression);
-      next = withBackendStoryFlags(next, backend.worldFlags);
-      const stateChanged =
-        next.backendClaimBaseline !== current.backendClaimBaseline
-        || next.jettyLifebuoyOwned !== current.jettyLifebuoyOwned
-        || next.boathouseSteeringWheelOwned !== current.boathouseSteeringWheelOwned
-        || next.motorboatPartsOwned !== current.motorboatPartsOwned;
-      if (stateChanged) {
-        await saveAct2RuntimeState(next);
-        if (control.isActive()) setState(next);
+      const reconciliation = reconcileAct2BackendSnapshot(current, backend);
+      if (reconciliation.changed) {
+        await saveAct2RuntimeState(reconciliation.state);
+        if (control.isActive()) setState(reconciliation.state);
       }
     },
     onError: (_error, control) => {
