@@ -11,10 +11,28 @@ export type ChapterPersistenceDefinition<T> = {
   normalize: (value: unknown) => T | null;
 };
 
+export type ChapterPersistenceOperationGuard = {
+  isActive?: () => boolean;
+};
+
 export type ChapterPersistenceHost<T> = {
-  load: () => Promise<T>;
-  save: (state: T) => Promise<void>;
-  clear: () => Promise<void>;
+  load: (guard?: ChapterPersistenceOperationGuard) => Promise<T>;
+  save: (state: T, guard?: ChapterPersistenceOperationGuard) => Promise<void>;
+  update: (
+    updater: (state: T) => T | null | Promise<T | null>,
+    guard?: ChapterPersistenceOperationGuard,
+  ) => Promise<T>;
+  clear: (guard?: ChapterPersistenceOperationGuard) => Promise<void>;
+};
+
+type PersistenceTarget = {
+  childId: string | null;
+  key: string;
+};
+
+type ReadResult<T> = {
+  state: T;
+  legacySourceKey: string | null;
 };
 
 const DEFAULT_CHILD_ID_STORAGE_KEY = "sysselcraft.backend.childId";
@@ -52,6 +70,36 @@ export function createChapterPersistenceHost<T>(
     return childId || null;
   }
 
+  async function captureTarget(): Promise<PersistenceTarget> {
+    const childId = await pairedChildId();
+    return {
+      childId,
+      key: childId
+        ? scopedKey(definition.storageKey, childId)
+        : definition.legacyStorageKey ?? definition.storageKey,
+    };
+  }
+
+  function assertGuardActive(guard?: ChapterPersistenceOperationGuard) {
+    if (guard?.isActive && !guard.isActive()) {
+      throw new Error(`Stale chapter persistence operation for ${definition.chapterId}`);
+    }
+  }
+
+  async function assertTargetCurrent(
+    target: PersistenceTarget,
+    guard?: ChapterPersistenceOperationGuard,
+  ) {
+    assertGuardActive(guard);
+    const currentChildId = await pairedChildId();
+    assertGuardActive(guard);
+    if (currentChildId !== target.childId) {
+      throw new Error(
+        `Stale chapter persistence identity for ${definition.chapterId}`,
+      );
+    }
+  }
+
   function decode(raw: string, key: string): T {
     let candidate: unknown;
     try {
@@ -68,55 +116,128 @@ export function createChapterPersistenceHost<T>(
     return normalized;
   }
 
-  async function loadNow(): Promise<T> {
-    const childId = await pairedChildId();
-    const legacyKey = definition.legacyStorageKey ?? definition.storageKey;
+  async function readTarget(
+    target: PersistenceTarget,
+    guard?: ChapterPersistenceOperationGuard,
+  ): Promise<ReadResult<T>> {
+    await assertTargetCurrent(target, guard);
 
-    if (!childId) {
-      const stored = await Preferences.get({ key: legacyKey });
-      return stored.value === null
-        ? definition.createDefaultState()
-        : decode(stored.value, legacyKey);
+    const stored = await Preferences.get({ key: target.key });
+    assertGuardActive(guard);
+    if (stored.value !== null) {
+      return {
+        state: decode(stored.value, target.key),
+        legacySourceKey: null,
+      };
     }
 
-    const key = scopedKey(definition.storageKey, childId);
-    const scoped = await Preferences.get({ key });
-    if (scoped.value !== null) return decode(scoped.value, key);
-
-    if (!definition.legacyStorageKey) return definition.createDefaultState();
+    if (!target.childId || !definition.legacyStorageKey) {
+      return {
+        state: definition.createDefaultState(),
+        legacySourceKey: null,
+      };
+    }
 
     const legacy = await Preferences.get({ key: definition.legacyStorageKey });
-    if (legacy.value === null) return definition.createDefaultState();
+    assertGuardActive(guard);
+    if (legacy.value === null) {
+      return {
+        state: definition.createDefaultState(),
+        legacySourceKey: null,
+      };
+    }
 
-    const migratedState = decode(legacy.value, definition.legacyStorageKey);
-    await Preferences.set({ key, value: JSON.stringify(migratedState) });
-    await Preferences.remove({ key: definition.legacyStorageKey });
-    return migratedState;
+    return {
+      state: decode(legacy.value, definition.legacyStorageKey),
+      legacySourceKey: definition.legacyStorageKey,
+    };
   }
 
-  async function saveNow(state: T): Promise<void> {
-    const childId = await pairedChildId();
-    const key = childId
-      ? scopedKey(definition.storageKey, childId)
-      : definition.legacyStorageKey ?? definition.storageKey;
+  async function writeTarget(
+    target: PersistenceTarget,
+    state: T,
+    guard?: ChapterPersistenceOperationGuard,
+  ) {
     const normalized = definition.normalize(state);
     if (!normalized) {
       throw new Error(`Refusing to persist invalid state for ${definition.chapterId}`);
     }
-    await Preferences.set({ key, value: JSON.stringify(normalized) });
+
+    await assertTargetCurrent(target, guard);
+    await Preferences.set({ key: target.key, value: JSON.stringify(normalized) });
+    return normalized;
   }
 
-  async function clearNow(): Promise<void> {
-    const childId = await pairedChildId();
-    const key = childId
-      ? scopedKey(definition.storageKey, childId)
-      : definition.legacyStorageKey ?? definition.storageKey;
-    await Preferences.remove({ key });
+  async function removeLegacyAfterCanonicalWrite(
+    target: PersistenceTarget,
+    legacySourceKey: string | null,
+    guard?: ChapterPersistenceOperationGuard,
+  ) {
+    if (!legacySourceKey || legacySourceKey === target.key) return;
+    await assertTargetCurrent(target, guard);
+    await Preferences.remove({ key: legacySourceKey });
+  }
+
+  async function loadForTarget(
+    target: PersistenceTarget,
+    guard?: ChapterPersistenceOperationGuard,
+  ): Promise<T> {
+    const read = await readTarget(target, guard);
+
+    if (read.legacySourceKey) {
+      const normalized = await writeTarget(target, read.state, guard);
+      await removeLegacyAfterCanonicalWrite(target, read.legacySourceKey, guard);
+      await assertTargetCurrent(target, guard);
+      return normalized;
+    }
+
+    await assertTargetCurrent(target, guard);
+    return read.state;
+  }
+
+  async function updateForTarget(
+    target: PersistenceTarget,
+    updater: (state: T) => T | null | Promise<T | null>,
+    guard?: ChapterPersistenceOperationGuard,
+  ): Promise<T> {
+    const read = await readTarget(target, guard);
+    assertGuardActive(guard);
+    const next = await updater(read.state);
+    assertGuardActive(guard);
+
+    if (next === null) {
+      await assertTargetCurrent(target, guard);
+      return read.state;
+    }
+
+    const normalized = await writeTarget(target, next, guard);
+    await removeLegacyAfterCanonicalWrite(target, read.legacySourceKey, guard);
+    await assertTargetCurrent(target, guard);
+    return normalized;
   }
 
   return {
-    load: () => runOrdered(loadNow),
-    save: (state) => runOrdered(() => saveNow(state)),
-    clear: () => runOrdered(clearNow),
+    load: (guard) => {
+      const target = captureTarget();
+      return runOrdered(async () => loadForTarget(await target, guard));
+    },
+    save: (state, guard) => {
+      const target = captureTarget();
+      return runOrdered(async () => {
+        await writeTarget(await target, state, guard);
+      });
+    },
+    update: (updater, guard) => {
+      const target = captureTarget();
+      return runOrdered(async () => updateForTarget(await target, updater, guard));
+    },
+    clear: (guard) => {
+      const target = captureTarget();
+      return runOrdered(async () => {
+        const resolved = await target;
+        await assertTargetCurrent(resolved, guard);
+        await Preferences.remove({ key: resolved.key });
+      });
+    },
   };
 }
