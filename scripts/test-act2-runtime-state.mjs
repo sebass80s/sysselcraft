@@ -675,7 +675,11 @@ assert.ok(lakeGameSource.includes("private isWaterAt"), "Act 2 runtime must cent
 assert.ok(lakeGameSource.includes("if (!this.isWalkable(target.x, target.y)) return;"), "touch movement must reject blocked water targets");
 assert.ok(lakeGameSource.includes("if (this.isWalkable(nextX, this.player.y))"), "keyboard movement must share the same world collision");
 assert.ok(lakeGameSource.includes("if (this.isWalkable(nextDogX, this.dog.y))"), "Valpen must use the same world collision instead of drifting into water or buildings");
-assert.ok(lakeGameSource.includes('this.add.image(815, 515, "act2-child")'), "Act 2 debug/runtime spawn must start on accepted land, not in the lake");
+assert.match(
+  lakeGameSource,
+  /createWorldPlayer\(this, \{[\s\S]*x: 815,[\s\S]*y: 515,[\s\S]*texture: "act2-child"/,
+  "Act 2 debug/runtime spawn must start on accepted land, not in the lake",
+);
 
 
 const page = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
