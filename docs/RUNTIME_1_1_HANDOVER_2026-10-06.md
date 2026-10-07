@@ -7,11 +7,11 @@ Verifiera repo-verkligheten innan du ändrar någonting.
 Repository: `sebass80s/sysselcraft`  
 Branch: `nova/runtime-architecture-v1`
 
-Senast verifierade branch-HEAD när denna handover skrevs:
+Senast verifierade kodcheckpoint:
 
-`eb7df728adea783c676fe697738be62200430fc9`
+`6f0acedd335e4b97913cc096b9d6ebd8c1300059`
 
-GitHub Actions **#2252: SUCCESS** på exakt den SHA:n.
+GitHub Actions **#2275: SUCCESS** på exakt den SHA:n.
 
 Den senaste verifierade kodcheckpointen före docs-closeout är:
 
@@ -131,32 +131,29 @@ Fuel-test result:
 
 Fortsätt i denna ordning. Hoppa inte till Act 3 gameplay.
 
-### 5. Generic chapter persistence host — NÄSTA
+### 5. Generic chapter persistence host — STÄNGD ✅
 
-Detta är nästa konkreta slice.
+Verifierad kodcheckpoint:
+- `6f0acedd335e4b97913cc096b9d6ebd8c1300059`
+- GitHub Actions **#2275 SUCCESS** på exakt den SHA:n.
 
-Nuvarande problem:
-- `act2RuntimeState.ts` äger fortfarande direkt Capacitor Preferences;
-- child-scoped key;
-- legacy-key migration;
-- parse/normalize;
-- load/save/clear.
+Shared persistence äger nu:
+- child-scoped Preferences I/O och canonical key construction;
+- ordered load/save/clear;
+- strict unreadable/unsupported persisted-state handling;
+- safe legacy-key migration;
+- canonical write före destruktiv legacy cleanup;
+- chapter-supplied migration + normalization hosting.
 
-Målet:
-- shared child-scoped chapter persistence infrastructure;
-- chapter config anger key/id/version/default/normalizer/migrations;
-- chapter fields förblir chapter-data;
-- lagringen, write ordering, successful-write-before-legacy-delete och clear/load/save-mekanik ska inte kopieras till Act 3.
+Act 2 är migrerad till shared hosten och äger fortfarande endast sin state-shape, defaults, normalizer, finale/schema migrationer och chapter-specifika invariants.
 
-Läs först:
-- `docs/STATE_OWNERSHIP.md`
-- `docs/SAVE_COMPATIBILITY_AUDIT.md`
-- nuvarande `act2RuntimeState.ts`
-- befintliga save/migration primitives.
+Fuel-proof:
+- en neutral framtida chapter-definition under `scripts/fixtures/chapter-persistence-fuel-proof.ts` kan migrate/load/save/clear via shared hosten utan egen `Preferences`-kod;
+- fuel-proofen är regressionstäckt i `test:chapter-persistence`.
 
-Rör inte backend-owned quest/wallet evidence.
+Backend-owned quest/wallet/earned-work evidence är oförändrat auktoritativt.
 
-### 6. Shared backend synchronization/reconciliation
+### 6. Shared backend synchronization/reconciliation — NÄSTA
 
 Act 2 ska inte äga en egen pollingloop för samma backend authority.
 
@@ -313,10 +310,10 @@ Undvik att lägga fem regex-guards för samma implementation i fem filer.
    - `docs/STATE_OWNERSHIP.md`
    - `docs/SAVE_COMPATIBILITY_AUDIT.md`
    - `docs/TECHNICAL_HANDOFF.md`
-5. Starta Runtime 1.1 punkt 5: generic chapter persistence host.
-6. Gör det i små slices. Första slice bör vara audit/contract, inte en massiv flytt av `act2RuntimeState.ts`.
-7. Stäng inte punkt 5 förrän en framtida chapter state kan load/save/clear/migrate utan en ny storage implementation.
-8. Gå därefter i ordning 6 -> 7 -> 8 -> 9 -> automated/browser -> fysisk iPhone.
+5. Punkt 5 är stängd på `6f0acedd335e4b97913cc096b9d6ebd8c1300059` / CI #2275 SUCCESS.
+6. Starta Runtime 1.1 punkt 6: shared backend synchronization/reconciliation med audit/contract först.
+7. Bevara backend authority och centralisera polling/subscription lifecycle, cancellation, stale-response safety och snapshots utan att flytta chapter selectors/reconciliation policy till transportlagret.
+8. Gå därefter i ordning 7 -> 8 -> 9 -> automated/browser -> fysisk iPhone.
 
 ## Slutstatus
 
@@ -327,9 +324,9 @@ Stängt:
 - 2 Generic Progression / Project Engine ✅
 - 3 Shared Story UI / sequencing / inputs / history / cards / choices ✅
 - 4 Generic Story Purchase integration ✅
+- 5 Generic chapter persistence host ✅
 
 Öppet:
-- 5 Generic chapter persistence host
 - 6 Shared backend synchronization/reconciliation
 - 7 Full World/Area Runtime Host
 - 8 Common debug/acceptance harness
