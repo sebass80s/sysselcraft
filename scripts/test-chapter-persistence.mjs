@@ -177,7 +177,11 @@ await identityWriteStarted;
 const queuedForA = identityHost.save({ version: 1, seen: true, counter: 2 });
 values.set("sysselcraft.backend.childId", "child-b");
 releaseIdentityWrite();
-await inFlightForA;
+await assert.rejects(
+  inFlightForA,
+  /Stale chapter persistence identity/,
+  "an in-flight write must roll back if the paired child changes before completion",
+);
 await assert.rejects(
   queuedForA,
   /Stale chapter persistence identity/,
@@ -210,6 +214,51 @@ await assert.rejects(
   guarded,
   /Stale chapter persistence operation/,
   "stopped runtime work must not land a queued persistence write",
+);
+
+// A lifecycle guard also rolls back a write that becomes stale while Preferences.set is in flight.
+values.clear();
+writes.length = 0;
+values.set("sysselcraft.backend.childId", "child-a");
+const guardedHost = host();
+const guardedBaseline = JSON.stringify({ version: 1, seen: false, counter: 8 });
+values.set("sysselcraft.chapter.test.v1.child-a", guardedBaseline);
+let releaseInFlightGuardWrite;
+let markInFlightGuardWriteStarted;
+const inFlightGuardWriteStarted = new Promise(resolve => { markInFlightGuardWriteStarted = resolve; });
+holdNextWrite = new Promise(resolve => { releaseInFlightGuardWrite = resolve; });
+notifyHeldWriteStarted = markInFlightGuardWriteStarted;
+let inFlightActive = true;
+const inFlightGuardedSave = guardedHost.save(
+  { version: 1, seen: true, counter: 9 },
+  { isActive: () => inFlightActive, expectedChildId: "child-a" },
+);
+await inFlightGuardWriteStarted;
+inFlightActive = false;
+releaseInFlightGuardWrite();
+await assert.rejects(
+  inFlightGuardedSave,
+  /Stale chapter persistence operation/,
+  "a write that becomes stale during native persistence must reject",
+);
+assert.equal(
+  values.get("sysselcraft.chapter.test.v1.child-a"),
+  guardedBaseline,
+  "a stale in-flight write must restore the exact previous durable bytes",
+);
+
+await assert.rejects(
+  guardedHost.save(
+    { version: 1, seen: true, counter: 10 },
+    { expectedChildId: "child-b" },
+  ),
+  /Stale chapter persistence identity/,
+  "authoritative work for child B must never write while child A is paired",
+);
+assert.equal(
+  values.get("sysselcraft.chapter.test.v1.child-a"),
+  guardedBaseline,
+  "expected-child rejection must not mutate the currently paired child's bytes",
 );
 
 // update() owns read -> transform -> write as one ordered operation.
