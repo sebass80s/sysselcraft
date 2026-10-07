@@ -683,6 +683,11 @@ assert.match(
 
 
 const page = fs.readFileSync(new URL("../src/components/Act2Runtime.tsx", import.meta.url), "utf8");
+const act2DebugFixtureSource = fs.readFileSync(new URL("../src/game/act2DebugFixture.ts", import.meta.url), "utf8");
+assert.match(page, /launchChapterDebug\(\s*ACT2_DEBUG_FIXTURE/, "Act 2 debug boot must delegate launch/session ownership to the shared chapter debug harness");
+assert.match(page, /resetChapterDebugState\(ACT2_DEBUG_FIXTURE\)/, "Act 2 debug reset must delegate to the shared chapter debug harness");
+assert.match(act2DebugFixtureSource, /chapterId: "act2"/, "Act 2 debug-specific state must live in a registered fixture rather than the shared harness");
+assert.match(act2DebugFixtureSource, /backendWorldProgression: 999/, "Act 2 synthetic debug progression must remain fixture-owned");
 const act2RuntimeAdapterSource = fs.readFileSync(new URL("../src/game/act2RuntimeAdapter.ts", import.meta.url), "utf8");
 const act2OpeningStorySource = fs.readFileSync(new URL("../src/game/act2OpeningStory.ts", import.meta.url), "utf8");
 const act2AlveStorySource = fs.readFileSync(new URL("../src/game/act2AlveStory.ts", import.meta.url), "utf8");
