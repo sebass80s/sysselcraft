@@ -9,9 +9,9 @@ Branch: `nova/runtime-architecture-v1`
 
 Senast verifierade kodcheckpoint:
 
-`c224761399e057a681d241a2b7541df74cc887c2`
+`860f5856f1d6574c71b183a0d75ef146c5865953`
 
-GitHub Actions **#2359: SUCCESS** på exakt den SHA:n.
+GitHub Actions **#2370: SUCCESS** på exakt den SHA:n.
 
 Den senaste verifierade kodcheckpointen före docs-closeout är:
 
@@ -221,22 +221,22 @@ Act 2 konsumerar shared harnessen genom `ACT2_DEBUG_FIXTURE`. Synthetic debug pr
 
 Fuel-proofen använder dessutom en neutral framtida chapter-fixture för launch/reset/inspection/probes utan Act 2-speciallogik.
 
-### 9. Empty Act 3 skeleton proof
+### 9. Empty Act 3 skeleton proof — STÄNGD ✅
 
-Detta är arkitekturens syratest.
+Verifierad kodcheckpoint:
+- `860f5856f1d6574c71b183a0d75ef146c5865953`
+- GitHub Actions **#2370 SUCCESS** på exakt den SHA:n.
 
-Bygg ett minimalt tomt Act 3 som endast använder:
-- chapter registration/metadata;
-- versioned chapter state via shared persistence;
-- story/content definitions;
-- project/progression definitions om det behövs;
-- purchase definitions om det behövs;
-- world/area data/adapters;
-- genuinely unique mechanics only.
+Det tomma Act 3-skelettet använder:
+- canonical chapter registration/metadata;
+- minimal versioned Act 3 state via shared chapter persistence;
+- shared Chapter Runtime Host och boundary;
+- shared debug/acceptance fixture, launcher, panel och probes;
+- samma production/debug skeleton utan Act 3 gameplay.
 
-Om tomma Act 3 kräver kopierad engine-logik är Runtime 1.1 fortfarande öppen.
+Focused fuel-regression `test:act3-empty-skeleton` ingår nu i full `npm run verify` och låser att Act 3 inte återintroducerar chapter-lokal Preferences, Supabase polling, Phaser bootstrap, progression engine eller Story Purchase plumbing.
 
-`/act3` är idag bara en read-only boundary/placeholder. Det finns ingen Act 3 gameplay-runtime ännu.
+`/act3` är fortfarande ett tomt arkitekturproof. Inget Act 3-gameplay eller innehåll har byggts.
 
 ### 10. Full automated + browser verification
 
@@ -337,7 +337,8 @@ Undvik att lägga fem regex-guards för samma implementation i fem filer.
 6. Punkt 6 är stängd på `9c6b0661879374ed85e166b2b314a202eb685751` / CI #2300 SUCCESS.
 7. Punkt 7 är stängd på `f1e3136fbac4ac8fe54c3c474de5818c71916755` / CI #2343 SUCCESS.
 8. Punkt 8 är stängd på `c224761399e057a681d241a2b7541df74cc887c2` / CI #2359 SUCCESS.
-9. Starta punkt 9: Empty Act 3 skeleton proof, endast arkitekturproof utan gameplay. Därefter automated/browser -> fysisk iPhone.
+9. Punkt 9 är stängd på `860f5856f1d6574c71b183a0d75ef146c5865953` / CI #2370 SUCCESS.
+10. Nästa gate är full automated/browser closeout. Fysisk iPhone först därefter.
 
 ## Slutstatus
 
@@ -352,10 +353,10 @@ Stängt:
 - 6 Shared backend synchronization/reconciliation ✅
 - 7 Full World/Area Runtime Host ✅
 - 8 Common debug/acceptance harness ✅
+- 9 Empty Act 3 proof ✅
 
 Öppet:
-- 9 Empty Act 3 proof
-- full automated/browser closeout
-- final physical iPhone update-in-place acceptance
+- 10 full automated/browser closeout
+- 11 final physical iPhone update-in-place acceptance
 
 Det viktigaste: börja inte bygga Act 3 gameplay ännu. Gör klart motorn tills tomma Act 3 kan vara bränsle, inte ännu ett specialbygge.
