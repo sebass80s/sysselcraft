@@ -2,7 +2,7 @@ import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
-import { WORLD_CAMERA, worldCameraDeadzone } from "../runtime/world/worldCamera";
+import { configureWorldCamera } from "../runtime/world/worldCameraHost";
 import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
@@ -190,8 +190,6 @@ export async function createVillageGame(
 
     create() {
       const camera = this.cameras.main;
-      camera.setBackgroundColor(WORLD_CAMERA.backgroundColor);
-      camera.setBounds(WORLD_MIN_X, 0, WORLD_WIDTH, WORLD_HEIGHT);
       this.drawVillage();
       this.player = this.add.image(REQUIRED_APPROACHES.spawn.x, REQUIRED_APPROACHES.spawn.y, "child-painted")
         .setOrigin(0.5, 0.94)
@@ -206,10 +204,12 @@ export async function createVillageGame(
         .setStrokeStyle(2, 0x6a754e, 0.55)
         .setVisible(false)
         .setDepth(900);
-      camera.centerOn(this.player.x, this.player.y);
-      camera.startFollow(this.player, true, WORLD_CAMERA.followLerpX, WORLD_CAMERA.followLerpY);
-      const cameraDeadzone = worldCameraDeadzone(viewWidth);
-      camera.setDeadzone(cameraDeadzone.width, cameraDeadzone.height);
+      configureWorldCamera(
+        camera,
+        { x: WORLD_MIN_X, y: 0, width: WORLD_WIDTH, height: WORLD_HEIGHT },
+        this.player,
+        viewWidth,
+      );
       this.createNoticeboardMarker();
       this.setQuestSourceAttention("noticeboard", requestedQuestSourceAttention.noticeboard);
       this.setQuestSourceAttention("linus", requestedQuestSourceAttention.linus);
