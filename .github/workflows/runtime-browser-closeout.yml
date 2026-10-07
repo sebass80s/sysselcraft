@@ -7,6 +7,7 @@ on:
       - ".github/workflows/runtime-browser-closeout.yml"
       - "scripts/test-runtime-1-1-browser.mjs"
       - "scripts/test-alpha-runtime.mjs"
+      - "src/**"
   workflow_dispatch:
 
 permissions:
