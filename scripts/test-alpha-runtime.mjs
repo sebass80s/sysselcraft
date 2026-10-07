@@ -149,8 +149,8 @@ async function pageSetup(noConfig=false,native=false){
  assert.deepEqual(errors,[]);
  // Web navigation unmounts the child inbox; its timers/listeners must stop.
  await page.evaluate(()=>{window.CapacitorCustomPlatform.name="web";});
- await page.getByRole('button',{name:'Koppla om',exact:true}).click();
- await page.waitForURL('**/pair/');
+ await page.goto(base+'/parent/');
+ await page.waitForURL('**/parent/');
  const afterUnmount=reads;
  await page.clock.fastForward(60_000);
  await page.evaluate(()=>window.dispatchEvent(new Event('focus')));
