@@ -2327,3 +2327,15 @@ GitHub Actions: **#2359 SUCCESS**
 Runtime 1.1 point 8 is closed. Shared launch/reset/state inspection/probes and debug launcher/panel are fixture-driven; Act 2 uses `ACT2_DEBUG_FIXTURE` and keeps only unique debug data/actions as extensions.
 
 Next item: point 9 Empty Act 3 skeleton architecture proof. No Act 3 gameplay.
+
+
+## Runtime 1.1 Empty Act 3 proof closeout — 2026-10-07
+
+Verified code checkpoint: `860f5856f1d6574c71b183a0d75ef146c5865953`  
+GitHub Actions: **#2370 SUCCESS**
+
+Runtime 1.1 point 9 is closed. `/act3` is an intentionally empty architecture proof using shared chapter persistence, shared chapter runtime hosting/boundary and shared debug/acceptance tooling. `test:act3-empty-skeleton` is part of full `npm run verify` and guards against recreating chapter-local engine plumbing.
+
+No Act 3 gameplay has been started.
+
+Next required gate: **full automated + browser verification**. After that, and only after that, perform the final physical iPhone update-in-place acceptance while preserving the existing save/backend.
