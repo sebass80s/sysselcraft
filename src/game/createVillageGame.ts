@@ -5,6 +5,7 @@ import { resolveInteraction, worldInputEnabled, type InteractionDefinition } fro
 import { configureWorldCamera } from "../runtime/world/worldCameraHost";
 import { createWorldGame } from "../runtime/world/worldGameHost";
 import { createWorldDog, createWorldPlayer } from "../runtime/world/worldActorHost";
+import { createWorldDirectionalInput, readWorldDirection, type WorldDirectionalInput } from "../runtime/world/worldDirectionalInput";
 import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
@@ -126,8 +127,7 @@ export async function createVillageGame(
     private dog?: GameObjects.Image;
     private path: Point[] = [];
     private movementStallFrames = 0;
-    private cursors?: Types.Input.Keyboard.CursorKeys;
-    private wasd?: Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
+    private directionalInput: WorldDirectionalInput | null = null;
     private targetMarker?: GameObjects.Arc;
     private noticeboardMarker?: GameObjects.Container;
     private backendLinusAttention = false;
@@ -229,10 +229,7 @@ export async function createVillageGame(
           if (!this.linus) return;
         },
       });
-      if (this.input.keyboard) {
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.wasd = this.input.keyboard.addKeys({ up: "W", down: "S", left: "A", right: "D" }) as Record<"up" | "down" | "left" | "right", Input.Keyboard.Key>;
-      }
+      this.directionalInput = createWorldDirectionalInput(this.input.keyboard);
       this.input.on("pointerdown", (pointer: Input.Pointer) => {
         if (!this.player || !this.acceptsWorldInput()) return;
         const recyclingPlacement = VISUAL_PRODUCTION_PLACEMENTS.find((placement) => placement.building === "recycling");
@@ -1095,12 +1092,11 @@ export async function createVillageGame(
     }
 
     private getKeyboardVector() {
-      const v = new Phaser.Math.Vector2();
-      if (this.cursors?.up.isDown || this.wasd?.up.isDown) v.y--;
-      if (this.cursors?.down.isDown || this.wasd?.down.isDown) v.y++;
-      if (this.cursors?.left.isDown || this.wasd?.left.isDown) v.x--;
-      if (this.cursors?.right.isDown || this.wasd?.right.isDown) v.x++;
-      return v;
+      const direction = readWorldDirection(this.directionalInput);
+      return new Phaser.Math.Vector2(
+        Number(direction.right) - Number(direction.left),
+        Number(direction.down) - Number(direction.up),
+      );
     }
 
     private tryMove(dx: number, dy: number) {
