@@ -1,4 +1,4 @@
-import { Preferences } from "@capacitor/preferences";
+import { createChapterPersistenceHost } from "../runtime/save/chapterPersistence";
 import { runSequentialMigrations } from "../runtime/save/migrations";
 import { progressGateRequired } from "../runtime/progression/progressGate";
 import {
@@ -62,18 +62,7 @@ export type Act2RuntimeState = {
   endCardSeen: boolean;
 };
 
-const LEGACY_KEY = "sysselcraft.act2.runtime.v1";
-const CHILD_ID_KEY = "sysselcraft.backend.childId";
-
-async function getAct2PairedChildId() {
-  const { value } = await Preferences.get({ key: CHILD_ID_KEY });
-  const childId = value?.trim() ?? "";
-  return childId || null;
-}
-
-function childRuntimeKey(childId: string) {
-  return `${LEGACY_KEY}.${childId}`;
-}
+const ACT2_STORAGE_KEY = "sysselcraft.act2.runtime.v1";
 const PROJECTS: Act2Project[] = ["cabin", "dock", "boathouse", "motorboat"];
 const ACT2_FINALE_SCHEMA_VERSION = 3 as const;
 
@@ -649,53 +638,15 @@ export function withPresentedContribution(
   });
 }
 
-function parseStoredAct2RuntimeState(value: string | null): Act2RuntimeState | null {
-  if (!value) return null;
-  try {
-    return normalizeAct2RuntimeState(JSON.parse(value));
-  } catch {
-    return null;
-  }
-}
+const act2Persistence = createChapterPersistenceHost<Act2RuntimeState>({
+  chapterId: "act2",
+  version: 1,
+  storageKey: ACT2_STORAGE_KEY,
+  legacyStorageKey: ACT2_STORAGE_KEY,
+  createDefaultState: createDefaultAct2RuntimeState,
+  normalize: normalizeAct2RuntimeState,
+});
 
-export async function loadAct2RuntimeState(): Promise<Act2RuntimeState> {
-  const childId = await getAct2PairedChildId();
-  if (!childId) {
-    const { value } = await Preferences.get({ key: LEGACY_KEY });
-    return parseStoredAct2RuntimeState(value) ?? createDefaultAct2RuntimeState();
-  }
-
-  const key = childRuntimeKey(childId);
-  const scoped = await Preferences.get({ key });
-  const scopedState = parseStoredAct2RuntimeState(scoped.value);
-  if (scopedState) return scopedState;
-
-  // One-time migration from the pre-account-scoped Act 2 save. The legacy
-  // value lives on this device, so assign it to the child currently paired
-  // on this device and remove the shared key before another child can inherit it.
-  const legacy = await Preferences.get({ key: LEGACY_KEY });
-  const legacyState = parseStoredAct2RuntimeState(legacy.value);
-  if (legacyState) {
-    await Preferences.set({ key, value: JSON.stringify(legacyState) });
-    await Preferences.remove({ key: LEGACY_KEY });
-    return legacyState;
-  }
-
-  return createDefaultAct2RuntimeState();
-}
-
-export async function saveAct2RuntimeState(state: Act2RuntimeState): Promise<void> {
-  const childId = await getAct2PairedChildId();
-  const key = childId ? childRuntimeKey(childId) : LEGACY_KEY;
-  await Preferences.set({ key, value: JSON.stringify(normalizeAct2RuntimeState(state)) });
-}
-
-
-export async function clearAct2RuntimeStateForPairedChild(): Promise<void> {
-  const childId = await getAct2PairedChildId();
-  if (!childId) {
-    await Preferences.remove({ key: LEGACY_KEY });
-    return;
-  }
-  await Preferences.remove({ key: childRuntimeKey(childId) });
-}
+export const loadAct2RuntimeState = () => act2Persistence.load();
+export const saveAct2RuntimeState = (state: Act2RuntimeState) => act2Persistence.save(state);
+export const clearAct2RuntimeStateForPairedChild = () => act2Persistence.clear();
