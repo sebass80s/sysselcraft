@@ -9,9 +9,9 @@ Branch: `nova/runtime-architecture-v1`
 
 Senast verifierade kodcheckpoint:
 
-`6f0acedd335e4b97913cc096b9d6ebd8c1300059`
+`f1e3136fbac4ac8fe54c3c474de5818c71916755`
 
-GitHub Actions **#2275: SUCCESS** på exakt den SHA:n.
+GitHub Actions **#2343: SUCCESS** på exakt den SHA:n.
 
 Den senaste verifierade kodcheckpointen före docs-closeout är:
 
@@ -175,28 +175,32 @@ Act 2 äger endast sin chapter-adapter:
 
 Boot-hydration och kontinuerlig polling använder samma shared authority source. Act 2 importerar inte längre pairing/backend transport eller snapshot construction direkt.
 
-### 7. Full World / Area Runtime Host — NÄSTA
+### 7. Full World / Area Runtime Host — STÄNGD ✅
 
-### 7. Full World / Area Runtime Host
+Verifierad kodcheckpoint:
+- `f1e3136fbac4ac8fe54c3c474de5818c71916755`
+- GitHub Actions **#2343 SUCCESS** på exakt den SHA:n.
 
-`useChapterWorldHost` stängde mount/sync/destroy-lifecycle men inte hela world engine.
+Shared World / Area runtime äger nu etablerad motorlogik för:
+- chapter-world mount/sync/destroy via `useChapterWorldHost`;
+- Phaser game/bootstrap/config via `createWorldGame`;
+- canonical camera background/bounds/follow/deadzone via `configureWorldCamera`;
+- player/dog creation + canonical visual footprint via `worldActorHost`;
+- shared cursor/WASD binding + direction snapshot via `worldDirectionalInput`;
+- shared viewport/depth primitives;
+- shared interaction resolution, markers och world-input authority.
 
-Återstår att dela tillräckligt av:
-- scene lifecycle;
-- player/dog creation/follow;
-- keyboard/touch plumbing;
-- camera follow;
-- common input enable/disable;
-- interaction plumbing;
-- labels/prompts;
-- common movement-loop lifecycle.
+Village och Lake konsumerar dessa shared primitives.
 
-Area-specifikt får förbli:
+Medvetet area-specifikt och **inte** ett öppet motorhål:
 - karta/assets/placements;
 - collision-data;
-- movement/navigation strategy, t.ex. A* i byn vs direkt lake movement.
+- Village A* kontra Lake direct movement;
+- authored world bounds;
+- movement feel och dog-follow tuning;
+- unika NPC/world interactions.
 
-Målet är att Act 3 inte ska behöva kopiera en ny `createAct3...Game.ts` för etablerad motorlogik.
+Fuel-gränsen är att ett framtida område får behöva world/area-data och movement/collision-adapter, men inte kopiera etablerad Phaser bootstrap, camera, actor eller directional-input plumbing.
 
 ### 8. Common chapter debug / acceptance harness
 
@@ -324,9 +328,9 @@ Undvik att lägga fem regex-guards för samma implementation i fem filer.
    - `docs/TECHNICAL_HANDOFF.md`
 5. Punkt 5 är stängd på `6f0acedd335e4b97913cc096b9d6ebd8c1300059` / CI #2275 SUCCESS.
 6. Punkt 6 är stängd på `9c6b0661879374ed85e166b2b314a202eb685751` / CI #2300 SUCCESS.
-7. Starta Runtime 1.1 punkt 7: Full World/Area Runtime Host med audit/contract först.
-8. Centralisera endast bevisat gemensam scene/player/dog/input/camera/interaction/lifecycle-logik. Lämna karta, assets, collision-data och movement/navigation strategy area-specifikt.
-9. Gå därefter i ordning 8 -> 9 -> automated/browser -> fysisk iPhone.
+7. Punkt 7 är stängd på `f1e3136fbac4ac8fe54c3c474de5818c71916755` / CI #2343 SUCCESS.
+8. Starta Runtime 1.1 punkt 8: Common chapter debug / acceptance harness.
+9. Därefter punkt 9 Empty Act 3 skeleton proof -> automated/browser -> fysisk iPhone.
 
 ## Slutstatus
 
@@ -339,9 +343,9 @@ Stängt:
 - 4 Generic Story Purchase integration ✅
 - 5 Generic chapter persistence host ✅
 - 6 Shared backend synchronization/reconciliation ✅
+- 7 Full World/Area Runtime Host ✅
 
 Öppet:
-- 7 Full World/Area Runtime Host
 - 8 Common debug/acceptance harness
 - 9 Empty Act 3 proof
 - full automated/browser closeout
