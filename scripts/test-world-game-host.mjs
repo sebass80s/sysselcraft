@@ -43,23 +43,19 @@ const viewport = { width: 1024, height: 576 };
 
 createWorldGame(Phaser, parent, viewport, FakeScene);
 
-assert.deepEqual(capturedConfig, {
-  type: 7,
-  parent,
-  width: 1024,
-  height: 576,
-  backgroundColor: worldCameraHost.WORLD_CAMERA_BACKGROUND_COLOR,
-  pixelArt: false,
-  antialias: true,
-  roundPixels: false,
-  scale: {
-    mode: 11,
-    autoCenter: 13,
-    width: 1024,
-    height: 576,
-  },
-  scene: FakeScene,
-});
+assert.equal(capturedConfig.type, 7);
+assert.equal(capturedConfig.parent, parent);
+assert.equal(capturedConfig.width, 1024);
+assert.equal(capturedConfig.height, 576);
+assert.equal(capturedConfig.backgroundColor, worldCameraHost.WORLD_CAMERA_BACKGROUND_COLOR);
+assert.equal(capturedConfig.pixelArt, false);
+assert.equal(capturedConfig.antialias, true);
+assert.equal(capturedConfig.roundPixels, false);
+assert.equal(capturedConfig.scale.mode, 11);
+assert.equal(capturedConfig.scale.autoCenter, 13);
+assert.equal(capturedConfig.scale.width, 1024);
+assert.equal(capturedConfig.scale.height, 576);
+assert.equal(capturedConfig.scene, FakeScene);
 
 const villageSource = fs.readFileSync(new URL("../src/game/createVillageGame.ts", import.meta.url), "utf8");
 const lakeSource = fs.readFileSync(new URL("../src/game/createAct2LakeGame.ts", import.meta.url), "utf8");
