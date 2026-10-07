@@ -54,7 +54,9 @@ import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../ru
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
 import { loadPairedBackendAuthoritySnapshot } from "../runtime/backend/pairedBackendAuthority";
 import { useBackendSyncHost } from "../runtime/backend/useBackendSyncHost";
-import { launchChapterDebug, resetChapterDebugState } from "../runtime/debug/chapterDebugHarness";
+import { inspectChapterDebugState, launchChapterDebug, resetChapterDebugState, runChapterDebugProbe } from "../runtime/debug/chapterDebugHarness";
+import { ChapterDebugLauncher } from "../runtime/debug/ChapterDebugLauncher";
+import { ChapterDebugPanel } from "../runtime/debug/ChapterDebugPanel";
 import {
   reconcileAct2BackendSnapshot,
   selectAct2BackendContext,
@@ -109,9 +111,6 @@ const ACT2_DEBUG_LAB_ENABLED = process.env.NODE_ENV !== "production";
 export function Act2Runtime({ debug = false, productionEnabled = true }: Act2RuntimeProps) {
   const router = useRouter();
   const hostRef = useRef<HTMLDivElement>(null);
-  const debugHoldTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const debugTapCountRef = useRef(0);
-  const debugTapResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const backendWorldProgressionRef = useRef<number | null>(null);
 
   const bootAct2 = useCallback(async ({ debug: debugMode }: ChapterRuntimeBootEnvironment) => {
@@ -663,40 +662,24 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     setContributionTurnInOpen(false);
   }
 
-  const openStoryDebugLab = () => {
-    if (!ACT2_DEBUG_LAB_ENABLED) return;
-    if (debugHoldTimerRef.current) {
-      clearTimeout(debugHoldTimerRef.current);
-      debugHoldTimerRef.current = null;
-    }
-    router.push("/act2-test");
+  const debugContext = {
+    childName,
+    backendWorldProgression,
+    backendWallet,
+    backendSyncError,
   };
+  const debugInspection = inspectChapterDebugState(
+    ACT2_DEBUG_FIXTURE,
+    state,
+    debugContext,
+  );
+  const debugContributionProbe = runChapterDebugProbe(
+    ACT2_DEBUG_FIXTURE,
+    "contribution-bounds",
+    state,
+    debugContext,
+  );
 
-  const cancelDebugHold = () => {
-    if (debugHoldTimerRef.current) {
-      clearTimeout(debugHoldTimerRef.current);
-      debugHoldTimerRef.current = null;
-    }
-  };
-
-  const startDebugHold = () => {
-    cancelDebugHold();
-    debugHoldTimerRef.current = setTimeout(openStoryDebugLab, 650);
-  };
-
-  const registerDebugTap = () => {
-    debugTapCountRef.current += 1;
-    if (debugTapResetRef.current) clearTimeout(debugTapResetRef.current);
-    if (debugTapCountRef.current >= 5) {
-      debugTapCountRef.current = 0;
-      openStoryDebugLab();
-      return;
-    }
-    debugTapResetRef.current = setTimeout(() => {
-      debugTapCountRef.current = 0;
-      debugTapResetRef.current = null;
-    }, 1800);
-  };
 
   return <main style={{ position: "fixed", inset: 0, overflow: "hidden", background: "#1f3427" }}>
     <GameUiShell
@@ -753,55 +736,38 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       ariaLabel="Kapitel 2 · Alve"
       onContinue={() => setChapterIntroVisible(false)}
     />}
-    {debug && <div style={{
-      position: "fixed", top: "max(8px, env(safe-area-inset-top))", right: 10, zIndex: 150,
-      display: "flex", gap: 6, padding: 7, borderRadius: 10, background: "rgba(22,28,22,.88)",
-    }}>
-      <button className="secondary-button compact" type="button" onClick={() => {
+    <ChapterDebugPanel
+      visible={debug}
+      chapterLabel="Act 2"
+      inspection={debugInspection}
+      onReset={() => {
         setState(resetChapterDebugState(ACT2_DEBUG_FIXTURE));
         setPreviewProject(null);
         setContributionTurnInOpen(false);
         setCabinRevisitOpen(false);
         setCabinRevisitLineIndex(0);
-      }}>↺ Act 2</button>
-      <button className="secondary-button compact" type="button" onClick={() => setState((current) => ({
-        ...current,
-        jettyLifebuoyOwned: true,
-        boathouseSteeringWheelOwned: true,
-        motorboatPartsOwned: true,
-      }))}>Ge testköp</button>
-      <span style={{ alignSelf: "center", color: "white", fontSize: 12, fontWeight: 800 }}>DEBUG · production UI</span>
-    </div>}
-    {!debug && ACT2_DEBUG_LAB_ENABLED && (<button
-      type="button"
-      aria-label="Akt 2 · Sjön"
-      title="Akt 2 · Sjön"
-      onTouchStart={startDebugHold}
-      onTouchEnd={cancelDebugHold}
-      onTouchCancel={cancelDebugHold}
-      onPointerDown={(event) => { if (event.pointerType !== "touch") startDebugHold(); }}
-      onPointerUp={(event) => { if (event.pointerType !== "touch") cancelDebugHold(); }}
-      onPointerCancel={(event) => { if (event.pointerType !== "touch") cancelDebugHold(); }}
-      onClick={registerDebugTap}
-      onContextMenu={(event) => event.preventDefault()}
-      style={{
-        position: "absolute",
-        top: "max(8px, env(safe-area-inset-top))",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 35,
-        border: 0,
-        borderRadius: 999,
-        padding: "6px 11px",
-        background: "rgba(22,28,22,.72)",
-        color: "rgba(255,255,255,.82)",
-        fontSize: 12,
-        fontWeight: 800,
-        touchAction: "none",
       }}
-    >
-      Akt 2 · Sjön
-    </button>)}
+      actions={[{
+        id: "test-purchases",
+        label: "Ge testköp",
+        onRun: () => setState((current) => ({
+          ...current,
+          jettyLifebuoyOwned: true,
+          boathouseSteeringWheelOwned: true,
+          motorboatPartsOwned: true,
+        })),
+      }]}
+      probes={[{
+        id: "contribution-bounds",
+        label: "Contribution bounds",
+        result: debugContributionProbe,
+      }]}
+    />
+    <ChapterDebugLauncher
+      enabled={!debug && ACT2_DEBUG_LAB_ENABLED}
+      label="Akt 2 · Sjön"
+      onOpen={() => router.push(ACT2_DEBUG_FIXTURE.debugRoute)}
+    />
 
     {state.openingComplete && <div ref={hostRef} style={{ position: "absolute", inset: 0 }} aria-label="Sjön i Act 2" />}
 
