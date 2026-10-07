@@ -101,6 +101,9 @@ const worldCamera = load("src/runtime/world/worldCamera.ts");
 const worldCameraHost = load("src/runtime/world/worldCameraHost.ts", {
   "./worldCamera": worldCamera,
 });
+const worldGameHost = load("src/runtime/world/worldGameHost.ts", {
+  "./worldCameraHost": worldCameraHost,
+});
 const worldDepth = load("src/runtime/world/worldDepth.ts");
 const worldViewport = load("src/runtime/world/worldViewport.ts");
 const markerRenderer = {
@@ -113,6 +116,7 @@ const { createAct2LakeGame } = load("src/game/createAct2LakeGame.ts", {
   "../runtime/interaction/interactionContract": interactionContract,
   "../runtime/world/movement": movement,
   "../runtime/world/worldCameraHost": worldCameraHost,
+  "../runtime/world/worldGameHost": worldGameHost,
   "../runtime/world/worldDepth": worldDepth,
   "../runtime/world/worldViewport": worldViewport,
 });
