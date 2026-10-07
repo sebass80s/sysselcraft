@@ -238,13 +238,21 @@ Focused fuel-regression `test:act3-empty-skeleton` ingår nu i full `npm run ver
 
 `/act3` är fortfarande ett tomt arkitekturproof. Inget Act 3-gameplay eller innehåll har byggts.
 
-### 10. Full automated + browser verification
+### 10. Full automated + browser verification — STÄNGD
 
-Efter 5–9:
-- full `npm run verify`;
-- focused empty-Act3/fuel regression;
-- browser smoke på chapter transitions, Story, shop, HUD/world-input, save/reload;
-- ingen Vercel krävs för vanlig arkitekturverifiering.
+Verifierad closeout-checkpoint:
+- code HEAD `98e8950c227cbf215ccab91b885fb3b03b9c2ae1`;
+- GitHub Actions CI **#2388 SUCCESS** på exakt samma SHA;
+- Runtime Browser Closeout **#12 SUCCESS** på exakt samma SHA.
+
+Browser-closeouten verifierar både den befintliga alpha-regressionen och Runtime 1.1-smoke för:
+- Story-overlay blockerar gameplay-HUD under Act 2-opening;
+- world/HUD mount + keyboard input efter blockers;
+- Story Purchase-handoff till Mira med safe no-purchase exit;
+- completed Act 2 -> Act 3-transition och bevarad Act 2-state över reload;
+- tom Act 3 production/debug skeleton via shared runtime/debug harness.
+
+Ingen Vercel krävs för vanlig arkitekturverifiering. Browser-workflowen triggas nu även på `src/**`, så runtime/UI-ändringar omfattas av browser-gaten.
 
 ### 11. Physical iPhone update-in-place acceptance — SIST
 
@@ -338,11 +346,12 @@ Undvik att lägga fem regex-guards för samma implementation i fem filer.
 7. Punkt 7 är stängd på `f1e3136fbac4ac8fe54c3c474de5818c71916755` / CI #2343 SUCCESS.
 8. Punkt 8 är stängd på `c224761399e057a681d241a2b7541df74cc887c2` / CI #2359 SUCCESS.
 9. Punkt 9 är stängd på `860f5856f1d6574c71b183a0d75ef146c5865953` / CI #2370 SUCCESS.
-10. Nästa gate är full automated/browser closeout. Fysisk iPhone först därefter.
+10. Punkt 10 är stängd på `98e8950c227cbf215ccab91b885fb3b03b9c2ae1` / CI #2388 SUCCESS / Runtime Browser Closeout #12 SUCCESS.
+11. Nästa och enda kvarvarande gate är fysisk iPhone update-in-place acceptance.
 
 ## Slutstatus
 
-Runtime 1.1 är **inte färdig**.
+Runtime 1.1-motorn och automated/browser-closeouten är färdiga. **Endast fysisk iPhone update-in-place acceptance återstår.**
 
 Stängt:
 - 1 Shared Chapter Runtime Host ✅
@@ -355,8 +364,10 @@ Stängt:
 - 8 Common debug/acceptance harness ✅
 - 9 Empty Act 3 proof ✅
 
+Stängt:
+- 10 full automated/browser closeout ✅
+
 Öppet:
-- 10 full automated/browser closeout
 - 11 final physical iPhone update-in-place acceptance
 
 Det viktigaste: börja inte bygga Act 3 gameplay ännu. Gör klart motorn tills tomma Act 3 kan vara bränsle, inte ännu ett specialbygge.
