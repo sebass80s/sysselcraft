@@ -590,3 +590,16 @@ Runtime 1.1 remains incomplete because the next fuel blockers are:
 2. empty Act 3 skeleton proof;
 3. full automated/browser closeout;
 4. final physical iPhone update-in-place acceptance.
+
+
+## 2026-10-07 Runtime 1.1 update — Common debug / acceptance harness CLOSED
+
+Verified code checkpoint:
+- `c224761399e057a681d241a2b7541df74cc887c2`
+- GitHub Actions **#2359 SUCCESS**.
+
+The earlier chapter-specific debug plumbing gap is closed at the engine boundary.
+
+Shared debug ownership now includes fixture-driven launch/session state, reset, inspection, probes, hidden hold/five-tap launch UI and common panel chrome. Chapter-specific synthetic state and one-off debug actions stay in chapter fixtures/extensions rather than the engine.
+
+Next fuel gate: **Empty Act 3 skeleton proof**. It must be architecture-only and must not introduce Act 3 gameplay.
