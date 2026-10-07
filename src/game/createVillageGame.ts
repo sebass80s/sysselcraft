@@ -4,6 +4,7 @@ import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
 import { configureWorldCamera } from "../runtime/world/worldCameraHost";
 import { createWorldGame } from "../runtime/world/worldGameHost";
+import { createWorldDog, createWorldPlayer } from "../runtime/world/worldActorHost";
 import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
@@ -192,15 +193,19 @@ export async function createVillageGame(
     create() {
       const camera = this.cameras.main;
       this.drawVillage();
-      this.player = this.add.image(REQUIRED_APPROACHES.spawn.x, REQUIRED_APPROACHES.spawn.y, "child-painted")
-        .setOrigin(0.5, 0.94)
-        .setDisplaySize(74, 118)
-        .setDepth(1000 + REQUIRED_APPROACHES.spawn.y);
-      this.dog = this.add.image(48, 427, "puppy-painted")
-        .setOrigin(0.5, 0.88)
-        .setDisplaySize(66, 55)
-        .setDepth(1427)
-        .setVisible(requestedDogVisible);
+      this.player = createWorldPlayer(this, {
+        x: REQUIRED_APPROACHES.spawn.x,
+        y: REQUIRED_APPROACHES.spawn.y,
+        texture: "child-painted",
+        depth: 1000 + REQUIRED_APPROACHES.spawn.y,
+      });
+      this.dog = createWorldDog(this, {
+        x: 48,
+        y: 427,
+        texture: "puppy-painted",
+        depth: 1427,
+        visible: requestedDogVisible,
+      });
       this.targetMarker = this.add.circle(REQUIRED_APPROACHES.spawn.x, REQUIRED_APPROACHES.spawn.y, 7, 0xf4d780, 0.32)
         .setStrokeStyle(2, 0x6a754e, 0.55)
         .setVisible(false)
