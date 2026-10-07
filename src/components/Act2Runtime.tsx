@@ -15,8 +15,6 @@ import {
   prerequisiteCompletionCount,
   prepareAct2ProductionEntry,
   saveAct2RuntimeState,
-  withBackendClaimBaseline,
-  withBackendStoryFlags,
   withMotorboatName,
   withPresentedContribution,
   withSelectedProject,
@@ -54,7 +52,6 @@ import { advanceStoryLine, previousStoryLineIndex, storyLineAt } from "../runtim
 import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../runtime/chapter/useChapterRuntimeHost";
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
 import { loadPairedBackendAuthoritySnapshot } from "../runtime/backend/pairedBackendAuthority";
-import { createBackendAuthoritySnapshot } from "../runtime/backend/backendSync";
 import { useBackendSyncHost } from "../runtime/backend/useBackendSyncHost";
 import {
   reconcileAct2BackendSnapshot,
