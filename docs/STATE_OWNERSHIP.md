@@ -1,6 +1,6 @@
 # Sysselcraft state ownership during backend migration
 
-Status: **CURRENT MIGRATION BOUNDARY · OBSERVE BEFORE MERGE**
+Status: **CURRENT OWNERSHIP CONTRACT · Runtime 1.1 architecture closed**
 
 Sysselcraft currently has two legitimate persistence domains. This is intentional during the migration from the proven local prototype to the shared family backend.
 
@@ -217,23 +217,6 @@ Canonical audit: `docs/SAVE_COMPATIBILITY_AUDIT.md`.
 Verified code checkpoint: `99df1984a2bc088f5715d8f6ef5b112bff8316c7`, GitHub Actions #1812 SUCCESS.
 
 
-## Runtime 1.1 next ownership boundary — generic chapter persistence — 2026-10-06
-
-Runtime 1.1 items 1–4 are closed. The next engine item is the generic child-scoped chapter persistence host.
-
-Ownership law for that work:
-- shared persistence infrastructure may own storage I/O, child scoping, key construction, load/save/clear lifecycle, write ordering and generic migration hosting;
-- each chapter owns its versioned state shape, defaults, normalizer, migrations and genuinely chapter-specific persisted fields;
-- backend remains authoritative for quest lifecycle, rewards, wallet and earned-work evidence;
-- local chapter persistence must not invent backend facts;
-- storage migration, invariant repair and backend recovery remain distinct responsibilities;
-- destructive legacy cleanup may occur only after the canonical new write succeeds.
-
-Act 2 is the migration consumer, not the template to copy. The goal is that Act 3 registers a persistence definition rather than creating another independent Preferences implementation.
-
-Canonical current handover: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
-
-
 ## Runtime 1.1 chapter persistence ownership — CLOSED 2026-10-07
 
 Verified checkpoint: `6f0acedd335e4b97913cc096b9d6ebd8c1300059`, GitHub Actions #2275 SUCCESS.
@@ -258,4 +241,4 @@ Each chapter still owns:
 
 Backend authority is unchanged. Quest lifecycle, rewards, wallet, earned-work/progression evidence and backend story ownership are not fabricated or max-merged by local chapter persistence.
 
-Next ownership boundary: shared backend synchronization/reconciliation. The shared layer may own polling/subscription lifecycle, cancellation, stale-response safety and canonical backend snapshots. Chapter adapters continue to own chapter-specific selectors and reconciliation policy.
+Runtime 1.1 backend synchronization/reconciliation is also closed. The shared layer owns polling/subscription lifecycle, cancellation, stale-response safety and canonical backend snapshots. Chapter adapters continue to own chapter-specific selectors and reconciliation policy.
