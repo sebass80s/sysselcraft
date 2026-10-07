@@ -1,0 +1,97 @@
+name: Runtime Browser Closeout
+
+on:
+  push:
+    branches: [nova/runtime-architecture-v1]
+    paths:
+      - ".github/workflows/runtime-browser-closeout.yml"
+      - "scripts/test-runtime-1-1-browser.mjs"
+      - "scripts/test-alpha-runtime.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-closeout:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://runtime-browser-test.supabase.co
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_runtime_browser_test
+      PLAYWRIGHT_MODULE: playwright
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Install browser harness
+        run: npm install --no-save --no-package-lock playwright@1.56.1
+
+      - name: Locate Chromium
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "CHROME_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          elif command -v chromium >/dev/null 2>&1; then
+            echo "CHROME_EXECUTABLE=$(command -v chromium)" >> "$GITHUB_ENV"
+          else
+            npx playwright install chromium
+          fi
+
+      - name: Build static export
+        run: npm run build
+
+      - name: Start static browser server
+        shell: bash
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory out >/tmp/sysselcraft-static.log 2>&1 &
+          echo $! > /tmp/sysselcraft-static.pid
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8766/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/sysselcraft-static.log
+          exit 1
+
+      - name: Existing alpha browser regression
+        env:
+          ALPHA_TEST_URL: http://127.0.0.1:8766
+        run: node scripts/test-alpha-runtime.mjs
+
+      - name: Start local Next runtime
+        shell: bash
+        run: |
+          npm run dev -- --hostname 127.0.0.1 --port 3000 >/tmp/sysselcraft-dev.log 2>&1 &
+          echo $! > /tmp/sysselcraft-dev.pid
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/sysselcraft-dev.log
+          exit 1
+
+      - name: Runtime 1.1 browser smoke
+        env:
+          RUNTIME_BROWSER_URL: http://127.0.0.1:3000
+        run: node scripts/test-runtime-1-1-browser.mjs
+
+      - name: Dump server logs on failure
+        if: failure()
+        run: |
+          echo "=== static ==="
+          cat /tmp/sysselcraft-static.log || true
+          echo "=== dev ==="
+          cat /tmp/sysselcraft-dev.log || true
