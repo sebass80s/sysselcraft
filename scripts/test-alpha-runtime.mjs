@@ -54,7 +54,7 @@ async function pageSetup(noConfig=false,native=false){
  await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(result)});
  });
  await page.goto(base);await page.locator('canvas').waitFor();await page.evaluate(()=>window.originalCanvas=document.querySelector('canvas'));
- await page.getByRole('button',{name:'📱 Koppla enhet',exact:true}).click();assert.equal(page.url(),base+'/');
+ await page.getByRole('button',{name:'Öppna SysselCraft-menyn',exact:true}).click();await page.getByRole('menuitem',{name:'🔐 Vuxenläge',exact:true}).click();await page.getByRole('dialog',{name:'Vuxenläge',exact:true}).waitFor();await page.getByRole('button',{name:'Koppla den här barnenheten',exact:true}).click();assert.equal(page.url(),base+'/');
  await page.getByLabel('Parningskod').fill('1234abcd');await page.getByRole('button',{name:'Koppla enheten',exact:true}).click();await page.getByText('Enheten är kopplad! 🎉',{exact:true}).waitFor();
  await page.getByRole('button',{name:'Stäng parning',exact:true}).click();await page.getByRole('button',{name:/📜 Uppdrag/}).click();await page.getByText('Alpha test quest',{exact:true}).waitFor();
  assert(reads>0);assert(await page.evaluate(()=>window.originalCanvas===document.querySelector('canvas')));assert.deepEqual(errors,[]);
