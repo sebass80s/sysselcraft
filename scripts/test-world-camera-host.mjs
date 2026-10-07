@@ -1,6 +1,30 @@
 import assert from "node:assert/strict";
-import { configureWorldCamera, WORLD_CAMERA_BACKGROUND_COLOR } from "../src/runtime/world/worldCameraHost.ts";
+import fs from "node:fs";
+import vm from "node:vm";
+import ts from "typescript";
 import { WORLD_CAMERA, worldCameraDeadzone } from "../src/runtime/world/worldCamera.ts";
+
+function loadTsModule(file, dependencies) {
+  const exports = {};
+  const code = ts.transpileModule(fs.readFileSync(new URL(file, import.meta.url), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  vm.runInNewContext(code, {
+    exports,
+    require(name) {
+      assert.ok(name in dependencies, `Unexpected world camera host dependency: ${name}`);
+      return dependencies[name];
+    },
+  });
+  return exports;
+}
+
+const {
+  configureWorldCamera,
+  WORLD_CAMERA_BACKGROUND_COLOR,
+} = loadTsModule("../src/runtime/world/worldCameraHost.ts", {
+  "./worldCamera": { WORLD_CAMERA, worldCameraDeadzone },
+});
 
 const calls = [];
 const camera = {
