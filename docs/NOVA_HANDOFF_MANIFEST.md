@@ -2148,3 +2148,16 @@ Then:
 11. Physical iPhone update-in-place acceptance
 
 Repo reality wins. Verify current HEAD and CI before work. Preserve backend authority. No Vercel for routine Runtime 1.1 work and no Act 3 gameplay yet.
+
+
+## Runtime 1.1 current checkpoint — 2026-10-07
+
+Canonical Runtime handover: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+Runtime 1.1 point 7, **Full World / Area Runtime Host**, is closed at:
+- code checkpoint `f1e3136fbac4ac8fe54c3c474de5818c71916755`;
+- GitHub Actions **#2343 SUCCESS**.
+
+Current next item is point 8, **Common chapter debug / acceptance harness**.
+
+Do not begin Act 3 gameplay. After point 8 comes the empty Act 3 architecture proof, then full automated/browser verification, then physical iPhone update-in-place acceptance.
