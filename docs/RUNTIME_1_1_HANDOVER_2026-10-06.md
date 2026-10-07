@@ -153,17 +153,29 @@ Fuel-proof:
 
 Backend-owned quest/wallet/earned-work evidence är oförändrat auktoritativt.
 
-### 6. Shared backend synchronization/reconciliation — NÄSTA
+### 6. Shared backend synchronization/reconciliation — STÄNGD ✅
 
-Act 2 ska inte äga en egen pollingloop för samma backend authority.
+Verifierad kodcheckpoint:
+- `9c6b0661879374ed85e166b2b314a202eb685751`
+- GitHub Actions **#2300 SUCCESS** på exakt den SHA:n.
 
-Shared host/service ska äga:
-- polling/subscription lifecycle;
+Shared backend runtime äger nu:
+- canonical wallet/progression/worldFlags authority snapshots;
+- paired-child lookup och backend game-state fetch;
+- polling lifecycle och default cadence;
+- max en request i flight;
 - cancellation/stale-response safety;
-- wallet/progression/ownership snapshot authority;
-- reconciliation dispatch till chapter adapters.
+- React host lifecycle/cleanup;
+- error/recovery dispatch.
 
-Chapter anger selectors/adapters, inte nätverksloopen.
+Act 2 äger endast sin chapter-adapter:
+- vilka snapshotfält presentationen behöver;
+- hur authoritative progression/world flags reconcileras till lokal Act 2 presentation state;
+- idempotent persist/update när den lokala presentationen faktiskt ändras.
+
+Boot-hydration och kontinuerlig polling använder samma shared authority source. Act 2 importerar inte längre pairing/backend transport eller snapshot construction direkt.
+
+### 7. Full World / Area Runtime Host — NÄSTA
 
 ### 7. Full World / Area Runtime Host
 
@@ -311,9 +323,10 @@ Undvik att lägga fem regex-guards för samma implementation i fem filer.
    - `docs/SAVE_COMPATIBILITY_AUDIT.md`
    - `docs/TECHNICAL_HANDOFF.md`
 5. Punkt 5 är stängd på `6f0acedd335e4b97913cc096b9d6ebd8c1300059` / CI #2275 SUCCESS.
-6. Starta Runtime 1.1 punkt 6: shared backend synchronization/reconciliation med audit/contract först.
-7. Bevara backend authority och centralisera polling/subscription lifecycle, cancellation, stale-response safety och snapshots utan att flytta chapter selectors/reconciliation policy till transportlagret.
-8. Gå därefter i ordning 7 -> 8 -> 9 -> automated/browser -> fysisk iPhone.
+6. Punkt 6 är stängd på `9c6b0661879374ed85e166b2b314a202eb685751` / CI #2300 SUCCESS.
+7. Starta Runtime 1.1 punkt 7: Full World/Area Runtime Host med audit/contract först.
+8. Centralisera endast bevisat gemensam scene/player/dog/input/camera/interaction/lifecycle-logik. Lämna karta, assets, collision-data och movement/navigation strategy area-specifikt.
+9. Gå därefter i ordning 8 -> 9 -> automated/browser -> fysisk iPhone.
 
 ## Slutstatus
 
@@ -325,9 +338,9 @@ Stängt:
 - 3 Shared Story UI / sequencing / inputs / history / cards / choices ✅
 - 4 Generic Story Purchase integration ✅
 - 5 Generic chapter persistence host ✅
+- 6 Shared backend synchronization/reconciliation ✅
 
 Öppet:
-- 6 Shared backend synchronization/reconciliation
 - 7 Full World/Area Runtime Host
 - 8 Common debug/acceptance harness
 - 9 Empty Act 3 proof
