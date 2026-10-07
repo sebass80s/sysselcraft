@@ -73,6 +73,21 @@ type Act2RuntimeCandidate = Omit<Partial<Act2RuntimeState>, "finaleSchemaVersion
 };
 
 function migrateAct2RuntimeCandidate(candidate: Act2RuntimeCandidate): Act2RuntimeCandidate {
+  if (candidate.version !== undefined && candidate.version !== 1) {
+    throw new Error(`Unsupported Act 2 runtime version: ${String(candidate.version)}`);
+  }
+
+  if (
+    candidate.finaleSchemaVersion !== undefined
+    && candidate.finaleSchemaVersion !== 1
+    && candidate.finaleSchemaVersion !== 2
+    && candidate.finaleSchemaVersion !== ACT2_FINALE_SCHEMA_VERSION
+  ) {
+    throw new Error(
+      `Unsupported Act 2 finale schema version: ${String(candidate.finaleSchemaVersion)}`,
+    );
+  }
+
   const currentVersion = candidate.finaleSchemaVersion === 2
     ? 2
     : candidate.finaleSchemaVersion === ACT2_FINALE_SCHEMA_VERSION
