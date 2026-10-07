@@ -2,7 +2,7 @@ import type { ConstructionPresentation } from "./constructionPresentation";
 import type { GameObjects, Input, Types } from "phaser";
 import { createInteractionMarker } from "../runtime/interaction/markerRenderer";
 import { resolveInteraction, worldInputEnabled, type InteractionDefinition } from "../runtime/interaction/interactionContract";
-import { configureWorldCamera } from "../runtime/world/worldCameraHost";
+import { configureWorldCamera, WORLD_CAMERA_BACKGROUND_COLOR } from "../runtime/world/worldCameraHost";
 import { worldViewportSize } from "../runtime/world/worldViewport";
 import { worldEntityDepth } from "../runtime/world/worldDepth";
 import { resolveInteractionPriority } from "../runtime/interaction/interactionPriority";
@@ -1297,7 +1297,7 @@ export async function createVillageGame(
     parent,
     width: viewWidth,
     height: viewport.height,
-    backgroundColor: WORLD_CAMERA.backgroundColor,
+    backgroundColor: WORLD_CAMERA_BACKGROUND_COLOR,
     pixelArt: false,
     antialias: true,
     roundPixels: false,
