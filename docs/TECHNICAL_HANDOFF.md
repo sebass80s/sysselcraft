@@ -2280,3 +2280,19 @@ Required next order:
 `backend sync -> world/area host -> debug harness -> empty Act 3 proof -> automated/browser -> physical iPhone`.
 
 Do not start Act 3 gameplay, use Vercel for routine verification, or alter backend authority while extracting the backend synchronization host.
+
+
+## Runtime 1.1 backend sync checkpoint — 2026-10-07
+
+Verified code checkpoint:
+- `9c6b0661879374ed85e166b2b314a202eb685751`
+- GitHub Actions **#2300 SUCCESS**
+
+Runtime 1.1 items 1–6 are now closed. Shared backend runtime owns paired authority loading, canonical wallet/progression/worldFlags snapshots, polling/cancellation/stale-response safety and host lifecycle. Act 2 owns only its selector/reconciliation adapter.
+
+NEXT: item 7 Full World/Area Runtime Host.
+
+Required order:
+`world/area host -> debug harness -> empty Act 3 proof -> automated/browser -> physical iPhone`.
+
+Do not generalize map/assets/collision/navigation strategy merely for symmetry.
