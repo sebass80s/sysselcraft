@@ -47,6 +47,7 @@ async function pageSetup(noConfig=false,native=false){
  await page.addInitScript(({storageKey,token,exp})=>localStorage.setItem(storageKey,JSON.stringify({access_token:token,refresh_token:'test-refresh',expires_at:exp,expires_in:3600,token_type:'bearer',user:{id:'test-user',is_anonymous:true,aud:'authenticated'}})),{storageKey,token,exp});
  let reads=0, offline=false;await page.route(url+'/**',async route=>{const u=route.request().url();let result=null;if(offline)return route.fulfill({status:503,contentType:'application/json',body:'{"message":"offline test"}'});
  if(u.includes('/rpc/redeem_child_pairing_code'))result='test-child';
+ else if(u.includes('/rpc/get_bound_child_id'))result=null;
  else if(u.includes('/rpc/is_bound_child'))result=true;
  else if(u.includes('/child_game_state'))result={child_id:'test-child',diamonds:0,syssel_bux:0,progression:{},world_flags:{}};
  else if(u.includes('/rpc/list_child_quests')){reads++;result=[{instance_id:'test-instance',quest_id:'test-quest',household_id:'test-household',child_id:'test-child',title:'Alpha test quest',description:'Mock only',progression_class:'community',reward_diamonds:1,reward_syssel_bux:1,state:'available',created_at:new Date().toISOString()}];}
@@ -82,6 +83,7 @@ async function pageSetup(noConfig=false,native=false){
   const u=new URL(route.request().url());let result;
   const args=route.request().postDataJSON();
   if(u.pathname.endsWith('/is_bound_child')) result=true;
+  else if(u.pathname.endsWith('/get_bound_child_id')) result='child-one';
   else if(u.pathname.endsWith('/redeem_child_pairing_code')) result='child-two';
   else if(u.pathname.endsWith('/submit_quest')) {
    submissions++;assert.equal(args.p_instance_id,'day-one');state='pending';result=null;
