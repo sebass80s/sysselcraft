@@ -24,8 +24,6 @@ import {
   type Act2RuntimeState,
 } from "../game/act2RuntimeState";
 import { loadSaveState } from "../game/saveState";
-import { getPairedChildId } from "../backend/childDeviceBinding";
-import { getChildGameState } from "../backend/familyRepository";
 import { JETTY_COMPLETION_REACTION, JETTY_CONTRIBUTION_BEATS, JETTY_LIFEBUOY_BEAT } from "../game/act2JettyStory";
 import { CABIN_CONTRIBUTION_BEATS, CABIN_WAITING_REACTION } from "../game/act2CabinStory";
 import { BOATHOUSE_CONTRIBUTION_BEATS, BOATHOUSE_STEERING_WHEEL_BEAT } from "../game/act2BoathouseStory";
@@ -55,6 +53,7 @@ import { StoryHistoryPanel } from "../runtime/story/StoryHistoryPanel";
 import { advanceStoryLine, previousStoryLineIndex, storyLineAt } from "../runtime/story/storySequence";
 import { useChapterRuntimeHost, type ChapterRuntimeBootEnvironment } from "../runtime/chapter/useChapterRuntimeHost";
 import { useChapterWorldHost } from "../runtime/chapter/useChapterWorldHost";
+import { loadPairedBackendAuthoritySnapshot } from "../runtime/backend/pairedBackendAuthority";
 import { createBackendAuthoritySnapshot } from "../runtime/backend/backendSync";
 import { useBackendSyncHost } from "../runtime/backend/useBackendSyncHost";
 import {
@@ -161,10 +160,9 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
       };
     }
 
-    const [act2, act1, childId] = await Promise.all([
+    const [act2, act1] = await Promise.all([
       loadAct2RuntimeState(),
       loadSaveState(),
-      getPairedChildId(),
     ]);
     const childName = act1?.childName || "Barnet";
     const act1ChapterComplete = chapterUnlocked(act1?.worldFlags?.act1EndCardSeen === true);
@@ -187,18 +185,16 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     let backendWallet: { diamonds: number; sysselBux: number } | null = null;
     let backendSyncError = "";
 
-    if (childId) {
-      try {
-        const backend = await getChildGameState(childId);
-        if (backend) {
-          backendWorldProgression = backend.progression.worldProgression;
-          backendWallet = { diamonds: backend.diamonds, sysselBux: backend.sysselBux };
-          entered = withBackendClaimBaseline(entered, backend.progression.worldProgression);
-          entered = withBackendStoryFlags(entered, backend.worldFlags);
-        }
-      } catch {
-        backendSyncError = "Kunde inte läsa questframsteg just nu.";
+    try {
+      const backend = await loadPairedBackendAuthoritySnapshot();
+      if (backend) {
+        const selected = selectAct2BackendContext(backend);
+        backendWorldProgression = selected.worldProgression;
+        backendWallet = selected.wallet;
+        entered = reconcileAct2BackendSnapshot(entered, backend).state;
       }
+    } catch {
+      backendSyncError = "Kunde inte läsa questframsteg just nu.";
     }
 
     const resumeProject = parseAct2PurchaseProject(
@@ -376,12 +372,7 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
 
   useBackendSyncHost({
     active: ready && !debug,
-    loadSnapshot: async () => {
-      const childId = await getPairedChildId();
-      if (!childId) return null;
-      const backend = await getChildGameState(childId);
-      return backend ? createBackendAuthoritySnapshot(backend) : null;
-    },
+    loadSnapshot: loadPairedBackendAuthoritySnapshot,
     onSnapshot: async (backend, control) => {
       if (!control.isActive()) return;
       const selected = selectAct2BackendContext(backend);
