@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sysselcraft.local/schemas/art-production-v2.schema.json",
+  "title": "SysselCraft Art Production Manifest v2",
+  "type": "object",
+  "required": [
+    "version",
+    "productionId",
+    "aspectRatio",
+    "beats"
+  ],
+  "properties": {
+    "version": {
+      "const": 2
+    },
+    "productionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aspectRatio": {
+      "type": "string",
+      "minLength": 1
+    },
+    "continuityGroup": {
+      "type": "string"
+    },
+    "beats": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "locationId",
+          "characters",
+          "summary",
+          "exactCastOnly",
+          "wardrobeLock"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "locationId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "establishLocation": {
+            "type": "boolean",
+            "default": false
+          },
+          "continuityGroup": {
+            "type": "string"
+          },
+          "continuityFrom": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "characters": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "shot": {
+            "type": "string"
+          },
+          "mood": {
+            "type": "string"
+          },
+          "timeOfDay": {
+            "type": "string"
+          },
+          "emotions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "exactCastOnly": {
+            "const": true
+          },
+          "wardrobeLock": {
+            "type": "boolean"
+          },
+          "barnetFaceHidden": {
+            "type": "boolean"
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mustNot": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "qaChecks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "aspectRatio": {
+            "type": "string"
+          },
+          "outputPath": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
