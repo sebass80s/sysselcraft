@@ -2163,6 +2163,32 @@ Nova håller kvar blicken vid de två namnen.
 - Festen är fortfarande hemlig för föräldrarna. Henrik får inte dominera storyn. Spelvalet får synligt resultat men ska inte blockera berättelsens kärnscen.
 - Dialogen A3-PARK-015–017 bygger på det godkända utkastet. Ändringen 1998 till 2011 gäller även Henrik-affischen för tidsmässig samstämmighet.
 
+## 11I. En gammal mästare — DIALOG LOCKED A3-PARK-019–022
+
+**Status:** User-approved scene. Full original dialogue appears in conversation immediately preceding user approval; this is an explicitly condensed record, **not a verbatim transcript**. Preserve exact approved dialogue before runtime implementation. No runtime or art changes.
+
+### A3-PARK-019 – Kan den fortfarande fungera?
+Henrik places the original wooden shuffleboard game on the lawn. Shows how pucks slide towards higher scoring areas; his puck hits an old protruding screw and falls off. Nova asks whether her parents used this exact table. Henrik believes so. Nova wants it repaired. Alve wants to start first.
+
+### A3-PARK-020 – Första matchen
+Three discs each and a short playable mobile shuffleboard mini-game against Nova. Player win/loss branches have distinct playful banter. **Both outcomes valid**, no scripted defeat or win. Alve jokes about being able to play winner.
+
+### A3-PARK-021 – Någon minns
+Henrik, seeing the 2011 scoreboard, remembers Nova's dad wearing an overly formal white ironed shirt and explaining rules to her mum, despite mum already knowing the game. Mum won repeatedly. After three matches dad invited mum for ice cream and they spent a long time talking by the water. Nova recognizes parts of this from her mum's story. Henrik's memory can be qualified; don't make him implausibly omniscient.
+
+### A3-PARK-022 – Vi ska göra det ordentligt
+Nova wants a family-day tournament with her parents facing each other in the final, then starts suggesting rigging the bracket. Barnet and Alve steer her toward a **separate fair rematch** instead. Nova loves the suggestion, plans to restore the table, source new discs, space for an audience, and add ice cream because the first date ended with it. She wants to recreate 2011 exactly. Barnet says the new day can be even more fun because the kids weren't there in 2011; Nova smiles.
+
+**Mandatory anchor lines:**
+- **Nova:** Då... får vi väl se till att de hamnar i finalen ändå.
+- **Barnet:** Fast då är det ju ingen riktig turnering.
+- **Alve:** De kan väl spela en egen match efteråt?
+- **Nova:** En revanschmatch!
+- **Barnet:** Ja. De hade ju inte oss där 2011.
+- **Nova:** Nej. Det hade de faktiskt inte.
+
+**Gameplay/design:** Reusable physics-based phone shuffleboard (drag back/release, friction and target zones), first Nova match now, parents' rematch payoff on family day. This is a proposal to be designed/implemented later, not an already built engine. Scoring victory branches do not impact later relationship outcome. Continue gradual SysselBux acquisitions from Mira and do not force a lump-sum purchase. Preserve separation, honest happy moments, and parents not reuniting.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
