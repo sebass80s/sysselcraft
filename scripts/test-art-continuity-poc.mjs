@@ -91,4 +91,38 @@ const missing = spawnSync(process.execPath, [
 assert.notEqual(missing.status, 0);
 assert.match(missing.stderr, /Approved anchor file is missing/);
 
+
+// ChatGPT adapter proof: an approved anchor may live only in persistent Library.
+{
+  const chatApprovals = path.join(temp, "chat-approvals.json");
+  run(builder, [
+    `--manifest=${manifest}`,
+    "--beat=POC-A3-001",
+    `--approvals=${chatApprovals}`,
+    `--out=${path.join(temp, "chat-first.job.json")}`
+  ]);
+  run(approver, [
+    `--manifest=${manifest}`,
+    "--beat=POC-A3-001",
+    "--chat-library-path=/SysselCraft/Art References/anchors/poc-continuity-chain-01/POC-A3-001.png",
+    `--approvals=${chatApprovals}`
+  ]);
+  const chatSecondOut = path.join(temp, "chat-second.job.json");
+  run(builder, [
+    `--manifest=${manifest}`,
+    "--beat=POC-A3-002",
+    `--approvals=${chatApprovals}`,
+    `--out=${chatSecondOut}`
+  ]);
+  const chatSecond = JSON.parse(fs.readFileSync(chatSecondOut, "utf8"));
+  assert.deepEqual(chatSecond.anchorReferencePaths, []);
+  assert.deepEqual(chatSecond.chatLibraryAnchorPaths, [
+    "/SysselCraft/Art References/anchors/poc-continuity-chain-01/POC-A3-001.png"
+  ]);
+  assert.equal(
+    chatSecond.outputContract.chatLibraryPath,
+    "/SysselCraft/Art References/anchors/poc-continuity-chain-01/POC-A3-002.png"
+  );
+}
+
 console.log("art continuity PoC: PASS");
