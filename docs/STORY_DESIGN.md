@@ -1,5 +1,20 @@
 # Sysselcraft — Story & World Design
 
+## CURRENT ACT 3 CANON — 2026-10-08
+
+Act 3 is no longer intentionally undefined.
+
+Canonical working Act 3 story specification:
+`docs/ACT3_STORY_MANIFEST.md`
+
+It locks the chapter title **På andra sidan sjön**, the larger Swedish lakeside town/city, Nova as emotional protagonist, the central lakeside park/family-day arc, the village support roles for Henning/Linus/Mira/Sol, and the rule that Nova's parents do not reunite.
+
+The current opening direction is:
+harbour arrival → withdrawn Nova → dock conversation → Nova shows the park.
+
+Older passages below saying the exact Act 3 destination/content is undefined are historical and superseded by the Act 3 manifest.
+
+
 > Canonical narrative/design document for Sysselcraft. This file describes the world, story, characters and intended emotional progression. Technical implementation details belong elsewhere.
 
 ## 1. Narrative promise
