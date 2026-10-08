@@ -1,8 +1,8 @@
 # SysselCraft image batch pipeline
 
-> **Act 3 production authority:** Runway Brand Kit `Syssel` + `docs/ACT3_ART_PIPELINE.md`.
+> **Act 3 production authority:** the renderer-independent continuity pipeline in this directory plus `docs/ACT3_ART_PIPELINE.md`.
 >
-> This local OpenAI batch pipeline is a **fallback / offline experiment harness**, not the canonical Act 3 production route. It remains useful for deterministic manifest validation, local character-sheet checks, dry-runs and renderer comparison, but production Act 3 images must not silently switch here when Runway reference grounding is available.
+> Character identity, beat content, continuity anchors and approval history belong to the pipeline, not to any renderer. ChatGPT is the preferred interactive renderer. Runway and the local OpenAI API generator are optional rendering adapters/fallbacks. Switching renderer must never change the canonical identity inputs or continuity lineage.
 
 This pipeline prepares deterministic image-generation task batches. It does not generate images by itself.
 
@@ -136,3 +136,40 @@ Defaults:
 Override with `--model=`, `--size=`, `--quality=`, or environment variables `SYC_IMAGE_MODEL`, `SYC_IMAGE_SIZE`, and `SYC_IMAGE_QUALITY`.
 
 The OpenAI image edit endpoint accepts multiple source images per request, so each task can carry its own canonical character sheets, environment references and approved anchors. The generator refuses non-canonical character identity paths before making any API request.
+
+## Continuity PoC — 2026-10-08
+
+The first scalable continuity proof is implemented.
+
+Commands:
+
+```bash
+npm run art:job -- --manifest=image-pipeline/batches/poc-continuity-chain-01.json --beat=POC-A3-001
+npm run art:approve -- --manifest=image-pipeline/batches/poc-continuity-chain-01.json --beat=POC-A3-001 --output=<approved-image.png>
+npm run test:art-continuity-poc
+```
+
+The job resolver automatically combines:
+- canonical character sheets from the registry;
+- structured beat content;
+- environment references;
+- the latest approved continuity anchors in the same sequence;
+- global and beat-specific hard rules;
+- QA checks and output contract.
+
+The approval command only promotes an image into the continuity chain when identity and continuity are explicitly accepted.
+
+The automated PoC proves:
+1. beat 1 resolves two canonical refs and zero anchors;
+2. after beat 1 is approved, beat 2 automatically resolves beat 1 as an anchor;
+3. after beat 2 is approved, beat 3 automatically resolves the two latest approved anchors;
+4. if an approved anchor disappears from durable storage, generation fails closed.
+
+This means future beats do not need manually copied reference lists or anchor ids.
+
+### Remaining ChatGPT adapter gate
+
+The continuity engine is renderer-independent and green. The remaining one-time-upload requirement for ChatGPT is a transport problem: canonical PNGs must also live on a persistent ChatGPT-accessible file surface so a later conversation can re-inject them as actual image inputs without asking the user to upload them again.
+
+Do not confuse this transport gate with continuity-engine correctness.
+
