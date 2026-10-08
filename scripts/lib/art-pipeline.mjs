@@ -51,7 +51,14 @@ export function validateManifest(manifest) {
   }
 
   if (manifest.version === 2) {
-    for (const beat of manifest.beats) validateV2Beat(beat);
+    const outputPaths = new Set();
+    for (const beat of manifest.beats) {
+      validateV2Beat(beat);
+      if (outputPaths.has(beat.outputPath)) {
+        fail(`Duplicate v2 outputPath "${beat.outputPath}".`);
+      }
+      outputPaths.add(beat.outputPath);
+    }
   } else if (manifest.version !== 1) {
     fail(`Unsupported art manifest version "${manifest.version}".`);
   }
