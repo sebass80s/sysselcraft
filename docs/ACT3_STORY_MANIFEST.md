@@ -5081,6 +5081,183 @@ De gör en diskret high five bakom föräldrarnas ryggar.
 
 Approved A3-EPILOG-001–006, with revised 004–006. Nova, mum and dad will bowl together Saturday despite not reuniting. The railway-station / old map / Act 4 hook is removed. Chapter 3 ends with the three friends, the boat, and the new photograph. The full approved dialogue is in this chat, but this note is not a verbatim transcription and needs transfer before beat implementation.
 
+
+## 11Y. A3-FAMILY-015–017 — FULL DIALOGUE TRANSCRIPTION
+
+### A3-FAMILY-015 – Mamma kommer
+
+Nova sitter fortfarande på parkbänken med Barnet och Alve.
+
+Alve har hittat en liten sten som han försöker balansera på skospetsen.
+
+Nova är tyst, men gråter inte längre.
+
+Längre bort kommer hennes mamma gående.
+
+Hon stannar ett par steg från bänken.
+
+**Mamma:** Hej, gumman.
+
+Nova tittar upp.
+
+**Nova:** Hej.
+
+**Mamma:** Får jag sitta en stund?
+
+Nova nickar.
+
+Barnet börjar resa sig.
+
+**Mamma:** Tack för att ni stannade hos henne.
+
+**Alve:** Vi skulle ändå sitta här.
+
+**Barnet:** Vi kan gå och hjälpa till där borta.
+
+**Mamma:** Det låter bra.
+
+Alve reser sig och ser sig om efter sin femte glasspinne.
+
+**Alve:** Jag måste nog hitta en papperskorg först.
+
+Barnet och Alve går tillbaka mot spelhörnan.
+
+Mamman sätter sig bredvid Nova.
+
+En stund tittar de bara ut över parken.
+
+**Mamma:** Vilken dag du har ordnat.
+
+**Nova:** Mm.
+
+**Mamma:** Jag tror inte jag skrattat så mycket åt din pappa på flera år.
+
+Nova tittar snabbt upp.
+
+**Nova:** Då fattar jag inte.
+
+**Mamma:** Vadå?
+
+**Nova:** Varför ni inte bara kan bli tillsammans igen.
+
+### A3-FAMILY-016 – Den där kvällen
+
+Mamman funderar på vad hon ska säga.
+
+**Mamma:** Jag förstår att du önskar det.
+
+**Nova:** Men ni var ju glada idag.
+
+**Mamma:** Ja. Jätteglada.
+
+**Nova:** Och ni bråkade inte en enda gång.
+
+**Mamma:** Nej.
+
+**Nova:** Jag trodde att om ni fick en riktigt bra dag så kanske ni skulle ändra er.
+
+Mamman lägger handen intill Novas på bänken.
+
+**Mamma:** Jag önskar att jag hade förstått hur mycket du hoppades på det.
+
+Nova tittar ner på sina skor.
+
+**Nova:** Det är kanske för sent ändå.
+
+**Mamma:** För sent för vad?
+
+Nova svarar inte.
+
+**Mamma:** Vad tänker du på, älskling?
+
+Det dröjer en stund.
+
+**Nova:** Kommer du ihåg när jag blev så arg vid middagen?
+
+Mamman nickar.
+
+**Mamma:** Ja, det gör jag.
+
+**Nova:** När jag skrek och kastade servetten på golvet.
+
+**Mamma:** Ja.
+
+**Nova:** Och jag sa att jag önskade att ni kunde sluta bestämma över mig.
+
+Hon sväljer.
+
+**Nova:** Nästa kväll berättade ni att ni skulle skiljas.
+
+Mamman blir stilla.
+
+**Nova:** Jag har tänkt på det jättemånga gånger.
+
+**Mamma:** Nova...
+
+**Nova:** Jag vet att jag var dum. Jag blev så arg. Och sedan, direkt efter, sa ni att vi inte skulle bo tillsammans mer.
+
+Hon börjar gråta igen.
+
+**Nova:** Tänk om ni trodde att jag inte ville ha er.
+
+### A3-FAMILY-017 – Det var aldrig ditt fel
+
+Mamman vänder sig helt mot Nova.
+
+**Mamma:** Nova. Titta på mig en liten stund.
+
+Nova lyfter blicken.
+
+**Mamma:** Det du sa den kvällen hade ingenting med vårt beslut att göra.
+
+**Nova:** Men det var ju precis efter.
+
+**Mamma:** Jag vet. Och nu förstår jag varför du har tänkt så.
+
+Hon tar Novas hand.
+
+**Mamma:** Men pappa och jag hade redan pratat om att flytta isär långt innan den middagen.
+
+**Nova:** Hade ni?
+
+**Mamma:** Ja. Under lång tid.
+
+Nova försöker förstå.
+
+**Nova:** Men varför berättade ni inte det då?
+
+**Mamma:** Vi försökte hitta ett bra sätt att säga det. Vi ville inte göra dig ledsen.
+
+Hon får tårar i ögonen.
+
+**Mamma:** Och jag önskar att vi hade förstått hur du skulle tolka det som hände.
+
+**Nova:** Så det var inte för att jag skrek?
+
+**Mamma:** Nej. Absolut inte.
+
+**Nova:** Eller för att jag var arg på pappa?
+
+**Mamma:** Nej, Nova.
+
+Mamman flyttar sig lite närmare.
+
+**Mamma:** Barn får bli arga på sina föräldrar. Barn får skrika och säga dumma saker ibland. Det betyder inte att en familj går sönder.
+
+Nova börjar snyfta.
+
+**Mamma:** Det var pappa och jag som bestämde att vi skulle bo på olika håll. Det var ett beslut mellan oss vuxna. Du hade aldrig kunnat orsaka det, och du hade inte kunnat stoppa det heller.
+
+**Nova:** Inte ens om jag hade varit snällare?
+
+Mamman skakar på huvudet.
+
+**Mamma:** Inte ens då. Du behöver inte vara snäll hela tiden för att vi ska älska dig.
+
+Nova kastar sig i mammans famn.
+
+Mamman håller om henne länge.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
