@@ -1,3 +1,4 @@
+import { getPairedChildId } from "../backend/childDeviceBinding";
 import { ACT2_PURCHASE_CATALOG } from "./act2PurchaseCatalog";
 import {
   ACT2_PURCHASE_PROJECTS,
@@ -88,14 +89,17 @@ export function storyPurchaseRegistrationById(id: string) {
 export type LoadedStoryPurchaseRegistration = {
   registration: StoryPurchaseRegistration<string>;
   snapshot: Awaited<ReturnType<StoryPurchaseRegistration<string>["loadSnapshot"]>>;
+  expectedChildId: string | null;
 };
 
 export async function loadRegisteredStoryPurchases(): Promise<LoadedStoryPurchaseRegistration[]> {
+  const expectedChildId = await getPairedChildId();
   return Promise.all(
     (STORY_PURCHASE_REGISTRATIONS as readonly StoryPurchaseRegistration<string>[]).map(
       async (registration) => ({
         registration,
-        snapshot: await registration.loadSnapshot(),
+        snapshot: await registration.loadSnapshot({ expectedChildId }),
+        expectedChildId,
       }),
     ),
   );
