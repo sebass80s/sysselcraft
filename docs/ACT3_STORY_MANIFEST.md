@@ -7077,6 +7077,137 @@ Strax efteråt plingar Barnets mobil. Nova har skickat en bild på ett nästan t
 
 **Nova (meddelande):** Börja öva. 😎
 
+
+## 11AL. A3-HUNT-001–006 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
+
+**Status:** Låst intrig och ledtrådar, dialog nyformulerad eftersom ordagranna original saknades i manifestet. Granska repliker före produktion.
+
+### A3-HUNT-001 – Ett nytt meddelande
+
+Barnets telefon plingar tidigt på morgonen.
+
+**Nova (meddelande):** SKATTJAKTEN ÄR KLAR. Ta med Alve.
+
+**Barnet (meddelande):** Var ska vi ses?
+
+**Nova (meddelande):** Fontänen på torget. Ta med skor och hjärna.
+
+**Alve:** Vad skrev hon?
+
+**Barnet:** Att vi behöver en hjärna.
+
+**Alve:** Bra. Du har ju en.
+
+### A3-HUNT-002 – Torget
+
+Nova står vid fontänen och håller ett kuvert med texten *UPPDRAG 1 – STADENS HJÄRTA*.
+
+**Nova:** Ni kom! Jag har gjort en skattjakt över nästan hela stan.
+
+**Alve:** Finns det en riktig skatt?
+
+**Nova:** Självklart. Men ni måste lösa ledtrådarna.
+
+Barnet öppnar kuvertet.
+
+**Barnet:** ”Där många väntar men ingen sover, hittar ni något som tiden lovar.”
+
+**Alve:** Varför ska tiden lova något?
+
+**Nova:** Jag skrev den sent igår.
+
+**Barnet:** Många väntar... Det kanske är vid busshållplatsen?
+
+**Nova:** Jag säger ingenting.
+
+### A3-HUNT-003 – Klockan
+
+De kommer till busshållplatsen där en gammal klocka sitter ovanför tidtabellen.
+
+**Alve:** Kolla klockan!
+
+**Barnet:** Och där, vid tidtabellen, ligger ett kuvert!
+
+**Nova:** Ni fick en poäng var.
+
+**Alve:** Vad får man för poäng?
+
+**Nova:** Äran.
+
+**Alve:** Den går inte att äta.
+
+Barnet öppnar nästa ledtråd.
+
+### A3-HUNT-004 – Den som läser hittar
+
+**Barnet:** ”Här finns tusen världar, fast huset står helt still. Leta där man lånar det man vill.”
+
+**Alve:** Man kan låna cyklar.
+
+**Nova:** Kan man låna tusen världar på en cykel?
+
+**Barnet:** Biblioteket!
+
+**Nova:** Rätt!
+
+På bibliotekets barnavdelning hittar de en stadskarta med en stjärna.
+
+**Alve:** Är det här nästa ledtråd?
+
+**Nova:** Det är nästa plats. Och nej, ni får inte använda kartappen.
+
+**Barnet:** Vi behöver inte den. Jag ser vart vi ska.
+
+### A3-HUNT-005 – En plats ovanför stan
+
+De står vid utsikten över staden och sjön.
+
+**Alve:** Oj! Man ser ända till vår sida.
+
+**Nova:** Jag brukar komma hit ibland när jag vill tänka.
+
+**Barnet:** Kan du se båda dina lägenheter härifrån?
+
+**Nova:** Nästan. Pappa bor nära skolan och mamma åt andra hållet.
+
+**Barnet:** Och det gamla huset?
+
+**Nova:** Inte härifrån. Men jag vet precis vägen dit.
+
+Hon blir tyst en kort stund.
+
+**Nova:** Vi behöver inte gå dit idag. Ni har ju en skatt att hitta.
+
+Hon räcker fram det sista kuvertet.
+
+### A3-HUNT-006 – Skatten
+
+På pappret syns en teckning av tre glassar.
+
+**Alve:** JAG VET!
+
+**Barnet:** Glasskiosken vid vattnet?
+
+**Nova:** Rätt igen. Kom!
+
+Vid kiosken köper Nova varsin glass åt dem.
+
+**Alve:** Det här är den bästa skatten hittills.
+
+**Nova:** Jag hade inte råd med en riktig piratkista till er.
+
+**Barnet:** Den här är bättre.
+
+**Nova:** Nästa gång gör jag ledtrådarna svårare.
+
+**Alve:** Nästa gång får du rita fyra glassar.
+
+**Nova:** Tre.
+
+**Alve:** Vi kan väl förhandla?
+
+De går längs vattnet med sina glassar.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
