@@ -13,6 +13,10 @@ export type StoryPurchaseSnapshot<TTarget extends string> = {
   purchaseStoryLineIndex: number;
 };
 
+export type StoryPurchaseOperationContext = {
+  expectedChildId?: string | null;
+};
+
 export type StoryPurchaseBeat = {
   image?: string;
   title: string;
@@ -30,14 +34,18 @@ export type StoryPurchaseRegistration<TTarget extends string = string> = {
   targets: readonly TTarget[];
   catalog: Record<TTarget, StoryPurchaseDefinition<TTarget>>;
   parseTarget: (value: string | null) => TTarget | null;
-  loadSnapshot: () => Promise<StoryPurchaseSnapshot<TTarget>>;
+  loadSnapshot: (
+    context?: StoryPurchaseOperationContext,
+  ) => Promise<StoryPurchaseSnapshot<TTarget>>;
   applyPurchaseResult: (
     target: TTarget,
     worldFlags: Record<string, unknown>,
+    context?: StoryPurchaseOperationContext,
   ) => Promise<StoryPurchaseApplyResult<TTarget>>;
   savePurchaseStoryProgress: (
     target: TTarget | null,
     lineIndex: number,
+    context?: StoryPurchaseOperationContext,
   ) => Promise<StoryPurchaseSnapshot<TTarget>>;
   purchaseStoryBeat: (target: TTarget) => StoryPurchaseBeat | null;
   resumeHref: (target: TTarget) => string;
