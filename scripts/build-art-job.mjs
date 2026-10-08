@@ -132,6 +132,8 @@ try {
       previousBeatAnchor,
       legacyAnchors
     },
+    // Backward-compatible v1 alias. V2 consumers must use the typed referenceContract fields.
+    continuityAnchors: manifest.version === 1 ? legacyAnchors : [],
     characterSheetPaths,
     chatLibraryReferencePaths,
     environmentReferencePaths,
