@@ -1221,6 +1221,26 @@ Name: **Henrik Andersson**, around 70, familiar to Nova since early childhood. F
 - Actual physical park/harbour map, contribution counts, runtime mini-game design, art and implementation remain unbuilt and must not be conflated with this dialogue/story lock.
 
 
+## 11B. City and Nova's mother's home — LOCKED 2026-10-08
+
+Status: Canonical story direction and approved dialogue; runtime and art not implemented. Follows A3-PARK-010. The full approved lines are in the 2026-10-08 conversation and must not be improvised during implementation.
+
+Sequence:
+- A3-CITY-001 "Stadens bästa ställe": Nova leads Barnet and Alve to a shop selling old games, comics and consoles. She enjoys playing there and shows her mischievous, competitive side.
+- A3-CITY-002 "Utmaningen": A retro arcade machine displays Nova's high score NOV. Barnet challenges her; Alve provides brief comic relief. An additional arcade minigame is NOT an implementation requirement.
+- A3-CITY-003 "Hemvägen": Nova says her parents are divorced and live in different parts of the city; her mother lives a few blocks away and father near the school. She mentions the ordinary inconvenience of possessions split between two homes. She invites the children to her mother's apartment.
+- A3-HOME-001 "Oväntat besök": Nova brings Barnet and Alve home, introduces them as new friends met at the harbour, says they visited the park and played minigolf, and deliberately does NOT mention the planned family celebration. Her mother offers juice and buns, lovingly teases Nova about her minigolf skill.
+- A3-HOME-002 "Mira": At the kitchen table, Barnet mentions the recently reopened village shop and its shopkeeper Mira. Nova's mother recognizes Mira from when they worked together at a store in the city years ago. They lost touch after Mira moved away. She is surprised to learn Mira moved to the village RECENTLY. She recalls Mira once finding thirty matching chairs for an inauguration. She asks them to send her greetings.
+- A3-HOME-003 "Hemligheten": Nova quietly warns Barnet not to reveal the party. Mira may learn only that it is a surprise and must not tell her mother. No photos before completion. Nova's list of people in the know starts with Nova herself, then Barnet. Her mother hears whispering; Nova covers by claiming Barnet needs more minigolf practice.
+
+Canonical constraints:
+1. **The party is a surprise for BOTH parents.** They can know about Nova's new friends and interest in the park, but not the secret celebration or its intended guests.
+2. **Mira only recently moved to the village.** Nova's mother knew her years earlier in the CITY, not as a longtime village resident.
+3. Nova is the emotional lead; Barnet is the playable lead; Alve is sidekick. Her mother is loving, warm and not a villain.
+4. The self-blame and belief she can reunite her parents remain unrevealed; only the divorce and separate homes become explicit.
+5. **Do not travel back across the lake yet.** The city visit and first visit to Nova's mother's home come before the first return trip to the village.
+6. Mother's and father's names/designs are still undecided. No production imagery now.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
