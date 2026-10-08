@@ -60,6 +60,12 @@ assert.match(skeletonSource, /useChapterRuntimeHost<Act3RuntimeState, Act3DebugC
 assert.match(skeletonSource, /ACT3_DEBUG_FIXTURE/, "Act 3 must use the shared debug fixture contract");
 assert.match(skeletonSource, /ChapterRuntimeBoundary/, "Act 3 must use the shared runtime boundary");
 assert.match(skeletonSource, /chapterUnlocked\(predecessorComplete\)/, "Act 3 access must derive from predecessor completion");
+assert.match(
+  skeletonSource,
+  /onClick=\{\(\) => router\.push\(chapterRoute\("act2"\)\)\}/,
+  "Act 3 return control must use the shared chapter router instead of a raw native-webview anchor",
+);
+
 
 for (const forbidden of [
   "@capacitor/preferences",
