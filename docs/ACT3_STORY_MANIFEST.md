@@ -6798,6 +6798,125 @@ Mira lägger försiktigt tillbaka fotografierna i albumet.
 
 **Barnet:** Vi lovar.
 
+
+## 11AJ. A3-SECRET-004–005 — FULL DIALOGUE
+
+### A3-SECRET-004 – Ett nytt problem
+
+Barnen lämnar affären.
+
+Nova håller det gamla fotografiet i ett kuvert.
+
+**Nova:** Vi har musiken! Vi har fotot! Vi har poängtavlan!
+
+**Alve:** Vi har glassen också.
+
+**Barnet:** Inte riktigt än.
+
+**Alve:** Men vi vet att den finns.
+
+Nova skrattar.
+
+**Nova:** Nu behöver vi bara få pappa att ta på sig skjortan.
+
+**Barnet:** Hur ska vi göra det?
+
+**Nova:** Jag kan inte säga åt honom att ha den. Då börjar han fråga varför.
+
+**Alve:** Vi kan skicka ett anonymt brev.
+
+**Nova:** Med vadå?
+
+**Alve:** "Ta på dig den vita skjortan. Fråga inte."
+
+Nova stannar.
+
+**Nova:** Det där låter ju som ett hot!
+
+**Alve:** Då skriver vi "snälla" på slutet.
+
+Barnet börjar skratta.
+
+**Barnet:** Vi kanske kan säga att alla ska vara lite finklädda.
+
+**Nova:** Ja! Det kan fungera.
+
+**Alve:** Men då måste Henrik också vara finklädd.
+
+**Nova:** Vad är problemet?
+
+**Alve:** Han kommer säkert hålla tal.
+
+**Nova:** Just det.
+
+De står tysta en stund.
+
+**Barnet:** Vi kan kanske bara låta pappa välja själv.
+
+Nova funderar.
+
+**Nova:** Fast jag vill ju att det ska bli precis som på fotot.
+
+Hon tittar ner på kuvertet.
+
+**Nova:** Vi får komma på något.
+
+### A3-SECRET-005 – En överraskning från Sol
+
+När de kommer ut på torget står Sol utanför sitt hus.
+
+**Sol:** Hej! Vad gör ni här igen?
+
+**Nova:** Vi behöver hjälp med musiken till festen.
+
+**Sol:** Så pass! Har ni något särskilt i åtanke?
+
+Nova visar affischen på fotografiet.
+
+**Nova:** Kan du hitta musik från det här bandet?
+
+Sol tittar på bilden.
+
+**Sol:** Men det där känner jag igen!
+
+**Alve:** Har du sett dem?
+
+**Sol:** Jag var faktiskt på en spelning med dem för länge sedan. Jag tror jag har en av deras gamla skivor hemma.
+
+**Nova:** VA?!
+
+**Sol:** Om den inte försvann när jag flyttade om i bokhyllan.
+
+**Barnet:** Kan vi leta?
+
+**Sol:** Absolut. Men då får ni hjälpa mig att sortera skivorna också.
+
+**Alve:** Är det här ännu ett förråd?
+
+**Sol:** Nej. Det är en mycket värre plats.
+
+**Nova:** Vadå?
+
+**Sol:** Min skivsamling.
+
+Sol öppnar dörren.
+
+Inne i rummet står flera lådor med gamla skivor.
+
+**Alve:** Hur många har du?
+
+**Sol:** Jag slutade räkna vid fyrahundra.
+
+**Nova:** Okej. Nu behöver vi verkligen en lista.
+
+Barnet och Alve tittar på varandra.
+
+**Alve:** Vi skulle aldrig ha berättat om den där planen.
+
+Nova skrattar och följer med Sol in.
+
+*Scenen slutar.*
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
