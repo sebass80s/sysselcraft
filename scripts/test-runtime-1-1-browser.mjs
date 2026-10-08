@@ -171,7 +171,11 @@ const completedAct1 = {
   },
 };
 
-async function setupPage(context, { act1 = completedAct1, act2State = null } = {}) {
+async function setupPage(context, {
+  act1 = completedAct1,
+  act2State = null,
+  pairedChildId = null,
+} = {}) {
   const page = await context.newPage();
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -187,14 +191,20 @@ async function setupPage(context, { act1 = completedAct1, act2State = null } = {
       });
     }
   });
-  await page.addInitScript(({ act1Save, act2Save }) => {
+  await page.addInitScript(({ act1Save, act2Save, childId }) => {
     if (act1Save) {
       localStorage.setItem("CapacitorStorage.sysselcraft.save.v1", JSON.stringify(act1Save));
     }
-    if (act2Save) {
-      localStorage.setItem("CapacitorStorage.sysselcraft.act2.runtime.v1", JSON.stringify(act2Save));
+    if (childId) {
+      localStorage.setItem("CapacitorStorage.sysselcraft.backend.childId", childId);
     }
-  }, { act1Save: act1, act2Save: act2State });
+    if (act2Save) {
+      const key = childId
+        ? `CapacitorStorage.sysselcraft.act2.runtime.v1.${childId}`
+        : "CapacitorStorage.sysselcraft.act2.runtime.v1";
+      localStorage.setItem(key, JSON.stringify(act2Save));
+    }
+  }, { act1Save: act1, act2Save: act2State, childId: pairedChildId });
   return { page, errors };
 }
 
@@ -245,20 +255,42 @@ try {
 
   {
     const context = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
-    const { page, errors } = await setupPage(context, { act2State: completedAct2 });
+    const pairedChildId = "iphone-existing-child";
+    const { page, errors } = await setupPage(context, {
+      act2State: completedAct2,
+      pairedChildId,
+    });
+    const act1Key = "CapacitorStorage.sysselcraft.save.v1";
+    const act2Key = `CapacitorStorage.sysselcraft.act2.runtime.v1.${pairedChildId}`;
     await page.goto(base + "/act2");
+    const act1BeforeTransition = await page.evaluate((key) => localStorage.getItem(key), act1Key);
+    const act2BeforeTransition = await page.evaluate((key) => localStorage.getItem(key), act2Key);
     const nextChapter = page.getByRole("button", { name: "Till kapitel 3 →", exact: true });
     await nextChapter.waitFor();
     await nextChapter.click();
     await page.waitForURL("**/act3/");
     await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
-    const persistedBeforeReload = await page.evaluate(() => localStorage.getItem("CapacitorStorage.sysselcraft.act2.runtime.v1"));
     await page.reload();
     await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
-    const persistedAfterReload = await page.evaluate(() => localStorage.getItem("CapacitorStorage.sysselcraft.act2.runtime.v1"));
-    assert.equal(persistedAfterReload, persistedBeforeReload, "Act 2 completion bytes must survive Act 3 reload unchanged");
+    const act1AfterReload = await page.evaluate((key) => localStorage.getItem(key), act1Key);
+    const act2AfterReload = await page.evaluate((key) => localStorage.getItem(key), act2Key);
+    assert.equal(
+      act1AfterReload,
+      act1BeforeTransition,
+      "existing Act 1 save bytes must survive paired-child Act 2 -> Act 3 update-in-place navigation",
+    );
+    assert.equal(
+      act2AfterReload,
+      act2BeforeTransition,
+      "child-scoped Act 2 completion bytes must survive Act 3 reload unchanged",
+    );
+    assert.equal(
+      await page.evaluate(() => localStorage.getItem("CapacitorStorage.sysselcraft.act2.runtime.v1")),
+      null,
+      "paired-child runtime must not leak completion state back into the unscoped legacy Act 2 key",
+    );
     assert.deepEqual(errors, []);
-    console.log("PASS Runtime 1.1 completed Act 2 transitions to empty Act 3 and survives reload");
+    console.log("PASS Runtime 1.1 paired-child update-in-place preserves Act 1 + scoped Act 2 across Act 3 reload");
     await context.close();
   }
 
