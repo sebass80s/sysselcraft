@@ -1,5 +1,9 @@
 # SysselCraft image batch pipeline
 
+> **Act 3 production authority:** Runway Brand Kit `Syssel` + `docs/ACT3_ART_PIPELINE.md`.
+>
+> This local OpenAI batch pipeline is a **fallback / offline experiment harness**, not the canonical Act 3 production route. It remains useful for deterministic manifest validation, local character-sheet checks, dry-runs and renderer comparison, but production Act 3 images must not silently switch here when Runway reference grounding is available.
+
 This pipeline prepares deterministic image-generation task batches. It does not generate images by itself.
 
 ## Hard identity rule
