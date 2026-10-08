@@ -28,10 +28,11 @@ const args = parseArgs(process.argv.slice(2));
 const manifestPath = args.manifest ? String(args.manifest) : null;
 const beatId = args.beat ? String(args.beat) : null;
 const outputRef = args.output ? String(args.output) : null;
-if (!manifestPath || !beatId || !outputRef) {
-  fail("Usage: node scripts/approve-art-image.mjs --manifest=<manifest.json> --beat=<beat-id> --output=<approved-image.png> [--approvals=<file>]");
+const chatLibraryPath = args["chat-library-path"] ? String(args["chat-library-path"]) : null;
+if (!manifestPath || !beatId || (!outputRef && !chatLibraryPath)) {
+  fail("Usage: node scripts/approve-art-image.mjs --manifest=<manifest.json> --beat=<beat-id> (--output=<approved-image.png> | --chat-library-path=<persistent-path>) [--approvals=<file>]");
 }
-if (!fs.existsSync(outputRef)) fail(`Approved image does not exist: ${outputRef}`);
+if (outputRef && !fs.existsSync(outputRef)) fail(`Approved image does not exist: ${outputRef}`);
 
 const manifest = readJson(manifestPath);
 if (!manifest.beats?.some((beat) => beat.id === beatId)) fail(`Unknown beat "${beatId}".`);
@@ -44,10 +45,11 @@ approvals.items ??= {};
 approvals.items[beatId] = {
   ...(approvals.items[beatId] ?? {}),
   status: "approved",
-  outputRef,
+  outputRef: outputRef ?? approvals.items[beatId]?.outputRef ?? null,
+  chatLibraryPath: chatLibraryPath ?? approvals.items[beatId]?.chatLibraryPath ?? null,
   identityPassed: true,
   continuityPassed: true,
   notes: args.notes ? String(args.notes) : approvals.items[beatId]?.notes ?? ""
 };
 writeJson(approvalPath, approvals);
-console.log(`APPROVED: ${beatId} -> ${outputRef}`);
+console.log(`APPROVED: ${beatId} -> ${outputRef ?? chatLibraryPath}`);
