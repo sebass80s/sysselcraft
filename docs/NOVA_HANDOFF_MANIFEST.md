@@ -8,7 +8,11 @@ Branch: `nova/runtime-architecture-v1`
 Repository reality wins over every older checkpoint in this file.
 
 Current code checkpoint before documentation closeout:
-- `ddb3db947dc30f96af054012937b8a8afbf7ba70`
+- `b118978ad51fef1eb81c74891465808fd86276c5`
+
+Verified on this exact code/test checkpoint:
+- GitHub Actions CI #2490: **SUCCESS**
+- Runtime Browser Closeout #28: **SUCCESS**
 - Act 3 contains the first authored runtime beat: persistent chapter-title entry **KAPITEL 3 — På andra sidan sjön**
 - the immediately preceding Act 3 commit had one extra closing brace in `Act3Skeleton.tsx`; that syntax error is fixed at the checkpoint above
 - verify CI and Runtime Browser Closeout on the final documentation HEAD before declaring the handover green
