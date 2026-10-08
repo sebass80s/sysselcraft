@@ -120,6 +120,7 @@ export default function VillagePrototype() {
   const [storyPurchaseReturnContext, setStoryPurchaseReturnContext] = useState<{
     registration: StoryPurchaseRegistration<string>;
     target: string;
+    expectedChildId: string | null;
   } | null>(null);
   const [pairedBackendChildName, setPairedBackendChildName] = useState<string | null>(null);
 
@@ -252,12 +253,13 @@ export default function VillagePrototype() {
     let cancelled = false;
     void (async () => {
       try {
-        const snapshot = await handoff.registration.loadSnapshot();
+        const expectedChildId = await getPairedChildId();
+        const snapshot = await handoff.registration.loadSnapshot({ expectedChildId });
         if (cancelled) return;
-        setStoryPurchaseReturnContext(handoff);
+        setStoryPurchaseReturnContext({ ...handoff, expectedChildId });
         setStoryPurchaseSources((sources) => [
           ...sources.filter((source) => source.registration.id !== handoff.registration.id),
-          { registration: handoff.registration, snapshot },
+          { registration: handoff.registration, snapshot, expectedChildId },
         ]);
         setShopCurrency("sysselbux");
         setShopMessage("");
@@ -901,13 +903,15 @@ export default function VillagePrototype() {
       setBackendWallet(wallet);
       publishBackendWallet(wallet);
 
+      if (!purchase.childId) throw new Error("Storyköpet saknade barnidentitet.");
       const outcome = await registration.applyPurchaseResult(
         target,
         purchase.worldFlags,
+        { expectedChildId: purchase.childId },
       );
       setStoryPurchaseSources((sources) => [
         ...sources.filter((candidate) => candidate.registration.id !== registration.id),
-        { registration, snapshot: outcome.snapshot },
+        { registration, snapshot: outcome.snapshot, expectedChildId: purchase.childId },
       ]);
       setShopMessage(outcome.message);
       window.dispatchEvent(new Event("sysselcraft:backend-wallet-refresh"));
@@ -1129,8 +1133,8 @@ export default function VillagePrototype() {
     setShopPanelOpen(false);
 
     if (storyPurchaseReturnContext) {
-      const { registration, target } = storyPurchaseReturnContext;
-      const snapshot = await registration.loadSnapshot();
+      const { registration, target, expectedChildId } = storyPurchaseReturnContext;
+      const snapshot = await registration.loadSnapshot({ expectedChildId });
       const purchaseOwned = snapshot.status[target]?.owned === true;
       const exit = resolveStoryPurchaseExit(target, purchaseOwned);
       setStoryPurchaseReturnContext(null);
@@ -1356,18 +1360,31 @@ export default function VillagePrototype() {
       const snapshot = await registration.savePurchaseStoryProgress(
         storyPurchaseStory,
         nextIndex,
+        { expectedChildId: storyPurchaseStorySource.expectedChildId },
       );
       setStoryPurchaseSources((sources) => [
         ...sources.filter((source) => source.registration.id !== registration.id),
-        { registration, snapshot },
+        {
+          registration,
+          snapshot,
+          expectedChildId: storyPurchaseStorySource.expectedChildId,
+        },
       ]);
       return;
     }
 
-    const snapshot = await registration.savePurchaseStoryProgress(null, 0);
+    const snapshot = await registration.savePurchaseStoryProgress(
+      null,
+      0,
+      { expectedChildId: storyPurchaseStorySource.expectedChildId },
+    );
     setStoryPurchaseSources((sources) => [
       ...sources.filter((source) => source.registration.id !== registration.id),
-      { registration, snapshot },
+      {
+        registration,
+        snapshot,
+        expectedChildId: storyPurchaseStorySource.expectedChildId,
+      },
     ]);
     router.push(registration.resumeHref(storyPurchaseStory));
   }
