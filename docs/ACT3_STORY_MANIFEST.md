@@ -1878,6 +1878,291 @@ Hon suddar bort en av punkterna på sin lista.
 
 **Kontinuitet:** Nova kan vara envis men lyhörd; ingen villkorslös perfektionism. Bordplacering kan senare bli ett spelarval och ge synlig effekt. Inget inköp har ännu gjorts och inga festdatum fastslagits.
 
+## 11H. En plats för alla — FULLSTÄNDIG DIALOG OCH FÖRSTA DEJTEN LÅSTA
+
+**Status:** A3-PARK-015–018 approved. The 2011 score board is a central story prop. Runtime and art remain unimplemented.
+
+### A3-PARK-015 – Henrik har en idé
+
+Barnet, Nova och Alve håller på att lägga tillbaka kubbspelet i lådan när Henrik dyker upp från scenbyggnaden.
+
+Han bär en hoprullad affisch under ena armen och en stor nyckelknippa i handen.
+
+**Henrik:** Där är ni! Precis de människor jag sökte!
+
+**Nova:** Har du hittat nyckeln till förrådet?
+
+**Henrik:** Nej, men jag har hittat något ännu bättre.
+
+Henrik rullar ut affischen över en bänk.
+
+På den står det *FOLKPARKENS STORA TALANGKVÄLL 2011*.
+
+**Alve:** Oj. Den är gammal.
+
+**Henrik:** Klassisk, skulle jag säga.
+
+**Barnet:** Varför har du den?
+
+**Henrik:** För att visa vad den här parken en gång var kapabel till! Musik! Tävlingar! Uppträdanden!
+
+**Nova:** Vi ska inte ha en talangkväll.
+
+**Henrik:** Inte? Det var synd. Jag hade kunnat hålla invigningstalet.
+
+**Alve:** Hur långt?
+
+**Henrik:** Jag har ett på sjutton minuter.
+
+**Nova:** Nej.
+
+**Henrik:** Ett kortare på elva.
+
+**Nova:** Henrik.
+
+**Henrik:** Jag förstår. Vi återkommer till talen.
+
+Han rullar ihop affischen.
+
+**Henrik:** Men det finns något annat. Den gamla spelhörnan bakom scenen har inte använts på flera år.
+
+**Barnet:** Vad finns där?
+
+**Henrik:** Det är just det vi behöver undersöka.
+
+**Alve:** Har du nyckeln dit?
+
+Henrik tittar på sin knippa.
+
+**Henrik:** Någonstans.
+
+### A3-PARK-016 – Den gamla spelhörnan
+
+En stund senare hittar Henrik rätt nyckel.
+
+Bakom scenen finns en gräsplätt omgiven av låga häckar. Under ett enkelt tak står några gamla spelbord och staplade träbackar.
+
+**Alve:** Här är ju jättemycket plats!
+
+**Barnet:** Man skulle kunna ha aktiviteter här.
+
+**Nova:** Men jag hade tänkt ha aktiviteterna framför scenen.
+
+**Henrik:** Det går också. Men här slipper ni flytta undan borden varje gång någon vill spela.
+
+Nova går runt och tittar.
+
+**Nova:** Fast då ser inte alla vad som händer.
+
+**Alve:** Man kanske inte måste titta på allt?
+
+**Nova:** Vad menar du?
+
+**Alve:** Om några spelar kan de andra äta tårta. Eller göra något annat.
+
+Nova ser först tveksam ut.
+
+**Barnet:** Det skulle också bli mindre trångt.
+
+**Henrik:** Dessutom har vi faktiskt två gamla spelbord här inne.
+
+Han lyfter bort ett dammigt överdrag.
+
+Under det står ett litet bord med målade spelplaner.
+
+**Alve:** Vad är det där?
+
+**Henrik:** Ett gammalt bordsspel. Jag tror man ska skjuta träbrickor mot poängfält.
+
+**Nova:** Det där kommer pappa gilla.
+
+**Barnet:** Har han spelat det?
+
+**Nova:** Nej, men han älskar sådana där spel där han kan låtsas vara världsmästare.
+
+Hon skrattar lite.
+
+**Nova:** Mamma brukar vinna ändå.
+
+**Henrik:** Då kanske de ska få tävla mot varandra!
+
+Nova tittar på spelbordet.
+
+**Nova:** Ja... kanske det.
+
+### A3-PARK-017 – Barnet får bestämma
+
+Henrik tar fram ett anteckningsblock.
+
+**Henrik:** Vi behöver bestämma vad spelhörnan ska användas till. Det är bra att veta innan jag börjar flytta saker.
+
+**Nova:** Jag hade tänkt att vi skulle...
+
+Hon avbryter sig och tittar på Barnet.
+
+**Nova:** Vet du vad? Du får välja.
+
+**Barnet:** Jag?
+
+**Nova:** Ja. Jag har ju bestämt nästan allt hittills.
+
+**Alve:** Nästan?
+
+**Nova:** Okej. Ganska mycket.
+
+**Henrik:** Då behöver vi ett beslut från vår nya aktivitetsansvariga!
+
+**Barnet:** Aktivitetsansvariga?
+
+**Henrik:** Eller aktivitetsansvarige. Eller aktivitetschef. Titlarna är inte helt klara.
+
+**Nova:** Henrik, låt Barnet välja.
+
+**SPELARVAL, EJ ÄNNU VALT AV ANVÄNDAREN:**
+- **Spelhörna:** Flera små spel där gästerna utmanar varandra.
+- **Skaparhörna:** Rita, pyssla och göra egna små minnen från dagen.
+- **Lite av varje:** Både spel och skapande.
+
+**Om Spelhörna:**
+
+**Barnet:** Vi gör en spelhörna med flera olika tävlingar.
+
+**Nova:** Pappa kommer försöka vinna allihop.
+
+**Alve:** Då får han möta mig.
+
+**Nova:** Det är nog precis vad han hoppas på.
+
+**Om Skaparhörna:**
+
+**Barnet:** Vi kan göra en plats där folk får rita och bygga saker.
+
+**Nova:** Mamma brukar alltid spara sånt vi gör.
+
+**Alve:** Även fula teckningar?
+
+**Nova:** Särskilt dem. Hon har en hel låda.
+
+**Om Lite av varje:**
+
+**Barnet:** Varför inte både spel och pyssel?
+
+**Nova:** Då behöver vi dela upp platsen lite.
+
+**Alve:** Ett bord för att vinna och ett bord för att vila efter att man förlorat.
+
+**Henrik:** En utmärkt organisationsmodell!
+
+**Implementationsregel:** Alla tre spelarval ska vara möjliga i runtime. Användarens "lås allt" låser alternativen och responsen, inte vilket alternativ den framtida spelaren väljer. Den gamla tävlingstavlan och föräldrarnas returmatch måste kunna fungera i varje variant.
+
+### A3-PARK-018 – Poängtavlan (ersätter tidigare utkast till beat 018)
+
+Henrik ropar från förrådet.
+
+**Henrik:** GODA NYHETER!
+
+**Alve:** Har du hittat fler nycklar?
+
+**Henrik:** Ännu bättre! Jag har hittat poängtavlan från 2011!
+
+**Nova:** Vi behöver ingen poängtavla från 2011!
+
+**Henrik:** Vänta tills du ser den!
+
+Han kommer ut med en stor, dammig tavla. På den står gamla namn och resultat skrivna med tusch.
+
+**Alve:** Oj. Har den legat där sedan 2011?
+
+**Henrik:** Nästan. Det här är folkparkens historia!
+
+Barnet pekar på två namn högt upp på tavlan.
+
+**Barnet:** Nova, känner du igen de där namnen?
+
+Nova kommer närmare.
+
+**Nova:** Vänta...
+
+Hon läser namnen igen.
+
+**Nova:** Men... det är ju mamma och pappa!
+
+**Alve:** Va?
+
+**Nova:** Det är deras namn!
+
+Henrik tittar på tavlan.
+
+**Henrik:** Jaså? Då var de med i den gamla parkturneringen.
+
+**Nova:** Mamma har berättat om den! Det var här de hade sin första dejt!
+
+**Barnet:** På en turnering?
+
+**Nova:** Ja! Pappa försökte imponera på mamma genom att vinna. Men han förlorade.
+
+**Alve:** Mot din mamma?
+
+**Nova:** Ja!
+
+Nova börjar skratta.
+
+**Nova:** Han brukar säga att han lät henne vinna.
+
+**Henrik:** Den ursäkten har jag hört förut.
+
+Nova tittar närmare på tavlan.
+
+**Nova:** Mamma har fortfarande ett foto från den dagen.
+
+Hon tar fram mobilen och fotograferar tavlan.
+
+**Barnet:** Ska du visa dem?
+
+**Nova:** Inte än.
+
+Hon tittar på poängtavlan igen.
+
+**Nova:** Vi måste ha den på festen.
+
+**Alve:** Den är ju ganska ful.
+
+**Nova:** Den är perfekt.
+
+**Henrik:** Äntligen någon som uppskattar parkens historia!
+
+**Barnet:** Var ska vi sätta den?
+
+**Nova:** Vid spelhörnan. Där de kan se den.
+
+**Alve:** Tror du de kommer ihåg?
+
+Nova ler.
+
+**Nova:** Det är klart de kommer.
+
+Hon tittar en sista gång på namnen.
+
+**Nova:** Tänk om vi kunde få dem att spela mot varandra igen. Precis som då.
+
+Barnet tittar på tavlan.
+
+**Barnet:** Det skulle vara kul.
+
+**Nova:** Ja.
+
+Nova håller kvar blicken vid de två namnen.
+
+**Nova:** Det skulle det verkligen.
+
+### Framtida payoff och kontinuitet
+
+- **2011** är det låsta året för deras första dejt och tävling. Aldrig 1998 i dessa scener. Tavlan är från samma turnering; föräldrarnas namn finns på den.
+- På familjedagen ser föräldrarna tavlan, skrattar åt olika minnen av deras första dejt, och kan spela returmatch. Pappan hävdar att han lät mamman vinna; mamman håller inte med.
+- Nova ser dem ha genuint roligt tillsammans, vilket förstärker hennes felaktiga hopp om återförening. Föräldrarna blir **inte** ett par igen, men dagen och glädjen är verkliga.
+- Festen är fortfarande hemlig för föräldrarna. Henrik får inte dominera storyn. Spelvalet får synligt resultat men ska inte blockera berättelsens kärnscen.
+- Dialogen A3-PARK-015–017 bygger på det godkända utkastet. Ändringen 1998 till 2011 gäller även Henrik-affischen för tidsmässig samstämmighet.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
