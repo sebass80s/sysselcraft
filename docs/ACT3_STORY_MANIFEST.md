@@ -1634,6 +1634,30 @@ The first village return introduces Mira as an old city-work colleague of Nova's
 
 **Narrative balance:** This is one preparation stream, not the main emotional arc. The chapter must keep Nova, her friendship with Barnet, city exploration and activities central. Mira is a supplier, not the chapter's protagonist.
 
+## 11F. Novas skattjakt — STORY LOCKED
+
+**Status:** Approved sequence A3-HUNT-001 through A3-HUNT-006, not implemented. Full Swedish dialogue is in the approved conversation immediately before "vi spikar och fortsätter"; this is a continuity record, not a verbatim script. Before runtime encoding, preserve the exact approved lines.
+
+### A3-HUNT-001 — Ett nytt meddelande
+The morning after meeting Mira, Nova texts Barnet that the treasure hunt is ready and Alve should come. Humorous exchange about bringing shoes and brains. Meeting point: fountain in the town square.
+
+### A3-HUNT-002 — Torget
+Nova waits at the fountain and gives Barnet an envelope labelled UPPDRAG 1 – STADENS HJÄRTA. Clue: **“Där många väntar men ingen sover, hittar ni något som tiden lovar.”** The children tease Nova about its late-night wording.
+
+### A3-HUNT-003 — Klockan
+The children connect waiting with the bus stop and time with its old clock; a clue envelope is beside the timetable. Alve finds the clock, Barnet the envelope, and Nova spontaneously awards them one point each.
+
+### A3-HUNT-004 — Den som läser hittar
+Clue: **“Här finns tusen världar, fast huset står helt still. Leta där man lånar det man vill.”** Barnet solves it as the library. In the children's area, the clue leads to a city map with Nova's star marker, not to a new mandatory minigame.
+
+### A3-HUNT-005 — En plats ovanför stan
+Following the map, they arrive at an overlook above the town and lake. Nova says she sometimes comes here to think. Barnet asks about both parents' flats and the former family villa. Nova still knows the way to the old house but declines to visit today. She hands over the final clue.
+
+### A3-HUNT-006 — Skatten
+The last clue is a drawing of ice cream. Nova treats the children to ice cream at the waterfront, within her limited budget; Alve provides a running joke about portions. They enjoy the experience, and Nova suggests a harder next hunt. They reaffirm they will meet again.
+
+**Design laws:** The hunt is about Nova's creativity and the emerging friendship, not festival shopping or restoring the park. Make clues genuinely solvable by the child using existing shared interaction primitives; aim for three meaningful clue stages and a reward. Do not automatically require a separate arcade minigame. Obtain venue permission for physical clues or use an authorized/digital equivalent. The villa is planted for a later scene, not revisited now. Nova remains central, Barnet solves and chooses, Alve adds humour. No art or runtime implementation yet.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
