@@ -5076,6 +5076,11 @@ De gör en diskret high five bakom föräldrarnas ryggar.
 
 **Låst kontinuitet:** Ingen av föräldrarna återförenas. Middagsutbrottet orsakade inte skilsmässan. Barnet och Alve förblir kompisar, inte rådgivare. Epilogen får vara glad och framåtblickande utan att sudda ut Novas sorg.
 
+
+## A3 epilogue approval (2026-10-09)
+
+Approved A3-EPILOG-001–006, with revised 004–006. Nova, mum and dad will bowl together Saturday despite not reuniting. The railway-station / old map / Act 4 hook is removed. Chapter 3 ends with the three friends, the boat, and the new photograph. The full approved dialogue is in this chat, but this note is not a verbatim transcription and needs transfer before beat implementation.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
