@@ -7496,6 +7496,89 @@ Nova lutar sig mot Barnet.
 
 Nova försöker låta bli att skratta.
 
+
+## 11AN. A3-ARCADE-001–003 — KOMPLETTERANDE DIALOGMANUS
+
+**Nyskrivna repliker från låst handling, ej verifierad ordagrann originaltext.**
+
+### A3-ARCADE-001 – Den hemliga ingången
+
+Nova leder Barnet och Alve till en butik med gamla tv-spel och filmer i skyltfönstret.
+
+**Alve:** Ska vi köpa ett spel?
+
+**Nova:** Nej, jag ska visa er något mycket bättre.
+
+**Barnet:** Vadå?
+
+Nova går längst in i butiken och drar undan ett draperi.
+
+En skylt säger *ARKADEN – ÖPPET NÄR DET ÄR ÖPPET*.
+
+**Alve:** Vad betyder det där?
+
+**Nova:** Att du får gå in när Rebecka har öppet.
+
+Bakom draperiet blinkar gamla arkadmaskiner.
+
+**Nova:** Välkomna till världens bästa ställe!
+
+### A3-ARCADE-002 – NOV
+
+Rebecka, rödhårig och i fyrtioårsåldern, sitter bakom disken och lagar en handkontroll.
+
+**Rebecka:** Men se där! NOV har tagit med förstärkning!
+
+**Alve:** Vem är NOV?
+
+**Nova:** Jag. Man får bara skriva tre bokstäver på rekordlistan.
+
+**Barnet:** Har du rekord här?
+
+**Rebecka:** Hon har försökt slå mig sedan hon var så här liten.
+
+Rebecka håller handen lågt över disken.
+
+**Nova:** Jag var inte så liten.
+
+**Rebecka:** Du fick stå på en pall för att nå knapparna.
+
+**Alve:** Har du slagit henne någon gång?
+
+**Nova:** Några gånger!
+
+**Rebecka:** På vissa spel, ja. På andra har hon lite kvar att öva.
+
+Rebecka lägger tre spelpolletter framför vart och ett av barnen.
+
+**Rebecka:** Första rundan bjuder jag på.
+
+**Nova:** Tack, Rebecka!
+
+### A3-ARCADE-003 – Välj ditt spel
+
+Tre maskiner står intill varandra: bilspel, rytmspel och färgblock.
+
+**Nova:** Okej! Ni får välja först.
+
+**Barnet:** Vad går de ut på?
+
+**Nova:** På den här ska du slå min tid, på den där följer du musiken, och där ska du få ihop färgerna.
+
+**Alve:** Finns det någon där man bara trycker på en knapp?
+
+**Rebecka:** Det finns en av-och-på-knapp på alla.
+
+**Alve:** Jag börjar med den.
+
+**Nova:** Nej, det gör du inte!
+
+*Spelaren väljer vilket skåp som ska visas. Bara ett spel behöver vara fullt spelbart i första implementationen. Båda resultatgrenar fortsätter.*
+
+**Alve:** Okej. Nu förstår jag varför du kommer hit så ofta.
+
+**Nova:** Vänta tills du ser maskinen längst in.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
