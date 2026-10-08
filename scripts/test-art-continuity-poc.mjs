@@ -7,6 +7,7 @@ import { spawnSync } from "node:child_process";
 
 const root = process.cwd();
 const builder = path.join(root, "scripts/build-art-job.mjs");
+const qa = path.join(root, "scripts/qa-art-image.mjs");
 const approver = path.join(root, "scripts/approve-art-image.mjs");
 const sourceManifest = path.join(root, "image-pipeline/batches/poc-continuity-chain-01.json");
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), "sysselcraft-art-poc-"));
@@ -39,10 +40,16 @@ function approve(beat, filename) {
     path.join(root, "public/assets/village/character-sheets/alve.png"),
     output
   );
-  run(approver, [
+  run(qa, [
     `--manifest=${manifest}`,
     `--beat=${beat}`,
     `--output=${output}`,
+    "--pass=identity,hard-rules",
+    `--approvals=${approvals}`
+  ]);
+  run(approver, [
+    `--manifest=${manifest}`,
+    `--beat=${beat}`,
     `--approvals=${approvals}`
   ]);
   return output;
@@ -101,10 +108,16 @@ assert.match(missing.stderr, /Approved anchor file is missing/);
     `--approvals=${chatApprovals}`,
     `--out=${path.join(temp, "chat-first.job.json")}`
   ]);
-  run(approver, [
+  run(qa, [
     `--manifest=${manifest}`,
     "--beat=POC-A3-001",
     "--chat-library-path=/SysselCraft/Art References/anchors/poc-continuity-chain-01/POC-A3-001.png",
+    "--pass=identity,hard-rules",
+    `--approvals=${chatApprovals}`
+  ]);
+  run(approver, [
+    `--manifest=${manifest}`,
+    "--beat=POC-A3-001",
     `--approvals=${chatApprovals}`
   ]);
   const chatSecondOut = path.join(temp, "chat-second.job.json");
