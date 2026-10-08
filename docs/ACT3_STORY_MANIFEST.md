@@ -2772,6 +2772,30 @@ De försvinner runt hörnet.
 - The friends repair their friendship but the parental conflict and Nova's deeper feelings remain unresolved.
 - After the scene, Nova leads the children to a favourite town destination unrelated to the family-day shopping list.
 
+## 11L. Ett ställe bara för oss — ARCADE LOCKED (Rebecka)
+
+**Status:** User-approved A3-ARCADE-001–006. NPC canonical identity: **Rebecka**, a **red-haired woman in her early 40s**, who runs the vintage games shop and hidden arcade. Every former reference to arcade owner "Rut" in these beats, including score labels **RUT**, is superseded by **Rebecka / REB**. The exact earlier Swedish draft survives in conversation; the following is a condensed continuity record, **not a verbatim dialogue transcript**. Restore the approved dialogue with name/description swaps before runtime implementation.
+
+### A3-ARCADE-001 — Den hemliga ingången
+After the notebook apology and no-plan walk, Nova leads Barnet and Alve through town to a shop displaying old games and films. Behind a curtain sign reading *ARKADEN – ÖPPET NÄR DET ÄR ÖPPET* is a room of arcade machines, lights and music. Nova calls it the world's best place.
+
+### A3-ARCADE-002 — NOV
+Behind the counter is **Rebecka (early 40s, red hair)** fixing a controller. She calls Nova **NOV**, Nova's three-character high-score signature, and jokes about how small Nova was when she first played. Rebecka runs the shop, knows Nova from childhood, and is formidable at the games. She gives each child three introductory tokens for free.
+
+### A3-ARCADE-003 — Välj ditt spel
+Three presented game options: a racing game (beat Nova's time), rhythm game (tap in time to music), and block puzzle (color combinations). Optional win/loss banter; both branches converge. These are **story/design proposals**, not promises that three separate runtime engines already exist. Prioritize one well-built game, other cabinets may stay decorative.
+
+### A3-ARCADE-004 — En plats att försvinna till
+The children rest on a sofa and Rebecka brings juice. Nova used to come here with her father, who collected retro games, and now often visits alone. Rebecka sometimes sends her outside and asks whether she ate lunch. Nova says here no one asks about custody weekends and packing bags. Preserve this as her own safe place, outside the festival and parental plot.
+
+### A3-ARCADE-005 — Den omöjliga maskinen
+A difficult arcade machine bears **HIGH SCORE – REB – 125 000** and a sign *SLÅ MIG OM DU KAN*. The kids collaborate; Barnet plays and Nova coaches. Rebecka's record is an optional long-term bonus challenge, not a progression gate. Alve's four-second defeat is a joke.
+
+### A3-ARCADE-006 — En ny tradition
+Rebecka asks whether they'll return and offers an improvised challengers list. She warmly tells Nova it was fun that she brought friends; Nova agrees. Walking away, they banter about a three-button game. Nova's phone stays in her bag. The friendship is growing and she has a real independent life.
+
+**Continuity:** Owner identity is **Rebecka**, never Rut; early 40s, red hair, established adult who looks out for Nova but is not a counselor or parent surrogate. This is a fully playful day, deliberately without party prep. No actual runtime or art now.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
