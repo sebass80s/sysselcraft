@@ -15,16 +15,22 @@ Do not ask Kalle to upload established character sheets again. Do not silently s
 
 ## ART REPO PROMOTION — LOCKED 2026-10-08
 
-For **`kör art`**, an accepted production image has two canonical destinations:
+For **`kör art`**, an accepted production image has two destinations:
 
-1. persistent ChatGPT Library, used for continuity;
-2. the beat's explicit GitHub `outputPath`, used by runtime.
+1. ChatGPT Library for continuity;
+2. the beat's explicit GitHub `outputPath` for runtime.
 
-A selected image is not considered repo-promoted until the **same raster** is present at the declared GitHub path and the commit/path has been verified.
+**Final GitHub binary upload is intentionally manual.**
 
-Do not upload drafts, rejected images, stress-test images or PoC images by default. Do not guess the destination folder. The v2 beat manifest owns `outputPath`.
+Locked workflow:
+1. Nova runs the full Art Pipeline 2.0 through generation, QA and approval.
+2. Nova gives Kalle the exact canonical filename + GitHub destination path.
+3. Kalle drag-and-drops the accepted PNG into GitHub.
+4. Nova verifies the file exists at the expected path.
 
-If binary GitHub transport is unavailable in a future chat/tool session, say so and leave repo promotion pending rather than claiming success.
+Do not ask Kalle to re-upload character refs or manage continuity. Do not ask him to invent paths. Only the final GitHub binary transfer is manual.
+
+Do not reopen/automate this final step unless Kalle explicitly asks to change the pipeline.
 
 ## READ FIRST — CURRENT STATE 2026-10-07
 

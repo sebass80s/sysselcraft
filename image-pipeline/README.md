@@ -158,15 +158,21 @@ Every v2 beat has a mandatory, unique `outputPath` under:
 `build-art-job.mjs` exposes it as `outputContract.repoOutputPath`.
 `approve-art-image.mjs` stores it as `approved.repoOutputPath`.
 
-For `kör art`, a user-selected + QA-passed image is promoted in two places:
-- ChatGPT Library, for future continuity;
-- GitHub at `repoOutputPath`, for runtime consumption.
+**Locked workflow:** after QA + approval, ChatGPT reports the exact filename/path and the user drag-and-drops the selected PNG into GitHub.
 
-The exact same raster must be used in both places. Do not regenerate or silently recompress during GitHub promotion.
+ChatGPT then verifies that the file exists at the expected path.
 
-Do not push drafts, rejected candidates or stress-test/PoC images unless the user explicitly selects them for production.
+The user should never need to:
+- re-upload character refs;
+- decide continuity anchors;
+- invent filenames;
+- decide destination folders.
 
-If the current tool session cannot transport binary image bytes into GitHub, stop and report the repo-promotion step as pending. Never claim a GitHub image upload that has not been verified.
+Only the final binary transport to GitHub is manual.
+
+Do not push drafts, rejected candidates, stress-test images or PoC images unless explicitly selected.
+
+Do not reopen this manual promotion step unless the user explicitly asks to change the production pipeline.
 
 ## Fail-closed rules
 
