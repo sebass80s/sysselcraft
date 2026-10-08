@@ -4617,6 +4617,438 @@ Mira ler svagt, stänger albumet och lägger tillbaka det.
 - Photos are returned; the exact photograph used for decorating needs to be copied/arranged separately if relevant.
 - In the aftermath Mira may help set up the mother-daughter conversation, not replace it.
 
+## 11U. Den stora dagen — A3-FAMILY-001–007 FULLSTÄNDIG DIALOG LÅST
+
+**Status:** User approved. Verbatim Swedish script below. No runtime or artwork implemented. Day may launch **only after all mandatory Mira purchases are complete**. Parents authentically have fun, but will not reunite. Children believe their secret plan is working.
+
+### A3-FAMILY-001 – Allt är klart
+
+*Scenen startar först när samtliga obligatoriska saker till familjedagen har köpts hos Mira och förberedelserna är färdiga.*
+
+Folkparken har förändrats.
+
+Ljusslingorna hänger mellan träden. Borden är dukade, spelhörnan är återställd och den gamla poängtavlan från 2011 står bredvid shuffleboardbordet.
+
+Henning håller på att ställa fram bakverk. Sol testar musiken och Linus bär fram en liten skylt.
+
+Barnet och Alve kommer genom parkgrinden.
+
+Nova springer emot dem.
+
+**Nova:** ÄNTLIGEN! Ni är här!
+
+**Alve:** Vi är inte sena.
+
+**Nova:** Nej, men jag har varit här i två timmar.
+
+**Barnet:** Hur ser det ut?
+
+**Nova:** KOM!
+
+Hon drar med dem in i parken.
+
+**Nova:** Titta! Allting är på plats!
+
+**Alve:** Till och med glassen?
+
+**Nova:** Ja, Alve. Till och med glassen.
+
+**Alve:** Då är vi redo.
+
+**Barnet:** Det är jättefint!
+
+Nova snurrar ett varv och tittar sig omkring.
+
+**Nova:** Jag fattar knappt att vi gjorde allt det här.
+
+**Alve:** Vi är ganska bra.
+
+**Nova:** Vi är bäst!
+
+### A3-FAMILY-002 – Henrik tar befälet
+
+Henrik kommer gående med en pärm under armen och en visselpipa runt halsen.
+
+**Henrik:** God morgon, arbetsgruppen!
+
+**Alve:** Varför har du en visselpipa?
+
+**Henrik:** För att upprätthålla ordning.
+
+**Nova:** Henrik, vi ska ha en familjedag. Inte en fotbollsmatch.
+
+**Henrik:** Ett arrangemang utan ordning är ett arrangemang utan framtid!
+
+Han blåser i visselpipan.
+
+Alla rycker till.
+
+**Sol (på avstånd):** HENRIK! LÄGG AV MED DEN DÄR!
+
+**Henrik:** Funktionstest!
+
+Nova tar fram anteckningsblocket.
+
+**Nova:** Okej. Pappa kommer först. Mamma ungefär tio minuter senare.
+
+**Henrik:** Då inleder vi med mitt välkomsttal.
+
+**Nova:** Nej!
+
+**Henrik:** Det är bara tolv minuter.
+
+**Alve:** Du sa sjutton förut.
+
+**Henrik:** Jag har kortat ner det.
+
+**Barnet:** Varför behöver vi ett tal?
+
+**Henrik:** För att välkomna gästerna!
+
+**Nova:** Du kan säga hej.
+
+Henrik funderar.
+
+**Henrik:** Ett ord. Mycket effektivt.
+
+### A3-FAMILY-003 – Den vita skjortan
+
+Nova står vid grinden och tittar ner längs vägen.
+
+**Nova:** Där kommer pappa!
+
+Barnet och Alve ställer sig bredvid henne.
+
+En man närmar sig folkparken.
+
+Han har på sig jeans och en mörk jacka.
+
+Nova kisar.
+
+**Nova:** Nej...
+
+**Barnet:** Vadå?
+
+**Nova:** Han har inte skjortan!
+
+**Alve:** Han kanske har den under jackan.
+
+**Nova:** Jag ser ju att han har en vanlig tröja.
+
+**Alve:** Då kanske han har skjortan under tröjan.
+
+Nova tittar på honom.
+
+**Nova:** Varför skulle han ha det?
+
+**Alve:** Jag vet inte. För att överraska dig?
+
+Pappan får syn på Nova och vinkar.
+
+**Pappa:** Hej, älskling!
+
+Nova springer fram.
+
+**Nova:** Hej pappa!
+
+Han kramar henne.
+
+**Pappa:** Men vad är det här för hemligt ställe du har dragit hit mig till?
+
+**Nova:** Du får se!
+
+Han tittar in genom grinden.
+
+**Pappa:** Oj. Har du gjort allt det här?
+
+**Nova:** Jag och mina kompisar!
+
+**Pappa:** Det ser ju fantastiskt ut.
+
+Nova ler stolt.
+
+**Nova:** Kom! Jag ska visa dig!
+
+### A3-FAMILY-004 – Mamma kommer
+
+En stund senare hörs röster vid grinden.
+
+Nova vänder sig om.
+
+**Nova:** Mamma!
+
+Hennes mamma kommer in i parken och stannar när hon får syn på dekorationerna.
+
+**Mamma:** Men... Nova!
+
+**Nova:** Överraskning!
+
+**Mamma:** Vad fint du har gjort!
+
+De kramas.
+
+**Nova:** Det är en massa saker du måste se.
+
+Hon tar sin mammas hand och leder henne mot spelhörnan.
+
+Pappan står där tillsammans med Barnet och Alve.
+
+När mamman får syn på honom stannar hon till.
+
+**Mamma:** Hej!
+
+**Pappa:** Hej! Så du blev också hitlurad?
+
+**Mamma:** Ja, tydligen.
+
+Han skrattar.
+
+**Pappa:** Jag har ingen aning om vad som pågår.
+
+**Mamma:** Inte jag heller.
+
+Nova tittar på Barnet och Alve.
+
+De tre utbyter förväntansfulla blickar.
+
+**Nova:** Okej! Då ska ni få se!
+
+### A3-FAMILY-005 – 2011
+
+Nova leder sina föräldrar fram till den gamla poängtavlan.
+
+**Nova:** Känner ni igen den här?
+
+Mamman tittar först på tavlan, sedan på spelbordet.
+
+**Mamma:** Nej men...
+
+Hon går närmare.
+
+**Mamma:** Är det verkligen den gamla?
+
+**Pappa:** Den där trodde jag var slängd för länge sedan!
+
+Nova pekar på namnen.
+
+**Nova:** Kolla!
+
+**Mamma:** Men herregud. Där står ju vi!
+
+Pappan börjar skratta.
+
+**Pappa:** Åh nej. Inte den där turneringen.
+
+**Mamma:** Vadå, den var ju jätterolig!
+
+**Pappa:** För dig, ja.
+
+**Mamma:** Du blev ju helt vansinnig när jag vann.
+
+**Pappa:** Jag lät dig vinna.
+
+Mamman brister ut i skratt.
+
+**Mamma:** Nej, det gjorde du verkligen inte!
+
+**Pappa:** Jo då. Jag ville göra ett gott första intryck.
+
+**Mamma:** Du sulade nästan iväg pucken i sjön.
+
+**Alve (viskar):** Det här är ju fantastiskt.
+
+Nova försöker hålla sig för skratt.
+
+**Nova:** Vill ni spela igen?
+
+Mamman tittar på pappan.
+
+**Mamma:** Vågar du?
+
+**Pappa:** Absolut.
+
+Han kavlar upp ärmarna.
+
+**Pappa:** Nu ska vi äntligen reda ut vem som egentligen är bäst.
+
+**Mamma:** Vi redde ut det 2011.
+
+Barnet, Nova och Alve skrattar.
+
+### A3-FAMILY-006 – Returmatchen
+
+*Här får spelaren delta i en shuffleboardaktivitet. Barnet kan hjälpa till att hålla räkningen eller spela en kort omgång medan föräldrarna möts i en returmatch.*
+
+Pappan skjuter iväg sin första puck.
+
+Den hamnar ganska nära mitten.
+
+**Pappa:** Sådär! Där satt den!
+
+Mamman skjuter.
+
+Hennes puck stannar närmare poängområdet.
+
+**Mamma:** Oj då.
+
+**Pappa:** Det där var tur.
+
+**Mamma:** Vi får väl se.
+
+Nova står mellan Barnet och Alve.
+
+**Nova:** De skrattar ju!
+
+**Alve:** Jag sa ju det!
+
+Barnet nickar.
+
+Spelet fortsätter.
+
+Pappan satsar på ett sista försök.
+
+Pucken glider för långt och hamnar precis utanför poängfältet.
+
+Mamman tar hem segern.
+
+**Mamma:** JAAAA!
+
+Hon sträcker upp armarna.
+
+**Pappa:** Det är omöjligt.
+
+**Mamma:** Vadå?
+
+**Pappa:** Det här bordet är uppenbarligen riggat.
+
+**Mamma:** Har det varit riggat i femton år?
+
+**Pappa:** Det förklarar faktiskt en del.
+
+Alla börjar skratta.
+
+**Henrik (på avstånd):** Jag kan intyga att bordet uppfyller samtliga krav!
+
+**Sol:** HENRIK! INGEN HAR FRÅGAT!
+
+Nova skrattar så mycket att hon nästan tappar sitt anteckningsblock.
+
+**Alve:** Nu är det dags för glass!
+
+**Pappa:** Varför då?
+
+**Nova:** Den som förlorar måste bjuda!
+
+**Pappa:** Vänta lite. Har ni hittat på regler utan mig?
+
+**Mamma:** Det är tydligen en tradition.
+
+**Pappa:** Ja, ja. Jag får väl köpa glass då.
+
+### A3-FAMILY-007 – Det gamla fotografiet
+
+Senare spelar Sol musik från 2011.
+
+Henning serverar bakverk och Linus berättar för pappan hur han hjälpt till med förberedelserna, utan att nämna sin rygg.
+
+Mira kommer fram till Novas föräldrar.
+
+**Mira:** Men titta vilka som är här!
+
+**Mamma:** MIRA?!
+
+De båda skrattar och kramar om varandra.
+
+**Mamma:** Men herregud, hur länge sedan är det?
+
+**Mira:** Alldeles för länge!
+
+**Pappa:** Du var ju med den där kvällen!
+
+**Mira:** Ja, och jag minns fortfarande hur mycket du pratade om din vita skjorta.
+
+**Pappa:** Varför är alla besatta av den skjortan?
+
+**Mamma:** Den var hemsk!
+
+**Mira:** Den var mycket vit.
+
+Nova står bredvid och skrattar.
+
+**Nova:** Jag hittade faktiskt ett gammalt foto från den kvällen.
+
+Hon visar bilden på mobilen.
+
+Mamman tar försiktigt telefonen.
+
+**Mamma:** Men åh...
+
+Hon tittar länge på bilden.
+
+**Pappa:** Där är ju jag!
+
+**Mamma:** Ja, det är du.
+
+**Mira:** Och där är jag. Med mitt fantastiska hår.
+
+**Pappa:** Och där är den där skjortan igen.
+
+Alla skrattar.
+
+Nova tittar upp mot dem.
+
+**Nova:** Ska vi ta en ny bild? På nästan samma ställe?
+
+**Mamma:** Ja, självklart!
+
+De går bort till spelhörnan.
+
+Mira ställer sig med kameran.
+
+**Mira:** Okej! Alla lite närmare varandra.
+
+Nova ställer sig mellan sina föräldrar och tar deras händer.
+
+Barnet och Alve står strax bredvid.
+
+**Mira:** Le!
+
+Kameran klickar.
+
+Mira visar bilden.
+
+**Nova:** Den blev jättefin!
+
+**Mamma:** Det blev den verkligen.
+
+**Pappa:** Mycket bättre än 2011. Jag har mindre hårgelé nu.
+
+Mamman skrattar.
+
+Nova tittar på fotografiet.
+
+Sedan på sina föräldrar som fortfarande står bredvid varandra och pratar.
+
+Hon vänder sig mot Barnet och Alve med ett stort leende.
+
+**Nova (viskar):** Det fungerar ju!
+
+**Alve (viskar):** Operation Pappa Förlorar Igen!
+
+De gör en diskret high five bakom föräldrarnas ryggar.
+
+*Scenen slutar på det nya fotografiet.*
+
+### Locked direction and acceptance gate
+
+- A3-FAMILY-001 is gated by persisted completion of **every mandatory festival item bought through Mira's existing purchase system**, including required setup; no new parallel wallet or purchase engine.
+- The old scoreboard with names, 2011 music and photographs connect the two family photographs separated by 15 years.
+- Father arrives in jeans, dark jacket and normal shirt, not the iconic white shirt. The running gag about the old white shirt continues in conversation.
+- Henrik's absurd management and Sol/Linus/Henning/Mira involvement are comic and warm.
+- The mother wins the rematch. The family photo shows both parents holding Nova's hands. The parents genuinely enjoy the day; children genuinely believe their plan is succeeding.
+- No foreshadowing discomfort before this beat ends; **parents do not reunite**, and the emotional turn is saved for later.
+- The shuffleboard interaction is a design proposal, not implemented.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
