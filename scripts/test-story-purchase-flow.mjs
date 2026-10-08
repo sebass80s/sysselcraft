@@ -247,7 +247,34 @@ assert.equal(
   "generic Story Purchase registry must resolve future chapter handoffs without Mira-specific branching",
 );
 
+assert.match(
+  villageSource,
+  /purchase\.childId[\s\S]*registration\.applyPurchaseResult\([\s\S]*expectedChildId: purchase\.childId/,
+  "backend Story Purchase results must bind local chapter persistence to the authoritative purchased child",
+);
+assert.match(
+  villageSource,
+  /savePurchaseStoryProgress\([\s\S]*expectedChildId: storyPurchaseStorySource\.expectedChildId/,
+  "purchase-story progress must remain bound to the child scope that opened the handoff",
+);
+
 const act2StoryPurchaseRegistrySource = fs.readFileSync(new URL("../src/game/storyPurchaseRegistry.ts", import.meta.url), "utf8");
+assert.match(
+  act2StoryPurchaseRegistrySource,
+  /updateAct2RuntimeState/,
+  "Act 2 Story Purchase persistence must use the shared atomic update path",
+);
+assert.doesNotMatch(
+  act2StoryPurchaseRegistrySource,
+  /saveAct2RuntimeState/,
+  "Act 2 Story Purchase must not retain separate load -> save persistence races",
+);
+assert.match(
+  act2StoryPurchaseRegistrySource,
+  /persistenceGuard\(context\)/,
+  "Act 2 Story Purchase operations must forward identity scope into shared persistence",
+);
+
 for (const required of [
   "ACT2_PURCHASE_CATALOG",
   "loadSnapshot",
