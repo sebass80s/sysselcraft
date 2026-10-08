@@ -64,7 +64,15 @@ const baseChecks = [
   "wardrobe",
   "barnet-face-hidden"
 ];
-const continuityChecks = [...baseChecks, "continuity"];
+const continuityChecks = [
+  "identity",
+  "exact-cast",
+  "location",
+  "hard-rules",
+  "wardrobe",
+  "continuity",
+  "barnet-face-hidden"
+];
 
 // 1. First harbor beat establishes location and contains only canonical identity refs.
 const harbor1 = build("V2-001");
