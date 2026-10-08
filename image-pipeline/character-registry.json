@@ -64,11 +64,17 @@
       "chatLibraryPath": "/SysselCraft/Art References/characters/sol.png"
     }
   },
-  "productionRoute": "runway-brand-kit",
+  "productionRoute": "renderer-independent",
   "runwayBrandKit": {
     "name": "Syssel",
     "category": "Character sheets"
   },
   "chatLibraryRoot": "/SysselCraft/Art References/characters",
-  "chatLibraryAnchorRoot": "/SysselCraft/Art References/anchors"
+  "chatLibraryAnchorRoot": "/SysselCraft/Art References/anchors",
+  "preferredRenderer": "chatgpt-image-generation",
+  "rendererAdapters": [
+    "chatgpt-image-generation",
+    "runway",
+    "openai-api"
+  ]
 }
