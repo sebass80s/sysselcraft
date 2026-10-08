@@ -96,7 +96,7 @@ const missing = spawnSync(process.execPath, [
   `--out=${path.join(temp, "missing.job.json")}`
 ], { cwd: root, encoding: "utf8" });
 assert.notEqual(missing.status, 0);
-assert.match(missing.stderr, /Approved anchor file is missing/);
+assert.match(missing.stderr, /Approved anchor.*file is missing/);
 
 
 // ChatGPT adapter proof: an approved anchor may live only in persistent Library.
