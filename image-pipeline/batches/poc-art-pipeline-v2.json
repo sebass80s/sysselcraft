@@ -35,7 +35,8 @@
         "extra animals",
         "wardrobe changes",
         "Barnet's face"
-      ]
+      ],
+      "outputPath": "public/assets/village/story-moments/act3/poc/V2-001.png"
     },
     {
       "id": "V2-002",
@@ -67,7 +68,8 @@
         "extra animals",
         "wardrobe changes",
         "Barnet's face"
-      ]
+      ],
+      "outputPath": "public/assets/village/story-moments/act3/poc/V2-002.png"
     },
     {
       "id": "V2-003",
@@ -99,7 +101,8 @@
         "extra animals",
         "wardrobe changes",
         "Barnet's face"
-      ]
+      ],
+      "outputPath": "public/assets/village/story-moments/act3/poc/V2-003.png"
     },
     {
       "id": "V2-004",
@@ -131,7 +134,8 @@
         "extra animals",
         "wardrobe changes",
         "Barnet's face"
-      ]
+      ],
+      "outputPath": "public/assets/village/story-moments/act3/poc/V2-004.png"
     },
     {
       "id": "V2-005",
@@ -163,7 +167,8 @@
         "extra animals",
         "wardrobe changes",
         "Barnet's face"
-      ]
+      ],
+      "outputPath": "public/assets/village/story-moments/act3/poc/V2-005.png"
     }
   ]
 }
