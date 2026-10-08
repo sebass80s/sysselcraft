@@ -1658,6 +1658,226 @@ The last clue is a drawing of ice cream. Nova treats the children to ice cream a
 
 **Design laws:** The hunt is about Nova's creativity and the emerging friendship, not festival shopping or restoring the park. Make clues genuinely solvable by the child using existing shared interaction primitives; aim for three meaningful clue stages and a reward. Do not automatically require a separate arcade minigame. Obtain venue permission for physical clues or use an authorized/digital equivalent. The villa is planted for a later scene, not revisited now. Nova remains central, Barnet solves and chooses, Alve adds humour. No art or runtime implementation yet.
 
+## 11G. En ny dag i folkparken — FULLSTÄNDIG DIALOG LÅST
+
+**Status:** User-approved A3-PARK-011–014, recorded verbatim. Not implemented.
+
+### A3-PARK-011 – Nova har en plan
+
+Nästa förmiddag kommer Barnet och Alve till folkparken.
+
+Nova står framför den lilla scenen med mobilen i handen. På gräsmattan har hon lagt ut några pinnar och snören.
+
+**Barnet:** Vad gör du?
+
+**Nova:** Äntligen! Jag har väntat på er.
+
+**Alve:** Vi kom ju precis.
+
+**Nova:** Jag har varit här sedan nio.
+
+**Barnet:** Vad är det för snören?
+
+**Nova:** Här ska borden stå. Jag har mätt så att alla kan se scenen.
+
+**Alve:** Med pinnar?
+
+**Nova:** Pinnarna är hörnen. Snörena visar var borden ska stå.
+
+Barnet går runt markeringarna.
+
+**Barnet:** Det ser ganska stort ut.
+
+**Nova:** Det behöver vara plats för alla.
+
+**Barnet:** Hur många kommer?
+
+**Nova:** Jag vet inte riktigt än.
+
+**Alve:** Då kanske vi ska börja med att räkna folk.
+
+**Nova:** Jag räknar redan.
+
+Hon visar sin mobil.
+
+**Nova:** Mamma, pappa, jag, ni två... och kanske några till.
+
+**Barnet:** Har du pratat med Henrik?
+
+**Nova:** Ja. Han har lovat att hjälpa oss med scenen.
+
+**Alve:** Har han hittat rätt nyckel då?
+
+**Nova:** Inte än.
+
+De skrattar.
+
+### A3-PARK-012 – Fel plats
+
+Barnet tittar på gräsmattan.
+
+**Barnet:** Skulle vi inte kunna ha borden närmare vattnet?
+
+**Nova:** Nej, då ser man inte scenen.
+
+**Barnet:** Men man får finare utsikt.
+
+**Nova:** Fast då måste folk vända sig om när det är musik.
+
+**Alve:** Man kan ju vrida på stolarna.
+
+**Nova:** Det blir rörigt.
+
+Barnet pekar mot några stora träd.
+
+**Barnet:** Där borta finns det skugga också.
+
+**Nova:** Men där stod aldrig borden förut.
+
+**Barnet:** Förut?
+
+Nova tittar på markeringarna.
+
+**Nova:** När vi brukade vara här. Borden stod alltid precis här.
+
+**Barnet:** Vi kan ju prova båda platserna.
+
+**Nova:** Varför ska vi det? Jag vet ju hur det såg ut.
+
+Barnet svarar inte direkt.
+
+Nova märker det.
+
+**Nova:** Förlåt. Jag menade inte så.
+
+**Barnet:** Det är lugnt.
+
+**Nova:** Jag har bara tänkt ganska mycket på det här.
+
+**Barnet:** Det märks.
+
+Nova ler lite.
+
+### A3-PARK-013 – Något som faktiskt är roligt
+
+Alve hittar en låda med gamla utomhusspel som Henrik har ställt vid scenen.
+
+**Alve:** Kolla! Kubb!
+
+**Barnet:** Ska vi spela?
+
+**Nova:** Vi måste ju bli klara med planeringen.
+
+**Alve:** Vi har inte ens börjat bära hit borden.
+
+**Barnet:** Vi kan spela en omgång först.
+
+Nova tvekar.
+
+**Nova:** En omgång.
+
+**Alve:** Jag börjar!
+
+Han ställer upp kubbpinnarna på gräset.
+
+**Nova:** De ska stå på två rader.
+
+**Alve:** Det vet jag.
+
+**Nova:** Du har gjort tre rader.
+
+**Alve:** Det är en ny variant.
+
+**Nova:** Det är en fel variant.
+
+Barnet skrattar.
+
+**Barnet:** Nova, kom och hjälp mig då.
+
+Nova lägger ifrån sig mobilen.
+
+**Nova:** Okej. Men då spelar vi ordentligt.
+
+De börjar spela.
+
+Alve kastar sin första pinne och missar samtliga kubbar.
+
+**Alve:** Det blåste.
+
+**Barnet:** Det är helt vindstilla.
+
+**Alve:** Precis. Jag hade räknat med motvind.
+
+Nova börjar skratta.
+
+Hon tar en kastpinne och siktar noggrant.
+
+Kastet träffar två kubbar.
+
+**Nova:** Så gör man.
+
+**Barnet:** Nu är det min tur.
+
+### A3-PARK-014 – Det behöver inte vara likadant
+
+Efter spelet sätter de sig i gräset.
+
+Nova dricker vatten och tittar på sina markeringar.
+
+**Nova:** Okej. Jag erkänner. Det var faktiskt kul.
+
+**Alve:** Trots att vi spelade fel variant?
+
+**Nova:** Vi spelade vanliga regler!
+
+**Alve:** Nästan.
+
+Barnet tittar bort mot träden vid vattnet.
+
+**Barnet:** Jag tycker fortfarande att borden skulle vara fina där borta.
+
+Nova följer Barnets blick.
+
+**Nova:** Kanske.
+
+**Barnet:** Vi kan fråga Henrik vad han tycker.
+
+**Nova:** Han kommer säga att vi ska ställa dem på scenen och hålla tal till dem.
+
+Alve skrattar.
+
+**Nova:** Men vi kan faktiskt prova. Vi behöver ju ändå se hur stora borden är.
+
+**Barnet:** Då kan vi fråga Mira vad hon har hittat.
+
+**Nova:** Just det! Har hon svarat?
+
+**Barnet:** Hon skulle undersöka vilka saker hon kan få tag i.
+
+Nova tar fram mobilen igen.
+
+**Nova:** Jag skriver till henne.
+
+**Barnet:** Du har väl hennes nummer?
+
+**Nova:** Nej. Men mamma har det inte heller, så vi får väl fråga dig.
+
+**Barnet:** Vi kan prata med Mira när vi åker tillbaka.
+
+**Nova:** Okej.
+
+Hon suddar bort en av punkterna på sin lista.
+
+**Nova:** Då flyttar vi inte pinnarna förrän vi vet hur stora borden är.
+
+**Alve:** Bra. Då hinner vi spela en omgång till.
+
+**Nova:** Du vill bara ha revansch.
+
+**Alve:** Ja. Det är väl därför man spelar?
+
+**Kontinuitet:** Nova kan vara envis men lyhörd; ingen villkorslös perfektionism. Bordplacering kan senare bli ett spelarval och ge synlig effekt. Inget inköp har ännu gjorts och inga festdatum fastslagits.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
