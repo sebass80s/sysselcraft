@@ -7333,6 +7333,169 @@ Nova lyser upp.
 
 Hon skriver ivrigt i sitt block.
 
+
+## 11AL. A3-CITY-001–003 / A3-HOME-001–003 — RECONSTRUCTED DIALOGUE DRAFT
+
+**Source note:** The formerly approved *verbatim* lines could not be independently recovered. This is a new script reconstructed from the exact locked scene beats in 11B; approval of individual lines is still pending. Do not present it as earlier verbatim approval.
+
+### A3-CITY-001 – Stadens bästa ställe
+
+Nova leder Barnet och Alve genom stadens äldre kvarter. Hon stannar framför ett skyltfönster fyllt med gamla spel och serietidningar.
+
+**Nova:** Här! Det här är stans bästa ställe.
+
+**Alve:** Det ser ut som någon glömt att städa i trettio år.
+
+**Nova:** Det är det som är grejen. Allt roligt finns kvar.
+
+**Barnet:** Får man spela här?
+
+**Nova:** Klart man får. Men först måste ni se något.
+
+Hon pekar mot en äldre spelmaskin bakom fönstret.
+
+**Nova:** Den där har jag försökt slå i evigheter.
+
+**Alve:** Då behöver du väl hjälp av ett proffs.
+
+**Nova:** Bra. Säg till när du hittar ett.
+
+### A3-CITY-002 – Utmaningen
+
+Nova visar en gammal arkadmaskin. På resultatlistan står NOV.
+
+**Barnet:** Är NOV du?
+
+**Nova:** Japp. Tre bokstäver är allt man får.
+
+**Alve:** Jag hade skrivit ALVE.
+
+**Nova:** Det är fyra.
+
+**Alve:** Då får de bygga om spelet.
+
+Nova ger Barnet kontrollen.
+
+**Nova:** Vågar du försöka?
+
+**Barnet:** Självklart.
+
+**Alve:** Jag tänker coacha.
+
+**Nova:** Helst inte.
+
+*Kort frivillig interaktion eller en berättad tävlingssekvens, beroende på befintlig runtime.*
+
+**Nova:** Okej. Inte dåligt!
+
+**Alve:** Nu är det min tur att visa hur man gör.
+
+**Barnet:** Varsågod.
+
+**Alve:** Vänta. Vilken knapp är hoppa?
+
+### A3-CITY-003 – Hemvägen
+
+Barnen går genom staden.
+
+**Alve:** Bor du långt härifrån?
+
+**Nova:** Hos mamma? Några kvarter. Hos pappa är det längre, bort mot skolan.
+
+**Barnet:** Bor de inte tillsammans?
+
+**Nova:** Nej. De är skilda.
+
+**Alve:** Måste du gå mellan två hem hela tiden?
+
+**Nova:** Ibland. Och jag har alltid fel laddare på fel ställe.
+
+**Barnet:** Jobbigt.
+
+**Nova:** Ja. Men mamma har bullar hemma. Vill ni komma?
+
+**Alve:** Det var dagens bästa fråga.
+
+### A3-HOME-001 – Oväntat besök
+
+Nova låser upp dörren till mammans lägenhet.
+
+**Nova:** Mamma! Jag har kompisar med mig!
+
+**Mamma:** Jaså? Hej på er!
+
+**Nova:** Det här är Barnet och Alve. Vi träffades vid hamnen.
+
+**Barnet:** Hej!
+
+**Alve:** Hej!
+
+**Mamma:** Vad roligt. Har ni haft kul?
+
+**Nova:** Vi har varit i parken och spelat minigolf.
+
+**Mamma:** Hur gick det för dig då, Nova?
+
+**Nova:** Du behöver inte säga det på det sättet.
+
+**Mamma:** Jag sa ju bara hur det gick.
+
+**Nova:** Det gick... konstnärligt.
+
+**Mamma:** Då behöver ni nog lite saft och bullar.
+
+**Alve:** Jag tycker verkligen om den här lägenheten.
+
+### A3-HOME-002 – Mira
+
+Barnen sitter vid köksbordet.
+
+**Barnet:** Vi har en affär i byn också. Mira jobbar där.
+
+**Mamma:** Mira? Menar du Mira som bodde här i stan?
+
+**Nova:** Känner du henne?
+
+**Mamma:** Vi jobbade tillsammans i en affär för länge sedan. Hon var alltid den som kunde hitta precis vad som helst.
+
+**Alve:** Till och med sjutton likadana stolar?
+
+**Mamma:** Trettio, faktiskt. Till en invigning. Ingen annan förstod hur hon lyckades.
+
+**Barnet:** Hon flyttade till byn ganska nyligen.
+
+**Mamma:** Har hon? Det visste jag inte. Vi tappade kontakten när hon flyttade härifrån.
+
+**Nova:** Vi kan hälsa från dig.
+
+**Mamma:** Gör gärna det. Jag skulle vilja träffa henne igen.
+
+### A3-HOME-003 – Hemligheten
+
+Mamman går för att hämta fler glas.
+
+Nova lutar sig mot Barnet.
+
+**Nova (viskar):** Kom ihåg att vi inte säger något om överraskningen.
+
+**Barnet:** Jag vet.
+
+**Alve:** Jag säger aldrig något.
+
+**Nova:** Du sa nyss 'hemlig' så högt att hela hamnen hörde.
+
+**Alve:** Det var för att ingen skulle missa det.
+
+**Mamma (från köket):** Vad viskar ni om?
+
+**Nova:** Att Barnet behöver träna mer på minigolf!
+
+**Barnet:** Va?!
+
+**Mamma:** Då får ni väl spela igen snart.
+
+Nova försöker låta bli att skratta.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
