@@ -69,5 +69,6 @@
     "name": "Syssel",
     "category": "Character sheets"
   },
-  "chatLibraryRoot": "/SysselCraft/Art References/characters"
+  "chatLibraryRoot": "/SysselCraft/Art References/characters",
+  "chatLibraryAnchorRoot": "/SysselCraft/Art References/anchors"
 }
