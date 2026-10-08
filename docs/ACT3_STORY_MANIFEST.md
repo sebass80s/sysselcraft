@@ -5049,6 +5049,20 @@ De gör en diskret high five bakom föräldrarnas ryggar.
 - No foreshadowing discomfort before this beat ends; **parents do not reunite**, and the emotional turn is saved for later.
 - The shuffleboard interaction is a design proposal, not implemented.
 
+## 11V. A3-FAMILY-008–014 — GODKÄND STORY
+
+**Låst av användaren:** Hela dialogutkastet ”När festen tar slut” A3-FAMILY-008–013 och den **reviderade** bänkscenen A3-FAMILY-014 med Alves parallell till stugrenoveringen. Originaldialogerna finns i föregående konversation och måste överföras ordagrant före implementation; detta är en kontinuitetsmarkör, inte en fullständig transkription.
+
+- 008: Festen lyckas, båda föräldrarna har roligt. Alve har ätit fem glassar. Nova hoppas på ett gemensamt hem igen.
+- 009: Sista shuffleboardomgången, Henriks visselpipa konfiskerad av Sol.
+- 010: Föräldrarna talar vänligt och vardagligt om att Nova åker hem med mamma, pappa hämtar söndag. Nova blir bestört.
+- 011: Nova avslöjar hur hon återskapat första dejten för att få föräldrarna att bli tillsammans igen. De älskar dagen men kommer inte att flytta ihop.
+- 012: Nova gråter: ”Jag gjorde ju allting rätt!” och springer till parkbänken inom synhåll.
+- 013: Mira påminner Barnet försiktigt om att erbjuda sällskap; hon tar inte över samtalet.
+- 014: Barnet och Alve sitter hos Nova. **Den senare reviderade dialogversionen ersätter föregående slut:** Alve säger att han själv trodde stugan skulle bli som förr när de lagade den och att han blev ledsen när det inte blev så, men att han ändå är glad att de lagade den. Barnet: ”Eller träffa Nova.” Nova: ”Så du tycker inte vi gjorde festen i onödan?” Alve protesterar att det var den roligaste festen han varit på. Nova är fortfarande ledsen; Barnet sitter kvar. Alve skämtar om fem glassar.
+
+**Nästa beat:** Novas mamma får höra om Novas felaktiga skuld: middagsutbrottet inträffade kvällen innan föräldrarna meddelade skilsmässan. Mamman måste tydligt säga att skilsmässan aldrig var Novas fel. Pappan får en egen viktig scen. Barnet och Alve förblir vänner, inte terapeuter. Föräldrarna återförenas inte.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
