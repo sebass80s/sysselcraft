@@ -63,6 +63,12 @@ function validateV2Beat(beat) {
   if (new Set(beat.characters).size !== beat.characters.length) fail(`Beat ${beat.id} has duplicate characters.`);
   if (beat.exactCastOnly !== true) fail(`Beat ${beat.id} must set exactCastOnly=true in v2.`);
   if (typeof beat.wardrobeLock !== "boolean") fail(`Beat ${beat.id} requires wardrobeLock boolean in v2.`);
+  if (
+    typeof beat.outputPath !== "string" ||
+    !/^public\/assets\/village\/story-moments\/act3\/[a-z0-9-]+\/[A-Za-z0-9._-]+\.png$/.test(beat.outputPath)
+  ) {
+    fail(`Beat ${beat.id} requires a canonical Act 3 PNG outputPath.`);
+  }
   if (beat.characters.includes("barnet") && beat.barnetFaceHidden !== true) {
     fail(`Beat ${beat.id} contains Barnet and must set barnetFaceHidden=true.`);
   }
