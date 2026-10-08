@@ -4215,6 +4215,246 @@ Nova receives an image from her father: he still has the white shirt resembling 
 - **Next emotional beat:** Nova is now close to telling Barnet and Alve plainly that she hopes the parents will become a couple again. This *hope* is separate from her **still-concealed belief that her dinner outburst caused the divorce**. Reveal in stages: the reunion wish first, the self-blame nearer the aftermath.
 - The parents **do not reunite**. Mira understands but does not reveal Nova's secret for her.
 
+## 11S. Den riktiga planen — BARNENS VERSION LÅST
+
+**Status:** User-approved revised reveal. A3-REVEAL-001 remains the original scene introduction (approved by continuation). The full revised A3-REVEAL-002–004 is recorded verbatim below. Previous prematurely mature/counseling versions are superseded. Not in runtime.
+
+### A3-REVEAL-001 – Bara vi tre
+
+Det börjar bli kväll i folkparken.
+
+Henrik har gått hem och Mira har åkt tillbaka till byn. Barnet, Nova och Alve sitter på scenkanten och tittar ut över parken.
+
+Ljusslingorna som redan är uppsatta lyser mellan träden.
+
+**Alve:** Nu börjar jag faktiskt längta till festen.
+
+**Barnet:** Jag också.
+
+**Nova:** Det kommer bli jättebra.
+
+Hon tittar ner på fotot från 2011 som hon har på mobilen.
+
+**Nova:** Vet ni vad jag tänkte?
+
+**Barnet:** Vadå?
+
+**Nova:** Om mamma och pappa spelar shuffleboard igen, på samma bord som när de träffades...
+
+**Alve:** Då kanske pappa vinner den här gången.
+
+**Nova:** Det tror jag faktiskt inte.
+
+De skrattar.
+
+**Nova:** Och så ser de poängtavlan och den gamla bilden. Och hör musiken som de brukade lyssna på.
+
+**Barnet:** Det blir nog en rolig överraskning.
+
+**Nova:** Ja.
+
+Hon lägger ifrån sig mobilen.
+
+**Nova:** Men det är inte bara därför jag gör det.
+
+Barnet tittar på henne.
+
+### A3-REVEAL-002 – Tänk om
+
+**Nova:** Jag har tänkt på en sak ganska länge.
+
+**Alve:** Vadå?
+
+**Nova:** Kommer ni ihåg när jag berättade om vårt gamla hus?
+
+**Barnet:** Med studsmattan?
+
+**Nova:** Ja. Och mitt gamla rum.
+
+Hon tittar bort mot spelhörnan.
+
+**Nova:** Jag vet att mamma och pappa inte bor ihop längre. Men de var ju kära förut.
+
+**Alve:** Ja, annars hade väl inte du funnits.
+
+**Nova:** Precis!
+
+**Barnet:** Och de träffades här.
+
+**Nova:** Exakt. Så tänk om vi gör om deras första dejt?
+
+**Alve:** Men det är ju det vi håller på med.
+
+**Nova:** Ja, fast tänk om det händer samma sak igen!
+
+Barnet tittar på henne.
+
+**Barnet:** Att de blir kära?
+
+Nova nickar.
+
+**Nova:** Ja!
+
+Alve tittar mot poängtavlan.
+
+**Alve:** Vänta lite. Så din pappa ska förlora mot din mamma igen, och sedan blir de tillsammans?
+
+**Nova:** Typ!
+
+**Alve:** Det är ju en jättebra plan!
+
+**Barnet:** Vi har ju till och med samma spelbord.
+
+**Nova:** Och poängtavlan. Och musiken. Och kanske pappas gamla skjorta!
+
+**Alve:** Du måste få honom att ha den på sig.
+
+**Nova:** Jag vet! Men utan att berätta varför.
+
+**Barnet:** Du kan säga att det är en överraskning.
+
+**Nova:** Ja!
+
+Hon börjar skratta.
+
+**Nova:** Fattar ni nu varför jag vill att allting ska bli perfekt?
+
+**Alve:** Ja! Vi ska göra världens bästa dejt!
+
+**Nova:** Fast de får inte veta att det är en dejt.
+
+**Alve:** En hemlig dejt.
+
+**Nova:** Precis!
+
+### A3-REVEAL-003 – Operation första dejten
+
+Nova slår upp anteckningsblocket.
+
+**Nova:** Okej. Nu när ni vet hela planen måste vi bestämma några saker.
+
+**Alve:** Vi behöver ett kodnamn.
+
+**Barnet:** Varför?
+
+**Alve:** För att det är hemligt!
+
+**Nova:** Okej. Vad föreslår du?
+
+**Alve:** Operation Kärlek.
+
+Nova stirrar på honom.
+
+**Nova:** Nej.
+
+**Barnet:** Operation Första Dejten?
+
+**Nova:** Bättre!
+
+**Alve:** Operation Pappa Förlorar Igen.
+
+Nova börjar skratta.
+
+**Nova:** Den är faktiskt bäst.
+
+**Barnet:** Men vi behöver fixa shuffleboardbordet först.
+
+**Nova:** Och musiken.
+
+**Alve:** Och glassen!
+
+**Nova:** Ja, glassen också.
+
+Hon börjar skriva.
+
+**Barnet:** Ska vi säga något till Mira?
+
+Nova funderar.
+
+**Nova:** Hon var ju med 2011. Hon kanske kommer ihåg vilken låt de lyssnade på.
+
+**Alve:** Vi kan fråga henne utan att berätta varför.
+
+**Nova:** Smart!
+
+**Barnet:** Och Henrik kanske har kvar fler saker från den kvällen.
+
+**Nova:** Ja! Vi får leta!
+
+Alve tittar nöjt på listan.
+
+**Alve:** Det här kommer fungera.
+
+Nova ler stort.
+
+**Nova:** Tror du verkligen det?
+
+**Alve:** Klart det gör. Vi har ju nästan allting!
+
+**Barnet:** Det kommer bli jättekul när de ser allt.
+
+**Nova:** Åh, jag längtar!
+
+### A3-REVEAL-004 – Hemligheten
+
+Solen börjar försvinna bakom träden.
+
+Nova slår igen blocket.
+
+**Nova:** Men ni får verkligen inte berätta för någon.
+
+**Barnet:** Nej.
+
+**Nova:** Inte för mamma. Inte för pappa. Inte för Henrik.
+
+**Alve:** Inte ens om han håller ett sjutton minuter långt förhör?
+
+**Nova:** Särskilt inte då!
+
+**Barnet:** Vi lovar.
+
+**Alve:** Tänk när de ser poängtavlan!
+
+**Nova:** Och fotot!
+
+**Barnet:** Vi borde ställa dem bredvid varandra.
+
+**Nova:** JA! Då fattar de direkt!
+
+**Alve:** Och sedan spelar de, och din mamma vinner igen.
+
+**Nova:** Och pappa får köpa glass.
+
+**Barnet:** Precis som förra gången.
+
+Nova tittar ut över parken.
+
+**Nova:** Tänk om det faktiskt blir så.
+
+**Alve:** Vadå?
+
+**Nova:** Att de blir kära igen.
+
+Barnet ler mot henne.
+
+**Barnet:** Det vore ju fantastiskt.
+
+**Alve:** Då måste du berätta hur det gick!
+
+**Nova:** Ni kommer ju vara här!
+
+**Alve:** Just det.
+
+De tre skrattar.
+
+Nova tar fram mobilen och fotograferar spelhörnan.
+
+**Nova:** Jag tror det här kan bli den bästa dagen i mitt liv.
+
+*De lämnar parken tillsammans.*
+
+**Continuity:** The three kids genuinely believe recreating the 2011 first date might reunite her parents. Do NOT retroactively have Barnet or Alve counsel Nova or predict failure. **Mira** alone understands the adult complexity and handles it gently. Nova's misguided self-blame for her dinner outburst is still withheld for the aftermath. The parents do not reunite. All physical festival assets must respect purchases already made.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
