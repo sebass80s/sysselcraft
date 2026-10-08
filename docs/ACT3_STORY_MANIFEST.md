@@ -605,6 +605,622 @@ Längre fram skymtar parkens gamla entréskylt mellan träden.
 
 **Continuity notes:** The phone notification foreshadows the parental split but its sender/content are **not yet locked**. Do not invent or display a particular message in this intro. Nova starts closed off, follows out of genuine curiosity about repairing the park, and only begins to open up on the walk. A3-OPEN-005 is a story transition toward the park, not proof that the playable map has been designed.
 
+
+## 11A. Park arrival, Henrik and first family-day objective — STORY LOCKED 2026-10-08
+
+**Status:** Dialogue/story approved by Kalle. Not implemented in runtime. Art postponed. Preserve Nova as the emotional centre, Barnet as player protagonist, Alve as sidekick, Henrik as a colourful supporting NPC. This is the canonical continuation immediately after A3-OPEN-005. The park is alive, not abandoned or a third act of simply repairing things. The chapter develops into organizing shared experiences, choices, activities and friendship; repairs are supporting tasks, not the main narrative.
+
+### A3-PARK-001 — Parken
+
+En bred grusgång leder fram till två gamla tegelpelare. Mellan dem hänger en stor skylt med texten **FOLKPARKEN**.
+
+Bakom entrén breder parken ut sig. Höga träd, gräsmattor och blomrabatter. Några barn leker vid en klätterställning och längre bort hörs musik från ett kafé.
+
+**Nova:** Här är den.
+
+**Barnet:** Oj, den är ju jättestor!
+
+**Alve:** Större än hela min tomt.
+
+**Nova:** Det finns en badplats på andra sidan också. Och minigolf bakom lekplatsen.
+
+**Barnet:** Vad brukar du göra här?
+
+**Nova:** Inte så mycket längre.
+
+**Barnet:** Men när du var här förut?
+
+**Nova:** Minigolf. Badade. Köpte alldeles för dyr glass.
+
+**Alve:** Hur dyr?
+
+**Nova:** För dyr för dig.
+
+**Alve:** Det vet du inte.
+
+Nova ler lite och börjar gå.
+
+**Nova:** Kom. Jag ska visa er den bästa banan.
+
+### A3-PARK-002 — Bana sju
+
+Minigolfbanorna ligger i en glänta mellan träden. Ett par barn spelar längre bort.
+
+Nova går direkt fram till bana sju.
+
+Mitt på banan står en liten träbro. Ena räcket har lossnat och färgen är sliten.
+
+**Nova:** Här! Den här var svårast.
+
+**Barnet:** Det är ju bron du berättade om.
+
+**Nova:** Man måste slå ganska löst. Annars flyger bollen över kanten.
+
+**Barnet:** Har du klarat den?
+
+**Nova:** På ett slag. En gång.
+
+**Barnet:** Då är du ju proffs.
+
+**Nova:** Jag har också slagit ut bollen i buskarna ungefär hundra gånger.
+
+Nova pekar på en stor buske intill banan.
+
+**Nova:** Pappa var ännu värre. Han sköt så hårt att mamma fick leta efter hans boll.
+
+**Barnet:** Hittade hon den?
+
+**Nova:** Hon hittade fyra. Ingen var hans.
+
+Nova skrattar åt minnet.
+
+**Barnet:** Brukade ni spela tillsammans?
+
+**Nova:** Varje lördag nästan. Vi hade en tävling om vem som fick välja kvällsmat.
+
+**Barnet:** Vem vann mest?
+
+**Nova:** Jag, så klart.
+
+**Barnet:** Vad valde du?
+
+**Nova:** Pizza. Varenda gång.
+
+Nova ler för sig själv. Sedan tittar hon på det trasiga broräcket.
+
+**Nova:** De borde verkligen fixa den här banan.
+
+**Barnet:** Vi kanske kan hjälpa till senare.
+
+**Nova:** Du har inte ens fått tillstånd att röra den.
+
+**Barnet:** Jag sa kanske.
+
+**Nova:** Du planerar redan, eller hur?
+
+**Barnet:** Lite.
+
+### A3-PARK-003 — Den gamla scenen
+
+De kommer fram till en liten utomhusscen. Framför scenen står bänkar i halvcirkel och en stor gräsmatta breder ut sig mellan träden.
+
+På scenen håller två ungdomar på att packa ihop instrument.
+
+**Barnet:** Vad brukar hända här?
+
+**Nova:** Konserter. Dans ibland. På sommaren ordnade de filmkvällar också.
+
+**Alve:** Film utomhus?
+
+**Nova:** Ja. På en jättestor duk. Man fick ta med egna filtar.
+
+**Barnet:** Har du varit på en sån?
+
+**Nova:** Många gånger. En gång började det ösregna mitt i filmen. Alla sprang in under taket utom pappa.
+
+**Barnet:** Vad gjorde han?
+
+**Nova:** Han satt kvar med sitt paraply och tittade.
+
+**Alve:** Ensam?
+
+**Nova:** Ja! Han vägrade missa slutet.
+
+**Barnet:** Vad var det för film?
+
+**Nova:** Ingen aning. Jag minns bara att han kom hem helt genomblöt.
+
+De skrattar.
+
+Nova tittar upp mot de gamla ljusslingorna mellan träden.
+
+**Nova:** Förut tände de alla lamporna när det blev mörkt. Det såg nästan ut som en annan plats.
+
+**Barnet:** Varför gör de inte det längre?
+
+**Nova:** Hälften fungerar inte. Henrik säger att de ska fixas varje år.
+
+**Barnet:** Vem är Henrik?
+
+**Nova:** Han har hand om parken. Han har varit här sedan jag var liten.
+
+**Alve:** Kan vi träffa honom?
+
+**Nova:** Han brukar vara vid förrådet. Men om han börjar prata om gamla dansband kommer vi aldrig härifrån.
+
+### A3-PARK-004 — Vid sjön
+
+Stigen leder ner till stranden.
+
+På gräset ligger några familjer på filtar. Ett par barn bygger sandslott och längre bort sticker en badbrygga ut i sjön.
+
+Nova stannar vid ett stort träd nära vattnet.
+
+**Nova:** Vi brukade sitta här.
+
+**Barnet:** Under trädet?
+
+**Nova:** Ja. Mamma tog alltid med mat. Pappa hade en filt som var jättestor och alldeles rutig.
+
+**Alve:** Vi har också haft en rutig filt.
+
+**Nova:** Det finns nog fler än en.
+
+**Alve:** Jag menade bara...
+
+**Barnet:** Vad brukade ni äta?
+
+**Nova:** Pastasallad. Mackor. Jordgubbar om det var sommar.
+
+**Barnet:** Det låter gott.
+
+**Nova:** Pappa glömde alltid besticken. Till slut fick mamma ha extra plastgafflar i bilen.
+
+Nova sätter sig på en stor sten vid trädet.
+
+**Barnet:** Kommer ni hit fortfarande?
+
+**Nova:** Ibland.
+
+**Barnet:** Hela familjen?
+
+Nova pillar loss en liten bit mossa från stenen.
+
+**Nova:** Vi gör inte så mycket tillsammans längre.
+
+Barnet sätter sig bredvid.
+
+**Barnet:** Saknar du det?
+
+Nova tittar ut mot sjön.
+
+**Nova:** Ibland.
+
+En liten paus.
+
+**Nova:** Kom. Jag ska visa er något annat.
+
+Hon reser sig snabbt.
+
+### A3-PARK-005 — En gammal idé
+
+På vägen tillbaka passerar de en gräsmatta med slitna picknickbord.
+
+Nova stannar vid ett av dem.
+
+**Nova:** Här brukade de ordna sommarfester. Med långbord, musik och allt möjligt.
+
+**Barnet:** Gör de inte det längre?
+
+**Nova:** Inte lika ofta. Henrik försöker ordna saker, men det blir aldrig riktigt som förr.
+
+**Barnet:** Vad skulle du vilja göra här?
+
+**Nova:** Jag vet inte. En stor fest kanske. Med mat och musik. Och minigolfturnering.
+
+**Alve:** Och glass.
+
+**Nova:** Du har pratat om glass sedan vi kom hit.
+
+**Alve:** Och ändå har jag inte fått någon.
+
+Nova skrattar.
+
+**Barnet:** Vi skulle kunna ordna något.
+
+**Nova:** Vi?
+
+**Barnet:** Ja. Du känner ju parken. Jag och Alve känner folk som kan hjälpa till.
+
+**Nova:** Ni har varit här i typ en halvtimme.
+
+**Barnet:** Vi har hunnit med ganska mycket på en halvtimme.
+
+Nova tittar bort mot scenen.
+
+**Nova:** Om man skulle göra något här måste det vara ordentligt.
+
+**Barnet:** Vad menar du?
+
+**Nova:** Riktig mat. Fungerande lampor. Musik. Inte bara ett bord med saft och några ballonger.
+
+**Barnet:** Då får vi planera.
+
+**Nova:** Jag skulle kunna göra en lista.
+
+Hon tar fram mobilen.
+
+**Alve:** Nu blir det på riktigt.
+
+**Nova:** Du får ansvara för glassen.
+
+**Alve:** Äntligen någon som förstår mig.
+
+Nova börjar skriva.
+
+**Barnet:** Vad skrev du först?
+
+**Nova:** Att vi måste prata med Henrik.
+
+**Barnet:** Var hittar vi honom?
+
+**Nova:** Bakom scenen. Jag vet var han brukar gömma sig när han inte vill svara i telefon.
+
+Nova stoppar undan mobilen.
+
+**Nova:** Kom. Men låt mig prata först. Han känner mig.
+
+De går tillbaka mot scenen.
+
+### A3-PARK-006 — Parkdirektören
+
+Barnet, Nova och Alve går runt den lilla utomhusscenen.
+
+Bakom scenen står ett rött förråd med dubbeldörrar. Utanför har någon ställt upp ett skrivbord, två plaststolar och ett stort parasoll.
+
+En äldre man med keps och ljus kavaj står bakom skrivbordet och pratar i telefon. Framför honom ligger papper, en kaffekopp och flera nyckelknippor.
+
+**Henrik:** Nej, nej! Jag beställde tretton bord! Tretton! Inte trettio!
+
+Han lyssnar en stund.
+
+**Henrik:** Vad ska jag med trettio bord till? Jag driver en folkpark, inte en möbelaffär!
+
+Han lägger på och suckar.
+
+**Henrik:** Ingen lyssnar längre.
+
+**Nova:** Hej, Henrik!
+
+Henrik tittar upp.
+
+**Henrik:** Nämen! Fröken Nova!
+
+Han breder ut armarna.
+
+**Henrik:** Jag trodde du hade övergett oss för köpcentrum och sådana där korta filmer på telefonen.
+
+**Nova:** Jag var faktiskt här förra sommaren.
+
+**Henrik:** Då är det alltså bara elva månader och tre veckor sedan sist.
+
+**Nova:** Du räknar väl inte?
+
+**Henrik:** Naturligtvis inte. Jag uppskattar bara tiden mycket noggrant.
+
+Nova skrattar.
+
+**Henrik:** Och vilka har vi här?
+
+**Nova:** Det här är Barnet och Alve. De kom hit med motorbåt från andra sidan sjön.
+
+**Henrik:** Sjövägen! Det är stil på er.
+
+**Barnet:** Nova har visat oss parken.
+
+**Henrik:** Då har ni fått den bästa guiden som finns. Hon kunde hitta till minigolfen innan hon kunde knyta skorna.
+
+**Nova:** Henrik!
+
+**Henrik:** Vadå? Det är ju sant.
+
+**Nova:** Vi behöver prata med dig om en sak.
+
+Henrik rättar till kavajen.
+
+**Henrik:** Då ska vi göra det ordentligt. Henrik Andersson. Parkchef, konferencier och tillfällig ansvarig för precis allting.
+
+Han räcker fram handen till Barnet.
+
+**Barnet:** Vi funderar på att ordna en fest här.
+
+Henrik stannar mitt i handslaget.
+
+**Henrik:** En fest?
+
+**Nova:** Kanske. Vi har bara pratat lite om det.
+
+**Henrik:** Hur många gäster? Vilken musik? Behöver ni scenen?
+
+**Nova:** Vi vet inte än!
+
+**Henrik:** Utmärkt. Då finns det fortfarande utrymme för planering.
+
+**Barnet:** Vi tänkte börja med att se vad som går att göra.
+
+**Henrik:** Klokt. Mycket klokt.
+
+Han drar fram en stor pärm från skrivbordet.
+
+**Henrik:** Här har ni parkens evenemangskalender.
+
+Han öppnar pärmen.
+
+Sidorna är nästan helt tomma.
+
+**Alve:** Det står ju ingenting.
+
+**Henrik:** Precis! Vi har utmärkta möjligheter att hitta ett ledigt datum.
+
+Nova skakar på huvudet och ler.
+
+### A3-PARK-007 — En riktig folkfest
+
+**Nova:** Vi vill ha musik på scenen. Och kanske göra i ordning borden vid vattnet.
+
+**Henrik:** Mat?
+
+**Nova:** Ja. Något gott. Och kanske minigolf också.
+
+**Henrik:** Då talar vi inte om en vanlig picknick. Då talar vi om ett arrangemang!
+
+Henrik plockar fram ett anteckningsblock.
+
+**Barnet:** Får vi ordna något här?
+
+**Henrik:** I princip, absolut. Men först måste vi bestämma vad ni faktiskt vill göra. Och jag behöver godkänna vilka delar av parken ni får använda.
+
+**Nova:** Vi tänkte börja ganska litet.
+
+**Henrik:** Alla stora evenemang börjar litet. Min första folkfest hade elva besökare och en dragspelare som kom till fel park.
+
+**Alve:** Spelade han ändå?
+
+**Henrik:** I tre timmar. Envisaste mannen jag träffat.
+
+**Barnet:** Vi känner några som kan hjälpa oss.
+
+**Nova:** De har byggt en brygga och renoverat en hel motorbåt.
+
+**Henrik:** Jaha! Då har ni åtminstone erfarenhet av logistik.
+
+**Barnet:** Vi känner en bagare också.
+
+**Henrik:** Nu lyssnar jag ännu mer.
+
+**Nova:** Och någon som kan fixa lamporna.
+
+**Henrik:** Lyssna noga nu, Nova. Man måste inte ha allt färdigt för att ordna en rolig dag.
+
+**Nova:** Fast om vi ska göra det vill jag att det blir riktigt fint.
+
+**Henrik:** Det förstår jag. Men börja med att visa mig en plan. Sedan ser vi vad som går att ordna.
+
+Nova tar fram mobilen.
+
+**Nova:** Jag skriver.
+
+**Barnet:** Vi kan börja med vilka aktiviteter vi vill ha.
+
+**Nova:** Och hur många bord vi behöver.
+
+**Alve:** Och glass.
+
+**Nova:** Glass är redan med på listan.
+
+**Alve:** Är det?
+
+**Nova:** Jag skrev det så att du skulle sluta fråga.
+
+Alve ser nöjd ut.
+
+### A3-PARK-008 — Den första planen
+
+De sätter sig vid bordet utanför förrådet.
+
+Nova visar Barnet en lista på mobilen.
+
+**Nova:** Jag har skrivit upp mat, musik, bord, stolar, lampor och minigolf.
+
+**Barnet:** Vi måste inte göra allt på en gång.
+
+**Nova:** Nej, men vi måste veta vad som behövs.
+
+**Barnet:** Vad vill du börja med?
+
+**Nova:** Jag vill se om vi kan få till en riktig minigolfturnering.
+
+**Henrik:** Då ska ni börja med att prata med mig om banorna. De är öppna för besökare, men några behöver ses över innan vi kan ha en tävling.
+
+**Nova:** Vi kan ordna spelare också. Jag känner några i stan.
+
+**Barnet:** Vi skulle kunna provspela banorna först.
+
+**Nova:** Det vill jag!
+
+Nova reser sig nästan innan hon hunnit avsluta meningen.
+
+**Henrik:** Vänta, vänta! Jag behöver fortfarande veta vilka ni är och vem som ansvarar för arrangemanget.
+
+**Nova:** Du känner ju mig!
+
+**Henrik:** Ja, och det är just därför jag vet att du kommer försöka bestämma allting själv.
+
+**Nova:** Det kommer jag inte alls.
+
+Henrik höjer på ögonbrynen.
+
+**Nova:** ...inte allting.
+
+**Barnet:** Vi hjälps åt.
+
+**Henrik:** Utmärkt. Då börjar vi med en provrunda. Jag ordnar klubbor och bollar.
+
+**Alve:** Får jag också spela?
+
+**Nova:** Ja, men du måste försöka träffa bollen.
+
+**Alve:** Jag är faktiskt väldigt bra på att träffa saker.
+
+**Barnet:** Det är det vi är lite oroliga för.
+
+Nova skrattar.
+
+**Henrik:** Jag hämtar utrustningen. Ni väntar här.
+
+Han går mot förrådet och börjar leta bland sina nycklar.
+
+**Henrik:** Var är nu den gula...
+
+**Nova:** Vänster innerficka!
+
+Henrik känner efter.
+
+**Henrik:** Jag visste att jag behöll dig av en anledning, Nova!
+
+**Nova:** Du har inte behållit mig någonstans!
+
+**Henrik:** Detaljer!
+
+Han försvinner in i förrådet.
+
+Nova vänder sig mot Barnet.
+
+**Nova:** Kom. Jag ska visa hur man klarar bana sju.
+
+### A3-PARK-009 — Utmaningen
+
+Nova står vid den första minigolfbanan med en blå klubba i handen.
+
+**Nova:** Vi börjar här. Den är ganska enkel.
+
+**Barnet:** Du sa att sjuan var svårast.
+
+**Nova:** Det är den också. Därför börjar vi inte med den.
+
+Alve granskar sin klubba.
+
+**Alve:** Varför är den så kort?
+
+**Nova:** För att du inte ska slå sönder något.
+
+**Alve:** Den här klubban är faktiskt i perfekt längd.
+
+**Barnet:** Du har hållit den i tre sekunder.
+
+Nova lägger upp den första bollen.
+
+**Nova:** Okej. Tre slag var. Flest poäng vinner.
+
+**Barnet:** Ska man inte ha så få slag som möjligt i minigolf?
+
+Nova stannar.
+
+**Nova:** Jo. Jag menar minst antal slag.
+
+**Alve:** Då har jag redan noll.
+
+**Nova:** Du har inte börjat!
+
+Nova försöker se allvarlig ut, men börjar skratta.
+
+**Nova:** Kom igen nu. Jag tänker vinna.
+
+**Gameplay transition:** Minigolf är den första planerade minispelsaktiviteten. Beslutad riktning: en återanvändbar minispels-capability genom Runtime 1.1, mobilvänlig touchkontroll, bollfysik, slagräknare och tre initiala banor inklusive bana sju med sin lilla bro. Detta är en **produktavsikt**, inte verifierad teknisk leverans. Gameplay-resultat får inte ändra Novas emotionella arc eller göra familjedagen misslyckad.
+
+### A3-PARK-010 — En speciell dag
+
+Efter minigolfen går Alve till kaféet för att undersöka glassutbudet. Barnet och Nova sitter på en bänk med utsikt över sjön.
+
+**Nova:** Det var faktiskt roligare än jag trodde.
+
+**Barnet:** Du vann ju.
+
+**Nova:** Med ett slag!
+
+**Barnet:** Du har spelat här hela livet. Jag har spelat här i tio minuter.
+
+**Nova:** Då får du väl öva.
+
+Nova tar fram mobilen och öppnar listan hon började skriva tidigare.
+
+**Barnet:** Har du kommit på fler saker till festen?
+
+**Nova:** Jag har gjort en ny lista. Den första blev för rörig.
+
+**Barnet:** Vad är det som ska hända egentligen? Ska vi bjuda hela stan?
+
+**Nova:** Nej. Jag tänkte mest några personer.
+
+**Barnet:** Vilka då?
+
+Nova tvekar.
+
+**Nova:** Min mamma och pappa.
+
+**Barnet:** Ska de komma hit?
+
+**Nova:** Jag har inte frågat dem än. Men de brukade älska den här parken.
+
+**Barnet:** Då blir de säkert glada.
+
+**Nova:** Det var här vi brukade göra allting tillsammans. Spela minigolf, bada, ha picknick...
+
+Hon tittar bort mot bana sju.
+
+**Nova:** Det var alltid så roligt då.
+
+**Barnet:** Då kan vi försöka ordna en sån dag igen.
+
+**Nova:** Tror du det?
+
+**Barnet:** Vi har ju redan börjat.
+
+Nova tittar på Barnet.
+
+**Nova:** Men då måste det bli riktigt bra. Inte bara nästan.
+
+**Barnet:** Vad är viktigast?
+
+**Nova:** Att mamma och pappa har kul tillsammans igen.
+
+**Barnet:** Då får vi hitta på något som båda gillar.
+
+Nova ler.
+
+**Nova:** Ja. Precis.
+
+Hon börjar skriva på mobilen igen.
+
+**Nova:** Vi behöver mycket mer än tre minigolfbanor.
+
+**Critical line lock (verbatim):** **Nova: ”Att mamma och pappa har kul tillsammans igen.”** The word **igen** is essential. The player now knows she wants an enjoyable family day with both parents, but does NOT yet know Nova wrongly blames herself for the separation or thinks perfection will reunite them. The divorce can be made explicit in a later natural conversation, but not her underlying self-blame yet.
+
+### Henrik — supporting character lock
+
+Name: **Henrik Andersson**, around 70, familiar to Nova since early childhood. Former/long-serving folkpark organizer and self-styled director, sociable, theatrical, vain, kind, sometimes overpromises; excels at events, permissions, contacts and stories, **not repairs**. He is **not Linus 2.0** and must never displace Nova as protagonist. Signature introduction: “Henrik Andersson. Parkchef, konferencier och tillfällig ansvarig för precis allting.” His 37 unlabelled keys are a running character detail. He is a park official who authorizes activities and coordinates adult supervision; the children must not independently dismantle municipal property.
+
+### Gameplay and narrative laws locked with the park sequence
+
+- Act 3 is **Nova's story**, not Henrik's. Barnet is the playable lead, Nova the emotional lead, Alve sidekick. Develop their friendship through shared play and discoveries, not only trauma exposition.
+- Experience creation replaces repetitive repair as dominant fantasy: planning a shared day, minigolf, activities, arranging, social connections, city exploration, selective repairs. One unified family-day arc, not four separate construction arcs.
+- The Act 1 village remains important support: Henning food, Linus lighting, Mira supplies, Sol music.
+- Nova's lists and escalating perfectionism unfold gradually. She keeps her true hope of reuniting her parents secret at this point.
+- The final family day truly succeeds; parents do **not** reunite; player choices cannot make the child's family responsible for that result.
+- **No images now.** Art production explicitly deferred by user.
+- Actual physical park/harbour map, contribution counts, runtime mini-game design, art and implementation remain unbuilt and must not be conflated with this dialogue/story lock.
+
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
@@ -686,6 +1302,7 @@ The text shown after the chapter title in `Act3Skeleton.tsx` is temporary runtim
 
 Still to author/lock:
 - exact arrival dialogue with Nova: **LOCKED in section 11**;
+- park arrival/Henrik/minigolf/Nova's first family-day objective: **LOCKED in section 11A**;
 - exact playable city/park map composition;
 - exact contribution/progression count for the four preparation streams;
 - whether streams are freely selectable, interleaved by authored order, or hybrid;
