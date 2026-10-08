@@ -4482,11 +4482,11 @@ Mira står bakom disken och packar upp några varor.
 
 **Mira:** Redan tillbaka? Glömde ni något?
 
-**Barnet:** Nova och Alve gick vidare. Jag ville bara lämna albumet så att det inte försvinner.
+**Barnet:** Nova och Alve gick vidare. Jag ville bara lämna tillbaka fotot så att det inte försvinner.
 
 **Mira:** Tack! Det var omtänksamt.
 
-Hon lägger albumet i en låda bakom disken.
+Hon lägger försiktigt tillbaka fotot i albumet och ställer det i en låda bakom disken.
 
 **Mira:** Hittade ni musiken?
 
