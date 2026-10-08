@@ -6107,6 +6107,97 @@ Alve tittar på skärmen.
 
 **Alve:** Jag skulle bara testa gravitationen.
 
+
+## 11AE. A3-EPILOG-004 — FULL REVISED DIALOGUE
+
+### A3-EPILOG-004 – Två fotografier
+
+Efter spelandet sitter de tre barnen på en liten soffa bakom arkadmaskinerna.
+
+Nova tar upp mobilen.
+
+**Nova:** Kolla vad jag fick av pappa igår.
+
+Hon visar fotografiet från parkbänken.
+
+**Barnet:** Det blev verkligen fint.
+
+**Nova:** Han skrev ut två stycken. En hänger i mitt rum hos mamma och den andra står på mitt skrivbord hos pappa.
+
+**Alve:** Har du kvar det gamla fotot också?
+
+**Nova:** Ja. Men jag gillar faktiskt det här bäst.
+
+**Barnet:** Varför då?
+
+**Nova:** Vet inte riktigt. Det känns mer som vi.
+
+**Alve:** Du hade ju gråtit på det där.
+
+**Nova:** Tack för påminnelsen.
+
+**Alve:** Och jag hade glass på tröjan.
+
+**Nova:** Det hade du hela dagen!
+
+De skrattar.
+
+**Nova:** Förresten! Vet ni vad vi ska göra på lördag?
+
+**Barnet:** Nej?
+
+**Nova:** Bowla!
+
+**Alve:** Vilka?
+
+**Nova:** Jag, mamma och pappa.
+
+**Barnet:** Alla tre?
+
+**Nova:** Japp! Pappa föreslog det när han hämtade mig i söndags. Och mamma sa ja!
+
+**Alve:** Kan din pappa bowla?
+
+**Nova:** Han säger det.
+
+**Alve:** Det sa han om shuffleboard också.
+
+Nova brister ut i skratt.
+
+**Nova:** Precis! Mamma säger att hon ska vinna igen.
+
+**Barnet:** Det kommer hon säkert göra.
+
+**Nova:** Vi får se. Jag tänker faktiskt vinna själv.
+
+Hon stoppar ner mobilen.
+
+**Nova:** Och nästa månad ska vi kanske gå på bio tillsammans också.
+
+**Barnet:** Vad kul!
+
+**Nova:** Ja. Vi har inte gjort så mycket tillsammans på jättelänge.
+
+Hon ler.
+
+**Nova:** Det ska bli jätteroligt.
+
+**Alve:** Särskilt om din pappa förlorar.
+
+**Nova:** Alve!
+
+**Alve:** Vadå? Jag börjar gilla era familjetraditioner.
+
+Nova skrattar och knuffar till honom med axeln.
+
+**Nova:** Förresten frågade mamma om ni vill komma hem och äta pizza någon dag.
+
+**Alve:** JA!
+
+**Barnet:** Du behöver inte ens tänka efter?
+
+**Alve:** Det är pizza.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
