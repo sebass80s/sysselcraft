@@ -37,7 +37,7 @@ function uniq(values) {
   return [...new Set(values.filter(Boolean))];
 }
 
-function canonicalSheetsFor(beat, registry) {
+function canonicalCharacterRefsFor(beat, registry) {
   return (beat.characters ?? []).map((id) => {
     const character = registry.characters?.[id];
     if (!character) fail(`Unknown character "${id}" in beat ${beat.id}.`);
@@ -50,7 +50,12 @@ function canonicalSheetsFor(beat, registry) {
       fail(`Character "${id}" does not use a canonical PNG character sheet.`);
     }
     if (!fs.existsSync(sheet)) fail(`Missing canonical sheet for "${id}": ${sheet}`);
-    return sheet;
+    if (!character.chatLibraryPath) fail(`Character "${id}" has no persistent ChatGPT Library path.`);
+    return {
+      characterId: id,
+      repoPath: sheet,
+      chatLibraryPath: character.chatLibraryPath
+    };
   });
 }
 
@@ -178,7 +183,9 @@ const registry = readJson(String(args.registry ?? DEFAULT_REGISTRY));
 const approvalPath = String(args.approvals ?? `image-pipeline/approvals/${manifest.productionId}.json`);
 const approvals = ensureApprovalState(manifest, approvalPath);
 const anchors = approvedAnchorsFor(beat, manifest, approvals);
-const characterSheetPaths = canonicalSheetsFor(beat, registry);
+const characterRefs = canonicalCharacterRefsFor(beat, registry);
+const characterSheetPaths = characterRefs.map((ref) => ref.repoPath);
+const chatLibraryReferencePaths = characterRefs.map((ref) => ref.chatLibraryPath);
 const environmentReferencePaths = uniq([
   ...(manifest.environmentRefs ?? []),
   ...(beat.environmentRefs ?? [])
@@ -207,7 +214,9 @@ const job = {
   title: beat.title ?? beat.id,
   continuityGroup: beat.continuityGroup ?? manifest.continuityGroup ?? "default",
   characters: beat.characters ?? [],
+  characterRefs,
   characterSheetPaths,
+  chatLibraryReferencePaths,
   environmentReferencePaths,
   continuityAnchors: anchors,
   anchorReferencePaths,
@@ -229,5 +238,6 @@ const outPath = String(args.out ?? `image-pipeline/out/${manifest.productionId}/
 writeJson(outPath, job);
 console.log(`ART JOB READY: ${beat.id}`);
 console.log(`  canonical refs: ${characterSheetPaths.length}`);
+console.log(`  ChatGPT persistent refs: ${chatLibraryReferencePaths.length}`);
 console.log(`  continuity anchors: ${anchorReferencePaths.length}`);
 console.log(`  output: ${outPath}`);
