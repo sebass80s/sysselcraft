@@ -5063,6 +5063,19 @@ De gör en diskret high five bakom föräldrarnas ryggar.
 
 **Nästa beat:** Novas mamma får höra om Novas felaktiga skuld: middagsutbrottet inträffade kvällen innan föräldrarna meddelade skilsmässan. Mamman måste tydligt säga att skilsmässan aldrig var Novas fel. Pappan får en egen viktig scen. Barnet och Alve förblir vänner, inte terapeuter. Föräldrarna återförenas inte.
 
+## 11W. A3-FAMILY-015–020 — GODKÄND STORY
+
+**Status:** Användaren har spikat dialogutkastet ”Det var inte du”, A3-FAMILY-015 till 020. Fullständig svensk dialog finns i föregående konversation och ska föras över ordagrant före implementation. Detta är en kontinuitetsnotering, inte ordagrann transkription.
+
+- **015:** Mamman kommer till bänken och Barnet och Alve lämnar plats. Nova frågar varför föräldrarna inte kan bli tillsammans igen när de haft så roligt.
+- **016:** Nova berättar om middagen då hon blev arg och sa dumma saker. **Redan nästa kväll** berättade föräldrarna att de skulle skiljas. Hon har sedan dess trott att de tog hennes ilska som en önskan att slippa dem.
+- **017:** Mamman förklarar tydligt att separationen var ett vuxenbeslut som diskuterats långt innan middagen. Nova orsakade den inte och kunde inte förhindra den. Barn får vara arga; kärleken från föräldrarna är inte villkorad av att barnet alltid är snällt.
+- **018:** Nova förklarar varför hon gjort alla listor och försökt återskapa första dejten. Mamman är glad för festen, men låter Nova vara ledsen över att den inte gav önskat resultat.
+- **019:** Pappan ansluter och bekräftar att det aldrig varit Novas fel. De kommer inte flytta ihop igen. Båda är fortfarande hennes föräldrar, även i skilda hem.
+- **020:** Nova vill ta ett nytt foto på bänken tillsammans med båda sina föräldrar, utan att kopiera det gamla fotot. Hon ber om två utskrifter, en till vardera hemmet. Barnet fotograferar.
+
+**Låst kontinuitet:** Ingen av föräldrarna återförenas. Middagsutbrottet orsakade inte skilsmässan. Barnet och Alve förblir kompisar, inte rådgivare. Epilogen får vara glad och framåtblickande utan att sudda ut Novas sorg.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
