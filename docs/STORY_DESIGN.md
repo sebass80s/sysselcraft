@@ -9,6 +9,8 @@ Canonical working Act 3 story specification:
 
 It locks the chapter title **På andra sidan sjön**, the larger Swedish lakeside town/city, Nova as emotional protagonist, the central lakeside park/family-day arc, the village support roles for Henning/Linus/Mira/Sol, and the rule that Nova's parents do not reunite.
 
+**Act 3 city/home story locked 2026-10-08:** `ACT3_STORY_MANIFEST.md` §11B. City retro-game shop, Nova's parents' separate city homes, visit to her mother's apartment, the old city-job connection to recently relocated Mira, and the *secret family-day surprise for both parents*. No village return yet; no art or runtime built.
+
 **Act 3 park continuation locked 2026-10-08:** Full A3-PARK-001 through A3-PARK-010 in `docs/ACT3_STORY_MANIFEST.md` §11A. Henrik Andersson is Nova's longtime acquaintance, eccentric folkpark event organizer (not a Linus repair clone); Nova is the emotional focus, Barnet the playable lead. Minigolf is planned shared-engine gameplay, not yet implemented. Nova's key locked line: **“Att mamma och pappa har kul tillsammans igen.”** Her deeper expectation and self-blame remain unrevealed. Story and gameplay intentions are locked; images explicitly deferred. 
 
 **Act 3 opening dialogue locked 2026-10-08.** The official, exact child-facing opening (A3-OPEN-000 through A3-OPEN-005) is now in `docs/ACT3_STORY_MANIFEST.md` §11. Barnet drives the meeting, Nova is suspicious and reserved, Alve stays a sidekick. Nova receives an unspecified phone notification and says her parents would not agree about allowing the boat trip; the separation remains unrevealed. Curiosity about repairing the worn park motivates her to guide the children. Do not treat this lock as runtime implementation.
