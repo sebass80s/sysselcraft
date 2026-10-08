@@ -2796,6 +2796,255 @@ Rebecka asks whether they'll return and offers an improvised challengers list. S
 
 **Continuity:** Owner identity is **Rebecka**, never Rut; early 40s, red hair, established adult who looks out for Nova but is not a counselor or parent surrogate. This is a fully playful day, deliberately without party prep. No actual runtime or art now.
 
+## 11M. De sa ja! — FULLSTÄNDIG DIALOG LÅST
+
+**Status:** Approved A3-DRAMA-011–015, full dialogue; no implementation.
+
+### A3-DRAMA-011 – Ett meddelande från Nova
+
+Nästa morgon vibrerar Barnets telefon.
+
+**Nova (meddelande):** DOM SA JA!!!!!
+
+**Barnet:** Vilka?
+
+**Nova:** MAMMA OCH PAPPA!!!
+
+**Nova:** BÅDA KAN KOMMA!!!
+
+**Barnet:** Till parken?
+
+**Nova:** JA!!
+
+**Nova:** Jag sa att det var en grej jag ville visa dem. På samma dag. Samma tid.
+
+**Barnet:** Vad sa de?
+
+**Nova:** Pappa sa att han skulle lägga in det i kalendern direkt. Mamma sa att hon gärna kommer.
+
+**Barnet:** Vad kul!
+
+**Nova:** JAG VET!
+
+Ett nytt meddelande dyker upp.
+
+**Nova:** Och vet du vad det bästa är?
+
+**Barnet:** Vadå?
+
+**Nova:** De har ingen aning om vad vi planerar 😎
+
+### A3-DRAMA-012 – En väldigt bra dag
+
+Lite senare möts Barnet, Alve och Nova vid fontänen på torget.
+
+Nova kommer springande med väskan studsande mot höften.
+
+**Nova:** Ni fattar inte hur bra det här är!
+
+**Alve:** Vi har förstått att något är ganska bra.
+
+**Nova:** Båda två kommer! Och de behöver inte byta några dagar eller ändra någonting!
+
+**Barnet:** Det måste kännas skönt.
+
+**Nova:** Jätteskönt!
+
+Hon fiskar upp mobilen.
+
+**Nova:** Jag har till och med fått svar från pappa att han tänker komma i tid.
+
+**Alve:** Har han problem med det?
+
+**Nova:** Ibland. En gång kom han en timme för sent till min skolavslutning för att han hade skrivit fel dag.
+
+**Barnet:** Oj.
+
+**Nova:** Fast han kom med blommor och världens fulaste ballong, så det blev rätt bra ändå.
+
+**Alve:** Vad var det för ballong?
+
+**Nova:** En dinosaurie med studentmössa.
+
+**Alve:** Den låter ju fantastisk.
+
+**Nova:** Jag har kvar den. Den är helt skrumpen.
+
+De skrattar.
+
+**Nova:** Okej. Nu måste vi göra den bästa familjedagen någonsin.
+
+**Barnet:** Det kommer bli kul.
+
+**Nova:** Det ska bli mer än kul.
+
+Hon tar fram anteckningsblocket.
+
+**Nova:** Det ska bli perfekt.
+
+### A3-DRAMA-013 – Tre olika planer
+
+Barnet och Alve följer med Nova till en bänk vid torget.
+
+Nova sprider ut tre pappersark.
+
+**Alve:** Varför har du tre?
+
+**Nova:** För att jag har gjort tre versioner.
+
+**Barnet:** Vad är skillnaden?
+
+**Nova:** En är om det regnar. En är om det är sol. Och en är om någon av dem kommer för sent.
+
+**Alve:** Smart.
+
+**Nova:** Tack.
+
+**Barnet:** Fast vi vet ju inte ens vilka saker Mira har än.
+
+**Nova:** Jag vet. Därför har jag gjort en fjärde lista över det vi inte vet.
+
+**Alve:** Då har du ju fyra planer.
+
+**Nova:** Nej, tre planer och en lista.
+
+**Barnet:** Det är faktiskt skillnad.
+
+Nova pekar nöjt på Barnet.
+
+**Nova:** Tack!
+
+Hon börjar förklara.
+
+**Nova:** Först ska de se poängtavlan. Sedan spelar vi shuffleboard. Sedan äter vi tårta. Och efter det ska musiken börja.
+
+**Alve:** När äter vi glass?
+
+**Nova:** Efter maten.
+
+**Alve:** Du sa ju efter tårtan.
+
+**Nova:** Glass och tårta är inte samma sak.
+
+**Alve:** Det är därför man kan äta båda.
+
+Nova suckar och gör en anteckning.
+
+**Nova:** Jag lägger till glass.
+
+**Alve:** Äntligen någon som lyssnar.
+
+### A3-DRAMA-014 – En gammal bild
+
+Nova tar upp sin telefon.
+
+**Nova:** Jag hittade fotot från deras första dejt igår!
+
+Hon visar en bild på två unga vuxna som står framför folkparkens gamla spelhörna.
+
+Pappan har en vit skjorta och alldeles för mycket hårgelé. Mamman håller upp ett litet pris och skrattar.
+
+**Barnet:** Det är ju samma plats!
+
+**Nova:** Precis! Och kolla på pappa!
+
+**Alve:** Han ser ut som han ska sälja bilar.
+
+Nova skrattar så mycket att hon nästan tappar telefonen.
+
+**Nova:** Jag måste visa honom den kommentaren någon gång.
+
+**Barnet:** Din mamma ser glad ut.
+
+**Nova:** Ja.
+
+Nova zoomar in på bilden.
+
+**Nova:** De ser båda glada ut.
+
+Hon tittar på fotot en stund.
+
+**Nova:** Jag skulle vilja ta ett nytt foto av dem på precis samma ställe.
+
+**Barnet:** Det kan vi ordna.
+
+**Nova:** Med samma poängtavla bakom.
+
+**Alve:** Och samma skjorta?
+
+**Nova:** Nej, den får han faktiskt välja själv.
+
+Barnet skrattar.
+
+**Nova:** Men om vi kunde få en bild som ser nästan likadan ut...
+
+Hon stannar upp.
+
+**Barnet:** Vadå?
+
+**Nova:** Ingenting. Det skulle bara vara fint.
+
+Hon stoppar undan telefonen.
+
+### A3-DRAMA-015 – En sak i taget
+
+Nova samlar ihop sina papper.
+
+**Nova:** Vi behöver prata med Henrik, Mira och Henning. Och Sol. Och Linus.
+
+**Alve:** Alla idag?
+
+**Nova:** Helst.
+
+**Barnet:** Vi kanske ska börja med en sak.
+
+**Nova:** Men vi har ju så mycket kvar!
+
+**Barnet:** Vi behöver inte göra allt på en dag.
+
+**Nova:** Fast dagen är ju bestämd nu.
+
+**Alve:** Och ingen har sagt att vi måste göra allt idag.
+
+Nova tittar på dem.
+
+**Nova:** Ni är väldigt lugna för två personer som ska ordna en jättefest.
+
+**Barnet:** Vi har ju fortfarande tid.
+
+Nova funderar.
+
+**Nova:** Okej. En sak i taget.
+
+Hon håller upp pekfingret.
+
+**Nova:** Men då börjar vi med den viktigaste.
+
+**Barnet:** Vilken är det?
+
+**Nova:** Shuffleboardbordet.
+
+**Alve:** Inte tårtan?
+
+**Nova:** Nej.
+
+**Alve:** Nu blev jag faktiskt lite orolig.
+
+Nova skrattar.
+
+**Nova:** Kom igen. Vi ska se om Henrik har hittat verktygen.
+
+De går mot folkparken.
+
+Nova går först, med anteckningsblocket i handen.
+
+### Continuity
+
+- Both parents accepted attending the same date/time to see something Nova wants to show them, **not knowing about the surprise family day**. No firm calendar date need be bound yet.
+- The 2011 photograph is an additional callback to the original scoreboard and prospective family-day rematch.
+- Nova's anxiety about perfection increases but friends retain agency and humour.
+- The subsequent narrative may transition from the park to Nova's first village visit; this does not require implementing all listed event-preparation errands first.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
