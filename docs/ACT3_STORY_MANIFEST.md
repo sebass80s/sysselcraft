@@ -3613,6 +3613,306 @@ Linus sluter ögonen.
 
 **Continuity:** Linus' temporary sore back and silly pride are the joke, not medical suffering. Sol is perceptive and already knows. No soapbox cars or repeat of Act 2 construction. The small optional storage sorting interaction is not a new building system. Nova's organization helps others, and she enjoys the village outside festival logistics.
 
+## 11P. Sols hemliga talang — FULLSTÄNDIG DIALOG LÅST
+
+**Status:** User-approved A3-VILLAGE-017–021, verbatim below; not implemented.
+
+### A3-VILLAGE-017 – Ett märkligt ljud
+
+Barnet, Nova och Alve lämnar Linus utanför förrådet.
+
+**Alve:** Tror ni han kommer sitta kvar där hela dagen?
+
+**Nova:** Om ingen hämtar hans mössa så.
+
+**Barnet:** Sol får nog ta hand om honom.
+
+Plötsligt hörs hög musik från huset på andra sidan torget.
+
+**Alve:** Vad är det som låter?
+
+**Barnet:** Det kommer från Sol.
+
+**Nova:** Har hon fest?
+
+De följer musiken runt hörnet.
+
+Dörren till Sols hus står på glänt. Inifrån hörs en kvinna sjunga högt och ganska falskt.
+
+**Sol (inifrån):** 🎵 JAG ÄR EN STJÄRNA I NAAAAATT! 🎵
+
+Alve stannar tvärt.
+
+**Alve:** Är det där Sol?
+
+**Barnet:** Det låter så.
+
+**Nova:** Det hoppas jag. Annars har någon brutit sig in och börjat sjunga.
+
+De kikar in genom dörren.
+
+Sol står mitt på golvet med en dammvippa som mikrofon. Hon har hörlurar på sig och dansar samtidigt som hon dammar en bokhylla.
+
+Hon har inte märkt dem.
+
+**Sol:** 🎵 INGEN KAN STOPPA MIIIIG! 🎵
+
+Nova trycker handen mot munnen.
+
+### A3-VILLAGE-018 – Upptäckt
+
+Alve börjar skratta.
+
+Sol vänder sig om.
+
+**Sol:** AAAH!
+
+Hon rycker av sig hörlurarna.
+
+**Sol:** Hur länge har ni stått där?!
+
+**Barnet:** Inte så länge.
+
+**Alve:** Sedan du var en stjärna i natten.
+
+Sol blundar.
+
+**Sol:** Fantastiskt.
+
+Nova skrattar så mycket att hon måste luta sig mot dörrkarmen.
+
+**Sol:** Ni vet att man brukar knacka?
+
+**Nova:** Dörren var öppen!
+
+**Sol:** Det är ett väldigt dåligt försvar.
+
+Sol ställer ifrån sig dammvippan.
+
+**Barnet:** Vad lyssnar du på?
+
+**Sol:** En gammal favoritlåt.
+
+**Alve:** Du kan hela texten.
+
+**Sol:** Ja. Det är faktiskt min enda talang.
+
+**Nova:** Din enda?
+
+**Sol:** Jag kan också sätta upp en hylla utan att den ramlar ner. Fråga Linus hur vanligt det är.
+
+Nova börjar skratta igen.
+
+**Sol:** Okej, okej. Nu får ni berätta vad ni vill.
+
+**Barnet:** Vi skulle bara se vad det var som lät.
+
+**Sol:** Då har ni fått se mer än ni önskade.
+
+### A3-VILLAGE-019 – Ingen publik, tack
+
+Nova får syn på en liten högtalare och en mikrofon på bordet.
+
+**Nova:** Är det där karaoke?
+
+**Sol:** Japp. Jag lånade den till en fest för flera år sedan och fick sedan köpa den för att jag råkade tappa fjärrkontrollen i en skål med dipp.
+
+**Alve:** Fungerar den fortfarande?
+
+**Sol:** Fjärrkontrollen? Nej. Mikrofonen? Ja.
+
+Nova tar försiktigt upp mikrofonen.
+
+**Nova:** Jag älskar karaoke.
+
+**Barnet:** Gör du?
+
+**Nova:** Bara när ingen tittar.
+
+**Alve:** Det är en ganska dålig idé med karaoke då.
+
+Sol ler.
+
+**Sol:** Vet du vad? Jag brukar tänka precis likadant.
+
+**Nova:** Men du stod ju och sjöng för hela byn!
+
+**Sol:** Det var inte meningen.
+
+**Barnet:** Det hördes nog ända till bageriet.
+
+**Sol:** Då får Henning en gratis konsert.
+
+Nova tittar på mikrofonen.
+
+**Nova:** Kan vi testa en låt?
+
+**Sol:** Absolut.
+
+**Alve:** Jag vill sjunga!
+
+**Nova:** Vi tänkte börja med en låt som faktiskt har toner.
+
+**Alve:** Jag kan massor av toner!
+
+**Barnet:** Kan du sjunga någon av dem?
+
+**Alve:** Vi får väl se.
+
+### A3-VILLAGE-020 – Den stora duetten
+
+Sol startar en låt på sin gamla karaokeanläggning.
+
+Nova tar den ena mikrofonen. Barnet får välja vem som ska ha den andra.
+
+*Här kan spelaren välja att sjunga tillsammans med Nova, låta Alve vara hennes duettpartner eller låta Sol vara med. Scenen fortsätter oavsett valet.*
+
+Musiken börjar.
+
+Alve dansar alldeles för ivrigt, oavsett vem som sjunger.
+
+Efter några sekunder snubblar han över sin egen sko och sätter sig rakt ner på en kudde.
+
+**Alve:** Det var meningen!
+
+**Nova:** Visst!
+
+Sol klappar takten.
+
+Nova missar en ton, försöker igen och börjar skratta mitt i refrängen.
+
+**Nova:** Vänta, vänta! Jag tappade bort mig!
+
+**Sol:** Fortsätt bara!
+
+**Nova:** Men jag sjöng fel!
+
+**Sol:** Jag har sjungit fel i tjugo år. Det går utmärkt!
+
+Barnet fortsätter sjunga.
+
+Nova tittar på Barnet, skrattar och hakar på igen.
+
+När låten tar slut gör Sol en överdriven bugning.
+
+**Sol:** Tack för en fantastisk konsert!
+
+**Alve:** Vi borde ta betalt.
+
+**Nova:** Ingen skulle betala för det där.
+
+**Sol:** Då får vi sälja öronproppar i stället.
+
+Alla skrattar.
+
+Utanför hörs en röst.
+
+**Linus:** SOL!
+
+De tittar mot dörren.
+
+Linus står en bit bort, fortfarande stel i ryggen.
+
+**Linus:** HAR DU STÄNGT AV MUSIKEN NU?
+
+**Sol:** JA!
+
+**Linus:** BRA!
+
+En paus.
+
+**Linus:** KAN DU SÄTTA PÅ DEN IGEN? JAG GILLADE DEN SISTA!
+
+Nova tappar nästan mikrofonen av skratt.
+
+### A3-VILLAGE-021 – En egen låt
+
+Lite senare sitter Nova på golvet bredvid högtalaren och tittar igenom Sols gamla skivor.
+
+**Nova:** Du har ju jättemycket musik.
+
+**Sol:** Jag sparar nästan allt.
+
+**Nova:** Min mamma hade några sådana här skivor förut.
+
+**Sol:** Jaså?
+
+**Nova:** Hon brukade spela dem när vi städade hemma. Pappa hatade en av låtarna.
+
+**Alve:** Varför?
+
+**Nova:** För att hon spelade den varje lördag.
+
+**Sol:** Det låter som en bra tradition.
+
+**Nova:** Vi brukade dansa i köket ibland.
+
+Hon ler åt minnet.
+
+Sol bläddrar bland skivorna.
+
+**Sol:** Vill du höra något riktigt pinsamt?
+
+**Nova:** Ja!
+
+**Sol:** Jag har en inspelning från när jag själv var med i en sångtävling.
+
+**Barnet:** Vann du?
+
+**Sol:** Nej. Jag kom näst sist.
+
+**Alve:** Vem kom sist?
+
+**Sol:** En man som glömde texten och sjöng sin inköpslista.
+
+**Nova:** Va?!
+
+**Sol:** Ändå fick han fler applåder än jag.
+
+Nova skrattar.
+
+**Nova:** Blev du inte jättearg?
+
+**Sol:** Jo! I ungefär tio minuter. Sedan gick vi allihop och åt pizza.
+
+**Barnet:** Hade du kul ändå?
+
+**Sol:** Jättekul. Jag har fortfarande kvar inspelningen.
+
+Nova tittar på mikrofonen.
+
+**Nova:** Då kanske vi kan sjunga en gång till.
+
+**Alve:** Jag trodde aldrig du skulle fråga!
+
+**Sol:** Då tycker jag att vi väljer en låt som alla kan.
+
+**Barnet:** Finns det någon sådan?
+
+**Sol:** Vi kan börja med en som har en enkel refräng.
+
+Nova reser sig och tar mikrofonen.
+
+**Nova:** Okej. Men den här gången vill jag välja låt.
+
+**Alve:** Har du gjort en lista?
+
+Nova tittar på honom.
+
+**Nova:** Alve.
+
+**Alve:** Vadå?
+
+**Nova:** Nej. Ingen lista.
+
+Hon väljer en låt och trycker på play.
+
+Musiken fyller rummet.
+
+*Scenen slutar med att de sjunger tillsammans.*
+
+**Continuity:** Sol is joyful and fallible, not therapist. Nova enjoys imperfection without an explicit moral. Linus has the same temporary sore back from the immediately preceding scene. Singing duet selection is a player branch; no rhythm-game engine is claimed to be implemented. No art or runtime work yet.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
