@@ -1,175 +1,168 @@
-# SysselCraft image batch pipeline
+# SysselCraft Art Pipeline
 
-> **Act 3 production authority:** the renderer-independent continuity pipeline in this directory plus `docs/ACT3_ART_PIPELINE.md`.
->
-> Character identity, beat content, continuity anchors and approval history belong to the pipeline, not to any renderer. ChatGPT is the preferred interactive renderer. Runway and the local OpenAI API generator are optional rendering adapters/fallbacks. Switching renderer must never change the canonical identity inputs or continuity lineage.
+Status: **v2 production pipeline**
 
-This pipeline prepares deterministic image-generation task batches. It does not generate images by itself.
+This directory owns repeatable image-production context for SysselCraft. The renderer is deliberately replaceable.
 
-## Hard identity rule
+Preferred renderer: **ChatGPT image generation**.
 
-Recurring character identity may only come from PNG character sheets under:
+Optional adapters:
+- Runway
+- local OpenAI API batch generator
 
-`public/assets/village/character-sheets/`
+The renderer never decides identity or continuity. The pipeline does.
 
-Runtime sprites, story images, environment images and WebP turnaround assets are never valid character identity references.
+## The three reference classes
 
-The canonical registry is:
+Every v2 art job separates references by responsibility.
+
+1. **Identity references**
+   - one canonical character sheet for every declared recurring character;
+   - supplied on every generation;
+   - highest authority for face, hair, age read, clothing, proportions and silhouette.
+
+2. **Location anchor**
+   - one approved image that establishes a location;
+   - controls geography, architecture and environmental visual language;
+   - does not control character identity.
+
+3. **Previous-beat anchor**
+   - at most one latest approved beat from the same location/continuity group;
+   - controls short-range staging, light and flow;
+   - does not control character identity.
+
+A location change does not inherit the previous location's anchors.
+
+## Upload once
+
+Canonical recurring-character sheets are registered in:
 
 `image-pipeline/character-registry.json`
 
-If a registered character sheet is missing, outside the canonical directory or not a PNG, the builder fails closed.
+Their repository sources live under:
 
-## Batch workflow
+`public/assets/village/character-sheets/`
 
-1. Create a JSON batch manifest with `batchId`, optional `anchors`, and `scenes`.
-2. Each scene declares its `characters` by registry id.
-3. The builder injects exactly one canonical character sheet per declared recurring character.
-4. Optional environment references remain separate from character identity references.
-5. If unapproved anchors exist, only anchor tasks are emitted.
-6. After an anchor is approved, set its `status` to `approved` and add its `outputRef` in the approval log.
-7. Rerun. Scene tasks are then emitted in chunks of five by default.
+The same eight canonical sheets are also persisted in ChatGPT Library under:
 
-## Example manifest
+`/SysselCraft/Art References/characters/`
 
-```json
-{
-  "batchId": "act3-example",
-  "batchSize": 5,
-  "aspectRatio": "landscape",
-  "anchors": [
-    {
-      "id": "ANCHOR-NOVA-ALVE",
-      "characters": ["nova", "alve"],
-      "prompt": "Create a continuity anchor for Nova and Alve."
-    }
-  ],
-  "scenes": [
-    {
-      "id": "ACT3-001",
-      "characters": ["nova", "alve", "puppy"],
-      "useAnchors": ["ANCHOR-NOVA-ALVE"],
-      "environmentRefs": ["path/to/approved/environment-reference.png"],
-      "prompt": "Describe only the authored action and composition for this scene.",
-      "rules": ["Scene-specific positive rule."],
-      "mustNot": ["Scene-specific forbidden element."],
-      "qaChecks": ["Scene-specific QA check."]
-    }
-  ]
-}
-```
+This means a later ChatGPT conversation can retrieve the real images as image inputs without asking the user to upload them again.
 
-The example names above are structural only. They do not define Act 3 story canon.
+Approved ChatGPT continuity images belong under:
 
-## Build
+`/SysselCraft/Art References/anchors/<production-id>/<beat-id>.png`
 
-```bash
-node scripts/build-image-batch.mjs --batch=path/to/batch.json
-```
+## Manifest v2
 
-Optional:
+Schema:
+
+`image-pipeline/schemas/art-production-v2.schema.json`
+
+PoC:
+
+`image-pipeline/batches/poc-art-pipeline-v2.json`
+
+A production beat defines at least:
+- stable beat id;
+- location id;
+- exact recurring cast;
+- authored action/summary;
+- exact-cast lock;
+- wardrobe lock;
+- Barnet face-hidden lock when applicable.
+
+It may additionally define:
+- whether this beat establishes a new location;
+- shot;
+- mood;
+- time of day;
+- per-character emotion;
+- explicit continuity source;
+- authored rules and forbidden elements.
+
+## Build a renderer-neutral job
 
 ```bash
-node scripts/build-image-batch.mjs \
-  --batch=path/to/batch.json \
-  --batch-size=5 \
-  --out=image-pipeline/out/my-batch \
-  --approvals=image-pipeline/approvals/my-batch.json
+npm run art:job -- \
+  --manifest=image-pipeline/batches/poc-art-pipeline-v2.json \
+  --beat=V2-001
 ```
 
-## Output
+The job contains:
+- canonical identity refs;
+- ChatGPT Library refs;
+- location anchor;
+- previous-beat anchor;
+- compiled prompt;
+- mandatory QA ids;
+- target persistent output path.
 
-Before anchors are approved:
+## Exact-cast rule
 
-`anchors-01.json`, `status.json`, and the approval log.
+V2 requires `exactCastOnly: true`.
 
-After anchors are approved:
+The compiler explicitly instructs the renderer to show exactly the declared recurring cast and no unrequested people or animals.
 
-`scenes-01.json`, `scenes-02.json`, etc., with at most five image tasks in each file.
+If Barnet is present, `barnetFaceHidden: true` is mandatory and validation fails closed otherwise.
 
-Every generated task keeps these reference classes separate:
+## QA before approval
 
-- `characterSheetPaths`
-- `environmentReferencePaths`
-- `anchorReferencePaths`
-- combined `referenceImagePaths`
+A generated image is only a candidate. It cannot become a continuity anchor until QA passes.
 
-This separation is deliberate. Character sheets are always the sole identity authority.
-
-## Test
+Record QA:
 
 ```bash
-node scripts/test-image-batch-builder.mjs
+npm run art:qa -- \
+  --manifest=<manifest.json> \
+  --beat=<beat-id> \
+  --chat-library-path=<candidate.png> \
+  --pass=identity,exact-cast,location,hard-rules,wardrobe,barnet-face-hidden
 ```
 
-## Generate the batch automatically
+Continuation beats also require `continuity`.
 
-The generator reads the built batch JSON, opens every referenced character sheet/environment/anchor from the local checkout, sends one image request per task, and writes one separate PNG per scene.
-
-First build the batch:
+Then approve:
 
 ```bash
-npm run image:batch:build -- --batch=path/to/batch.json
+npm run art:approve -- \
+  --manifest=<manifest.json> \
+  --beat=<beat-id>
 ```
 
-Then generate a built chunk:
+Approval is bound to the exact candidate that was QA-reviewed. Replacing the candidate after QA makes approval fail.
+
+## Fail-closed rules
+
+Generation/approval must stop when:
+- a canonical character is unknown;
+- a canonical sheet is missing;
+- a required persistent ChatGPT reference is missing from registry;
+- Barnet is present without the face-hidden contract;
+- an emotion is authored for a character outside the cast;
+- a continuation location has no approved establishing anchor;
+- previous-beat continuity tries to cross locations;
+- an approved local anchor disappears;
+- any mandatory QA check is missing or failed;
+- QA belongs to a different candidate.
+
+## Tests
 
 ```bash
-export OPENAI_API_KEY="..."
-npm run image:batch:generate -- --input=image-pipeline/out/<batch-id>/scenes-01.json
-```
-
-Useful safe preflight:
-
-```bash
-npm run image:batch:generate -- --input=image-pipeline/out/<batch-id>/scenes-01.json --dry-run
-```
-
-Defaults:
-
-- model: `gpt-image-2.5-sunburst`
-- size: `1536x1024`
-- quality: `high`
-- output: separate PNG files plus `generation-results.json`
-- generation is sequential so a five-image chunk produces five independent API requests and five image files
-
-Override with `--model=`, `--size=`, `--quality=`, or environment variables `SYC_IMAGE_MODEL`, `SYC_IMAGE_SIZE`, and `SYC_IMAGE_QUALITY`.
-
-The OpenAI image edit endpoint accepts multiple source images per request, so each task can carry its own canonical character sheets, environment references and approved anchors. The generator refuses non-canonical character identity paths before making any API request.
-
-## Continuity PoC — 2026-10-08
-
-The first scalable continuity proof is implemented.
-
-Commands:
-
-```bash
-npm run art:job -- --manifest=image-pipeline/batches/poc-continuity-chain-01.json --beat=POC-A3-001
-npm run art:approve -- --manifest=image-pipeline/batches/poc-continuity-chain-01.json --beat=POC-A3-001 --output=<approved-image.png>
 npm run test:art-continuity-poc
+npm run test:art-pipeline-v2
 ```
 
-The job resolver automatically combines:
-- canonical character sheets from the registry;
-- structured beat content;
-- environment references;
-- the latest approved continuity anchors in the same sequence;
-- global and beat-specific hard rules;
-- QA checks and output contract.
+Both are part of `npm run verify`.
 
-The approval command only promotes an image into the continuity chain when identity and continuity are explicitly accepted.
+The v2 regression explicitly proves:
 
-The automated PoC proves:
-1. beat 1 resolves two canonical refs and zero anchors;
-2. after beat 1 is approved, beat 2 automatically resolves beat 1 as an anchor;
-3. after beat 2 is approved, beat 3 automatically resolves the two latest approved anchors;
-4. if an approved anchor disappears from durable storage, generation fails closed.
+`harbor -> harbor -> park -> park -> harbor`
 
-This means future beats do not need manually copied reference lists or anchor ids.
+On the return to harbor, the resolver restores the original harbor location anchor and the latest approved harbor beat. It does not inherit the more recent park images.
 
-### Remaining ChatGPT adapter gate
+## Legacy batch tooling
 
-The continuity engine is renderer-independent and green. The remaining one-time-upload requirement for ChatGPT is a transport problem: canonical PNGs must also live on a persistent ChatGPT-accessible file surface so a later conversation can re-inject them as actual image inputs without asking the user to upload them again.
+`build-image-batch.mjs` and `generate-image-batch.mjs` remain useful as renderer adapters and batch experiments.
 
-Do not confuse this transport gate with continuity-engine correctness.
-
+They are not the authority for identity or continuity. New Act 3+ production should be authored as v2 manifests and resolved through `build-art-job.mjs`.
