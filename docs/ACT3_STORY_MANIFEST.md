@@ -1241,6 +1241,27 @@ Canonical constraints:
 5. **Do not travel back across the lake yet.** The city visit and first visit to Nova's mother's home come before the first return trip to the village.
 6. Mother's and father's names/designs are still undecided. No production imagery now.
 
+## 11C. Nova's old home, treasure hunt and two-home everyday life — LOCKED 2026-10-08
+
+**Status:** Approved story, not implemented. This follows A3-HOME-003 and precedes Barnet and Alve returning to the village by themselves.
+
+### A3-HOME-004 — Mitt gamla rum
+Nova shows Barnet and Alve her small but cosy room at her mother's apartment: posters, bed by the window, busy desk, guitar and games. She once lived with both parents in a **villa with a garden**. She remembers her substantially larger upstairs bedroom, large desk with room for Lego builds, the in-ground trampoline, meals on the patio and flowering lilac bush. Her old desk could not fit in the apartment; the house is now occupied by others. Her father also lives in an apartment. She keeps a framed photograph showing her by the trampoline, the house and lilac. Nova speaks matter-of-factly, not in a breakdown; she misses both her home and ordinary life there. The scene ends when she promises to show something she saved from the old house.
+
+### A3-HOME-005 — Skattkistan
+Nova pulls a metal treasure box from under the bed, containing shells, a blue marble, an old key and handwritten clues. She shows Barnet a hand-drawn treasure map from the villa garden. As a child she ran treasure hunts for her parents; her father once used barbecue tongs as a pretend sword because of her skull warning. Barnet suggests a treasure hunt across town. Nova likes the challenge and starts designing one; Alve volunteers to hide the treasure and jokes that forgetting its location would make the quest harder.
+
+### A3-HOME-006 — På kylskåpet
+While helping clear dishes, Barnet notices a colour-coded fridge calendar: green days at mum's, blue at dad's. Her mother calmly reminds Nova of a changed handover next Friday. Nova thought she'd be at her mother's all weekend, becomes frustrated that adults keep changing her plans and shuts a cupboard too hard. Mother acknowledges the inconvenience and suggests discussing it after dinner. No adult is depicted as a villain.
+
+### A3-HOME-007 — Lite senare
+Back in Nova's room, she tells Barnet how inconvenient it is to keep possessions in two places, including a gym bag her dad once had to bring to school. She misses not needing to think about where everything belongs. Barnet steers the conversation back to the treasure hunt; Nova realizes a **citywide** hunt works no matter which home she is staying in. She starts drawing the map and teases Barnet about minigolf. This is genuine friendship, not therapy.
+
+### A3-HOME-008 — Innan de går
+At dusk, Barnet and Alve leave, thanking Nova's mother for the buns. Mother asks them to greet Mira. Nova privately confirms she intends to make the treasure hunt difficult, exchanges contact details with Barnet and reminds Barnet to keep **the surprise family party** secret. Shortly after leaving, Barnet receives a message from Nova with a photo of a blank treasure map and the text **“Börja öva. 😎”**.
+
+**Continuity:** These home beats establish that Nova misses the villa and garden, not only her parents' relationship. Treasure hunting is an optional recurring friendship activity, distinct from the event project and not a confirmed new arcade minigame. Nova's family-day secret and underlying self-blame remain hidden; the two-home schedule is already known. Next scene: **Barnet + Alve alone in the motorboat returning to the village**, processing their first encounter with Nova. Nova does not ride with them yet.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
