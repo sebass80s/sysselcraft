@@ -6641,6 +6641,163 @@ Hon tittar på skjortan igen.
 
 *Scenen slutar.*
 
+
+## 11AI. A3-SECRET-001–003 — FULL DIALOGUE
+
+### A3-SECRET-001 – En mycket hemlig fråga
+
+Nästa dag står Barnet, Nova och Alve i Miras affär.
+
+Nova har anteckningsblocket under armen. På framsidan har Alve ritat ett litet hjärta med ett stort kryss över.
+
+**Mira:** Hej på er! Vad kan jag hjälpa till med idag?
+
+**Nova:** Vi har en fråga.
+
+**Alve:** En väldigt hemlig fråga.
+
+Nova ger honom en snabb blick.
+
+**Nova:** Inte så hemlig.
+
+**Alve:** Nej, just det. Helt vanlig fråga.
+
+Mira ler.
+
+**Mira:** Då ska jag försöka ge ett helt vanligt svar.
+
+**Barnet:** Du var ju med i folkparken 2011.
+
+**Mira:** Det stämmer.
+
+**Nova:** Kommer du ihåg vilken musik som spelades?
+
+**Mira:** Den kvällen?
+
+**Nova:** Ja. Alltså, under turneringen.
+
+**Mira:** Oj, det var länge sedan.
+
+**Alve:** Men du måste ju komma ihåg *någon* låt.
+
+**Mira:** Jag minns att det spelades en hel del dålig dansmusik.
+
+**Nova:** Var den verkligen dålig?
+
+**Mira:** Jag tyckte det då.
+
+**Alve:** Men kanske bra dålig?
+
+**Mira:** Det är också en möjlighet.
+
+Nova tar fram mobilen.
+
+**Nova:** Om du kommer ihåg några låtar kan vi leta upp dem.
+
+**Mira:** Jag ska se vad jag kan hitta.
+
+### A3-SECRET-002 – Fotot avslöjar något
+
+Mira går in bakom disken och kommer tillbaka med ett litet album.
+
+**Mira:** Jag hittade faktiskt några gamla bilder när jag letade efter ljusslingorna.
+
+**Nova:** FÅR JAG SE?!
+
+**Mira:** Självklart.
+
+De bläddrar bland fotografier från turneringen 2011.
+
+På ett av dem syns Novas mamma som skrattar framför spelbordet. Bredvid henne står Mira med en pappersmugg i handen.
+
+**Nova:** Men det är ju du!
+
+**Mira:** Det är det.
+
+**Alve:** Du ser nästan likadan ut.
+
+**Mira:** Det där får du gärna säga igen.
+
+På nästa bild står Novas pappa vid en liten scen.
+
+Bakom honom syns en banderoll:
+
+*FOLKPARKENS SOMMARTURNERING 2011*
+
+Och bredvid den en liten affisch med namnet på kvällens band.
+
+**Barnet:** Kolla! Där står det vilka som spelade!
+
+Nova lutar sig fram.
+
+**Nova:** Ja! Det är ju perfekt!
+
+**Mira:** Jaså, varför då?
+
+**Nova:** För att... det skulle vara roligt med samma musik igen.
+
+**Alve:** Så att de blir kära igen!
+
+Det blir knäpptyst.
+
+Nova stirrar på Alve.
+
+Alve stirrar på Nova.
+
+Sedan på Mira.
+
+**Alve:** ...i musiken.
+
+**Mira:** I musiken?
+
+**Alve:** Ja. Så att alla blir kära i musiken igen.
+
+Mira nickar gravallvarligt.
+
+**Mira:** Förstås.
+
+Barnet försöker gömma ett skratt.
+
+### A3-SECRET-003 – Mira vet
+
+Nova tittar ner i albumet.
+
+**Nova:** Tror du Sol kan spela samma låtar?
+
+**Mira:** Det tror jag säkert.
+
+**Barnet:** Vi kan fråga henne.
+
+**Nova:** Bra. Då har vi musiken också.
+
+Mira tittar på de tre barnen.
+
+**Mira:** Ni verkar väldigt nöjda med er plan.
+
+**Nova:** Ja. Det blir nog jättebra.
+
+**Mira:** Jag tror också att det kan bli en väldigt fin dag.
+
+**Alve:** Den bästa!
+
+Mira ler mot honom.
+
+**Mira:** Ni har verkligen lagt ner mycket arbete.
+
+Nova nickar stolt.
+
+**Nova:** Vänta bara tills de får se allt!
+
+Mira lägger försiktigt tillbaka fotografierna i albumet.
+
+**Mira:** Den här bilden kan ni gärna låna, om ni lovar att vara rädda om den.
+
+**Nova:** Verkligen?!
+
+**Mira:** Verkligen. Men den ska tillbaka sedan.
+
+**Barnet:** Vi lovar.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
