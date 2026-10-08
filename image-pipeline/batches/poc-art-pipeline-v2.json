@@ -1,0 +1,137 @@
+{
+  "version": 2,
+  "productionId": "poc-art-pipeline-v2",
+  "aspectRatio": "16:9",
+  "continuityGroup": "act3-town-poc",
+  "beats": [
+    {
+      "id": "V2-001",
+      "title": "Arrive in harbor",
+      "locationId": "town-harbor",
+      "establishLocation": true,
+      "characters": [
+        "alve",
+        "barnet",
+        "nova"
+      ],
+      "summary": "Alve and Barnet arrive by motorboat in the small town harbor. Nova sits on the dock with headphones on, head in her hands, looking a little sad.",
+      "shot": "Wide story moment that clearly establishes the harbor.",
+      "mood": "Quiet concern, warm late-afternoon light.",
+      "timeOfDay": "late afternoon",
+      "emotions": {
+        "alve": "curious and concerned",
+        "barnet": "attentive",
+        "nova": "sad and withdrawn"
+      },
+      "exactCastOnly": true,
+      "wardrobeLock": true,
+      "barnetFaceHidden": true,
+      "rules": [
+        "The motorboat is present at the dock.",
+        "Nova wears her canonical headphones."
+      ],
+      "mustNot": [
+        "extra people",
+        "extra animals",
+        "wardrobe changes",
+        "Barnet's face"
+      ]
+    },
+    {
+      "id": "V2-002",
+      "title": "Talk on the dock",
+      "locationId": "town-harbor",
+      "establishLocation": false,
+      "characters": [
+        "alve",
+        "barnet",
+        "nova"
+      ],
+      "summary": "Alve and Barnet talk with Nova on the dock in the same harbor.",
+      "shot": "Medium-wide conversational story moment.",
+      "mood": "Cautious but warmer.",
+      "timeOfDay": "late afternoon",
+      "emotions": {
+        "alve": "friendly and attentive",
+        "barnet": "listening",
+        "nova": "still subdued but engaging"
+      },
+      "exactCastOnly": true,
+      "wardrobeLock": true,
+      "barnetFaceHidden": true,
+      "rules": [
+        "Remain in the established harbor geography."
+      ],
+      "mustNot": [
+        "extra people",
+        "extra animals",
+        "wardrobe changes",
+        "Barnet's face"
+      ]
+    },
+    {
+      "id": "V2-003",
+      "title": "Nova shows the park",
+      "locationId": "town-park",
+      "establishLocation": true,
+      "characters": [
+        "alve",
+        "barnet",
+        "nova"
+      ],
+      "summary": "Nova takes Alve and Barnet to the town park, shows them around, and looks a little happier.",
+      "shot": "Wide walking story moment that establishes the park.",
+      "mood": "Warmer and more hopeful.",
+      "timeOfDay": "late afternoon",
+      "emotions": {
+        "alve": "interested",
+        "barnet": "curious",
+        "nova": "a little happier and more open"
+      },
+      "exactCastOnly": true,
+      "wardrobeLock": true,
+      "barnetFaceHidden": true,
+      "rules": [
+        "The park belongs visually to the same small town, but it must be clearly distinct from the harbor."
+      ],
+      "mustNot": [
+        "extra people",
+        "extra animals",
+        "wardrobe changes",
+        "Barnet's face"
+      ]
+    },
+    {
+      "id": "V2-004",
+      "title": "Continue through park",
+      "locationId": "town-park",
+      "establishLocation": false,
+      "characters": [
+        "alve",
+        "barnet",
+        "nova"
+      ],
+      "summary": "The three continue deeper into the same park while Nova points out something ahead.",
+      "shot": "Medium-wide continuation in the established park.",
+      "mood": "Friendly and increasingly relaxed.",
+      "timeOfDay": "late afternoon",
+      "emotions": {
+        "alve": "curious",
+        "barnet": "engaged",
+        "nova": "more relaxed"
+      },
+      "exactCastOnly": true,
+      "wardrobeLock": true,
+      "barnetFaceHidden": true,
+      "rules": [
+        "Preserve the established park geography and visual language."
+      ],
+      "mustNot": [
+        "extra people",
+        "extra animals",
+        "wardrobe changes",
+        "Barnet's face"
+      ]
+    }
+  ]
+}
