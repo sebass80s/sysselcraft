@@ -4500,33 +4500,43 @@ Mira fortsätter plocka upp varor.
 
 **Mira:** Nova verkade väldigt glad idag.
 
-**Barnet:** Ja. Hon tror verkligen att planen kommer fungera.
+**Barnet:** Ja. Hon har knappt pratat om något annat än festen.
 
-Mira stannar upp en kort stund.
-
-**Mira:** Det märkte jag.
-
-**Barnet:** Tror du att den gör det?
-
-Mira tittar på Barnet.
-
-**Mira:** Jag tror att ni kommer ordna en väldigt fin dag.
-
-**Barnet:** Men tror du att hennes mamma och pappa blir kära igen?
-
-Mira funderar en stund.
-
-**Mira:** Det vet jag inte, vännen.
-
-**Barnet:** De var ju kära förut.
-
-**Mira:** Ja, det var de.
+**Mira:** Det kan jag tänka mig.
 
 Hon tar upp ett paket och ställer det på hyllan.
 
-**Mira:** Och jag tror att de fortfarande tycker väldigt mycket om Nova. Båda två.
+**Mira:** Den där poängtavlan från 2011... Det måste ha varit speciellt för henne att hitta den.
 
-**Barnet:** Det gör de nog.
+**Barnet:** Ja. Hon har till och med hittat en bild på sin pappas gamla skjorta.
+
+**Mira:** Jaså, den vita?
+
+**Barnet:** Den är tydligen kvar.
+
+Mira ler lite för sig själv.
+
+**Mira:** Vilket jobb ni lägger ner på att få den här dagen att likna den gamla.
+
+Barnet rycker på axlarna.
+
+**Barnet:** Nova har många idéer.
+
+**Mira:** Det märks. Hon måste verkligen längta efter att få se dem där tillsammans.
+
+Barnet nickar, men säger inget.
+
+Mira fortsätter att packa upp varorna.
+
+**Mira:** Vet du, ibland blir en dag jättebra fast den inte slutar riktigt som man tänkt.
+
+**Barnet:** Som när vi åkte över sjön för första gången?
+
+**Mira:** Ja, ungefär så.
+
+**Barnet:** Då träffade vi ju Nova.
+
+**Mira:** Precis. Och nu har hon er.
 
 **Mira:** Vet du vad jag tänkte fråga dig?
 
@@ -4601,7 +4611,7 @@ Mira ler svagt, stänger albumet och lägger tillbaka det.
 ### Binding continuity and future payoff
 
 - Mira knows the children's deeper plan from earlier and from Alve's outburst; she never humiliates them or discloses it.
-- Mira gently prepares Barnet to **be present as a friend, not to fix Nova's feelings**. Avoid adult-sounding advice placed in the children's mouths.
+- Barnet **does not reveal or confirm the secret reunion plan**. Mira deduces it herself from the 2011 artifacts and Nova's intensity; she gently encourages ordinary friendship without assigning Barnet adult responsibility.
 - **Do not make Barnet responsible for Nova's mental wellbeing**. Her mother later explicitly reassures her the divorce was not caused by her outburst.
 - Before the party the kids continue genuinely hoping the reunion plan works. Do not spoil the outcome for them.
 - Photos are returned; the exact photograph used for decorating needs to be copied/arranged separately if relevant.
