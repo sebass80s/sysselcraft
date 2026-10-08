@@ -1624,6 +1624,16 @@ De går uppför stigen mot byn.
 - Bilder och runtimeimplementation är uppskjutna.
 
 
+## 11E. Mira as long-horizon family-day supplier — PRODUCT DIRECTION LOCKED
+
+The first village return introduces Mira as an old city-work colleague of Nova's mother. The reunion connection and the secret surprise remain intact.
+
+**Economy design decision:** Act 3 uses Mira as a SysselBux sink across the whole chapter, never as one large up-front purchase. Barnet can gradually purchase party supplies (tables, chairs, decorations, textiles and related event setup) in any sensible order as funds become available. Bought items remain bought, persist across sessions, and visibly appear in the park. The **family day cannot begin until the complete required Mira supply set has been purchased**. There is no real-world countdown or deadline that pressures the child to earn rewards quickly. Prices, catalog, exact gating predicate and order rules remain to be designed.
+
+**Runtime ownership:** Use shared Runtime 1.1 Story Purchase and backend-authoritative wallet/purchase records. Do not implement parallel Act 3 wallet or purchase-state systems. Verify existing capabilities before adding chapter-local adapters. Buying every item at once must never be required.
+
+**Narrative balance:** This is one preparation stream, not the main emotional arc. The chapter must keep Nova, her friendship with Barnet, city exploration and activities central. Mira is a supplier, not the chapter's protagonist.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
