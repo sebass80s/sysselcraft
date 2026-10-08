@@ -11,7 +11,7 @@ import {
 } from "./act2StoryPurchaseAdapter";
 import {
   loadAct2RuntimeState,
-  saveAct2RuntimeState,
+  updateAct2RuntimeState,
 } from "./act2RuntimeState";
 import { JETTY_LIFEBUOY_BEAT } from "./act2JettyStory";
 import { BOATHOUSE_STEERING_WHEEL_BEAT } from "./act2BoathouseStory";
@@ -19,8 +19,15 @@ import {
   defineStoryPurchaseRegistration,
   resolveStoryPurchaseRegistration,
   type StoryPurchaseBeat,
+  type StoryPurchaseOperationContext,
   type StoryPurchaseRegistration,
 } from "../runtime/purchase/storyPurchaseRegistry";
+
+function persistenceGuard(context?: StoryPurchaseOperationContext) {
+  return context && "expectedChildId" in context
+    ? { expectedChildId: context.expectedChildId }
+    : undefined;
+}
 
 function purchaseStoryBeat(target: Act2PurchaseProject): StoryPurchaseBeat | null {
   if (target === "dock") return JETTY_LIFEBUOY_BEAT;
@@ -34,28 +41,29 @@ export const ACT2_STORY_PURCHASE_REGISTRATION = defineStoryPurchaseRegistration(
   targets: ACT2_PURCHASE_PROJECTS,
   catalog: ACT2_PURCHASE_CATALOG,
   parseTarget: parseAct2PurchaseProject,
-  loadSnapshot: async () => {
-    const state = await loadAct2RuntimeState();
+  loadSnapshot: async (context) => {
+    const state = await loadAct2RuntimeState(persistenceGuard(context));
     return deriveAct2StoryPurchaseSnapshot(state);
   },
-  applyPurchaseResult: async (target, worldFlags) => {
-    const current = await loadAct2RuntimeState();
-    const outcome = applyAct2StoryPurchaseResult(current, target, worldFlags);
-    await saveAct2RuntimeState(outcome.state);
+  applyPurchaseResult: async (target, worldFlags, context) => {
+    let message = "";
+    const state = await updateAct2RuntimeState((current) => {
+      const outcome = applyAct2StoryPurchaseResult(current, target, worldFlags);
+      message = outcome.message;
+      return outcome.state;
+    }, persistenceGuard(context));
     return {
-      snapshot: deriveAct2StoryPurchaseSnapshot(outcome.state),
-      message: outcome.message,
+      snapshot: deriveAct2StoryPurchaseSnapshot(state),
+      message,
     };
   },
-  savePurchaseStoryProgress: async (target, lineIndex) => {
-    const current = await loadAct2RuntimeState();
-    const next = {
+  savePurchaseStoryProgress: async (target, lineIndex, context) => {
+    const state = await updateAct2RuntimeState((current) => ({
       ...current,
       pendingPurchaseStory: target === "dock" || target === "boathouse" ? target : null,
       purchaseStoryLineIndex: Math.max(0, lineIndex),
-    };
-    await saveAct2RuntimeState(next);
-    return deriveAct2StoryPurchaseSnapshot(next);
+    }), persistenceGuard(context));
+    return deriveAct2StoryPurchaseSnapshot(state);
   },
   purchaseStoryBeat,
   resumeHref: act2ResumeHref,
