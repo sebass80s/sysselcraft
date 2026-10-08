@@ -245,3 +245,20 @@ Audit result: **PASS**.
 
 Physical iPhone update-in-place acceptance remains the only gate before real Act 3 gameplay.
 
+## Pre-iPhone acceptance sweep
+
+Final automated sweep before physical iPhone acceptance: **PASS**.
+
+A remaining Story Purchase persistence race was found and fixed before device testing. Story Purchase now uses shared atomic chapter persistence and propagates authoritative child identity through purchase, ownership refresh and purchase-story progress.
+
+Verification:
+- final code/test HEAD `34fdd42591d78440b98c75f7d7dc1f997713aab2`
+- CI **#2430 SUCCESS** on exact HEAD
+- Runtime Browser Closeout **#23 SUCCESS** on runtime-equivalent checkpoint `cb76a1b297bb9edc1f82a9d75fd56f32f4b30004`
+- paired-child browser fixture preserves existing Act 1 bytes and child-scoped Act 2 bytes through Act 2 -> Act 3 + reload
+
+Canonical detailed report:
+`docs/PRE_IPHONE_ACCEPTANCE_SWEEP_2026-10-08.md`
+
+The only remaining Runtime 1.1 gate is physical iPhone update-in-place acceptance. No uninstall/reset/save clearing.
+
