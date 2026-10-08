@@ -12,6 +12,10 @@ Optional adapters:
 
 The renderer never decides identity or continuity. The pipeline does.
 
+## Production lock
+
+Art Pipeline 2.0 is the locked SysselCraft production method. Normal chapter work should use it, not redesign it. The final GitHub PNG drag-and-drop step is intentional.
+
 ## Operator shorthand: `kör art`
 
 In any future SysselCraft chat, the phrase **`kör art`** means:
