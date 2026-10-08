@@ -210,7 +210,7 @@ assert.match(
 );
 assert.match(
   villageSource,
-  /const snapshot = await registration\.loadSnapshot\(\);[\s\S]*const purchaseOwned = snapshot\.status\[target\]\?\.owned === true/,
+  /const snapshot = await registration\.loadSnapshot\(\{ expectedChildId \}\);[\s\S]*const purchaseOwned = snapshot\.status\[target\]\?\.owned === true/,
   "contextual shop exit must refresh ownership through the resolved registry entry",
 );
 
@@ -318,6 +318,6 @@ assert.match(
 );
 assert.match(
   gameRegistrySource,
-  /snapshot: await registration\.loadSnapshot\(\)/,
+  /snapshot: await registration\.loadSnapshot\(\{ expectedChildId \}\)/,
   "registered Story Purchase loader must delegate chapter state loading to each registration",
 );
