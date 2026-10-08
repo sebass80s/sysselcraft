@@ -17,35 +17,48 @@
   "characters": {
     "alve": {
       "displayName": "Alve",
-      "characterSheet": "public/assets/village/character-sheets/alve.png"
+      "characterSheet": "public/assets/village/character-sheets/alve.png",
+      "runwayAssetName": "alve.png (1)"
     },
     "barnet": {
       "displayName": "Barnet",
-      "characterSheet": "public/assets/village/character-sheets/barnet.png"
+      "characterSheet": "public/assets/village/character-sheets/barnet.png",
+      "runwayAssetName": "barnet.png (1)"
     },
     "henning": {
       "displayName": "Henning",
-      "characterSheet": "public/assets/village/character-sheets/henning.png"
+      "characterSheet": "public/assets/village/character-sheets/henning.png",
+      "runwayAssetName": "henning.png (1)"
     },
     "linus": {
       "displayName": "Linus",
-      "characterSheet": "public/assets/village/character-sheets/linus.png"
+      "characterSheet": "public/assets/village/character-sheets/linus.png",
+      "runwayAssetName": "linus.png (1)"
     },
     "mira": {
       "displayName": "Mira",
-      "characterSheet": "public/assets/village/character-sheets/mira.png"
+      "characterSheet": "public/assets/village/character-sheets/mira.png",
+      "runwayAssetName": "mira.png (1)"
     },
     "nova": {
       "displayName": "Nova",
-      "characterSheet": "public/assets/village/character-sheets/nova.png"
+      "characterSheet": "public/assets/village/character-sheets/nova.png",
+      "runwayAssetName": "nova.png (1)"
     },
     "puppy": {
       "displayName": "Valpen",
-      "characterSheet": "public/assets/village/character-sheets/puppy.png"
+      "characterSheet": "public/assets/village/character-sheets/puppy.png",
+      "runwayAssetName": "puppy.png (1)"
     },
     "sol": {
       "displayName": "Sol",
-      "characterSheet": "public/assets/village/character-sheets/sol.png"
+      "characterSheet": "public/assets/village/character-sheets/sol.png",
+      "runwayAssetName": "sol.png (1)"
     }
+  },
+  "productionRoute": "runway-brand-kit",
+  "runwayBrandKit": {
+    "name": "Syssel",
+    "category": "Character sheets"
   }
 }
