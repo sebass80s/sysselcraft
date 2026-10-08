@@ -5485,6 +5485,163 @@ Pappan ler.
 
 *Scenen slutar på fotografiet från bänken.*
 
+
+## 11AA. A3-FAMILY-014 — FULL REVISED BENCH DIALOGUE
+
+### A3-FAMILY-014 – Vi stannar här
+
+Nova sitter på bänken med armarna om knäna.
+
+Barnet och Alve närmar sig försiktigt.
+
+**Barnet:** Nova?
+
+Hon torkar kinderna med tröjärmen.
+
+**Nova:** Vad?
+
+**Barnet:** Får vi sitta här?
+
+Nova rycker på axlarna.
+
+**Nova:** Om ni vill.
+
+De sätter sig på varsin sida om henne.
+
+En stund säger ingen något.
+
+Långt borta hörs musiken från scenen, nu mycket svagare.
+
+**Alve:** Jag trodde verkligen det skulle fungera.
+
+Nova tittar på honom.
+
+**Nova:** Jag också.
+
+Alve petar med skon på gruset.
+
+**Alve:** Förlåt.
+
+**Nova:** Varför säger du förlåt?
+
+**Alve:** Jag sa ju att det var en jättebra plan.
+
+**Nova:** Det var det ju.
+
+Hon snyftar till.
+
+**Nova:** Det skulle ju bli som förut.
+
+**Barnet:** Det var en jättefin dag.
+
+**Nova:** Men det hjälpte inte!
+
+Hon gömmer ansiktet i händerna.
+
+Barnet sitter kvar bredvid henne.
+
+Efter en stund lutar Nova huvudet mot Barnets axel.
+
+**Nova:** Jag ville bara att vi skulle få bli en familj igen.
+
+**Alve:** Ni är väl fortfarande en familj?
+
+Nova lyfter huvudet.
+
+**Nova:** Inte som förut.
+
+Alve tittar ner.
+
+**Alve:** Nej.
+
+Det blir tyst.
+
+**Nova:** Jag saknar vårt hus. Och mitt rum. Och att mamma och pappa var där samtidigt.
+
+Hon torkar kinderna.
+
+**Nova:** Jag trodde verkligen det skulle fungera. Vi gjorde ju allting rätt.
+
+Alve sitter och petar med en liten pinne i gruset.
+
+**Alve:** Jag trodde också det, när vi lagade stugan.
+
+Nova tittar på honom.
+
+**Nova:** Vadå?
+
+**Alve:** Att allt skulle bli som förut.
+
+Han rycker lite på axlarna.
+
+**Alve:** Jag tänkte att om vi bara lagade allting så skulle det kännas som när mamma var där.
+
+Nova säger ingenting.
+
+**Alve:** Och pappa och syrran kom ju tillbaka. Men det blev inte riktigt som jag hade tänkt mig.
+
+**Nova:** Blev du inte ledsen?
+
+**Alve:** Jo. Ganska mycket faktiskt.
+
+Han tittar bort mot sjön.
+
+**Alve:** Men vet du vad?
+
+**Nova:** Vadå?
+
+**Alve:** Jag är ändå glad att vi lagade stugan.
+
+Nova tittar på honom.
+
+**Alve:** Annars hade vi ju inte haft någonstans att äta alla de där mackorna. Eller åka båt ifrån.
+
+**Barnet:** Eller träffa Nova.
+
+Alve nickar.
+
+**Alve:** Just det. Det också.
+
+Nova ler lite genom tårarna.
+
+**Nova:** Så du tycker inte vi gjorde festen i onödan?
+
+Alve ser nästan förnärmad ut.
+
+**Alve:** Va? Nej! Det var ju den roligaste festen jag har varit på!
+
+**Barnet:** Och dina föräldrar hade verkligen kul.
+
+**Alve:** Och din mamma vann ju igen!
+
+Nova fnissar till.
+
+**Nova:** Pappa blev faktiskt ganska sur.
+
+**Alve:** Han borde öva mer.
+
+De sitter tysta en liten stund.
+
+**Nova:** Jag är ändå ledsen.
+
+**Alve:** Jag vet.
+
+**Nova:** Jag vill inte gå tillbaka än.
+
+**Barnet:** Då sitter vi här ett tag till.
+
+Alve lutar sig bakåt mot bänken.
+
+**Alve:** Bra. För jag orkar ändå inte resa mig. Jag har ätit fem glassar.
+
+Nova skrattar till, trots att hon fortfarande gråter.
+
+Barnet sitter kvar med armen om henne.
+
+*Kameran drar sig långsamt tillbaka från bänken.*
+
+*Scenen slutar.*
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
