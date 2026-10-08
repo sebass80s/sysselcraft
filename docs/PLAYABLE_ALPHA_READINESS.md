@@ -1,5 +1,22 @@
 # Playable Alpha Readiness Audit — 2026-09-21
 
+## CURRENT PLAYABLE STATUS — 2026-10-08
+
+The historical audit below remains useful evidence, but current project state has moved forward.
+
+- Act 1 is established.
+- Act 2 is complete through `act2Complete && endCardSeen`.
+- Act 3 has begun on Runtime 1.1 with the persistent chapter-title entry **KAPITEL 3 — På andra sidan sjön**.
+- Harbour/Nova gameplay is not implemented yet.
+- Core preserved-device update-in-place acceptance has been exercised.
+- Two follow-up native smokes remain desirable: background/foreground lifecycle and one ordinary backend quest turn-in/claim path.
+
+Current physical report:
+`docs/PHYSICAL_IPHONE_ACCEPTANCE_2026-10-08.md`
+
+Older wording that says Act 3 is blocked by native acceptance is historical.
+
+
 ## Scope and verdict
 
 Audited baseline: `823ea25e9a869fbbfdc585fcb0589d193dd89ddb`, branch `nova/local-construction-snapshot`, canonical workspace `/Users/karoaa/Developer/sysselcraft`. Repository code takes precedence over older handoffs. The pre-existing whitespace-only change in `ios/App/App/config.xml` was preserved and excluded from audit commits.
