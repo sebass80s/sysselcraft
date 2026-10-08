@@ -6365,6 +6365,129 @@ Hon ler och stoppar ner mobilen igen.
 
 **SLUT PÅ TREDJE KAPITLET**
 
+
+## 11AG. A3-PREP-001–003 — FULL DIALOGUE
+
+### A3-PREP-001 – Det börjar likna något
+
+*Vi återvänder till folkparken några dagar senare.*
+
+Några av borden har ställts på plats. Ljusslingor hänger mellan träden och den gamla spelhörnan är städad.
+
+Barnet och Alve kommer fram till scenen där Nova står med sin anteckningsbok.
+
+**Nova:** Ni måste komma och titta!
+
+**Barnet:** Vad har hänt?
+
+**Nova:** Henrik har fått igång lamporna vid scenen. Och Mira har skickat hit de första borden.
+
+**Alve:** Har du burit hit dem själv?
+
+**Nova:** Nej, Henrik fick hjälp av några vuxna.
+
+**Barnet:** Det börjar se riktigt fint ut.
+
+**Nova:** Visst gör det!
+
+Hon visar runt.
+
+**Nova:** Här ska vi ha maten. Där borta blir spelhörnan. Och vid vattnet tänkte jag sätta upp en plats där man kan ta foton.
+
+**Alve:** Ska vi ha en fotovägg?
+
+**Nova:** Ungefär. Jag vill kunna ta samma bild som mamma och pappa tog 2011.
+
+**Barnet:** Det blir nog bra.
+
+Nova tittar på området.
+
+**Nova:** Om vi får resten av sakerna på plats.
+
+**Barnet:** Vi har ju tid kvar.
+
+**Nova:** Jag vet. Men jag vill gärna bli färdig tidigt.
+
+### A3-PREP-002 – Det saknas fortfarande saker
+
+Barnet och Nova går igenom Miras inköpslista.
+
+Några rader är redan avbockade.
+
+**Nova:** Vi har fixat en del. Men vi behöver fortfarande fler stolar, dukar och dekorationerna till spelhörnan.
+
+**Barnet:** Vi köper det efter hand.
+
+**Nova:** Ja. Jag har inte glömt det.
+
+**Alve:** Och glass.
+
+**Nova:** Glass har du skrivit på listan tre gånger.
+
+**Alve:** Då är den extra viktig.
+
+Nova ler.
+
+**Barnet:** Mira sa ju att hon kan lägga undan det vi behöver.
+
+**Nova:** Jag vet. Och vi behöver inte betala allt idag.
+
+Hon tittar över parken.
+
+**Nova:** Det är bara så konstigt att se allting halvfärdigt.
+
+**Barnet:** Det brukar se ut så medan man gör i ordning något.
+
+**Alve:** Du skulle ha sett vår stuga när taket var halvlagat.
+
+**Nova:** Då hade jag nog blivit ganska stressad.
+
+**Alve:** Det blev jag också. Särskilt när det började regna.
+
+Nova skrattar.
+
+### A3-PREP-003 – En bild som inte stämmer
+
+Nova visar Barnet ett foto på mobilen.
+
+Det föreställer hennes föräldrar framför spelhörnan 2011.
+
+**Nova:** Jag har försökt hitta exakt var de stod.
+
+**Barnet:** Varför?
+
+**Nova:** Så att vi kan ta det nya fotot på samma plats.
+
+Barnet jämför fotot med spelhörnan.
+
+**Barnet:** Det där trädet finns ju kvar.
+
+**Nova:** Ja, men scenen har byggts om sedan dess. Så bakgrunden blir inte likadan.
+
+**Alve:** Det gör väl inget?
+
+**Nova:** Jo, lite.
+
+**Barnet:** Vi kan ju stå ungefär där.
+
+**Nova:** Fast då hamnar inte poängtavlan på samma ställe.
+
+Hon flyttar sig några steg.
+
+**Nova:** Om vi ställer tavlan här och flyttar bordet dit...
+
+**Barnet:** Då blir det väl bra?
+
+Nova tittar på skärmen.
+
+**Nova:** Kanske.
+
+Alve tar upp en pinne och håller den framför ansiktet som en mikrofon.
+
+**Alve:** Välkomna till världens mest noggranna fotografering!
+
+Nova skrattar till, men återgår snabbt till bilden.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
