@@ -5258,6 +5258,233 @@ Nova kastar sig i mammans famn.
 
 Mamman håller om henne länge.
 
+
+## 11Z. A3-FAMILY-018–020 — FULL DIALOGUE TRANSCRIPTION
+
+### A3-FAMILY-018 – Alla listorna
+
+Nova sitter kvar lutad mot sin mamma.
+
+**Nova:** Jag trodde att om jag gjorde en riktigt bra fest...
+
+Hon tystnar.
+
+**Mamma:** Att vadå?
+
+**Nova:** Att jag kunde fixa det.
+
+Mamman stryker henne över håret.
+
+**Mamma:** Är det därför du har jobbat så hårt?
+
+Nova nickar.
+
+**Nova:** Jag tänkte att om jag bara gjorde allting rätt den här gången så kanske ni ville bo tillsammans igen.
+
+**Mamma:** Älskling.
+
+Nova snyter sig i tröjärmen.
+
+**Nova:** Jag hade en jättelång lista.
+
+**Mamma:** Det har jag förstått.
+
+**Nova:** Vi hittade rätt spelbord och samma poängtavla. Och pappa hade till och med kvar skjortan, fast han inte tog den på sig.
+
+Mamman ler lite.
+
+**Mamma:** Den där skjortan.
+
+**Nova:** Jag blev så arg när han kom utan den.
+
+**Mamma:** Jag tycker faktiskt att han valde ganska klokt.
+
+Nova fnissar till.
+
+**Mamma:** Vet du vad som gjorde mig allra gladast idag?
+
+**Nova:** Vadå?
+
+**Mamma:** Att se dig så glad. Och att du hade ordnat allt tillsammans med dina kompisar.
+
+Nova tittar ut mot scenen.
+
+**Nova:** Det var roligt.
+
+**Mamma:** Ja. Det var det verkligen.
+
+**Nova:** Men det blev inte som jag ville.
+
+**Mamma:** Nej. Det blev inte det.
+
+Hon håller om Nova lite hårdare.
+
+**Mamma:** Och du får vara ledsen för det.
+
+### A3-FAMILY-019 – Pappa också
+
+Novas pappa kommer gående längs gången.
+
+Han stannar när han får syn på dem.
+
+**Pappa:** Är det okej att jag kommer?
+
+Nova tittar på sin mamma.
+
+Mamman nickar.
+
+**Nova:** Ja.
+
+Pappan sätter sig på huk framför bänken.
+
+**Pappa:** Jag är ledsen att du blev så besviken idag.
+
+**Nova:** Jag trodde ni skulle bli kära igen.
+
+Pappan nickar långsamt.
+
+**Pappa:** Jag förstår det nu.
+
+**Nova:** Mamma sa att det inte var mitt fel att ni skildes.
+
+Han ser på henne.
+
+**Pappa:** Det har hon helt rätt i.
+
+**Nova:** Inte ens den där middagen?
+
+**Pappa:** Nej. Inte den middagen, och inte något annat du har gjort.
+
+Han sätter sig på andra sidan om henne.
+
+**Pappa:** Vi borde ha varit bättre på att berätta det för dig.
+
+Nova tittar från sin mamma till sin pappa.
+
+**Nova:** Men kommer ni aldrig bo ihop igen?
+
+De vuxna utbyter en blick.
+
+**Mamma:** Nej, älskling. Det kommer vi inte.
+
+Nova börjar gråta lite igen.
+
+Pappan lägger armen om henne.
+
+**Pappa:** Men du får fortfarande ha oss båda. Vi kommer alltid vara din mamma och pappa.
+
+**Nova:** Fast på två ställen.
+
+**Pappa:** Ja. På två ställen.
+
+**Nova:** Jag tycker inte om det.
+
+**Mamma:** Det förstår jag.
+
+En lång stund sitter de tre tillsammans.
+
+### A3-FAMILY-020 – Ett fotografi till
+
+Musiken från scenen har tystnat.
+
+De sista gästerna har börjat lämna folkparken.
+
+Nova sitter fortfarande mellan sina föräldrar.
+
+**Pappa:** Vet du en sak?
+
+**Nova:** Vadå?
+
+**Pappa:** Jag har nog aldrig blivit så överraskad i hela mitt liv.
+
+**Nova:** Inte?
+
+**Pappa:** Nej. Jag trodde du skulle visa mig en ny lekplats.
+
+**Mamma:** Jag trodde vi skulle gå och fika.
+
+**Nova:** Men ni fick ju fika.
+
+**Mamma:** Ja. Och ett helt nöjesfält på köpet.
+
+**Pappa:** Och jag blev fullständigt förnedrad i shuffleboard.
+
+Nova skrattar till.
+
+**Nova:** Du borde öva.
+
+**Pappa:** Det sa Alve också.
+
+**Nova:** Han brukar ha rätt ibland.
+
+Pappan reser sig.
+
+**Pappa:** Ska vi gå och tacka alla som hjälpte dig?
+
+Nova tvekar.
+
+**Nova:** Kan vi ta ett foto till först?
+
+**Mamma:** Självklart.
+
+**Nova:** Fast inte som det gamla fotot.
+
+**Pappa:** Hur vill du ha det då?
+
+Nova funderar.
+
+**Nova:** Bara vi tre. Här på bänken.
+
+Mamman tar upp mobilen och ropar på Barnet, som står tillsammans med Alve en bit bort.
+
+**Mamma:** Skulle du kunna hjälpa oss att ta en bild?
+
+Barnet kommer fram och tar emot mobilen.
+
+Nova sätter sig mellan sina föräldrar.
+
+Hon har fortfarande röda ögon efter gråten.
+
+Men när Barnet höjer telefonen lutar hon sig mot dem båda.
+
+**Barnet:** Är ni redo?
+
+**Nova:** Vänta!
+
+Hon tar tag i deras händer.
+
+**Nova:** Nu.
+
+Barnet tar bilden.
+
+Mamman tittar på resultatet.
+
+**Mamma:** Den blev jättefin.
+
+Nova tittar länge på skärmen.
+
+**Nova:** Ja.
+
+**Pappa:** Ska jag skriva ut den åt dig?
+
+**Nova:** Ja, gärna.
+
+En kort paus.
+
+**Nova:** Två stycken, kanske.
+
+**Pappa:** En till varje lägenhet?
+
+Nova nickar.
+
+**Nova:** Ja.
+
+Pappan ler.
+
+**Pappa:** Det ordnar vi.
+
+*Scenen slutar på fotografiet från bänken.*
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
