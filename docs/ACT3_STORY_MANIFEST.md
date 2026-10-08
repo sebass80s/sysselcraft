@@ -1262,6 +1262,86 @@ At dusk, Barnet and Alve leave, thanking Nova's mother for the buns. Mother asks
 
 **Continuity:** These home beats establish that Nova misses the villa and garden, not only her parents' relationship. Treasure hunting is an optional recurring friendship activity, distinct from the event project and not a confirmed new arcade minigame. Nova's family-day secret and underlying self-blame remain hidden; the two-home schedule is already known. Next scene: **Barnet + Alve alone in the motorboat returning to the village**, processing their first encounter with Nova. Nova does not ride with them yet.
 
+## 11D. Boat return to village — DIALOGUE LOCKED 2026-10-08
+
+**Status:** Entire five-beat dialogue approved by user in current conversation. Not implemented in runtime. The boat carries **Barnet and Alve only**; Nova remains in town. Full dialogue from A3-BOAT-001 through A3-BOAT-005 is the authoritative approved script and must be transferred verbatim into structured Story beats before implementation, not improvised.
+
+### A3-BOAT-001 — Vilken dag
+Sunset as the boat leaves the city. The boys joke about how they came only to explore and ended up making friends with Nova, playing minigolf and planning a party. Alve jokes that his two buns count as three. They appreciate Nova's kind mother and notice the surprising connection to Mira.
+
+### A3-BOAT-002 — Den nya kompisen
+Barnet says Nova is funny; Alve calls her bossy and remembers her guarding her card games. They recognize that she was withdrawn on the dock but opened up. The upcoming town treasure hunt gives them something to look forward to. Alve suggests being on the same team.
+
+### A3-BOAT-003 — Det som inte finns kvar
+Passing a small pine-covered island, Alve notices how much Nova misses her old house and garden. He relates this to his own summer cottage and the death of his mother.
+
+Core exact dialogue and emotional pivot:
+
+**Alve:** När mamma dog ville jag att allt skulle vara som innan.
+
+**Barnet:** Är det därför du ville laga stugan?
+
+**Alve:** Lite. Vi brukade vara där allihop på somrarna.
+
+**Barnet:** Saknar du henne fortfarande?
+
+**Alve:** Varje dag.
+
+Alve says it is not as hard all the time now. He once thought restoring the cottage to how it was while his mother lived might make things feel the same.
+
+**Barnet:** Gjorde det det?
+
+**Alve:** Nej.
+
+Then he remembers how his father and sister came back, and they swam, grilled, had fun and finished the motorboat together.
+
+**Alve:** Och om jag inte hade försökt laga stugan hade jag kanske aldrig träffat dig.
+
+**Barnet:** Då hade vi inte suttit här.
+
+**Alve:** Nä. Och då hade vi inte träffat Nova heller.
+
+**Alve:** Det är konstigt egentligen.
+
+**Barnet:** Vadå?
+
+**Alve:** Jag fick inte tillbaka det jag ville ha. Men det blev bra ändå.
+
+**Barnet:** Ja. Det blev det.
+
+**Alve:** Undrar om Nova också kan få det bra.
+
+**Barnet:** Det hoppas jag.
+
+A light joke about Alve hitting a minigolf ball backward restores the friendly tone.
+
+**CRITICAL ALVE RULE:** This is a meaningful once-only articulation of the Act 2 lesson. Alve still misses his mother every day. Her death is not equated with Nova's parents separating. Alve may *later* relate to Nova naturally when she needs it, but must **not repeatedly re-explain, preach, solve her problem, or dwell on his grief**. Nova retains her own realization and agency.
+
+### A3-BOAT-004 — Den stora planen
+Nova texts Barnet a practical list: food, music, tables, lights, minigolf; reminder **“Kolla att allting fungerar. Helst två gånger.”** with strawberry cake options. Alve and Barnet name Henning, Linus, Mira, Sol as potential help but have not yet received their agreement. Alve notes the challenge of getting two parents who live apart to attend the same party, **without directly declaring that Nova wants them reunited**.
+
+Exact pivotal exchange:
+
+**Alve:** Det måste vara ganska svårt att få två som inte bor ihop att komma på samma fest.
+
+**Barnet:** Vi får fråga Nova hur hon tänkt.
+
+**Alve:** Hoppas hon vet.
+
+Alve observes Nova may be hard to deal with if something goes wrong, then decides they should help with the party, and perhaps with other things too.
+
+### A3-BOAT-005 — Hemma igen
+The village comes into view. The boys plan to greet Mira from Nova's mother and ask villagers for help the next day. Alve jokes about his two-item list: **“Ett. Hjälp Nova.”** and **“Två? Glass.”** They tie the boat up and agree they like Nova and will return to her soon.
+
+### Continuity and implementation notes
+
+- No invented confirmation from any village NPC; support commitments come later.
+- Nova does not board this journey; her first village visit is a later event.
+- The party remains a surprise to both parents.
+- No story art now; no gameplay/runtime implemented.
+- Avoid turning the boys' gentle observations into diagnosis of Nova's self-blame or plans to restore the marriage.
+- The approved full Swedish script is in this conversation, supplied immediately before the user's explicit "vi spikar." This section locks the sequence and pivotal verbatim lines, **but is a structured condensation, not a verbatim transcription of all dialogue**.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
