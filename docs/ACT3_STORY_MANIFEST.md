@@ -6488,6 +6488,159 @@ Alve tar upp en pinne och håller den framför ansiktet som en mikrofon.
 
 Nova skrattar till, men återgår snabbt till bilden.
 
+
+## 11AH. A3-PREP-004–006 — FULL DIALOGUE
+
+### A3-PREP-004 – En liten hemlighet
+
+Mira kommer in i parken med en kartong under armen.
+
+**Mira:** Hallå på er! Jag har med mig något ni kanske vill titta på.
+
+**Nova:** Är det dukarna?
+
+**Mira:** Nej, något roligare.
+
+Hon öppnar kartongen och tar upp en gammal ljusslinga med små färgade lampor.
+
+**Mira:** Den här använde vi faktiskt på flera av parkens fester för länge sedan.
+
+**Nova:** Är den från 2011?
+
+**Mira:** Den kan mycket väl vara det.
+
+Nova tar försiktigt i en av lamporna.
+
+**Nova:** Den är jättefin.
+
+**Mira:** Jag tänkte att den kanske skulle passa nära spelhörnan.
+
+**Barnet:** Det tror jag.
+
+Mira tittar på Nova.
+
+**Mira:** Du har gjort väldigt fint här.
+
+**Nova:** Tack. Fast vi är inte färdiga.
+
+**Mira:** Nej, det ser jag.
+
+Hon ställer kartongen på ett bord.
+
+**Mira:** Jag har hört att dina föräldrar båda ska komma.
+
+**Nova:** Ja!
+
+**Mira:** Då ser jag fram emot att träffa dem igen.
+
+Nova ler.
+
+**Nova:** De kommer bli så överraskade.
+
+Mira tittar på henne en liten stund.
+
+**Mira:** Det tror jag också.
+
+### A3-PREP-005 – Ett samtal med Mira
+
+*Lite senare hjälper Barnet Mira att bära några tomma lådor till parkens förråd.*
+
+Nova och Alve är kvar vid scenen.
+
+**Mira:** Hur verkar Nova må?
+
+**Barnet:** Bra, tror jag. Hon är väldigt glad över festen.
+
+**Mira:** Det märks.
+
+Mira ställer ner lådorna.
+
+**Mira:** Hon har nog tänkt på den här dagen ganska länge.
+
+**Barnet:** Hon vill att allt ska bli precis som 2011.
+
+**Mira:** Ja.
+
+En kort paus.
+
+**Mira:** Du vet, jag känner hennes mamma ganska väl från förr. De där två hade verkligen roligt tillsammans på den tiden.
+
+**Barnet:** Nova har visat oss fotot.
+
+**Mira:** Det var en fin kväll.
+
+Hon ser ut genom förrådsdörren mot Nova, som håller upp en ljusslinga för Alve.
+
+**Mira:** Men femton år är en lång tid.
+
+**Barnet:** Vad menar du?
+
+Mira funderar.
+
+**Mira:** Bara att människor förändras. Det är inte alltid saker blir som man tänkte sig.
+
+**Barnet:** Nova vill verkligen att de ska ha kul.
+
+**Mira:** Det hoppas jag också att de får.
+
+Hon ler lite.
+
+**Mira:** Och jag hoppas hon får det också.
+
+### A3-PREP-006 – Ett nytt besked
+
+Nova kommer springande mot Barnet och Mira.
+
+**Nova:** Barnet! Kom!
+
+**Barnet:** Vad är det?
+
+**Nova:** Pappa har skickat en bild.
+
+Hon visar mobilen.
+
+På bilden syns en gammal vit skjorta, nästan identisk med den han bar 2011.
+
+**Alve:** Har han kvar den?!
+
+**Nova:** Ja! Han hittade den längst in i garderoben!
+
+**Barnet:** Varför skickade han bilden till dig?
+
+**Nova:** Jag hade frågat om han kom ihåg den där skjortan. Jag trodde inte han skulle hitta den.
+
+**Alve:** Ska han ha den på festen?
+
+**Nova:** Det vet han ju inte om än.
+
+Hon tittar på bilden med ett brett leende.
+
+**Nova:** Men tänk om han tar på sig den.
+
+Mira tittar också på bilden.
+
+**Mira:** Den där minns jag.
+
+**Nova:** Visst är den fin?
+
+**Mira:** Den är väldigt... vit.
+
+Nova skrattar.
+
+**Nova:** Han såg så rolig ut i den.
+
+Barnet tittar på Nova.
+
+**Barnet:** Du verkar glad.
+
+**Nova:** Klart jag är! Allting börjar ju falla på plats.
+
+Hon tittar på skjortan igen.
+
+**Nova:** Det här kommer bli den bästa dagen någonsin.
+
+*Scenen slutar.*
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
