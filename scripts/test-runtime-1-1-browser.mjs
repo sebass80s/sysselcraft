@@ -316,7 +316,7 @@ try {
     await page.goto(base + "/act3");
     await enterAct3Chapter(page);
     await page.getByRole("button", { name: "← Tillbaka till sjön", exact: true }).click();
-    await page.waitForURL("**/act2");
+    await page.waitForURL(/\/act2\/?$/);
     await page.getByLabel("SysselCraft HUD").waitFor();
     assert.deepEqual(errors, []);
     console.log("PASS Runtime 1.1 Act 3 return control routes back to Act 2 lake runtime");
