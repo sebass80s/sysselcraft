@@ -5,7 +5,11 @@
 The project has crossed from Runtime 1.1 closeout into the first real Act 3 content slice.
 
 Current code checkpoint before documentation closeout:
-`ddb3db947dc30f96af054012937b8a8afbf7ba70`
+`b118978ad51fef1eb81c74891465808fd86276c5`
+
+Verified on this exact code/test checkpoint:
+- GitHub Actions CI #2490: **SUCCESS**
+- Runtime Browser Closeout #28: **SUCCESS**
 
 Implemented Act 3 runtime state:
 - `src/game/act3RuntimeState.ts` owns version 1 state: `{ version: 1, entered: boolean }`
