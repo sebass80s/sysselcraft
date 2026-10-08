@@ -79,6 +79,10 @@ const harbor1 = build("V2-001");
 assert.equal(harbor1.version, 2);
 assert.equal(harbor1.locationId, "town-harbor");
 assert.equal(harbor1.establishLocation, true);
+assert.equal(
+  harbor1.outputContract.repoOutputPath,
+  "public/assets/village/story-moments/act3/poc/V2-001.png"
+);
 assert.equal(harbor1.referenceContract.locationAnchor, null);
 assert.equal(harbor1.referenceContract.previousBeatAnchor, null);
 assert.deepEqual(harbor1.characters, ["alve", "barnet", "nova"]);
@@ -129,6 +133,13 @@ qaPass(
   "/SysselCraft/Art References/anchors/poc-art-pipeline-v2/V2-001.png"
 );
 approve("V2-001");
+{
+  const state = JSON.parse(fs.readFileSync(approvals, "utf8"));
+  assert.equal(
+    state.items["V2-001"].approved.repoOutputPath,
+    "public/assets/village/story-moments/act3/poc/V2-001.png"
+  );
+}
 
 // 2. Second harbor beat gets one stable location anchor + one short-range previous beat.
 // They may point to the same raster, but roles remain separate and combined paths dedupe.
@@ -251,6 +262,35 @@ qaPass(
     `--out=${path.join(temp, "cross-location-job.json")}`
   ], [1]);
   assert.match(result.stderr, /cannot inherit previous-beat continuity across locations/);
+}
+
+
+{
+  const badManifest = path.join(temp, "missing-output-path.json");
+  const data = JSON.parse(fs.readFileSync(manifest, "utf8"));
+  delete data.beats[0].outputPath;
+  fs.writeFileSync(badManifest, JSON.stringify(data, null, 2));
+  const result = invoke(builder, [
+    `--manifest=${badManifest}`,
+    "--beat=V2-001",
+    `--approvals=${path.join(temp, "missing-output-approvals.json")}`,
+    `--out=${path.join(temp, "missing-output-job.json")}`
+  ], [1]);
+  assert.match(result.stderr, /requires a canonical Act 3 PNG outputPath/);
+}
+
+{
+  const badManifest = path.join(temp, "duplicate-output-path.json");
+  const data = JSON.parse(fs.readFileSync(manifest, "utf8"));
+  data.beats[1].outputPath = data.beats[0].outputPath;
+  fs.writeFileSync(badManifest, JSON.stringify(data, null, 2));
+  const result = invoke(builder, [
+    `--manifest=${badManifest}`,
+    "--beat=V2-001",
+    `--approvals=${path.join(temp, "duplicate-output-approvals.json")}`,
+    `--out=${path.join(temp, "duplicate-output-job.json")}`
+  ], [1]);
+  assert.match(result.stderr, /Duplicate v2 outputPath/);
 }
 
 console.log("art pipeline v2: PASS");
