@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   createDefaultAct3RuntimeState,
   loadAct3RuntimeState,
+  saveAct3RuntimeState,
   type Act3RuntimeState,
 } from "../game/act3RuntimeState";
 import { loadAct2RuntimeState } from "../game/act2RuntimeState";
@@ -13,6 +14,7 @@ import { ACT3_DEBUG_FIXTURE, type Act3DebugContext } from "../game/act3DebugFixt
 import { chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
 import { chapterRoute } from "../runtime/chapter/chapterRegistry";
 import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
+import { ChapterIntroCard } from "../runtime/chapter/ChapterCards";
 import {
   useChapterRuntimeHost,
   type ChapterRuntimeBootEnvironment,
@@ -63,7 +65,7 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
       accessAllowed: chapterUnlocked(predecessorComplete),
       state: act3,
       context: {},
-      chapterIntroVisible: false,
+      chapterIntroVisible: !act3.entered,
     };
   }, []);
 
@@ -72,6 +74,8 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
     setState,
     context,
     status,
+    chapterIntroVisible,
+    setChapterIntroVisible,
   } = useChapterRuntimeHost<Act3RuntimeState, Act3DebugContext>({
     debug,
     productionEnabled: true,
@@ -85,12 +89,19 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
     state,
     context,
   );
-  const emptySkeletonProbe = runChapterDebugProbe(
+  const chapterEntryProbe = runChapterDebugProbe(
     ACT3_DEBUG_FIXTURE,
-    "empty-skeleton",
+    "chapter-entry",
     state,
     context,
   );
+
+  async function acknowledgeChapterIntro() {
+    const next = { ...state, entered: true };
+    await saveAct3RuntimeState(next);
+    setState(next);
+    setChapterIntroVisible(false);
+  }
 
   if (status !== "active") {
     return (
@@ -106,13 +117,21 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
   }
 
   return (
-    <main className="parent-page" data-runtime-proof="empty-act3">
+    <main className="parent-page" data-runtime-proof="act3-chapter-entry">
+      {chapterIntroVisible && (
+        <ChapterIntroCard
+          chapterLabel="KAPITEL 3"
+          title="På andra sidan sjön"
+          ariaLabel="Kapitel 3 · På andra sidan sjön"
+          onContinue={() => void acknowledgeChapterIntro()}
+        />
+      )}
+
       <section style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
         <p style={{ letterSpacing: ".18em", fontWeight: 800, opacity: .72 }}>KAPITEL 3</p>
-        <h1>Tom runtime är redo</h1>
+        <h1>På andra sidan sjön</h1>
         <p>
-          Det här är endast Runtime 1.1:s arkitekturproof. Inget Kapitel 3-innehåll,
-          gameplay eller progression är implementerat ännu.
+          Kapitel 3 är startat. Nästa storybeat är ankomsten till hamnen och mötet med Nova.
         </p>
         <button
           className="secondary-button"
@@ -129,16 +148,16 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
         inspection={inspection}
         onReset={() => setState(resetChapterDebugState(ACT3_DEBUG_FIXTURE))}
         probes={[{
-          id: "empty-skeleton",
-          label: "Empty skeleton",
-          result: emptySkeletonProbe,
+          id: "chapter-entry",
+          label: "Chapter entry",
+          result: chapterEntryProbe,
         }]}
       />
       <ChapterDebugLauncher
         enabled={!debug && ACT3_DEBUG_LAB_ENABLED}
-        label="Akt 3 · tomt proof"
+        label="Akt 3 · På andra sidan sjön"
         onOpen={() => router.push(ACT3_DEBUG_FIXTURE.debugRoute)}
       />
     </main>
   );
-}
+}}

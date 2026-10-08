@@ -15,7 +15,7 @@ function loadTsModule(path, dependencies = {}) {
   vm.runInNewContext(code, {
     exports,
     require(name) {
-      assert.ok(name in dependencies, `Unexpected Act 3 empty-proof dependency: ${name}`);
+      assert.ok(name in dependencies, `Unexpected Act 3 chapter-entry dependency: ${name}`);
       return dependencies[name];
     },
   });
@@ -59,6 +59,9 @@ assert.match(stateSource, /chapterId: "act3"/, "Act 3 persistence must register 
 assert.match(skeletonSource, /useChapterRuntimeHost<Act3RuntimeState, Act3DebugContext>/, "Act 3 must use the shared chapter runtime host");
 assert.match(skeletonSource, /ACT3_DEBUG_FIXTURE/, "Act 3 must use the shared debug fixture contract");
 assert.match(skeletonSource, /ChapterRuntimeBoundary/, "Act 3 must use the shared runtime boundary");
+assert.match(skeletonSource, /ChapterIntroCard/, "Act 3 must use the shared chapter intro card");
+assert.match(skeletonSource, /title="På andra sidan sjön"/, "Act 3 must use the locked chapter title");
+assert.match(skeletonSource, /saveAct3RuntimeState\(next\)/, "Act 3 chapter entry must persist through shared chapter persistence");
 assert.match(skeletonSource, /chapterUnlocked\(predecessorComplete\)/, "Act 3 access must derive from predecessor completion");
 assert.match(
   skeletonSource,
@@ -79,7 +82,7 @@ for (const forbidden of [
   assert.equal(
     skeletonSource.includes(forbidden),
     false,
-    `empty Act 3 proof must not rebuild existing engine plumbing: ${forbidden}`,
+    `Act 3 chapter entry must not rebuild existing engine plumbing: ${forbidden}`,
   );
 }
 
@@ -88,4 +91,4 @@ assert.match(debugRouteSource, /<Act3Skeleton debug \/>/, "debug Act 3 route mus
 assert.match(debugRouteSource, /NODE_ENV !== "production"/, "Act 3 debug lab must remain dev-only");
 assert.match(registrySource, /act3:\s*{[\s\S]*route: "\/act3"[\s\S]*predecessorId: "act2"/, "Act 3 must be registered as the next chapter");
 
-console.log("PASS: empty Act 3 uses shared Runtime 1.1 engines without chapter-local engine copies");
+console.log("PASS: Act 3 chapter entry uses shared Runtime 1.1 engines without chapter-local engine copies");

@@ -22,11 +22,11 @@ export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3Debug
     return {
       version: state.version,
       entered: state.entered,
-      emptySkeleton: true,
+      chapterEntryReady: true,
     };
   },
   probes: {
-    "empty-skeleton"(state) {
+    "chapter-entry"(state) {
       return {
         ok: state.version === 1 && state.entered === false,
         details: {

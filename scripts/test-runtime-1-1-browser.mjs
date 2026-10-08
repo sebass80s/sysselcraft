@@ -171,6 +171,17 @@ const completedAct1 = {
   },
 };
 
+async function enterAct3Chapter(page) {
+  const intro = page.getByRole("dialog", { name: "Kapitel 3 · På andra sidan sjön", exact: true });
+  await intro.waitFor();
+  const button = intro.getByRole("button", { name: "Fortsätt", exact: true });
+  await button.click();
+  await page.getByText("På andra sidan sjön", { exact: true }).first().waitFor();
+  await button.click();
+  await intro.waitFor({ state: "hidden" });
+  await page.getByRole("heading", { name: "På andra sidan sjön", exact: true }).waitFor();
+}
+
 async function setupPage(context, {
   act1 = completedAct1,
   act2State = null,
@@ -269,9 +280,14 @@ try {
     await nextChapter.waitFor();
     await nextChapter.click();
     await page.waitForURL("**/act3/");
-    await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
+    await enterAct3Chapter(page);
     await page.reload();
-    await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
+    await page.getByRole("heading", { name: "På andra sidan sjön", exact: true }).waitFor();
+    assert.equal(
+      await page.getByRole("dialog", { name: "Kapitel 3 · På andra sidan sjön", exact: true }).count(),
+      0,
+      "acknowledged Act 3 chapter intro must not replay after reload",
+    );
     const act1AfterReload = await page.evaluate((key) => localStorage.getItem(key), act1Key);
     const act2AfterReload = await page.evaluate((key) => localStorage.getItem(key), act2Key);
     assert.equal(
@@ -298,7 +314,7 @@ try {
     const context = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
     const { page, errors } = await setupPage(context, { act2State: completedAct2 });
     await page.goto(base + "/act3");
-    await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
+    await enterAct3Chapter(page);
     await page.getByRole("button", { name: "← Tillbaka till sjön", exact: true }).click();
     await page.waitForURL("**/act2");
     await page.getByLabel("SysselCraft HUD").waitFor();
@@ -311,9 +327,9 @@ try {
     const context = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
     const { page, errors } = await setupPage(context, { act2State: completedAct2 });
     await page.goto(base + "/act3-test");
-    await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
+    await page.getByRole("heading", { name: "På andra sidan sjön", exact: true }).waitFor();
     await page.getByText("DEBUG · production UI", { exact: true }).waitFor();
-    await page.getByText("✅ Empty skeleton", { exact: true }).waitFor();
+    await page.getByText("✅ Chapter entry", { exact: true }).waitFor();
     assert.deepEqual(errors, []);
     console.log("PASS Runtime 1.1 Act 3 uses the shared debug/acceptance harness in-browser");
     await context.close();
