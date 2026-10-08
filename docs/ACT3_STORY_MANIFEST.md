@@ -7579,6 +7579,113 @@ Tre maskiner står intill varandra: bilspel, rytmspel och färgblock.
 
 **Nova:** Vänta tills du ser maskinen längst in.
 
+
+## 11AO. A3-ARCADE-004–006 — KOMPLETTERANDE DIALOGMANUS
+
+**Nyskriven dialog från låst handlingssammanfattning, inte påstådd ordagrann originaltext.**
+
+### A3-ARCADE-004 – En plats att försvinna till
+
+Barnen sitter på soffan bakom maskinerna. Rebecka kommer med saft.
+
+**Rebecka:** Paus för proffsen. Och för Alve.
+
+**Alve:** Jag tycker att jag spelade väldigt modigt.
+
+**Nova:** Du körde in i väggen.
+
+**Rebecka:** Med full övertygelse.
+
+Barnet tittar på bilderna på väggen.
+
+**Barnet:** Har du kommit hit länge?
+
+**Nova:** Sedan jag var liten. Pappa brukade ta med mig. Han samlar på gamla spel.
+
+**Alve:** Kommer han fortfarande hit?
+
+**Nova:** Ibland. Oftast kommer jag själv numera.
+
+**Rebecka:** Och ibland får jag påminna henne om att världen utanför också finns.
+
+**Nova:** Det är en överdrift.
+
+**Rebecka:** Har du ätit lunch?
+
+**Nova:** ...Nästan.
+
+Rebecka höjer ögonbrynen och går tillbaka till disken.
+
+**Nova:** Här inne frågar ingen vilken helg jag ska vara hos vem. Det är rätt skönt.
+
+**Barnet:** Och så finns det ju spel.
+
+**Nova:** Precis.
+
+### A3-ARCADE-005 – Den omöjliga maskinen
+
+Nova leder dem till den svåraste automaten. Ovanför sitter en skylt: *SLÅ MIG OM DU KAN*.
+
+**Alve:** Vem är REB?
+
+**Nova:** Rebecka. Hon har rekordet.
+
+**Barnet:** Då ska vi försöka slå det!
+
+**Rebecka (från disken):** Lycka till!
+
+*Poängtavlans kanonvärde ska synkas med epilogens REB 98 500 och NOV 98 450 före implementation. Det äldre synopsisvärdet 125 000 är inkonsekvent.*
+
+Barnet spelar medan Nova pekar och coachar.
+
+**Nova:** Nu! Hoppa! Nej, andra knappen!
+
+**Barnet:** Jag försöker!
+
+**Alve:** Jag kan ta nästa!
+
+Alve tar kontrollen. Hans figur förlorar efter fyra sekunder.
+
+**Rebecka:** Det var snabbt.
+
+**Alve:** Jag sparar energin till nästa försök.
+
+**Nova:** Du hann inte ens få poäng!
+
+### A3-ARCADE-006 – En ny tradition
+
+Vid disken lägger Rebecka fram en lapp med tre namn.
+
+**Rebecka:** Ska ni komma tillbaka och utmana varandra?
+
+**Nova:** Självklart.
+
+**Alve:** Skriv upp mig först.
+
+**Rebecka:** I vilken kategori? Snabbast att förlora?
+
+**Alve:** Den är min!
+
+Rebecka vänder sig till Nova.
+
+**Rebecka:** Roligt att du tog med kompisar hit.
+
+**Nova:** Ja. Det var faktiskt jättekul.
+
+Utanför butiken går Barnet, Nova och Alve vidare.
+
+**Barnet:** Ska vi försöka slå rekordet nästa gång?
+
+**Nova:** Jag tänker träna tills jag gör det.
+
+**Alve:** Jag ska hitta ett spel med tre knappar.
+
+**Nova:** Det här hade fyra.
+
+**Alve:** Där har vi problemet.
+
+Nova skrattar och stoppar mobilen i väskan utan att titta på den.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
