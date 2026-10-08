@@ -3225,6 +3225,394 @@ Hon öppnar förrådsdörren.
 4. **After family day:** Mira is **among the first adults to realize just how much guilt Nova carries** when the parents do not reunite. She supports and creates room for an honest conversation, but **Nova's mother personally reassures Nova that the divorce was the adults' decision and never caused by Nova's dinner outburst**. Do not let Mira steal that crucial mother-daughter moment.
 5. Family day remains a secret to both parents before the event. Mira sells required festival supplies gradually over Act 3; no single upfront SysselBux payment.
 
+## 11O. Linus är i toppform — FULLSTÄNDIG DIALOG LÅST
+
+**Status:** User approved A3-VILLAGE-011–016. Replaces the unused soapbox-car concept entirely. No runtime or art yet.
+
+### A3-VILLAGE-011 – En märklig promenad
+
+Barnet, Nova och Alve kommer ut från bageriet.
+
+Nova har fått en bulle av Henning och tittar sig omkring på torget.
+
+**Nova:** Jag gillar verkligen er by.
+
+**Alve:** Det säger du bara för att du fick en bulle.
+
+**Nova:** Det är en ganska bra anledning.
+
+Längre bort kommer Linus gående med ovanligt korta, stela steg. Han håller ryggen rak och armarna lite ut från kroppen.
+
+**Nova:** Varför går han sådär?
+
+**Barnet:** Vem?
+
+**Nova:** Han där. Han ser ut som en robot.
+
+Alve får syn på Linus.
+
+**Alve:** Det är Linus!
+
+Linus försöker vinka utan att vrida överkroppen.
+
+**Linus:** Tjenare!
+
+**Barnet:** Hej! Vad gör du?
+
+**Linus:** Tar en liten promenad. Håller igång kroppen, vet ni.
+
+Han försöker sätta sig på en bänk, men stannar halvvägs.
+
+**Linus:** Nä. Man ska inte sitta för mycket.
+
+Han rätar på sig igen, mycket långsamt.
+
+**Nova:** Har du ont i ryggen?
+
+**Linus:** Jag? Nej, nej. Lite träningsvärk bara.
+
+**Alve:** Vad har du tränat?
+
+**Linus:** Lyfta saker.
+
+**Barnet:** Vilka saker?
+
+**Linus:** Tunga.
+
+Nova tittar på Barnet.
+
+**Nova:** Han har ont i ryggen.
+
+**Linus:** Jag hörde det där.
+
+### A3-VILLAGE-012 – Säg inget till Sol
+
+Linus vinkar barnen närmare.
+
+Han försöker böja sig ner för att viska, men ångrar sig och gestikulerar åt dem att komma upp närmare hans huvud i stället.
+
+**Linus:** Hörni. En liten sak.
+
+**Barnet:** Vadå?
+
+**Linus:** Ni behöver inte säga något om det här till Sol.
+
+**Alve:** Om din rygg?
+
+**Linus:** Schhh!
+
+**Nova:** Varför inte?
+
+**Linus:** För att hon har sagt åt mig i flera veckor att inte lyfta de där stora lådorna själv.
+
+**Barnet:** Och gjorde du det ändå?
+
+**Linus:** Jag skulle bara flytta en.
+
+**Alve:** Hur många flyttade du?
+
+**Linus:** ...Sju.
+
+Nova börjar skratta.
+
+**Linus:** Och nu tror Sol att jag håller på att göra i ordning förrådet.
+
+**Barnet:** Gör du inte det då?
+
+**Linus:** Jo, absolut. Mentalt.
+
+Han pekar mot sitt huvud.
+
+**Linus:** Jag planerar arbetet.
+
+**Nova:** Med ryggen?
+
+**Linus:** Exakt. Nej! Jag menar...
+
+Från andra sidan torget hörs Sol ropa.
+
+**Sol:** LINUS!
+
+Linus stelnar till.
+
+**Linus:** Inte ett ord.
+
+### A3-VILLAGE-013 – Världens sämsta hemlighet
+
+Sol kommer gående mot dem.
+
+**Sol:** Där är du! Jag har letat efter dig.
+
+**Linus:** Här står jag!
+
+**Sol:** Det ser jag. Varför står du sådär?
+
+**Linus:** Hur då?
+
+**Sol:** Som en planka.
+
+**Linus:** Bra hållning. Viktigt för ryggen.
+
+Nova pressar ihop läpparna för att inte börja skratta.
+
+**Sol:** Har du flyttat lådorna?
+
+**Linus:** Vilka lådor?
+
+Sol tittar på honom.
+
+**Linus:** Jaha, *de* lådorna.
+
+**Sol:** Ja, de sju stora som stod bakom verkstaden.
+
+Barnet och Alve tittar snabbt på varandra.
+
+**Linus:** Några av dem.
+
+**Sol:** Hur många?
+
+**Linus:** Det beror på hur man räknar.
+
+**Sol:** Linus.
+
+**Linus:** Sju.
+
+Sol suckar.
+
+**Sol:** Och nu har du ont i ryggen.
+
+**Linus:** Nej, nej. Inte ont. Bara lite... begränsad rörlighet.
+
+Sol tappar sin penna.
+
+**Sol:** Kan du ta den?
+
+Linus tittar ner på pennan.
+
+Sedan på Sol.
+
+Sedan på pennan igen.
+
+**Linus:** Jag tror vi ska låta den ligga. Man måste tänka på miljön.
+
+**Nova:** VA?!
+
+Nova brister ut i skratt.
+
+Barnet böjer sig ner och plockar upp pennan.
+
+**Sol:** Tack.
+
+Sol tittar tillbaka på Linus.
+
+**Sol:** Du har ryggskott.
+
+**Linus:** Det är ett väldigt starkt ord.
+
+### A3-VILLAGE-014 – Den stora räddningsaktionen
+
+Sol korsar armarna.
+
+**Sol:** Nu går du hem och vilar från lådlyftandet.
+
+**Linus:** Jag kan inte. Jag har ett förråd att ordna.
+
+**Sol:** Förrådet klarar sig.
+
+**Linus:** Men det är nästan färdigt!
+
+**Barnet:** Du har ju bara flyttat lådorna.
+
+**Linus:** Precis. En mycket viktig del.
+
+**Nova:** Vi kan väl hjälpa dig med resten?
+
+Linus tittar förskräckt på henne.
+
+**Linus:** Nej, nej. Ni ska inte behöva...
+
+**Sol:** Utmärkt idé. Då kan du sitta och tala om var sakerna ska stå.
+
+**Linus:** Sitta?
+
+Sol pekar på bänken.
+
+**Linus:** Jag föredrar att stå.
+
+**Alve:** Du kan ligga.
+
+**Linus:** Jag föredrar att stå.
+
+**Nova:** Kan du göra något annat än att stå?
+
+Linus funderar.
+
+**Linus:** Jag kan ge instruktioner.
+
+**Sol:** Perfekt. Då gör vi så.
+
+### A3-VILLAGE-015 – Chefen från bänken
+
+En stund senare står Barnet, Nova och Alve utanför Linus förråd.
+
+Linus står bredvid en stol som Sol har hämtat åt honom.
+
+**Sol:** Sätt dig nu.
+
+**Linus:** Jag ska bara...
+
+**Sol:** Linus.
+
+Han sätter sig försiktigt. Mycket försiktigt.
+
+**Alve:** Det där tog lång tid.
+
+**Linus:** Jag uppskattar inte tidtagningen.
+
+Barnet öppnar förrådet.
+
+Där inne står kartonger, verktyg och gamla cykeldelar huller om buller.
+
+**Nova:** Oj.
+
+**Barnet:** Vad ska vi börja med?
+
+**Linus:** De blå lådorna ska stå till vänster. De gröna till höger. Och den lilla röda ska längst upp.
+
+**Nova:** Varför?
+
+**Linus:** För att det alltid har varit så.
+
+**Nova:** Men då måste man ju flytta alla andra lådor för att få tag i den röda.
+
+Linus öppnar munnen.
+
+Stänger den igen.
+
+**Linus:** Det är en del av systemet.
+
+**Alve:** Ett dåligt system.
+
+**Linus:** Ett väl beprövat system!
+
+*Här får spelaren hjälpa till med en kort sorteringsaktivitet. Barnet väljer var sakerna ska placeras medan Nova och Alve kommenterar. Ingen ny byggmekanik behövs.*
+
+Efter en stund är förrådet mycket mer lättöverskådligt.
+
+**Nova:** Så! Nu kan du nå allt utan att flytta på någonting.
+
+**Linus:** Det där ser faktiskt...
+
+Han tvekar.
+
+**Linus:** ...ganska bra ut.
+
+**Alve:** Bättre än ditt gamla system?
+
+**Linus:** Jag tänker inte svara på den frågan.
+
+Sol kommer tillbaka.
+
+**Sol:** Men titta! Vad fint ni har gjort!
+
+**Barnet:** Nova kom på hur vi skulle sortera.
+
+**Nova:** Och Alve hittade tre skruvmejslar i en stövel.
+
+**Alve:** Den var full av överraskningar.
+
+Sol skrattar.
+
+**Sol:** Bra jobbat!
+
+Linus försöker resa sig för att inspektera förrådet.
+
+Han kommer halvvägs upp och stannar.
+
+Alla tittar på honom.
+
+**Linus:** Jag sitter faktiskt ganska bra här.
+
+### A3-VILLAGE-016 – Diagnosen
+
+En stund senare sitter Linus fortfarande på stolen.
+
+Sol kommer ut med ett glas vatten.
+
+**Sol:** Här. Och nu ska du ta det lugnt.
+
+**Linus:** Jag känner mig redan mycket bättre.
+
+**Sol:** Du har sagt det i tjugo minuter.
+
+**Linus:** Det blir mer sant varje gång.
+
+Nova sitter på en låda bredvid Barnet och Alve.
+
+**Nova:** Du borde faktiskt lyssna på Sol.
+
+**Linus:** Nu börjar du också?
+
+**Nova:** Jag säger bara att om man får hjälp slipper man göra allt själv.
+
+Linus tittar mot det nystädade förrådet.
+
+**Linus:** Det verkar ligga något i det.
+
+**Sol:** Hör ni det? Kan någon skriva ner det?
+
+**Alve:** Jag har papper!
+
+**Linus:** Lägg undan det där.
+
+Barnet skrattar.
+
+**Sol:** Tack för hjälpen, allihop. Jag tror Linus klarar sig nu.
+
+**Linus:** Självklart!
+
+Sol går iväg för att hämta sin verktygslåda.
+
+Linus väntar tills hon är utom hörhåll.
+
+Sedan vinkar han Barnet närmare.
+
+**Linus:** Du...
+
+**Barnet:** Ja?
+
+**Linus:** Skulle du kunna hämta min mössa?
+
+**Barnet:** Var är den?
+
+Linus pekar neråt.
+
+Mössan ligger precis vid hans fötter.
+
+Barnet tittar på mössan.
+
+Sedan på Linus.
+
+**Linus:** Säg inget till Sol.
+
+**Nova:** LINUS!
+
+Alla tre barnen brister ut i skratt.
+
+Sol ropar från andra sidan torget.
+
+**Sol:** JAG HÖR DIG!
+
+Linus sluter ögonen.
+
+**Linus:** Jag kommer aldrig få glömma det här, va?
+
+**Alve:** Nej.
+
+*Scenen slutar.*
+
+**Continuity:** Linus' temporary sore back and silly pride are the joke, not medical suffering. Sol is perceptive and already knows. No soapbox cars or repeat of Act 2 construction. The small optional storage sorting interaction is not a new building system. Nova's organization helps others, and she enjoys the village outside festival logistics.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
