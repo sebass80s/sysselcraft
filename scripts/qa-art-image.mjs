@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import {
-  DEFAULT_REGISTRY,
   parseArgs,
   readJson,
   writeJson,
@@ -29,7 +28,6 @@ try {
   const beat = manifest.beats.find((item) => item.id === beatId);
   if (!beat) fail(`Unknown beat "${beatId}".`);
 
-  const registry = readJson(String(args.registry ?? DEFAULT_REGISTRY));
   const approvalPath = String(args.approvals ?? `image-pipeline/approvals/${manifest.productionId}.json`);
   const approvals = ensureApprovalState(manifest, approvalPath);
 
