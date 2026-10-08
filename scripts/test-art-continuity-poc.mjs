@@ -51,6 +51,10 @@ function approve(beat, filename) {
 const first = build("POC-A3-001");
 assert.deepEqual(first.characters, ["alve", "barnet"]);
 assert.equal(first.characterSheetPaths.length, 2);
+assert.deepEqual(first.chatLibraryReferencePaths, [
+  "/SysselCraft/Art References/characters/alve.png",
+  "/SysselCraft/Art References/characters/barnet.png"
+]);
 assert.equal(first.anchorReferencePaths.length, 0);
 assert.equal(first.referenceImagePaths.length, 2);
 assert.match(first.prompt, /CANONICAL IDENTITY LAW/);
