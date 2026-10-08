@@ -2496,6 +2496,282 @@ Barnet stänger försiktigt blocket.
 - Next story follows the rupture; Nova should be allowed initiative in making amends.
 - Scene's phone call and timetable are narrative beats, **not** a real-world time limit on SysselBux collection.
 
+## 11K. Det bortglömda blocket — FULLSTÄNDIG DIALOG LÅST
+
+**Status:** User-approved A3-DRAMA-006–010, with A3-DRAMA-009 corrected so that the separation announcement occurs **the very next evening** after Nova's outburst. No runtime implementation or art yet.
+
+### A3-DRAMA-006 – Ingen Nova
+
+Nästa förmiddag är folkparken nästan tom.
+
+Henrik står vid scenen och försöker få en gammal presenning att ligga stilla. Ena hörnet blåser upp så fort han fäster det andra.
+
+**Henrik:** Nej, nej, nej! Du ska ligga *under* stenen!
+
+Barnet och Alve kommer fram.
+
+**Alve:** Behöver du hjälp?
+
+**Henrik:** Jag har situationen helt under kontroll.
+
+Presenningen blåser av.
+
+**Henrik:** Nästan helt.
+
+Barnet hjälper Henrik att lägga tillbaka den.
+
+**Henrik:** Tack. Var är vår unga festgeneral idag?
+
+**Barnet:** Nova?
+
+**Henrik:** Just hon.
+
+**Barnet:** Vi trodde hon skulle vara här.
+
+**Henrik:** Jag har inte sett henne.
+
+Alve tittar mot spelhörnan.
+
+**Alve:** Vi kanske ska skriva till henne.
+
+Barnet tar fram telefonen.
+
+**Barnet (meddelande):** Hej! Är du på väg till parken?
+
+De väntar en stund.
+
+Inget svar.
+
+**Henrik:** Nå, det är ingen fara. Parken står kvar.
+
+**Alve:** Förhoppningsvis.
+
+Henrik tittar misstänksamt på presenningen.
+
+**Henrik:** Vi gör vårt bästa.
+
+Barnet tar upp Novas anteckningsblock ur väskan.
+
+**Barnet:** Hon glömde det här igår.
+
+**Alve:** Då kan vi ju lämna tillbaka det.
+
+### A3-DRAMA-007 – Vid lägenheten
+
+Barnet och Alve går till huset där Nova bor med sin mamma.
+
+Utanför porten står Nova med en liten väska över axeln. Hon håller telefonen mot örat.
+
+**Nova:** Men jag sa ju att den var där!
+
+Hon lyssnar.
+
+**Nova:** Nej, inte den blå. Den svarta!
+
+En paus.
+
+**Nova:** Okej. Jag får väl leta när jag kommer.
+
+Hon lägger på och får syn på Barnet och Alve.
+
+**Nova:** Hej.
+
+**Barnet:** Hej.
+
+**Alve:** Vi hittade ditt block.
+
+Barnet håller fram det.
+
+Nova stirrar på blocket.
+
+**Nova:** Men där är det ju!
+
+Hon tar emot det.
+
+**Nova:** Jag har letat överallt. Jag trodde jag hade glömt det hos pappa.
+
+**Barnet:** Det låg på scenen.
+
+**Nova:** Tack.
+
+Hon bläddrar snabbt igenom sidorna.
+
+**Alve:** Är allt kvar?
+
+**Nova:** Ja. Till och med den jättedåliga skissen jag gjorde på en tårta.
+
+**Barnet:** Den såg faktiskt ut som en tårta.
+
+**Nova:** Den såg ut som en igelkott.
+
+Barnet ler.
+
+Nova stänger blocket.
+
+**Nova:** Förlåt för igår.
+
+### A3-DRAMA-008 – Inte ert fel
+
+De sätter sig på en låg mur utanför huset.
+
+**Nova:** Jag var ganska dum mot er.
+
+**Alve:** Lite.
+
+**Barnet:** Vi fattade att du var ledsen.
+
+**Nova:** Fast det är ingen anledning att skrika.
+
+Hon tittar ner på blocket.
+
+**Nova:** Jag blev bara så arg när pappa ringde.
+
+**Barnet:** För att han måste jobba?
+
+**Nova:** Ja. Fast mest för att jag hade sett fram emot lördagen.
+
+**Alve:** Har ni hittat en annan dag?
+
+**Nova:** Söndag. Om han inte måste jobba då också.
+
+Hon säger det skämtsamt, men ler inte.
+
+**Barnet:** Det är klart du får bli besviken.
+
+**Nova:** Jag vet.
+
+En stund är de tysta.
+
+**Nova:** Det är bara så tröttsamt att aldrig veta.
+
+**Alve:** Vadå?
+
+**Nova:** Var jag ska vara. Vilken väska jag ska packa. Om någon har tid att skjutsa mig. Sånt där.
+
+Hon knackar försiktigt blocket mot knät.
+
+**Nova:** Jag vet att mamma och pappa försöker. Men jag önskar att jag slapp tänka på det ibland.
+
+**Barnet:** Som när vi gjorde skattjakten?
+
+Nova ler lite.
+
+**Nova:** Ja. Precis.
+
+**Alve:** Då får vi väl göra fler sådana dagar.
+
+**Nova:** Det tycker jag också.
+
+### A3-DRAMA-009 – Något hon inte har berättat
+
+Nova tittar på en spricka i trottoaren.
+
+**Nova:** Vet ni en konstig sak?
+
+**Barnet:** Vadå?
+
+**Nova:** Jag kommer ihåg nästan exakt vad som hände sista gången vi alla åt middag i det gamla huset.
+
+Barnet och Alve väntar.
+
+**Nova:** Pappa hade gjort lasagne. Mamma var sen från jobbet. Och jag blev jättearg för att de hade glömt köpa glass.
+
+**Alve:** Glass?
+
+**Nova:** Ja. Jag skrek åt dem och smällde igen dörren till mitt rum.
+
+Hon drar med skon mot gruset.
+
+**Nova:** Sedan hörde jag dem bråka i köket.
+
+**Barnet:** Om glassen?
+
+**Nova:** Jag vet inte. Jag hörde inte vad de sa.
+
+Hon tittar mot huset.
+
+**Nova:** Nästa kväll satte de sig med mig i soffan. Båda två.
+
+**Barnet:** Vad sa de?
+
+**Nova:** Att de skulle skiljas. Att pappa skulle flytta.
+
+Nova pillar på hörnet av anteckningsblocket.
+
+**Nova:** Jag kommer fortfarande ihåg var vi satt. Och vad jag hade på mig.
+
+**Alve:** Det måste ha varit jobbigt.
+
+**Nova:** Ja.
+
+Hon bläddrar till första sidan i blocket.
+
+**Nova:** Det är konstigt att jag kommer ihåg precis allt från de där två dagarna. Men nästan ingenting från veckan innan.
+
+**Barnet:** Du blev nog väldigt överraskad.
+
+**Nova:** Ja. Det blev jag.
+
+En stund är det tyst.
+
+Nova stänger blocket och reser sig.
+
+**Nova:** Ska vi gå någonstans? Jag vill inte sitta här hela dagen.
+
+### A3-DRAMA-010 – Ingen plan idag
+
+**Barnet:** Vi kan gå till spelbutiken.
+
+**Alve:** Eller köpa glass.
+
+Nova tittar på honom.
+
+**Nova:** Du har verkligen inte lärt dig något av den där historien.
+
+**Alve:** Jo. Jag har lärt mig att man måste köpa glass i tid.
+
+Nova skrattar till.
+
+**Barnet:** Vi behöver inte planera någonting idag.
+
+**Nova:** Ingenting?
+
+**Barnet:** Nej. Vi kan bara gå och se vad vi hittar på.
+
+Nova ser först lite skeptisk ut.
+
+**Nova:** Ni är ganska dåliga på att planera.
+
+**Alve:** Tack.
+
+**Nova:** Det var inte en komplimang.
+
+**Barnet:** Kom då.
+
+Barnet börjar gå.
+
+Alve följer efter.
+
+Nova står kvar en sekund med blocket i handen.
+
+Sedan stoppar hon ner det i väskan och springer efter.
+
+**Nova:** Vänta! Jag vet ett ställe!
+
+**Alve:** Jag trodde vi inte skulle planera!
+
+**Nova:** Det är inte en plan. Jag vet bara vart vi ska!
+
+De försvinner runt hörnet.
+
+### Continuity lock
+
+- Nova's upset at the final family dinner and her parents announcing the divorce took place on **two consecutive evenings**. Never restore the former "weeks later" version.
+- She has not stated openly that she blames herself; the association remains implied. Later, after the family day, she can explain her mistaken causal interpretation. The mother is responsible for explicitly reassuring her that the separation was the adults' decision.
+- Alve can empathize but should not rehash his own loss or turn this into a lesson.
+- The friends repair their friendship but the parental conflict and Nova's deeper feelings remain unresolved.
+- After the scene, Nova leads the children to a favourite town destination unrelated to the family-day shopping list.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
