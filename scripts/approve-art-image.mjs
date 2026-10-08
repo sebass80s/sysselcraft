@@ -46,7 +46,8 @@ try {
       ...item.candidate,
       qaPassed: [...item.qa.passed],
       establishesLocation: beat.establishLocation === true,
-      locationId: beat.locationId ?? null
+      locationId: beat.locationId ?? null,
+      repoOutputPath: beat.outputPath ?? null
     },
     notes: args.notes ? String(args.notes) : item.notes ?? ""
   };
