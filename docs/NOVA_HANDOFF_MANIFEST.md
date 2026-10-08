@@ -1,5 +1,44 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
+## CURRENT HANDOVER — 2026-10-08
+
+Repository: `sebass80s/sysselcraft`  
+Branch: `nova/runtime-architecture-v1`
+
+Repository reality wins over every older checkpoint in this file.
+
+Current code checkpoint before documentation closeout:
+- `ddb3db947dc30f96af054012937b8a8afbf7ba70`
+- Act 3 contains the first authored runtime beat: persistent chapter-title entry **KAPITEL 3 — På andra sidan sjön**
+- the immediately preceding Act 3 commit had one extra closing brace in `Act3Skeleton.tsx`; that syntax error is fixed at the checkpoint above
+- verify CI and Runtime Browser Closeout on the final documentation HEAD before declaring the handover green
+
+Canonical continuation docs:
+- `docs/NOVA_HANDOVER_2026-10-08.md`
+- `docs/ACT3_STORY_MANIFEST.md`
+- `docs/ACT3_ART_PIPELINE.md`
+- `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`
+- `docs/PHYSICAL_IPHONE_ACCEPTANCE_2026-10-08.md`
+
+Current product/runtime boundary:
+- Act 1: established and preserved
+- Act 2: complete, including **Över sjön** and the end card
+- Act 3: started, but only the chapter-title entry is implemented; harbour/Nova gameplay is not implemented yet
+- Runtime 1.1 remains the shared owner of chapter lifecycle, persistence, Story, project/progression, Story Purchase, World/Area host and debug infrastructure
+- normal Act 3 work must be content/config plus narrow adapters; if reusable plumbing is missing, stop and fix the shared engine first
+
+Art:
+- SysselCraft Art Pipeline 2.0 is locked
+- `kör art` means the full documented pipeline, not a prose-only image prompt
+- canonical character refs are persistent in ChatGPT Library
+- final GitHub PNG transfer is intentionally manual drag-and-drop after approval; Nova supplies exact filename/path and verifies placement
+
+Native:
+- preserved-device update-in-place acceptance has been exercised successfully enough to begin Act 3
+- two follow-up smokes remain desirable: background→foreground lifecycle and one ordinary backend quest turn-in/claim path
+- never uninstall/reset the preserved device merely to simplify testing
+
+
 ## ART COMMAND — LOCKED 2026-10-08
 
 **`kör art`** is the user's canonical shorthand for **SysselCraft Art Pipeline 2.0**.
@@ -32,7 +71,7 @@ Do not ask Kalle to re-upload character refs or manage continuity. Do not ask hi
 
 Do not reopen/automate this final step unless Kalle explicitly asks to change the pipeline.
 
-## READ FIRST — CURRENT STATE 2026-10-07
+## Historical Runtime 1.1 checkpoint — 2026-10-07
 
 Repository reality always wins. Verify branch, HEAD and GitHub CI before any change.
 
@@ -46,8 +85,7 @@ Verified runtime code checkpoint:
 - GitHub Actions CI #2388 SUCCESS
 - Runtime Browser Closeout #12 SUCCESS
 
-Only remaining gate before real Act 3 gameplay:
-**physical iPhone update-in-place acceptance with the existing save/backend preserved.**
+This checkpoint is historical. Core physical update-in-place acceptance has since been exercised and the first Act 3 title-entry slice has begun. See the current handover block above.
 
 Future chapter rule: content/config/adapters on the shared engine. If new chapter work starts duplicating persistence, backend polling, Phaser bootstrap, Story sequencing, progression, Story Purchase or debug infrastructure, stop and fix the shared owner.
 

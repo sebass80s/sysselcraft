@@ -191,8 +191,20 @@ Alve presence and HUD visibility are not persistence authorities:
 - completed Act 2 + `endCardSeen=true` means Alve is absent;
 - global gameplay chrome is derived by `uiShellState.ts` from world readiness and blocking overlay state, never from project selection.
 
-### Act 3 boundary
-The Chapter 3 route is read-only until Act 3 owns a versioned state family. Act 2 must not persist Act 3 entry, clear Act 2, or replay rewards during transition.
+### Act 3 local state ownership — CURRENT 2026-10-08
+
+Act 3 now owns a dedicated versioned local state family through the shared chapter persistence host.
+
+Current canonical state:
+- storage family: `sysselcraft.act3.runtime.v1`, child-scoped by the shared persistence host;
+- shape: `{ version: 1, entered: boolean }`;
+- `entered=false` means the Chapter 3 title entry has not yet been acknowledged;
+- acknowledging **KAPITEL 3 — På andra sidan sjön** persists `entered=true`;
+- no harbour/Nova story progression is persisted yet.
+
+Act 2 remains authoritative only for the predecessor completion boundary `act2Complete && endCardSeen`. Act 2 must never write Act 3 entry state, clear Act 3, fabricate Act 3 progress or replay rewards during chapter transition.
+
+Future Act 3 story/project fields belong to Act 3 chapter state only when they describe local consumed/presentation state. Backend quest lifecycle, rewards, wallet and earned-work evidence remain backend-authoritative under the existing rules.
 
 
 ## Save migration ownership closeout — 2026-10-04

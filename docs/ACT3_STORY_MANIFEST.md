@@ -1,6 +1,6 @@
 # Act 3 Story Manifest
 
-Status: **CANONICAL WORKING MANIFEST**
+Status: **CANONICAL WORKING MANIFEST · RUNTIME STARTED**
 Date: 2026-10-08
 Chapter title: **KAPITEL 3 — På andra sidan sjön**
 
@@ -420,17 +420,30 @@ If a normal Act 3 mechanic cannot be expressed through the shared engine, stop c
 
 The first real Act 3 story purchase must use the generic shared purchase system. Do not create `act3Purchase...` clones.
 
-## 14. Current runtime baseline
+## 14. Current runtime baseline — 2026-10-08
 
-Current Act 3 implementation is intentionally an empty Runtime 1.1 skeleton:
+Act 3 has moved beyond the empty proof.
+
+Implemented:
 - route `/act3`;
 - shared chapter runtime host;
-- chapter persistence;
-- debug fixture/harness;
-- Act 2 completion gate;
-- return route to Act 2.
+- shared child-scoped chapter persistence;
+- version 1 Act 3 state `{ version: 1, entered: boolean }`;
+- production gate from Act 2 completion;
+- shared ChapterIntroCard showing **KAPITEL 3 — På andra sidan sjön**;
+- acknowledgment persists `entered=true` before removing the title card;
+- shared debug fixture/harness;
+- safe router-based return to Act 2.
 
-The first real Act 3 implementation can now replace the empty proof with authored content while preserving the shared architecture.
+Not implemented yet:
+- playable town/harbour area;
+- Nova encounter;
+- A3-OPEN-001 through A3-OPEN-004 runtime Story beats;
+- city/park progression;
+- party-preparation streams;
+- final family-day sequence.
+
+The text shown after the chapter title in `Act3Skeleton.tsx` is temporary runtime placeholder copy, not canonical child-facing story dialogue.
 
 ## 15. Open design decisions
 

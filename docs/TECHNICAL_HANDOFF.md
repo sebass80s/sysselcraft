@@ -1,6 +1,32 @@
 # Sysselcraft Technical Handoff
 
-## READ FIRST — current technical state 2026-10-07
+## CURRENT TECHNICAL STATE — 2026-10-08
+
+The project has crossed from Runtime 1.1 closeout into the first real Act 3 content slice.
+
+Current code checkpoint before documentation closeout:
+`ddb3db947dc30f96af054012937b8a8afbf7ba70`
+
+Implemented Act 3 runtime state:
+- `src/game/act3RuntimeState.ts` owns version 1 state: `{ version: 1, entered: boolean }`
+- persistence uses shared `createChapterPersistenceHost`
+- production entry remains gated by `act2Complete && endCardSeen`
+- first authored Act 3 runtime beat is shared `ChapterIntroCard`: **KAPITEL 3 — På andra sidan sjön**
+- acknowledging the card persists `entered=true`
+- current post-title body is placeholder copy only; harbour/Nova runtime has not been built yet
+- `/act3-test` continues to use the shared debug harness
+
+Canonical story: `docs/ACT3_STORY_MANIFEST.md`  
+Canonical art: `docs/ACT3_ART_PIPELINE.md`
+
+Do not clone Act 2 architecture into Act 3. If ordinary Act 3 work needs reusable plumbing that Runtime 1.1 cannot express, stop at that boundary, extend the shared owner, add the smallest regression, verify, then resume.
+
+Physical acceptance is recorded in `docs/PHYSICAL_IPHONE_ACCEPTANCE_2026-10-08.md`. Core update-in-place acceptance has been exercised on preserved devices. Two non-blocking follow-up smokes remain desirable: background/foreground lifecycle and a normal backend quest turn-in/claim path.
+
+Vercel remains non-canonical for routine verification. Use GitHub CI + Runtime Browser Closeout + Xcode/iPhone when native behavior matters.
+
+
+## Historical technical state — 2026-10-07
 
 Canonical Runtime 1.1 status lives in:
 - `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`
@@ -16,9 +42,7 @@ Verified runtime code checkpoint:
 - GitHub Actions CI #2388 SUCCESS
 - Runtime Browser Closeout #12 SUCCESS
 
-Only remaining acceptance gate: physical iPhone update-in-place with the existing save/backend preserved.
-
-Do not start Act 3 gameplay before that native acceptance is closed. Do not use Vercel for routine runtime verification. Never regenerate the iOS project.
+This checkpoint is historical. Core physical update-in-place acceptance has since been exercised and the first Act 3 title-entry slice has begun. Do not use Vercel for routine runtime verification. Never regenerate the iOS project.
 
 
 > Current-state sections and `docs/NOVA_HANDOFF_MANIFEST.md` supersede stale historical assumptions.

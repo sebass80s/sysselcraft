@@ -1,5 +1,39 @@
 # Runtime Architecture 1.1 — Canonical Handover
 
+## CURRENT OVERRIDE — 2026-10-08
+
+Runtime 1.1 is now the active shared engine beneath the first real Act 3 content.
+
+The older “item 11 is the only remaining gate” wording later in this document is superseded.
+
+Core physical update-in-place acceptance has been exercised on preserved iPhones:
+- pairing/current child survived;
+- Act 1 local/world state survived;
+- wallet/quest presentation remained reasonable;
+- NPC/dog state survived;
+- completed Act 2 state survived;
+- Act 2 → Act 3 transition worked;
+- restart preserved state;
+- a second physical iPhone was also updated successfully.
+
+Two follow-up native smokes remain desirable but are not treated as an Act 3 blocker:
+1. background → foreground lifecycle;
+2. ordinary backend quest turn-in/claim path.
+
+Canonical physical report:
+`docs/PHYSICAL_IPHONE_ACCEPTANCE_2026-10-08.md`
+
+Act 3 now consumes the shared chapter runtime for its first authored beat:
+- chapter title **KAPITEL 3 — På andra sidan sjön**
+- versioned Act 3 local state `version:1, entered:boolean`
+- shared child-scoped chapter persistence
+- shared chapter boundary/host
+- shared ChapterIntroCard
+- shared debug harness
+
+This is the intended Runtime 1.1 fuel test: the first real chapter beat required content/state wiring, not a cloned runtime engine.
+
+
 ## Repository truth first
 
 Repository: `sebass80s/sysselcraft`  
@@ -30,9 +64,9 @@ Canonical docs were then cleaned up on later docs-only commits. Verify the curre
 8. Common debug / acceptance harness ✅
 9. Empty Act 3 skeleton proof ✅
 10. Full automated + browser closeout ✅
-11. Physical iPhone update-in-place acceptance ⬜
+11. Physical iPhone update-in-place acceptance ✅ core pass; two follow-up smokes remain
 
-Only item 11 remains before Runtime 1.1 is fully accepted on the preserved physical device.
+Core item 11 has now been exercised on preserved physical devices. See the current override above for the two remaining follow-up smokes.
 
 ## Fuel principle
 
