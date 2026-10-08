@@ -387,3 +387,35 @@ This sequence is mandatory and must not be skipped for speed.
 This document remains authoritative for its own domain. Current Runtime Architecture 1.1 execution status and continuation order are tracked in `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
 
 Verified Runtime 1.1 docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, GitHub Actions #2252 SUCCESS. Runtime items 1–4 are closed; generic chapter persistence is next. This pointer does not change the domain decisions recorded above.
+
+## Connected production-path verification — 2026-10-08
+
+The Runway production route has now been exercised from ChatGPT against the real connected workspace.
+
+Verified:
+- authenticated Runway workspace available;
+- Brand Kit **Syssel** resolves successfully;
+- categories **Character sheets** and **Environment references** are readable;
+- all eight canonical recurring character sheets resolve as reusable Runway-hosted image assets;
+- multi-reference image generation accepts the real canonical Alve and Barnet assets in the same request;
+- a 16:9 / 2K proof-of-concept generation completed successfully;
+- the user did not need to download or re-upload canonical references.
+
+PoC task:
+- Runway task id: `9c020c98-03c4-4822-ab96-17cbf79a92f8`
+- refs: canonical `alve.png (1)` + `barnet.png (1)`
+- Barnet rear-view / face-hidden rule was included explicitly in the generation contract.
+
+**Important acceptance boundary:** successful generation proves reference resolution and transport, not visual identity quality by itself. The generated raster still requires visual QA against the canonical sheets before the identity-grounding PoC is considered fully accepted.
+
+### Canonical route decision
+
+For Act 3 production:
+1. **Primary:** Runway Brand Kit `Syssel` through this document's resolver/generation contract.
+2. **Fallback / experiment only:** local `image-pipeline/` OpenAI batch tooling.
+3. Never silently switch routes because a production reference is unavailable.
+4. Never persist signed Runway asset URLs in repository manifests; resolve current hosted URLs from Brand Kit at execution time.
+5. Repository manifests should store semantic canonical ids/names, not expiring transport URLs.
+
+This removes the previous ambiguity where the local batch scripts and the Runway pipeline could both appear to be production authorities.
+
