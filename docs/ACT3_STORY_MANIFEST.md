@@ -6917,6 +6917,23 @@ Nova skrattar och följer med Sol in.
 
 *Scenen slutar.*
 
+## 11AK. Dialogaudit inför beat-implementation (2026-10-09)
+
+**Manusstatus är inte samma sak som storybeslut.** Scenerna nedan får inte märkas som beat-ready förrän de har talare och godkända repliker ordagrant.
+
+**Full dialog verifierad i detta manifest:** A3-PREP-001–006 (11AG–11AH); A3-SECRET-001–006 (11AI–11AJ och 11T); A3-FAMILY-001–020 (11U, 11AA–11AC, 11Y–11Z); A3-EPILOG-001–006 (11AD–11AF); Linus A3-VILLAGE-011–016; Sol A3-VILLAGE-017–021; bergknallen A3-VILLAGE-022–026; A3-REVEAL-001–004; övriga fullt utskrivna sekvenser i 11A, 11D, 11G–11H, 11J–11K, 11M–11N.
+
+**Återstående manusluckor / synopsis endast:**
+- 11B: stadsvandring och Novas mammas hem.
+- 11C: det gamla hemmet och vardagen med två hem.
+- 11F: skattjakten A3-HUNT-001–006.
+- 11I: spelhörnan A3-PARK-019–022.
+- 11L: arkaden A3-ARCADE-001–006.
+- A3-VILLAGE-004–008 och A3-VILLAGE-010, verifiera äldre dialog. A3-VILLAGE-009 finns i full omskriven Mira-version.
+- Öppning/övriga tidigare scener i avsnitt 11 utanför 11A behöver verifieras scenvis.
+
+**Bevaranderegel:** Skriv inte nya repliker och kalla dem gammal godkänd originaldialog. Återfinn ordagranna utdrag ur tidigare chattar eller gör ett särskilt nytt manusutkast för användarens godkännande. Ingen runtime-/art-implementation gjord av denna audit.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
