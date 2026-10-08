@@ -114,7 +114,13 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
           Det här är endast Runtime 1.1:s arkitekturproof. Inget Kapitel 3-innehåll,
           gameplay eller progression är implementerat ännu.
         </p>
-        <a className="secondary-button" href={chapterRoute("act2")}>← Tillbaka till sjön</a>
+        <button
+          className="secondary-button"
+          type="button"
+          onClick={() => router.push(chapterRoute("act2"))}
+        >
+          ← Tillbaka till sjön
+        </button>
       </section>
 
       <ChapterDebugPanel
