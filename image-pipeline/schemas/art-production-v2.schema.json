@@ -35,7 +35,8 @@
           "characters",
           "summary",
           "exactCastOnly",
-          "wardrobeLock"
+          "wardrobeLock",
+          "outputPath"
         ],
         "properties": {
           "id": {
@@ -121,10 +122,8 @@
             "type": "string"
           },
           "outputPath": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": "string",
+            "pattern": "^public/assets/village/story-moments/act3/[a-z0-9-]+/[A-Za-z0-9._-]+\\.png$"
           }
         },
         "additionalProperties": false
