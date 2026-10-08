@@ -2189,6 +2189,313 @@ Nova wants a family-day tournament with her parents facing each other in the fin
 
 **Gameplay/design:** Reusable physics-based phone shuffleboard (drag back/release, friction and target zones), first Nova match now, parents' rematch payoff on family day. This is a proposal to be designed/implemented later, not an already built engine. Scoring victory branches do not impact later relationship outcome. Continue gradual SysselBux acquisitions from Mira and do not force a lump-sum purchase. Preserve separation, honest happy moments, and parents not reuniting.
 
+## 11J. När planen spricker — FULLSTÄNDIG DIALOG LÅST
+
+**Status:** Godkänd A3-DRAMA-001–005, ordagrant bevarad nedan. Ingen runtimeimplementation ännu.
+
+### A3-DRAMA-001 – Pappa ringer
+
+Nova står kvar vid shuffleboardbordet och fotograferar den gamla poängtavlan.
+
+**Nova:** Jag måste visa er bilden mamma har från deras första dejt. Pappa ser helt galen ut i den där skjortan.
+
+**Alve:** Har han slips också?
+
+**Nova:** Nej, men han har gelé i håret så att det står rakt upp.
+
+Hennes telefon börjar ringa.
+
+**Nova:** Det är pappa. Vänta lite.
+
+Hon svarar.
+
+**Nova:** Hej!
+
+**Pappa (telefon):** Hej gumman! Är du fortfarande i parken?
+
+**Nova:** Ja, vi hittade en jätterolig grej. Du vet den gamla turneringen när du och mamma...
+
+**Pappa:** Vad kul! Du, jag måste prata med dig om helgen.
+
+Nova tystnar.
+
+**Nova:** Vadå?
+
+**Pappa:** Jag behöver jobba på lördag. Vi har fått ett problem som måste fixas.
+
+**Nova:** Men vi skulle ju ses.
+
+**Pappa:** Jag vet. Jag tänkte att du kunde komma på söndag i stället.
+
+**Nova:** Fast det var ju din helg.
+
+**Pappa:** Jag vet, Nova. Jag är ledsen.
+
+**Nova:** Du sa att du var ledig.
+
+**Pappa:** Det var jag också när vi pratade sist.
+
+Nova går några steg bort.
+
+**Nova:** Kan du inte bara säga att du inte kan jobba?
+
+**Pappa:** Jag önskar att det var så enkelt.
+
+**Nova:** Det säger du alltid.
+
+En stund hörs bara ljudet från parken.
+
+**Pappa:** Jag ska prata med mamma så att vi kan lösa det.
+
+**Nova:** Jag kan prata med henne själv.
+
+**Pappa:** Okej. Men jag ringer henne också, så att det inte blir något missförstånd.
+
+**Nova:** Jag måste gå nu.
+
+**Pappa:** Vi hörs senare, okej? Jag älskar dig.
+
+**Nova:** Hej.
+
+Hon lägger på innan han hinner svara.
+
+### A3-DRAMA-002 – Det är alltid något
+
+Barnet och Alve står kvar vid spelbordet.
+
+Nova kommer tillbaka och stoppar telefonen hårt i fickan.
+
+**Barnet:** Är allt okej?
+
+**Nova:** Jadå.
+
+Hon börjar samla ihop shuffleboardbrickorna.
+
+**Alve:** Du behöver inte städa. Vi kan hjälpa till.
+
+**Nova:** Jag vet.
+
+Hon tappar en bricka på marken.
+
+**Nova:** Åh, kom igen!
+
+Barnet böjer sig ner och plockar upp den.
+
+**Barnet:** Här.
+
+**Nova:** Tack.
+
+Hon tittar på brickan i Barnets hand.
+
+**Nova:** Pappa kan inte ha mig på lördag.
+
+**Barnet:** Varför inte?
+
+**Nova:** Han måste jobba. Plötsligt. Som vanligt.
+
+**Alve:** Kan du inte åka dit på söndag då?
+
+**Nova:** Jo, men det är inte det som är grejen!
+
+Alve ryggar till lite.
+
+**Nova:** Förlåt.
+
+Hon sätter sig på scenkanten.
+
+**Nova:** Jag hade planerat att vi skulle göra något på lördag. Och nu får jag ändra allt.
+
+**Barnet:** Vad skulle ni göra?
+
+**Nova:** Jag vet inte ens längre.
+
+Hon drar fingret över skärmen på telefonen.
+
+**Nova:** Mamma säger alltid att de försöker få allt att fungera. Pappa säger samma sak. Men ändå blir det jag som ska packa om väskan och ändra planer.
+
+Alve sätter sig på trappsteget bredvid.
+
+**Alve:** Det låter ganska jobbigt.
+
+**Nova:** Det är det också.
+
+**Barnet:** Vill du att vi stannar en stund?
+
+Nova nickar.
+
+### A3-DRAMA-003 – En dålig idé
+
+Efter en stund reser sig Nova.
+
+**Nova:** Vi borde göra klart planen för festen.
+
+**Barnet:** Vi kan göra det imorgon.
+
+**Nova:** Nej. Vi kan lika gärna göra det nu.
+
+Hon öppnar sin lista.
+
+**Nova:** Vi måste fixa borden, lamporna, tårtan och shuffleboardbordet. Och fråga Henrik om scenen.
+
+**Barnet:** Vi har ju redan börjat.
+
+**Nova:** Men vi ligger efter.
+
+**Alve:** Efter vadå?
+
+**Nova:** Min plan!
+
+Hon börjar gå mot scenen.
+
+**Nova:** Om vi bara får allt att fungera så kommer det bli en jättebra dag.
+
+**Barnet:** Det tror jag också.
+
+**Nova:** Men då får ingenting bli fel.
+
+**Alve:** Fast ibland går ju saker fel ändå.
+
+Nova vänder sig om.
+
+**Nova:** Kan du sluta säga så?
+
+Alve blir tyst.
+
+**Nova:** Jag vet att saker går fel. Det är därför jag försöker fixa dem!
+
+Barnet tittar på henne.
+
+**Barnet:** Alve försökte bara hjälpa.
+
+**Nova:** Jag bad inte om hjälp med att hitta fel på min plan!
+
+Det blir alldeles tyst.
+
+Henrik syns längre bort vid förrådet men märker inte vad som hänt.
+
+Nova tittar på Barnet och Alve.
+
+**Nova:** Förlåt. Jag...
+
+Hon stoppar ner mobilen.
+
+**Nova:** Jag måste gå.
+
+### A3-DRAMA-004 – Gå inte
+
+Nova börjar gå mot parkens utgång.
+
+Barnet följer efter några steg.
+
+**Barnet:** Nova!
+
+Hon stannar men vänder sig inte om.
+
+**Barnet:** Vi vill ju hjälpa dig.
+
+**Nova:** Jag vet.
+
+**Barnet:** Du behöver inte göra allt själv.
+
+Nova vänder sig om.
+
+**Nova:** Fast om jag inte gör det, vem ska göra det då?
+
+**Barnet:** Vi är ju här.
+
+**Nova:** Ni förstår inte.
+
+**Barnet:** Vad är det vi inte förstår?
+
+Nova öppnar munnen, men säger inget.
+
+Hon tittar tillbaka mot poängtavlan.
+
+**Nova:** Mamma och pappa brukade ha så roligt här.
+
+**Barnet:** Det kan de väl ha igen?
+
+**Nova:** Ja. Det är ju det jag försöker!
+
+Hon tar ett steg bakåt.
+
+**Nova:** Jag vill bara att det ska bli som det var.
+
+Barnet väntar.
+
+**Nova:** Glöm det. Vi ses imorgon.
+
+Hon går.
+
+### A3-DRAMA-005 – Efteråt
+
+Barnet går tillbaka till Alve vid spelbordet.
+
+Alve sitter och vrider på en shuffleboardbricka mellan fingrarna.
+
+**Alve:** Blev hon sur på dig också?
+
+**Barnet:** Lite kanske.
+
+**Alve:** Jag skulle inte ha sagt sådär.
+
+**Barnet:** Du sa inget dumt.
+
+**Alve:** Jag vet. Men hon blev ju ledsen.
+
+Barnet sätter sig bredvid honom.
+
+**Barnet:** Hennes pappa ringde. Han kan inte träffa henne på lördag.
+
+**Alve:** Just det.
+
+Han tittar ut mot parkens utgång.
+
+**Alve:** Hon saknar nog hur det var när de bodde ihop.
+
+**Barnet:** Ja.
+
+**Alve:** Vi kanske ska låta henne vara ifred idag.
+
+**Barnet:** Vi kan skriva senare.
+
+Alve nickar.
+
+En stund sitter de och tittar på det gamla spelbordet.
+
+**Alve:** Tror du hon kommer tillbaka imorgon?
+
+**Barnet:** Det tror jag.
+
+**Alve:** Bra. Jag har ju inte fått min revansch än.
+
+Barnet ler lite.
+
+**Alve:** Fast vi kanske ska vänta med att fråga om den.
+
+**Barnet:** Det är nog en bra idé.
+
+På scenen ligger Novas anteckningsblock kvar.
+
+Barnet går fram och plockar upp det.
+
+På första sidan står det med stora bokstäver:
+
+**FAMILJEDAGEN – ALLT SKA BLI BRA**
+
+Barnet stänger försiktigt blocket.
+
+*Scenen slutar.*
+
+### Story continuity
+
+- The father is caring, not a villain, but the unexpected work change has real consequences for Nova.
+- Nova apologizes once during the confrontation but leaves upset; no immediate resolution.
+- Her underlying self-blame and reunion wish are not yet openly explained.
+- Alve must not invoke his mother's death here to lecture or equate losses.
+- Next story follows the rupture; Nova should be allowed initiative in making amends.
+- Scene's phone call and timetable are narrative beats, **not** a real-world time limit on SysselBux collection.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
