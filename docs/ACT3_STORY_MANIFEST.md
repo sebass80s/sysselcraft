@@ -4185,6 +4185,36 @@ Motorbåten lämnar bryggan.
 
 **Continuity:** Alve remembers his late mother without rehashing his grief or equating his loss with divorce. Nova creates a new happy memory rather than trying to recreate the old family portrait. Parents can visit separately; the family-day plot remains unresolved. Skipping stones is an optional interaction, not an implemented minigame.
 
+## 11R. Snart är det dags — DIALOGUE LOCKED A3-PREP-001–006
+
+**Status:** User approved all six beats. Approved full Swedish dialogue remains in the conversation preceding the user instruction “Spika. Det börjar nästan bli dags för nova att förklara sin plan va”. This section records precise canonical progression and notable lines, not the complete verbatim script. **Transfer verbatim before runtime implementation.**
+
+### A3-PREP-001 – Det börjar likna något
+Several days pass; a conditional montage shows tables, lights and game corner **only if purchased**. Nova excitedly shows Barnet and Alve the evolving folkpark, including food area, game corner and proposed 2011-photo recreation spot. She worries about buying the remaining items early.
+
+### A3-PREP-002 – Det saknas fortfarande saker
+Mira's shopping list shows some items checked, others such as chairs, cloths and game-area decor pending. Purchases proceed gradually using SysselBux, never a single up-front buy. Alve jokes that ice cream belongs on the list three times. Nova is uneasy about seeing things half-finished.
+
+### A3-PREP-003 – En bild som inte stämmer
+Nova compares the 2011 first-date photograph with the renovated stage and game corner and is troubled that their new portrait cannot perfectly recreate the original. Alve teases her about fussing over photography.
+
+### A3-PREP-004 – En liten hemlighet
+Mira brings a vintage string of colored lights possibly used in 2011. Nova likes it. Mira, already aware of Nova's concealed hope, hears that both parents have accepted attending and warmly says she looks forward to seeing them. No parents know the full surprise.
+
+### A3-PREP-005 – Ett samtal med Mira
+In private with Barnet, Mira reflects gently on how much Nova has invested in the day, that her parents genuinely enjoyed 2011 but fifteen years change people. Key exchange: **Barnet:** “Nova vill verkligen att de ska ha kul.” **Mira:** “Det hoppas jag också att de får.” and then **“Och jag hoppas hon får det också.”** Mira does not explain away Nova's feelings or assume the role of a therapist.
+
+### A3-PREP-006 – Ett nytt besked
+Nova receives an image from her father: he still has the white shirt resembling the one from the first date. She had asked if he remembered it, but he does **not** know about the party's planned reenactment. She becomes euphoric and believes everything is falling into place. Mira dryly calls the shirt very white. Nova: **“Det här kommer bli den bästa dagen någonsin.”**
+
+### Continuity and implementation
+
+- **Must not render unpurchased park assets:** beat staging and lines depend on persisted Mira purchase records. “Several days later” is narrative, not a deadline. No purchases forced at once.
+- Father and mother agreed to attend on the same day but still do not know the family-day reveal.
+- The 2011 photo, original scoreboard, first-date game, colored lights and old white shirt are emotionally charged artifacts, not evidence of the adults wanting to reunite.
+- **Next emotional beat:** Nova is now close to telling Barnet and Alve plainly that she hopes the parents will become a couple again. This *hope* is separate from her **still-concealed belief that her dinner outburst caused the divorce**. Reveal in stages: the reunion wish first, the self-blame nearer the aftermath.
+- The parents **do not reunite**. Mira understands but does not reveal Nova's secret for her.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
