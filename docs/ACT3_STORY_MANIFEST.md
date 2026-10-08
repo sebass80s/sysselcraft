@@ -7208,6 +7208,131 @@ Vid kiosken köper Nova varsin glass åt dem.
 
 De går längs vattnet med sina glassar.
 
+
+## 11AM. A3-PARK-019–022 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
+
+**Status:** Följer godkänd händelseföljd. Repliker nyformulerade eftersom originaltexten inte fanns bevarad i manifestet. Måste granskas före beats.
+
+### A3-PARK-019 – Kan den fortfarande fungera?
+
+Henrik drar fram det gamla shuffleboardbordet på gräset.
+
+**Henrik:** Mina damer och herrar! Ett stycke äkta folkparkshistoria!
+
+**Alve:** Ser ut som ett långt bord.
+
+**Henrik:** Det är ett mycket speciellt långt bord. Man skjuter puckar och försöker få så mycket poäng som möjligt.
+
+Han demonstrerar. Pucken träffar en skruv som sticker upp och ramlar av.
+
+**Henrik:** ...när bordet är i bättre skick.
+
+**Nova:** Är det samma bord som mamma och pappa spelade på?
+
+**Henrik:** Jag skulle tro det. Vi hade inte råd med två.
+
+**Barnet:** Då behöver vi laga det.
+
+**Alve:** Efter att vi har testat en gång?
+
+**Henrik:** Jag föreslår att vi börjar med skruven.
+
+### A3-PARK-020 – Första matchen
+
+Skruven är åtgärdad. Nova tar tre puckar.
+
+**Nova:** Jag utmanar Barnet!
+
+**Alve:** Varför får inte jag vara med?
+
+**Nova:** För att du redan håller räkningen.
+
+**Alve:** Jaha. Ett mycket viktigt uppdrag.
+
+*Barnet och Nova spelar en kort omgång med tre puckar var. Utgången beror på spelaren.*
+
+**Om Barnet vinner:**
+
+**Nova:** Va! Du har ju aldrig spelat förut!
+
+**Barnet:** Jag kanske är naturbegåvad.
+
+**Alve:** Jag vill spela mot mästaren!
+
+**Om Nova vinner:**
+
+**Nova:** JAAA! Jag visste det!
+
+**Barnet:** Vi tar en returmatch.
+
+**Alve:** Jag vill också vinna något.
+
+*Båda grenarna går tillbaka till samma scen.*
+
+**Henrik:** Utmärkt! Jag ser redan turneringspotential.
+
+### A3-PARK-021 – Någon minns
+
+Henrik ser den gamla poängtavlan intill spelbordet.
+
+**Henrik:** Vänta, är inte det där... Jo, minsann! Jag minns den där turneringen.
+
+**Nova:** När mamma och pappa var här?
+
+**Henrik:** Din pappa hade en väldigt vit skjorta. Han förklarade reglerna för din mamma i flera minuter.
+
+**Alve:** Kunde hon inte reglerna?
+
+**Henrik:** Jo. Det var väl det som gjorde det så roligt när hon vann.
+
+**Nova:** Mamma har berättat att hon vann flera gånger!
+
+**Henrik:** Det minns jag. Och efteråt gick de ner till vattnet och åt glass.
+
+**Barnet:** Var du med dem då?
+
+**Henrik:** Nej, men jag minns att de kom tillbaka och fortsatte prata långt efter att spelet var färdigt.
+
+Nova tittar på namnen på tavlan och ler.
+
+### A3-PARK-022 – Vi ska göra det ordentligt
+
+**Nova:** Då måste vi ha en turnering på familjedagen!
+
+**Alve:** Ska alla spela?
+
+**Nova:** Ja, och sedan ska mamma och pappa mötas i finalen.
+
+**Barnet:** Men tänk om någon annan vinner?
+
+Nova tänker snabbt.
+
+**Nova:** Då... får vi väl se till att de hamnar i finalen ändå.
+
+**Barnet:** Fast då är det ju ingen riktig turnering.
+
+**Alve:** De kan väl spela en egen match efteråt?
+
+Nova lyser upp.
+
+**Nova:** En revanschmatch!
+
+**Barnet:** Precis. Det behöver inte vara exakt samma turnering.
+
+**Nova:** Men vi ska ha samma bord. Och poängtavlan. Och glass!
+
+**Alve:** Nu börjar det likna något.
+
+**Barnet:** Det kan bli ännu roligare den här gången.
+
+**Nova:** Tror du det?
+
+**Barnet:** Ja. De hade ju inte oss där 2011.
+
+**Nova:** Nej. Det hade de faktiskt inte.
+
+Hon skriver ivrigt i sitt block.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
