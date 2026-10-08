@@ -297,6 +297,19 @@ try {
   {
     const context = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
     const { page, errors } = await setupPage(context, { act2State: completedAct2 });
+    await page.goto(base + "/act3");
+    await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
+    await page.getByRole("button", { name: "← Tillbaka till sjön", exact: true }).click();
+    await page.waitForURL("**/act2");
+    await page.getByLabel("SysselCraft HUD").waitFor();
+    assert.deepEqual(errors, []);
+    console.log("PASS Runtime 1.1 Act 3 return control routes back to Act 2 lake runtime");
+    await context.close();
+  }
+
+  {
+    const context = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
+    const { page, errors } = await setupPage(context, { act2State: completedAct2 });
     await page.goto(base + "/act3-test");
     await page.getByRole("heading", { name: "Tom runtime är redo", exact: true }).waitFor();
     await page.getByText("DEBUG · production UI", { exact: true }).waitFor();
