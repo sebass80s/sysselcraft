@@ -160,4 +160,4 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
       />
     </main>
   );
-}}
+}
