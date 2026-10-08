@@ -3913,6 +3913,278 @@ Musiken fyller rummet.
 
 **Continuity:** Sol is joyful and fallible, not therapist. Nova enjoys imperfection without an explicit moral. Linus has the same temporary sore back from the immediately preceding scene. Singing duet selection is a player branch; no rhythm-game engine is claimed to be implemented. No art or runtime work yet.
 
+## 11Q. Innan vi åker hem — FULLSTÄNDIG DIALOG LÅST
+
+**Status:** User approved A3-VILLAGE-022–026. Entire dialogue preserved below. No art or runtime implementation yet.
+
+### A3-VILLAGE-022 – En liten omväg
+
+Musiken har tystnat hemma hos Sol. Barnet, Nova och Alve kommer ut på torget.
+
+**Nova:** Jag tror jag sjöng sönder rösten.
+
+**Alve:** Det var nog när du försökte ta den där höga tonen.
+
+**Nova:** Du sjöng en helt annan låt än vi andra!
+
+**Alve:** Jag gjorde en remix.
+
+Barnet skrattar.
+
+**Nova:** Vilken remix då?
+
+**Alve:** Den är inte färdig än.
+
+De fortsätter mot vägen ner till sjön.
+
+**Alve:** Hörni, vi kan väl ta en annan väg tillbaka?
+
+**Barnet:** Vilken då?
+
+**Alve:** Jag vill visa Nova en sak.
+
+**Nova:** Ska jag bli orolig?
+
+**Alve:** Nej. Den här gången behöver vi inte laga någonting.
+
+**Nova:** Det var skönt att höra.
+
+De följer Alve längs en smal stig mellan träden.
+
+### A3-VILLAGE-023 – Utsikten
+
+Stigen leder upp till en liten bergknalle ovanför sjön.
+
+Härifrån syns stugan, bryggan och motorbåten. Längre bort ligger staden på andra sidan vattnet.
+
+**Nova:** Oj!
+
+**Barnet:** Jag har inte varit här uppe förut.
+
+**Alve:** Jag brukar gå hit ibland.
+
+Nova sätter sig på en stor sten.
+
+**Nova:** Man ser ju nästan hela sjön.
+
+**Alve:** Jag vet.
+
+**Nova:** Är det där folkparken?
+
+Barnet pekar mot ett område på andra sidan vattnet.
+
+**Barnet:** Ungefär där.
+
+**Nova:** Det ser så nära ut.
+
+**Alve:** Fast det tar en stund med båten.
+
+Nova tittar på stugan längre ner.
+
+**Nova:** Har du bott här hela livet?
+
+**Alve:** Nej. Vi brukade komma hit på somrarna.
+
+**Nova:** Med din familj?
+
+**Alve:** Ja.
+
+Han sätter sig bredvid henne.
+
+**Alve:** Mamma brukade ta med oss hit. Vi hade med oss mackor och saft.
+
+**Nova:** Brukade ni ha picknick?
+
+**Alve:** Ja. Fast min syster åt alltid upp kakorna innan vi kom fram.
+
+**Barnet:** Låter som någon annan jag känner.
+
+**Alve:** Det är därför jag är så bra på att äta snabbt.
+
+De skrattar.
+
+### A3-VILLAGE-024 – Det som blev annorlunda
+
+Nova tittar ut över vattnet.
+
+**Nova:** Saknar du det?
+
+**Alve:** Vadå?
+
+**Nova:** När ni brukade vara här allihop.
+
+Alve funderar.
+
+**Alve:** Ja. Ibland ganska mycket.
+
+**Nova:** Jag förstår.
+
+En stund är de tysta.
+
+**Alve:** Men pappa och syrran kommer hit igen nu. Det gjorde de inte så ofta ett tag.
+
+**Nova:** Varför inte?
+
+**Alve:** Det blev bara så efter att mamma dog.
+
+**Nova:** Okej.
+
+Alve pekar ner mot bryggan.
+
+**Alve:** Och nu har vi lagat nästan allting. Så det är roligare att vara här.
+
+**Nova:** Ni gjorde verkligen ett jättestort jobb.
+
+**Alve:** Ja. Särskilt Barnet.
+
+**Barnet:** Du hjälpte ju också till.
+
+**Alve:** Jag hade väldigt många bra idéer.
+
+**Nova:** Det tvivlar jag inte på.
+
+Han ler.
+
+**Alve:** Vi brukar faktiskt ha ganska kul här nu.
+
+Nova tittar på honom.
+
+**Nova:** Trots att det inte är som förut?
+
+**Alve:** Ja. Det är annorlunda.
+
+Han rycker på axlarna.
+
+**Alve:** Men det är fortfarande min stuga.
+
+Nova nickar och tittar ner mot vattnet.
+
+### A3-VILLAGE-025 – En idé
+
+Barnet får syn på en liten platt sten bredvid stigen.
+
+**Barnet:** Kolla! Den här är perfekt.
+
+**Nova:** Till vadå?
+
+**Barnet:** Kasta macka.
+
+Barnet kastar stenen ut över vattnet.
+
+Den studsar tre gånger innan den sjunker.
+
+**Alve:** Tre!
+
+**Nova:** Jag kan slå det.
+
+Hon letar upp en sten.
+
+**Alve:** Du har aldrig kastat macka förut.
+
+**Nova:** Det vet du väl inte.
+
+Nova kastar.
+
+Stenen plumsar rakt ner i vattnet.
+
+**Alve:** Noll.
+
+**Nova:** Det var uppvärmning.
+
+Barnet visar hur stenen ska hållas.
+
+Nova försöker igen.
+
+Två studsar.
+
+**Nova:** TVÅ!
+
+**Alve:** Fortfarande mindre än tre.
+
+**Nova:** Jag räknar mitt första försök som en provomgång.
+
+**Alve:** Det där har jag hört förut.
+
+De fortsätter kasta stenar en stund.
+
+Alve får fyra studsar och firar som om han vunnit ett världsmästerskap.
+
+**Nova:** Du hade tur!
+
+**Alve:** Skicklighet.
+
+**Barnet:** Ska vi försöka slå honom?
+
+**Nova:** Självklart!
+
+*Här kan spelaren få göra några korta försök att kasta macka. En enkel gestbaserad aktivitet, inte nödvändigtvis ett eget minispel.*
+
+### A3-VILLAGE-026 – På andra sidan
+
+Solen börjar sjunka när de återvänder till bryggan.
+
+Nova stannar bredvid motorbåten.
+
+**Nova:** Det känns konstigt att jag aldrig varit här förut.
+
+**Barnet:** Du har ju inte känt oss så länge.
+
+**Nova:** Nej, men jag har bott på andra sidan sjön hela livet.
+
+**Alve:** Du får komma hit oftare.
+
+**Nova:** Det tänker jag.
+
+Hon tittar tillbaka mot stugan.
+
+**Nova:** Kanske kan jag ta med mamma någon gång. Hon skulle gilla det här.
+
+**Barnet:** Det får du gärna.
+
+**Nova:** Och pappa gillar båtar. Han skulle vilja se motorbåten.
+
+**Alve:** Då får han komma hit också.
+
+Nova ler.
+
+**Nova:** Ja. Fast kanske inte samtidigt.
+
+**Alve:** Det behöver de väl inte.
+
+Nova ser lite överraskad ut.
+
+**Alve:** Det går ju att åka hit flera gånger.
+
+Hon tittar på honom.
+
+Sedan ler hon.
+
+**Nova:** Ja. Det gör det ju faktiskt.
+
+Barnet kliver ner i båten och gör sig redo att köra.
+
+Nova stannar en stund på bryggan och tar en bild av sjön.
+
+**Nova:** Jag ska spara den här.
+
+**Barnet:** Varför?
+
+**Nova:** För att jag vill komma ihåg idag.
+
+**Alve:** Vi har väl inte gjort något särskilt?
+
+Nova tittar på dem.
+
+**Nova:** Jo. Det har vi.
+
+Hon stoppar undan mobilen och kliver ombord.
+
+Motorbåten lämnar bryggan.
+
+*Scenen slutar.*
+
+**Continuity:** Alve remembers his late mother without rehashing his grief or equating his loss with divorce. Nova creates a new happy memory rather than trying to recreate the old family portrait. Parents can visit separately; the family-day plot remains unresolved. Skipping stones is an optional interaction, not an implemented minigame.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
