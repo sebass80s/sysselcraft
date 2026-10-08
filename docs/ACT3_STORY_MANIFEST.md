@@ -5813,6 +5813,171 @@ Hennes röst blir lite högre än hon tänkt sig.
 
 Barnet och Alve, som står en bit bort, slutar prata.
 
+
+## 11AC. A3-FAMILY-011–013 — FULL DIALOGUE
+
+### A3-FAMILY-011 – Men ni hade ju roligt
+
+**Nova:** Men ni har ju haft jättekul idag.
+
+**Mamma:** Ja, det har vi verkligen.
+
+**Nova:** Ni har skrattat och spelat och dansat!
+
+**Pappa:** Ja. Och det är tack vare dig.
+
+**Nova:** Men då kan vi väl vara tillsammans igen?
+
+Föräldrarna ser överraskade ut.
+
+**Mamma:** Nova...
+
+**Nova:** Jag gjorde ju allting! Samma spel och samma musik och bilderna och glassen...
+
+Hon tittar på sin pappa.
+
+**Nova:** Jag försökte till och med få dig att ha den där skjortan!
+
+Pappan tittar ner på sin tröja.
+
+**Pappa:** Var det därför du frågade om den?
+
+**Nova:** Ja!
+
+Hon tar upp mobilen och visar bilden från 2011.
+
+**Nova:** Det var ju här ni blev kära. Och nu har ni gjort allting igen!
+
+Hennes mamma sätter sig på huk bredvid henne.
+
+**Mamma:** Älskling, det är fantastiskt fint det du har ordnat.
+
+**Nova:** Men varför räcker det inte då?
+
+Mamman försöker möta hennes blick.
+
+**Mamma:** Det fungerar inte riktigt så.
+
+**Nova:** Varför inte?!
+
+**Pappa:** Nova, vi tycker väldigt mycket om varandra. Men vi ska inte bo tillsammans igen.
+
+**Nova:** Fast ni gjorde ju det förut!
+
+Ingen svarar direkt.
+
+**Nova:** Ni hade ju kul idag!
+
+Hennes röst spricker.
+
+### A3-FAMILY-012 – Det blev ju precis rätt
+
+Nova backar ett steg.
+
+**Nova:** Jag fattar inte.
+
+**Mamma:** Nova, lyssna...
+
+**Nova:** Nej!
+
+Hon tittar bort mot spelhörnan.
+
+**Nova:** Jag hittade precis rätt bord. Vi fick tillbaka poängtavlan. Sol hittade musiken. Vi gjorde samma foto.
+
+Hon börjar gråta.
+
+**Nova:** Jag gjorde ju allting rätt!
+
+Pappan sträcker sig försiktigt mot henne.
+
+**Pappa:** Kom här, gumman.
+
+Nova skakar på huvudet.
+
+**Nova:** Jag vill inte!
+
+Hon vänder sig om och springer bort från borden, mot den lugnare delen av parken.
+
+**Mamma:** Nova!
+
+Mamman tar några steg efter henne, men stannar när hon ser att Nova satt sig på en bänk en bit bort, fortfarande inom synhåll.
+
+Pappan ställer sig bredvid mamman.
+
+De utbyter en bekymrad blick.
+
+En bit därifrån står Barnet och Alve.
+
+**Alve:** Vad hände?
+
+**Barnet:** Jag vet inte.
+
+**Alve:** Men allting gick ju bra.
+
+Barnet tittar bort mot Nova.
+
+**Alve:** Vi gjorde ju allt som stod på listan.
+
+Han ser ner på sin halvätna glass.
+
+**Alve:** Jag fattar inte heller.
+
+### A3-FAMILY-013 – Mira kommer fram
+
+Mira har sett vad som hände från spelhörnan.
+
+Hon går fram till Barnet och Alve.
+
+**Mira:** Hej på er.
+
+Ingen av dem säger något.
+
+**Mira:** Det blev en väldigt fin fest.
+
+**Alve:** Men Nova blev ledsen.
+
+**Mira:** Ja, jag såg det.
+
+**Alve:** Vi trodde ju att det skulle fungera.
+
+Barnet tittar snabbt på Alve.
+
+Mira sätter sig på huk så att hon kommer närmare deras ögonhöjd.
+
+**Mira:** Vill ni veta en sak?
+
+Barnet nickar.
+
+**Mira:** Jag tror inte att ni kunde ha gjort en bättre dag åt henne.
+
+**Alve:** Men det hjälpte ju inte.
+
+**Mira:** Jag tror att den här dagen betydde väldigt mycket för hennes föräldrar också.
+
+**Barnet:** Men Nova sprang iväg.
+
+**Mira:** Ja.
+
+Mira tittar bort mot bänken där Nova sitter.
+
+**Mira:** Kommer du ihåg vad vi pratade om i affären?
+
+Barnet nickar långsamt.
+
+**Mira:** Vill du gå och fråga om hon vill ha sällskap?
+
+**Barnet:** Ja.
+
+**Alve:** Ska jag följa med?
+
+**Mira:** Fråga henne. Hon kanske vill ha er båda.
+
+Barnet och Alve går mot bänken.
+
+Mira vänder sig mot Novas föräldrar, som fortfarande står vid borden.
+
+*Här kan Mira senare hjälpa dem förstå hur mycket Nova har hoppats på dagen, utan att lägga ord i hennes mun.*
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
