@@ -1,6 +1,6 @@
 # Act 3 Art Pipeline
 
-Status: **PREPARED / VEGA-OWNED ART PIPELINE**
+Status: **CONTINUITY POC GREEN / CHATGPT ADAPTER NEXT**
 Date: 2026-10-04
 
 This document defines the production method for **all Act 3 art**. It carries forward the proven SysselCraft visual rules from `docs/ART_DIRECTION.md`, but replaces the Act 2 manual reference-upload bottleneck with a connected Runway reference library and a strict no-guess resolver.
@@ -418,4 +418,48 @@ For Act 3 production:
 5. Repository manifests should store semantic canonical ids/names, not expiring transport URLs.
 
 This removes the previous ambiguity where the local batch scripts and the Runway pipeline could both appear to be production authorities.
+
+## Renderer-independent continuity engine — 2026-10-08
+
+Act 3 art production no longer assigns identity/continuity ownership to Runway or any other renderer.
+
+Canonical ownership is now:
+- `image-pipeline/character-registry.json` for recurring character identity;
+- structured beat manifests for authored image intent;
+- `scripts/build-art-job.mjs` for deterministic reference + prompt + continuity resolution;
+- approval logs for accepted visual lineage;
+- `scripts/approve-art-image.mjs` for promotion into the continuity chain.
+
+Preferred renderer: **ChatGPT image generation**.
+
+Optional adapters:
+- Runway, when useful;
+- local OpenAI API generator, for automation/fallback/testing.
+
+The renderer receives a prepared art job. It does not decide which character reference or continuity anchor is canonical.
+
+### Verified three-beat continuity PoC
+
+Manifest:
+`image-pipeline/batches/poc-continuity-chain-01.json`
+
+Regression:
+`scripts/test-art-continuity-poc.mjs`
+
+Verified behavior:
+- first beat: canonical Alve + Barnet refs, zero continuity anchors;
+- second beat: automatically inherits approved first image;
+- third beat: automatically inherits the two most recent approved images;
+- missing approved anchor fails closed;
+- global Barnet face-hidden and style rules are compiled into every job.
+
+GitHub Actions CI #2444: **SUCCESS** on `d2dfc3511f4c696f0e9b6912556332d53ad0678c`, including `art continuity PoC: PASS`.
+
+### Remaining one-time-upload gate
+
+For ChatGPT to remain the renderer across future conversations, the same canonical PNGs must be persisted on a ChatGPT-accessible Project/Library surface and recoverable as real image inputs.
+
+The Git repository alone is not sufficient for this adapter because repository paths are not image inputs to ChatGPT image generation.
+
+This is the next PoC step. Until it passes, do not claim that cross-conversation “upload once” is solved.
 
