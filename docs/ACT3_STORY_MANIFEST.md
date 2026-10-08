@@ -5642,6 +5642,177 @@ Barnet sitter kvar med armen om henne.
 
 *Scenen slutar.*
 
+
+## 11AB. A3-FAMILY-008–010 — FULL DIALOGUE
+
+### A3-FAMILY-008 – Världens bästa dag
+
+Det har blivit sen eftermiddag i folkparken.
+
+Henning går runt med de sista kakorna. Sol har satt på ännu en gammal låt och några av gästerna dansar framför scenen.
+
+Novas mamma och pappa står tillsammans med Mira och skrattar åt något från 2011.
+
+Barnet, Nova och Alve sitter på kanten av ett bord med varsin glass.
+
+**Alve:** Jag har ont i magen.
+
+**Barnet:** Du har ätit fyra glassar.
+
+**Alve:** Fem.
+
+**Nova:** FEM?!
+
+**Alve:** Den första var ganska liten.
+
+Nova brister ut i skratt.
+
+**Barnet:** Kolla på dina föräldrar.
+
+Nova vänder sig om.
+
+Hennes pappa försöker visa en gammal dansrörelse. Mamman skrattar och härmar honom.
+
+**Nova:** De har skrattat nästan hela dagen!
+
+**Alve:** Jag tror de gillar varandra.
+
+**Nova:** Jag vet!
+
+Hon skiner upp.
+
+**Nova:** Det här är precis som jag tänkte mig.
+
+**Barnet:** Fast bättre.
+
+**Nova:** Mycket bättre!
+
+Hon tittar på fotografiet de tog tidigare.
+
+**Nova:** Jag ska skriva ut det här och sätta upp det hemma.
+
+**Alve:** Du kanske behöver två.
+
+**Nova:** Varför då?
+
+**Alve:** En hos mamma och en hos pappa.
+
+Nova tittar på honom.
+
+**Nova:** Ja. Kanske det.
+
+Hon tittar tillbaka mot sina föräldrar.
+
+**Nova:** Eller så räcker det med en stor.
+
+Alve nickar glatt, utan att riktigt förstå vad hon menar.
+
+### A3-FAMILY-009 – Ett sista spel
+
+Henrik kommer fram till barnen.
+
+**Henrik:** Jag har ett viktigt meddelande!
+
+**Nova:** Måste du blåsa i visselpipan först?
+
+**Henrik:** Nej. Den är tillfälligt beslagtagen.
+
+**Alve:** Av vem?
+
+**Henrik:** Sol.
+
+Han ser mycket förnärmad ut.
+
+**Henrik:** Men! Vi har tid för en sista omgång i spelhörnan innan vi stänger.
+
+**Nova:** Mamma! Pappa! Vill ni spela en gång till?
+
+Föräldrarna kommer fram.
+
+**Pappa:** Ska jag verkligen utsätta mig för det där igen?
+
+**Mamma:** Du kan ju få revansch.
+
+**Pappa:** Det sa du förra gången också.
+
+**Nova:** Snälla!
+
+**Pappa:** Okej då. Men nu får Nova vara med i mitt lag.
+
+**Mamma:** Jaha! Nu ska du fuska också?
+
+**Nova:** Jag spelar med båda!
+
+**Alve:** Det är ännu mer fusk!
+
+Alla skrattar.
+
+*En kort, valfri omgång shuffleboard kan spelas här. Oavsett resultat fortsätter berättelsen.*
+
+När de är färdiga klappar Henrik händerna.
+
+**Henrik:** Därmed förklarar jag dagens turnering officiellt avslutad!
+
+**Sol:** Den var väl inte officiell?
+
+**Henrik:** Det blev den precis.
+
+### A3-FAMILY-010 – Den där vanliga frågan
+
+Solen börjar sjunka. Några gäster går hem och Henning packar ihop sina saker.
+
+Novas mamma står vid ett bord och hjälper till att samla ihop tallrikar.
+
+Pappan kommer fram till henne med Nova bredvid sig.
+
+**Pappa:** Du, hur gör vi med hämtningen imorgon?
+
+**Mamma:** Imorgon? Jag trodde vi sa söndag efter lunch.
+
+**Pappa:** Just det, söndag var det. Jag blandade ihop dagarna.
+
+**Mamma:** Ingen fara.
+
+Han vänder sig mot Nova.
+
+**Pappa:** Då åker du med mamma hem ikväll, så kommer jag och hämtar dig på söndag. Blir det bra?
+
+Nova tittar på honom.
+
+**Nova:** Va?
+
+**Pappa:** På söndag. Vi kan äta lunch först om du vill.
+
+**Nova:** Men...
+
+Hon tittar mellan sina föräldrar.
+
+**Nova:** Ska vi inte åka tillsammans?
+
+Mamman ler försiktigt.
+
+**Mamma:** Vi ska ju åt olika håll, älskling.
+
+**Nova:** Men vi kan väl åka till vårt hus?
+
+**Pappa:** Vilket hus menar du?
+
+**Nova:** Vårt gamla.
+
+Mamman och pappan blir tysta ett ögonblick.
+
+**Mamma:** Nova, det bor ju en annan familj där nu.
+
+**Nova:** Jag vet det.
+
+**Pappa:** Vi har ju våra lägenheter nu.
+
+**Nova:** Jag vet!
+
+Hennes röst blir lite högre än hon tänkt sig.
+
+Barnet och Alve, som står en bit bort, slutar prata.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
