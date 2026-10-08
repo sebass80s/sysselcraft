@@ -104,7 +104,7 @@ function approvedAnchorsFor(beat, manifest, approvals) {
     .filter((candidate) => {
       const approval = approvals.items?.[candidate.id];
       return approval?.status === "approved" &&
-        approval.outputRef &&
+        (approval.outputRef || approval.chatLibraryPath) &&
         approval.identityPassed === true &&
         approval.continuityPassed === true;
     });
@@ -118,7 +118,8 @@ function approvedAnchorsFor(beat, manifest, approvals) {
 
   return eligible.slice(-depth).reverse().map((candidate) => ({
     beatId: candidate.id,
-    outputRef: approvals.items[candidate.id].outputRef
+    outputRef: approvals.items[candidate.id].outputRef ?? null,
+    chatLibraryPath: approvals.items[candidate.id].chatLibraryPath ?? null
   }));
 }
 
@@ -195,7 +196,8 @@ for (const ref of environmentReferencePaths) {
   if (!fs.existsSync(ref)) fail(`Missing environment reference for ${beat.id}: ${ref}`);
 }
 
-const anchorReferencePaths = anchors.map((anchor) => anchor.outputRef);
+const anchorReferencePaths = anchors.map((anchor) => anchor.outputRef).filter(Boolean);
+const chatLibraryAnchorPaths = anchors.map((anchor) => anchor.chatLibraryPath).filter(Boolean);
 for (const ref of anchorReferencePaths) {
   if (!fs.existsSync(ref)) fail(`Approved anchor file is missing for ${beat.id}: ${ref}`);
 }
@@ -220,6 +222,7 @@ const job = {
   environmentReferencePaths,
   continuityAnchors: anchors,
   anchorReferencePaths,
+  chatLibraryAnchorPaths,
   referenceImagePaths: uniq([
     ...characterSheetPaths,
     ...environmentReferencePaths,
@@ -230,7 +233,8 @@ const job = {
   approval: approvals.items[beat.id],
   outputContract: {
     aspectRatio: beat.aspectRatio ?? manifest.aspectRatio ?? "16:9",
-    targetPath: beat.outputPath ?? null
+    targetPath: beat.outputPath ?? null,
+    chatLibraryPath: `${registry.chatLibraryAnchorRoot ?? "/SysselCraft/Art References/anchors"}/${manifest.productionId}/${beat.id}.png`
   }
 };
 
@@ -239,5 +243,7 @@ writeJson(outPath, job);
 console.log(`ART JOB READY: ${beat.id}`);
 console.log(`  canonical refs: ${characterSheetPaths.length}`);
 console.log(`  ChatGPT persistent refs: ${chatLibraryReferencePaths.length}`);
-console.log(`  continuity anchors: ${anchorReferencePaths.length}`);
+console.log(`  continuity anchors: ${anchors.length}`);
+console.log(`  local anchor refs: ${anchorReferencePaths.length}`);
+console.log(`  ChatGPT anchor refs: ${chatLibraryAnchorPaths.length}`);
 console.log(`  output: ${outPath}`);
