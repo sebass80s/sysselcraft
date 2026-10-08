@@ -5,6 +5,34 @@ Date: 2026-10-08
 
 This is the canonical production contract for Act 3 story art and the template for later chapters.
 
+## Chat shorthand — `kör art`
+
+The user command **`kör art`** is the canonical shorthand for executing the full SysselCraft **Art Pipeline 2.0**.
+
+It never means “generate an image from prose only”.
+
+When the user says `kör art` for a scene/beat, the active assistant must:
+
+1. read this document plus `image-pipeline/README.md`;
+2. resolve the scene into the structured v2 beat contract;
+3. resolve the exact recurring cast from `image-pipeline/character-registry.json`;
+4. retrieve every canonical cast PNG from ChatGPT Library at `/SysselCraft/Art References/characters/` as actual image inputs;
+5. resolve at most one approved location anchor;
+6. resolve at most one approved previous-beat anchor from the same location/continuity group;
+7. generate with ChatGPT image generation unless the user explicitly chooses another renderer;
+8. visually QA identity, exact cast, location, hard rules, wardrobe, continuity and Barnet face-hidden where applicable;
+9. reject failed candidates instead of letting them enter continuity;
+10. persist an accepted image under the pipeline's Library anchor/output path and mark it approved.
+
+Hard shorthand rules:
+- do not ask the user to re-upload canonical character sheets already in Library;
+- do not silently fall back to text-only character descriptions;
+- do not silently switch to Runway or another paid renderer;
+- canonical character sheets always outrank generated anchors for identity;
+- a candidate is not continuity until QA + approval pass.
+
+If the scene is already clear from the current conversation, `kör art` should execute rather than ask the user to restate it.
+
 ## Goal
 
 SysselCraft may need hundreds of images. Production must therefore survive long sequences, location changes and new conversations without:

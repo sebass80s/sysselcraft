@@ -12,6 +12,22 @@ Optional adapters:
 
 The renderer never decides identity or continuity. The pipeline does.
 
+## Operator shorthand: `kör art`
+
+In any future SysselCraft chat, the phrase **`kör art`** means:
+
+> Execute the full Art Pipeline 2.0 for the current requested scene.
+
+Required behavior:
+- use the structured v2 beat contract;
+- load every declared recurring character's canonical PNG from persistent ChatGPT Library as a real image input;
+- use one location anchor and at most one same-location previous-beat anchor when applicable;
+- render in ChatGPT image generation by default;
+- run the mandatory QA gate;
+- persist + approve only accepted candidates.
+
+It must **not** degrade into a standalone prose prompt, guessed character identity, repeated user upload, or silent Runway/API fallback.
+
 ## The three reference classes
 
 Every v2 art job separates references by responsibility.

@@ -1,5 +1,18 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
+## ART COMMAND — LOCKED 2026-10-08
+
+**`kör art`** is the user's canonical shorthand for **SysselCraft Art Pipeline 2.0**.
+
+A future Nova seeing this command must read:
+- `docs/ACT3_ART_PIPELINE.md`
+- `image-pipeline/README.md`
+- `image-pipeline/character-registry.json`
+
+Then execute the documented pipeline: structured beat → persistent canonical ChatGPT Library character refs → location anchor → at most one same-location previous-beat anchor → ChatGPT image generation → QA → approval/persistence.
+
+Do not ask Kalle to upload established character sheets again. Do not silently switch to Runway. Do not treat `kör art` as a plain text-to-image prompt.
+
 ## READ FIRST — CURRENT STATE 2026-10-07
 
 Repository reality always wins. Verify branch, HEAD and GitHub CI before any change.
