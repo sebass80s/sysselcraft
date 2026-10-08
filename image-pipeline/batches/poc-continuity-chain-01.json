@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "productionId": "poc-continuity-chain-01",
+  "aspectRatio": "16:9",
+  "continuity": {
+    "policy": "latest-approved-same-cast",
+    "anchorDepth": 2
+  },
+  "beats": [
+    {
+      "id": "POC-A3-001",
+      "title": "Anchor one",
+      "continuityGroup": "poc-a3-lakeside",
+      "characters": [
+        "alve",
+        "barnet"
+      ],
+      "summary": "Alve and Barnet stand beside a quiet Swedish lake, seen in a wide grounded story-moment composition.",
+      "shot": "Wide establishing story moment. Barnet rear-facing.",
+      "mood": "Quiet, natural, grounded.",
+      "rules": [
+        "Barnet is shown from behind.",
+        "Keep both canonical outfits unchanged."
+      ],
+      "mustNot": [
+        "extra people",
+        "civilization",
+        "Barnet's face",
+        "cartoon styling"
+      ],
+      "qaChecks": [
+        "Alve and Barnet remain recognizably canonical."
+      ]
+    },
+    {
+      "id": "POC-A3-002",
+      "title": "Anchor two",
+      "continuityGroup": "poc-a3-lakeside",
+      "characters": [
+        "alve",
+        "barnet"
+      ],
+      "summary": "Alve points across the lake while Barnet stands beside him, continuing the same visual sequence.",
+      "shot": "Medium-wide continuation of the accepted lakeside sequence.",
+      "mood": "Curious, restrained, natural.",
+      "rules": [
+        "Barnet remains rear three-quarter with face hidden.",
+        "Preserve the established lakeside visual language."
+      ],
+      "mustNot": [
+        "extra people",
+        "civilization",
+        "Barnet's face",
+        "wardrobe changes"
+      ],
+      "qaChecks": [
+        "Identity and clothing match the canonical sheets and prior approved anchor."
+      ]
+    },
+    {
+      "id": "POC-A3-003",
+      "title": "Continuity proof",
+      "continuityGroup": "poc-a3-lakeside",
+      "characters": [
+        "alve",
+        "barnet"
+      ],
+      "summary": "Alve and Barnet begin walking along the lakeshore, still within the same continuous visual sequence.",
+      "shot": "Wide side/rear composition with clear continuity from the previous accepted images.",
+      "mood": "Forward movement, calm anticipation.",
+      "rules": [
+        "Barnet's face remains fully hidden.",
+        "Preserve established character scale and clothing."
+      ],
+      "mustNot": [
+        "extra people",
+        "civilization",
+        "Barnet's face",
+        "identity drift"
+      ],
+      "qaChecks": [
+        "Both canonical identities survive the third image without drift."
+      ]
+    }
+  ]
+}
