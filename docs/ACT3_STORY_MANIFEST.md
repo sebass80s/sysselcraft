@@ -5978,6 +5978,135 @@ Mira vänder sig mot Novas föräldrar, som fortfarande står vid borden.
 
 *Här kan Mira senare hjälpa dem förstå hur mycket Nova har hoppats på dagen, utan att lägga ord i hennes mun.*
 
+
+## 11AD. A3-EPILOG-001–003 — FULL DIALOGUE
+
+### A3-EPILOG-001 – Ett meddelande
+
+*Några dagar efter familjedagen.*
+
+Barnet och Alve har precis kommit till staden med motorbåten.
+
+Alves mobil plingar.
+
+**Alve:** Nova!
+
+Han öppnar meddelandet.
+
+**Nova (meddelande):** Var är ni?
+
+**Alve:** I hamnen.
+
+**Nova (meddelande):** Bra. Kom till Rebeckas. NU.
+
+**Barnet:** Vad är det?
+
+**Alve:** Hon vill att vi kommer till spelhallen.
+
+Ett nytt meddelande dyker upp.
+
+**Nova (meddelande):** Och ta med ert mod.
+
+**Alve:** Oj.
+
+**Barnet:** Vadå?
+
+**Alve:** Jag tror hon har tränat.
+
+### A3-EPILOG-002 – Rekordet
+
+Rebeckas spelhall är full av blinkande skärmar och elektroniska ljudeffekter.
+
+Nova står framför det gamla arkadspelet där hon tidigare försökt slå rekordet.
+
+På skärmen lyser initialerna:
+
+**REB – 98 500**
+
+Under dem:
+
+**NOV – 98 450**
+
+**Alve:** Du är ju nästan uppe på rekordet!
+
+**Nova:** Jag vet!
+
+**Barnet:** Har du spelat mycket?
+
+**Nova:** Lite.
+
+Rebecka kommer fram bakom disken med sitt röda hår uppsatt i en slarvig knut.
+
+**Rebecka:** Hon har varit här varenda dag.
+
+**Nova:** Rebecka!
+
+**Rebecka:** Vadå? Du frågade inte om jag skulle hålla det hemligt.
+
+Alve tittar på poängen igen.
+
+**Alve:** Femtio poäng!
+
+**Nova:** Jag vet. Det är fruktansvärt.
+
+**Rebecka:** Det är mitt gamla rekord, förresten.
+
+**Barnet:** Är REB du?
+
+**Rebecka:** Vem annars?
+
+**Alve:** Jag trodde det var en legendarisk spelare.
+
+**Rebecka:** Det är det också.
+
+### A3-EPILOG-003 – En utmaning
+
+Nova håller fram spelkontrollen mot Barnet.
+
+**Nova:** Okej. Din tur.
+
+**Barnet:** Jag?
+
+**Nova:** Ja. Jag har tränat så mycket att jag behöver en riktig motståndare.
+
+**Alve:** Jag kan spela!
+
+**Nova:** Du tryckte på pausknappen när du skulle hoppa förra gången.
+
+**Alve:** Det var ett taktiskt beslut.
+
+**Rebecka:** En mycket ovanlig taktik.
+
+Nova skrattar.
+
+**Nova:** Först Barnet. Sedan du.
+
+*Spelaren får prova arkadspelet. Ett kort, återspelbart minispel, med personligt rekord och en poängtavla.*
+
+När omgången är över klappar Nova händerna.
+
+**Nova:** Okej! Inte illa!
+
+**Alve:** Nu är det min tur!
+
+Han tar kontrollen och ställer sig framför skärmen.
+
+**Alve:** Nu ska jag visa er hur man spelar.
+
+Han trycker på start.
+
+Figuren faller omedelbart ner i ett hål.
+
+**Rebecka:** Imponerande.
+
+**Barnet:** Nytt rekord?
+
+**Nova:** Kortast speltid någonsin!
+
+Alve tittar på skärmen.
+
+**Alve:** Jag skulle bara testa gravitationen.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
