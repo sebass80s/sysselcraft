@@ -195,7 +195,7 @@ for (const retiredState of [
 }
 assert.match(
   villageSource,
-  /const snapshot = await handoff\.registration\.loadSnapshot\(\);[\s\S]*setStoryPurchaseReturnContext\(handoff\)/,
+  /const expectedChildId = await getPairedChildId\(\);[\s\S]*const snapshot = await handoff\.registration\.loadSnapshot\(\{ expectedChildId \}\);[\s\S]*setStoryPurchaseReturnContext\(\{ \.\.\.handoff, expectedChildId \}\)/,
   "direct Story Purchase handoff must load through the resolved registry entry",
 );
 assert.match(
