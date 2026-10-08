@@ -165,6 +165,7 @@ try {
     outputContract: {
       aspectRatio: beat.aspectRatio ?? manifest.aspectRatio ?? "16:9",
       targetPath: beat.outputPath ?? null,
+      repoOutputPath: beat.outputPath ?? null,
       chatLibraryPath: `${registry.chatLibraryAnchorRoot ?? "/SysselCraft/Art References/anchors"}/${manifest.productionId}/${beat.id}.png`
     }
   };
