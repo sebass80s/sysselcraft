@@ -132,6 +132,38 @@
         "wardrobe changes",
         "Barnet's face"
       ]
+    },
+    {
+      "id": "V2-005",
+      "title": "Return to harbor",
+      "locationId": "town-harbor",
+      "establishLocation": false,
+      "characters": [
+        "alve",
+        "barnet",
+        "nova"
+      ],
+      "summary": "The three return to the same town harbor after visiting the park.",
+      "shot": "Wide return-to-location story moment.",
+      "mood": "Familiar and more relaxed than on arrival.",
+      "timeOfDay": "late afternoon",
+      "emotions": {
+        "alve": "comfortable",
+        "barnet": "curious",
+        "nova": "more at ease"
+      },
+      "exactCastOnly": true,
+      "wardrobeLock": true,
+      "barnetFaceHidden": true,
+      "rules": [
+        "The harbor must match the originally established harbor geography."
+      ],
+      "mustNot": [
+        "extra people",
+        "extra animals",
+        "wardrobe changes",
+        "Barnet's face"
+      ]
     }
   ]
 }
