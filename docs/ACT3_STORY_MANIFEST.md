@@ -6934,6 +6934,149 @@ Nova skrattar och följer med Sol in.
 
 **Bevaranderegel:** Skriv inte nya repliker och kalla dem gammal godkänd originaldialog. Återfinn ordagranna utdrag ur tidigare chattar eller gör ett särskilt nytt manusutkast för användarens godkännande. Ingen runtime-/art-implementation gjord av denna audit.
 
+
+## 11AK. A3-HOME-004–008 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
+
+**Observera:** Tidigare godkänd handling, men originalreplikerna gick inte att återställa från manifestet. Dessa repliker är nyskrivna för att göra beats möjliga att granska, inte verifierad ordagrann återgivning.
+
+### A3-HOME-004 – Mitt gamla rum
+
+Nova öppnar dörren till sitt rum i mammans lägenhet. Sängen står intill fönstret och på skrivbordet ligger spel, ritblock och en gitarr.
+
+**Nova:** Välkomna till mitt slott. Inte så stort, men jag bestämmer över musiken.
+
+**Alve:** Får vi se din gitarr?
+
+**Nova:** Om du lovar att inte spela som Sol.
+
+**Barnet:** Har du bott här länge?
+
+**Nova:** Sedan mamma och pappa flyttade isär. Förut bodde vi i en villa med trädgård.
+
+Hon visar en inramad bild med studsmatta och syrener.
+
+**Nova:** Där var mitt rum. Jag hade ett jättestort skrivbord och kunde bygga ett legoslott utan att behöva plocka undan middagen först.
+
+**Alve:** Lyxigt. Hos mig fick jag nästan skotta bort brödsmulor från bygget.
+
+**Nova:** Vi hade en studsmatta som var nergrävd. Och en syrenbuske som luktade jättegott på sommaren.
+
+**Barnet:** Kan du hälsa på där?
+
+**Nova:** Någon annan bor där nu. Så nej, inte direkt.
+
+Hon ställer tillbaka bilden.
+
+**Nova:** Men jag räddade faktiskt en sak innan vi flyttade. Vänta här!
+
+### A3-HOME-005 – Skattkistan
+
+Nova drar fram en plåtlåda under sängen. Den innehåller snäckor, en blå glaskula, en nyckel och vikta papper.
+
+**Alve:** Är det guld?
+
+**Nova:** Bättre. Det är min skattkista.
+
+**Barnet:** Är det en karta?
+
+**Nova:** Från trädgården. Jag brukade göra skattjakter åt mamma och pappa.
+
+**Alve:** Hittade de skatten?
+
+**Nova:** Oftast. En gång stod det ”VARNING FÖR PIRATER” vid grillen, så pappa gick runt med en grilltång som svärd.
+
+**Barnet:** Kan du göra en skattjakt här i staden?
+
+Nova tittar upp.
+
+**Nova:** Det skulle jag kunna. Men då får ni inte fuska.
+
+**Alve:** Jag kan gömma skatten.
+
+**Nova:** Och komma ihåg var den ligger?
+
+**Alve:** Det är ju svårare om jag glömmer.
+
+**Nova:** Du får definitivt inte gömma den.
+
+### A3-HOME-006 – På kylskåpet
+
+I köket hjälper Barnet till att bära undan glas. På kylskåpet sitter en kalender med blå och gröna dagar.
+
+**Barnet:** Varför är dagarna olika färger?
+
+**Nova:** Grönt är hos mamma. Blått är hos pappa.
+
+**Mamma:** Just det, Nova. Nästa fredag bytte pappa och jag dag. Då är du hos honom.
+
+**Nova:** Men jag trodde jag skulle vara här hela helgen!
+
+**Mamma:** Jag vet. Vi behövde ändra den här gången. Vi kan prata om det efter maten.
+
+**Nova:** Ni ändrar alltid precis när jag har planerat något!
+
+Nova stänger skåpluckan lite för hårt.
+
+**Mamma:** Jag hör att du blir arg. Vi pratar om hur vi kan lösa det.
+
+**Nova:** Okej.
+
+Hon tar sitt glas och går mot rummet.
+
+### A3-HOME-007 – Lite senare
+
+Nova sitter på mattan och skissar en ny karta.
+
+**Nova:** Jag glömmer alltid något. Ibland är gympapåsen hos pappa när jag är hos mamma. En gång fick han köra hela vägen till skolan med den.
+
+**Alve:** Han borde ha en extra gympapåse.
+
+**Nova:** Det säger alla. Men jag vill bara slippa hålla reda på två av allt.
+
+Barnet tittar på kartan.
+
+**Barnet:** Men skattjakten kan ju vara i stan. Då funkar den från båda hemmen.
+
+Nova stannar upp.
+
+**Nova:** Det var faktiskt smart.
+
+**Alve:** Skriv upp att jag sa det.
+
+**Nova:** Det var Barnet som sa det.
+
+**Alve:** Jag höll med väldigt snabbt.
+
+Nova skrattar.
+
+**Nova:** Bra. Då får ni första ledtråden snart. Och den ska bli svårare än minigolfen!
+
+### A3-HOME-008 – Innan de går
+
+Det skymmer och Barnet och Alve tar på sig skorna.
+
+**Mamma:** Tack för idag! Vill ni ha med er en bulle till båten?
+
+**Alve:** Gärna två.
+
+**Nova:** Du fick ju redan två!
+
+**Mamma:** Hälsa Mira från mig nästa gång ni träffar henne.
+
+**Barnet:** Det ska vi.
+
+Vid dörren lutar sig Nova närmare Barnet.
+
+**Nova:** Och kom ihåg, ingen säger något om överraskningen.
+
+**Barnet:** Jag lovar.
+
+**Nova:** Bra. Jag skickar kartan när den är klar.
+
+Strax efteråt plingar Barnets mobil. Nova har skickat en bild på ett nästan tomt skattkartspapper.
+
+**Nova (meddelande):** Börja öva. 😎
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
