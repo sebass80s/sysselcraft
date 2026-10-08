@@ -4455,6 +4455,158 @@ Nova tar fram mobilen och fotograferar spelhörnan.
 
 **Continuity:** The three kids genuinely believe recreating the 2011 first date might reunite her parents. Do NOT retroactively have Barnet or Alve counsel Nova or predict failure. **Mira** alone understands the adult complexity and handles it gently. Nova's misguided self-blame for her dinner outburst is still withheld for the aftermath. The parents do not reunite. All physical festival assets must respect purchases already made.
 
+## 11T. Operation Pappa Förlorar Igen — STORY LOCKED
+
+**Status:** User explicitly approved A3-SECRET-001–005 and requested new A3-SECRET-006, alone with Mira. First five approved dialogue beats exist in the conversation before this update; the following is a precise plot/script record, not a verbatim transcription. New beat 006 is reproduced in full below. No runtime/art implementation.
+
+### A3-SECRET-001 – En mycket hemlig fråga
+Barnet, Nova and Alve visit Mira. Alve draws a crossed-out heart on Nova's notebook and loudly says they have a *very secret* question. They ask for music played during the 2011 folkpark tournament. Mira remembers bad dance music and offers to look.
+
+### A3-SECRET-002 – Fotot avslöjar något
+Mira produces an old photo album. A photograph contains Nova's mum beside Mira, and another shows dad beside an event band's poster for FOLKPARKENS SOMMARTURNERING 2011. Alve blurts **“Så att de blir kära igen!”**, then fails to cover by adding **“…i musiken.”** Mira quietly plays along without confronting the children.
+
+### A3-SECRET-003 – Mira vet
+They decide to ask Sol to find that band's music. Mira is pleased by the children's work, does not promise a reunion, and lends them the picture carefully, expecting its return.
+
+### A3-SECRET-004 – Ett nytt problem
+Outside, the children celebrate finding photo, music and scoreboard. Nova wants her father to wear the original white shirt but cannot openly explain why. Alve proposes an anonymous threatening-sounding note followed by “snälla”, Barnet suggests asking people to dress up, but Henrik might then make a speech. They leave the shirt question unresolved.
+
+### A3-SECRET-005 – En överraskning från Sol
+Sol recognizes the band from the old poster and thinks she has one of its records. She invites them to hunt through her collection of more than four hundred records. Humour about another impossible storage area; no new required shopping or new music-game engine. All three children still genuinely believe the reunion idea might work.
+
+### A3-SECRET-006 – Bara en liten sak (full dialogue; user's requested addition)
+
+Barnet kommer tillbaka till Miras affär.
+
+Mira står bakom disken och packar upp några varor.
+
+**Mira:** Redan tillbaka? Glömde ni något?
+
+**Barnet:** Nova och Alve gick vidare. Jag ville bara lämna albumet så att det inte försvinner.
+
+**Mira:** Tack! Det var omtänksamt.
+
+Hon lägger albumet i en låda bakom disken.
+
+**Mira:** Hittade ni musiken?
+
+**Barnet:** Sol tror att hon har skivan.
+
+**Mira:** Då får vi hoppas att hon hittar den under alla de andra fyrahundra.
+
+Barnet skrattar.
+
+Mira fortsätter plocka upp varor.
+
+**Mira:** Nova verkade väldigt glad idag.
+
+**Barnet:** Ja. Hon tror verkligen att planen kommer fungera.
+
+Mira stannar upp en kort stund.
+
+**Mira:** Det märkte jag.
+
+**Barnet:** Tror du att den gör det?
+
+Mira tittar på Barnet.
+
+**Mira:** Jag tror att ni kommer ordna en väldigt fin dag.
+
+**Barnet:** Men tror du att hennes mamma och pappa blir kära igen?
+
+Mira funderar en stund.
+
+**Mira:** Det vet jag inte, vännen.
+
+**Barnet:** De var ju kära förut.
+
+**Mira:** Ja, det var de.
+
+Hon tar upp ett paket och ställer det på hyllan.
+
+**Mira:** Och jag tror att de fortfarande tycker väldigt mycket om Nova. Båda två.
+
+**Barnet:** Det gör de nog.
+
+**Mira:** Vet du vad jag tänkte fråga dig?
+
+**Barnet:** Vadå?
+
+**Mira:** Brukar du vara med Nova när hon är ledsen också?
+
+**Barnet:** Ja. Vi blev lite osams förut, men sedan blev vi sams igen.
+
+**Mira:** Vad bra.
+
+**Barnet:** Varför undrar du?
+
+**Mira:** Jag tänkte bara att det är fint att hon har fått så bra kompisar.
+
+Barnet ler.
+
+**Barnet:** Hon är en bra kompis också.
+
+**Mira:** Det tror jag säkert.
+
+Mira stänger den sista kartongen.
+
+**Mira:** Om hon skulle bli ledsen någon gång, så behöver du inte alltid komma på något smart att säga.
+
+**Barnet:** Inte?
+
+**Mira:** Nej. Det kan räcka att fråga om hon vill ha sällskap.
+
+Barnet funderar lite.
+
+**Barnet:** Eller spela något?
+
+**Mira:** Ja. Om hon vill det.
+
+**Barnet:** Vi brukar ha ganska kul tillsammans.
+
+**Mira:** Det har jag förstått.
+
+Utanför hörs Alve ropa från torget.
+
+**Alve:** BARNET! KOMMER DU?
+
+**Barnet:** Jag måste gå!
+
+**Mira:** Spring du.
+
+Barnet går mot dörren.
+
+**Mira:** Du!
+
+Barnet vänder sig om.
+
+**Mira:** Hälsa Nova att jag ser fram emot festen.
+
+**Barnet:** Det ska jag!
+
+**Mira:** Och hälsa Alve att jag inte har glömt hans glass.
+
+Barnet skrattar och springer ut.
+
+Mira blir stående bakom disken en stund.
+
+Hon tar fram albumet igen och öppnar det vid fotografiet från 2011.
+
+På bilden skrattar två unga människor bredvid ett gammalt shuffleboardbord.
+
+Mira ler svagt, stänger albumet och lägger tillbaka det.
+
+*Scenen slutar.*
+
+### Binding continuity and future payoff
+
+- Mira knows the children's deeper plan from earlier and from Alve's outburst; she never humiliates them or discloses it.
+- Mira gently prepares Barnet to **be present as a friend, not to fix Nova's feelings**. Avoid adult-sounding advice placed in the children's mouths.
+- **Do not make Barnet responsible for Nova's mental wellbeing**. Her mother later explicitly reassures her the divorce was not caused by her outburst.
+- Before the party the kids continue genuinely hoping the reunion plan works. Do not spoil the outcome for them.
+- Photos are returned; the exact photograph used for decorating needs to be copied/arranged separately if relevant.
+- In the aftermath Mira may help set up the mother-daughter conversation, not replace it.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
