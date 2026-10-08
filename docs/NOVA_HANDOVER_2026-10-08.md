@@ -13,7 +13,11 @@ Verify branch, HEAD, GitHub CI and Runtime Browser Closeout before changing anyt
 
 Code checkpoint immediately before this documentation closeout:
 
-`ddb3db947dc30f96af054012937b8a8afbf7ba70`
+`b118978ad51fef1eb81c74891465808fd86276c5`
+
+Verified on this exact code/test checkpoint:
+- GitHub Actions CI #2490: **SUCCESS**
+- Runtime Browser Closeout #28: **SUCCESS**
 
 That commit fixes the one syntax defect introduced by the first Act 3 title-entry implementation. After the documentation commits, verify the new exact HEAD again.
 
