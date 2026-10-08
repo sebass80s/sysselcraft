@@ -9,8 +9,9 @@ Canonical working Act 3 story specification:
 
 It locks the chapter title **På andra sidan sjön**, the larger Swedish lakeside town/city, Nova as emotional protagonist, the central lakeside park/family-day arc, the village support roles for Henning/Linus/Mira/Sol, and the rule that Nova's parents do not reunite.
 
-The current opening direction is:
-harbour arrival → withdrawn Nova → dock conversation → Nova shows the park.
+**Act 3 opening dialogue locked 2026-10-08.** The official, exact child-facing opening (A3-OPEN-000 through A3-OPEN-005) is now in `docs/ACT3_STORY_MANIFEST.md` §11. Barnet drives the meeting, Nova is suspicious and reserved, Alve stays a sidekick. Nova receives an unspecified phone notification and says her parents would not agree about allowing the boat trip; the separation remains unrevealed. Curiosity about repairing the worn park motivates her to guide the children. Do not treat this lock as runtime implementation.
+
+Locked opening beats: chapter title → harbour arrival → first guarded encounter → motorboat and subtle family hint → invitation to inspect the park → walk toward its entrance.
 
 Older passages below saying the exact Act 3 destination/content is undefined are historical and superseded by the Act 3 manifest.
 
