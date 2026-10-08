@@ -332,41 +332,278 @@ After Nova's realization:
 
 This is a perceptual shift, not a literal environment mutation.
 
-## 11. Current opening direction — authored, not yet dialogue-locked
+## 11. Act 3 opening — DIALOGUE LOCKED 2026-10-08
 
-The title card is locked. The first city-arrival beats have now also been explored visually through the Art Pipeline.
+**Production status:** Exact story dialogue locked. Only the shared ChapterIntroCard (A3-OPEN-000) is implemented in runtime. The remaining beats below are authored canon, **not yet implemented**. Preserve the names/line order and concrete story events when encoding; do not substitute earlier draft dialogue.
 
-Current opening direction:
+This is the official opening of Act 3. The player/Barnet leads every interaction; Alve is the secondary, lightly comic sidekick. Nova begins guarded and suspicious, shows cautious interest in the repaired motorboat and the possibility of improving the park, and does **not** become cheerful immediately. Her parents' separation is only subtly seeded; the actual cause and Nova's false sense of responsibility stay unrevealed.
 
-### A3-OPEN-000 — Chapter title
-Black title card:
+### A3-OPEN-000 — Chapter title (implemented)
+
+Black shared ChapterIntroCard:
 
 > **KAPITEL 3**  
 > **På andra sidan sjön**
 
-### A3-OPEN-001 — Arrival at the town harbour
-Barnet and Alve arrive by the restored motorboat at the small city harbour.
+### A3-OPEN-001 — Hamnen
 
-The city is clearly more populated/urban than the lake place.
+Motorbåten glider in mellan bryggorna.
 
-### A3-OPEN-002 — Nova on the dock
-Nova is sitting at the harbour/dock with headphones on, head in her hands, looking sad or withdrawn.
+Längs kajen ligger segelbåtar och små motorbåtar. Bakom hamnen reser sig flera våningar höga hus. En buss stannar vid torget och människor promenerar längs vattnet.
 
-Barnet and Alve notice her.
+**Alve:** Kolla alla båtar! Den där har till och med två motorer.
 
-### A3-OPEN-003 — Talk on the dock
-Barnet and Alve speak with Nova in the same harbour.
+**Barnet:** Vi kan lägga till där borta.
 
-Nova remains subdued but begins engaging.
+Alve hoppar upp på bryggan med förtöjningslinan.
 
-### A3-OPEN-004 — Nova shows the park
-Nova takes Barnet and Alve to the city park/folkpark by the water.
+**Alve:** Kasta hit den andra tampen!
 
-She shows them around and visibly becomes a little happier/more open.
+Barnet kastar repet.
 
-These four arrival beats are the current production direction but their exact dialogue and beat boundaries are **not yet locked**.
+**Alve:** Sådär. Nu kommer vi åtminstone inte driva iväg.
 
-The existing art stress/PoC proves the visual continuity method; stress-test images are not automatically canonical runtime assets.
+De kliver upp på bryggan.
+
+**Alve:** Undrar om det finns någon som säljer glass här.
+
+**Barnet:** Vi kan börja med att hitta centrum.
+
+### A3-OPEN-002 — Tjejen på kajen
+
+På en bänk längre bort sitter en tjej med stora hörlurar. Hon håller mobilen i handen och har dragit upp knäna mot bröstet.
+
+Barnet går fram till henne.
+
+**Barnet:** Ursäkta, vet du hur man kommer till centrum?
+
+Tjejen tittar upp och drar av sig ena hörluren.
+
+**Nova:** Vad?
+
+**Barnet:** Centrum. Vi har precis kommit hit med båten.
+
+**Nova:** Trappan bakom kiosken. Sen rakt fram.
+
+**Barnet:** Tack! Jag heter Barnet.
+
+**Nova:** Jaha?
+
+**Barnet:** Vad heter du?
+
+**Nova:** Brukar du gå fram till folk du inte känner och fråga vad de heter?
+
+**Barnet:** Ibland.
+
+Nova granskar Barnet.
+
+**Nova:** Nova.
+
+**Barnet:** Bor du här?
+
+**Nova:** Ja. Och jag försöker faktiskt lyssna på musik.
+
+Hon sätter tillbaka hörluren.
+
+Barnet vänder sig mot Alve, som står vid båten.
+
+**Alve:** Fick du veta var centrum ligger?
+
+**Barnet:** Bakom kiosken.
+
+Nova har hört dem och lyfter blicken igen.
+
+### A3-OPEN-003 — Båten (med låst subtil föräldrahint)
+
+**Nova:** Vänta. Är det ni som kom med den där gamla motorbåten?
+
+**Barnet:** Ja.
+
+**Nova:** Den såg ut att knappt komma in i hamnen.
+
+**Barnet:** Vi har renoverat den. Den fungerar faktiskt ganska bra nu.
+
+**Nova:** Har ni renoverat en motorbåt?
+
+**Barnet:** Jag och Alve. Fast vi fick hjälp också.
+
+**Nova:** Var kommer ni ifrån?
+
+**Barnet:** Andra sidan sjön. Det finns en liten by där och en stuga ute i skogen.
+
+**Nova:** Och ni åkte hit bara för att titta runt?
+
+**Barnet:** Vi ville se vad som fanns på andra sidan sjön.
+
+**Nova:** Ni kunde väl ha kollat på en karta?
+
+**Barnet:** Det är roligare att åka båt.
+
+**Nova:** Får ni verkligen åka så långt själva?
+
+**Barnet:** Ja. Varför?
+
+**Nova:** Mina föräldrar skulle aldrig komma överens om det.
+
+Nova tittar ner på mobilen. Ett meddelande har dykt upp på skärmen.
+
+Hon läser det, suckar och lägger undan telefonen.
+
+**Barnet:** Har det hänt något?
+
+**Nova:** Nej.
+
+**Barnet:** Du ser ledsen ut.
+
+**Nova:** Jag är mest trött på att alla ska bestämma saker hela tiden.
+
+**Barnet:** Vadå för saker?
+
+**Nova:** Strunt samma. Du känner inte ens mig.
+
+Barnet tittar mot motorbåten.
+
+**Barnet:** Nä. Men du får gärna följa med och kolla på stan.
+
+**Nova:** Jag bor ju här.
+
+**Barnet:** Just det. Då kanske du kan visa oss något istället.
+
+Nova tittar upp igen.
+
+**Nova:** Ni vet alltså verkligen ingenting om den här stan?
+
+**Barnet:** Inte ens var parken ligger. Finns det något roligt att göra här?
+
+### A3-OPEN-004 — Den gamla parken
+
+**Nova:** Det finns ett köpcentrum. Och en biograf.
+
+**Barnet:** Något utomhus?
+
+**Nova:** Det finns en park vid vattnet. En gammal folkpark.
+
+**Barnet:** Vad finns där?
+
+**Nova:** Minigolf, en scen, ett kafé. En badbrygga också.
+
+**Barnet:** Det låter ju kul.
+
+**Nova:** Det var bättre förr. Nu är halva minigolfbanan trasig och lamporna vid scenen fungerar knappt.
+
+**Barnet:** Varför lagar ingen det?
+
+**Nova:** Vet inte. Kommunen kanske inte bryr sig.
+
+**Barnet:** Vi skulle kunna hjälpa till.
+
+Nova tittar upp från mobilen.
+
+**Nova:** Med vadå?
+
+**Barnet:** Laga minigolfbanan. Eller lamporna.
+
+**Nova:** Du har inte ens sett parken.
+
+**Barnet:** Nej, men vi hade aldrig lagat en motorbåt heller.
+
+Nova kastar en blick mot båten.
+
+**Nova:** Du tror att ni kan komma hit och börja laga saker som ni hittar?
+
+**Barnet:** Vi kan åtminstone titta på vad som behöver göras.
+
+**Nova:** Det är inte så enkelt.
+
+**Barnet:** Det var inte båten heller.
+
+Nova blir tyst en stund.
+
+**Nova:** Det finns faktiskt ett gammalt förråd bakom scenen. Där brukade de ha verktyg och färg.
+
+**Barnet:** Finns det kvar?
+
+**Nova:** Jag vet inte. Det är länge sedan jag var där.
+
+**Barnet:** Ska vi gå och kolla?
+
+**Nova:** Varför är du så intresserad av den där parken?
+
+**Barnet:** Du sa ju att den brukade vara rolig. Det vore synd om den bara fick stå och förfalla.
+
+Nova tittar bort mot stan.
+
+**Nova:** Den var faktiskt riktigt fin en gång.
+
+**Barnet:** Vill du visa oss?
+
+**Nova:** Jag kan visa var den ligger. Men jag lovar inte att ni får hålla på med någonting där.
+
+**Barnet:** Vi börjar med att titta.
+
+Nova stoppar mobilen i bakfickan och hänger hörlurarna runt halsen.
+
+**Nova:** Okej. Men då går vi längs vattnet. Det är närmare.
+
+Alve kommer tillbaka från båten.
+
+**Alve:** Ska vi någonstans?
+
+**Barnet:** Nova ska visa oss en park.
+
+**Alve:** Har de glass där?
+
+**Nova:** Det finns ett kafé.
+
+**Alve:** Perfekt.
+
+**Nova:** Jag sa inte att det var öppet.
+
+Nova börjar gå längs kajen.
+
+Barnet och Alve följer efter.
+
+### A3-OPEN-005 — På väg mot parken
+
+De lämnar hamnen och följer strandpromenaden.
+
+En cyklist ringer på klockan när de går för brett över gångvägen.
+
+**Nova:** Håll till höger. Det är cykelbana på andra sidan strecket.
+
+Barnet flyttar sig.
+
+**Barnet:** Hur länge har du bott här?
+
+**Nova:** Hela livet.
+
+**Barnet:** Då måste du kunna varenda väg.
+
+**Nova:** Nästan. Jag brukade cykla hit hela tiden.
+
+**Barnet:** Till parken?
+
+**Nova:** Mm. Vi spelade minigolf där nästan varje helg.
+
+**Barnet:** Vilken bana var svårast?
+
+**Nova:** Sjuan. Den hade en liten bro där bollen alltid fastnade.
+
+**Barnet:** Fick du någonsin i den?
+
+**Nova:** En gång. På första slaget, faktiskt.
+
+**Barnet:** Då får du visa hur man gör.
+
+Nova tittar på Barnet.
+
+**Nova:** Om banan ens finns kvar.
+
+De fortsätter längs vattnet.
+
+Längre fram skymtar parkens gamla entréskylt mellan träden.
+
+**Continuity notes:** The phone notification foreshadows the parental split but its sender/content are **not yet locked**. Do not invent or display a particular message in this intro. Nova starts closed off, follows out of genuine curiosity about repairing the park, and only begins to open up on the walk. A3-OPEN-005 is a story transition toward the park, not proof that the playable map has been designed.
 
 ## 12. Art production — locked
 
@@ -448,7 +685,7 @@ The text shown after the chapter title in `Act3Skeleton.tsx` is temporary runtim
 ## 15. Open design decisions
 
 Still to author/lock:
-- exact arrival dialogue with Nova;
+- exact arrival dialogue with Nova: **LOCKED in section 11**;
 - exact playable city/park map composition;
 - exact contribution/progression count for the four preparation streams;
 - whether streams are freely selectable, interleaved by authored order, or hybrid;
