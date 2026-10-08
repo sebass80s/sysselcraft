@@ -1,9 +1,13 @@
 # Act 3 Art Pipeline
 
-Status: **ART PIPELINE 2.0**
+Status: **ART PIPELINE 2.0 · LOCKED PRODUCTION METHOD**
 Date: 2026-10-08
 
 This is the canonical production contract for Act 3 story art and the template for later chapters.
+
+## Production lock — 2026-10-08
+
+This workflow is now locked for production. Normal Act 3 work should use it, not redesign it. Change it only if Kalle explicitly asks or a concrete production failure proves the contract insufficient.
 
 ## Chat shorthand — `kör art`
 
