@@ -6198,6 +6198,173 @@ Nova skrattar och knuffar till honom med axeln.
 
 **Alve:** Det är pizza.
 
+
+## 11AF. A3-EPILOG-005–006 — FULL REVISED DIALOGUE
+
+### A3-EPILOG-005 – En ny utmaning
+
+Rebecka kommer fram till soffan.
+
+**Rebecka:** Hörni! Ska ni sitta här hela dagen eller tänker någon försöka slå mitt rekord?
+
+**Nova:** Vi håller på att samla krafter.
+
+**Rebecka:** Det låter som en ursäkt.
+
+**Alve:** Hon är nervös.
+
+**Nova:** Vem då?
+
+**Alve:** Rebecka. Hon vet att vi kommer slå henne.
+
+Rebecka skrattar.
+
+**Rebecka:** Du får gärna börja med att klara första banan.
+
+**Alve:** Jag undersökte bara hur spelet fungerar.
+
+**Rebecka:** Genom att ramla ner i samma hål fyra gånger?
+
+**Alve:** Det är viktigt att vara noggrann.
+
+Nova reser sig.
+
+**Nova:** Okej! En sista omgång.
+
+**Barnet:** Ska du försöka slå rekordet igen?
+
+**Nova:** Nej.
+
+De andra stirrar på henne.
+
+**Nova:** Jag ska slå rekordet.
+
+Rebecka höjer ögonbrynen.
+
+**Rebecka:** Det vill jag se.
+
+*Här får spelaren välja om Barnet ska spela eller heja på Nova. Om rekordet slås får spelaren ett roligt extra ögonblick, men berättelsen fortsätter oavsett resultat.*
+
+### A3-EPILOG-006 – Tre kompisar
+
+En stund senare kommer Barnet, Nova och Alve ut från spelhallen.
+
+**Alve:** Jag tycker faktiskt att jag blev ganska bra på slutet.
+
+**Nova:** Du klarade två banor.
+
+**Alve:** Dubbelt så många som förut.
+
+**Barnet:** Det är ju sant.
+
+Nova skrattar.
+
+De börjar gå mot hamnen.
+
+**Nova:** Vad ska ni göra imorgon?
+
+**Barnet:** Vet inte riktigt.
+
+**Alve:** Jag tänkte sova länge.
+
+**Nova:** Ska vi hitta på något?
+
+**Alve:** Vadå?
+
+**Nova:** Ingen aning.
+
+Alve stannar.
+
+**Alve:** Vänta. Du har ingen plan?
+
+**Nova:** Nej.
+
+**Alve:** Ingen lista?
+
+**Nova:** Nej!
+
+**Alve:** Inga saker vi behöver köpa?
+
+**Nova:** ALVE!
+
+Barnet börjar skratta.
+
+Nova knuffar lätt till Alve.
+
+**Nova:** Vi kan väl bara träffas och se vad vi känner för?
+
+**Barnet:** Det låter kul.
+
+**Alve:** Okej. Men jag tänker ta med matsäck.
+
+**Nova:** Det får du.
+
+De fortsätter gå.
+
+Vid hamnen stannar Nova och tittar ut över sjön.
+
+**Nova:** Vet ni vad?
+
+**Barnet:** Vadå?
+
+**Nova:** Jag är väldigt glad att ni kom hit den där dagen.
+
+**Alve:** När vi kom med båten?
+
+**Nova:** Ja.
+
+**Barnet:** Vi med.
+
+Nova tittar på dem.
+
+**Nova:** Ni är mina bästa kompisar.
+
+Alve ler.
+
+**Alve:** Du är rätt bra du också.
+
+**Nova:** Rätt bra?!
+
+**Alve:** Okej då. Jättebra.
+
+De skrattar.
+
+Alve kliver ner i motorbåten.
+
+**Alve:** Kom nu! Jag börjar bli hungrig!
+
+**Barnet:** Du åt ju nyss!
+
+**Alve:** Det var förut.
+
+Barnet kliver ombord.
+
+Nova står kvar på bryggan och vinkar.
+
+**Nova:** Ses imorgon!
+
+**Barnet:** Ses!
+
+**Alve:** Glöm inte matsäcken!
+
+**Nova:** DET ÄR DU SOM SKA TA MED DEN!
+
+Motorbåten lämnar hamnen.
+
+Nova står kvar och vinkar tills båten är en bit ut på sjön.
+
+Sedan tar hon upp mobilen.
+
+På skärmen syns det nya fotografiet från parkbänken.
+
+Hon ler och stoppar ner mobilen igen.
+
+*Kameran följer motorbåten ut över vattnet.*
+
+*Bilden tonar långsamt ut.*
+
+**SLUT PÅ TREDJE KAPITLET**
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
