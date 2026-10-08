@@ -112,7 +112,8 @@ The job contains:
 - previous-beat anchor;
 - compiled prompt;
 - mandatory QA ids;
-- target persistent output path.
+- target persistent Library output path;
+- exact GitHub runtime output path.
 
 ## Exact-cast rule
 
@@ -147,6 +148,25 @@ npm run art:approve -- \
 ```
 
 Approval is bound to the exact candidate that was QA-reviewed. Replacing the candidate after QA makes approval fail.
+
+## GitHub promotion
+
+Every v2 beat has a mandatory, unique `outputPath` under:
+
+`public/assets/village/story-moments/act3/<group>/<filename>.png`
+
+`build-art-job.mjs` exposes it as `outputContract.repoOutputPath`.
+`approve-art-image.mjs` stores it as `approved.repoOutputPath`.
+
+For `kör art`, a user-selected + QA-passed image is promoted in two places:
+- ChatGPT Library, for future continuity;
+- GitHub at `repoOutputPath`, for runtime consumption.
+
+The exact same raster must be used in both places. Do not regenerate or silently recompress during GitHub promotion.
+
+Do not push drafts, rejected candidates or stress-test/PoC images unless the user explicitly selects them for production.
+
+If the current tool session cannot transport binary image bytes into GitHub, stop and report the repo-promotion step as pending. Never claim a GitHub image upload that has not been verified.
 
 ## Fail-closed rules
 

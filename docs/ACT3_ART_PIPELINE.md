@@ -22,7 +22,9 @@ When the user says `kör art` for a scene/beat, the active assistant must:
 7. generate with ChatGPT image generation unless the user explicitly chooses another renderer;
 8. visually QA identity, exact cast, location, hard rules, wardrobe, continuity and Barnet face-hidden where applicable;
 9. reject failed candidates instead of letting them enter continuity;
-10. persist an accepted image under the pipeline's Library anchor/output path and mark it approved.
+10. persist an accepted image under the pipeline's Library anchor/output path and mark it approved;
+11. upload the **exact same accepted raster** to the beat's declared GitHub `outputPath` on the active SysselCraft branch;
+12. verify the resulting GitHub commit/path before considering repository promotion complete.
 
 Hard shorthand rules:
 - do not ask the user to re-upload canonical character sheets already in Library;
@@ -233,9 +235,32 @@ For each real story beat:
 8. record QA;
 9. reject or approve;
 10. save approved image to the job's Library output path;
-11. continue.
+11. upload that exact approved image to `outputContract.repoOutputPath` in GitHub;
+12. verify the GitHub commit/path;
+13. continue.
 
 No approved QA, no anchor.
+
+## GitHub promotion contract
+
+Every v2 beat must declare one unique runtime asset path under:
+
+`public/assets/village/story-moments/act3/<group>/<filename>.png`
+
+This path is carried into the renderer-neutral job as `outputContract.repoOutputPath` and into approved metadata as `approved.repoOutputPath`.
+
+When the user selects/accepts a candidate and QA passes:
+1. keep the accepted raster in ChatGPT Library for continuity;
+2. promote that **same raster** to GitHub at `repoOutputPath`;
+3. do not rename, recompress, substitute or regenerate it during promotion;
+4. verify the GitHub path/commit after upload;
+5. only the explicitly selected candidate may replace an existing asset at the same path.
+
+Drafts, rejected generations, stress-test images and PoC outputs are **not** pushed to production asset folders merely because they were generated.
+
+If direct binary transport to GitHub is unavailable in the current tool session, report that limitation instead of claiming the repo image was uploaded. The declared `repoOutputPath` remains the source of truth for the pending promotion.
+
+Two beats may never share the same `outputPath`; manifest validation fails closed on collisions.
 
 ## Stop rules
 

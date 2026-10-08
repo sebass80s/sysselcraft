@@ -13,6 +13,19 @@ Then execute the documented pipeline: structured beat → persistent canonical C
 
 Do not ask Kalle to upload established character sheets again. Do not silently switch to Runway. Do not treat `kör art` as a plain text-to-image prompt.
 
+## ART REPO PROMOTION — LOCKED 2026-10-08
+
+For **`kör art`**, an accepted production image has two canonical destinations:
+
+1. persistent ChatGPT Library, used for continuity;
+2. the beat's explicit GitHub `outputPath`, used by runtime.
+
+A selected image is not considered repo-promoted until the **same raster** is present at the declared GitHub path and the commit/path has been verified.
+
+Do not upload drafts, rejected images, stress-test images or PoC images by default. Do not guess the destination folder. The v2 beat manifest owns `outputPath`.
+
+If binary GitHub transport is unavailable in a future chat/tool session, say so and leave repo promotion pending rather than claiming success.
+
 ## READ FIRST — CURRENT STATE 2026-10-07
 
 Repository reality always wins. Verify branch, HEAD and GitHub CI before any change.
