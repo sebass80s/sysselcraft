@@ -6,7 +6,7 @@ import path from "node:path";
 const args = Object.fromEntries(process.argv.slice(2).filter(v => v.startsWith("--")).map(v => { const i=v.indexOf("="); return i<0?[v.slice(2),true]:[v.slice(2,i),v.slice(i+1)]; }));
 function block(reason) { console.error("ART PREFLIGHT BLOCKED: "+reason); process.exit(2); }
 function readJson(p) { try { return JSON.parse(fs.readFileSync(p,"utf8")); } catch(e) { block("Cannot read "+p+": "+e.message); } }
-if(!args.job || !args.story || !args.evidence) block("Usage: --job=<job.json> --story=<story.md> --evidence=<receipt.json>");
+if(!args.job || !args.story || !args.evidence || !args.contract || !args["final-prompt"]) block("Usage: --job=<job.json> --story=<story.md> --evidence=<receipt.json> --contract=<scene.json> --final-prompt=<prompt.txt>");
 const job=readJson(args.job), ev=readJson(args.evidence);
 if(job.version!==2 || !job.beatId || !job.prompt || !job.outputContract?.repoOutputPath) block("Invalid v2 art job");
 if(ev.beatId!==job.beatId) block("Beat ID mismatch");
@@ -19,6 +19,23 @@ const next=story.indexOf("\n### ",index+heading.length);
 const scene=story.slice(index,next<0?undefined:next);
 if(!Array.isArray(ev.sceneQuotes) || ev.sceneQuotes.length<2 || ev.sceneQuotes.some(q=>typeof q!=="string" || q.trim().length<12 || !scene.includes(q))) block("Verbatim story evidence missing");
 if(typeof ev.sceneIntent!=="string" || ev.sceneIntent.trim().length<30) block("Scene intent missing for semantic audit");
+const contract=readJson(args.contract);
+if(contract.beatId!==job.beatId || contract.storyHeading!==heading.trim()) block("Scene contract references wrong beat");
+if(!Array.isArray(contract.verbatimStoryQuotes)||contract.verbatimStoryQuotes.length<2||contract.verbatimStoryQuotes.some(q=>!scene.includes(q))) block("Scene contract quotations not found in source");
+if(!Array.isArray(contract.cast)|| JSON.stringify([...contract.cast].sort())!==JSON.stringify([...job.characters].sort())) block("Scene contract cast mismatch");
+if(!Array.isArray(contract.requiredVisuals)||contract.requiredVisuals.length<3||!Array.isArray(contract.forbiddenVisuals)) block("Incomplete scene contract");
+if(typeof contract.finalPrompt!=="string"||contract.finalPrompt.length<150) block("Scene contract has no locked finalPrompt");
+let finalPrompt;
+try { finalPrompt=fs.readFileSync(args["final-prompt"],"utf8").trim(); } catch(e) { block("Missing final renderer prompt: "+e.message); }
+if(finalPrompt!==contract.finalPrompt.trim()) block("Final renderer prompt differs from LOCKED scene contract; do not call image generator");
+for(const required of contract.requiredVisuals) {
+ if(typeof required!=="string"|| !finalPrompt.toLocaleLowerCase().includes(required.toLocaleLowerCase())) block("Required visual missing in final prompt: "+required);
+}
+for(const forbidden of contract.forbiddenVisuals) {
+ if(typeof forbidden!=="string"||!forbidden.trim()) block("Malformed forbidden visual");
+ if(finalPrompt.toLocaleLowerCase().includes(forbidden.toLocaleLowerCase())) block("Forbidden visual in final prompt: "+forbidden);
+}
+if(ev.approvedFinalPromptSha256!==crypto.createHash("sha256").update(finalPrompt).digest("hex")) block("Renderer prompt receipt does not match reviewed prompt");
 if(!Array.isArray(job.characters) || !Array.isArray(ev.cast) || JSON.stringify([...ev.cast].sort())!==JSON.stringify([...job.characters].sort())) block("Cast mismatch");
 if(job.exactCastOnly!==true || job.wardrobeLock!==true) block("Cast or wardrobe not locked");
 if(job.characters.includes("barnet") && !job.qa?.requiredCheckIds?.includes("barnet-face-hidden")) block("Barnet face-hidden check missing");
