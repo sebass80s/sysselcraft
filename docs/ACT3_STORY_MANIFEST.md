@@ -7379,6 +7379,8 @@ Barnet gör sig redo.
 
 ## A3-PARK-021 – Någon minns
 
+**Dramaturgisk avgränsning mot A3-PARK-018:** I 018 upptäcker Barnet namnen och Nova känner igen sina föräldrars första dejt. Här ska vi inte spela upp den upptäckten igen. Henrik tillför sådant Nova inte kände till: pappans nystrukna vita skjorta, hur han förklarade reglerna trots att mamman redan kunde dem, flera matcher och hur det slutade med glass och ett långt samtal vid vattnet. Novas reaktion går från nyfikenhet till ett stilla, varmt minne. Behåll originaldialogen nedan ordagrant; denna anvisning styr tempo och iscensättning, inte nya repliker.
+
 Henrik står vid poängtavlan och betraktar de gamla resultaten.
 
 **Henrik:** Nu när jag ser namnen känner jag faktiskt igen dem.
