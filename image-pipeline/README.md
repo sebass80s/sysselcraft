@@ -1,6 +1,6 @@
 # SysselCraft Art Pipeline
 
-Status: **v2.1 production pipeline**
+Status: **v2.2 production pipeline**
 
 This directory owns repeatable image-production context for SysselCraft. The renderer is deliberately replaceable.
 
@@ -14,13 +14,29 @@ The renderer never decides identity or continuity. The pipeline does.
 
 ## Production lock
 
-Art Pipeline 2.1 is the locked SysselCraft production method. Normal chapter work should use it, not redesign it. The final GitHub PNG drag-and-drop step is intentional.
+Art Pipeline 2.2 is the locked SysselCraft production method. Normal chapter work should use it, not redesign it. The final GitHub PNG drag-and-drop step is intentional.
+
+## Art Pipeline 2.2 — locked visual-reference production method (2026-10-09)
+
+**Status: LOCKED by user.** Use this method for Act 3 art unless explicitly changed by the user. This upgrades the operator workflow, not the underlying ChatGPT image model.
+
+1. **Canon first:** Read the exact requested beat in `docs/ACT3_STORY_MANIFEST.md` and its matching locked contract, creating and validating a contract from canon when absent. Confirm cast, location, scene action and continuity before generation.
+2. **Real reference images first:** Use the canonical character-sheet images, preferably the versions attached directly to the current ChatGPT image-production conversation. Treat the generation as reference-guided image transformation/editing; keep identity, face, hair, wardrobe and proportions fixed. Do not silently replace supplied images with text-only descriptions.
+3. **Single-character sanity checks:** The 2026-10-09 tests visually produced a strong Nova seated portrait and an Alve seated portrait. A later three-character bench image visually preserved Nova, Alve and Barnet more faithfully than prior attempts. These are observed results, **not** a technical receipt proving which reference images the hosted generator consumed.
+4. **Exact-cast group scenes:** For combinations, preserve every individual canonical sheet as the identity authority. Barnet is only seen from behind, with canonical cap, red hoodie, olive backpack, blue trousers and trail shoes.
+5. **Same-location continuity:** Use approved location and previous-beat anchors only; never treat test pictures or rejected images as approved production continuity.
+6. **Fail closed:** If exact beat, canonical refs, reference access, required anchors, final scene instructions or image-tool grounding cannot be confirmed, STOP before generation. Do not use unrelated props, people, animals, or previous beat content.
+7. **Post-render review:** Check every character's silhouette, face, hair and clothing, anatomy, original beat, environment and story action. Reject on any mismatch. Only promote images after QA and explicit approval; user handles final GitHub PNG drag-and-drop.
+
+**Honest limitation:** The GitHub preflight program cannot intercept ChatGPT's built-in image-generation calls; reference consumption and pixel-exact consistency are not technically guaranteed. This is a locked working method supported by the observed visual tests, not proof of a fully automated or deterministic renderer. Do not claim otherwise.
+
+**No switch to Runway or paid OpenAI API without explicit authorization.**
 
 ## Operator shorthand: `kör art`
 
 In any future SysselCraft chat, the phrase **`kör art`** means:
 
-> Execute the full Art Pipeline 2.1 for the current requested scene.
+> Execute the full Art Pipeline 2.2 for the current requested scene.
 
 Required behavior:
 - use the structured v2 beat contract;
