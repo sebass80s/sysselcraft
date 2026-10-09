@@ -8166,6 +8166,167 @@ De går ut på torget med Nova mitt i en tugga.
 
 *Fortsätter i A3-VILLAGE-011, ”En märklig promenad”, där Nova precis har fått en bulle.*
 
+
+## 11AR. A3-VILLAGE-004–008/010 — KOMPLETTERANDE DIALOGMANUS
+
+**Status:** Dessa scener har nyskrivna repliker utifrån redan beslutad första byutflykt. Inga tidigare godkända ordagranna repliker ersätts. A3-VILLAGE-009 är separat redan spikad Mira-dialog och gäller oförändrad.
+
+### A3-VILLAGE-004 – Välkommen ombord
+
+Nova står vid stadens brygga. Barnet och Alve gör i ordning motorbåten.
+
+**Nova:** Är det verkligen ni som har lagat den här?
+
+**Alve:** Mest Barnet. Jag var chef.
+
+**Barnet:** Du höll i verktygen.
+
+**Alve:** En oerhört viktig uppgift.
+
+Nova kliver försiktigt ombord.
+
+**Nova:** Jag har aldrig åkt så här långt över sjön.
+
+**Barnet:** Då ska du få se vår sida.
+
+**Nova:** Finns det minigolf där?
+
+**Alve:** Nej, men vi har en väldigt bra bagare.
+
+### A3-VILLAGE-005 – Över sjön
+
+Motorbåten lämnar staden. Nova tittar ut över vattnet.
+
+**Nova:** Det ser helt annorlunda ut härifrån!
+
+**Alve:** Vänta tills vi kommer till vår brygga.
+
+**Barnet:** Där finns stugan vi lagade.
+
+**Nova:** Den du berättade om?
+
+**Alve:** Japp. Den står fortfarande kvar, otroligt nog.
+
+**Nova:** Varför skulle den inte göra det?
+
+**Alve:** Du skulle ha sett den innan.
+
+### A3-VILLAGE-006 – Stugan
+
+Vid stranden visar Alve vägen till den renoverade stugan.
+
+**Nova:** Men oj! Är det här ert ställe?
+
+**Alve:** Ja. Fast det såg inte alls ut så här förut.
+
+**Barnet:** Vi lagade stugan, bryggan och båthuset.
+
+**Nova:** På riktigt?
+
+**Alve:** Det var väldigt mycket arbete. Jag fick nästan träningsvärk av att titta på.
+
+Nova får syn på ett fotografi inne i stugan.
+
+**Nova:** Är det din familj?
+
+**Alve:** Ja. Pappa, storasyrran och mamma.
+
+Han blir tyst en stund.
+
+**Alve:** Mamma dog när hon blev sjuk.
+
+**Nova:** Oj. Jag visste inte.
+
+**Alve:** Det är okej. Kom, jag ska visa dig bryggan.
+
+Nova följer med utan att pressa honom på fler frågor.
+
+### A3-VILLAGE-007 – En helt annan by
+
+På vägen från stranden till byn passerar de skog och hus.
+
+**Nova:** Det är så lugnt här! Var är alla bilar?
+
+**Barnet:** Inte så många på den här vägen.
+
+**Alve:** Men när Linus bygger något hörs det över hela byn.
+
+**Nova:** Vem är Linus?
+
+**Barnet:** Du kommer märka det.
+
+Framme på torget ser Nova skyltarna och människorna.
+
+**Nova:** Här ser ju mysigt ut.
+
+**Alve:** Vänta tills du får en bulle.
+
+### A3-VILLAGE-008 – Ett bekant namn
+
+De går mot Miras affär.
+
+**Nova:** Mira... Vänta, är det hon som känner min mamma?
+
+**Barnet:** Precis.
+
+**Nova:** Då måste jag hälsa!
+
+Mira kommer fram till dörren.
+
+**Mira:** Hej Barnet! Och vilken ny kompis har ni med er?
+
+**Nova:** Jag heter Nova. Min mamma sa att jag skulle hälsa!
+
+**Mira:** Nova? Men så roligt! Kom in, allihop.
+
+**Alve:** Vi har en ganska stor inköpslista.
+
+**Nova:** Alve!
+
+**Mira:** Då är ni på rätt ställe.
+
+*Fortsätt direkt med låst A3-VILLAGE-009, ”Mira förstår”.*
+
+### A3-VILLAGE-010 – Hos Henning
+
+Efter affären leder Barnet och Alve Nova till bageriet.
+
+**Henning:** Men hej på er! Har ni tagit med en ny smakdomare?
+
+**Nova:** Om det innebär att få smaka bullar, ja.
+
+**Alve:** Hon är väldigt kvalificerad.
+
+**Henning:** Då vill jag att du provar den här.
+
+Henning räcker fram en nybakad bulle.
+
+**Nova:** Oj, tack!
+
+Hon tar en tugga.
+
+**Nova:** Det här kan vara den bästa bullen jag ätit.
+
+**Alve:** Jag sa ju det!
+
+**Henning:** Jag hör att vi har en framtida stamkund.
+
+**Barnet:** Vi ordnar en familjedag i folkparken också.
+
+**Nova:** Och då behöver vi något gott till alla gästerna.
+
+**Henning:** Det löser vi. Men vi behöver veta hur många som kommer.
+
+**Alve:** Minst en extra till mig.
+
+**Nova:** Det skriver jag inte upp.
+
+**Henning:** Vi kan väl börja med att prata om en tårta?
+
+Nova ler och tar fram anteckningsblocket.
+
+*Följ därefter den låsta scenen A3-VILLAGE-011 med Linus.*
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
