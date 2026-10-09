@@ -40,6 +40,23 @@ Hard shorthand rules:
 
 If the scene is already clear from the current conversation, `kör art` should execute rather than ask the user to restate it.
 
+## Mandatory pre-generation gate (2026-10-09)
+
+For **every** `kör art <beat-id>`, fail closed **before** invoking image generation.
+
+1. **Read canonical script:** locate the exact heading `### <beat-id> —` in `docs/ACT3_STORY_MANIFEST.md`. Read the entire section, and quote at least two exact, relevant lines. If absent, STOP. Never infer a beat from the previous image.
+2. **Build scene contract:** extract real location, action, story chronology, character cast, wardrobe, and forbidden elements. Compare the proposed image scene to all fields. Contradiction, ambiguity or unauthored subject: STOP.
+3. **Real character references:** read actual PNGs for every cast member, not just filenames, descriptions or registry paths. Confirm they are made available to the image generator as image inputs. If that cannot be confirmed, STOP, rather than generating from text alone.
+4. **Location continuity:** use only approved anchors belonging to this location and continuity group. If a required anchor cannot be retrieved or matched, STOP.
+5. **Final instruction audit:** immediately before tool invocation, compare the full submitted image instruction to the exact scene contract. A changed place, story beat, clothing, or cast is a STOP. Do not improvise a scene.
+6. **Visual QA:** after generation verify cast, face/hair, wardrobe, scene, action, continuity, and hidden face of Barnet. A failed image is rejected, never approved or used as an anchor.
+
+### Enforcement scope
+
+This is a mandatory **assistant pre-call guard** for ChatGPT's built-in generator. A repo script cannot intercept or cancel that hosted tool call; the assistant must decline to call it if the guard is not satisfied. Do not claim a cryptographically enforced guarantee over the ChatGPT tool.
+
+For external or file-backed workflows, `scripts/preflight-art-job.mjs` provides a separate fail-closed CLI audit requiring beat-specific manuscript evidence and fingerprints of actual input files. Its evidence receipt requires operator/renderer confirmation; self-reported fields alone cannot prove that a remote renderer consumed the images. This CLI does not authorize using paid APIs or Runway.
+
 ## Goal
 
 SysselCraft may need hundreds of images. Production must therefore survive long sequences, location changes and new conversations without:
