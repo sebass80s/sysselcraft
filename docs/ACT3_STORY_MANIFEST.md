@@ -2688,6 +2688,14 @@ Hon drar med skon mot gruset.
 
 **Nova:** Ja. Fast ibland önskar man att man kunde ta tillbaka det.
 
+Nova tittar ner på händerna.
+
+**Nova:** Jag var rätt jobbig hemma ibland. Bråkade med mamma och pappa om nästan allting. De blev nog ganska trötta på mig.
+
+**Barnet:** Bråkade ni mycket?
+
+**Nova:** Jag vet inte. Det känns så när jag tänker tillbaka.
+
 **Nova:** Sedan hörde jag dem bråka i köket.
 
 **Barnet:** Om glassen?
@@ -6482,6 +6490,10 @@ Barnet jämför fotot med spelhörnan.
 
 **Nova:** Jag vill inte missa något viktigt den här gången.
 
+**Barnet:** Vad menar du med den här gången?
+
+**Nova:** Äsch. Ingenting. Jag vill bara att mamma och pappa ska ha det bra.
+
 **Alve:** Det är ju bara ett foto.
 
 **Nova:** Jag vet.
@@ -8067,6 +8079,10 @@ Nova ler och tar fram anteckningsblocket.
 **Infört i fulla dialogscener:** A3-HOME-006 (hon ber snabbt om ursäkt efter att ha smällt i skåpet), A3-DRAMA-009 (hon ångrar det hon sa vid middagen), A3-PREP-001 (allt måste tänkas igenom så det inte blir fel), A3-PREP-003 (fotot får inte bli fel *den här gången*), A3-PREP-006 (vill inte förstöra något den här gången) och A3-REVEAL-002 (vill inte vara den som sabbar det).
 
 **Kontinuitetsanmärkning:** Tidigare manus har olika detaljer kring middagsutbrottet (glass/lasagne/dörr kontra servett). Fixa till en konsekvent minnesbild innan beat-implementation; ändra inte den låsta tidsrelationen att separationen meddelades **nästa kväll**.
+
+### Förstärkta skuldantydningar, 2026-10-09
+
+Nova säger uttryckligen före avslöjandet att hon var rätt jobbig hemma och bråkade mycket, samt tror att hennes föräldrar blev trötta på henne. Detta uttrycker hennes egen felaktiga uppfattning, inte sanningen. Vid fotografiet får Barnet fråga vad hon menar med 'den här gången', men hon slätar över det. Det slutliga klargörandet sker fortfarande med mamman.
 
 ## 12. Art production — locked
 
