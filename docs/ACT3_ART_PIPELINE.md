@@ -1,6 +1,6 @@
 # Act 3 Art Pipeline
 
-Status: **ART PIPELINE 2.1 · LOCKED PRODUCTION METHOD**
+Status: **ART PIPELINE 2.2 · LOCKED PRODUCTION METHOD**
 Date: 2026-10-09
 
 This is the canonical production contract for Act 3 story art and the template for later chapters.
@@ -8,6 +8,22 @@ This is the canonical production contract for Act 3 story art and the template f
 ## Production lock — 2026-10-08
 
 This workflow is now locked for production. Normal Act 3 work should use it, not redesign it. Change it only if Kalle explicitly asks or a concrete production failure proves the contract insufficient.
+
+## Art Pipeline 2.2 — locked visual-reference production method (2026-10-09)
+
+**Status: LOCKED by user.** Use this method for Act 3 art unless explicitly changed by the user. This upgrades the operator workflow, not the underlying ChatGPT image model.
+
+1. **Canon first:** Read the exact requested beat in `docs/ACT3_STORY_MANIFEST.md` and its matching locked contract, creating and validating a contract from canon when absent. Confirm cast, location, scene action and continuity before generation.
+2. **Real reference images first:** Use the canonical character-sheet images, preferably the versions attached directly to the current ChatGPT image-production conversation. Treat the generation as reference-guided image transformation/editing; keep identity, face, hair, wardrobe and proportions fixed. Do not silently replace supplied images with text-only descriptions.
+3. **Single-character sanity checks:** The 2026-10-09 tests visually produced a strong Nova seated portrait and an Alve seated portrait. A later three-character bench image visually preserved Nova, Alve and Barnet more faithfully than prior attempts. These are observed results, **not** a technical receipt proving which reference images the hosted generator consumed.
+4. **Exact-cast group scenes:** For combinations, preserve every individual canonical sheet as the identity authority. Barnet is only seen from behind, with canonical cap, red hoodie, olive backpack, blue trousers and trail shoes.
+5. **Same-location continuity:** Use approved location and previous-beat anchors only; never treat test pictures or rejected images as approved production continuity.
+6. **Fail closed:** If exact beat, canonical refs, reference access, required anchors, final scene instructions or image-tool grounding cannot be confirmed, STOP before generation. Do not use unrelated props, people, animals, or previous beat content.
+7. **Post-render review:** Check every character's silhouette, face, hair and clothing, anatomy, original beat, environment and story action. Reject on any mismatch. Only promote images after QA and explicit approval; user handles final GitHub PNG drag-and-drop.
+
+**Honest limitation:** The GitHub preflight program cannot intercept ChatGPT's built-in image-generation calls; reference consumption and pixel-exact consistency are not technically guaranteed. This is a locked working method supported by the observed visual tests, not proof of a fully automated or deterministic renderer. Do not claim otherwise.
+
+**No switch to Runway or paid OpenAI API without explicit authorization.**
 
 ## Chat shorthand — `kör art`
 
@@ -57,7 +73,7 @@ This is a mandatory **assistant pre-call guard** for ChatGPT's built-in generato
 
 For external or file-backed workflows, `scripts/preflight-art-job.mjs` provides a separate fail-closed CLI audit requiring beat-specific manuscript evidence, a locked scene contract in `image-pipeline/contracts/<beat-id>.json`, the exact final renderer prompt in a text file, its matching SHA-256 receipt, and fingerprints of actual input files. The script blocks if any word in the final prompt differs from the approved contract. No contract means STOP. Its evidence receipt requires operator/renderer confirmation; self-reported fields alone cannot prove that a remote renderer consumed the images. This CLI does not authorize using paid APIs or Runway. **Important:** Even an exact textual match cannot prove that image generation will obey the prompt. For the built-in ChatGPT generator the assistant must inspect the final tool instruction itself and abstain when a contract cannot be matched. The CLI does not intercept the hosted tool.
 
-## Art Pipeline 2.1: hard stop for ChatGPT art calls
+## Art Pipeline 2.2: hard stop for ChatGPT art calls
 
 A `kör art <beat-id>` request is **NOT** permission to improvise a scene. Before every ChatGPT image call:
 
