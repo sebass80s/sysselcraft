@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "beatId": "A3-PARK-002",
+  "storyHeading": "### A3-PARK-002 —",
+  "verbatimStoryQuotes": [
+    "Minigolfbanorna ligger i en glänta mellan träden.",
+    "Mitt på banan står en liten träbro. Ena räcket har lossnat och färgen är sliten."
+  ],
+  "cast": [
+    "nova",
+    "barnet",
+    "alve"
+  ],
+  "requiredVisuals": [
+    "mini-golf lane number seven",
+    "small wooden bridge",
+    "Nova",
+    "Barnet",
+    "Alve",
+    "olive leather-strapped backpack"
+  ],
+  "forbiddenVisuals": [
+    "fantasy creature",
+    "beanie-wearing boy",
+    "dark-haired woman",
+    "blue-gray, big-eared creature"
+  ],
+  "finalPrompt": "Create ONE cinematic, photo-like SysselCraft Act 3 story moment: A3-PARK-002, \"Bana sju\". Use the actual canonical character sheets as image inputs for Nova, Barnet and Alve and preserve their faces, hair, proportions and clothing exactly. Scene: inside the living Swedish folk park, in a leafy clearing among trees, Nova leads Barnet and Alve to mini-golf lane number seven. At the center of the worn green lane stands a small wooden bridge obstacle. One wooden railing is loose and broken, paint is weathered. Nova, the short copper-red bob-haired girl in dusty teal sweatshirt, loose blue jeans, black headphones at her neck and high-top sneakers, gestures toward the damaged little bridge with a wistful half-smile. Barnet is only seen from behind, wearing the canonical blue-and-beige mountain cap, red hoodie, olive leather-strapped backpack and blue cargo trousers. Alve is a young freckled boy with tousled ginger hair, faded olive hoodie, brown cargo shorts, gloves, belt tools and work boots. A couple of children play mini-golf much farther in the background, as authored. Keep the established folkpark greenery and late-afternoon natural light. Frame the small wooden bridge, lane number seven and the three protagonists clearly. No text overlays, no fantasy stylization; exact authorized cast in foreground."
+}
