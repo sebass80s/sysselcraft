@@ -7809,6 +7809,89 @@ Ute på gatan ser Alve eftertänksam ut.
 
 Nova skrattar. Mobilen ligger kvar i hennes väska när de går vidare.
 
+
+## 11AP. A3-CITY-001–003 — KOMPLETTERANDE DIALOGMANUS
+
+**Status:** Nyskriven full dialog utifrån redan låst sceninnehåll. Godkänd originaldialog är inte återställd ordagrant.
+
+### A3-CITY-001 – Stadens bästa ställe
+
+Nova leder Barnet och Alve längs en gata med små affärer.
+
+**Nova:** Kom, jag vill visa er ett riktigt bra ställe.
+
+**Alve:** Har de glass?
+
+**Nova:** Du har redan frågat fyra gånger.
+
+De stannar vid en butik vars fönster är fullt av gamla tv-spel, serietidningar och handkontroller.
+
+**Barnet:** Oj, vad mycket spel!
+
+**Nova:** Jag vet. Jag älskar gamla spel.
+
+**Alve:** Kan man spela något här?
+
+**Nova:** Vänta bara.
+
+### A3-CITY-002 – Utmaningen
+
+Nova pekar på en spelmaskin inne i butiken. På topplistan står NOV.
+
+**Barnet:** Är NOV du?
+
+**Nova:** Japp. Tre bokstäver, det är allt man får.
+
+**Alve:** Jag ska skriva ALV.
+
+**Nova:** Då måste du först få poäng.
+
+**Alve:** Jag har massor av poäng hemma.
+
+**Barnet:** Inte i det här spelet!
+
+Nova räcker över kontrollen.
+
+**Nova:** Vågar du försöka slå mig?
+
+**Barnet:** Självklart.
+
+*Valfri spelutmaning eller kort dialogbaserad spelrunda. Ingen separat spelmotor krävs för just detta besök.*
+
+**Nova:** Okej, nästa gång får du revansch.
+
+**Alve:** Och jag vill försöka få in mitt namn!
+
+### A3-CITY-003 – Hemvägen
+
+De går vidare genom staden.
+
+**Barnet:** Bor du långt härifrån?
+
+**Nova:** Mamma bor några kvarter bort. Pappa bor närmare skolan.
+
+**Alve:** Bor de inte tillsammans?
+
+**Nova:** Nej. De är skilda.
+
+**Barnet:** Jaha.
+
+**Nova:** Det är lite jobbigt ibland. Jag glömmer alltid saker i fel lägenhet.
+
+**Alve:** Du borde ha en väska som följer med själv.
+
+**Nova:** Ja tack. Uppfinn en sådan!
+
+De skrattar.
+
+**Nova:** Vill ni komma hem till mamma en stund? Hon brukar ha bullar.
+
+**Alve:** JA.
+
+**Barnet:** Du vet ju inte ens om hon har några idag.
+
+**Alve:** Det är värt risken.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
