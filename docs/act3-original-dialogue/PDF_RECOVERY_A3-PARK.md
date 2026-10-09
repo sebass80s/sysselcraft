@@ -42,7 +42,66 @@ Nova: Den ligger bakom lekplatsen. Kom.
 ---
 
 <!-- PDF sida 14 -->
+A3-PARK-002 —- Bana sju
 
+De går fram till en liten minigolfbana.
+
+Det växer gräs mellan plattorna. Färgen på banorna har bleknat
+
+och på en av dem ligger en trasig träbit.
+
+Nova går direkt fram till den sjunde banan.
+
+Nova: Här. Det var den här jag berättade om.
+
+En liten träbro står mitt på banan. Ena sidan har lossnat.
+
+Barnet: Det är ju knappt någon bro kvar.
+
+Nova: Pappa brukade alltid skjuta för hårt här. Bollen flög rakt
+
+ner i buskarna.
+
+Barnet: Vad gjorde ni då?
+
+Nova: Mamma fick krypa in och leta efter den.
+
+Nova skrattar till.
+
+Nova: En gång hittade hon fyra andra bollar också.
+
+Barnet: Vann du den gången?
+
+Nova: Nej. Pappa fuskade.
+
+Barnet: Hur då?
+
+Nova: Han räknade inte när bollen åkte utanför banan.
+
+Barnet: Det låter som fusk.
+
+Nova: Det var det!
+
+Hon ler, men när hon ser den trasiga bron försvinner leendet lite.
+
+Nova: Nu spelar nästan ingen här längre.
+
+Barnet: Den där bron skulle man kunna bygga en ny.
+
+Nova: Med vadå?
+
+Barnet: Trä, kanske. Vi byggde en hel brygga hemma hos Alve.
+
+Nova: Ni verkar ha lagat rätt mycket saker.
+
+
+
+
+Barnet: Du skulle se hans stuga.
+Alve: Den har faktiskt riktiga fönster nu.
+Nova: Hade den inte det innan?
+Alve: Inte alla.
+Nova tittar på dem, för första gången genuint imponerad.
 
 ---
 
@@ -404,7 +463,175 @@ Nova: Kom. Jag ska visa hur man klarar bana sju.
 ---
 
 <!-- PDF sida 22 -->
+A3-PARK-009 - Utmaningen
 
+Nova står vid den första minigolfbanan med en blå klubba i
+
+handen.
+
+Nova: Vi börjar här. Den är ganska enkel.
+
+Barnet: Du sa att sjuan var svårast.
+
+Nova: Det är den också. Därför börjar vi inte med den.
+
+Alve granskar sin klubba.
+
+Alve: Varför är den så kort?
+
+Nova: För att du inte ska slå sönder något.
+
+Alve: Den här klubban är faktiskt i perfekt längd.
+
+
+
+
+Barnet: Du har hållit den i tre sekunder.
+Nova lägger upp den första bollen.
+Nova: Okej. Tre slag var. Flest poäng vinner.
+Barnet: Ska man inte ha så få slag som möjligt i minigolf?
+Nova stannar.
+Nova: Jo. Jag menar minst antal slag.
+Alve: Då har jag redan noll.
+Nova: Du har inte börjat!
+Nova försöker se allvarlig ut, men börjar skratta.
+Nova: Kom igen nu. Jag tänker vinna.
+Nej, faktiskt inte! & L En enkel men snygg minigolf skulle vara
+fullt rimlig att bygga i SysselCraft.
+Och jag tycker att det är precis rätt tillfälle att börja introducera
+minispel. Efter två akter med reparationer och byggprojekt
+behöver vi lite nytt gameplay.
+Vi har dessutom en fördel: SysselCraft använder redan Phaser,
+som lämpar sig bra för den här typen av 2D-spel.
+Det handlar framför allt om hur ambitiösa vi vill vara.
+Tre ambitionsnivåer
+å Play Fun Golf Game: Free Online 2D Minigolf Video Game for
+Kids & Adults
+Nivå 1: Enkel minigolf
+Dra bakåt för att sikta och bestämma styrkan. Släpp för att
+skjuta. En bana, en boll, ett hål och slagräknare.
+Låg komplexitet
+NARBE House — Accessible Apps and Tools
+Nivå 2: Riktig minigolf
+Tre olika banor, väggstudsar, hinder och den berömda bron på
+bana sju. Nova och Alve kommenterar spelet.
+Medelhög komplexitet.
+Fore Score Alpha 1: Ultimate Chicken Horse meets Mini-Golf! -
+Release Announcements - itch.io
+Nivå 3: Komplett minigolfspel
+Nio banor, rörliga hinder, turneringar, rekord, flera
+svårighetsgrader och upplåsbart innehåll.
+Högre komplexitet.
+Jag skulle välja nivå 2
+
+
+
+
+Tre spelbara banor till att börja med, och sedan kan vi bygga ut
+systemet utan att börja om.
+
+Första versionens funktioner
+
++ Sikta och skjut med fingret på iPhone.
+
+»  Bollfysik, friktion och studs mot kanter.
+
++ Tre banor med olika hinder.
+
+«  Slagräknare och poäng.
+
+« Novas och Alves kommentarer utifrån resultatet.
+
+» Möjlighet att spela igen senare i akten.
+
+Det riktigt roliga är att minigolfen kan bli ett återanvändbart
+system. Vi kan använda samma grund för andra precisionsspel i
+senare akter.
+
+En viktig arkitekturregel gäller dock: vi bygger minispel som en
+gemensam Runtime 1.1-capability, inte som ett specialbyggt
+Act3Minigolf med egen persistence och navigation.
+
+Min bedömning är att själva bollfysiken är relativt enkel. Det
+svårare arbetet ligger i att få touchkontrollerna att kännas bra på
+iPhone, göra banorna roliga och integrera spelet med storyn utan
+buggar. Den befintliga motorn behöver granskas innan vi kan
+säga exakt vad som krävs.
+
+Min rekommendation: Vi börjar med en spelbar prototyp av bana
+sju, med den lilla bron som Nova berättat om. Fungerar den bra
+på iPhone har vi grunden till ett riktigt roligt minispel.
+Och då kan Nova utmana Barnet på riktigt, inte bara genom
+dialog. S
+
+Minigolfmatchen är avslutad.
+Alve har gått bort till kaféet för att undersöka glassutbudet.
+Barnet och Nova sitter på en bänk med utsikt över sjön.
+
+Nova: Det var faktiskt roligare än jag trodde.
+
+Barnet: Du vann ju.
+
+Nova: Med ett slag!
+
+Barnet: Du har spelat här hela livet. Jag har spelat här i tio
+minuter.
+
+Nova: Då får du väl öva.
+
+Nova tar fram mobilen och öppnar listan hon började skriva
+tidigare.
+
+Barnet: Har du kommit på fler saker till festen?
+
+
+
+
+
+Nova: Jag har gjort en ny lista. Den första blev för rörig.
+Barnet: Vad är det som ska hända egentligen? Ska vi bjuda hela
+stan?
+Nova: Nej. Jag tänkte mest några personer.
+Barnet: Vilka då?
+Nova tvekar.
+Nova: Min mamma och pappa.
+Barnet: Ska de komma hit?
+Nova: Jag har inte frågat dem än. Men de brukade älska den här
+parken.
+Barnet: Då blir de säkert glada.
+Nova: Det var här vi brukade göra allting tillsammans. Spela
+minigolf, bada, ha picknick...
+Hon tittar bort mot bana sju.
+Nova: Det var alltid så roligt då.
+Barnet: Då kan vi försöka ordna en sån dag igen.
+Nova: Tror du det?
+Barnet: Vi har ju redan börjat.
+Nova tittar på Barnet.
+Nova: Men då måste det bli riktigt bra. Inte bara nästan.
+Barnet: Vad är viktigast?
+Nova: Att mamma och pappa har kul tillsammans.
+Barnet: Då får vi hitta på något som båda gillar.
+Nova ler.
+Nova: Ja. Precis.
+Hon börjar skriva på mobilen igen.
+Nova: Vi behöver mycket mer än tre minigolfbanor.
+Vi har också spikat:
+« Henrik Andersson, folkparkens excentriske arrangör, inte
+Linus 2.0.
+« Minigolf som första planerade minispel, byggt med
+återanvändbar teknik.
+« Nova som emotionell huvudperson, Barnet som spelarens
+huvudkaraktär och Alve som sidekick.
+« Mindre fokus på reparationer, mer på upplevelser, vänskap
+och aktiviteter.
+« Novas verkliga förhoppningar avslöjas gradvis.
+
+
+
+
+Och den viktigaste repliken är sparad exakt:
+Nova: "Att mamma och pappa har kul tillsammans igen.”
+AKT 3 - NOVA
 
 ---
 
@@ -459,17 +686,173 @@ De skrattar.
 ---
 
 <!-- PDF sida 63 -->
+A3-PARK-012 - Fel plats
 
+Barnet tittar på gräsmattan.
+
+Barnet: Skulle vi inte kunna ha borden närmare vattnet?
+
+Nova: Nej, då ser man inte scenen.
+
+Barnet: Men man får finare utsikt.
+
+Nova: Fast då måste folk vända sig om när det är musik.
+
+Alve: Man kan ju vrida på stolarna.
+
+Nova: Det blir rörigt.
+
+Barnet pekar mot några stora träd.
+
+Barnet: Där borta finns det skugga också.
+
+Nova: Men där stod aldrig borden förut.
+
+Barnet: Förut?
+
+Nova tittar på markeringarna.
+
+Nova: När vi brukade vara här. Borden stod alltid precis här.
+
+Barnet: Vi kan ju prova båda platserna.
+
+Nova: Varför ska vi det? Jag vet ju hur det såg ut.
+
+Barnet svarar inte direkt.
+
+Nova märker det.
+
+Nova: Förlåt. Jag menade inte så.
+
+Barnet: Det är lugnt.
+
+
+
+
+Nova: Jag har bara tänkt ganska mycket på det här.
+
+Barnet: Det märks.
+
+Nova ler lite.
 
 ---
 
 <!-- PDF sida 64 -->
+A3-PARK-013 — Något som faktiskt är roligt
 
+Alve hittar en låda med gamla utomhusspel som Henrik har ställt
+
+vid scenen.
+
+Alve: Kolla! Kubb!
+
+Barnet: Ska vi spela?
+
+Nova: Vi måste ju bli klara med planeringen.
+
+Alve: Vi har inte ens börjat bära hit borden.
+
+Barnet: Vi kan spela en omgång först.
+
+Nova tvekar.
+
+Nova: En omgång.
+
+Alve: Jag börjar!
+
+Han ställer upp kubbpinnarna på gräset.
+
+Nova: De ska stå på två rader.
+
+Alve: Det vet jag.
+
+Nova: Du har gjort tre rader.
+
+Alve: Det är en ny variant.
+
+Nova: Det är en fel variant.
+
+Barnet skrattar.
+
+Barnet: Nova, kom och hjälp mig då.
+
+Nova lägger ifrån sig mobilen.
+
+Nova: Okej. Men då spelar vi ordentligt.
+
+De börjar spela.
+
+Alve kastar sin första pinne och missar samtliga kubbar.
+
+Alve: Det blåste.
+
+Barnet: Det är helt vindstilla.
+
+Alve: Precis. Jag hade räknat med motvind.
+
+Nova börjar skratta.
+
+Hon tar en kastpinne och siktar noggrant.
+
+Kastet träffar två kubbar.
+
+Nova: Så gör man.
+
+Barnet: Nu är det min tur.
 
 ---
 
 <!-- PDF sida 64 -->
+A3-PARK-014 —- Det behöver inte vara likadant
 
+
+
+
+Efter spelet sätter de sig i gräset.
+Nova dricker vatten och tittar på sina markeringar.
+Nova: Okej. Jag erkänner. Det var faktiskt kul.
+Alve: Trots att vi spelade fel variant?
+Nova: Vi spelade vanliga regler!
+Alve: Nästan.
+Barnet tittar bort mot träden vid vattnet.
+Barnet: Jag tycker fortfarande att borden skulle vara fina där
+borta.
+Nova följer Barnets blick.
+Nova: Kanske.
+Barnet: Vi kan fråga Henrik vad han tycker.
+Nova: Han kommer säga att vi ska ställa dem på scenen och
+hålla tal till dem.
+Alve skrattar.
+Nova: Men vi kan faktiskt prova. Vi behöver ju ändå se hur stora
+borden är.
+Barnet: Då kan vi fråga Mira vad hon har hittat.
+Nova: Just det! Har hon svarat?
+Barnet: Hon skulle undersöka vilka saker hon kan få tag i.
+Nova tar fram mobilen igen.
+Nova: Jag skriver till henne.
+Barnet: Du har väl hennes nummer?
+Nova: Nej. Men mamma har det inte heller, så vi får väl fråga dig.
+Barnet: Vi kan prata med Mira när vi åker tillbaka.
+Nova: Okej.
+Hon suddar bort en av punkterna på sin lista.
+Nova: Då flyttar vi inte pinnarna förrän vi vet hur stora borden är.
+Alve: Bra. Då hinner vi spela en omgång till.
+Nova: Du vill bara ha revansch.
+Alve: Ja. Det är väl därför man spelar?
+Worked for 52s
+& Spikat! Hela dialogen A3-PARK-011 till A3-PARK-014 är
+sparad ordagrant i docs/ACT3 STORY MANIFEST.md .
+Commit: cc5ca3c3664c8088308e4c0fee9503e4f4f909bd
+Nu fortsätter vi samma dag i folkparken. Jag vill att vi ger Barnet
+ett första riktigt val, men också låter Nova få syn på något som
+förändrar hennes plan en aning.
+
+
+
+
+AKT 3 - NOVA
+En plats för alla
+Dialogutkast 1- A3-PARK-015 till A3-PARK-018 - Ej spikat
 
 ---
 
@@ -615,265 +998,3 @@ Nova ler.
 Nova: Det var en rätt bra dag.
 Hon tittar tillbaka mot den gamla spelhörnan.
 Nova: Det skulle vara kul om de spelade något tillsammans igen.
-Barnet: Då får vi ordna det.
-Nova: Ja.
-Henrik ropar från förrådet.
-Henrik: GODA NYHETER!
-Alve: Har du hittat fler nycklar?
-Henrik: Ännu bättre! Jag har hittat poängtavlan från 1998!
-Nova: Vi behöver ingen poängtavla från 1998!
-Henrik: Den är nästan oanvänd!
-Barnet: Varför nästan?
-Henrik: Den blev visst lite feltryckt.
-Han håller upp en stor tavla.
-Överst står det FOLKPARKENS MÄSTERSKP 1998.
-Alve: Det saknas ett A.
-Henrik: Precis. En samlarupplaga.
-Nova brister ut i skratt.
-Jag tycker vi är på väg mot något bra här. Nova har fortfarande
-sin tydliga bild av hur dagen ska bli, men Barnet får faktiskt
-påverka den. Och oavsett valet kan vi visa hur spelhörnan
-förändras allt eftersom föremål köps in hos Mira.
-Viktigast är nog att Nova säger att det vore kul om föräldrarna
-spelade tillsammans igen. För henne är det en del av en större,
-hemlig förhoppning. För spelaren är det än så länge bara en fin
-aktivitet att planera.
-Nästa naturliga scen: Nova får höra från Henrik att folkparken
-behöver en del förberedelser, och Barnet får de första konkreta
-festmålen. Men innan vi gör det vill jag att det ska finnas
-utrymme för roliga saker i staden också, så att Akt 3 inte
-förvandlas till en enda lång inköpslista.
-Henrik ropar från förrådet.
-Henrik: GODA NYHETER!
-Alve: Har du hittat fler nycklar?
-Henrik: Ännu bättre! Jag har hittat poängtavlan från 1998!
-
-
-
-
-Nova: Vi behöver ingen poängtavla från 1998!
-
-Henrik: Vänta tills du ser den!
-
-Han kommer ut med en stor, dammig tavla. På den står gamla
-
-namn och resultat skrivna med tusch.
-
-Alve: Oj. Har den legat där sedan 1998?
-
-Henrik: Nästan. Det här är folkparkens historia!
-
-Barnet pekar på två namn högt upp på tavlan.
-
-Barnet: Nova, känner du igen de där namnen?
-
-Nova kommer närmare.
-
-Nova: Vänta...
-
-Hon läser namnen igen.
-
-Nova: Men... det är ju mamma och pappa!
-
-Alve: Va?
-
-Nova: Det är deras namn!
-
-Henrik tittar på tavlan.
-
-Henrik: Jaså? Då var de med i den gamla parkturneringen.
-
-Nova: Mamma har berättat om den! Det var här de hade sin
-
-första dejt!
-
-Barnet: På en turnering?
-
-Nova: Ja! Pappa försökte imponera på mamma genom att vinna.
-
-Men han förlorade.
-
-Alve: Mot din mamma?
-
-Nova: Ja!
-
-Nova börjar skratta.
-
-Nova: Han brukar säga att han lät henne vinna.
-
-Henrik: Den ursäkten har jag hört förut.
-
-Nova tittar närmare på tavlan.
-
-Nova: Mamma har fortfarande ett foto från den dagen.
-
-Hon tar fram mobilen och fotograferar tavlan.
-
-Barnet: Ska du visa dem?
-
-Nova: Inte än.
-
-[TRANSKRIPTION AVBRUTEN HÄR: KONTROLLERA PDF]
-
----
-
-<!-- PDF sida 71 -->
-A3-PARK-019 — Kan den fortfarande fungera?
-Henrik har ställt det gamla spelbordet mitt på gräsmattan.
-Nova står bredvid och studerar poängtavlan från 2011.
-
-
-
-
-Henrik: Nu ska vi se om den här gamla skönheten fortfarande
-fungerar!
-Alve: Vad heter spelet egentligen?
-Henrik: Shuffleboard! Eller bordsshuffleboard, för att vara exakt.
-Barnet: Hur spelar man?
-Henrik: Man skjuter brickorna över bordet. Ju längre fram de
-stannar, desto fler poäng får man. Men skjuter man för hårt åker
-de över kanten.
-Henrik visar med en träbricka.
-Den glider över bordet, träffar en gammal skruv och ramlar ner
-på marken.
-Alve: Så inte så?
-Henrik: Nej, inte riktigt så.
-Nova: Är det här verkligen spelet som mamma och pappa
-spelade?
-Henrik: Samma bord, om jag minns rätt.
-Nova: Då måste vi fixa det!
-Barnet: Vi kan väl testa om de andra brickorna fungerar?
-Henrik: Utmärkt idé!
-Alve: Jag börjar.
-Nova: Varför ska du alltid börja?
-Alve: För att jag är snabbast på att säga det.
-
----
-
-<!-- PDF sida 72 -->
-A3-PARK-020 —- Första matchen
-Barnet, Nova och Alve står runt bordet.
-Henrik har putsat spelplanen med en gammal trasa och hittat
-några hela brickor.
-Henrik: Tre brickor var. Närmast bortre kanten utan att ramla av
-får flest poäng.
-Nova: Jag vill möta Barnet först.
-Alve: Hallå! Jag då?
-Nova: Du får möta vinnaren.
-Alve: Äntligen ett system jag förstår.
-Nova skjuter sin första bricka.
-Den glider nästan hela vägen till fempoängsfältet.
-Nova: Ha!
-Barnet: Det där var ganska bra.
-Nova: Ganska?
-
-
-
-
-Barnet: Vi får se.
-
-Barnet gör sig redo.
-
-Här spelar spelaren en kort omgång bordsshuffleboard mot
-
-Nova.
-
-Om Barnet vinner:
-
-Nova: Men va? Hur gjorde du det där?
-
-Barnet: Jag siktade.
-
-Nova: Tack för den avancerade tekniken.
-
-Alve: Jag visste att Barnet skulle vinna.
-
-Nova: Det sa du inte innan.
-
-Alve: Jag tänkte det väldigt tydligt.
-
-Om Nova vinner:
-
-Nova: JAAAA! Där satt den!
-
-Barnet: Du har övat.
-
-Nova: Aldrig spelat förut. Ren talang.
-
-Alve: Du ska väl inte börja kalla dig världsmästare nu?
-
-Nova: Inte förrän jag vunnit två gånger.
-
----
-
-<!-- PDF sida 73 -->
-
-
----
-
-<!-- PDF sida 74 -->
-A3-PARK-022 —- Vi ska göra det ordentligt
-Nova plockar upp en av träbrickorna.
-Nova: Vi måste ha en riktig turnering på familjedagen.
-Barnet: Med alla gäster?
-Nova: Ja! Och så får mamma och pappa mötas i finalen.
-Alve: Men tänk om någon annan vinner?
-Nova: Då... får vi väl se till att de hamnar i finalen ändå.
-Barnet: Fast då är det ju ingen riktig turnering.
-Nova tittar på Barnet.
-Nova: Nej, men jag vill ju att de ska spela mot varandra.
-Alve: De kan väl spela en egen match efteråt?
-Nova funderar.
-Nova: En revanschmatch!
-Barnet: Precis.
-Nova: Med samma poängtavla och allting.
-Hon börjar skriva på mobilen.
-Nova: Vi behöver laga bordet, skaffa nya brickor och göra plats
-för publiken.
-Alve: Och glass.
-Nova: Varför glass?
-Alve: Det var ju så deras dejt slutade. Det sa Henrik precis.
-Nova tittar upp.
-Nova: Vänta. Det är faktiskt en bra idé.
-Alve: Tack!
-Nova: Vi skulle kunna ha en liten glassvagn bredvid spelhörnan.
-Barnet: Vi får fråga Henrik om det går.
-Henrik: Jag känner en alldeles utmärkt glassförsäljare!
-Alve: Jag gillar redan den här festen.
-Nova fotograferar spelbordet.
-Nova: Tänk om vi kan få allting att se ut precis som då.
-
-
-
-
-Barnet: Vi kanske kan göra det ännu roligare.
-Nova tittar på Barnet.
-Nova: Ännu roligare?
-Barnet: Ja. De hade ju inte oss där 2011.
-Nova ler.
-Nova: Nej. Det hade de faktiskt inte.
-En spelidé som passar här
-Solid Hardwood Tabletop Shuffleboard Game, Handmade
-Wooden Board, Home Bar Game, Family Night Activity - Etsy
-Bordsshuffleboard
-Jag tänker mig ett enkelt mobilspel där man drar bakåt och
-släpper en bricka. Den glider över spelplanen och stannar i ett
-poängfält. Spelaren behöver balansera kraft och precision.
-Första matchen är mot Nova. Under familjedagen återkommer
-spelet i en turnering och föräldrarnas revanschmatch.
-Det jag särskilt gillar är att spelet får en berättelsemässig
-anledning att finnas. Vi lägger inte till ett minispel bara för
-variation, utan för att det finns en historia bakom det.
-Och vi får en liten viktig konflikt: Nova vill nästan arrangera
-resultaten för att allt ska bli som hon tänkt. Barnet visar att det
-går att lösa på ett roligare och rättvisare sätt.
-En sak jag skulle hålla öppet är Henriks minne. Det är charmigt
-att han minns skjortan och glassen, men vi kan också låta honom
-vara lite osäker på detaljerna. Han ska inte plötsligt ha
-fotografiskt minne av alla folkparkens dejter.
-Jag tycker vi spikar den här först om du gillar den, och sedan kan
-vi introducera nästa del av staden och ett äventyr som inte
-kretsar kring festen.
-Worked for 39s
-
----
