@@ -6977,6 +6977,12 @@ Nova öppnar dörren till sitt rum i mammans lägenhet. Sängen står intill fö
 
 **Nova:** Sedan mamma och pappa flyttade isär. Förut bodde vi i en villa med trädgård.
 
+**Nova:** Jag bråkade rätt mycket på den tiden. Om läxor och läggtider och nästan allt.
+
+**Alve:** Om läggtider bråkar jag också.
+
+**Nova:** Ja. Fast jag var nog ganska jobbig att bo med ibland.
+
 Hon visar en inramad bild med studsmatta och syrener.
 
 **Nova:** Där var mitt rum. Jag hade ett jättestort skrivbord och kunde bygga ett legoslott utan att behöva plocka undan middagen först.
@@ -7062,6 +7068,12 @@ Nova sitter på mattan och skissar en ny karta.
 **Alve:** Han borde ha en extra gympapåse.
 
 **Nova:** Det säger alla. Men jag vill bara slippa hålla reda på två av allt.
+
+**Nova:** Och så måste pappa åka extra bara för min skull.
+
+**Barnet:** Han ville väl att du skulle få din gympapåse.
+
+**Nova:** Ja. Jag vet.
 
 Barnet tittar på kartan.
 
@@ -7205,6 +7217,12 @@ De står vid utsikten över staden och sjön.
 **Nova:** Inte härifrån. Men jag vet precis vägen dit.
 
 Hon blir tyst en kort stund.
+
+**Nova:** Jag tänker mest på alla bråk där hemma. Nu saknar jag till och med vanliga tisdagar.
+
+**Barnet:** Vad gjorde ni då?
+
+**Nova:** Åt middag. Kollade på teve. Sånt.
 
 **Nova:** Vi behöver inte gå dit idag. Ni har ju en skatt att hitta.
 
