@@ -6957,6 +6957,18 @@ Nova skrattar och följer med Sol in.
 
 *Scenen slutar.*
 
+## 11AK0. ORIGINALKÄLLOR ÅTERSTÄLLDA FRÅN PDF 2026-10-09
+
+**VIKTIGT: Prioritera källan framför rekonstruerad text.** Användaren tillhandahöll den 89-sidiga utskriften `Skriv hamnintro dialog.pdf` från den ursprungliga konversationen. Den innehåller dialogtexter för 63 identifierade manusbeats (utöver annat samtalsmaterial). Källtranskriptet är OCR-baserat och ska vid behov kontrolleras mot PDF-sidan.
+
+Originalutdragen finns nu i `docs/act3-original-dialogue/PDF_RECOVERY_A3-HOME.md`, `PDF_RECOVERY_A3-HUNT.md`, `PDF_RECOVERY_A3-ARCADE.md`, `PDF_RECOVERY_A3-CITY.md`, `PDF_RECOVERY_A3-VILLAGE.md`, `PDF_RECOVERY_A3-PARK.md` och `PDF_RECOVERY_A3-BOAT.md`.
+
+**Fullständig audit av de tidigare rekonstruerade grupperna:** 32 av 33 manusbeat har återfunna originalutdrag i PDF. `A3-HOME-004` återfanns inte som ett eget rubricerat beat och ska inte förfalskas som ordagrant återfunnet. `A3-PARK-019–022` är också återförda till avsnitt 11AU nedan från PDF-källan (commit `4d9e2ad`). Övriga nya originalutdrag är bevarade separat, medan de tidigare kompletterande avsnitten 11AS–11AZ behålls för spårbarhet: de är **inte** auktoritativa när PDF-utdrag visar annan repliktext.
+
+Dessa återfunna original innehåller både dialogutkast och revisionsversioner. *Källtrohet* och *slutligt användargodkännande* är olika kontrollpunkter. PDF-dialogen är originalkällan; den skall inte automatiskt beskrivas som slutgiltigt låst om samtalet inte visar ett uttryckligt godkännande.
+
+---
+
 ## 11AK. Dialogaudit inför beat-implementation (uppdaterad 2026-10-09)
 
 **Samtliga inventerade Akt 3-beats har nu dialogtext**, inklusive öppningen, staden, hemmen, skattjakten, parken, arkaden, första bybesöket, familjedagen och epilogen.
