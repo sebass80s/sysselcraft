@@ -2363,6 +2363,8 @@ Alve blir tyst.
 
 **Nova:** Jag vet att saker går fel. Det är därför jag försöker fixa dem!
 
+**Nova:** Jag har redan bråkat tillräckligt mycket hemma.
+
 Barnet tittar på henne.
 
 **Barnet:** Alve försökte bara hjälpa.
@@ -2609,6 +2611,8 @@ Barnet ler.
 Nova stänger blocket.
 
 **Nova:** Förlåt för igår.
+
+**Nova:** Jag vill inte bli så där arg. Jag var det så ofta förr, känns det som.
 
 ### A3-DRAMA-008 – Inte ert fel
 
@@ -6455,6 +6459,8 @@ Nova ler.
 Hon tittar över parken.
 
 **Nova:** Det är bara så konstigt att se allting halvfärdigt.
+
+**Nova:** Jag vill att mamma och pappa ska få en hel dag då jag inte bråkar om något.
 
 **Barnet:** Det brukar se ut så medan man gör i ordning något.
 
