@@ -1,7 +1,7 @@
 # Act 3 Art Pipeline
 
-Status: **ART PIPELINE 2.0 · LOCKED PRODUCTION METHOD**
-Date: 2026-10-08
+Status: **ART PIPELINE 2.1 · LOCKED PRODUCTION METHOD**
+Date: 2026-10-09
 
 This is the canonical production contract for Act 3 story art and the template for later chapters.
 
@@ -56,6 +56,22 @@ For **every** `kör art <beat-id>`, fail closed **before** invoking image genera
 This is a mandatory **assistant pre-call guard** for ChatGPT's built-in generator. A repo script cannot intercept or cancel that hosted tool call; the assistant must decline to call it if the guard is not satisfied. Do not claim a cryptographically enforced guarantee over the ChatGPT tool.
 
 For external or file-backed workflows, `scripts/preflight-art-job.mjs` provides a separate fail-closed CLI audit requiring beat-specific manuscript evidence, a locked scene contract in `image-pipeline/contracts/<beat-id>.json`, the exact final renderer prompt in a text file, its matching SHA-256 receipt, and fingerprints of actual input files. The script blocks if any word in the final prompt differs from the approved contract. No contract means STOP. Its evidence receipt requires operator/renderer confirmation; self-reported fields alone cannot prove that a remote renderer consumed the images. This CLI does not authorize using paid APIs or Runway. **Important:** Even an exact textual match cannot prove that image generation will obey the prompt. For the built-in ChatGPT generator the assistant must inspect the final tool instruction itself and abstain when a contract cannot be matched. The CLI does not intercept the hosted tool.
+
+## Art Pipeline 2.1: hard stop for ChatGPT art calls
+
+A `kör art <beat-id>` request is **NOT** permission to improvise a scene. Before every ChatGPT image call:
+
+1. Fetch the exact beat from the canonical Act 3 story manifest; if absent, STOP.
+2. Fetch the locked exact-beat JSON contract from `image-pipeline/contracts/<beat-id>.json`; if absent, STOP. The contract contains exact manuscript quotations, expected foreground cast, visual must-haves, and the COMPLETE final prompt. Never substitute a newly improvised prompt.
+3. Verify each character's real uploaded PNG reference is accessible to this tool session. If renderer reference access cannot be established, STOP; don't call text-only generation.
+4. Confirm location/previous approved images are from the same canonical location. No fabricated continuity. If the image has not been approved, it is NOT an anchor.
+5. Review the exact final prompt and mandatory beat elements, independently of reading the JSON. Compare with manuscript and physically visible reference sheets. If mismatched, STOP.
+6. Call generator only with the **complete finalPrompt verbatim** (plus actual images), not a summary or a different paraphrase. Do not add unrelated characters, environments, actions or props.
+7. After image, perform visual QA and mark PASS only after every mandatory element matches. A failed image is rejected without promotion.
+
+**What is technically enforceable:** `scripts/preflight-art-job.mjs` rejects unverified file-backed jobs or altered prompts. It does NOT intercept the built-in ChatGPT image tool. For ChatGPT generation, steps above remain assistant operational obligations. NEVER claim this tool is programmatically locked by GitHub.
+
+**Regression case:** A3-PARK-003 must show the old outdoor stage, semicircular benches, two musicians packing instruments, and aging light strings; not minigolf. Nova/Barnet/Alve keep exact canonical clothing. Contract: `image-pipeline/contracts/A3-PARK-003.json`.
 
 ## Goal
 
