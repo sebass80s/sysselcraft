@@ -7263,130 +7263,227 @@ Vid kiosken köper Nova varsin glass åt dem.
 De går längs vattnet med sina glassar.
 
 
-## 11AU. A3-PARK-019–022 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
+## 11AU. A3-PARK-019–022 — ÅTERFUNNEN ORIGINALTEXT FRÅN KONVERSATIONS-PDF
 
-**Status:** Följer godkänd händelseföljd. Repliker nyformulerade eftersom originaltexten inte fanns bevarad i manifestet. Måste granskas före beats.
+**Källstatus:** Text från den ursprungliga konversationens dialogutkast på PDF-sidorna 71–75; inte den senare nyformulerade kompletteringen. PDF rubricerar detta utkast som *ej spikat*. Senare godkännande behöver bedömas separat; repliker får inte märkas som ordagrant godkända utan stöd.
 
-### A3-PARK-019 – Kan den fortfarande fungera?
+## A3-PARK-019 – Kan den fortfarande fungera?
 
-Henrik drar fram det gamla shuffleboardbordet på gräset.
+Henrik har ställt det gamla spelbordet mitt på gräsmattan.
 
-**Henrik:** Mina damer och herrar! Ett stycke äkta folkparkshistoria!
+Nova står bredvid och studerar poängtavlan från 2011.
 
-**Alve:** Ser ut som ett långt bord.
+**Henrik:** Nu ska vi se om den här gamla skönheten fortfarande fungerar!
 
-**Henrik:** Det är ett mycket speciellt långt bord. Man skjuter puckar och försöker få så mycket poäng som möjligt.
+**Alve:** Vad heter spelet egentligen?
 
-Han demonstrerar. Pucken träffar en skruv som sticker upp och ramlar av.
+**Henrik:** Shuffleboard! Eller bordsshuffleboard, för att vara exakt.
 
-**Henrik:** ...när bordet är i bättre skick.
+**Barnet:** Hur spelar man?
 
-**Nova:** Är det samma bord som mamma och pappa spelade på?
+**Henrik:** Man skjuter brickorna över bordet. Ju längre fram de stannar, desto fler poäng får man. Men skjuter man för hårt åker de över kanten.
 
-**Henrik:** Jag skulle tro det. Vi hade inte råd med två.
+Henrik visar med en träbricka.
 
-**Barnet:** Då behöver vi laga det.
+Den glider över bordet, träffar en gammal skruv och ramlar ner på marken.
 
-**Alve:** Efter att vi har testat en gång?
+**Alve:** Så inte så?
 
-**Henrik:** Jag föreslår att vi börjar med skruven.
+**Henrik:** Nej, inte riktigt så.
 
-### A3-PARK-020 – Första matchen
+**Nova:** Är det här verkligen spelet som mamma och pappa spelade?
 
-Skruven är åtgärdad. Nova tar tre puckar.
+**Henrik:** Samma bord, om jag minns rätt.
 
-**Nova:** Jag utmanar Barnet!
+**Nova:** Då måste vi fixa det!
 
-**Alve:** Varför får inte jag vara med?
+**Barnet:** Vi kan väl testa om de andra brickorna fungerar?
 
-**Nova:** För att du redan håller räkningen.
+**Henrik:** Utmärkt idé!
 
-**Alve:** Jaha. Ett mycket viktigt uppdrag.
+**Alve:** Jag börjar.
 
-*Barnet och Nova spelar en kort omgång med tre puckar var. Utgången beror på spelaren.*
+**Nova:** Varför ska du alltid börja?
+
+**Alve:** För att jag är snabbast på att säga det.
+
+## A3-PARK-020 – Första matchen
+
+Barnet, Nova och Alve står runt bordet.
+
+Henrik har putsat spelplanen med en gammal trasa och hittat några hela brickor.
+
+**Henrik:** Tre brickor var. Närmast bortre kanten utan att ramla av får flest poäng.
+
+**Nova:** Jag vill möta Barnet först.
+
+**Alve:** Hallå! Jag då?
+
+**Nova:** Du får möta vinnaren.
+
+**Alve:** Äntligen ett system jag förstår.
+
+Nova skjuter sin första bricka.
+
+Den glider nästan hela vägen till fempoängsfältet.
+
+**Nova:** Ha!
+
+**Barnet:** Det där var ganska bra.
+
+**Nova:** Ganska?
+
+**Barnet:** Vi får se.
+
+Barnet gör sig redo.
+
+*Här spelar spelaren en kort omgång bordsshuffleboard mot Nova.*
 
 **Om Barnet vinner:**
 
-**Nova:** Va! Du har ju aldrig spelat förut!
+**Nova:** Men va? Hur gjorde du det där?
 
-**Barnet:** Jag kanske är naturbegåvad.
+**Barnet:** Jag siktade.
 
-**Alve:** Jag vill spela mot mästaren!
+**Nova:** Tack för den avancerade tekniken.
+
+**Alve:** Jag visste att Barnet skulle vinna.
+
+**Nova:** Det sa du inte innan.
+
+**Alve:** Jag tänkte det väldigt tydligt.
 
 **Om Nova vinner:**
 
-**Nova:** JAAA! Jag visste det!
+**Nova:** JAAAA! Där satt den!
 
-**Barnet:** Vi tar en returmatch.
+**Barnet:** Du har övat.
 
-**Alve:** Jag vill också vinna något.
+**Nova:** Aldrig spelat förut. Ren talang.
 
-*Båda grenarna går tillbaka till samma scen.*
+**Alve:** Du ska väl inte börja kalla dig världsmästare nu?
 
-**Henrik:** Utmärkt! Jag ser redan turneringspotential.
+**Nova:** Inte förrän jag vunnit två gånger.
 
-### A3-PARK-021 – Någon minns
+## A3-PARK-021 – Någon minns
 
-Henrik ser den gamla poängtavlan intill spelbordet.
+Henrik står vid poängtavlan och betraktar de gamla resultaten.
 
-**Henrik:** Vänta, är inte det där... Jo, minsann! Jag minns den där turneringen.
+**Henrik:** Nu när jag ser namnen känner jag faktiskt igen dem.
 
-**Nova:** När mamma och pappa var här?
+**Nova:** Mamma och pappa?
 
-**Henrik:** Din pappa hade en väldigt vit skjorta. Han förklarade reglerna för din mamma i flera minuter.
+**Henrik:** Ja. Din pappa kom hit med en skjorta som var alldeles för fin för folkparken.
 
-**Alve:** Kunde hon inte reglerna?
+**Alve:** Vadå för skjorta?
 
-**Henrik:** Jo. Det var väl det som gjorde det så roligt när hon vann.
+**Henrik:** Vit. Nystruken. Han såg ut som om han skulle på bröllop.
 
-**Nova:** Mamma har berättat att hon vann flera gånger!
+Nova börjar skratta.
 
-**Henrik:** Det minns jag. Och efteråt gick de ner till vattnet och åt glass.
+**Nova:** Det låter faktiskt som pappa.
 
-**Barnet:** Var du med dem då?
+**Henrik:** Och så försökte han förklara reglerna för din mamma, fast hon redan kunde spela.
 
-**Henrik:** Nej, men jag minns att de kom tillbaka och fortsatte prata långt efter att spelet var färdigt.
+**Barnet:** Hur gick det?
 
-Nova tittar på namnen på tavlan och ler.
+**Henrik:** Hon vann första matchen.
 
-### A3-PARK-022 – Vi ska göra det ordentligt
+**Nova:** Det vet jag!
 
-**Nova:** Då måste vi ha en turnering på familjedagen!
+**Henrik:** Och andra matchen.
 
-**Alve:** Ska alla spela?
+**Alve:** Oj.
 
-**Nova:** Ja, och sedan ska mamma och pappa mötas i finalen.
+**Henrik:** Efter tredje matchen frågade han om hon ville ha glass.
 
-**Barnet:** Men tänk om någon annan vinner?
+**Nova:** Gjorde han?
 
-Nova tänker snabbt.
+**Henrik:** Jodå. De satt borta vid vattnet och pratade länge.
+
+Nova tittar bort mot bänkarna.
+
+**Nova:** Mamma har berättat att de åt glass på sin första dejt.
+
+**Barnet:** Det gör vi också ganska ofta.
+
+**Alve:** Alldeles för sällan, tycker jag.
+
+Nova ler men fortsätter titta mot bänkarna.
+
+**Nova:** Undrar om de kommer ihåg allt det där.
+
+**Henrik:** Det skulle förvåna mig om de glömt det.
+
+## A3-PARK-022 – Vi ska göra det ordentligt
+
+Nova plockar upp en av träbrickorna.
+
+**Nova:** Vi måste ha en riktig turnering på familjedagen.
+
+**Barnet:** Med alla gäster?
+
+**Nova:** Ja! Och så får mamma och pappa mötas i finalen.
+
+**Alve:** Men tänk om någon annan vinner?
 
 **Nova:** Då... får vi väl se till att de hamnar i finalen ändå.
 
 **Barnet:** Fast då är det ju ingen riktig turnering.
 
+Nova tittar på Barnet.
+
+**Nova:** Nej, men jag vill ju att de ska spela mot varandra.
+
 **Alve:** De kan väl spela en egen match efteråt?
 
-Nova lyser upp.
+Nova funderar.
 
 **Nova:** En revanschmatch!
 
-**Barnet:** Precis. Det behöver inte vara exakt samma turnering.
+**Barnet:** Precis.
 
-**Nova:** Men vi ska ha samma bord. Och poängtavlan. Och glass!
+**Nova:** Med samma poängtavla och allting.
 
-**Alve:** Nu börjar det likna något.
+Hon börjar skriva på mobilen.
 
-**Barnet:** Det kan bli ännu roligare den här gången.
+**Nova:** Vi behöver laga bordet, skaffa nya brickor och göra plats för publiken.
 
-**Nova:** Tror du det?
+**Alve:** Och glass.
+
+**Nova:** Varför glass?
+
+**Alve:** Det var ju så deras dejt slutade. Det sa Henrik precis.
+
+Nova tittar upp.
+
+**Nova:** Vänta. Det är faktiskt en bra idé.
+
+**Alve:** Tack!
+
+**Nova:** Vi skulle kunna ha en liten glassvagn bredvid spelhörnan.
+
+**Barnet:** Vi får fråga Henrik om det går.
+
+**Henrik:** Jag känner en alldeles utmärkt glassförsäljare!
+
+**Alve:** Jag gillar redan den här festen.
+
+Nova fotograferar spelbordet.
+
+**Nova:** Tänk om vi kan få allting att se ut precis som då.
+
+**Barnet:** Vi kanske kan göra det ännu roligare.
+
+Nova tittar på Barnet.
+
+**Nova:** Ännu roligare?
 
 **Barnet:** Ja. De hade ju inte oss där 2011.
 
+Nova ler.
+
 **Nova:** Nej. Det hade de faktiskt inte.
-
-Hon skriver ivrigt i sitt block.
-
 
 ## 11AV. A3-ARCADE-001–003 — KOMPLETTERANDE DIALOGMANUS
 
