@@ -174,7 +174,83 @@ Dialogutkast 1— ej spikat
 ---
 
 <!-- PDF sida 33 -->
+A3-HOME-005 — Skattkistan
 
+Nova drar ut en låda under sängen.
+
+Den är full av gamla spel, foton, klistermärken och småsaker.
+
+Nova: Här! Jag visste att jag hade den någonstans.
+
+Hon plockar fram en liten plåtask med en tecknad skattkista på
+
+locket.
+
+Alve: Är det pengar i den?
+
+Nova: Ja, ungefär tre miljoner.
+
+Alve: På riktigt?
+
+Nova: Nej, Alve.
+
+Hon öppnar asken.
+
+Där ligger några snäckskal, en blå glaskula, en rostig nyckel och
+
+flera små papperslappar.
+
+Barnet: Vad är allt det där?
+
+Nova: Min skattjakt.
+
+Barnet: Har du gjort en skattjakt?
+
+Nova: När vi bodde i huset brukade jag gömma saker i
+
+trädgården och rita kartor. Mamma och pappa fick leta.
+
+Hon vecklar upp ett gammalt papper.
+
+På det finns en handritad karta över trädgården, med ett stort
+
+kryss bakom studsmattan.
+
+Barnet: Är det där ert gamla hus?
+
+Nova: Ja. Här var altanen och här stod syrenbusken. Och det här
+
+var min hemliga plats.
+
+Alve: Varför har du ritat en dödskalle?
+
+Nova: För att det såg farligare ut.
+
+Alve: Fungerade det?
+
+Nova: Pappa vägrade gå förbi den utan ett svärd.
+
+
+
+
+Barnet: Hade han ett svärd?
+Nova: Han använde en grilltång.
+Barnet skrattar.
+Nova: Jag gjorde jättesvåra ledtrådar också. En gång tog det
+mamma nästan en timme att hitta en burk med tre stenar.
+Barnet: Vi borde göra en skattjakt här i stan.
+Nova tittar upp.
+Nova: Du skulle aldrig klara mina ledtrådar.
+Barnet: Det vet du inte.
+Nova: Okej. Utmaning antagen.
+Hon tar fram ett tomt papper och börjar rita.
+Barnet: Ska du göra en nu?
+Nova: Inte nu. Man måste planera en bra skattjakt.
+Alve: Jag kan gömma skatten!
+Nova: Då kommer du glömma var du lagt den.
+Alve: Det gör ju jakten svårare.
+Nova börjar skratta.
+Nova: Okej, det där var faktiskt en poäng.
 
 ---
 
@@ -285,6 +361,85 @@ Nova: Hemligt.
 ---
 
 <!-- PDF sida 36 -->
+A3-HOME-008 - Innan de går
 
+Det börjar bli kväll.
+
+Barnet och Alve står i hallen och tar på sig skorna.
+
+Mamman: Det var roligt att träffa er. Ni får gärna komma tillbaka.
+
+Alve: Tack för bullarna!
+
+Mamman: Det finns fler nästa gång.
+
+Nova: Nu kommer han aldrig sluta komma hit.
+
+Alve flinar.
+
+Mamman: Och hälsa Mira från mig om ni träffar henne.
+
+Barnet: Det ska vi.
+
+Nova följer Barnet ut i trapphuset.
+
+Nova: Du.
+
+Barnet: Vad?
+
+Nova: Jag menade faktiskt det där med skattjakten.
+
+Barnet: Jag också.
+
+Nova: Jag tänker göra den ganska svår.
+
+Barnet: Då får jag väl ta med Alve.
+
+De tittar mot Alve som försöker få upp en hopknuten skosnöre.
+
+Nova: Då blir det ännu svårare.
+
+
+
+
+Barnet skrattar.
+
+Nova tar fram mobilen.
+
+Nova: Vi borde kunna skriva till varandra. Annars vet jag ju inte
+
+när ni kommer tillbaka.
+
+Barnet: Ja, det kan vi.
+
+De byter kontaktuppgifter.
+
+Nova: Jag skickar när första ledtråden är klar.
+
+Barnet: Vi ses snart då.
+
+Nova: Och du får inte berätta för någon om det andra.
+
+Barnet: Överraskningen?
+
+Nova nickar.
+
+Barnet: Jag lovar.
+
+Nova ler.
+
+Nova: Okej. Hej då!
+
+Hon stänger dörren.
+
+En stund senare hörs ett meddelande i Barnets telefon.
+
+Nova har skickat en bild på en helt tom skattkarta.
+
+Under bilden står:
+
+Nova: Börja öva. &
+
+AKT 3 - NOVA
 
 ---
