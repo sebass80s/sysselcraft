@@ -58,6 +58,16 @@ Fetch actual character sheet images and verify they are available to the renderi
 
 Regression: `node scripts/test-art-contracts-v21.mjs`.
 
+## Canonical Prop Registry
+
+Recurring props use `image-pipeline/prop-registry.json`, with canonical reference PNGs under `public/assets/village/prop-sheets/`.
+
+First registered prop: `folkpark-game-table`, from A3-PARK-016. Its exact reference is `public/assets/village/prop-sheets/folkpark-game-table.png`. Never redraw its scoring surface or wooden pucks freely.
+
+A v2 beat that features it must declare `"props": ["folkpark-game-table"]`. `scripts/build-art-job.mjs` then verifies the PNG exists and includes it in `propRefs`, `referenceImagePaths`, the compiled render prompt, and `prop-identity`/`prop-continuity` QA checks. Preflight includes the prop PNG in its physical image input receipt.
+
+**Scope:** This is supported in generated manifest-based art jobs. Built-in ChatGPT image calls cannot be intercepted by repo scripts and still require deliberate reference attachment and visual QA. An uploaded binary is not proof the model used it.
+
 ## The three reference classes
 
 Every v2 art job separates references by responsibility.
