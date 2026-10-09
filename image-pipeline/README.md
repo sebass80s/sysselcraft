@@ -1,6 +1,6 @@
 # SysselCraft Art Pipeline
 
-Status: **v2 production pipeline**
+Status: **v2.1 production pipeline**
 
 This directory owns repeatable image-production context for SysselCraft. The renderer is deliberately replaceable.
 
@@ -14,13 +14,13 @@ The renderer never decides identity or continuity. The pipeline does.
 
 ## Production lock
 
-Art Pipeline 2.0 is the locked SysselCraft production method. Normal chapter work should use it, not redesign it. The final GitHub PNG drag-and-drop step is intentional.
+Art Pipeline 2.1 is the locked SysselCraft production method. Normal chapter work should use it, not redesign it. The final GitHub PNG drag-and-drop step is intentional.
 
 ## Operator shorthand: `kör art`
 
 In any future SysselCraft chat, the phrase **`kör art`** means:
 
-> Execute the full Art Pipeline 2.0 for the current requested scene.
+> Execute the full Art Pipeline 2.1 for the current requested scene.
 
 Required behavior:
 - use the structured v2 beat contract;
@@ -31,6 +31,16 @@ Required behavior:
 - persist + approve only accepted candidates.
 
 It must **not** degrade into a standalone prose prompt, guessed character identity, repeated user upload, or silent Runway/API fallback.
+
+## 2.1 pre-call stop gate
+
+For every `kör art <beat-id>`, **read the exact script and its committed `image-pipeline/contracts/<beat-id>.json`**. The contract must contain the exact foreground cast, verbatim manuscript evidence, visual requirements, explicit forbidden motifs, and the full final image-generation prompt. If there is no contract, or it conflicts with the manuscript, STOP without making an image. Never improvise from a previous beat.
+
+Fetch actual character sheet images and verify they are available to the rendering operation. No verified images means STOP. The final prompt must be the exact locked `finalPrompt`. Visual QA follows every generation.
+
+`scripts/preflight-art-job.mjs` enforces this for file-backed jobs when a complete evidence receipt exists, but cannot intercept ChatGPT's built-in image tool. The assistant must enforce the same pre-call gate and report limitations accurately.
+
+Regression: `node scripts/test-art-contracts-v21.mjs`.
 
 ## The three reference classes
 
