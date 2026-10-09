@@ -6917,25 +6917,15 @@ Nova skrattar och följer med Sol in.
 
 *Scenen slutar.*
 
-## 11AK. Dialogaudit inför beat-implementation (2026-10-09)
+## 11AK. Dialogaudit inför beat-implementation (uppdaterad 2026-10-09)
 
-**Manusstatus är inte samma sak som storybeslut.** Scenerna nedan får inte märkas som beat-ready förrän de har talare och godkända repliker ordagrant.
+**Samtliga inventerade Akt 3-beats har nu dialogtext**, inklusive öppningen, staden, hemmen, skattjakten, parken, arkaden, första bybesöket, familjedagen och epilogen.
 
-**Full dialog verifierad i detta manifest:** A3-PREP-001–006 (11AG–11AH); A3-SECRET-001–006 (11AI–11AJ och 11T); A3-FAMILY-001–020 (11U, 11AA–11AC, 11Y–11Z); A3-EPILOG-001–006 (11AD–11AF); Linus A3-VILLAGE-011–016; Sol A3-VILLAGE-017–021; bergknallen A3-VILLAGE-022–026; A3-REVEAL-001–004; övriga fullt utskrivna sekvenser i 11A, 11D, 11G–11H, 11J–11K, 11M–11N.
+**Två skilda källstatusar:** (1) tidigare användargodkänd ordagrann dialog, bevarad i manus; (2) nyformulerade kompletteringar i 11AS–11AZ där de tidigare exakta replikerna inte kunde återfinnas. Dessa kompletteringar följer låst berättelse men är **inte godkända som ordagranna originalrepliker** och ska granskas innan de blir kanoniska beats.
 
-**Återstående manusluckor / synopsis endast:**
-- 11B: stadsvandring och Novas mammas hem.
-- 11C: det gamla hemmet och vardagen med två hem.
-- 11F: skattjakten A3-HUNT-001–006.
-- 11I: spelhörnan A3-PARK-019–022.
-- 11L: arkaden A3-ARCADE-001–006.
-- A3-VILLAGE-004–008 och A3-VILLAGE-010, verifiera äldre dialog. A3-VILLAGE-009 finns i full omskriven Mira-version.
-- Öppning/övriga tidigare scener i avsnitt 11 utanför 11A behöver verifieras scenvis.
+**Teknisk status:** Inga nya beats eller spelmekaniker implementerade i runtime. Skilj fullständigt manusunderlag från programmerad och kvalitetssäkrad runtime.
 
-**Bevaranderegel:** Skriv inte nya repliker och kalla dem gammal godkänd originaldialog. Återfinn ordagranna utdrag ur tidigare chattar eller gör ett särskilt nytt manusutkast för användarens godkännande. Ingen runtime-/art-implementation gjord av denna audit.
-
-
-## 11AK. A3-HOME-004–008 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
+## 11AS. A3-HOME-004–008 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
 
 **Observera:** Tidigare godkänd handling, men originalreplikerna gick inte att återställa från manifestet. Dessa repliker är nyskrivna för att göra beats möjliga att granska, inte verifierad ordagrann återgivning.
 
@@ -7078,7 +7068,7 @@ Strax efteråt plingar Barnets mobil. Nova har skickat en bild på ett nästan t
 **Nova (meddelande):** Börja öva. 😎
 
 
-## 11AL. A3-HUNT-001–006 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
+## 11AT. A3-HUNT-001–006 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
 
 **Status:** Låst intrig och ledtrådar, dialog nyformulerad eftersom ordagranna original saknades i manifestet. Granska repliker före produktion.
 
@@ -7209,7 +7199,7 @@ Vid kiosken köper Nova varsin glass åt dem.
 De går längs vattnet med sina glassar.
 
 
-## 11AM. A3-PARK-019–022 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
+## 11AU. A3-PARK-019–022 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
 
 **Status:** Följer godkänd händelseföljd. Repliker nyformulerade eftersom originaltexten inte fanns bevarad i manifestet. Måste granskas före beats.
 
@@ -7334,170 +7324,7 @@ Nova lyser upp.
 Hon skriver ivrigt i sitt block.
 
 
-## 11AL. A3-CITY-001–003 / A3-HOME-001–003 — RECONSTRUCTED DIALOGUE DRAFT
-
-**Source note:** The formerly approved *verbatim* lines could not be independently recovered. This is a new script reconstructed from the exact locked scene beats in 11B; approval of individual lines is still pending. Do not present it as earlier verbatim approval.
-
-### A3-CITY-001 – Stadens bästa ställe
-
-Nova leder Barnet och Alve genom stadens äldre kvarter. Hon stannar framför ett skyltfönster fyllt med gamla spel och serietidningar.
-
-**Nova:** Här! Det här är stans bästa ställe.
-
-**Alve:** Det ser ut som någon glömt att städa i trettio år.
-
-**Nova:** Det är det som är grejen. Allt roligt finns kvar.
-
-**Barnet:** Får man spela här?
-
-**Nova:** Klart man får. Men först måste ni se något.
-
-Hon pekar mot en äldre spelmaskin bakom fönstret.
-
-**Nova:** Den där har jag försökt slå i evigheter.
-
-**Alve:** Då behöver du väl hjälp av ett proffs.
-
-**Nova:** Bra. Säg till när du hittar ett.
-
-### A3-CITY-002 – Utmaningen
-
-Nova visar en gammal arkadmaskin. På resultatlistan står NOV.
-
-**Barnet:** Är NOV du?
-
-**Nova:** Japp. Tre bokstäver är allt man får.
-
-**Alve:** Jag hade skrivit ALVE.
-
-**Nova:** Det är fyra.
-
-**Alve:** Då får de bygga om spelet.
-
-Nova ger Barnet kontrollen.
-
-**Nova:** Vågar du försöka?
-
-**Barnet:** Självklart.
-
-**Alve:** Jag tänker coacha.
-
-**Nova:** Helst inte.
-
-*Kort frivillig interaktion eller en berättad tävlingssekvens, beroende på befintlig runtime.*
-
-**Nova:** Okej. Inte dåligt!
-
-**Alve:** Nu är det min tur att visa hur man gör.
-
-**Barnet:** Varsågod.
-
-**Alve:** Vänta. Vilken knapp är hoppa?
-
-### A3-CITY-003 – Hemvägen
-
-Barnen går genom staden.
-
-**Alve:** Bor du långt härifrån?
-
-**Nova:** Hos mamma? Några kvarter. Hos pappa är det längre, bort mot skolan.
-
-**Barnet:** Bor de inte tillsammans?
-
-**Nova:** Nej. De är skilda.
-
-**Alve:** Måste du gå mellan två hem hela tiden?
-
-**Nova:** Ibland. Och jag har alltid fel laddare på fel ställe.
-
-**Barnet:** Jobbigt.
-
-**Nova:** Ja. Men mamma har bullar hemma. Vill ni komma?
-
-**Alve:** Det var dagens bästa fråga.
-
-### A3-HOME-001 – Oväntat besök
-
-Nova låser upp dörren till mammans lägenhet.
-
-**Nova:** Mamma! Jag har kompisar med mig!
-
-**Mamma:** Jaså? Hej på er!
-
-**Nova:** Det här är Barnet och Alve. Vi träffades vid hamnen.
-
-**Barnet:** Hej!
-
-**Alve:** Hej!
-
-**Mamma:** Vad roligt. Har ni haft kul?
-
-**Nova:** Vi har varit i parken och spelat minigolf.
-
-**Mamma:** Hur gick det för dig då, Nova?
-
-**Nova:** Du behöver inte säga det på det sättet.
-
-**Mamma:** Jag sa ju bara hur det gick.
-
-**Nova:** Det gick... konstnärligt.
-
-**Mamma:** Då behöver ni nog lite saft och bullar.
-
-**Alve:** Jag tycker verkligen om den här lägenheten.
-
-### A3-HOME-002 – Mira
-
-Barnen sitter vid köksbordet.
-
-**Barnet:** Vi har en affär i byn också. Mira jobbar där.
-
-**Mamma:** Mira? Menar du Mira som bodde här i stan?
-
-**Nova:** Känner du henne?
-
-**Mamma:** Vi jobbade tillsammans i en affär för länge sedan. Hon var alltid den som kunde hitta precis vad som helst.
-
-**Alve:** Till och med sjutton likadana stolar?
-
-**Mamma:** Trettio, faktiskt. Till en invigning. Ingen annan förstod hur hon lyckades.
-
-**Barnet:** Hon flyttade till byn ganska nyligen.
-
-**Mamma:** Har hon? Det visste jag inte. Vi tappade kontakten när hon flyttade härifrån.
-
-**Nova:** Vi kan hälsa från dig.
-
-**Mamma:** Gör gärna det. Jag skulle vilja träffa henne igen.
-
-### A3-HOME-003 – Hemligheten
-
-Mamman går för att hämta fler glas.
-
-Nova lutar sig mot Barnet.
-
-**Nova (viskar):** Kom ihåg att vi inte säger något om överraskningen.
-
-**Barnet:** Jag vet.
-
-**Alve:** Jag säger aldrig något.
-
-**Nova:** Du sa nyss 'hemlig' så högt att hela hamnen hörde.
-
-**Alve:** Det var för att ingen skulle missa det.
-
-**Mamma (från köket):** Vad viskar ni om?
-
-**Nova:** Att Barnet behöver träna mer på minigolf!
-
-**Barnet:** Va?!
-
-**Mamma:** Då får ni väl spela igen snart.
-
-Nova försöker låta bli att skratta.
-
-
-## 11AN. A3-ARCADE-001–003 — KOMPLETTERANDE DIALOGMANUS
+## 11AV. A3-ARCADE-001–003 — KOMPLETTERANDE DIALOGMANUS
 
 **Nyskrivna repliker från låst handling, ej verifierad ordagrann originaltext.**
 
@@ -7580,7 +7407,7 @@ Tre maskiner står intill varandra: bilspel, rytmspel och färgblock.
 **Nova:** Vänta tills du ser maskinen längst in.
 
 
-## 11AO. A3-ARCADE-004–006 — KOMPLETTERANDE DIALOGMANUS
+## 11AW. A3-ARCADE-004–006 — KOMPLETTERANDE DIALOGMANUS
 
 **Nyskriven dialog från låst handlingssammanfattning, inte påstådd ordagrann originaltext.**
 
@@ -7687,130 +7514,7 @@ Utanför butiken går Barnet, Nova och Alve vidare.
 Nova skrattar och stoppar mobilen i väskan utan att titta på den.
 
 
-## 11AO. A3-ARCADE-004–006 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
-
-**Obs:** Originalreplikerna från tidigare konversation är inte verifierbart åtkomliga. Texten nedan är en ny dialog som följer låst innehåll i 11L. Kräver separat dialoggodkännande, inte ett återfunnet original.
-
-### A3-ARCADE-004 – En plats att försvinna till
-
-Efter spelandet slår sig barnen ner i en gammal soffa. Rebecka ställer fram saft.
-
-**Rebecka:** Här får ni. Ni ser ut att behöva fylla på energi.
-
-**Alve:** Jag skulle gärna fylla på med bullar också.
-
-**Rebecka:** De finns i affären bredvid. Men först behöver du dricka något.
-
-**Nova:** Jag har suttit här i den här soffan hur många gånger som helst.
-
-**Barnet:** Brukar du komma hit ofta?
-
-**Nova:** Ganska. Pappa tog med mig hit när jag var liten. Han samlade på gamla spel.
-
-**Rebecka:** Och du var ungefär så här hög när du lärde dig spela.
-
-Hon håller handen strax ovanför soffkanten.
-
-**Nova:** Så liten var jag inte!
-
-**Rebecka:** Knappt längre än en spelkontroll.
-
-**Alve:** Det förklarar varför hon är så bra. Hon har tränat sedan hon kunde gå.
-
-Nova ler och dricker av saften.
-
-**Nova:** Det är skönt att komma hit ibland. Ingen frågar vilken lägenhet jag ska sova i eller om jag packat rätt väska.
-
-Rebecka ser på henne och nickar.
-
-**Rebecka:** Fast jag brukar fråga om du har ätit lunch.
-
-**Nova:** Ja, ja. Och om jag varit utomhus.
-
-**Rebecka:** Båda ganska rimliga frågor.
-
-**Barnet:** Det är ett bra ställe.
-
-**Nova:** Det bästa.
-
-### A3-ARCADE-005 – Den omöjliga maskinen
-
-Längst in i spelhallen står en dammig maskin. På skärmen lyser HIGH SCORE – REB – 125 000.
-
-**Alve:** Slå mig om du kan, står det!
-
-**Nova:** Det är Rebeckas rekord. Hon är helt omöjlig.
-
-**Rebecka:** Inte omöjlig. Bara envis.
-
-**Barnet:** Ska vi prova?
-
-**Nova:** Ja! Jag kan visa var första fällan finns.
-
-Barnet tar kontrollen.
-
-**Alve:** Och jag kan räkna ner. Tre, två, ett!
-
-En kort omgång följer. Barnet får spela; resultatet påverkar inte nästa beat.
-
-**Nova:** Bra! Du kom längre än förra gången.
-
-**Rebecka:** Fortsätter ni så där kanske jag blir tvungen att börja träna igen.
-
-**Alve:** Min tur!
-
-Alve tar kontrollen. Fyra sekunder senare är spelet slut.
-
-**Alve:** Va?!
-
-**Nova:** Nytt rekord. Fast åt fel håll.
-
-**Alve:** Det var ett provåk.
-
-**Rebecka:** Då har vi testat att maskinen fungerar.
-
-### A3-ARCADE-006 – En ny tradition
-
-Barnen gör sig redo att gå.
-
-**Rebecka:** Kommer ni tillbaka?
-
-**Nova:** Självklart. Någon måste slå dig.
-
-**Rebecka:** Då får jag nog skriva upp er på utmanarlistan.
-
-Hon river av ett papper och skriver NOV, BARNET och ALVE.
-
-**Alve:** Skriv att jag är expert.
-
-**Rebecka:** På att förlora snabbt?
-
-**Alve:** Det är också en expertis.
-
-Nova tar på sig jackan.
-
-**Rebecka:** Det var kul att du tog med dig kompisar, Nova.
-
-Nova ler.
-
-**Nova:** Ja. Det var det.
-
-Ute på gatan ser Alve eftertänksam ut.
-
-**Alve:** Nästa gång ska jag börja med ett spel som har färre knappar.
-
-**Barnet:** Hur många?
-
-**Alve:** Tre. Högst.
-
-**Nova:** Du spelade ju på en med två.
-
-**Alve:** Då kanske en knapp.
-
-Nova skrattar. Mobilen ligger kvar i hennes väska när de går vidare.
-
-
-## 11AP. A3-CITY-001–003 — KOMPLETTERANDE DIALOGMANUS
+## 11AX. A3-CITY-001–003 — KOMPLETTERANDE DIALOGMANUS
 
 **Status:** Nyskriven full dialog utifrån redan låst sceninnehåll. Godkänd originaldialog är inte återställd ordagrant.
 
@@ -7893,7 +7597,7 @@ De skrattar.
 **Alve:** Det är värt risken.
 
 
-## 11AQ. A3-HOME-001–003 — KOMPLETTERANDE DIALOGMANUS
+## 11AY. A3-HOME-001–003 — KOMPLETTERANDE DIALOGMANUS
 
 **Nyskrivna repliker utifrån godkänd händelseföljd; inte verifierad ordagrann kopia.**
 
@@ -7992,7 +7696,7 @@ Nova svarar högt.
 Nova ler mot Barnet och gömmer blocket bakom ryggen.
 
 
-## 11AP. A3-VILLAGE-004–008 och 010 — KOMPLETTERANDE DIALOG (NYFORMULERAD)
+## 11AZ. A3-VILLAGE-004–008 och 010 — KOMPLETTERANDE DIALOG (NYFORMULERAD)
 
 **Status:** Tidigare beats finns beskrivna i projektets berättelse, men exakt godkänd ordalydelse kunde inte återfinnas. Detta är nya repliker enligt låst handling, för granskning. A3-VILLAGE-009 om Mira finns redan i sin fullständiga godkända version och ersätts inte.
 
