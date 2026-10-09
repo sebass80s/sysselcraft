@@ -8108,6 +8108,10 @@ Nova ler och tar fram anteckningsblocket.
 
 Nova säger uttryckligen före avslöjandet att hon var rätt jobbig hemma och bråkade mycket, samt tror att hennes föräldrar blev trötta på henne. Detta uttrycker hennes egen felaktiga uppfattning, inte sanningen. Vid fotografiet får Barnet fråga vad hon menar med 'den här gången', men hon slätar över det. Det slutliga klargörandet sker fortfarande med mamman.
 
+## 11BC. Godkända skuldantydningar
+
+Användaren godkände de sex nya antydningarna i A3-HOME-004, A3-HOME-007, A3-HUNT-005, A3-DRAMA-003, A3-DRAMA-007 och A3-PREP-002. Dessa är nu låsta. Andra nyformulerade dialoger behöver fortfarande granskas. Novas skuldkänsla är inte en faktisk orsak till föräldrarnas separation.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
