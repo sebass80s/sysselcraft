@@ -6375,3 +6375,8 @@ Visual progression remains locked:
 This document remains authoritative for its own domain. Current Runtime Architecture 1.1 execution status and continuation order are tracked in `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
 
 Verified Runtime 1.1 docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, GitHub Actions #2252 SUCCESS. Runtime items 1–4 are closed; generic chapter persistence is next. This pointer does not change the domain decisions recorded above.
+
+
+## Act 3 dialogue canon precedence
+
+For all Act 3 beats, **the latest expressly approved dialogue revision and design decision overrides earlier drafts and recovered chat/PDF extracts**. See `docs/ACT3_DIALOG_CANON_RESOLUTION.md` for the inventory of 135 beat IDs and 38 duplicates, and `docs/ACT3_STORY_MANIFEST.md` for latest authoring. Do not restore older character names, ages, score tags, or dialogues while rescuing missing lines from archival OCR. Canonical arcade owner: **Rebecka** (red-haired, early 40s), initials **REB**, not Rut/RUT. `A3-PARK-021` uses the later revised dialogue in section 11AU. Ambiguous versions are conflicts to verify, not a license to invent approval.
