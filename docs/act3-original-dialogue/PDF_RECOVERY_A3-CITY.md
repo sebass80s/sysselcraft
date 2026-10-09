@@ -79,7 +79,56 @@ fungerar även om minispel inte är implementerat ännu.
 ---
 
 <!-- PDF sida 27 -->
+A3-CITY-003 - Hemvägen
 
+De kommer ut ur spelbutiken en stund senare.
+
+Nova: Okej, du var faktiskt ganska bra.
+
+Barnet: Du slog ju mitt rekord direkt.
+
+Nova: Jag har ett rykte att försvara.
+
+Nova tittar på mobilen.
+
+Nova: Jag måste nog gå hem snart.
+
+Barnet: Bor du långt härifrån?
+
+Nova: Inte från mammas lägenhet. Den ligger några kvarter bort.
+
+Barnet: Mammas lägenhet?
+
+Nova: Ja. Pappa bor åt andra hållet, nära skolan.
+
+Barnet: Har du två hem?
+
+Nova: Ja. Mina föräldrar är skilda.
+
+Hon säger det ganska snabbt, som om det är något hon berättat
+
+många gånger.
+
+Barnet: Är det jobbigt?
+
+Nova: Ibland. Man glömmer alltid fel saker på fel ställe.
+
+Barnet: Som vadå?
+
+Nova: Hörladdaren. Gympakläder. Min favorittröja.
+
+Alve: Du borde ha två av allt.
+
+Nova: Ska du köpa två favorittröjor åt mig då?
+
+
+
+
+Alve: Jag tänkte mer två laddare.
+Nova: Det har jag redan.
+Barnet ler.
+Barnet: Får vi följa med en bit?
+Nova: Ni kan följa med hem om ni vill. Mamma är nog hemma.
 
 ---
 
