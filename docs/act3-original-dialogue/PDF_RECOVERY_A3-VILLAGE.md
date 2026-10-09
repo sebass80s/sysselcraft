@@ -221,8 +221,15 @@ men gradvis vill lägga till mer och mer. Där får vi in hennes
 perfektionism även i ekonomin, utan att låta den styra spelarens
 möjligheter att tjäna pengar.
 & Jag har sparat principen i docs/ACT3 STORY MANIFEST.md
-
-[TRANSKRIPTION AVBRUTEN HÄR: KONTROLLERA PDF]
+på GitHub.
+Commit: a7f8c5c5226cfe1fd12c556059648e58617809d8
+Nästa steg blir att fortsätta berättelsen med Novas skattjakt i
+staden. Vi behöver inte bestämma Miras exakta sortiment eller
+priser ännu. Det gör vi när vi designar progressionen för hela
+akten."
+AKT 3 - NOVA
+Skattjakten
+Dialogutkast 1— ej spikat
 
 ---
 
@@ -321,22 +328,232 @@ Nova: Ja!
 ---
 
 <!-- PDF sida 82 -->
+A3-VILLAGE-006 - Ett foto på väggen
 
+Inne i stugan står ett litet köksbord vid fönstret. På väggen
+
+hänger några fotografier.
+
+Nova går fram till dem.
+
+Nova: Är det där du?
+
+Alve: Ja. Fast för några år sedan.
+
+Nova: Du var jätteliten!
+
+Alve: Jag var inte så liten.
+
+Barnet: Du är inte så stor nu heller.
+
+Alve: Tack för stödet.
+
+Nova tittar på nästa bild.
+
+På fotot står Alve tillsammans med sin pappa, sin storasyster och
+
+sin mamma framför stugan.
+
+Nova: Är det din familj?
+
+Alve: Ja.
+
+Han pekar.
+
+Alve: Pappa. Syrran. Och mamma.
+
+Nova tittar på bilden.
+
+Nova: Bor de också här?
+
+
+
+
+Alve skakar på huvudet.
+
+Alve: Pappa och syrran kommer hit ibland. Mamma dog när jag
+
+var mindre.
+
+Nova vänder sig mot honom.
+
+Nova: Oj. Det visste jag inte.
+
+Alve: Nej.
+
+Nova: Förlåt.
+
+Alve: Det är lugnt. Du kunde ju inte veta.
+
+En stund tittar de på fotografiet.
+
+Nova: Det är ett fint foto.
+
+Alve: Det tycker jag också.
+
+Han pekar mot köket.
+
+Alve: Vill ni ha saft?
+
+Nova: Har du saft?
+
+Alve: Ja.
+
+Barnet: Kolla datumet först.
+
+Alve: Den är inte så gammal!
+
+Barnet: Det sa du om sylten också.
+
+Nova börjar skratta.
 
 ---
 
 <!-- PDF sida 83 -->
+A3-VILLAGE-007 — En riktig by
 
+Efter besöket i stugan promenerar de längs stigen mot byn.
+
+Nova tittar nyfiket på träden, husen och den lilla vägen.
+
+Nova: Är det alltid så här tyst?
+
+Barnet: Inte när Henning bakar tidigt på morgonen.
+
+Alve: Eller när Linus försöker starta sin gamla gräsklippare.
+
+Nova: Ni känner verkligen alla här?
+
+Barnet: Ganska många.
+
+De kommer fram till torget.
+
+Nova stannar.
+
+Nova: Men vad fint det är här!
+
+På torget finns små butiker, planteringar och en anslagstavla full
+
+med lappar.
+
+Nova: Har ni verkligen ett riktigt bageri?
+
+Alve: Japp.
+
+Nova: Och en affär?
+
+Barnet: Det är Miras.
+
+Nova tittar mot skyltfönstret.
+
+
+
+
+Nova: Mammas gamla kompis?
+
+Barnet: Precis.
+
+Nova: Då måste vi gå in!
 
 ---
 
 <!-- PDF sida 84 -->
+A3-VILLAGE-008 —- Mira och Nova
 
+Mira håller på att packa upp några lådor när dörrklockan plingar.
+
+Mira: Hej på er! Men nu har ni visst med er någon ny!
+
+Barnet: Det här är Nova.
+
+Nova: Hej!
+
+Mira lägger ifrån sig lådan.
+
+Mira: Men är det du som är dotter till min gamla kollega?
+
+Nova: Ja! Mamma blev jätteglad när hon hörde att du bodde här.
+
+Mira: Vad roligt! Jag kände henne långt innan du föddes.
+
+Nova: Hon berättade om de där trettio stolarna.
+
+Mira stönar dramatiskt.
+
+Mira: Inte stolarna igen!
+
+Alve: Vi har också hört den historien.
+
+Mira: Då behöver ingen höra den en tredje gång.
+
+De skrattar.
+
+Mira tittar på Nova.
+
+Mira: Du är faktiskt lite lik din mamma.
+
+Nova: Alla säger det.
+
+Mira: Hon brukade också komma in med en lista över allt som
+
+behövde göras.
+
+Alve: DET FÖRKLARAR SÅ MYCKET!
+
+Nova: Alve!
+
+Mira skrattar.
+
+Mira: Men hon var också väldigt bra på att få saker gjorda.
+
+Nova ler.
+
+Nova: Vi behöver faktiskt lite hjälp med en grej.
+
+Mira: Det har jag förstått.
+
+Barnet tittar mot dörren och kontrollerar att ingen annan står där.
+
+Barnet: Det är fortfarande en hemlighet.
+
+Mira: Den stannar här.
 
 ---
 
 <!-- PDF sida 84 -->
+A3-VILLAGE-009 —- Festinköpen
 
+
+
+
+Mira lägger fram ett häfte med bilder av bord, stolar,
+dekorationer och andra festartiklar.
+Mira: Jag har tittat lite på vad vi skulle kunna ordna.
+Nova öppnar häftet.
+Nova: Oj! Finns allt det här?
+Mira: Det mesta. Men vi behöver inte beställa allting direkt.
+Barnet: Vi tänkte köpa sakerna efter hand.
+Mira: Det är klokt. Då kan vi börja med det viktigaste och fylla på
+senare.
+Nova tittar på ett bord med ljusa dukar.
+Nova: Sådana här hade vi i trädgården hemma förut.
+Alve: Då kanske de skulle passa i parken?
+Nova: Ja...
+Hon bläddrar vidare och hittar färgglada dekorationer.
+Nova: Fast de här är också fina.
+Mira: Ni behöver inte bestämma allt idag.
+Nova tittar på Barnet.
+Nova: Vilket tycker du?
+Barnet: Vi kan börja med det vi har råd med.
+Nova: Okej. Men jag vill gärna veta vad allt kostar först.
+Mira: Det ordnar jag. Ni får en lista med priser och kan komma
+tillbaka när ni vill.
+Alve: Har du glass också?
+Mira tittar upp.
+Mira: Du ger dig verkligen aldrig.
+Alve: Jag frågar bara.
+Mira: Det finns i frysen.
+Alve: Jag visste att det var värt att följa med hit.
 
 ---
 
@@ -466,7 +683,57 @@ Nova tittar upp.
 Nova: Hur menar du?
 Mira: Din mamma hade tappat bort sin jacka. Din pappa spillde
 läsk på skjortan. Och vi kom för sent till början av turneringen.
+Alve: Låter som en ganska dålig dejt.
+Mira: Det trodde jag också. Men de hade fantastiskt roligt.
+Nova ler lite.
+Nova: Mamma har aldrig berättat det där.
+Mira: Fråga henne någon gång.
+Nova tittar på ljusslingorna igen.
+Nova: Fast den här gången kan vi ju se till att allt fungerar.
+Mira: Vi kan försöka.
+Mira ger henne en penna.
+Mira: Ska vi börja med att skriva upp vad ni behöver?
+Lite senare.
+Barnet och Alve hjälper Nova att bära ut några tomma lådor till
+Miras förråd.
 
-[TRANSKRIPTION AVBRUTEN HÄR: KONTROLLERA PDF]
+
+
+
+Nova har gått före.
+Mira stannar Barnet vid dörren.
+Mira: Du, en sak bara.
+Barnet: Ja?
+Mira: Är den här festen tänkt som en överraskning för hennes
+föräldrar?
+Barnet: Ja. De vet bara att de ska komma till parken.
+Mira: Jag förstår.
+Hon tittar ut genom fönstret där Nova visar Alve en bild på
+mobilen.
+Mira: Hon har verkligen lagt ner mycket arbete på det här.
+Barnet: Ja. Hon vill att mamma och pappa ska ha kul tillsammans
+igen.
+Mira nickar långsamt.
+Mira: Det hoppas jag att de får.
+Barnet: Vadå?
+Mira: En riktigt rolig dag.
+Hon öppnar förrådsdörren.
+Mira: Kom. Vi ska se om jag har några ljusslingor kvar från förra
+sommaren.
+
+Worked for 46s
+Bilderna har vi inte än så tänk inte på det. DET VIKTIGA ÄR ATT
+ALLT MANUS FINNS FAKKING SPARAT NU.
+Har vi allt???
+
+Worked for 25s
+
+Så vad menar du? Vi har alltså sparade dialoger för allt?
+
+OK då vill jag testa att bildgenerera, men jag tänker göra det i en
+ny tråd inom samma projekt. Ge mig en prompt för att använda
+vår "bildmotor" och generera aktens fem första beats
+
+Worked for 31s
 
 ---
