@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "beatId": "A3-PARK-003",
+  "storyHeading": "### A3-PARK-003 —",
+  "verbatimStoryQuotes": [
+    "De kommer fram till en liten utomhusscen. Framför scenen står bänkar i halvcirkel och en stor gräsmatta breder ut sig mellan träden.",
+    "På scenen håller två ungdomar på att packa ihop instrument.",
+    "Nova tittar upp mot de gamla ljusslingorna mellan träden."
+  ],
+  "cast": [
+    "nova",
+    "barnet",
+    "alve"
+  ],
+  "requiredVisuals": [
+    "small outdoor stage",
+    "benches forming a semicircle",
+    "two teenage musicians",
+    "festival lights",
+    "Nova",
+    "Barnet",
+    "Alve",
+    "blue-green sweatshirt",
+    "dark-red hoodie",
+    "brown knee-length cargo shorts"
+  ],
+  "forbiddenVisuals": [
+    "mini-golf hole seven",
+    "fantasy creature",
+    "dark-haired woman"
+  ],
+  "finalPrompt": "SysselCraft Art Pipeline 2.1. Render exactly A3-PARK-003 \"Den gamla scenen\" as one cinematic photo-like 16:9 story image. Place: a small outdoor stage in the active old Swedish folk park, with weathered benches forming a semicircle and a broad grassy lawn between leafy trees. Two teenage musicians are ON STAGE packing away their real musical instruments; they are authored incidental background characters, not replacements for the three protagonists. Strings of old partly broken festival lights hang among the trees; Nova is looking upward toward them and remembering past outdoor film evenings. Foreground cast EXACTLY Nova, Barnet, and Alve, faithfully following the real uploaded canonical character-sheet IMAGE references. Nova is a young freckled girl with short straight copper-red bob and fringe, dusty blue-green sweatshirt, loose faded blue jeans, black high-top sneakers, black chunky headphones around neck and worn brown backpack. Barnet is seen ONLY from the back: navy-and-beige mountain-logo baseball cap, dark-red hoodie, substantial olive backpack with leather straps and compass, blue cargo trousers and rugged blue trail shoes; never show the face. Alve is a young freckled ginger-haired boy with wildly tousled hair, faded olive hoodie, brown knee-length cargo shorts, gloves, work-tool belt and heavy brown boots. All three stand viewing the stage and lights, natural anatomically correct poses; Alve can glance at Nova, Barnet faces stage, Nova gazes upward. Late afternoon natural warm light, realistic worn park, continuity with the approved Folkparken entrance. NO minigolf hole seven, wooden golf bridge, beanie, dark-haired woman, fantasy creature, substitute clothing or invented animal."
+}
