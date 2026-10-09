@@ -2678,7 +2678,7 @@ Barnet och Alve väntar.
 
 **Alve:** Glass?
 
-**Nova:** Ja. Jag skrek åt dem och smällde igen dörren till mitt rum.
+**Nova:** Ja. Jag skrek åt dem, slängde servetten på golvet och smällde igen dörren till mitt rum.
 
 Hon drar med skon mot gruset.
 
