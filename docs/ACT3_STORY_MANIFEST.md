@@ -8,6 +8,13 @@ This document consolidates the currently locked Act 3 story direction from `docs
 
 Repository reality and `docs/STORY_DESIGN.md` remain authoritative if a contradiction is found. When this manifest is intentionally changed, update the canonical story document as part of the same change.
 
+
+## 0. Canon dialogue precedence (mandatory for every beat)
+
+**The latest expressly user-approved changes ALWAYS win**, including revisions after any original conversation PDF. Never equate archival “original” with the latest approved dialogue. Treat the PDF and `docs/act3-original-dialogue/` as recovery evidence for missing lines, **not a rollback instruction**. Preserve edits to names, identities, dates, props, gameplay choices, and every dialogue branch. Later draft text is not automatically approved just because it appears later in this document.
+
+**Beat-by-beat resolution register:** `docs/ACT3_DIALOG_CANON_RESOLUTION.md` (135 beat IDs; duplicates/conflicts indexed). For the arcade, the canonical owner is **Rebecka**, not Rut, and her score tag is **REB**, not RUT. For A3-PARK-021 use the revised dialogue in 11AU. Check user approval when two candidates conflict. Never silently restore an older version.
+
 ## 1. Chapter boundary
 
 Act 2 ends with Barnet and Alve leaving the restored lake place in the restored motorboat.
@@ -6959,7 +6966,7 @@ Nova skrattar och följer med Sol in.
 
 ## 11AK0. ORIGINALKÄLLOR ÅTERSTÄLLDA FRÅN PDF 2026-10-09
 
-**VIKTIGT: Prioritera källan framför rekonstruerad text.** Användaren tillhandahöll den 89-sidiga utskriften `Skriv hamnintro dialog.pdf` från den ursprungliga konversationen. Den innehåller dialogtexter för 63 identifierade manusbeats (utöver annat samtalsmaterial). Källtranskriptet är OCR-baserat och ska vid behov kontrolleras mot PDF-sidan.
+**VIKTIGT: Senast uttryckligen godkända ändring har alltid företräde framför äldre PDF och OCR!** PDF-dokumentet är en källa för saknade repliker, inte en instruktion att rulla tillbaka senare namn, dialoger eller designbeslut. Se `ACT3_DIALOG_CANON_RESOLUTION.md` för beat-för-beat-inventering.
 
 Originalutdragen finns nu i `docs/act3-original-dialogue/PDF_RECOVERY_A3-HOME.md`, `PDF_RECOVERY_A3-HUNT.md`, `PDF_RECOVERY_A3-ARCADE.md`, `PDF_RECOVERY_A3-CITY.md`, `PDF_RECOVERY_A3-VILLAGE.md`, `PDF_RECOVERY_A3-PARK.md` och `PDF_RECOVERY_A3-BOAT.md`.
 
