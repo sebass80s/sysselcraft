@@ -7892,6 +7892,105 @@ De skrattar.
 
 **Alve:** Det är värt risken.
 
+
+## 11AQ. A3-HOME-001–003 — KOMPLETTERANDE DIALOGMANUS
+
+**Nyskrivna repliker utifrån godkänd händelseföljd; inte verifierad ordagrann kopia.**
+
+### A3-HOME-001 – Oväntat besök
+
+Nova låser upp dörren till mammans lägenhet.
+
+**Nova:** Mamma! Jag har med mig några kompisar!
+
+**Mamma:** Jaså? Hej på er!
+
+**Barnet:** Hej!
+
+**Alve:** Hej! Nova sa att det kanske finns bullar.
+
+**Nova:** ALVE!
+
+Mamman skrattar.
+
+**Mamma:** Det finns faktiskt bullar. Vill ni ha saft också?
+
+**Alve:** Gärna!
+
+**Mamma:** Hur träffades ni?
+
+**Nova:** De kom med båt till hamnen. Sen visade jag dem stan och folkparken.
+
+**Barnet:** Vi spelade minigolf.
+
+**Mamma:** Vann Nova igen?
+
+**Nova:** Jag vann nästan.
+
+**Mamma:** Det låter mer som min Nova.
+
+### A3-HOME-002 – Mira
+
+Vid köksbordet sitter barnen med saft och bullar.
+
+**Barnet:** Vi har en butik hemma i byn också. Mira öppnade den nyligen.
+
+Novas mamma ställer ner sin kopp.
+
+**Mamma:** Mira? Vänta, är det samma Mira som jobbade med mig inne i stan?
+
+**Nova:** Känner du henne?
+
+**Mamma:** Ja! Vi jobbade i samma affär för flera år sedan. Jag har inte träffat henne sedan hon flyttade.
+
+**Barnet:** Hon kom till vår by ganska nyligen.
+
+**Mamma:** Så roligt! Hon kunde alltid ordna nästan vad som helst. En gång behövde vi trettio likadana stolar till en invigning. Mira hittade dem på en eftermiddag.
+
+**Alve:** Kan hon ordna trettio bullar också?
+
+**Nova:** Du har redan ätit tre!
+
+**Mamma:** Hälsa henne så mycket från mig nästa gång ni ses.
+
+**Barnet:** Det ska vi.
+
+### A3-HOME-003 – Hemligheten
+
+Nova drar Barnet lite åt sidan i hallen.
+
+**Nova (viskar):** Kom ihåg, inget om festen.
+
+**Barnet (viskar):** Jag vet.
+
+**Nova:** Inte till mamma, inte till pappa. Mira får bara veta att det är en överraskning.
+
+**Barnet:** Okej.
+
+**Nova:** Och inga foton förrän allt är färdigt.
+
+Hon tar upp sitt anteckningsblock.
+
+**Nova:** Hemliga gruppen: Nova. Barnet...
+
+**Barnet:** Och Alve?
+
+**Nova:** Ja, om han inte berättar allt så fort han får en bulle.
+
+Från köket hörs mamman.
+
+**Mamma:** Vad viskar ni om där ute?
+
+Nova svarar högt.
+
+**Nova:** Jag sa bara att Barnet behöver öva mer på minigolf!
+
+**Barnet:** Va?!
+
+**Mamma:** Då får ni väl spela en gång till!
+
+Nova ler mot Barnet och gömmer blocket bakom ryggen.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
