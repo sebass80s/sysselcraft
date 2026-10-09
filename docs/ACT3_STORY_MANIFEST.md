@@ -2682,6 +2682,12 @@ Barnet och Alve väntar.
 
 Hon drar med skon mot gruset.
 
+**Nova:** Jag har tänkt på vad jag sa efteråt. Att jag önskade att de skulle sluta bestämma över mig.
+
+**Alve:** Sånt säger man ju när man blir arg.
+
+**Nova:** Ja. Fast ibland önskar man att man kunde ta tillbaka det.
+
 **Nova:** Sedan hörde jag dem bråka i köket.
 
 **Barnet:** Om glassen?
@@ -4318,6 +4324,8 @@ Alve tittar mot poängtavlan.
 Hon börjar skratta.
 
 **Nova:** Fattar ni nu varför jag vill att allting ska bli perfekt?
+
+**Nova:** Jag tänker inte vara den som sabbar det, i alla fall.
 
 **Alve:** Ja! Vi ska göra världens bästa dejt!
 
@@ -6408,6 +6416,10 @@ Nova tittar på området.
 
 **Nova:** Jag vet. Men jag vill gärna bli färdig tidigt.
 
+Nova drar ett streck under den sista punkten i blocket.
+
+**Nova:** Om man tänker efter ordentligt innan så slipper något bli fel sedan.
+
 ### A3-PREP-002 – Det saknas fortfarande saker
 
 Barnet och Nova går igenom Miras inköpslista.
@@ -6467,6 +6479,12 @@ Barnet jämför fotot med spelhörnan.
 **Alve:** Det gör väl inget?
 
 **Nova:** Jo, lite.
+
+**Nova:** Jag vill inte missa något viktigt den här gången.
+
+**Alve:** Det är ju bara ett foto.
+
+**Nova:** Jag vet.
 
 **Barnet:** Vi kan ju stå ungefär där.
 
@@ -6638,6 +6656,10 @@ Barnet tittar på Nova.
 Hon tittar på skjortan igen.
 
 **Nova:** Det här kommer bli den bästa dagen någonsin.
+
+Hon håller kvar blicken på bilden av skjortan.
+
+**Nova:** Jag ska verkligen inte förstöra något den här gången.
 
 *Scenen slutar.*
 
@@ -7006,6 +7028,12 @@ I köket hjälper Barnet till att bära undan glas. På kylskåpet sitter en kal
 **Nova:** Ni ändrar alltid precis när jag har planerat något!
 
 Nova stänger skåpluckan lite för hårt.
+
+Hon stannar upp och tittar snabbt på sin mamma.
+
+**Nova:** Förlåt. Jag menade inte att smälla.
+
+**Mamma:** Det är okej att bli arg. Vi får prata om planerna sedan.
 
 **Mamma:** Jag hör att du blir arg. Vi pratar om hur vi kan lösa det.
 
@@ -8030,6 +8058,15 @@ Hon tar en tugga.
 Nova ler och tar fram anteckningsblocket.
 
 *Följ därefter den låsta scenen A3-VILLAGE-011 med Linus.*
+
+
+## 11BA. Novas återkommande skuldkänsla — SUBTILA FÖRANINGAR
+
+**Beslut 2026-10-09:** Innan föräldrasamtalet skall Nova på flera ställen visa överdrivet ansvarstagande för bråk, misstag och om något blir fel. Det är antydningar, inte direkta påståenden att hon orsakade skilsmässan. De tre vännerna får inte förstå hemligheten i förväg eller börja föreläsa om den. Mammans tydliga avlastning i A3-FAMILY-017 är fortfarande avslöjandets och upplösningens tyngdpunkt.
+
+**Infört i fulla dialogscener:** A3-HOME-006 (hon ber snabbt om ursäkt efter att ha smällt i skåpet), A3-DRAMA-009 (hon ångrar det hon sa vid middagen), A3-PREP-001 (allt måste tänkas igenom så det inte blir fel), A3-PREP-003 (fotot får inte bli fel *den här gången*), A3-PREP-006 (vill inte förstöra något den här gången) och A3-REVEAL-002 (vill inte vara den som sabbar det).
+
+**Kontinuitetsanmärkning:** Tidigare manus har olika detaljer kring middagsutbrottet (glass/lasagne/dörr kontra servett). Fixa till en konsekvent minnesbild innan beat-implementation; ändra inte den låsta tidsrelationen att separationen meddelades **nästa kväll**.
 
 ## 12. Art production — locked
 
