@@ -7686,6 +7686,129 @@ Utanför butiken går Barnet, Nova och Alve vidare.
 
 Nova skrattar och stoppar mobilen i väskan utan att titta på den.
 
+
+## 11AO. A3-ARCADE-004–006 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
+
+**Obs:** Originalreplikerna från tidigare konversation är inte verifierbart åtkomliga. Texten nedan är en ny dialog som följer låst innehåll i 11L. Kräver separat dialoggodkännande, inte ett återfunnet original.
+
+### A3-ARCADE-004 – En plats att försvinna till
+
+Efter spelandet slår sig barnen ner i en gammal soffa. Rebecka ställer fram saft.
+
+**Rebecka:** Här får ni. Ni ser ut att behöva fylla på energi.
+
+**Alve:** Jag skulle gärna fylla på med bullar också.
+
+**Rebecka:** De finns i affären bredvid. Men först behöver du dricka något.
+
+**Nova:** Jag har suttit här i den här soffan hur många gånger som helst.
+
+**Barnet:** Brukar du komma hit ofta?
+
+**Nova:** Ganska. Pappa tog med mig hit när jag var liten. Han samlade på gamla spel.
+
+**Rebecka:** Och du var ungefär så här hög när du lärde dig spela.
+
+Hon håller handen strax ovanför soffkanten.
+
+**Nova:** Så liten var jag inte!
+
+**Rebecka:** Knappt längre än en spelkontroll.
+
+**Alve:** Det förklarar varför hon är så bra. Hon har tränat sedan hon kunde gå.
+
+Nova ler och dricker av saften.
+
+**Nova:** Det är skönt att komma hit ibland. Ingen frågar vilken lägenhet jag ska sova i eller om jag packat rätt väska.
+
+Rebecka ser på henne och nickar.
+
+**Rebecka:** Fast jag brukar fråga om du har ätit lunch.
+
+**Nova:** Ja, ja. Och om jag varit utomhus.
+
+**Rebecka:** Båda ganska rimliga frågor.
+
+**Barnet:** Det är ett bra ställe.
+
+**Nova:** Det bästa.
+
+### A3-ARCADE-005 – Den omöjliga maskinen
+
+Längst in i spelhallen står en dammig maskin. På skärmen lyser HIGH SCORE – REB – 125 000.
+
+**Alve:** Slå mig om du kan, står det!
+
+**Nova:** Det är Rebeckas rekord. Hon är helt omöjlig.
+
+**Rebecka:** Inte omöjlig. Bara envis.
+
+**Barnet:** Ska vi prova?
+
+**Nova:** Ja! Jag kan visa var första fällan finns.
+
+Barnet tar kontrollen.
+
+**Alve:** Och jag kan räkna ner. Tre, två, ett!
+
+En kort omgång följer. Barnet får spela; resultatet påverkar inte nästa beat.
+
+**Nova:** Bra! Du kom längre än förra gången.
+
+**Rebecka:** Fortsätter ni så där kanske jag blir tvungen att börja träna igen.
+
+**Alve:** Min tur!
+
+Alve tar kontrollen. Fyra sekunder senare är spelet slut.
+
+**Alve:** Va?!
+
+**Nova:** Nytt rekord. Fast åt fel håll.
+
+**Alve:** Det var ett provåk.
+
+**Rebecka:** Då har vi testat att maskinen fungerar.
+
+### A3-ARCADE-006 – En ny tradition
+
+Barnen gör sig redo att gå.
+
+**Rebecka:** Kommer ni tillbaka?
+
+**Nova:** Självklart. Någon måste slå dig.
+
+**Rebecka:** Då får jag nog skriva upp er på utmanarlistan.
+
+Hon river av ett papper och skriver NOV, BARNET och ALVE.
+
+**Alve:** Skriv att jag är expert.
+
+**Rebecka:** På att förlora snabbt?
+
+**Alve:** Det är också en expertis.
+
+Nova tar på sig jackan.
+
+**Rebecka:** Det var kul att du tog med dig kompisar, Nova.
+
+Nova ler.
+
+**Nova:** Ja. Det var det.
+
+Ute på gatan ser Alve eftertänksam ut.
+
+**Alve:** Nästa gång ska jag börja med ett spel som har färre knappar.
+
+**Barnet:** Hur många?
+
+**Alve:** Tre. Högst.
+
+**Nova:** Du spelade ju på en med två.
+
+**Alve:** Då kanske en knapp.
+
+Nova skrattar. Mobilen ligger kvar i hennes väska när de går vidare.
+
 ## 12. Art production — locked
 
 Use SysselCraft **Art Pipeline 2.0**.
