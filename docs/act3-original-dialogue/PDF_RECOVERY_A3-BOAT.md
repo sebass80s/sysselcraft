@@ -5,26 +5,283 @@ Källa: Skriv hamnintro dialog.pdf, OCR-transkription. Kontrollera exakta tecken
 Antal scenutdrag: 5
 
 <!-- PDF sida 37 -->
+A3-BOAT-001 — Tillbaka över sjön
 
+Dialogutkast 1— ej spikat
+
+Solen står lågt över staden när motorbåten lämnar hamnen.
+
+Alve sitter längst bak med sin jacka uppdragen över hakan.
+
+Barnet styr båten mot andra sidan sjön.
+
+En stund hörs bara motorn och vattnet mot skrovet.
+
+Alve: Det blev en ganska konstig dag.
+
+Barnet: På vilket sätt?
+
+Alve: Vi skulle bara se vad som fanns på andra sidan sjön. Nu
+
+känner vi en tjej, har spelat minigolf och ska ordna en jättefest.
+
+Barnet: Vi hann med spelbutiken också.
+
+Alve: Just det. Och jag fick tre bullar.
+
+Barnet: Du fick två.
+
+Alve: Jag räknade den sista som två. Den var stor.
+
+Barnet skrattar.
 
 ---
 
 <!-- PDF sida 37 -->
+A3-BOAT-002 — Nova
 
+Alve tittar tillbaka mot staden, som blir mindre bakom dem.
+
+
+
+
+Alve: Vad tycker du om Nova?
+
+Barnet: Hon är rolig.
+
+Alve: Hon är ganska bossig.
+
+Barnet: Lite.
+
+Alve: Hon sa åt mig att inte röra korten i hennes rum. Jag hade ju
+
+inte ens öppnat lådan.
+
+Barnet: Du höll på att öppna den.
+
+Alve: Jag skulle bara titta.
+
+Han drar upp jackan igen.
+
+Alve: Fast hon var rätt snäll också.
+
+Barnet: Ja. Hon verkade ha kul när vi spelade.
+
+Alve: I hamnen såg hon mest ut som om hon ville kasta oss i
+
+sjön.
+
+Barnet: Hon ville nog vara ifred.
+
+Alve: Tur att vi inte gick direkt då.
+
+Barnet: Ja.
+
+Alve funderar en stund.
+
+Alve: Tror du hon gillar oss?
+
+Barnet: Hon bjöd ju hem oss.
+
+Alve: Sant. Och hon ska göra en skattjakt.
+
+Barnet: Den tänker jag vinna.
+
+Alve: Kan man vinna en skattjakt?
+
+Barnet: Om man hittar skatten först.
+
+Alve: Då är det nog bäst att vi är på samma lag.
 
 ---
 
 <!-- PDF sida 38 -->
+A3-BOAT-003 - Två hem
 
+De passerar en liten ö med några tallar.
+
+Alve sitter tyst en stund.
+
+Alve: Det där med två hem verkar jobbigt.
+
+Barnet: Att behöva flytta mellan dem?
+
+Alve: Ja. Tänk om man glömmer sin cykel hos den ena och
+
+hjälmen hos den andra.
+
+Barnet: Nova glömde ju sin gympapåse flera gånger.
+
+Alve: Och hennes gamla hus lät mycket roligare än lägenheten.
+
+Barnet: Hon verkade sakna trädgården.
+
+Alve: Jag skulle också sakna min stuga om vi flyttade därifrån.
+
+Barnet tittar på Alve.
+
+Barnet: Du ville ju knappt vara där när vi träffades.
+
+Alve: Nej. Men nu är den bra.
+
+Han tittar ut över vattnet.
+
+
+
+
+Alve: Fast det är inte riktigt samma stuga som förut.
+
+Barnet: Nej. Vi har byggt om nästan allting.
+
+Alve: Mm. Det blev inte som jag tänkte först.
+
+Barnet: Blev det sämre?
+
+Alve: Nä. Det blev faktiskt bättre.
+
+En liten paus.
+
+Alve: Tror du Nova får tillbaka sitt gamla hus?
+
+Barnet: Hon sa ju att det bor andra där nu.
+
+Alve: Just det.
+
+Alve funderar.
+
+Alve: Då är det nog bra att hon har oss.
+
+Barnet: Varför då?
+
+Alve: Vi kan ju hitta på nya saker med henne.
+
+Barnet ler.
 
 ---
 
 <!-- PDF sida 39 -->
+A3-BOAT-004 —- Festen
 
+En stund senare får Barnet ett meddelande.
+
+Telefonen ligger säkert i sitt fack vid förarplatsen. Barnet låter
+
+Alve läsa meddelandet.
+
+Alve: Det är Nova!
+
+Barnet: Vad skriver hon?
+
+Alve: Hon har gjort en lista.
+
+Barnet: Redan?
+
+Alve: Mat, musik, bord, lampor, minigolf... vänta, här står det
+
+något mer.
+
+Barnet: Vadå?
+
+Alve: "INGET FÅR GÅ FEL."
+
+Barnet skrattar till.
+
+Barnet: Hon menar nog att hon vill att det ska bli fint.
+
+Alve: Hoppas det. För saker går ju alltid fel.
+
+Barnet: Som när du tappade verktygslådan i sjön?
+
+Alve: Den flöt faktiskt.
+
+Barnet: I tre sekunder.
+
+Alve: Tre väldigt viktiga sekunder.
+
+Alve tittar tillbaka på meddelandet.
+
+Alve: Varför tror du hon vill göra den där festen så stor?
+
+Barnet: Hon vill att mamma och pappa ska ha roligt tillsammans
+
+igen.
+
+Alve: Fast de bor ju inte tillsammans längre.
+
+Barnet: Nej.
+
+
+
+
+Alve: Tror du hon vill att de ska bli ihop igen?
+
+Barnet funderar.
+
+Barnet: Kanske.
+
+Alve: Då blir det en väldigt viktig fest.
+
+Barnet: Vi får göra vårt bästa.
+
+Alve: Och se till att det finns glass.
+
+Barnet: Du har verkligen bara en sak i huvudet.
+
+Alve: Nej. Jag tänker faktiskt på Nova också.
+
+Alve tittar ner på telefonen igen.
+
+Alve: Hon verkar behöva en riktigt rolig dag.
 
 ---
 
 <!-- PDF sida 40 -->
+A3-BOAT-005 - Ljuset från byn
 
+På andra sidan sjön börjar de första husen i byn synas mellan
+
+träden.
+
+Alve ställer sig försiktigt upp för att se bättre.
+
+Alve: Där är bryggan!
+
+Barnet: Jag ser den.
+
+Alve: Tror du Mira fortfarande har öppet?
+
+Barnet: Varför?
+
+Alve: Vi skulle ju hälsa från Novas mamma.
+
+Barnet: Just det.
+
+Alve: Och kanske fråga om hon kan få tag i grejer till festen.
+
+Barnet: Vi kan prata med henne imorgon.
+
+Alve: Bra. Då hinner vi göra en lista.
+
+Barnet tittar på honom.
+
+Barnet: Inte du också.
+
+Alve: Vadå?
+
+Barnet: En till lista.
+
+Alve: Min blir kort.
+
+Barnet: Vad står det på den?
+
+Alve: Ett. Hjälp Nova.
+
+Barnet: Och två?
+
+Alve: Glass.
+
+Barnet skrattar medan båten sakta glider in mot bryggan.
+
+Långt bort på andra sidan sjön tänds stadens lampor.
 
 ---
