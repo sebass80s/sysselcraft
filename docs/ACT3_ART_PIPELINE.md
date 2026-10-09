@@ -55,7 +55,7 @@ For **every** `kör art <beat-id>`, fail closed **before** invoking image genera
 
 This is a mandatory **assistant pre-call guard** for ChatGPT's built-in generator. A repo script cannot intercept or cancel that hosted tool call; the assistant must decline to call it if the guard is not satisfied. Do not claim a cryptographically enforced guarantee over the ChatGPT tool.
 
-For external or file-backed workflows, `scripts/preflight-art-job.mjs` provides a separate fail-closed CLI audit requiring beat-specific manuscript evidence and fingerprints of actual input files. Its evidence receipt requires operator/renderer confirmation; self-reported fields alone cannot prove that a remote renderer consumed the images. This CLI does not authorize using paid APIs or Runway.
+For external or file-backed workflows, `scripts/preflight-art-job.mjs` provides a separate fail-closed CLI audit requiring beat-specific manuscript evidence, a locked scene contract in `image-pipeline/contracts/<beat-id>.json`, the exact final renderer prompt in a text file, its matching SHA-256 receipt, and fingerprints of actual input files. The script blocks if any word in the final prompt differs from the approved contract. No contract means STOP. Its evidence receipt requires operator/renderer confirmation; self-reported fields alone cannot prove that a remote renderer consumed the images. This CLI does not authorize using paid APIs or Runway. **Important:** Even an exact textual match cannot prove that image generation will obey the prompt. For the built-in ChatGPT generator the assistant must inspect the final tool instruction itself and abstain when a contract cannot be matched. The CLI does not intercept the hosted tool.
 
 ## Goal
 
