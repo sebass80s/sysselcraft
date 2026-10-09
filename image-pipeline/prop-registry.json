@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "props": {
+    "folkpark-game-table": {
+      "displayName": "Folkparkens gamla spelbord",
+      "referencePath": "public/assets/village/prop-sheets/folkpark-game-table.png",
+      "introducedIn": "A3-PARK-016",
+      "status": "canonical",
+      "identityRules": [
+        "Reproduce the exact weathered wooden tabletop game from the reference image.",
+        "Keep its worn red-brown wooden frame, painted scoring zones and round wooden pucks.",
+        "Do not redesign or substitute the playing surface in later beats."
+      ],
+      "qaChecks": [
+        "prop-identity",
+        "prop-continuity"
+      ]
+    }
+  }
+}
