@@ -2789,7 +2789,7 @@ Three presented game options: a racing game (beat Nova's time), rhythm game (tap
 The children rest on a sofa and Rebecka brings juice. Nova used to come here with her father, who collected retro games, and now often visits alone. Rebecka sometimes sends her outside and asks whether she ate lunch. Nova says here no one asks about custody weekends and packing bags. Preserve this as her own safe place, outside the festival and parental plot.
 
 ### A3-ARCADE-005 — Den omöjliga maskinen
-A difficult arcade machine bears **HIGH SCORE – REB – 125 000** and a sign *SLÅ MIG OM DU KAN*. The kids collaborate; Barnet plays and Nova coaches. Rebecka's record is an optional long-term bonus challenge, not a progression gate. Alve's four-second defeat is a joke.
+A difficult arcade machine bears **HIGH SCORE – REB – 98 500** and a sign *SLÅ MIG OM DU KAN*. The kids collaborate; Barnet plays and Nova coaches. Rebecka's record is an optional long-term bonus challenge, not a progression gate. Alve's four-second defeat is a joke.
 
 ### A3-ARCADE-006 — En ny tradition
 Rebecka asks whether they'll return and offers an improvised challengers list. She warmly tells Nova it was fun that she brought friends; Nova agrees. Walking away, they banter about a three-button game. Nova's phone stays in her bag. The friendship is growing and she has a real independent life.
