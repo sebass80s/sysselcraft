@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "beatId": "A3-PARK-004",
+  "storyHeading": "### A3-PARK-004 —",
+  "verbatimStoryQuotes": [
+    "På gräset ligger några familjer på filtar. Ett par barn bygger sandslott och längre bort sticker en badbrygga ut i sjön.",
+    "Nova stannar vid ett stort träd nära vattnet.",
+    "Nova sätter sig på en stor sten vid trädet."
+  ],
+  "cast": [
+    "nova",
+    "barnet",
+    "alve"
+  ],
+  "requiredVisuals": [
+    "lakeside",
+    "large mossy stone",
+    "big leafy lakeside tree",
+    "families picnic",
+    "sandcastles",
+    "wooden swimming jetty",
+    "Nova",
+    "Barnet",
+    "Alve",
+    "dark red hoodie",
+    "olive large leather-buckled trail backpack"
+  ],
+  "forbiddenVisuals": [
+    "fantasy creature",
+    "minigolf lane",
+    "outdoor concert stage"
+  ],
+  "finalPrompt": "SysselCraft A3-PARK-004 'Vid sjön'. One beautiful 16:9 cinematic photo-like story still using the ACTUAL uploaded Nova, Barnet and Alve character sheets as visual identity references. The scene is a lively Swedish lakeside folk park beach in the afternoon. Foreground: Nova, a young freckled girl with straight short copper-red chin-length bob and blunt fringe, dusty teal sweatshirt, loose blue jeans, dark high-top sneakers, black large headphones at neck, and brown shoulder backpack, sits on a large mossy stone beneath a big leafy lakeside tree, looking wistfully toward the lake; Barnet sits beside Nova on the stone, seen strictly from behind with NO visible face, wearing the exact blue-and-cream mountain-print cap, dark red hoodie, olive large leather-buckled trail backpack with compass, blue cargo trousers and sturdy blue trail shoes; Alve, freckled younger boy with unruly ginger-brown hair, faded olive hoodie, brown knee-length cargo shorts, work gloves, toolbelt and brown boots, stands naturally close by, listening. Behind them, a few families picnic on blankets on a lawn, two little children build sandcastles at the shoreline and a modest wooden swimming jetty stretches into the sparkling lake. Mood nostalgic and gentle, attentive to Nova's memory of family picnics; no flashback, no visible parents of Nova in foreground, no new protagonists. Use same warm Swedish park look as previous park scenes, realistic anatomy and fixed canonical outfits. No text."
+}
