@@ -6964,6 +6964,12 @@ Nova skrattar och följer med Sol in.
 
 *Scenen slutar.*
 
+## AKTUELL DIALOGPRIORITET (KANON, 2026-10-09)
+
+**ALLTID SENASTE GODKÄNDA ÄNDRING.** `docs/ACT3_DIALOG_CANON_RESOLUTION.md` är obligatoriskt uppslagsregister för samtliga 135 identifierade beats; dubbla manusversioner får inte avgöras utifrån filordning, första textträff eller det äldre OCR-utdraget. Källprioritet: senare uttryckligen användargodkända ändringar > äldre godkända repliker > återfunnet tidigare PDF-utkast > ej godkänd nyskriven komplettering. Vid verklig oklarhet märk scenen källkonflikt utan att hitta på godkännande.
+
+Särskilt: Arkadägaren heter **Rebecka**, är rödhårig och i tidiga 40-årsåldern, med initialerna **REB**; äldre PDF:s Rut/RUT är ersatt. För **A3-PARK-021** gäller den senare reviderade dialogen i detta manifest, inte det äldre PDF-utkastet. Inga överkörningar av senare canon vid återställning.
+
 ## 11AK0. ORIGINALKÄLLOR ÅTERSTÄLLDA FRÅN PDF 2026-10-09
 
 **KRITISK REVISIONSREGEL (gäller samtliga beats):** Senaste *uttryckligen användargodkända* version vinner över tidigare godkända manus, äldre synopsis, återfunna PDF-original och senare nyskrivna rekonstruktioner. Dokumentordning är inte godkännandeordning. Konsultera `docs/ACT3_DIALOG_CANON_RESOLUTION.md` och granska alla källkonflikter innan implementation. PDF är återställningsbevis, inte order om att återinföra övergivna detaljer. **Rebecka** (rödhårig, tidiga 40-årsåldern, rekordinitialer REB) ersätter äldre Rut/RUT överallt; ingen runtime-dialog får använda gamla namnet. A3-PARK-021 använder den senast reviderade repliksatta texten här i 11AU, inte PDF-utkastet. A3-HOME-004 saknar eget identifierat original i PDF och får inte påstås vara ordagrant återställt.
