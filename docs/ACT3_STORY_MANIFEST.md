@@ -6966,6 +6966,10 @@ Nova skrattar och följer med Sol in.
 
 ## 11AK0. ORIGINALKÄLLOR ÅTERSTÄLLDA FRÅN PDF 2026-10-09
 
+**KRITISK REVISIONSREGEL (gäller samtliga beats):** Senaste *uttryckligen användargodkända* version vinner över tidigare godkända manus, äldre synopsis, återfunna PDF-original och senare nyskrivna rekonstruktioner. Dokumentordning är inte godkännandeordning. Konsultera `docs/ACT3_DIALOG_CANON_RESOLUTION.md` och granska alla källkonflikter innan implementation. PDF är återställningsbevis, inte order om att återinföra övergivna detaljer. **Rebecka** (rödhårig, tidiga 40-årsåldern, rekordinitialer REB) ersätter äldre Rut/RUT överallt; ingen runtime-dialog får använda gamla namnet. A3-PARK-021 använder den senast reviderade repliksatta texten här i 11AU, inte PDF-utkastet. A3-HOME-004 saknar eget identifierat original i PDF och får inte påstås vara ordagrant återställt.
+
+
+
 **VIKTIGT: Senast uttryckligen godkända ändring har alltid företräde framför äldre PDF och OCR!** PDF-dokumentet är en källa för saknade repliker, inte en instruktion att rulla tillbaka senare namn, dialoger eller designbeslut. Se `ACT3_DIALOG_CANON_RESOLUTION.md` för beat-för-beat-inventering.
 
 Originalutdragen finns nu i `docs/act3-original-dialogue/PDF_RECOVERY_A3-HOME.md`, `PDF_RECOVERY_A3-HUNT.md`, `PDF_RECOVERY_A3-ARCADE.md`, `PDF_RECOVERY_A3-CITY.md`, `PDF_RECOVERY_A3-VILLAGE.md`, `PDF_RECOVERY_A3-PARK.md` och `PDF_RECOVERY_A3-BOAT.md`.
