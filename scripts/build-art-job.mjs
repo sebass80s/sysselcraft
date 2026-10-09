@@ -68,6 +68,17 @@ try {
   const approvalPath = String(args.approvals ?? `image-pipeline/approvals/${manifest.productionId}.json`);
   const approvals = ensureApprovalState(manifest, approvalPath);
   const characterRefs = canonicalCharacterRefsFor(beat, registry);
+  const propIds = beat.props ?? [];
+  if (!Array.isArray(propIds) || new Set(propIds).size !== propIds.length) fail(`Beat ${beat.id}: props must be a unique array.`);
+  const propRegistry = propIds.length ? readJson("image-pipeline/prop-registry.json") : { props: {} };
+  const propRefs = propIds.map((id) => {
+    const prop = propRegistry.props?.[id];
+    if (!prop || prop.status !== "canonical") fail(`Missing canonical prop "${id}" for ${beat.id}.`);
+    const ref = prop.referencePath;
+    if (typeof ref !== "string" || !ref.startsWith("public/assets/village/prop-sheets/") || !ref.endsWith(".png")) fail(`Invalid canonical prop reference for ${id}.`);
+    assertLocalReferenceExists(ref, `Canonical prop ${id}`);
+    return { propId: id, displayName: prop.displayName, repoPath: ref, identityRules: prop.identityRules ?? [], qaChecks: prop.qaChecks ?? ["prop-identity"] };
+  });
   const characterSheetPaths = characterRefs.map((ref) => ref.repoPath);
   const chatLibraryReferencePaths = characterRefs.map((ref) => ref.chatLibraryPath);
   const environmentReferencePaths = uniq([
@@ -89,6 +100,12 @@ try {
   } else {
     legacyAnchors = v1ApprovedAnchorsFor(beat, manifest, approvals);
     prompt = compileV1Prompt(beat, registry, characterRefs, legacyAnchors);
+  }
+
+  if (propRefs.length) {
+    prompt += "\n\nCANONICAL PROP IDENTITY LAW:\n" + propRefs.map((ref) =>
+      `- ${ref.propId}: use exact supplied PNG ${ref.repoPath}. ${ref.identityRules.join(" ")}`
+    ).join("\n");
   }
 
   const localLocation = referencePaths(locationAnchor).local;
@@ -126,8 +143,10 @@ try {
     exactCastOnly: manifest.version === 2 ? beat.exactCastOnly : null,
     wardrobeLock: manifest.version === 2 ? beat.wardrobeLock : null,
     characterRefs,
+    propRefs,
     referenceContract: {
       identity: characterRefs,
+      props: propRefs,
       locationAnchor,
       previousBeatAnchor,
       legacyAnchors
@@ -145,6 +164,7 @@ try {
     chatLibraryAnchorPaths: uniq([...libraryLegacy, ...libraryLocation, ...libraryPrevious]),
     referenceImagePaths: uniq([
       ...characterSheetPaths,
+      ...propRefs.map((ref) => ref.repoPath),
       ...environmentReferencePaths,
       ...localLocation,
       ...localPrevious,
@@ -158,7 +178,7 @@ try {
     ]),
     prompt,
     qa: {
-      requiredCheckIds: qaCheckIds,
+      requiredCheckIds: uniq([...qaCheckIds, ...propRefs.flatMap((ref) => ref.qaChecks)]),
       customChecks: customQaChecks
     },
     approval: approvals.items[beat.id],
