@@ -7379,15 +7379,15 @@ Barnet gör sig redo.
 
 ## A3-PARK-021 – Någon minns
 
-**Dramaturgisk avgränsning mot A3-PARK-018:** I 018 upptäcker Barnet namnen och Nova känner igen sina föräldrars första dejt. Här ska vi inte spela upp den upptäckten igen. Henrik tillför sådant Nova inte kände till: pappans nystrukna vita skjorta, hur han förklarade reglerna trots att mamman redan kunde dem, flera matcher och hur det slutade med glass och ett långt samtal vid vattnet. Novas reaktion går från nyfikenhet till ett stilla, varmt minne. Behåll originaldialogen nedan ordagrant; denna anvisning styr tempo och iscensättning, inte nya repliker.
+**Status:** Reviderad spelversion 2026-10-09, baserad på återfunnen originaldialog från PDF s. 73–74. Originalreplikerna ligger oförändrade i `docs/act3-original-dialogue/A3-PARK-019-022_ORIGINAL_FROM_CHAT_PDF.md`. Denna version skiljer medvetet scenen från A3-PARK-018: där upptäcks föräldrarnas namn och första dejten; här berättar Henrik sådant Nova inte redan visste.
 
-Henrik står vid poängtavlan och betraktar de gamla resultaten.
+Henrik står vid poängtavlan och betraktar de gamla resultaten. Nova kommer fram till honom.
 
-**Henrik:** Nu när jag ser namnen känner jag faktiskt igen dem.
+**Henrik:** Vet du, Nova? Nu när jag ser namnen minns jag faktiskt något mer från den där turneringen.
 
-**Nova:** Mamma och pappa?
+**Nova:** Vadå?
 
-**Henrik:** Ja. Din pappa kom hit med en skjorta som var alldeles för fin för folkparken.
+**Henrik:** Din pappa kom hit med en skjorta som var alldeles för fin för folkparken.
 
 **Alve:** Vadå för skjorta?
 
@@ -7403,7 +7403,7 @@ Nova börjar skratta.
 
 **Henrik:** Hon vann första matchen.
 
-**Nova:** Det vet jag!
+**Nova:** Ja, det har mamma berättat!
 
 **Henrik:** Och andra matchen.
 
@@ -7411,13 +7411,13 @@ Nova börjar skratta.
 
 **Henrik:** Efter tredje matchen frågade han om hon ville ha glass.
 
-**Nova:** Gjorde han?
+**Nova:** Gjorde han det då? Efter att ha förlorat tre gånger?
 
-**Henrik:** Jodå. De satt borta vid vattnet och pratade länge.
+**Henrik:** Jodå. De satte sig borta vid vattnet och pratade länge. Jag minns att de nästan glömde bort att vi stängde.
 
-Nova tittar bort mot bänkarna.
+Nova tittar bort mot bänkarna vid sjön.
 
-**Nova:** Mamma har berättat att de åt glass på sin första dejt.
+**Nova:** Mamma har berättat att de åt glass på sin första dejt. Men inte att de satt kvar så länge.
 
 **Barnet:** Det gör vi också ganska ofta.
 
