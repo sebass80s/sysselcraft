@@ -2616,7 +2616,7 @@ Hon tar ett steg bakåt.
 
 Barnet väntar.
 
-**Nova:** Glöm det. Vi ses imorgon.
+**Nova:** Glöm det.
 
 Hon går.
 
