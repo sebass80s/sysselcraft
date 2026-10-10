@@ -30,7 +30,7 @@ Inventerade **135** unika ID och **38** ID med dubbla eller fler manusförekomst
 | A3-BOAT-005 | 1 | 11D | Jämför PDF-original mot senare ändringsbeslut |
 | A3-CITY-001 | 1 | 11AX | Jämför PDF-original mot senare ändringsbeslut |
 | A3-CITY-002 | 1 | 11AX | Jämför PDF-original mot senare ändringsbeslut |
-| A3-CITY-003 | 1 | 11AX | Jämför PDF-original mot senare ändringsbeslut |
+| A3-CITY-003 | 1 | 11AX | **LÅST 2026-10-10:** användargodkänd originaldialog från PDF sida 27; äldre nyskriven version borttagen |
 | A3-DRAMA-001 | 1 | 11J | Manusets senaste förekomst |
 | A3-DRAMA-002 | 1 | 11J | Manusets senaste förekomst |
 | A3-DRAMA-003 | 1 | 11J | Manusets senaste förekomst |
