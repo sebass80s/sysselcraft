@@ -7096,37 +7096,89 @@ Hon tar sitt glas och går mot rummet.
 
 ### A3-HOME-007 – Lite senare
 
-Nova sitter på mattan och skissar en ny karta.
+**KANONISK DIALOG, GODKÄND 2026-10-10.** Ersätter tidigare dialog om gympapåsen. Nova planerar skattjakten i hemlighet; Barnet och Alve får varken se kartan eller ledtrådarna. Fortsätter i A3-HUNT-001.
 
-**Nova:** Jag glömmer alltid något. Ibland är gympapåsen hos pappa när jag är hos mamma. En gång fick han köra hela vägen till skolan med den.
+Nova sitter på golvet i sitt rum. Framför henne ligger ett anteckningsblock och några pennor. Hon ritar något när Barnet och Alve kommer tillbaka från köket.
 
-**Alve:** Han borde ha en extra gympapåse.
+**Alve:** Vad gör du?
 
-**Nova:** Det säger alla. Men jag vill bara slippa hålla reda på två av allt.
+Nova slår snabbt igen blocket.
 
-**Nova:** Och så måste pappa åka extra bara för min skull.
+**Nova:** Ingenting.
 
-**Barnet:** Han ville väl att du skulle få din gympapåse.
+**Alve:** Det såg väldigt mycket ut som någonting.
 
-**Nova:** Ja. Jag vet.
+**Barnet:** Är det skattjakten?
 
-Barnet tittar på kartan.
+**Nova:** Kanske.
 
-**Barnet:** Men skattjakten kan ju vara i stan. Då funkar den från båda hemmen.
+**Alve:** Får vi se?
 
-Nova stannar upp.
+**Nova:** Nej!
 
-**Nova:** Det var faktiskt smart.
+Alve försöker kika över hennes axel.
 
-**Alve:** Skriv upp att jag sa det.
+**Nova:** Alve! Du får inte titta!
 
-**Nova:** Det var Barnet som sa det.
+**Alve:** Jag skulle bara se om du stavade rätt.
 
-**Alve:** Jag höll med väldigt snabbt.
+**Nova:** Till vadå?
 
-Nova skrattar.
+**Alve:** Det vet jag ju inte. Du gömde ju allt!
 
-**Nova:** Bra. Då får ni första ledtråden snart. Och den ska bli svårare än minigolfen!
+Nova skrattar och lägger blocket bakom ryggen.
+
+**Barnet:** Ska skattjakten vara här i närheten?
+
+**Nova:** Den ska vara i stan. Mer säger jag inte.
+
+**Alve:** Hela stan?
+
+**Nova:** Kanske.
+
+**Alve:** Det kommer ta flera dagar!
+
+**Nova:** Nej då. Om ni är tillräckligt smarta.
+
+**Barnet:** När får vi börja?
+
+**Nova:** När jag är färdig med ledtrådarna.
+
+**Alve:** Jag är redan färdig.
+
+**Nova:** Med vad?
+
+**Alve:** Att börja.
+
+Nova skakar på huvudet och ler.
+
+**Nova:** Ni får ett meddelande när allt är klart. Då får ni veta var ni ska möta mig.
+
+**Barnet:** Inte ens en liten ledtråd?
+
+Nova funderar en stund.
+
+**Nova:** Okej. En enda.
+
+Barnet och Alve lutar sig förväntansfullt fram.
+
+**Nova:** Ta på er bekväma skor.
+
+**Alve:** Det där var ju ingen ledtråd!
+
+**Nova:** Jo. En väldigt bra sådan.
+
+Hon stoppar ner anteckningsblocket i skrivbordslådan.
+
+**Nova:** Och nu får ni gå härifrån. Jag har hemligt arbete att göra.
+
+**Alve:** Jag tror hon tänker gömma skatten i glasskaféet.
+
+**Nova:** Ut!
+
+Barnet och Alve skrattar och går mot dörren.
+
+Nova väntar tills de har gått innan hon tar fram blocket igen och fortsätter rita.
 
 ### A3-HOME-008 – Innan de går
 
