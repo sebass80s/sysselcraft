@@ -7492,21 +7492,43 @@ Barnet öppnar kuvertet.
 
 ### A3-HUNT-003 – Klockan
 
-De kommer till busshållplatsen där en gammal klocka sitter ovanför tidtabellen.
+**KANON LÅST 2026-10-10:** PDF-originalet (s. 54), uttryckligen valt av användaren. Den nyskrivna versionen är borttagen.
 
-**Alve:** Kolla klockan!
+Barnet tittar sig omkring på torget.
 
-**Barnet:** Och där, vid tidtabellen, ligger ett kuvert!
+Folk sitter på bänkar, handlar frukt och väntar vid busshållplatsen.
 
-**Nova:** Ni fick en poäng var.
+**Barnet:** ”Många väntar...” Det kanske är busshållplatsen?
 
-**Alve:** Vad får man för poäng?
+**Alve:** Där väntar folk hela tiden.
 
-**Nova:** Äran.
+**Nova:** Ni får gå och undersöka.
 
-**Alve:** Den går inte att äta.
+De går fram till hållplatsen.
 
-Barnet öppnar nästa ledtråd.
+Ovanför tidtabellen sitter en gammal rund klocka.
+
+**Alve:** Där! Tiden!
+
+**Barnet:** Det måste vara den.
+
+Nova korsar armarna.
+
+**Nova:** Vad ska ni göra nu då?
+
+**Barnet:** Leta efter nästa ledtråd.
+
+Barnet upptäcker ett litet kuvert som Nova satt fast på anslagstavlan bredvid tidtabellen.
+
+**Barnet:** Här är det!
+
+**Alve:** Jag hittade klockan först.
+
+**Nova:** Och Barnet hittade kuvertet. Ett poäng var.
+
+**Alve:** Har vi poäng?
+
+**Nova:** Det har vi nu.
 
 ### A3-HUNT-004 – Den som läser hittar
 
