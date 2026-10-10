@@ -4789,21 +4789,37 @@ Barnet ler.
 
 Mira stänger den sista kartongen.
 
-**Mira:** Om hon skulle bli ledsen någon gång, så behöver du inte alltid komma på något smart att säga.
+**Mira:** Du, Barnet. Om Nova skulle bli ledsen efter festen...
 
-**Barnet:** Inte?
+**Barnet:** Varför skulle hon bli det?
 
-**Mira:** Nej. Det kan räcka att fråga om hon vill ha sällskap.
+**Mira:** Det vet jag inte om hon blir. Men hon har lagt väldigt mycket hopp i den här dagen.
 
-Barnet funderar lite.
+**Barnet:** Vi ska ju göra allt för att festen ska bli bra.
 
-**Barnet:** Eller spela något?
+**Mira:** Det vet jag. Men ibland blir man besviken ändå, fast alla har gjort sitt bästa.
 
-**Mira:** Ja. Om hon vill det.
+Barnet funderar en stund.
 
-**Barnet:** Vi brukar ha ganska kul tillsammans.
+**Barnet:** Vad ska jag göra då?
 
-**Mira:** Det har jag förstått.
+**Mira:** Du behöver inte göra något särskilt. Det viktigaste är att hon vet att du finns där.
+
+**Barnet:** Hur då?
+
+**Mira:** Fråga om hon vill prata. Eller hitta på något tillsammans. Och om hon inte vill något av det, så är det också okej.
+
+**Barnet:** Så jag behöver inte försöka göra henne glad?
+
+**Mira:** Nej. Ibland räcker det att visa att man finns där och är hennes kompis.
+
+Barnet nickar.
+
+**Barnet:** Det kan jag göra.
+
+Mira ler.
+
+**Mira:** Det vet jag att du kan.
 
 Utanför hörs Alve ropa från torget.
 
