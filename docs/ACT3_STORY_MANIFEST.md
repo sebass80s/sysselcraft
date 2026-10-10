@@ -7436,19 +7436,37 @@ Vid dörren lutar sig Nova närmare Barnet.
 
 ### A3-HUNT-001 – Ett nytt meddelande
 
-Barnets telefon plingar tidigt på morgonen.
+**KANON LÅST 2026-10-10:** Originaldialog återställd från PDF s. 53. OCR-tecknet efter Barnets skämt är, enligt användarbeslut, ersatt med skratt-emojin 😂. Den äldre nyskrivna kompletteringen är borttagen.
 
-**Nova (meddelande):** SKATTJAKTEN ÄR KLAR. Ta med Alve.
+Nästa morgon får Barnet ett meddelande från Nova.
 
-**Barnet (meddelande):** Var ska vi ses?
+**Nova (meddelande):** SKATTJAKTEN ÄR KLAR.
 
-**Nova (meddelande):** Fontänen på torget. Ta med skor och hjärna.
+**Nova (meddelande):** Ta med Alve. Ni behöver båda två.
 
-**Alve:** Vad skrev hon?
+**Barnet (meddelande):** Vad ska vi ta med?
 
-**Barnet:** Att vi behöver en hjärna.
+**Nova (meddelande):** Skor. Och hjärnor.
 
-**Alve:** Bra. Du har ju en.
+**Barnet (meddelande):** Alve har åtminstone skor.
+
+**Nova (meddelande):** 😂
+
+En stund senare kommer ett nytt meddelande.
+
+**Nova (meddelande):** Möt mig vid fontänen på torget. Och försök komma i tid.
+
+Barnet visar meddelandet för Alve.
+
+**Alve:** Varför behöver vi båda två?
+
+**Barnet:** Vet inte.
+
+**Alve:** Tror du hon har gömt något farligt?
+
+**Barnet:** Nej.
+
+**Alve:** Bra. Då tar jag med en ryggsäck.
 
 ### A3-HUNT-002 – Torget
 
