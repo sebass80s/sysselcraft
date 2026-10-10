@@ -7706,9 +7706,9 @@ Utanför butiken går Barnet, Nova och Alve vidare.
 Nova skrattar och stoppar mobilen i väskan utan att titta på den.
 
 
-## 11AX. A3-CITY-001–003 — KOMPLETTERANDE DIALOGMANUS
+## 11AX. A3-CITY-001–002 KOMPLETTERINGAR; A3-CITY-003 GODKÄND ORIGINALDIALOG
 
-**Status:** Nyskriven full dialog utifrån redan låst sceninnehåll. Godkänd originaldialog är inte återställd ordagrant.
+**Status:** A3-CITY-001–002 är nyskrivna kompletteringar. **A3-CITY-003 är användargodkänd originaldialog** och ersätter den tidigare kompletteringen.
 
 ### A3-CITY-001 – Stadens bästa ställe
 
@@ -7760,33 +7760,55 @@ Nova räcker över kontrollen.
 
 ### A3-CITY-003 – Hemvägen
 
-De går vidare genom staden.
+**KANONISK DIALOG: användargodkänd 2026-10-10.** Den tidigare nyskrivna kompletteringen är borttagen och ersatt med denna originaldialog från `PDF_RECOVERY_A3-CITY.md` (PDF-sida 27). Använd endast denna version.
+
+De kommer ut ur spelbutiken en stund senare.
+
+**Nova:** Okej, du var faktiskt ganska bra.
+
+**Barnet:** Du slog ju mitt rekord direkt.
+
+**Nova:** Jag har ett rykte att försvara.
+
+Nova tittar på mobilen.
+
+**Nova:** Jag måste nog gå hem snart.
 
 **Barnet:** Bor du långt härifrån?
 
-**Nova:** Mamma bor några kvarter bort. Pappa bor närmare skolan.
+**Nova:** Inte från mammas lägenhet. Den ligger några kvarter bort.
 
-**Alve:** Bor de inte tillsammans?
+**Barnet:** Mammas lägenhet?
 
-**Nova:** Nej. De är skilda.
+**Nova:** Ja. Pappa bor åt andra hållet, nära skolan.
 
-**Barnet:** Jaha.
+**Barnet:** Har du två hem?
 
-**Nova:** Det är lite jobbigt ibland. Jag glömmer alltid saker i fel lägenhet.
+**Nova:** Ja. Mina föräldrar är skilda.
 
-**Alve:** Du borde ha en väska som följer med själv.
+Hon säger det ganska snabbt, som om det är något hon berättat många gånger.
 
-**Nova:** Ja tack. Uppfinn en sådan!
+**Barnet:** Är det jobbigt?
 
-De skrattar.
+**Nova:** Ibland. Man glömmer alltid fel saker på fel ställe.
 
-**Nova:** Vill ni komma hem till mamma en stund? Hon brukar ha bullar.
+**Barnet:** Som vadå?
 
-**Alve:** JA.
+**Nova:** Hörladdaren. Gympakläder. Min favorittröja.
 
-**Barnet:** Du vet ju inte ens om hon har några idag.
+**Alve:** Du borde ha två av allt.
 
-**Alve:** Det är värt risken.
+**Nova:** Ska du köpa två favorittröjor åt mig då?
+
+**Alve:** Jag tänkte mer två laddare.
+
+**Nova:** Det har jag redan.
+
+Barnet ler.
+
+**Barnet:** Får vi följa med en bit?
+
+**Nova:** Ni kan följa med hem om ni vill. Mamma är nog hemma.
 
 
 ## 11AY. A3-HOME-001–003 — KOMPLETTERANDE DIALOGMANUS
