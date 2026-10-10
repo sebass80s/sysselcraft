@@ -79,7 +79,7 @@ Inventerade **135** unika ID och **38** ID med dubbla eller fler manusförekomst
 | A3-HOME-005 | 2 | 11AS | Jämför PDF-original mot senare ändringsbeslut |
 | A3-HOME-006 | 2 | 11AS | Jämför PDF-original mot senare ändringsbeslut |
 | A3-HOME-007 | 2 | 11AS | **LÅST 2026-10-10:** senast godkänd full dialog i huvudmanifestet. Hemlig skattjakt; gammal gympapåsedialog ersatt och inaktiv. |
-| A3-HOME-008 | 2 | 11AS | Jämför PDF-original mot senare ändringsbeslut |
+| A3-HOME-008 | 2 | 11AS | **LÅST 2026-10-10:** nytt godkänt avsked i aktivt huvudmanus; äldre kartbilds-SMS borttaget, skattjakten hålls hemlig till HUNT-001. |
 | A3-HUNT-001 | 2 | 11AT | Jämför PDF-original mot senare ändringsbeslut |
 | A3-HUNT-002 | 2 | 11AT | Jämför PDF-original mot senare ändringsbeslut |
 | A3-HUNT-003 | 2 | 11AT | Jämför PDF-original mot senare ändringsbeslut |
