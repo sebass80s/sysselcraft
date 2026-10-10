@@ -72,7 +72,7 @@ Inventerade **135** unika ID och **38** ID med dubbla eller fler manusförekomst
 | A3-FAMILY-018 | 1 | 11Z | Manusets senaste förekomst |
 | A3-FAMILY-019 | 1 | 11Z | Manusets senaste förekomst |
 | A3-FAMILY-020 | 1 | 11Z | Manusets senaste förekomst |
-| A3-HOME-001 | 1 | 11AY | Jämför PDF-original mot senare ändringsbeslut |
+| A3-HOME-001 | 1 | 11AY | **LÅST 2026-10-10:** senare version ”Oväntat besök” uttryckligen godkänd; äldre PDF-dialog ”Hemma hos Nova” bortvald, använd ej |
 | A3-HOME-002 | 1 | 11AY | Jämför PDF-original mot senare ändringsbeslut |
 | A3-HOME-003 | 1 | 11AY | Jämför PDF-original mot senare ändringsbeslut |
 | A3-HOME-004 | 2 | 11AS | Originalrubrik ej återfunnen i PDF; ej verifierad originaldialog |
