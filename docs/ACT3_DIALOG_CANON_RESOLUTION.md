@@ -4,6 +4,9 @@
 
 ## Särskilt låsta overridebeslut
 
+- **A3-CITY-001–003 (2026-10-10):** Ny uttryckligen godkänd fullständig dialog finns i `docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md`. Denna fil **ersätter** äldre CITY-dialoger i `ACT3_STORY_MANIFEST.md`, inklusive CITY-003:s tidigare tävlingsöppning. Första besöket är en ljus retrospelbutik utan highscore eller spelutmaning. Dold ARCADE/Rebecka/NOV kommer efter DRAMA-010 och före DRAMA-011. Använd aldrig äldre CITY-002:s spelmaskinsdialog.
+
+
 - VILLAGE-004–008 och VILLAGE-010: PDF-originalet är godkänt och aktivt i 11AR sedan 2026-10-10. Nyskrivna ersättningar har tagits bort. VILLAGE-009 finns separat i 11N.
 - **Rensning 2026-10-10:** Föråldrad nyskriven VILLAGE-sektion `11AZ` borttagen ur huvudmanifestet. `11AR` är kvar enbart som *ej slutgranskad komplettering*, inte som godkänd kanon. Originaldialoger för VILLAGE-004–008/010 måste först jämföras med senare uttryckliga beslut innan ytterligare radering; använd INTE enbart 11AR för bildproduktion.
 
