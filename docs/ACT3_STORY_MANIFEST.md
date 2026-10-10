@@ -7182,6 +7182,8 @@ Nova väntar tills de har gått innan hon tar fram blocket igen och fortsätter 
 
 ### A3-HOME-008 – Innan de går
 
+**KANONISK DIALOG, GODKÄND 2026-10-10.** Det tidigare slutet med skickad kartbild har ersatts. Skattjakten och kartan förblir hemliga till A3-HUNT-001.
+
 Det skymmer och Barnet och Alve tar på sig skorna.
 
 **Mamma:** Tack för idag! Vill ni ha med er en bulle till båten?
@@ -7200,12 +7202,15 @@ Vid dörren lutar sig Nova närmare Barnet.
 
 **Barnet:** Jag lovar.
 
-**Nova:** Bra. Jag skickar kartan när den är klar.
+**Nova:** Bra. Ni får ett meddelande när allt är klart.
 
-Strax efteråt plingar Barnets mobil. Nova har skickat en bild på ett nästan tomt skattkartspapper.
+**Alve:** Med första ledtråden?
 
-**Nova (meddelande):** Börja öva. 😎
+**Nova:** Kanske. Om ni har tur.
 
+**Barnet:** Vi ses snart!
+
+**Nova:** Det gör vi!
 
 ## 11AT. A3-HUNT-001–006 — KOMPLETTERANDE DIALOGMANUS (NYFORMULERAT)
 
