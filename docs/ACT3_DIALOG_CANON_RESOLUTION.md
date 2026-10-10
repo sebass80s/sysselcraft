@@ -130,6 +130,9 @@ Inventerade **135** unika ID och **38** ID med dubbla eller fler manusförekomst
 | A3-SECRET-004 | 2 | 11AJ | Manusets senaste förekomst |
 | A3-SECRET-005 | 2 | 11AJ | Manusets senaste förekomst |
 | A3-SECRET-006 | 1 | 11T | Manusets senaste förekomst |
+| A3-VILLAGE-001 | 1 | 11D2 | **ÅTERSTÄLLD 2026-10-10:** originaldialog från PDF sidor 48–50 i aktivt huvudmanifest; ev. senare uttryckligen godkända ändringar vinner |
+| A3-VILLAGE-002 | 1 | 11D2 | **ÅTERSTÄLLD 2026-10-10:** originaldialog från PDF sidor 48–50 i aktivt huvudmanifest; ev. senare uttryckligen godkända ändringar vinner |
+| A3-VILLAGE-003 | 1 | 11D2 | **ÅTERSTÄLLD 2026-10-10:** originaldialog från PDF sidor 48–50 i aktivt huvudmanifest; ev. senare uttryckligen godkända ändringar vinner |
 | A3-VILLAGE-004 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
 | A3-VILLAGE-005 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
 | A3-VILLAGE-006 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
