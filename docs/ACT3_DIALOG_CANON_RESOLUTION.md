@@ -166,3 +166,5 @@ Inventerade **135** unika ID och **38** ID med dubbla eller fler manusförekomst
 3. Använd arkiverad PDF för saknade ordagranna repliker, aldrig för att revert:a ändrade namn, åldrar, relationsfakta, datum, föremål eller senare reviderade scener.
 4. Vid oklart företräde: markera beat som **källkonflikt** och behåll både texter; ändra inte tyst.
 5. Kontrollera alla spelval och grenar för samma canon, inte bara huvuddialog.
+
+- **A3-SECRET-006 (2026-10-10):** Godkänt och låst reviderat råd från Mira: **”Ibland räcker det att visa att man finns där och är hennes kompis.”** Ersätter föregående råd i scenen; resten oförändrat. Mira antyder besvikelse utan att avslöja utfallet.
