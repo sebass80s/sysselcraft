@@ -8187,165 +8187,441 @@ Nova svarar högt.
 Nova ler mot Barnet och gömmer blocket bakom ryggen.
 
 
-## 11AR. A3-VILLAGE-004–008/010 — KOMPLETTERANDE DIALOGMANUS
+## 11AR. A3-VILLAGE-004–008/010 — ORIGINALDIALOGER FRÅN PDF (AKTIV KANON)
 
-**Status:** Dessa scener har nyskrivna repliker utifrån redan beslutad första byutflykt. Inga tidigare godkända ordagranna repliker ersätts. A3-VILLAGE-009 är separat redan spikad Mira-dialog och gäller oförändrad.
+**Beslut 2026-10-10:** Användaren har uttryckligen valt originaldialogerna ur `PDF_RECOVERY_A3-VILLAGE.md` (PDF s. 80–85) och förkastat nyskrivna kompletteringar. Dessa sex dialoger är aktiva. A3-VILLAGE-009 är separat låst i 11N och får inte ersättas av äldre PDF-utkast. Radbrytningar normaliserade från OCR utan avsiktliga repliksändringar. Eventuella faktiska teckenfel i OCR måste kontrolleras mot PDF före runtime.
 
-### A3-VILLAGE-004 – Välkommen ombord
+### A3-VILLAGE-004 – Över sjön
 
-Nova står vid stadens brygga. Barnet och Alve gör i ordning motorbåten.
+Motorbåten ligger vid stadens kaj. Alve håller i förtöjningslinan
+medan Barnet gör sig redo att köra.
+Nova står på bryggan och granskar båten.
+**Nova:** Så ni har verkligen byggt den här själva?
+**Alve:** Vi lagade den. Det är skillnad.
 
-**Nova:** Är det verkligen ni som har lagat den här?
+**Barnet:** Den gick inte att köra när vi hittade den.
+**Nova:** Och nu ska jag åka i den?
+**Alve:** Den fungerar jättebra!
+**Nova:** Det sa du lite för snabbt.
+Barnet visar var Nova ska sitta och var flytvästen finns.
+**Nova:** Har ni åkt många gånger?
+**Barnet:** Några.
+**Nova:** Det var inte så många som jag hoppades.
+**Alve:** Vi har i alla fall kommit fram varje gång.
+Nova tittar på honom.
+**Nova:** Det där hjälpte faktiskt inte.
+Hon kliver försiktigt ombord.
+**Nova:** Okej. Kör innan jag ändrar mig.
+Barnet startar motorn.
+När båten lämnar hamnen håller Nova hårt i sätets kant.
+Efter en stund slappnar hon av och tittar ut över vattnet.
+**Nova:** Wow.
+**Barnet:** Vadå?
+**Nova:** Man ser hela staden härifrån!
+**Alve:** Vänta tills vi kommer längre ut.
+Nova lutar sig fram.
+**Nova:** Är det där folkparken?
+**Barnet:** Ja.
+**Nova:** Den ser jätteliten ut.
+**Alve:** Det gör du också härifrån.
+**Nova:** Vi sitter ju i samma båt!
+**Alve:** Jag menade i vanliga fall.
+Nova skrattar och vänder sig mot sjön.
 
-**Alve:** Mest Barnet. Jag var chef.
+### A3-VILLAGE-005 – Stugan
 
-**Barnet:** Du höll i verktygen.
+Motorbåten närmar sig stranden där Alve har sin stuga.
+Nova ser bryggan, båthuset och den lilla stugan mellan träden.
+**Nova:** Bor ni här?!
+**Alve:** Jag bor här. Barnet bor i byn lite längre bort.
+**Nova:** Men det här ser ju ut som ett sommarställe!
+**Alve:** Det är det också. Fast vi brukar vara här ganska mycket nu.
+Barnet lägger till vid bryggan.
+Nova hoppar försiktigt iland.
 
-**Alve:** En oerhört viktig uppgift.
+**Nova:** Det luktar skog.
 
-Nova kliver försiktigt ombord.
+**Alve:** Vad brukar skog lukta i stan?
 
-**Nova:** Jag har aldrig åkt så här långt över sjön.
+**Nova:** Avgaser, typ.
 
-**Barnet:** Då ska du få se vår sida.
+Hon går fram till stugan.
 
-**Nova:** Finns det minigolf där?
+**Nova:** Det är jättemysigt.
 
-**Alve:** Nej, men vi har en väldigt bra bagare.
+**Alve:** Tack!
 
-### A3-VILLAGE-005 – Över sjön
+**Barnet:** Du skulle ha sett den innan.
 
-Motorbåten lämnar staden. Nova tittar ut över vattnet.
+**Nova:** Hur såg den ut?
 
-**Nova:** Det ser helt annorlunda ut härifrån!
+**Alve:** Taket läckte. Bryggan var trasig. Båthuset såg ut som att
 
-**Alve:** Vänta tills vi kommer till vår brygga.
+det tänkte ramla ihop.
 
-**Barnet:** Där finns stugan vi lagade.
+**Nova:** Och ni lagade allt?
 
-**Nova:** Den du berättade om?
+**Barnet:** Med hjälp av folk från byn.
 
-**Alve:** Japp. Den står fortfarande kvar, otroligt nog.
+Nova tittar på stugan igen.
 
-**Nova:** Varför skulle den inte göra det?
+**Nova:** Det måste ha tagit jättelång tid.
 
-**Alve:** Du skulle ha sett den innan.
+**Alve:** Ja. Men det var ganska kul också.
 
-### A3-VILLAGE-006 – Stugan
+Han öppnar dörren.
 
-Vid stranden visar Alve vägen till den renoverade stugan.
+**Alve:** Vill du se insidan?
 
-**Nova:** Men oj! Är det här ert ställe?
+**Nova:** Ja!
 
-**Alve:** Ja. Fast det såg inte alls ut så här förut.
+### A3-VILLAGE-006 – Ett foto på väggen
 
-**Barnet:** Vi lagade stugan, bryggan och båthuset.
 
-**Nova:** På riktigt?
+Inne i stugan står ett litet köksbord vid fönstret. På väggen
 
-**Alve:** Det var väldigt mycket arbete. Jag fick nästan träningsvärk av att titta på.
+hänger några fotografier.
 
-Nova får syn på ett fotografi inne i stugan.
+Nova går fram till dem.
+
+**Nova:** Är det där du?
+
+**Alve:** Ja. Fast för några år sedan.
+
+**Nova:** Du var jätteliten!
+
+**Alve:** Jag var inte så liten.
+
+**Barnet:** Du är inte så stor nu heller.
+
+**Alve:** Tack för stödet.
+
+Nova tittar på nästa bild.
+
+På fotot står Alve tillsammans med sin pappa, sin storasyster och
+
+sin mamma framför stugan.
 
 **Nova:** Är det din familj?
 
-**Alve:** Ja. Pappa, storasyrran och mamma.
+**Alve:** Ja.
 
-Han blir tyst en stund.
+Han pekar.
 
-**Alve:** Mamma dog när hon blev sjuk.
+**Alve:** Pappa. Syrran. Och mamma.
 
-**Nova:** Oj. Jag visste inte.
+Nova tittar på bilden.
 
-**Alve:** Det är okej. Kom, jag ska visa dig bryggan.
+**Nova:** Bor de också här?
 
-Nova följer med utan att pressa honom på fler frågor.
+Alve skakar på huvudet.
 
-### A3-VILLAGE-007 – En helt annan by
+**Alve:** Pappa och syrran kommer hit ibland. Mamma dog när jag
 
-På vägen från stranden till byn passerar de skog och hus.
+var mindre.
 
-**Nova:** Det är så lugnt här! Var är alla bilar?
+Nova vänder sig mot honom.
 
-**Barnet:** Inte så många på den här vägen.
+**Nova:** Oj. Det visste jag inte.
 
-**Alve:** Men när Linus bygger något hörs det över hela byn.
+**Alve:** Nej.
 
-**Nova:** Vem är Linus?
+**Nova:** Förlåt.
 
-**Barnet:** Du kommer märka det.
+**Alve:** Det är lugnt. Du kunde ju inte veta.
 
-Framme på torget ser Nova skyltarna och människorna.
+En stund tittar de på fotografiet.
 
-**Nova:** Här ser ju mysigt ut.
+**Nova:** Det är ett fint foto.
 
-**Alve:** Vänta tills du får en bulle.
+**Alve:** Det tycker jag också.
 
-### A3-VILLAGE-008 – Ett bekant namn
+Han pekar mot köket.
 
-De går mot Miras affär.
+**Alve:** Vill ni ha saft?
 
-**Nova:** Mira... Vänta, är det hon som känner min mamma?
+**Nova:** Har du saft?
+
+**Alve:** Ja.
+
+**Barnet:** Kolla datumet först.
+
+**Alve:** Den är inte så gammal!
+
+**Barnet:** Det sa du om sylten också.
+
+Nova börjar skratta.
+
+### A3-VILLAGE-007 – En riktig by
+
+
+Efter besöket i stugan promenerar de längs stigen mot byn.
+
+Nova tittar nyfiket på träden, husen och den lilla vägen.
+
+**Nova:** Är det alltid så här tyst?
+
+**Barnet:** Inte när Henning bakar tidigt på morgonen.
+
+**Alve:** Eller när Linus försöker starta sin gamla gräsklippare.
+
+**Nova:** Ni känner verkligen alla här?
+
+**Barnet:** Ganska många.
+
+De kommer fram till torget.
+
+Nova stannar.
+
+**Nova:** Men vad fint det är här!
+
+På torget finns små butiker, planteringar och en anslagstavla full
+
+med lappar.
+
+**Nova:** Har ni verkligen ett riktigt bageri?
+
+**Alve:** Japp.
+
+**Nova:** Och en affär?
+
+**Barnet:** Det är Miras.
+
+Nova tittar mot skyltfönstret.
+
+**Nova:** Mammas gamla kompis?
 
 **Barnet:** Precis.
 
-**Nova:** Då måste jag hälsa!
+**Nova:** Då måste vi gå in!
 
-Mira kommer fram till dörren.
+### A3-VILLAGE-008 – Mira och Nova
 
-**Mira:** Hej Barnet! Och vilken ny kompis har ni med er?
 
-**Nova:** Jag heter Nova. Min mamma sa att jag skulle hälsa!
+Mira håller på att packa upp några lådor när dörrklockan plingar.
 
-**Mira:** Nova? Men så roligt! Kom in, allihop.
+**Mira:** Hej på er! Men nu har ni visst med er någon ny!
 
-**Alve:** Vi har en ganska stor inköpslista.
+**Barnet:** Det här är Nova.
+
+**Nova:** Hej!
+
+Mira lägger ifrån sig lådan.
+
+**Mira:** Men är det du som är dotter till min gamla kollega?
+
+**Nova:** Ja! Mamma blev jätteglad när hon hörde att du bodde här.
+
+**Mira:** Vad roligt! Jag kände henne långt innan du föddes.
+
+**Nova:** Hon berättade om de där trettio stolarna.
+
+Mira stönar dramatiskt.
+
+**Mira:** Inte stolarna igen!
+
+**Alve:** Vi har också hört den historien.
+
+**Mira:** Då behöver ingen höra den en tredje gång.
+
+De skrattar.
+
+Mira tittar på Nova.
+
+**Mira:** Du är faktiskt lite lik din mamma.
+
+**Nova:** Alla säger det.
+
+**Mira:** Hon brukade också komma in med en lista över allt som
+
+behövde göras.
+
+**Alve:** DET FÖRKLARAR SÅ MYCKET!
 
 **Nova:** Alve!
 
-**Mira:** Då är ni på rätt ställe.
+Mira skrattar.
 
-*Fortsätt direkt med låst A3-VILLAGE-009, ”Mira förstår”.*
+**Mira:** Men hon var också väldigt bra på att få saker gjorda.
 
-### A3-VILLAGE-010 – Hos Henning
+Nova ler.
 
-Efter affären leder Barnet och Alve Nova till bageriet.
+**Nova:** Vi behöver faktiskt lite hjälp med en grej.
 
-**Henning:** Men hej på er! Har ni tagit med en ny smakdomare?
+**Mira:** Det har jag förstått.
 
-**Nova:** Om det innebär att få smaka bullar, ja.
+Barnet tittar mot dörren och kontrollerar att ingen annan står där.
 
-**Alve:** Hon är väldigt kvalificerad.
+**Barnet:** Det är fortfarande en hemlighet.
 
-**Henning:** Då vill jag att du provar den här.
+**Mira:** Den stannar här.
 
-Henning räcker fram en nybakad bulle.
+### A3-VILLAGE-010 – Någon känner igen Nova
 
-**Nova:** Oj, tack!
+Barnet, Nova och Alve lämnar affären och går mot bageriet.
+Utanför står Henning med en stor mjölsäck i famnen.
+**Henning:** Hallå där! Har vi fått besök?
+**Barnet:** Det här är Nova. Hon bor i staden på andra sidan sjön.
+**Henning:** Trevligt att träffas!
+**Nova:** Hej! Är det du som bakar alla bullarna?
+**Henning:** Alla är kanske att ta i. Men de flesta.
+**Alve:** Och de bästa.
 
-Hon tar en tugga.
+**Henning:** Det var vänligt sagt.
+Han tittar på Nova.
+**Henning:** Vad för er hit?
+**Nova:** Vi ville se byn. Och så håller vi på med en överraskning.
+**Henning:** Jaså?
+Nova tittar på Barnet, som nickar.
+**Nova:** En fest. I folkparken i stan.
+**Henning:** Det låter trevligt.
+**Nova:** Vi behöver en tårta. Ganska stor.
+**Henning:** Hur stor?
+**Nova:** Det vet vi inte än.
+**Henning:** Då har vi något gemensamt. Jag vet inte heller hur stor
+den kan bli.
+Alve skrattar.
+**Barnet:** Skulle du kunna hjälpa oss när det närmar sig?
+**Henning:** Det tror jag säkert. Kom tillbaka när ni vet hur många
+som ska äta.
+**Nova:** Tack!
+Henning lyfter mjölsäcken igen.
+**Henning:** Och en sak till. Var inte rädda för att bjuda många. Det
+är roligare att baka mycket än lite!
+**Alve:** Han är min favoritbagare.
+**Barnet:** Han är den enda bagaren du känner.
+**Alve:** Precis. Väldigt bra konkurrensläge.
+Nova skrattar.
+Hon ser sig omkring på torget igen.
+**Nova:** Det här är faktiskt ett väldigt bra ställe.
+**Barnet:** Vad menar du?
+**Nova:** Alla verkar vilja hjälpa till.
+**Alve:** Det brukar vara så här.
+Nova tittar på Barnet.
+**Nova:** Jag är glad att jag följde med.
+**Barnet:** Jag också.
+De fortsätter genom byn medan Henning bär in mjölsäcken i
+bageriet.
+Worked for 26s
+Reviderat 009: Mira lägger fram ett häfte med bilder på bord,
+stolar, dukar och dekorationer.
+**Mira:** Jag har tittat lite på vad vi skulle kunna ordna.
 
-**Nova:** Det här kan vara den bästa bullen jag ätit.
+**Nova:** Oj! Finns allt det här?
+**Mira:** Det mesta. Och vi behöver inte köpa allting på en gång.
+Nova börjar bläddra.
+**Nova:** Vi vill ha ganska enkla bord. Och ljusa dukar. Helst vita.
+**Mira:** Det ska vi nog kunna hitta.
+**Nova:** Och så behöver vi något som passar till den gamla
+spelhörnan.
+**Mira:** I folkparken?
+**Nova:** Ja. Vi hittade ett gammalt shuffleboardbord där.
+Mira stannar upp.
+**Mira:** Shuffleboard?
+**Nova:** Ja! Och en gammal poängtavla från 2011.
+Mira tittar på henne.
+**Mira:** Från 2011, säger du?
+**Nova:** Mm. Mamma och pappa var med i turneringen. De hade
+sin första dejt där!
+Mira börjar le.
+**Mira:** Men vänta nu. Var det den kvällen din pappa hade en vit
+skjorta?
+Nova stirrar på henne.
+**Nova:** Va?!
+**Mira:** Och alldeles för mycket hårgelé?
+**Nova:** DU VAR DÄR?!
+**Mira:** Javisst! Jag följde med din mamma dit.
+**Alve:** Kände de inte varandra innan?
+**Mira:** Jo, lite grann. Men det var första gången de gick dit
+tillsammans.
+**Nova:** Mamma har aldrig berättat att du var med!
+**Mira:** Jag var mest där för att heja på henne. Sedan träffade jag
+några andra och lät dem vara ifred.
+**Barnet:** Vann hennes mamma verkligen tre gånger?
+**Mira:** Jag minns åtminstone två. Och din pappa hade väldigt
+många förklaringar till varför han förlorade.
+Nova börjar skratta.
+**Nova:** Han säger fortfarande att han lät henne vinna!
+**Mira:** Det skulle han nog säga även om hon vann hundra gånger.
+**Nova:** Kommer du ihåg något mer?
+**Mira:** Att de skrattade väldigt mycket. Och att de satt kvar nere
+vid vattnet långt efter att turneringen var slut.
+Nova tittar ner på bilderna i häftet.
 
-**Alve:** Jag sa ju det!
+**Nova:** Vi tänkte ha en turnering på festen också.
+**Mira:** Jaså?
+**Nova:** Och så ska de spela mot varandra igen. På samma bord.
+Med den gamla poängtavlan.
+Mira betraktar henne en stund.
+**Nova:** Och så ska vi försöka ta ett likadant foto som det från
+2011.
+**Mira:** Det låter som att du har planerat mycket.
+**Nova:** Ja. Jag vill att de ska få en riktigt bra dag tillsammans.
+**Mira:** Det förstår jag.
+Nova vänder blad.
+**Nova:** Tror du vi kan få tag i sådana här ljusslingor också?
+**Mira:** Det tror jag.
+**Nova:** Bra! För jag vill verkligen att allting ska bli rätt.
+Mira blir tyst en kort stund.
+**Mira:** Nova?
+**Nova:** Ja?
+**Mira:** Jag var med den kvällen. Och vet du vad jag kommer ihåg
+bäst?
+**Nova:** Vadå?
+**Mira:** Att ingenting blev som vi hade tänkt.
+Nova tittar upp.
+**Nova:** Hur menar du?
+**Mira:** Din mamma hade tappat bort sin jacka. Din pappa spillde
+läsk på skjortan. Och vi kom för sent till början av turneringen.
+**Alve:** Låter som en ganska dålig dejt.
+**Mira:** Det trodde jag också. Men de hade fantastiskt roligt.
+Nova ler lite.
+**Nova:** Mamma har aldrig berättat det där.
+**Mira:** Fråga henne någon gång.
+Nova tittar på ljusslingorna igen.
+**Nova:** Fast den här gången kan vi ju se till att allt fungerar.
+**Mira:** Vi kan försöka.
+Mira ger henne en penna.
+**Mira:** Ska vi börja med att skriva upp vad ni behöver?
+Lite senare.
+Barnet och Alve hjälper Nova att bära ut några tomma lådor till
+Miras förråd.
 
-**Henning:** Jag hör att vi har en framtida stamkund.
+Nova har gått före.
+Mira stannar Barnet vid dörren.
+**Mira:** Du, en sak bara.
+**Barnet:** Ja?
+**Mira:** Är den här festen tänkt som en överraskning för hennes
+föräldrar?
+**Barnet:** Ja. De vet bara att de ska komma till parken.
+**Mira:** Jag förstår.
+Hon tittar ut genom fönstret där Nova visar Alve en bild på
+mobilen.
+**Mira:** Hon har verkligen lagt ner mycket arbete på det här.
+**Barnet:** Ja. Hon vill att mamma och pappa ska ha kul tillsammans
+igen.
+Mira nickar långsamt.
+**Mira:** Det hoppas jag att de får.
+**Barnet:** Vadå?
+**Mira:** En riktigt rolig dag.
+Hon öppnar förrådsdörren.
+**Mira:** Kom. Vi ska se om jag har några ljusslingor kvar från förra
+sommaren.
 
-**Barnet:** Vi ordnar en familjedag i folkparken också.
+Worked for 46s
+Bilderna har vi inte än så tänk inte på det. DET VIKTIGA ÄR ATT
+ALLT MANUS FINNS FAKKING SPARAT NU.
+Har vi allt???
 
-**Nova:** Och då behöver vi något gott till alla gästerna.
+Worked for 25s
 
-**Henning:** Det löser vi. Men vi behöver veta hur många som kommer.
+Så vad menar du? Vi har alltså sparade dialoger för allt?
 
-**Alve:** Minst en extra till mig.
+OK då vill jag testa att bildgenerera, men jag tänker göra det i en
+ny tråd inom samma projekt. Ge mig en prompt för att använda
+vår "bildmotor" och generera aktens fem första beats
 
-**Nova:** Det skriver jag inte upp.
-
-**Henning:** Vi kan väl börja med att prata om en tårta?
-
-Nova ler och tar fram anteckningsblocket.
-
-*Följ därefter den låsta scenen A3-VILLAGE-011 med Linus.*
+Worked for 31s
 
 
 ## 11BA. Novas återkommande skuldkänsla — SUBTILA FÖRANINGAR
