@@ -4,6 +4,9 @@
 
 ## Särskilt låsta overridebeslut
 
+- **A3-VILLAGE-009 (2026-10-10):** Använd full dialog i 11N med SENAST GODKÄNT reviderat avslut där Mira frågar om 2011-fotot och säger **”Ja. Det också.”** Äldre avslut med ”En riktigt rolig dag” är ersatt. SECRET-006 behåller sin separata senare antydan.
+
+
 - Arkadägaren heter **Rebecka**, rödhårig i tidiga 40-årsåldern, rekordinitialer **REB**. Äldre PDF-texter använder Rut/RUT och får aldrig användas så i runtime.
 - **A3-PARK-021**: Använd den särskilt reviderade fullständiga dialogen i huvudmanifestets **11AU** efter commit `53d55b2`, inte PDF-draftens tidigare dialog.
 - **A3-PARK-019, 020, 022**: Den återfunna originaldialogen i **11AU** är prioriterad framför äldre kondenserad synopsis; eventuella senare explicit godkända ändringar vinner.
