@@ -3,6 +3,8 @@
 **Regel (högsta prioritet): Senaste uttryckligen godkända revidering vinner.** Källornas ordning i manifestet är inte kronologisk i manusarbetet. Ett restaurerat OCR-utdrag är **inte** en återställning av gamla namn eller beslut. GitHub-fragment och äldre dialogrubriker får inte automatiskt vinna över senare manusbeslut.
 
 ## Särskilt låsta overridebeslut
+
+- VILLAGE-004–008 och VILLAGE-010: PDF-originalet är godkänt och aktivt i 11AR sedan 2026-10-10. Nyskrivna ersättningar har tagits bort. VILLAGE-009 finns separat i 11N.
 - **Rensning 2026-10-10:** Föråldrad nyskriven VILLAGE-sektion `11AZ` borttagen ur huvudmanifestet. `11AR` är kvar enbart som *ej slutgranskad komplettering*, inte som godkänd kanon. Originaldialoger för VILLAGE-004–008/010 måste först jämföras med senare uttryckliga beslut innan ytterligare radering; använd INTE enbart 11AR för bildproduktion.
 
 
@@ -138,12 +140,12 @@ Inventerade **135** unika ID och **38** ID med dubbla eller fler manusförekomst
 | A3-VILLAGE-001 | 1 | 11D2 | **ÅTERSTÄLLD 2026-10-10:** originaldialog från PDF sidor 48–50 i aktivt huvudmanifest; ev. senare uttryckligen godkända ändringar vinner |
 | A3-VILLAGE-002 | 1 | 11D2 | **ÅTERSTÄLLD 2026-10-10:** originaldialog från PDF sidor 48–50 i aktivt huvudmanifest; ev. senare uttryckligen godkända ändringar vinner |
 | A3-VILLAGE-003 | 1 | 11D2 | **ÅTERSTÄLLD 2026-10-10:** originaldialog från PDF sidor 48–50 i aktivt huvudmanifest; ev. senare uttryckligen godkända ändringar vinner |
-| A3-VILLAGE-004 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
-| A3-VILLAGE-005 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
-| A3-VILLAGE-006 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
-| A3-VILLAGE-007 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
-| A3-VILLAGE-008 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
-| A3-VILLAGE-010 | 2 | 11AR | Jämför PDF-original mot senare ändringsbeslut |
+| A3-VILLAGE-004 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
+| A3-VILLAGE-005 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
+| A3-VILLAGE-006 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
+| A3-VILLAGE-007 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
+| A3-VILLAGE-008 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
+| A3-VILLAGE-010 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
 | A3-VILLAGE-011 | 1 | 11O | Manusets senaste förekomst |
 | A3-VILLAGE-012 | 1 | 11O | Manusets senaste förekomst |
 | A3-VILLAGE-013 | 1 | 11O | Manusets senaste förekomst |
