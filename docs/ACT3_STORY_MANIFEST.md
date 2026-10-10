@@ -3394,7 +3394,7 @@ Mira ger henne en penna.
 
 *Lite senare.*
 
-Barnet och Alve hjälper Nova att bära ut några tomma lådor till Miras förråd.
+Barnet och Alve hjälper Nova att bära några tomma lådor till Miras förråd.
 
 Nova har gått före.
 
@@ -3404,25 +3404,41 @@ Mira stannar Barnet vid dörren.
 
 **Barnet:** Ja?
 
-**Mira:** Är den här festen tänkt som en överraskning för hennes föräldrar?
+**Mira:** Den här festen... Det är Nova som har kommit på alltihop, eller hur?
 
-**Barnet:** Ja. De vet bara att de ska komma till parken.
+**Barnet:** Ja. Hon har planerat jättemycket.
 
-**Mira:** Jag förstår.
+**Mira:** Det märks.
 
-Hon tittar ut genom fönstret där Nova visar Alve en bild på mobilen.
+Mira tittar mot Nova, som står längre bort och visar Alve något på mobilen.
 
-**Mira:** Hon har verkligen lagt ner mycket arbete på det här.
+**Mira:** Har hon sagt varför det är så viktigt att allt ska bli precis som 2011?
 
-**Barnet:** Ja. Hon vill att mamma och pappa ska ha kul tillsammans igen.
+**Barnet:** Hon vill att mamma och pappa ska få en lika rolig dag som då.
+
+**Mira:** Jaha.
+
+Mira blir tyst en stund.
+
+**Mira:** Och det där med fotot. Är tanken att de ska stå på samma plats igen?
+
+**Barnet:** Ja! Med poängtavlan och allting.
 
 Mira nickar långsamt.
 
-**Mira:** Det hoppas jag att de får.
+**Mira:** Jag förstår.
 
 **Barnet:** Vadå?
 
-**Mira:** En riktigt rolig dag.
+**Mira:** Jag tror att jag börjar förstå varför den här dagen betyder så mycket för henne.
+
+Barnet tittar frågande på Mira.
+
+**Barnet:** För att det är deras första dejt?
+
+Mira ler lite.
+
+**Mira:** Ja. Det också.
 
 Hon öppnar förrådsdörren.
 
