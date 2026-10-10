@@ -7811,11 +7811,13 @@ Barnet ler.
 **Nova:** Ni kan följa med hem om ni vill. Mamma är nog hemma.
 
 
-## 11AY. A3-HOME-001–003 — KOMPLETTERANDE DIALOGMANUS
+## 11AY. A3-HOME-001–003 — AKTIVA DIALOGMANUS
 
-**Nyskrivna repliker utifrån godkänd händelseföljd; inte verifierad ordagrann kopia.**
+**A3-HOME-001:** Senare manusversion uttryckligen godkänd 2026-10-10, tidigare PDF-utkast bortvalt. **A3-HOME-002–003:** Nyskrivna repliker utifrån godkänd händelseföljd, ännu inte verifierade ordagranna originalkopior.
 
 ### A3-HOME-001 – Oväntat besök
+
+**LÅST, ANVÄNDARGODKÄND 2026-10-10:** Denna senare dialog är den enda aktiva versionen. Det tidigare PDF-utkastet ”Hemma hos Nova” är bortvalt och får **inte** användas för repliker, bildmanus eller runtime. Festen är hemlig för båda föräldrarna.
 
 Nova låser upp dörren till mammans lägenhet.
 
