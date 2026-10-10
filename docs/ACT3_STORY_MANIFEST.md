@@ -2570,8 +2570,6 @@ Henrik syns längre bort vid förrådet men märker inte vad som hänt.
 
 Nova tittar på Barnet och Alve.
 
-**Nova:** Förlåt. Jag...
-
 Hon stoppar ner mobilen.
 
 **Nova:** Jag måste gå.
