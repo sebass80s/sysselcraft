@@ -3,6 +3,8 @@
 **Regel (högsta prioritet): Senaste uttryckligen godkända revidering vinner.** Källornas ordning i manifestet är inte kronologisk i manusarbetet. Ett restaurerat OCR-utdrag är **inte** en återställning av gamla namn eller beslut. GitHub-fragment och äldre dialogrubriker får inte automatiskt vinna över senare manusbeslut.
 
 ## Särskilt låsta overridebeslut
+- **Rensning 2026-10-10:** Föråldrad nyskriven VILLAGE-sektion `11AZ` borttagen ur huvudmanifestet. `11AR` är kvar enbart som *ej slutgranskad komplettering*, inte som godkänd kanon. Originaldialoger för VILLAGE-004–008/010 måste först jämföras med senare uttryckliga beslut innan ytterligare radering; använd INTE enbart 11AR för bildproduktion.
+
 
 - **A3-VILLAGE-009 (2026-10-10):** Använd full dialog i 11N med SENAST GODKÄNT reviderat avslut där Mira frågar om 2011-fotot och säger **”Ja. Det också.”** Äldre avslut med ”En riktigt rolig dag” är ersatt. SECRET-006 behåller sin separata senare antydan.
 
