@@ -1,7 +1,7 @@
 # Akt 3 — Implementationsbeslut och plan
 
 
-**Kronologisk helhetskarta (DRAFT, inväntar användargranskning):** `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` beskriver hela OPEN→EPILOG, platsupplåsningar, quest-pauser och minispel. Detta är *inte* nytt låst kanon.
+**Kronologisk helhetskarta (huvudordningen nu LÅST 2026-10-11):** `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` beskriver hela OPEN→EPILOG. **Användaren har godkänt de stora blockens ordning**, inklusive första stadsdagen → första hemresan utan Nova → skattjakten → 2011-upptäckten → dramat/arkaden → Novas första bybesök → förberedelserna → familjedagen → epilogen. **Platsupplåsningar, detaljerade triggers och IRL-questgrindar är fortfarande DRAFT**, inte nya låsta implementationer.
 
 **Status:** PRODUKTBESLUT LÅSTA 2026-10-11. X-porten ligger i kod; övrig stadskarta, berättelse och minispel ÄNNU INTE IMPLEMENTERADE.  
 **Repo/branch:** `sebass80s/sysselcraft` / `nova/runtime-architecture-v1`  
