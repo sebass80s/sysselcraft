@@ -43,8 +43,8 @@ Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta p
 - **QUEST-PACING LÅST 2026-10-11 (senaste beslutet, ersätter äldre storysegmentmodell):** **A3-OPEN-000–005 + A3-PARK-001 är gratis. Från A3-PARK-002 genom A3-SECRET-006 kräver varje individuellt beat-ID exakt ett nytt föräldragodkänt/claimat IRL-quest.** Ingen gruppering av flera beats på samma godkända quest. Dialog, bild/val och minispel inuti ett redan upplåst beat avslutas utan extra IRL-krav. Exempel: PARK-009 inkluderar minigolf, och PARK-010 kräver därefter nästa godkända quest.
 - Questframsteg ska hämtas från **samma backend-auktoritativa godkända/claimade progression som Akt 2**. En redan konsumerad händelse får inte ge dubbla steg; flera claimade quests får inte hoppa över en väntande storyscen. Sparning/återstart får inte återspela konsumerade beats.
 - Framsteg kan fortsätta över flera dagar; att återvända till aktiv plats under väntan visar aktuell status och låter spelaren fortsätta när grinden är uppfylld.
-- **Undantag från 1:1-questloopen:** När festen väl startar ska **FAMILY-001–021 och EPILOG-001–006** spelas sammanhängande utan nya IRL-questkrav. Spelaren kan fortfarande delta i manusets spel och val, men inte tvingas till verkliga sysslor mitt i finalen.
-- **Antalet följer automatiskt beat-ID:n:** nuvarande manusinventering har **140** identifierade beats (138 i dialogindex plus separat godkända VILLAGE-009). **7 fria introbeats** (OPEN-000–005 + PARK-001), **106 individuella questlåsta beats** (PARK-002–SECRET-006 i godkänd ordning) och **27 fria finale-/epilogbeats** (FAMILY-001–021, EPILOG-001–006). Detta kräver 106 godkända/inlämnade questinstanser **men inte 106 olika sysslor**; upprepade uppdrag kan räknas via befintlig Quest V2. Vid ändrat manusantal räknas antalet om. Beat→kartplats-/triggerkoppling och priser är fortfarande öppna.
+- **Undantag från 1:1-questloopen:** När festen väl startar ska **FAMILY-001–021** spelas utan nya IRL-questkrav; därefter krävs **ett** nytt godkänt quest för att öppna **EPILOG-001–006**, som därefter spelas sammanhängande utan fler questkrav. Spelaren kan fortfarande delta i manusets spel och val, men inte tvingas till verkliga sysslor mitt i finalen.
+- **Antalet följer automatiskt beat-ID:n:** nuvarande manusinventering har **140** identifierade beats (138 i dialogindex plus separat godkända VILLAGE-009). **7 fria introbeats** (OPEN-000–005 + PARK-001), **106 individuella questlåsta beats** (PARK-002–SECRET-006 i godkänd ordning) och **21 questfria FAMILY-beats och 6 epilogbeats bakom en gemensam questgrind** (FAMILY-001–021, EPILOG-001–006). Detta kräver 107 godkända/inlämnade questinstanser totalt (106 individuella + 1 för epilogen) **men inte 106 olika sysslor**; upprepade uppdrag kan räknas via befintlig Quest V2. Vid ändrat manusantal räknas antalet om. Beat→kartplats-/triggerkoppling och priser är fortfarande öppna.
 
 ## 3. Miras inköpslista och SysselBux — LÅST
 
@@ -122,3 +122,11 @@ Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta p
 - **Release-TODO:** ta bort X-bypass och återställ normalt kapitelkrav vid uttryckligt godkänd Akt 3-release.
 
 **Låst komplettering 2026-10-12:** A3-FAMILY-021 (*Vi gjorde vad vi kunde*) är ett nytt, användargodkänt och manuslåst båtbeat i kvällsljus efter FAMILY-020 och före EPILOG-001 (som fortfarande inleds några dagar senare). Inget nytt IRL-quest. Håll rutt och återresa åtskilda från den ordinarie EPILOG-001-resan. Total nu **140 identifierade beats = 7 gratis intro + 106 questlåsta + 27 questfria FAMILY/EPILOG**.
+
+
+### Beslut 2026-10-12: Epilogen har EN gemensam questgrind (ersätter tidigare questfri epilog)
+
+- **A3-FAMILY-001–021:** spelas utan ytterligare quests efter befintlig finale-/inköpsgrind.
+- **Mellan FAMILY-021 och EPILOG-001:** barnet måste göra **ett nytt, föräldragodkänt IRL-quest** för att låsa upp epilogen. Det är en separat inlämning och inte återanvändning av den sista questen före familjedagen.
+- **A3-EPILOG-001–006:** efter upplåsning spelas alla sex beats i ett enda sammanhängande svep utan ytterligare quests. Normal sparning/återupptagning ska fortfarande fungera.
+- **Totalen är 107 godkända questinlämningar**: 106 tidigare för PARK-002–SECRET-006 + 1 epiloggrind. Fortfarande **140 beats** totalt, av vilka 106 har individuell questgrind, 6 delar en gemensam questgrind, 21 FAMILY och 7 intro är questfria. Ingen ny story-beat tillkommer.
