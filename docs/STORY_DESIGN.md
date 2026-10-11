@@ -1,5 +1,11 @@
 # Sysselcraft — Story & World Design
 
+## LOCKED: Independent village expansion (post-Act 3 / pre-Act 4) — 2026-10-12
+
+**New canonical feature spec:** [`docs/VILLAGE_EXPANSION_POST_ACT3_DESIGN.md`](VILLAGE_EXPANSION_POST_ACT3_DESIGN.md). **Design locked; no runtime code or assets implemented.**
+
+Restore the original promise that the home village grows as the child progresses. Plan a **new village area/screen to the LEFT of the existing Act 1 village**, with independent, room-furnishing-like **SysselBux purchases in Mira's shop** (Mira remains the merchant). The child chooses which buildings to acquire; the area is persistent and runs **parallel to all chapter stories, with no compulsory Act 3/4 gates**. A **unique short character beat fires when each building is completed** and must not replay accidentally after restart. Initial concepts: **fotbollsplan, glasskiosk, lekplats** (skatepark optional). Signature football vignette: **Linus as biased division-7 referee, judging for the village team**; exact script is NOT locked. Tone is light, character-based, and gives Linus an ongoing central role in village life. **Build this after finishing Act 3 and before starting Act 4.** Exact catalog/prices, plot count, construction stages and scripts remain OPEN. This feature does not alter Act 3's city map or Act 4's narrative.
+
 ## CURRENT ACT 3 CANON — 2026-10-08
 
 Act 3 is no longer intentionally undefined.
