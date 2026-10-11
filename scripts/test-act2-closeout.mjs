@@ -231,13 +231,13 @@ const act2RuntimeSource = fs.readFileSync(new URL("../src/components/Act2Runtime
 
 assert.match(
   act2RuntimeSource,
-  /const nextChapter = nextChapterDestination\("act2"/,
-  "completed Act 2 must derive the next chapter from the canonical registry",
+  /contextualActions=\{state\.act2Complete && state\.endCardSeen \? \([\s\S]*Kapitel 3 kommer snart/,
+  "completed Act 2 must show the temporary release lock for unfinished Act 3",
 );
-assert.match(
+assert.doesNotMatch(
   act2RuntimeSource,
-  /contextualActions=\{state\.act2Complete && state\.endCardSeen && nextChapter \? \([\s\S]*router\.push\(nextChapter\.route\)[\s\S]*Till kapitel 3/,
-  "completed Act 2 must expose the registered next-chapter transition through the shared GameUiShell",
+  /router\.push\(nextChapter\.route\)/,
+  "normal Act 2 must not launch unfinished Act 3",
 );
 assert.doesNotMatch(
   act2RuntimeSource,
