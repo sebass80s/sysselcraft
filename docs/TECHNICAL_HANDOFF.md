@@ -21,7 +21,7 @@
 - Quest-wait behavior and persistence reuse Runtime 1.1/Act 2 shared engines. Direct dialogue beats do not need IRL quests between each other. FAMILY/EPILOG has no new IRL quest gates.
 - All Act 3 story purchases happen **only at Mira**, unlocking after the in-story shopping list appears. A dedicated Act 3 list UI shows owned/missing. Chairs/lights/speakers/ice cream are tentative candidates; prices/counts unset.
 - Purchases may be made throughout the Act. **Only the final preparation/festival gate** requires that all obligatory purchases are complete. Missing purchases → Nova says: **"Vi måste få klart inköpen innan vi kan starta festen!"** → back to map; return once purchased.
-- First minigame prototype: shuffleboard at the park; rules and integration still open.
+- **Story order is canonically minigolf in A3-PARK-009 first**, followed by shuffleboard discovery in PARK-019, playable match in PARK-020 and family-day rematch in FAMILY-006. A proposal to prototype shuffleboard technically first **must not replace the earlier minigolf story beat**. Rules and technical prototype order remain open.
 
 Current code is just the ChapterIntroCard + `act3RuntimeState` entry flag. **Do not claim any of the above systems are implemented.**
 
