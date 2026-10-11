@@ -1,6 +1,6 @@
 # Akt 3 — Implementationsbeslut och plan
 
-**Status:** PRODUKTBESLUT LÅSTA 2026-10-11; **INTE IMPLEMENTERADE** (förutom befintligt Act 3-kapitelkort/sparstart).  
+**Status:** PRODUKTBESLUT LÅSTA 2026-10-11. X-porten ligger i kod; övrig stadskarta, berättelse och minispel ÄNNU INTE IMPLEMENTERADE.  
 **Repo/branch:** `sebass80s/sysselcraft` / `nova/runtime-architecture-v1`  
 **Källor:** Användarens uttryckliga beslut i implementationsdiskussion 2026-10-11. Story canon: `docs/ACT3_STORY_MANIFEST.md` + `docs/ACT3_DIALOG_CANON_RESOLUTION.md`. Engine canon: `docs/RUNTIME_ARCHITECTURE_1_1.md`, `docs/STATE_OWNERSHIP.md` och `docs/TECHNICAL_HANDOFF.md`.
 
@@ -82,3 +82,19 @@
 ## Nuvarande kodstatus vid detta beslut
 
 `src/game/act3RuntimeState.ts` har vid planeringstillfället endast `{ version: 1, entered: boolean }` och använder delad `createChapterPersistenceHost`. Det första kapitelkortet finns; **stadskarta, platsrouting, shoppinglista, deadbeats, minispel och Act 3-questgrindar är ännu inte byggda**. Separata commits/tester krävs innan någon av dessa delar får märkas DONE.
+
+## Tillfällig release-spärr och telefon-test — 2026-10-11
+
+**Kodstatus: koden är inlagd i GitHub; automatisk fullverifiering och fysisk iPhone-acceptans återstår.**
+
+- Akt 2:s ordinarie `Till kapitel 3`-knapp är ersatt med statisk text: **Kapitel 3 kommer snart**.
+- En direkt öppning av `/act3` är också spärrad. Det är inte tillräckligt att bara gömma menylänken.
+- I **Vuxenläge** finns en knapp märkt exakt **X**. Den visar ett lösenordsfält. Den hårdkodade utvecklingskoden är **`nova3`** och är endast ett spoilerskydd för barnet, **inte en säkerhetsfunktion**.
+- Efter korrekt lösenord skapas en **engångsbiljett i WebView-flikens `sessionStorage`**. Navigering till `/act3` konsumerar den innan Act 3-save läses. För ny öppning, direktlänk eller sidomladdning krävs ny X-upplåsning. Testpasset som redan är öppet kan fortgå.
+- Teståtkomst via X går även om **Akt 2 ännu inte är färdig**. Den normala kapitelgrinden återkommer **först efter uttryckligt releasebeslut**.
+- Utvecklingsrouten `/act3-test` förblir dev-only och kan inte nås i produktion.
+- Akt 1/2-save, wallet och backend-questprogression ändras inte av själva X-upplåsningen. Akt 3 använder fortsatt sin egen child-scoped sparning; testprogression kan därför kvarstå när vuxen öppnar X igen.
+- Implementation: `src/game/act3PreviewAccess.ts`, `src/components/Act3PreviewLauncher.tsx`, `src/components/VillagePrototype.tsx`, `src/components/Act2Runtime.tsx`, `src/components/Act3Skeleton.tsx`.
+- Regresstester: `scripts/test-act3-preview-gate.mjs` och ändrat `scripts/test-act3-empty-skeleton.mjs`; båda i `npm run verify`.
+- **Återstår:** kör full verifiering från riktig checkout, testa fel/rätt kod och spärrad direktlänk på iPhone, testa appåterstart och bekräfta att befintliga Act 1/2-save-data lever kvar. **Inga verifierade fysiska testresultat ännu.**
+- **Release-TODO:** ta bort X-bypass och återställ normalt kapitelkrav vid uttryckligt godkänd Akt 3-release.
