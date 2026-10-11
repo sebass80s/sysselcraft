@@ -134,9 +134,11 @@ Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta p
 
 ## LÅST UX-BESLUT 2026-10-12 — Läs FAMILY tillsammans med en vuxen
 
-**Trigger:** när Akt 3:s sista förberedelse-/inköpsgrind är klar och **före A3-FAMILY-001**. Visas en gång på barnets skärm, och **samma text** ska samtidigt vara tillgänglig i kopplat föräldraläge för detta barn. Ingen storyspoiler i meddelandet. Föräldern ska kunna läsa det även om hen öppnar vuxenläget senare (persisted unread/inbox/notice, inte en flyktig toast). Om en push-notis till förälderns enhet stöds i framtiden ska den peka på samma information; designbeslutet innebär **inte** att pushinfrastruktur finns idag.
+**Trigger:** när Akt 3:s sista förberedelse-/inköpsgrind är klar och **före A3-FAMILY-001**. Visas en gång på barnets skärm, och **mottagaranpassad föräldrainformation** ska samtidigt vara tillgänglig i kopplat föräldraläge för detta barn. Ingen storyspoiler i meddelandet. Föräldern ska kunna läsa det även om hen öppnar vuxenläget senare (persisted unread/inbox/notice, inte en flyktig toast). Om en push-notis till förälderns enhet stöds i framtiden ska den peka på samma information; designbeslutet innebär **inte** att pushinfrastruktur finns idag.
 
-**Delad, ordagrant identisk meddelandetext (barnskärm och föräldraläge):**
+**Separata mottagaranpassade meddelanden (ersätter tidigare krav på identisk text):**
+
+**Barnskärmen, spoilerfri:**
 
 > **Nu börjar berättelsens avslutning!**
 >
@@ -146,6 +148,18 @@ Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta p
 >
 > Du behöver inte göra fler sysslor under den här delen av berättelsen.
 
+**Föräldraläget, innehållsinformation:**
+
+> **Spela gärna nästa kapitel tillsammans! ❤️**
+>
+> Ditt barn är på väg in i en lite längre del av SysselCrafts berättelse som handlar om vänskap, skilsmässa, skuld och besvikelse.
+>
+> Nova hoppas kunna få sina föräldrar att bli tillsammans igen och behöver så småningom förstå att deras separation inte är hennes fel.
+>
+> Vi rekommenderar att du spelar den här delen tillsammans med ditt barn. Berättelsen tar upp känsliga ämnen på ett varsamt sätt och kan ge fina tillfällen att prata om familjer, känslor och sådant vi inte alltid kan förändra.
+>
+> Ni behöver inte läsa allt på en gång. Det går bra att pausa och fortsätta senare.
+
 **Barnets knappar:** ”Spela tillsammans” och ”Fortsätt själv”. Inget krav på vuxengodkännande och inget tvång att ha en vuxen närvarande. Knapparna går vidare till FAMILY-001, inte till separata manusvarianter. FAMILY-001–021 kan pausas och återupptas från exakt senaste beat/linje. Föräldraläget visar motsvarande informationskort, ingen ny quest eller grind. Meddelandet gäller bara FAMILY-kedjan; **en separat** föräldragodkänd quest krävs senare för att trigga EPILOG-001–006 som spelas i ett svep.
 
-**Implementationsstatus:** detta är dokumenterat produkt-/UX-beslut, **inte** verifierad leverans i app eller faktisk telefon-push. Använd en gemensam textkonstant i implementationen för att undvika textdrift mellan ytorna. Koppla parent notice till aktuellt barn/save och säkerställ idempotens.
+**Implementationsstatus:** detta är dokumenterat produkt-/UX-beslut, **inte** verifierad leverans i app eller faktisk telefon-push. Använd separata kanoniska textkonstanter i implementationen, en för barn och en förälder. Koppla parent notice till aktuellt barn/save och säkerställ idempotens.
