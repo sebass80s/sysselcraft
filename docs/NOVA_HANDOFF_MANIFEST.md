@@ -3,6 +3,14 @@
 
 **ACT 3 GAMEFLOW: MACRO CHRONOLOGY + EXACT BEAT GATING APPROVED 2026-10-11:** Read `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md`. **OPEN-000–005 and PARK-001 are FREE. Starting with PARK-002, every individual scripted beat ID through SECRET-006 requires EXACTLY ONE NEW parent-approved/claimed IRL quest; DO NOT group multiple beat IDs as one quest/story segment.** Each beat's dialogue/minigame completes naturally, but next beat needs next claim. PARK-009 includes minigolf; PARK-010 needs its own quest. **FAMILY-001–020 and EPILOG-001–006 are uninterrupted and quest-free once the already agreed final purchase/story gate is met.** Current count **139 beats = 7 free opening + 106 quest-locked + 26 free finale/epilogue**; this means 106 approved quest *instances*, NOT unique chore types (repeatable Quest V2 is allowed). A3-VILLAGE-009 is a separately approved beat, between 008 and 010, missing from older index. Earlier long ungated-block and multi-beat story-segment advice is superseded. Map unlock timings, minigame rules, catalog/prices and routes remain DRAFT; NONE of the Act 3 story flow is implemented.
 
+## ACT 3 CITY MAP: EXACTLY FIVE ICONS – LOCKED 2026-10-11
+
+- **Five and only five city-map choices:** **Folkparken**, **Hemma hos Novas mamma**, **Spelbutiken/Arkaden**, **Hamnen**, and the temporary **Skattjakten**. Static map, no separate pins for the clock, library, town square, school, scene, stage, extra merchants or mini-game venues.
+- **One shared location** for early CITY-001–003 *Spelbutiken* (ordinary retro shop) and later ARCADE-001–006 *Arkaden*, with no Rebecka/NOV/REB spoiler until the ARCADE reveal after DRAMA-010. Icon label switches to Arkaden at reveal, not beforehand.
+- **Skattjakten** icon visible/active **only during HUNT-001–006**; hidden when HUNT-006 ends. Still 1 approved quest per HUNT beat.
+- **Hamnen = motorboat return to the actual Act 2 world → Act 1 village**. This must work during quest-wait and must never accidentally consume or skip quest-gated BOAT-001–005 story beats. Mira's mandatory purchases stay in her existing Act 1 shop, reached via the boat/prior worlds.
+- Location list and purpose LOCKED; exact reveal beat positions, map art/pixels and boat journey resume details OPEN. **Documented only, runtime not yet built.** Source of truth: `docs/ACT3_IMPLEMENTATION_PLAN.md` §1A + `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` §1A.
+
 ## ACT 3 ADULT X PREVIEW GATE — 2026-10-11
 
 **CODE PRESENT; NOT YET NATIVE ACCEPTED.** `docs/ACT3_IMPLEMENTATION_PLAN.md` documents the temporary product-release isolation.
