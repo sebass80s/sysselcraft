@@ -1,5 +1,8 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
+
+**ACT 3 GAMEFLOW DRAFT 2026-10-11:** Read `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` for the complete chronology from OPEN to EPILOG, tentative map icon unlocks, quest pauses, minigames, purchased-party gate and open design questions. **It is a DRAFT awaiting user review, not a locked gameplay contract or implemented code.** It also flags a beat-inventory audit (138 indexed entries plus the separately approved A3-VILLAGE-009).
+
 ## ACT 3 ADULT X PREVIEW GATE — 2026-10-11
 
 **CODE PRESENT; NOT YET NATIVE ACCEPTED.** `docs/ACT3_IMPLEMENTATION_PLAN.md` documents the temporary product-release isolation.
