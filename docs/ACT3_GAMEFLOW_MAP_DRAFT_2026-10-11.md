@@ -1,9 +1,30 @@
 # Akt 3 – Kronologisk gameplay-/kartflödeskarta
 
-**Status: ARBETSUTKAST 2026-10-11 – FÖR GRANSKNING. INTE SPIKAT.**  
+**Status 2026-10-11: ÖVERGRIPANDE KRONOLOGI GODKÄND AV ANVÄNDAREN OCH SPIKAD I GITHUB. Questgrindar, exakt kart-UX, beat-routing, köpupplåsning och interaktioner är fortsatt ARBETSUTKAST.**  
 **Implementation:** Endast befintligt Act 3 chapter intro-skelett och temporär Vuxenläge → X-testport är kodade; allt story-/kart-/minispelsflöde nedan är ännu design.  
 **Källor:** `docs/ACT3_STORY_MANIFEST.md`, `docs/ACT3_DIALOG_CANON_RESOLUTION.md`, godkända CITY-dialoger `docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md`, `docs/ACT3_IMPLEMENTATION_PLAN.md`.  
 **Regel:** Godkänd manusdialog ska inte skrivas om av en spelplansskiss. Senare godkända ändringar vinner över äldre synopsis/PDF. Följ inga inofficiella plats-/questplaner som om de vore kanon.
+
+## Godkänt: hela aktens huvudordning (LOCKED 2026-10-11)
+
+Användaren godkände uttryckligen att denna övergripande ordning ”känns rätt”. Det låser **ordningen mellan manusets stora delar**, inte den tekniska placeringen av IRL-quests, antalet quests eller de enskilda kartklick som ännu markeras K?/Q?.
+
+1. **OPEN-000–005**: ankomst till hamnen, möte med Nova och väg till folkparken.
+2. **PARK-001–010**: parken, Henrik, familjedagsidén och första **minigolfen PARK-009**.
+3. **CITY-001–003 → HOME-001–008**: första besöket i retrobutiken (ingen arkad ännu), Novas mamma, två hem, skattkistan och familjehistorien.
+4. **BOAT-001–005 → VILLAGE-001–003**: Barnet och Alve reser till byn **utan Nova** och besöker Mira.
+5. **HUNT-001–006**: Novas skattjakt genom staden.
+6. **PARK-011–022**: fortsatt planering, upptäckt av poängtavlan från 2011 och senare **shuffleboard PARK-020**.
+7. **DRAMA-001–010**: pappasamtalet, konflikt och vänskapens försoning.
+8. **ARCADE-001–006**: hemliga arkaden hos Rebecka, **först efter DRAMA-010**.
+9. **DRAMA-011–015**: båda föräldrarna säger ja och Novas nya optimism.
+10. **VILLAGE-004–026, inklusive VILLAGE-009 mellan 008 och 010**: Nova följer med över sjön; stugan, Mira, Henning, Linus och Sol.
+11. **PREP-001–006 → REVEAL-001–004 → SECRET-001–006**: festen tar form, den djupare hemliga planen och sista förberedelserna. Miras inköp pågår **parallellt nästan hela akten**.
+12. **Enda obligatoriska inköpsgrinden** inför sista förberedelsequestet/att starta festen; saknade varor ger Novas redan låsta väntedialog.
+13. **FAMILY-001–020**: lyckad familjedag, sanningen om Novas skuldkänslor och det nya familjefotot; **inga IRL-questkrav mitt i finalen**.
+14. **EPILOG-001–006**: några dagar senare, spelhallen och båten, **SLUT PÅ TREDJE KAPITLET** utan tidigare struken Act 4-krok.
+
+**Fortfarande öppet:** var och hur många IRL-questgrindar som införs, exakt antal godkända quests, första kartvisning och övrig kartupplåsning, tillfälliga skattjaktspins, deadbeat-repliker, minispelsregler/replay, inköpskatalog/priser och exakta triggers för förberedelsebeats.
 
 ## 0. Grundidé som redan är beslutad
 
@@ -145,4 +166,4 @@
 - **Slice F:** PREP/REVEAL/SECRET, köpgrind, FAMILY och EPILOG, med full iPhone/save-acceptance.
 - Inga onödiga Vercel-deploys eller GitHub Actions-kostnader. Avsluta varje slice med regressionskontroller, dokumentation och fysisk acceptans när den faktiskt behövs.
 
-**Ägarregel:** Hela denna fil är ett *diskussionsunderlag*, inte en låst ny quest- eller beat-konfiguration. Sätt aldrig LOCKED utan ett senare uttryckligt användargodkännande och GitHub-verifiering.
+**Ägarregel:** Den övergripande kronologin i avsnittet **Godkänt** är låst genom användarens godkännande och GitHub-verifiering. Övriga K?/Q?, kartdetaljer, questantal, triggers och implementeringsordningen är fortsatt diskussionsunderlag. Kalla aldrig dessa detaljer LOCKED utan nytt uttryckligt godkännande.
