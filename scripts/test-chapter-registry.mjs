@@ -62,8 +62,8 @@ assert.match(handoff, /storyPurchaseShopHref\(\{[\s\S]*shopChapterId: "act1"[\s\
 assert.match(handoff, /storyPurchaseResumeHref\(\{[\s\S]*chapterId: "act2"/, "Act 2 purchase resume must delegate its registered Act 2 target to the shared purchase handoff");
 assert.match(sharedPurchaseHandoff, /chapterRoute\(input\.shopChapterId\)/, "shared purchase handoff must resolve shop routes through the chapter registry");
 assert.match(sharedPurchaseHandoff, /chapterRoute\(input\.chapterId\)/, "shared purchase resume must resolve chapter routes through the chapter registry");
-assert.match(act2, /const nextChapter = nextChapterDestination\("act2"/, "Act 2 must derive its next chapter from the shared transition");
-assert.match(act2, /router\.push\(nextChapter\.route\)/, "Act 2 next-chapter navigation must use the resolved registered route");
+assert.match(act2, /Kapitel 3 kommer snart/, "Act 2 temporarily holds navigation until Act 3 is ready");
+assert.doesNotMatch(act2, /router\.push\(nextChapter\.route\)/, "Act 2's natural chapter route is disabled during preview");
 assert.doesNotMatch(act2, /router\.push\("\/act3"\)/, "Act 2 must not hard-code the Act 3 route");
 
 
