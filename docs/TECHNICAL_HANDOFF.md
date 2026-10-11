@@ -1,5 +1,17 @@
 # Sysselcraft Technical Handoff
 
+## TEMPORARY ACT 3 PREVIEW GATE — 2026-10-11
+
+**Code committed; full verification and preserved-iPhone acceptance still pending.** The canonical implementation/acceptance record is `docs/ACT3_IMPLEMENTATION_PLAN.md` (section `Tillfällig release-spärr och telefon-test`).
+
+- Act 2's ordinary `Till kapitel 3` action has been removed, replaced by **Kapitel 3 kommer snart**.
+- Direct production `/act3` is blocked unless an explicit, **single-use sessionStorage launch grant** comes from `Vuxenläge → X` in the child app.
+- Button label **X** opens a password prompt, static development passcode **nova3**. This is only a child spoiler barrier, **not strong authentication**. Access bypasses completed Act 2 for developer testing; grants are consumed before reading Act 3 state.
+- `/act3-test` remains dev-only. Existing Act 1/2 saves and backend quest economy are not modified by gate entry.
+- Code: `act3PreviewAccess.ts`, `Act3PreviewLauncher.tsx`, `VillagePrototype.tsx`, `Act2Runtime.tsx`, `Act3Skeleton.tsx`. Tests: `test:act3-preview-gate` and `test:act3-empty-skeleton`.
+- Once Act 3 is truly releasable, explicitly remove the temporary X gate and reinstate normal chapter eligibility. Do not accidentally ship the bypass indefinitely.
+
+
 ## LOCKED ACT 3 IMPLEMENTATION DECISIONS — 2026-10-11
 
 **Canonical product/runtime implementation plan:** `docs/ACT3_IMPLEMENTATION_PLAN.md` (verified GitHub doc; do not replace with guesses from older planning). Product decisions are locked, **not yet implemented**.
