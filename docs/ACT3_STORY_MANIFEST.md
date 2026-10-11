@@ -6615,27 +6615,27 @@ Hon ler och stoppar ner mobilen igen.
 
 *Vi återvänder till folkparken några dagar senare.*
 
-Några av borden har ställts på plats. Ljusslingor hänger mellan träden och den gamla spelhörnan är städad.
+*Några av borden har ställts på plats. Ljusslingor hänger mellan träden och den gamla spelhörnan är städad. Linus står på en stege och sätter upp lampor medan några vuxna hjälper till längre bort. Sol bär en låda med dekorationer och Henning kommer gående med något övertäckt på en bricka.*
 
-Barnet och Alve kommer fram till scenen där Nova står med sin anteckningsbok.
+*Barnet och Alve kommer fram till scenen där Nova står med sin anteckningsbok.*
 
 **Nova:** Ni måste komma och titta!
 
 **Barnet:** Vad har hänt?
 
-**Nova:** Henrik har fått igång lamporna vid scenen. Och Mira har skickat hit de första borden.
+**Nova:** Allt börjar faktiskt falla på plats. Linus håller på att sätta upp ljusen, Mira hjälpte till att få hit de första borden, och nu känns det faktiskt som att det här kan bli på riktigt.
 
-**Alve:** Har du burit hit dem själv?
+**Alve:** Oj. Hela byn verkar ju vara här.
 
-**Nova:** Nej, Henrik fick hjälp av några vuxna.
+**Nova:** Ja. Jag tror nästan att de är mer taggade än jag.
 
 **Barnet:** Det börjar se riktigt fint ut.
 
 **Nova:** Visst gör det!
 
-Hon visar runt.
+*Hon visar runt över området.*
 
-**Nova:** Här ska vi ha maten. Där borta blir spelhörnan. Och vid vattnet tänkte jag sätta upp en plats där man kan ta foton.
+**Nova:** Här ska vi ha maten. Där borta blir spelhörnan. Och vid vattnet tänkte jag ordna en plats där man kan ta foton.
 
 **Alve:** Ska vi ha en fotovägg?
 
@@ -6643,57 +6643,103 @@ Hon visar runt.
 
 **Barnet:** Det blir nog bra.
 
-Nova tittar på området.
+*Linus ropar från stegen längre bort.*
 
-**Nova:** Om vi får resten av sakerna på plats.
+**Linus:** Om ingen rör den här sladden nu så överlever vi allihop!
 
-**Barnet:** Vi har ju tid kvar.
+**Sol:** Det där var inte lugnande alls!
 
-**Nova:** Jag vet. Men jag vill gärna bli färdig tidigt.
+*Henning stannar till med brickan och ler mot dem.*
 
-Nova drar ett streck under den sista punkten i blocket.
+**Henning:** Jag sa ju att det behövs något gott när folk arbetar så här hårt.
+
+**Alve:** Har du redan börjat baka?
+
+**Henning:** Jag börjar alltid innan folk tror att jag har börjat.
+
+*Nova tittar ut över området där byborna arbetar.*
+
+**Nova:** Det känns faktiskt bättre nu när vi inte gör allt själva.
+
+**Alve:** Jag sa ju att folk här brukar hjälpa till.
+
+**Barnet:** Och Linus verkar ta ljusslingorna på väldigt stort allvar.
+
+**Linus:** Det här är ett precisionsjobb!
+
+*Nova skrattar lite.*
+
+**Nova:** Jag klagar inte. Det blir jättebra.
+
+*Hon tittar ner i anteckningsboken och drar ett streck under den sista punkten.*
 
 **Nova:** Om man tänker efter ordentligt innan så slipper något bli fel sedan.
 
 ### A3-PREP-002 – Det saknas fortfarande saker
 
-Barnet och Nova går igenom Miras inköpslista.
+*Folkparken börjar sakta ta form. Linus har fått upp de flesta ljusslingorna och Sol håller på att sortera dekorationer vid scenen. Henning har ställt fram en bricka med nybakade bullar till alla som hjälper till.*
 
-Några rader är redan avbockade.
+*Nova står vid ett av borden med Miras inköpslista. Barnet och Alve kommer fram.*
 
-**Nova:** Vi har fixat en del. Men vi behöver fortfarande fler stolar, dukar och dekorationerna till spelhörnan.
+**Nova:** Okej. Vi har fixat borden, några av lamporna och det mesta till scenen.
 
-**Barnet:** Vi köper det efter hand.
+**Barnet:** Det är ju jättemycket!
 
-**Nova:** Ja. Jag har inte glömt det.
+**Nova:** Ja, fast vi behöver fortfarande fler stolar, vita dukar och dekorationerna till spelhörnan.
 
 **Alve:** Och glass.
 
 **Nova:** Glass har du skrivit på listan tre gånger.
 
-**Alve:** Då är den extra viktig.
+**Alve:** Fyra. Jag la till en när du inte tittade.
 
-Nova ler.
+*Nova skrattar och stryker över en av glasspunkterna.*
 
-**Barnet:** Mira sa ju att hon kan lägga undan det vi behöver.
+**Alve:** Hallå! Det där var min reservglass!
 
-**Nova:** Jag vet. Och vi behöver inte betala allt idag.
+*Mira kommer förbi med en kartong.*
 
-Hon tittar över parken.
+**Mira:** Jag har lagt undan resten av dukarna i affären. Ni kan hämta dem när ni behöver dem.
 
-**Nova:** Det är bara så konstigt att se allting halvfärdigt.
+**Nova:** Tack! Men vi har inte riktigt råd med allting än.
 
-**Nova:** Jag vill att mamma och pappa ska få en hel dag då jag inte bråkar om något.
+**Mira:** Det är ingen brådska. Ni behöver inte köpa allt på en gång.
 
-**Barnet:** Det brukar se ut så medan man gör i ordning något.
+*Nova nickar och tittar ut över parken.*
 
-**Alve:** Du skulle ha sett vår stuga när taket var halvlagat.
+**Nova:** Jag vet. Det är bara så konstigt att se allting halvfärdigt.
 
-**Nova:** Då hade jag nog blivit ganska stressad.
+**Barnet:** Det ser ju bättre ut varje gång vi kommer hit.
 
-**Alve:** Det blev jag också. Särskilt när det började regna.
+**Nova:** Jo, men jag vill att mamma och pappa ska få en hel dag då jag inte bråkar om något. Då måste vi ju få allting rätt.
 
-Nova skrattar.
+*Alve tittar mot Linus, som håller på att reda ut en trasslig ljusslinga.*
+
+**Alve:** Det där ser inte särskilt rätt ut.
+
+**Linus:** Jag hörde det där!
+
+**Sol:** Linus, du har trasslat in dig i sladden.
+
+**Linus:** Jag undersöker hur lång den är!
+
+**Henning:** Den verkar räcka ungefär två varv runt Linus.
+
+*Barnen börjar skratta.*
+
+**Nova:** Okej. Kanske behöver inte exakt allting bli perfekt.
+
+*Hon tittar ner på listan igen.*
+
+**Nova:** Men jag vill fortfarande ha de vita dukarna.
+
+**Alve:** Och glass.
+
+**Nova:** ALVE!
+
+**Alve:** Jag ville bara kontrollera att du kom ihåg det.
+
+*Nova skrattar och stoppar ner listan i sin ryggsäck.*
 
 ### A3-PREP-003 – En bild som inte stämmer
 
