@@ -26,7 +26,23 @@ Scope: cinematic Act 3 story-moment illustrations. This does **not** supersede `
 
 ## Canonical character-library approach
 
-Use existing authoritative art reference assets first. Proposed location for future reviewed uploads: `public/assets/art-reference/characters/`. **Do not treat this folder as populated merely because a path appears here.** The user can provide artwork; uploader must verify physical files on the chosen branch. Maintain path, checksum or unique identifier, outfit variants and approval date in shot manifest. Preserve adult reference sheets for Nova's mother, blond tired-looking father in his forties, and grey-haired/bearded Henrik. Maintain separate identity for Mira, Sol and Henning.
+**Verified canonical directory on `nova/runtime-architecture-v1`: `public/assets/character-sheets/`.** All eleven files below were individually checked with GitHub's repository file API on 2026-10-11. Use these existing assets; do not create a duplicate `art-reference/characters` directory.
+
+| Character | Canonical repository path |
+| --- | --- |
+| Nova | `public/assets/character-sheets/nova.png` |
+| Barnet | `public/assets/character-sheets/barnet.png` |
+| Alve | `public/assets/character-sheets/alve.png` |
+| Mira | `public/assets/character-sheets/mira.png` |
+| Sol | `public/assets/character-sheets/sol.png` |
+| Linus | `public/assets/character-sheets/linus.png` |
+| Henning | `public/assets/character-sheets/henning.png` |
+| Valpen | `public/assets/character-sheets/puppy.png` |
+| Novas mamma | `public/assets/character-sheets/mamma-nova.png` |
+| Novas pappa | `public/assets/character-sheets/pappa-nova.png` |
+| Henrik | `public/assets/character-sheets/henrik.png` |
+
+An existing repository file is **not automatically supplied to the image-generation model**. Before any generation, ensure the relevant images are actually passed as visible reference images / edited inputs. If they cannot be loaded in the generation context, report that blocker rather than claiming visual identity is locked. Track wardrobe and moment-specific continuity from the latest accepted frames.
 
 ## Stage outcomes
 
