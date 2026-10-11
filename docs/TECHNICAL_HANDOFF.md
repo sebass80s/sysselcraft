@@ -12,6 +12,10 @@
 - Once Act 3 is truly releasable, explicitly remove the temporary X gate and reinstate normal chapter eligibility. Do not accidentally ship the bypass indefinitely.
 
 
+## ACT 3 CITY MAP FIVE ICONS – LATEST LOCKED 2026-10-11
+
+Exactly five city-map locations: **Folkparken**, **Hemma hos Novas mamma**, **Spelbutiken (later relabeled Arkaden)**, **Hamnen** and a **temporary Skattjakten icon shown only for HUNT-001–006**. Do not introduce extra map pins for streets, fountain, bus-stop clock, library, former villa, individual park features or city merchants. CITY-001–003 shows an ordinary retro shop; secret arcade / Rebecka / NOV / REB only revealed at ARCADE-001 (after DRAMA-010), changing the existing icon's label. Harbour motorboat is return navigation to the existing Act 2 world and from there Act 1 village, available in quest-wait; mere navigation must never advance/skip individually quest-gated BOAT-001–005. This is a **locked design decision, not a tested implementation**. Canonical detail: `docs/ACT3_IMPLEMENTATION_PLAN.md` §1A.
+
 ## LOCKED ACT 3 IMPLEMENTATION DECISIONS — 2026-10-11
 
 **Canonical product/runtime implementation plan:** `docs/ACT3_IMPLEMENTATION_PLAN.md` (verified GitHub doc; do not replace with guesses from older planning). Product decisions are locked, **not yet implemented**.
