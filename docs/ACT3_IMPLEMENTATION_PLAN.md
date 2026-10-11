@@ -24,11 +24,11 @@
 ## 2. Story och questprogression — LÅST
 
 - Använd **gemensam Runtime 1.1 Story Engine, chapter host, chapter persistence, backend host och progression/project engine**. Ingen ny Act 3-kopia av dialogmotor, questtransport eller sparsystem.
-- Berättelsebeats kan spelas **direkt efter varandra** utan IRL-quest emellan. Bara uttryckligen definierade **progressionsgrindar** väntar på godkända/claimade IRL-quests eller andra specificerade villkor.
+- **Questpacing LÅST 2026-10-11:** **OPEN-000–005/vägen till parken är questfritt intro. Från folkparken gäller 1 godkänt/claimat IRL-quest = 1 ny storydel**, som i övriga SysselCraft. När ett intjänat berättelseavsnitt eller dess minispel väl startat spelas det till naturlig avslutning; nya questkrav infaller **mellan** storydelar, aldrig mitt i ett samtal eller ett minispel. Tidigare förslag om att hela första park-/stadsdagen ska vara questfri har förkastats.
 - Questframsteg ska hämtas från **samma backend-auktoritativa godkända/claimade progression som Akt 2**. En redan konsumerad händelse får inte ge dubbla steg; flera claimade quests får inte hoppa över en väntande storyscen. Sparning/återstart får inte återspela konsumerade beats.
 - Framsteg kan fortsätta över flera dagar; att återvända till aktiv plats under väntan visar aktuell status och låter spelaren fortsätta när grinden är uppfylld.
-- **Familjedagen och den efterföljande FAMILY/EPILOG-storysekvensen ska gå att spela sammanhängande utan nya IRL-questkrav.** Spelets egna frivilliga aktiviteter/minispel inom manusets beats är ett annat slags interaktion och får inte bli krav på nya verkliga sysslor mitt i dramat.
-- Antal quests per grind, när grindar infaller och exakt koppling beat→plats ska **bestämmas senare** från godkänt manus och pacing. Inga siffror eller exakta priser är beslutade här.
+- **Undantag från 1:1-questloopen:** När festen väl startar ska **FAMILY-001–020 och EPILOG-001–006** spelas sammanhängande utan nya IRL-questkrav. Spelaren kan fortfarande delta i manusets spel och val, men inte tvingas till verkliga sysslor mitt i finalen.
+- **Ett quest per storydel är bestämt.** Ännu inte bestämt: hur många **storydelar** manusets enskilda beat-ID:n ska grupperas till, vilken sida av gränsen PARK-001 ligger på, exakt **totalt antal quests** och beat→kartplats-/triggerkoppling. Ingen ska automatiskt härleda 139 quests från antalet beat-ID:n. Inga priser är beslutade här.
 
 ## 3. Miras inköpslista och SysselBux — LÅST
 
