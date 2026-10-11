@@ -42,13 +42,15 @@
 - Skillnaden mellan **ägd vara** och **berättelsens praktiska förberedelse** får modelleras med befintlig Story Purchase/progression utan att låsa varje förberedelsebeat bakom ett separat köp.
 - **Ekonomi- och ägandesanning stannar i nuvarande auktoritativa system** enligt `STATE_OWNERSHIP.md`; ingen extra Act 3-plånbok, klientsidig tilldelning eller lokal återköpslogik.
 
-## 4. Minispel — LÅST RIKTNING / IMPLEMENTATION EJ VALD
+## 4. Minispel — MINIGOLF BEKRÄFTAT, IMPLEMENTATION EJ VALD
 
 - **Manusordning (LÅST):** **minigolf först i A3-PARK-009**; shuffleboard introduceras senare i **A3-PARK-019**, spelas första gången i **A3-PARK-020** och återkommer under **A3-FAMILY-006**. Förväxla aldrig den kronologiska berättelseordningen med vilken mekanik som prototypas tekniskt först.
-- **Teknisk prototypidé:** börja med ett isolerat parkminispel; shuffleboard har tidigare föreslagits som första tekniska experiment, men detta får inte ersätta minigolfen i PARK-009. Exakt teknikordning beror på implementationskostnaden.
-- Börja som **isolerat test** och mät insats, mobilkänsla och återanvändbarhet innan fler minispel beslutas.
+- **MINIGOLF GODKÄNT SOM SPELINS LAG:** Användaren provade en fristående webbaserad minigolf-PoC den 2026-10-11 och bekräftade att minigolf fungerar som minispel i SysselCraft. **PoC-koden, grafiken, banorna och exakta kontrollerna är inte låsta** och behöver inte återanvändas.
+- **Verifierat designgrepp i PoC:** sikta genom att klicka/toucha banan, hålla inne en **Force-knapp** för slagstyrka och släppa för att skjuta; bollens rullning/friktion fungerade tillräckligt bra för att godkänna *speltypen*. Detta är PoC-feedback, inte en implementerad gameplay-feature i spelet.
+- **Teknisk ordning:** minigolf har alltså redan haft sin första spelkänsle-PoC. Fortsätt med en integrerbar minigolfmotor eller jämför alternativ när arbetet når PARK-009; shuffleboard är fortfarande ett senare separat minispel i PARK-020 och FAMILY-006.
+- Använd resultaten från den fristående PoC:n som referens; mät kostnad, mobilkänsla och återanvändbarhet innan en *produktionsimplementation* väljs.
 - Minispel får inte skapa en fristående parallell game-/save-motor. Eventuell gemensam funktionalitet ska ligga i återanvändbar engine-del.
-- Exakt mekanik, poängräkning, om replay är tillgängligt, och om spelet kan hoppas över vid story-beats är ännu inte låst.
+- Exakta spelregler, antal produktionsbanor, UI, slagräkning, replay, hur minigolfen blir klar och kopplingen till PARK-010 är ännu inte låsta. Förändra inte godkända dialoger oavsiktligt (PARK-010 säger t.ex. att Nova vann med ett slag) och låt aldrig spelresultat styra Novas känslomässiga arc.
 
 ## 5. Genomförande i små verifierbara etapper — PLAN, EJ BESTÄLLD IMPLEMENTATION
 
@@ -56,7 +58,7 @@
 2. **Beat- och deadbeat-routing:** plats-ID, uppsättning aktiva beats, återbesök, väntedialog, debughoppa till beat; återanvänd shared Story.
 3. **Questkoppling:** en faktisk IRL-progressionsgrind, restart mitt i beat, idempotens och backend authority.
 4. **Mira + inköpslista:** storyupplåsning av katalog, återanvänd Story Purchase, ägandestatus, listknapp och EN sista inköpsgrind.
-5. **Folkparksminispel:** planera mini-golf vid PARK-009 och shuffleboard vid PARK-020/FAMILY-006; prova mekaniker isolerat och mät kostnad före integration.
+5. **Folkparksminispel:** minigolf är godkänt efter fristående PoC för PARK-009; välj och verifiera produktionsimplementation senare. Shuffleboard följer i PARK-020/FAMILY-006.
 6. **Resten av manuset/FINAL:** kanoniska beat-ID:n, godkända bildpaths, låst story före/efter minispel, FAMILY/EPILOG utan IRL-grind.
 7. **Acceptance:** automatiserade regressionsprov och fysisk iPhone med bevarad save. Ingen onödig Vercel-deploy eller Actions-budgetbränning.
 
@@ -78,7 +80,7 @@
 - Exakt questantal och fördelning över storyns förberedelser.
 - Slutligt inköpssortiment och priser.
 - Deadbeatvarianter och vilka accepterade illustrationer som kan återanvändas.
-- Minigolfens och shuffleboards konkreta regler, återspelning och teknisk prototypordning. Storyordningen PARK-009 → PARK-020 → FAMILY-006 är redan låst.
+- Minigolfens och shuffleboards konkreta regler, återspelning och slutlig implementation. **Att ha minigolf i spelet är beslutat**, men PoC:n får ersättas. Storyordningen PARK-009 → PARK-020 → FAMILY-006 är redan låst.
 
 ## Nuvarande kodstatus vid detta beslut
 
