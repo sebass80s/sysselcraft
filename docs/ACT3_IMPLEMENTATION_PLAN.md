@@ -1,7 +1,7 @@
 # Akt 3 — Implementationsbeslut och plan
 
 
-**Kronologisk helhetskarta (huvudordningen nu LÅST 2026-10-11):** `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` beskriver hela OPEN→EPILOG. **Användaren har godkänt de stora blockens ordning**, inklusive första stadsdagen → första hemresan utan Nova → skattjakten → 2011-upptäckten → dramat/arkaden → Novas första bybesök → förberedelserna → familjedagen → epilogen. **Platsupplåsningar, detaljerade triggers och IRL-questgrindar är fortfarande DRAFT**, inte nya låsta implementationer.
+**Kronologisk helhetskarta (huvudordning + 1:1-quest-beats LÅSTA 2026-10-11):** `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` beskriver hela OPEN→EPILOG. **Användaren har godkänt de stora blockens ordning**, inklusive första stadsdagen → första hemresan utan Nova → skattjakten → 2011-upptäckten → dramat/arkaden → Novas första bybesök → förberedelserna → familjedagen → epilogen. **Platsupplåsningar, detaljerade triggers och IRL-questgrindar är fortfarande DRAFT**, inte nya låsta implementationer.
 
 **Status:** PRODUKTBESLUT LÅSTA 2026-10-11. X-porten ligger i kod; övrig stadskarta, berättelse och minispel ÄNNU INTE IMPLEMENTERADE.  
 **Repo/branch:** `sebass80s/sysselcraft` / `nova/runtime-architecture-v1`  
@@ -24,11 +24,11 @@
 ## 2. Story och questprogression — LÅST
 
 - Använd **gemensam Runtime 1.1 Story Engine, chapter host, chapter persistence, backend host och progression/project engine**. Ingen ny Act 3-kopia av dialogmotor, questtransport eller sparsystem.
-- **Questpacing LÅST 2026-10-11:** **OPEN-000–005/vägen till parken är questfritt intro. Från folkparken gäller 1 godkänt/claimat IRL-quest = 1 ny storydel**, som i övriga SysselCraft. När ett intjänat berättelseavsnitt eller dess minispel väl startat spelas det till naturlig avslutning; nya questkrav infaller **mellan** storydelar, aldrig mitt i ett samtal eller ett minispel. Tidigare förslag om att hela första park-/stadsdagen ska vara questfri har förkastats.
+- **QUEST-PACING LÅST 2026-10-11 (senaste beslutet, ersätter äldre storysegmentmodell):** **A3-OPEN-000–005 + A3-PARK-001 är gratis. Från A3-PARK-002 genom A3-SECRET-006 kräver varje individuellt beat-ID exakt ett nytt föräldragodkänt/claimat IRL-quest.** Ingen gruppering av flera beats på samma godkända quest. Dialog, bild/val och minispel inuti ett redan upplåst beat avslutas utan extra IRL-krav. Exempel: PARK-009 inkluderar minigolf, och PARK-010 kräver därefter nästa godkända quest.
 - Questframsteg ska hämtas från **samma backend-auktoritativa godkända/claimade progression som Akt 2**. En redan konsumerad händelse får inte ge dubbla steg; flera claimade quests får inte hoppa över en väntande storyscen. Sparning/återstart får inte återspela konsumerade beats.
 - Framsteg kan fortsätta över flera dagar; att återvända till aktiv plats under väntan visar aktuell status och låter spelaren fortsätta när grinden är uppfylld.
 - **Undantag från 1:1-questloopen:** När festen väl startar ska **FAMILY-001–020 och EPILOG-001–006** spelas sammanhängande utan nya IRL-questkrav. Spelaren kan fortfarande delta i manusets spel och val, men inte tvingas till verkliga sysslor mitt i finalen.
-- **Ett quest per storydel är bestämt.** Ännu inte bestämt: hur många **storydelar** manusets enskilda beat-ID:n ska grupperas till, vilken sida av gränsen PARK-001 ligger på, exakt **totalt antal quests** och beat→kartplats-/triggerkoppling. Ingen ska automatiskt härleda 139 quests från antalet beat-ID:n. Inga priser är beslutade här.
+- **Antalet följer automatiskt beat-ID:n:** nuvarande manusinventering har **139** identifierade beats (138 i dialogindex plus separat godkända VILLAGE-009). **7 fria introbeats** (OPEN-000–005 + PARK-001), **106 individuella questlåsta beats** (PARK-002–SECRET-006 i godkänd ordning) och **26 fria finale-/epilogbeats** (FAMILY-001–020, EPILOG-001–006). Detta kräver 106 godkända/inlämnade questinstanser **men inte 106 olika sysslor**; upprepade uppdrag kan räknas via befintlig Quest V2. Vid ändrat manusantal räknas antalet om. Beat→kartplats-/triggerkoppling och priser är fortfarande öppna.
 
 ## 3. Miras inköpslista och SysselBux — LÅST
 
@@ -59,7 +59,7 @@
 
 1. **Kartnavigation/spelkedja:** Chapter intro → statisk karta → hamn/park → storybeat → tillbaka till karta; låst/nyupptäckt plats och Act 2-motorbåtsretur.
 2. **Beat- och deadbeat-routing:** plats-ID, uppsättning aktiva beats, återbesök, väntedialog, debughoppa till beat; återanvänd shared Story.
-3. **Questkoppling:** en faktisk IRL-progressionsgrind, restart mitt i beat, idempotens och backend authority.
+3. **Questkoppling:** visa exakt 1 questgrind mellan varje individuellt beat-ID från PARK-002 till SECRET-006, med test av restart mitt i beat, dubbel-claim, backend authority och säker resa till Akt 1/2 utan skip.
 4. **Mira + inköpslista:** storyupplåsning av katalog, återanvänd Story Purchase, ägandestatus, listknapp och EN sista inköpsgrind.
 5. **Folkparksminispel:** minigolf är godkänt efter fristående PoC för PARK-009; välj och verifiera produktionsimplementation senare. Shuffleboard följer i PARK-020/FAMILY-006.
 6. **Resten av manuset/FINAL:** kanoniska beat-ID:n, godkända bildpaths, låst story före/efter minispel, FAMILY/EPILOG utan IRL-grind.
