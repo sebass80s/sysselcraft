@@ -496,3 +496,32 @@ Next Runtime work is NOT more Act 2 content. It is the generic chapter persisten
 Preserve all Act 2 invariants and authored beats while moving generic mechanics outward.
 
 Canonical Runtime continuation: `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
+
+
+## LÅST DESIGNBESLUT 2026-10-12 — Akt 2:s familjeupplösning och epilog
+
+När motorbåtens byggprojekt är slutfört och de befintliga slutvillkoren är uppfyllda visas **en enda kort uppmaning före familjeupplösningen** om att gärna läsa/spela den känslomässiga avslutningen tillsammans med en vuxen. **Familjeupplösningen och hela epilogen ska därefter spelas i ett sammanhängande flöde utan några nya IRL-quests mellan eller under scenerna.** Spelaren får pausa och återuppta exakt där hen slutade. Inga nya obligatoriska grindar eller vuxengodkännanden införs för läsningen.
+
+**Barnets skärm (spoilerfri):**
+
+> **Nu närmar sig berättelsens avslutning!**
+>
+> Det som händer nu kan väcka lite stora tankar och känslor.
+>
+> Vi rekommenderar att du spelar den här delen tillsammans med en vuxen. Då kan ni prata om det som händer, om ni vill.
+>
+> Du kan pausa och fortsätta senare.
+
+**Föräldraläget (med innehållsinformation):**
+
+> **Spela gärna avslutningen tillsammans med ditt barn ❤️**
+>
+> Akt 2 närmar sig sitt slut. Berättelsen handlar om Alve, som har förlorat sin mamma efter en tids sjukdom och försökt hantera sorgen genom att reparera familjens gamla stuga.
+>
+> I avslutningen får vi följa hans återförening med familjen. Berättelsen berör sorg, saknad och insikten att vissa saker inte går att laga, även om man gör sitt bästa.
+>
+> Vi rekommenderar att du spelar den här delen tillsammans med ditt barn. Det kan vara ett fint tillfälle att prata om förlust, familj och känslor, om barnet vill.
+>
+> Ni kan pausa och fortsätta senare.
+
+Samma trigger exponerar informationen i det kopplade föräldraläget, så att föräldern kan läsa den även senare. Barnet får fortsätta själv. **Detta är dokumenterad design, inte bekräftat implementerad runtime-funktion eller skickad pushnotis.** Akt 3 har motsvarande rekommendation men en separat questgrind före sin epilog; **kopiera inte den grinden till Akt 2**.
