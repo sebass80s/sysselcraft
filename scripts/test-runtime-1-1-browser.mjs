@@ -187,7 +187,7 @@ async function enterAct3ViaAdultX(page) {
   await page.getByRole("button", { name: "X", exact: true }).click();
   await page.getByLabel("Lösenord för Akt 3").fill("nova3");
   await page.getByRole("button", { name: "Öppna Akt 3", exact: true }).click();
-  await page.waitForURL(/\\/act3\\/?$/);
+  await page.waitForURL(/\/act3\/?$/);
 }
 
 async function setupPage(context, {
