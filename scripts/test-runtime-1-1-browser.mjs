@@ -182,6 +182,14 @@ async function enterAct3Chapter(page) {
   await page.getByRole("heading", { name: "På andra sidan sjön", exact: true }).waitFor();
 }
 
+async function enterAct3ViaAdultX(page) {
+  await page.goto(base + "/?menu=adult");
+  await page.getByRole("button", { name: "X", exact: true }).click();
+  await page.getByLabel("Lösenord för Akt 3").fill("nova3");
+  await page.getByRole("button", { name: "Öppna Akt 3", exact: true }).click();
+  await page.waitForURL(/\\/act3\\/?$/);
+}
+
 async function setupPage(context, {
   act1 = completedAct1,
   act2State = null,
@@ -276,17 +284,20 @@ try {
     await page.goto(base + "/act2");
     const act1BeforeTransition = await page.evaluate((key) => localStorage.getItem(key), act1Key);
     const act2BeforeTransition = await page.evaluate((key) => localStorage.getItem(key), act2Key);
-    const nextChapter = page.getByRole("button", { name: "Till kapitel 3 →", exact: true });
-    await nextChapter.waitFor();
-    await nextChapter.click();
-    await page.waitForURL("**/act3/");
+    await page.getByText("Kapitel 3 kommer snart", { exact: true }).waitFor();
+    await page.goto(base + "/act3");
+    await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
+    await enterAct3ViaAdultX(page);
     await enterAct3Chapter(page);
     await page.reload();
+    await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
+    // A new adult X launch can resume the already saved Act 3 title entry.
+    await enterAct3ViaAdultX(page);
     await page.getByRole("heading", { name: "På andra sidan sjön", exact: true }).waitFor();
     assert.equal(
       await page.getByRole("dialog", { name: "Kapitel 3 · På andra sidan sjön", exact: true }).count(),
       0,
-      "acknowledged Act 3 chapter intro must not replay after reload",
+      "acknowledged Act 3 chapter intro must not replay after new adult X unlock",
     );
     const act1AfterReload = await page.evaluate((key) => localStorage.getItem(key), act1Key);
     const act2AfterReload = await page.evaluate((key) => localStorage.getItem(key), act2Key);
@@ -314,6 +325,8 @@ try {
     const context = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
     const { page, errors } = await setupPage(context, { act2State: completedAct2 });
     await page.goto(base + "/act3");
+    await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
+    await enterAct3ViaAdultX(page);
     await enterAct3Chapter(page);
     await page.getByRole("button", { name: "← Tillbaka till sjön", exact: true }).click();
     await page.waitForURL(/\/act2\/?$/);
