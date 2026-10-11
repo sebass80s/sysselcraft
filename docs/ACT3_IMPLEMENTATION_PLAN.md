@@ -80,7 +80,7 @@
 - Exakt stadskartegrafik/platser och vilket beat som först introducerar var och en.
 - Hur hemresa tillbaka till Akt 3 från befintlig Akt 2-värld exponeras i runtime; ska vara smidig men får inte radera existerande navigation.
 - Om flera storyplatser får vara samtidigt aktiva, och prioritet när så sker. **Blanda inte ihop parallella inköp med parallella aktiva platser.**
-- Exakt questantal och fördelning över storyns förberedelser.
+- **Questantalet är nu känt från godkända beat-ID:n:** 106 questupplåsningar mellan PARK-002 och SECRET-006 i nuvarande manus, 1 godkänt quest/beat. Öppet är **kartplats, återstart och väntestatus** vid respektive beat samt hur upprepade verkliga quests placeras i vuxenflödet, inte grundantalet.
 - Slutligt inköpssortiment och priser.
 - Deadbeatvarianter och vilka accepterade illustrationer som kan återanvändas.
 - Minigolfens och shuffleboards konkreta regler, återspelning och slutlig implementation. **Att ha minigolf i spelet är beslutat**, men PoC:n får ersättas. Storyordningen PARK-009 → PARK-020 → FAMILY-006 är redan låst.
