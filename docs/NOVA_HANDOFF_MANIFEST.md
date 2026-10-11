@@ -1,5 +1,20 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
+## ACT 3 PRODUCT DECISIONS LOCKED IN REPO — 2026-10-11
+
+**READ FIRST:** `docs/ACT3_IMPLEMENTATION_PLAN.md` is the canonical implementation/product contract for the conversation's decisions on Act 3 navigation, quest pacing, deadbeats, Mira shopping, festival gate, minigame prototype, and acceptance. This file contains explicit LOCKED vs OPEN distinctions. **Not yet coded.**
+
+Key corrections to prevent regressions:
+- Act 3 city is a **static clickable map** with hidden-until-introduced location icons; clicking opens the location's next beat, **not** a separate fullscreen location or walkable Phaser area.
+- Active place stays marked while waiting on IRL quests. Deadbeats handle revisits. **Motorboat at harbour returns to Act 2 world.**
+- Shopkeeper **Mira alone** sells all mandatory Act 3 purchases; Linus, Sol and Henning help with preparations but are not merchants. The list unlocks in-story; dedicated list button shows missing items.
+- Purchasing is possible almost throughout Act 3. **Do not gate each intermediate beat with purchases.** Check required purchases only before the final quest/festival. Missing goods: Nova says "**Vi måste få klart inköpen innan vi kan starta festen!**" and return to map; continue immediately when purchased.
+- FAMILY/EPILOG remains a continuous narrative with no new real-life quest requirements. First minigame experiment is park shuffleboard.
+- Counts, prices, exact location→beat unlocks, and minigame rules remain OPEN. Old Act 3 free-roam assumptions are superseded.
+
+**Truth rule:** `spikat` only after decisions are committed and re-fetched; `implemented` only after code/test evidence.
+
+
 ## CURRENT HANDOVER — 2026-10-08
 
 Repository: `sebass80s/sysselcraft`  
