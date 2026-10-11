@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -9,9 +9,8 @@ import {
   saveAct3RuntimeState,
   type Act3RuntimeState,
 } from "../game/act3RuntimeState";
-import { loadAct2RuntimeState } from "../game/act2RuntimeState";
 import { ACT3_DEBUG_FIXTURE, type Act3DebugContext } from "../game/act3DebugFixture";
-import { chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
+import { consumeAct3PreviewEntry } from "../game/act3PreviewAccess";
 import { chapterRoute } from "../runtime/chapter/chapterRegistry";
 import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
 import { ChapterIntroCard } from "../runtime/chapter/ChapterCards";
@@ -40,6 +39,9 @@ function createInitialAct3Context(): Act3DebugContext {
 
 export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
   const router = useRouter();
+  // Cache a consumed, single-use X grant for this mounted chapter instance.
+  // The shared chapter host can re-run boot in development without denying access.
+  const previewEntryRef = useRef<boolean | null>(null);
 
   const bootAct3 = useCallback(async ({ debug: debugMode }: ChapterRuntimeBootEnvironment) => {
     if (debugMode) {
@@ -55,14 +57,23 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
       };
     }
 
-    const [act3, act2] = await Promise.all([
-      loadAct3RuntimeState(),
-      loadAct2RuntimeState(),
-    ]);
-    const predecessorComplete = act2.act2Complete && act2.endCardSeen;
+    if (previewEntryRef.current === null) {
+      previewEntryRef.current = consumeAct3PreviewEntry(window.sessionStorage);
+    }
+    if (!previewEntryRef.current) {
+      return {
+        accessAllowed: false,
+        state: createDefaultAct3RuntimeState(),
+        context: {},
+        chapterIntroVisible: false,
+      };
+    }
 
+    // Only an explicit Vuxenläge → X launch may enter unfinished Act 3,
+    // including when the tester has not completed Act 2.
+    const act3 = await loadAct3RuntimeState();
     return {
-      accessAllowed: chapterUnlocked(predecessorComplete),
+      accessAllowed: true,
       state: act3,
       context: {},
       chapterIntroVisible: !act3.entered,
@@ -109,7 +120,7 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
         status={status}
         loadingText="Laddar kapitel 3…"
         lockedTitle="Kapitel 3 är låst"
-        lockedBody="Avsluta kapitel 2 innan du fortsätter över sjön."
+        lockedBody="Kapitel 3 är under utveckling. En vuxen kan öppna testversionen via Vuxenläge och knappen X."
         returnHref={chapterRoute("act2")}
         returnLabel="← Tillbaka till sjön"
       />
