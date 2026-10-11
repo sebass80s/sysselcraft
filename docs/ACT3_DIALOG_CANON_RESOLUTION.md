@@ -23,7 +23,7 @@
 
 ## Inventering
 
-Inventerade **139** identifierade unika beat-ID:n (2026-10-11), inklusive separat godkända **A3-VILLAGE-009** i 11N. Enligt tabellens förekomstfält har **32** ID:n två eller fler registrerade manusförekomster. `Huvudsektion` visar prioriterad manusplacering, **inte i sig en garanti för godkännande**. Med nu låst progression: **OPEN-000–005 + PARK-001 = 7 gratis**, **PARK-002 till SECRET-006 = 106 beats med exakt ett föräldragodkänt IRL-quest var**, **FAMILY-001–020 och EPILOG-001–006 = 26 questfria finalbeats**. Upprepade uppdrag är tillåtna enligt Quest V2; detta är inte 106 unika sysslor.
+Inventerade **140** identifierade unika beat-ID:n (2026-10-11), inklusive separat godkända **A3-VILLAGE-009** i 11N. Enligt tabellens förekomstfält har **32** ID:n två eller fler registrerade manusförekomster. `Huvudsektion` visar prioriterad manusplacering, **inte i sig en garanti för godkännande**. Med nu låst progression: **OPEN-000–005 + PARK-001 = 7 gratis**, **PARK-002 till SECRET-006 = 106 beats med exakt ett föräldragodkänt IRL-quest var**, **FAMILY-001–021 och EPILOG-001–006 = 27 questfria finalbeats**. Upprepade uppdrag är tillåtna enligt Quest V2; detta är inte 106 unika sysslor.
 
 | Beat | Förekomster | Senaste manussektion | Käll-/ändringsstatus |
 |---|---:|---|---|
@@ -82,6 +82,7 @@ Inventerade **139** identifierade unika beat-ID:n (2026-10-11), inklusive separa
 | A3-FAMILY-018 | 1 | 11Z | Manusets senaste förekomst |
 | A3-FAMILY-019 | 1 | 11Z | Manusets senaste förekomst |
 | A3-FAMILY-020 | 1 | 11Z | Manusets senaste förekomst |
+| A3-FAMILY-021 | 1 | 11ZB | **LÅST 2026-10-12:** ”Vi gjorde vad vi kunde”, kvällens båtresa direkt före epilogen |
 | A3-HOME-001 | 1 | 11AY | **LÅST 2026-10-10:** senare version ”Oväntat besök” uttryckligen godkänd; äldre PDF-dialog ”Hemma hos Nova” bortvald, använd ej |
 | A3-HOME-002 | 1 | 11AY | Jämför PDF-original mot senare ändringsbeslut |
 | A3-HOME-003 | 1 | 11AY | Jämför PDF-original mot senare ändringsbeslut |
