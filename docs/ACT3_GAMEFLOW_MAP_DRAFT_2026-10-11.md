@@ -9,8 +9,8 @@
 
 - **GRATIS:** `A3-OPEN-000–005` samt **`A3-PARK-001`**.
 - **EXAKT 1:1:** Från **`A3-PARK-002`** till och med **`A3-SECRET-006`**: **ett nytt godkänt och inlämnat IRL-quest ger ett, och endast ett, nytt beat-ID** i kronologisk ordning. Detta ersätter alla äldre förslag om ”storydelar” med flera beat-ID:n eller längre questfria mellanpartier. Ett beat kan innehålla dialog, bilder, spelval och ett minispel utan extra quest under samma beat. **PARK-009** innehåller minigolf; **PARK-010** kräver ett nytt quest.
-- **FINALE:** Efter sista story-/förberedelsequestet och den redan beslutade enda inköpsgrinden hos Mira spelas **`A3-FAMILY-001–021` + `A3-EPILOG-001–006` utan ytterligare IRL-quests**. Inget extra ”107:e quest” för att kontrollera inköpslistan.
-- **RÄKNING:** Dialoginventeringen har 138 unika beat-ID:n och saknar separat godkända `VILLAGE-009`. Tillsammans blir det **140**: 7 gratis startbeats + **106 questlåsta beats** + 27 gratis final-/epilogbeats. **106 godkända inlämningar betyder inte 106 unika sysslor**. Upprepade föräldragodkända sysslor kan fortsätta ge progress via befintliga Quest V2/Runtime 1.1-regler. Ändras manusets beatantal, ändras siffran.
+- **FINALE:** Efter sista story-/förberedelsequestet och den redan beslutade enda inköpsgrinden hos Mira spelas **`A3-FAMILY-001–021` utan quests; därefter ETT godkänt IRL-quest som startar `A3-EPILOG-001–006` sammanhängande**. Inget extra quest för att kontrollera inköpslistan; det 107:e questet är en separat, senare epiloggrind.
+- **RÄKNING:** Dialoginventeringen har 138 unika beat-ID:n och saknar separat godkända `VILLAGE-009`. Tillsammans blir det **140**: 7 gratis startbeats + **106 questlåsta beats** + 21 questfria FAMILY-beats + 6 epilogbeats bakom en gemensam questgrind. **106 godkända inlämningar betyder inte 106 unika sysslor**. Upprepade föräldragodkända sysslor kan fortsätta ge progress via befintliga Quest V2/Runtime 1.1-regler. Ändras manusets beatantal, ändras siffran.
 - **INGEN DUBBELFÖRBRUKNING:** en claim får inte släppa flera beats och flera ackumulerade claims får inte hoppa över osedda beats. Spara progression och aktuell scen över resor mellan kapitel/omstart.
 - **FORTFARANDE ÖPPET:** exakt första kartvisning, ikonplacering/upplåsningsbeat, deadbeat-repliker, replay-val, köp/priser och hur man visar väntan/återupptar båtresor. **LÅST:** fem stadsikoner enligt 1A, PARK-001 gratis, 1 quest per beat till SECRET-006.
 
@@ -80,7 +80,7 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 | 26 | **FAMILY-001–007:** platsen är klar, Henrik kommenderar, pappa och mamma anländer, minnen och shuffleboard-returmatch, gammalt fotografi | Folkparken | **F:** FAMILY-001–007 utan ytterligare IRL-quests, efter köpgrinden och sista före-final-questet. |
 | 27 | **FAMILY-008–014:** lyckad dag, sista spelet, vanligt samtal om hemresa, Novas besvikelse, Mira låter Barnet finnas där, bänkscenen | Folkparken | **F:** FAMILY-008–014 utan ytterligare IRL-quests. |
 | 28 | **FAMILY-015–020:** mamman kommer, Nova berättar om middagsutbrottet, båda föräldrarna tydliggör att det aldrig var hennes fel, nytt foto till två hem | Folkparken | **F:** FAMILY-015–021 utan ytterligare IRL-quests. **FAMILY-021** är ett nytt godkänt kvällsbeat i motorbåten på hemvägen, direkt efter 020 och före EPILOG-001. |
-| 29 | **EPILOG-001–006:** några dagar senare, tillbaka till Rebeckas arkad, nytt spel, familjefotot finns i båda hemmen, bowlingplaner, vännerna skiljs åt vid båten | Hamnen → arkaden → hamnen | **F:** EPILOG-001–006 utan ytterligare IRL-quests. |
+| 29 | **EPILOG-001–006:** några dagar senare, tillbaka till Rebeckas arkad, nytt spel, familjefotot finns i båda hemmen, bowlingplaner, vännerna skiljs åt vid båten | Hamnen → arkaden → hamnen | **F:** Ett nytt godkänt quest öppnar EPILOG-001, därefter EPILOG-001–006 i ett svep utan fler quest. |
 
 ### 1A. Stadskartans fem platser – LÅST 2026-10-11
 
@@ -168,3 +168,11 @@ Använd det **senaste låsta kontraktet överst i detta dokument**. Varje nytt g
 **Ägarregel:** Huvudkronologin, **de fem typerna av stadskarteikoner i 1A**, och **OPEN-000–005 + PARK-001 gratis → exakt 1 godkänt quest per beat från PARK-002 till SECRET-006 → questfri FAMILY/EPILOG** är låsta. Exakta ikonpositioner, minispelsregler och köp är fortsatt förslag. Ingen Act 3-storyruntime är implementerad än.
 
 **Nytt låst slutbeat 2026-10-12:** A3-FAMILY-021 *Vi gjorde vad vi kunde*, godkänd kvällsresa på sjön med Alve och Barnet, direkt efter familjefotot i FAMILY-020 och före epilogen några dagar senare. Inget questkrav för 021. Visuellt ankare: kvällens motorbåt, stadsljus på avstånd, de två vännerna återvänder hem.
+
+
+### Beslut 2026-10-12: Epilogen har EN gemensam questgrind (ersätter tidigare questfri epilog)
+
+- **A3-FAMILY-001–021:** spelas utan ytterligare quests efter befintlig finale-/inköpsgrind.
+- **Mellan FAMILY-021 och EPILOG-001:** barnet måste göra **ett nytt, föräldragodkänt IRL-quest** för att låsa upp epilogen. Det är en separat inlämning och inte återanvändning av den sista questen före familjedagen.
+- **A3-EPILOG-001–006:** efter upplåsning spelas alla sex beats i ett enda sammanhängande svep utan ytterligare quests. Normal sparning/återupptagning ska fortfarande fungera.
+- **Totalen är 107 godkända questinlämningar**: 106 tidigare för PARK-002–SECRET-006 + 1 epiloggrind. Fortfarande **140 beats** totalt, av vilka 106 har individuell questgrind, 6 delar en gemensam questgrind, 21 FAMILY och 7 intro är questfria. Ingen ny story-beat tillkommer.
