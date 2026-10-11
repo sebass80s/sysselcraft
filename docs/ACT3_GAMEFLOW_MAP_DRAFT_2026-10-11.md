@@ -84,7 +84,7 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 
 ### 1A. Stadskartans fem platser – LÅST 2026-10-11
 
-**Exakt fem typer av klickbara kartikoner, inga separata stadsmarkörer för småscener.** Platser låses upp när berättelsen introducerar dem enligt den redan beslutade principen. Skattjaktsikonen existerar endast under den aktiva jaktsekvensen. Akt 1/2:s riktiga spelvärldar förblir utanför stadskartan.
+**Exakt fem möjliga kartplatser totalt, men ALDRIG alla fem synliga från början.** Ikonerna ska **avslöjas successivt när berättelsen leder Barnet till respektive plats**. Okända platser syns inte ens som grå/låsta/frågeteckenikoner, och får inte kunna klickas. Ett namn som bara nämns i dialog avslöjar inte automatiskt ikonens position. Redan upptäckta permanenta platser fortsätter synas efter platsbyte och omstart, även när de inte är aktiva. Skattjaktsikonen är undantaget: den finns bara under aktiv HUNT-001–006 och försvinner därefter. Akt 1/2:s spelvärldar förblir utanför stadskartan.
 
 | Plats / en och samma ikon | Storykoppling | Visning / funktion |
 | --- | --- | --- |
@@ -95,6 +95,8 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 | **Skattjakten** 🗺️ | HUNT-001–006 | **Endast aktiv under skattjakten.** En enda tillfällig kartikon för hela jakten, inte separata ikoner för torget, fontänen, busshållplatsens klocka, biblioteket, utsiktsplatsen eller glassstället. Varje HUNT-beat kräver fortfarande **ett godkänt quest**. När HUNT-006 är klart tas ikonen bort. |
 
 **Ingen sjätte stadsikon** för torg, bibliotek, skola, den gamla villan, spelhörna, Miras butik, Henning, Linus eller Sol. Torget/stadsgatorna kan finnas i beatbilder och interaktioner utan egna permanenta pins. Bybor och bybutik besöks via **Hamnen → Akt 2 → Akt 1** och deras befintliga world-/storyinteraktioner. Världsbytet får aldrig nollställa story, quest, inköp eller pairing.
+
+**Successiv kartupplåsning:** Hamnen är känd efter landstigningen; Folkparken blir synlig när Nova leder barnet dit; Spelbutiken avslöjas först när de kommer dit (hette **inte** Arkaden då); hemmet hos Novas mamma blir synligt vid inbjudan/besöket; Skattjakten visas endast så länge HUNT-sviten pågår. **Det är presentationens ordning som är låst, inte exakta beat-triggers eller pixelpositioner.** Den första kartvyn får inte läcka framtida platser.
 
 **Redan låst globalt:** en aktiv Story-plats markeras tydligt, uppdragsväntan ger samma väntedialog som i Akt 2 och besök till känd inaktiv plats kan ge deadbeat utan progression.
 
