@@ -1,7 +1,7 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
 
-**ACT 3 GAMEFLOW: MACRO CHRONOLOGY APPROVED AND LOCKED 2026-10-11:** Read `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md`. User explicitly approved the **overall sequence** from OPEN to EPILOG: city/park/minigolf → first home/boat/village trip without Nova → hunt → 2011 scoreboard/shuffleboard → drama → secret arcade → parents RSVP → Nova's village visit → PREP/REVEAL/SECRET → purchase gate/FAMILY → epilogue. **Detailed map icon unlocks, IRL quest counts/locations, minigame scoring, purchase prices and exact routes are still DRAFT**, not implemented or approved. Inventory caveat: 138 indexed entries plus separately approved A3-VILLAGE-009.
+**ACT 3 GAMEFLOW: MACRO CHRONOLOGY + QUEST LOOP APPROVED 2026-10-11:** Read `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md`. User explicitly approved the overall OPEN→EPILOG order, and now explicitly corrected pacing: **OPEN intro and approach to the park require ZERO IRL quests. From the park onward, the normal SysselCraft cadence applies: 1 approved/claimed IRL quest unlocks 1 NEW STORY SEGMENT.** Segment boundaries may group multiple scripted beat IDs; do not infer one quest per spoken line or 139 quests from manifest indexing. A newly unlocked dialogue/minigame can finish naturally, then the next segment waits for a new approved quest. **FAMILY/EPILOG remains uninterrupted with no extra IRL quests after festival starts.** Earlier advice to gate only after BOAT-005 or to allow all PARK-001–010 without quests is superseded. Exact segment boundaries, total count, map icons, minigame scoring, purchases and routes remain DRAFT. Inventory caveat: 138 indexed entries plus separately approved A3-VILLAGE-009.
 
 ## ACT 3 ADULT X PREVIEW GATE — 2026-10-11
 
