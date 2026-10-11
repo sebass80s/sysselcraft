@@ -1,5 +1,8 @@
 # Akt 3 — Implementationsbeslut och plan
 
+
+**Kronologisk helhetskarta (DRAFT, inväntar användargranskning):** `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` beskriver hela OPEN→EPILOG, platsupplåsningar, quest-pauser och minispel. Detta är *inte* nytt låst kanon.
+
 **Status:** PRODUKTBESLUT LÅSTA 2026-10-11. X-porten ligger i kod; övrig stadskarta, berättelse och minispel ÄNNU INTE IMPLEMENTERADE.  
 **Repo/branch:** `sebass80s/sysselcraft` / `nova/runtime-architecture-v1`  
 **Källor:** Användarens uttryckliga beslut i implementationsdiskussion 2026-10-11. Story canon: `docs/ACT3_STORY_MANIFEST.md` + `docs/ACT3_DIALOG_CANON_RESOLUTION.md`. Engine canon: `docs/RUNTIME_ARCHITECTURE_1_1.md`, `docs/STATE_OWNERSHIP.md` och `docs/TECHNICAL_HANDOFF.md`.
