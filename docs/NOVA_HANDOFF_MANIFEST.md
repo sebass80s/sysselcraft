@@ -1,5 +1,15 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
+## ACT 3 ADULT X PREVIEW GATE — 2026-10-11
+
+**CODE PRESENT; NOT YET NATIVE ACCEPTED.** `docs/ACT3_IMPLEMENTATION_PLAN.md` documents the temporary product-release isolation.
+
+- Vuxenläge has a button literally **X**, prompting for hard-coded dev code **nova3** (spoiler gate only). Correct password grants one navigation to `/act3` through `sessionStorage`.
+- `/act3` consumes the passcode grant before loading its own chapter state; direct URLs cannot start unfinished Act 3. The regular Act 2 link is replaced with **Kapitel 3 kommer snart**. Developers can enter Act 3 even before Act 2 completion.
+- Tests added/updated: `scripts/test-act3-preview-gate.mjs`, `scripts/test-act3-empty-skeleton.mjs`. `npm run verify` includes both; full run and preserved iPhone acceptance not claimed.
+- Existing chapter save and backend quest/wallet systems remain untouched. **RELEASE TODO:** remove X bypass and restore natural Act 2→3 when fully accepted.
+
+
 ## ACT 3 PRODUCT DECISIONS LOCKED IN REPO — 2026-10-11
 
 **READ FIRST:** `docs/ACT3_IMPLEMENTATION_PLAN.md` is the canonical implementation/product contract for the conversation's decisions on Act 3 navigation, quest pacing, deadbeats, Mira shopping, festival gate, minigame prototype, and acceptance. This file contains explicit LOCKED vs OPEN distinctions. **Not yet coded.**
