@@ -62,7 +62,16 @@ assert.match(skeletonSource, /ChapterRuntimeBoundary/, "Act 3 must use the share
 assert.match(skeletonSource, /ChapterIntroCard/, "Act 3 must use the shared chapter intro card");
 assert.match(skeletonSource, /title="På andra sidan sjön"/, "Act 3 must use the locked chapter title");
 assert.match(skeletonSource, /saveAct3RuntimeState\(next\)/, "Act 3 chapter entry must persist through shared chapter persistence");
-assert.match(skeletonSource, /chapterUnlocked\(predecessorComplete\)/, "Act 3 access must derive from predecessor completion");
+assert.match(
+  skeletonSource,
+  /consumeAct3PreviewEntry\\(window\\.sessionStorage\\)/,
+  "Unfinished Act 3 may only boot after an explicit, single-use adult preview grant",
+);
+assert.doesNotMatch(
+  skeletonSource,
+  /loadAct2RuntimeState/,
+  "Adult preview must work even before the Act 2 predecessor is complete",
+);
 assert.match(
   skeletonSource,
   /onClick=\{\(\) => router\.push\(chapterRoute\("act2"\)\)\}/,
