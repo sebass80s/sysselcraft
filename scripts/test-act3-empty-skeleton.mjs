@@ -64,7 +64,7 @@ assert.match(skeletonSource, /title="På andra sidan sjön"/, "Act 3 must use th
 assert.match(skeletonSource, /saveAct3RuntimeState\(next\)/, "Act 3 chapter entry must persist through shared chapter persistence");
 assert.match(
   skeletonSource,
-  /consumeAct3PreviewEntry\\(window\\.sessionStorage\\)/,
+  /consumeAct3PreviewEntry\(window\.sessionStorage\)/,
   "Unfinished Act 3 may only boot after an explicit, single-use adult preview grant",
 );
 assert.doesNotMatch(
