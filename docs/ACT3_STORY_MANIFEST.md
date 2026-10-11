@@ -1146,7 +1146,7 @@ Nova försöker se allvarlig ut, men börjar skratta.
 
 **Nova:** Kom igen nu. Jag tänker vinna.
 
-**Gameplay transition:** Minigolf är den första planerade minispelsaktiviteten. Beslutad riktning: en återanvändbar minispels-capability genom Runtime 1.1, mobilvänlig touchkontroll, bollfysik, slagräknare och tre initiala banor inklusive bana sju med sin lilla bro. Detta är en **produktavsikt**, inte verifierad teknisk leverans. Gameplay-resultat får inte ändra Novas emotionella arc eller göra familjedagen misslyckad.
+**Gameplay transition (beslut uppdaterat 2026-10-11):** Minigolf är **bekräftat som minispel i Akt 3** och ligger först vid A3-PARK-009. Användaren har spelat en fristående webbaserad PoC med touch-/klicksikte, hålla-inne-Force och släpp-för-slag och godkänt **speltypen**, men **inte låst just PoC-koden, grafik, banantal eller kontrollmodell**. Inget minigolfspel är ännu integrerat i runtime. En återanvändbar mobilvänlig minispels-capability genom Runtime 1.1 är fortsatt riktningen. Banan med bron (sjuan) är ett viktigt storyankare; exakt produktionsbanantal och regelverk återstår. Minigolf är först, medan shuffleboard först spelas vid A3-PARK-020. Gameplay-resultat får inte ändra Novas emotionella arc eller göra familjedagen misslyckad; bevara PARK-010-dialogens godkända repliker vid implementation.
 
 ### A3-PARK-010 — En speciell dag
 
