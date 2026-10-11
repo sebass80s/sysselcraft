@@ -5,7 +5,7 @@
 
 ## ACT 3 CITY MAP: EXACTLY FIVE ICONS – LOCKED 2026-10-11
 
-- **Five and only five city-map choices:** **Folkparken**, **Hemma hos Novas mamma**, **Spelbutiken/Arkaden**, **Hamnen**, and the temporary **Skattjakten**. Static map, no separate pins for the clock, library, town square, school, scene, stage, extra merchants or mini-game venues.
+- **Five POTENTIAL map locations, progressively revealed, NOT visible all at launch:** **Folkparken**, **Hemma hos Novas mamma**, **Spelbutiken/Arkaden**, **Hamnen**, and temporary **Skattjakten**. Unknown locations must be completely absent (no grey/locked icons), revealed only when the story leads the child there; once discovered, permanent pins remain on return/restart. The harbour is known on arrival; the park when Nova leads there; shop when first visited; mother's home when invited/visited; temporary hunt marker only while HUNT-001–006 is active. Only the shop pin changes its label to Arkaden later. Exact reveal triggers/pixel positions remain open. No other city pins.
 - **One shared location** for early CITY-001–003 *Spelbutiken* (ordinary retro shop) and later ARCADE-001–006 *Arkaden*, with no Rebecka/NOV/REB spoiler until the ARCADE reveal after DRAMA-010. Icon label switches to Arkaden at reveal, not beforehand.
 - **Skattjakten** icon visible/active **only during HUNT-001–006**; hidden when HUNT-006 ends. Still 1 approved quest per HUNT beat.
 - **Hamnen = motorboat return to the actual Act 2 world → Act 1 village**. This must work during quest-wait and must never accidentally consume or skip quest-gated BOAT-001–005 story beats. Mira's mandatory purchases stay in her existing Act 1 shop, reached via the boat/prior worlds.
