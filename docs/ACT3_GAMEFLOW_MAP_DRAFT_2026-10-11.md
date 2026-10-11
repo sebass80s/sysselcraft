@@ -9,8 +9,8 @@
 
 - **GRATIS:** `A3-OPEN-000–005` samt **`A3-PARK-001`**.
 - **EXAKT 1:1:** Från **`A3-PARK-002`** till och med **`A3-SECRET-006`**: **ett nytt godkänt och inlämnat IRL-quest ger ett, och endast ett, nytt beat-ID** i kronologisk ordning. Detta ersätter alla äldre förslag om ”storydelar” med flera beat-ID:n eller längre questfria mellanpartier. Ett beat kan innehålla dialog, bilder, spelval och ett minispel utan extra quest under samma beat. **PARK-009** innehåller minigolf; **PARK-010** kräver ett nytt quest.
-- **FINALE:** Efter sista story-/förberedelsequestet och den redan beslutade enda inköpsgrinden hos Mira spelas **`A3-FAMILY-001–020` + `A3-EPILOG-001–006` utan ytterligare IRL-quests**. Inget extra ”107:e quest” för att kontrollera inköpslistan.
-- **RÄKNING:** Dialoginventeringen har 138 unika beat-ID:n och saknar separat godkända `VILLAGE-009`. Tillsammans blir det **139**: 7 gratis startbeats + **106 questlåsta beats** + 26 gratis final-/epilogbeats. **106 godkända inlämningar betyder inte 106 unika sysslor**. Upprepade föräldragodkända sysslor kan fortsätta ge progress via befintliga Quest V2/Runtime 1.1-regler. Ändras manusets beatantal, ändras siffran.
+- **FINALE:** Efter sista story-/förberedelsequestet och den redan beslutade enda inköpsgrinden hos Mira spelas **`A3-FAMILY-001–021` + `A3-EPILOG-001–006` utan ytterligare IRL-quests**. Inget extra ”107:e quest” för att kontrollera inköpslistan.
+- **RÄKNING:** Dialoginventeringen har 138 unika beat-ID:n och saknar separat godkända `VILLAGE-009`. Tillsammans blir det **140**: 7 gratis startbeats + **106 questlåsta beats** + 27 gratis final-/epilogbeats. **106 godkända inlämningar betyder inte 106 unika sysslor**. Upprepade föräldragodkända sysslor kan fortsätta ge progress via befintliga Quest V2/Runtime 1.1-regler. Ändras manusets beatantal, ändras siffran.
 - **INGEN DUBBELFÖRBRUKNING:** en claim får inte släppa flera beats och flera ackumulerade claims får inte hoppa över osedda beats. Spara progression och aktuell scen över resor mellan kapitel/omstart.
 - **FORTFARANDE ÖPPET:** exakt första kartvisning, ikonplacering/upplåsningsbeat, deadbeat-repliker, replay-val, köp/priser och hur man visar väntan/återupptar båtresor. **LÅST:** fem stadsikoner enligt 1A, PARK-001 gratis, 1 quest per beat till SECRET-006.
 
@@ -30,7 +30,7 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 10. **VILLAGE-004–026, inklusive VILLAGE-009 mellan 008 och 010**: Nova följer med över sjön; stugan, Mira, Henning, Linus och Sol.
 11. **PREP-001–006 → REVEAL-001–004 → SECRET-001–006**: festen tar form, den djupare hemliga planen och sista förberedelserna. Miras inköp pågår **parallellt nästan hela akten**.
 12. **Enda obligatoriska inköpsgrinden** inför sista förberedelsequestet/att starta festen; saknade varor ger Novas redan låsta väntedialog.
-13. **FAMILY-001–020**: lyckad familjedag, sanningen om Novas skuldkänslor och det nya familjefotot; **inga IRL-questkrav mitt i finalen**.
+13. **FAMILY-001–021**: lyckad familjedag, sanningen om Novas skuldkänslor och det nya familjefotot; **inga IRL-questkrav mitt i finalen**.
 14. **EPILOG-001–006**: några dagar senare, spelhallen och båten, **SLUT PÅ TREDJE KAPITLET** utan tidigare struken Act 4-krok.
 
 **Fortfarande öppet:** kartlayout och exakt upplåsningstid, köppriser, deadbeat-dialoger, spelregler och beat-resume. **LÅST:** fem kartplatser enligt 1A samt ett quest per beat från PARK-002 till SECRET-006.
@@ -79,7 +79,7 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 | 25 | **Sista förberedelsegrinden** | Aktiv plats: folkparken (förslag) | **ENDA KÖPGRINDEN:** kontroll av nödvändiga Mira-varor vid sista förberedelse-/festgrinden, **inget extra IRL-quest för kontrollen**. |
 | 26 | **FAMILY-001–007:** platsen är klar, Henrik kommenderar, pappa och mamma anländer, minnen och shuffleboard-returmatch, gammalt fotografi | Folkparken | **F:** FAMILY-001–007 utan ytterligare IRL-quests, efter köpgrinden och sista före-final-questet. |
 | 27 | **FAMILY-008–014:** lyckad dag, sista spelet, vanligt samtal om hemresa, Novas besvikelse, Mira låter Barnet finnas där, bänkscenen | Folkparken | **F:** FAMILY-008–014 utan ytterligare IRL-quests. |
-| 28 | **FAMILY-015–020:** mamman kommer, Nova berättar om middagsutbrottet, båda föräldrarna tydliggör att det aldrig var hennes fel, nytt foto till två hem | Folkparken | **F:** FAMILY-015–020 utan ytterligare IRL-quests. |
+| 28 | **FAMILY-015–020:** mamman kommer, Nova berättar om middagsutbrottet, båda föräldrarna tydliggör att det aldrig var hennes fel, nytt foto till två hem | Folkparken | **F:** FAMILY-015–021 utan ytterligare IRL-quests. **FAMILY-021** är ett nytt godkänt kvällsbeat i motorbåten på hemvägen, direkt efter 020 och före EPILOG-001. |
 | 29 | **EPILOG-001–006:** några dagar senare, tillbaka till Rebeckas arkad, nytt spel, familjefotot finns i båda hemmen, bowlingplaner, vännerna skiljs åt vid båten | Hamnen → arkaden → hamnen | **F:** EPILOG-001–006 utan ytterligare IRL-quests. |
 
 ### 1A. Stadskartans fem platser – LÅST 2026-10-11
@@ -139,7 +139,7 @@ Använd det **senaste låsta kontraktet överst i detta dokument**. Varje nytt g
 
 ## 2. Källrevision och saker som kräver verklighetscheck
 
-- Äldre anteckningar anger **135 beats**. Den aktuella upplösningsinventeringen innehåller **138 ID:n**, men saknar **VILLAGE-009** trots att beatet är godkänt och finns separat i huvudmanifestet 11N. Alltså täcker denna karta **139 identifierbara beat-ID:n** om VILLAGE-009 räknas, inte 135. **Detta är en dokumentationsaudit, inte ett påstående om 139 unika implementerade spelkort.** Rensa/fixa inventeringen som ett separat säkert dokumentationspass, inte genom att tysta manuella källluckor.
+- Äldre anteckningar anger **135 beats**. Den aktuella upplösningsinventeringen innehåller **138 ID:n**, men saknar **VILLAGE-009** trots att beatet är godkänt och finns separat i huvudmanifestet 11N. Alltså täcker denna karta **140 identifierbara beat-ID:n** om VILLAGE-009 räknas, inte 135. **Detta är en dokumentationsaudit, inte ett påstående om 140 unika implementerade spelkort.** Rensa/fixa inventeringen som ett separat säkert dokumentationspass, inte genom att tysta manuella källluckor.
 - \`docs/ACT3_DIALOG_CANON_RESOLUTION.md\` styr version. Ny CITY-001–003 den 10 oktober **ersätter** äldre butik/highscore-variant. A3-ARCADE ligger efter DRAMA-010. A3-VILLAGE-009 har separat senaste Mira-dialog. Park-021 har en senare reviderad version.
 - En del sektioner i huvudmanifestet är kondenserade, med senare fullständigare versioner längre ned; använd denna karta för ordning, aldrig som ersättning för faktisk rad-för-rad manusresolution.
 - Art-assets och hela Act 3-city runtime saknas som produktionsleverans. Inget är ”DONE” bara för att beat står i detta dokument.
@@ -166,3 +166,5 @@ Använd det **senaste låsta kontraktet överst i detta dokument**. Varje nytt g
 - Inga onödiga Vercel-deploys eller GitHub Actions-kostnader. Avsluta varje slice med regressionskontroller, dokumentation och fysisk acceptans när den faktiskt behövs.
 
 **Ägarregel:** Huvudkronologin, **de fem typerna av stadskarteikoner i 1A**, och **OPEN-000–005 + PARK-001 gratis → exakt 1 godkänt quest per beat från PARK-002 till SECRET-006 → questfri FAMILY/EPILOG** är låsta. Exakta ikonpositioner, minispelsregler och köp är fortsatt förslag. Ingen Act 3-storyruntime är implementerad än.
+
+**Nytt låst slutbeat 2026-10-12:** A3-FAMILY-021 *Vi gjorde vad vi kunde*, godkänd kvällsresa på sjön med Alve och Barnet, direkt efter familjefotot i FAMILY-020 och före epilogen några dagar senare. Inget questkrav för 021. Visuellt ankare: kvällens motorbåt, stadsljus på avstånd, de två vännerna återvänder hem.
