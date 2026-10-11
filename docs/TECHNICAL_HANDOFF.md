@@ -1,5 +1,19 @@
 # Sysselcraft Technical Handoff
 
+## LOCKED ACT 3 IMPLEMENTATION DECISIONS — 2026-10-11
+
+**Canonical product/runtime implementation plan:** `docs/ACT3_IMPLEMENTATION_PLAN.md` (verified GitHub doc; do not replace with guesses from older planning). Product decisions are locked, **not yet implemented**.
+
+- Act 3 city navigation is a static icon-based map, **not** free-roam Phaser. Undiscovered story locations stay hidden; tap a discovered location to show its next beat directly. Active/waiting locations are marked; completed/inactive visits yield a deadbeat.
+- Hamlet/harbour motorboat is return navigation to the existing Act 2 world (and onward Act 1 village); do not replace prior worlds.
+- Quest-wait behavior and persistence reuse Runtime 1.1/Act 2 shared engines. Direct dialogue beats do not need IRL quests between each other. FAMILY/EPILOG has no new IRL quest gates.
+- All Act 3 story purchases happen **only at Mira**, unlocking after the in-story shopping list appears. A dedicated Act 3 list UI shows owned/missing. Chairs/lights/speakers/ice cream are tentative candidates; prices/counts unset.
+- Purchases may be made throughout the Act. **Only the final preparation/festival gate** requires that all obligatory purchases are complete. Missing purchases → Nova says: **"Vi måste få klart inköpen innan vi kan starta festen!"** → back to map; return once purchased.
+- First minigame prototype: shuffleboard at the park; rules and integration still open.
+
+Current code is just the ChapterIntroCard + `act3RuntimeState` entry flag. **Do not claim any of the above systems are implemented.**
+
+
 ## CURRENT TECHNICAL STATE — 2026-10-08
 
 The project has crossed from Runtime 1.1 closeout into the first real Act 3 content slice.
