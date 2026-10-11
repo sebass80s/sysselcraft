@@ -1,7 +1,7 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
 
-**ACT 3 GAMEFLOW DRAFT 2026-10-11:** Read `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` for the complete chronology from OPEN to EPILOG, tentative map icon unlocks, quest pauses, minigames, purchased-party gate and open design questions. **It is a DRAFT awaiting user review, not a locked gameplay contract or implemented code.** It also flags a beat-inventory audit (138 indexed entries plus the separately approved A3-VILLAGE-009).
+**ACT 3 GAMEFLOW: MACRO CHRONOLOGY APPROVED AND LOCKED 2026-10-11:** Read `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md`. User explicitly approved the **overall sequence** from OPEN to EPILOG: city/park/minigolf → first home/boat/village trip without Nova → hunt → 2011 scoreboard/shuffleboard → drama → secret arcade → parents RSVP → Nova's village visit → PREP/REVEAL/SECRET → purchase gate/FAMILY → epilogue. **Detailed map icon unlocks, IRL quest counts/locations, minigame scoring, purchase prices and exact routes are still DRAFT**, not implemented or approved. Inventory caveat: 138 indexed entries plus separately approved A3-VILLAGE-009.
 
 ## ACT 3 ADULT X PREVIEW GATE — 2026-10-11
 
