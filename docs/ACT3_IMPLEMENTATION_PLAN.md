@@ -130,3 +130,22 @@ Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta p
 - **Mellan FAMILY-021 och EPILOG-001:** barnet måste göra **ett nytt, föräldragodkänt IRL-quest** för att låsa upp epilogen. Det är en separat inlämning och inte återanvändning av den sista questen före familjedagen.
 - **A3-EPILOG-001–006:** efter upplåsning spelas alla sex beats i ett enda sammanhängande svep utan ytterligare quests. Normal sparning/återupptagning ska fortfarande fungera.
 - **Totalen är 107 godkända questinlämningar**: 106 tidigare för PARK-002–SECRET-006 + 1 epiloggrind. Fortfarande **140 beats** totalt, av vilka 106 har individuell questgrind, 6 delar en gemensam questgrind, 21 FAMILY och 7 intro är questfria. Ingen ny story-beat tillkommer.
+
+
+## LÅST UX-BESLUT 2026-10-12 — Läs FAMILY tillsammans med en vuxen
+
+**Trigger:** när Akt 3:s sista förberedelse-/inköpsgrind är klar och **före A3-FAMILY-001**. Visas en gång på barnets skärm, och **samma text** ska samtidigt vara tillgänglig i kopplat föräldraläge för detta barn. Ingen storyspoiler i meddelandet. Föräldern ska kunna läsa det även om hen öppnar vuxenläget senare (persisted unread/inbox/notice, inte en flyktig toast). Om en push-notis till förälderns enhet stöds i framtiden ska den peka på samma information; designbeslutet innebär **inte** att pushinfrastruktur finns idag.
+
+**Delad, ordagrant identisk meddelandetext (barnskärm och föräldraläge):**
+
+> **Nu börjar berättelsens avslutning!**
+>
+> Det som händer nu kan väcka lite stora tankar och känslor.
+>
+> Vi rekommenderar att du spelar den här delen tillsammans med en vuxen. Då kan ni prata om det som händer, om ni vill.
+>
+> Du behöver inte göra fler sysslor under den här delen av berättelsen.
+
+**Barnets knappar:** ”Spela tillsammans” och ”Fortsätt själv”. Inget krav på vuxengodkännande och inget tvång att ha en vuxen närvarande. Knapparna går vidare till FAMILY-001, inte till separata manusvarianter. FAMILY-001–021 kan pausas och återupptas från exakt senaste beat/linje. Föräldraläget visar motsvarande informationskort, ingen ny quest eller grind. Meddelandet gäller bara FAMILY-kedjan; **en separat** föräldragodkänd quest krävs senare för att trigga EPILOG-001–006 som spelas i ett svep.
+
+**Implementationsstatus:** detta är dokumenterat produkt-/UX-beslut, **inte** verifierad leverans i app eller faktisk telefon-push. Använd en gemensam textkonstant i implementationen för att undvika textdrift mellan ytorna. Koppla parent notice till aktuellt barn/save och säkerställ idempotens.
