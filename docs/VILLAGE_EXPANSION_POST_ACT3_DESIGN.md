@@ -19,6 +19,7 @@ The village should continue to change because the child carries out real-world q
 5. **Completion beats:** **When a building is finished, it triggers its own short, distinct character/story beat.** This is part of the reward for building, beyond decoration. Use the existing story/beat language and shared engine rather than creating a parallel dialogue system. Trigger only when the completion condition is met, and persist the fact it played so reloading does not duplicate it.
 6. **Character and tonal direction:** These independent scenes primarily show everyday village life, comedy and established personalities. **Linus returns as a central comic presence in the village**, without becoming the protagonist of all future acts. The main chapter stories may remain more emotionally serious.
 7. **Location in roadmap:** This is a **dedicated development slice after completion of Act 3 and before beginning Act 4**, not Act 3 filler and not an Act 4 story arc. Can continue to function during later chapters.
+8. **Optional paid minigames:** Selected completed buildings unlock **replayable minigames at that location**. **Each play/session costs SysselBux (SB)**, paid when starting the game. Building acquisition and play fees are separate SysselBux sinks. The child may replay by paying again. Minigames do **not** reward SB or diamonds and do not bypass real-world, parent-approved quests as the source of currency. No minigame purchase/play is mandatory for story progress.
 
 ## First building concepts (examples, not locked final catalog)
 
@@ -28,6 +29,14 @@ The village should continue to change because the child carries out real-world q
 - **Skatepark:** Additional candidate building, not yet confirmed for the first release.
 
 Further catalog ideas may be added after testing; avoid locking a fixed building list prematurely.
+
+### Minigames as optional spending (LOCKED CORE LOOP — 2026-10-12)
+
+**Real-world approved quest → earn SB → buy chosen building at Mira → building completion beat → optionally pay SB to play a minigame on that site → pay SB again for another session.**
+
+Candidate pairings for later design: football field / penalty shootout; ice-cream kiosk / serving orders; playground / timing challenge; skatepark / trick challenge. These examples are **NOT selected minigames or locked rules**. They illustrate how the purchased environment can become interactive. Only appropriate buildings need minigames; a specific game for every building is not yet required.
+
+For a fair child-facing economy, show each play fee before starting, avoid extra charges for mistakes during a session, and tune the price against realistic quest rewards so playing remains accessible. Exact fee values, session duration and retry UX remain OPEN. These are in-game SB fees, **not real-money payments or in-app purchases**.
 
 ## Design guardrails
 
@@ -45,7 +54,8 @@ Further catalog ideas may be added after testing; avoid locking a fixed building
 - Number/shape of plots, free placement versus zones, moving previously bought buildings.
 - Exact left-area map layout, navigation, art and NPC placement.
 - Beat scripts, image requirements, whether completed beats can be replayed and any later recurring interactions.
-- Whether buildings offer gameplay beyond their initial completion beat.
+- Which buildings have minigames, which games they contain, game rules, difficulty, scoring, replay and interaction details.
+- Exact per-session SB fees, balancing, cancel/refund behavior if a session cannot start, and how sessions/charges persist.
 - UX for announcing affordability/build progress, balance and economy calibration.
 
 ## Acceptance goals for implementation
@@ -53,5 +63,6 @@ Further catalog ideas may be added after testing; avoid locking a fixed building
 - Child can navigate from the established village into the separate left-hand area and back.
 - Mira's shop exposes the applicable building purchases, debits **SysselBux** exactly once per valid purchase and preserves state on restart.
 - Completing each purchased building causes its distinct beat exactly once and leaves the building visible/persistent.
+- Selected finished buildings offer an optional minigame at that site. Starting each valid play charges its advertised SB fee **exactly once**; no additional SB/diamonds are awarded by gameplay. Replay incurs a new fee; failed or cancelled starts must not silently double-charge.
 - Ordinary Act 3/Act 4 story, quest approvals, diamonds, save/persistence and existing shop purchases are unaffected.
 - A family can engage with the village-building loop while waiting for the next story chapter, without any new compulsory quest.
