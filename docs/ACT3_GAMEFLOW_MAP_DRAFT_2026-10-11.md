@@ -1,6 +1,6 @@
 # Akt 3 – Kronologisk gameplay-/kartflödeskarta
 
-**Status 2026-10-11: ÖVERGRIPANDE KRONOLOGI GODKÄND AV ANVÄNDAREN OCH SPIKAD I GITHUB. Questgrindar, exakt kart-UX, beat-routing, köpupplåsning och interaktioner är fortsatt ARBETSUTKAST.**  
+**Status 2026-10-11: ÖVERGRIPANDE KRONOLOGI OCH GRUNDPRINCIP FÖR QUEST-PACING GODKÄNDA. Exakta storydelsgränser/beat-mappningar, kart-UX, köpupplåsning och interaktioner är fortfarande ARBETSUTKAST.**  
 **Implementation:** Endast befintligt Act 3 chapter intro-skelett och temporär Vuxenläge → X-testport är kodade; allt story-/kart-/minispelsflöde nedan är ännu design.  
 **Källor:** `docs/ACT3_STORY_MANIFEST.md`, `docs/ACT3_DIALOG_CANON_RESOLUTION.md`, godkända CITY-dialoger `docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md`, `docs/ACT3_IMPLEMENTATION_PLAN.md`.  
 **Regel:** Godkänd manusdialog ska inte skrivas om av en spelplansskiss. Senare godkända ändringar vinner över äldre synopsis/PDF. Följ inga inofficiella plats-/questplaner som om de vore kanon.
@@ -24,14 +24,14 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 13. **FAMILY-001–020**: lyckad familjedag, sanningen om Novas skuldkänslor och det nya familjefotot; **inga IRL-questkrav mitt i finalen**.
 14. **EPILOG-001–006**: några dagar senare, spelhallen och båten, **SLUT PÅ TREDJE KAPITLET** utan tidigare struken Act 4-krok.
 
-**Fortfarande öppet:** var och hur många IRL-questgrindar som införs, exakt antal godkända quests, första kartvisning och övrig kartupplåsning, tillfälliga skattjaktspins, deadbeat-repliker, minispelsregler/replay, inköpskatalog/priser och exakta triggers för förberedelsebeats.
+**Fortfarande öppet:** hur en "storybit" avgränsas i faktiska beat-ID:n, antal storydelar och därmed totalt antal quests, första kartvisning och övrig kartupplåsning, skattjaktspins, deadbeats, minispelsregler/replay, inköpskatalog/priser och exakta triggers. Grundregeln är nu **ett godkänt quest = en ny storydel** från parkens gameplay och framåt, med separat obruten FAMILY/EPILOG.
 
 ## 0. Grundidé som redan är beslutad
 
 - Akt 3-staden: **statisk illustrerad karta med klickbara platsikoner**, ej free-roam. Oupptäckta platser är helt dolda; story-aktiv plats är markerad. Klick öppnar dess nästa Story-beat DIREKT (inget extra miljörum).
 - Följande plats saknas aktivt beat? **Deadbeat** som inte konsumerar/ger framsteg. Questväntan återanvänder Runtime 1.1/Act 2:s befintliga backend-auktoritativa progressionsmotor och visar återstående status.
 - Hamnens **motorbåt återvänder till den befintliga traverserbara Akt 2-världen**, och därifrån går det till Akt 1-byn. Akt 1/2 får inte ersättas med statiska karta-fiktioner. Normal återresa till staden ska fortsätta fungera; exakt UI där återstår.
-- Storybeats kan följas direkt på varandra. **Inga IRL-quests mitt i öppningsmötet, mitt i klimaktiska scener eller i FAMILY/EPILOG.** Pauser med godkända verkliga quests väljs uttryckligen i authoring efter pacing och tests, inte en quest per beat.
+- **NYTT BESLUT 2026-10-11:** OPEN-introt är questfritt. När spelaren når folkparken börjar **ordinarie SysselCraft-loop: 1 godkänt IRL-quest = 1 ny storydel**. Efter varje avklarad storydel väntar nästa del på nästa godkända quest. Storydel betyder en spelbar narrativ enhet och behöver inte vara identisk med ett dialog-ID, en replik eller en scenbild; den exakta indelningen beslutas separat. Ett redan upplåst beat/minispel spelas till sin naturliga avslutning utan extra grind mitt i själva aktiviteten. Tidigare idéer om att hela parkdagen, skattjakten, stadsturen och dramat i stora obrutna block skulle vara questfria gäller inte som standard längre. **FAMILY/EPILOG spelas fortfarande sammanhängande utan nya IRL-questkrav.**
 - **Alla festinköp hos Mira** via SysselBux och befintlig Story Purchase-ekonomi. Varor köps successivt i valfri ordning när listan introducerats. Butikslista med ägt/saknas; en **enda obligatorisk inköpsgrind nära allra sista förberedelsequestet/innan festen**.
 - Saknade inköp där → vanlig dialog: **Nova: ”Vi måste få klart inköpen innan vi kan starta festen!”** → tillbaka till kartan. Ingen extra quest för detta, och inga intermediate purchase gates.
 - Minigolf är **godkänt som speltyp** efter HTML-PoC 2026-10-11; *inte PoC-koden* som slutlig implementation. Ordning: minigolf PARK-009, shuffleboard PARK-020 och FAMILY-006.
@@ -39,24 +39,24 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 
 ## 1. Hela spelkedjan – föreslagen kronologi
 
-**Legend:** A = automatiskt sammanhängande storybeats; K = kart-/platsval; Q? = förslag på *framtida* questpaus, **inte godkänt antal eller placering**; MG = minispel; SHOP = kan köpa när listan öppnats; F = finale utan IRL-questpauser.
+**Legend:** A = inom redan upplåst storydel får dialogen löpa sammanhängande; K = kart-/platsval; Q = ordinarie loop **1 godkänt quest → 1 ny storydel** från parken och framåt (exakt beatgruppering TBD); MG = minispel som hör till en storydel; SHOP = inköp parallellt efter listupplåsning; F = FAMILY/EPILOG utan nya IRL-questpauser.
 
 | # | Beat-ID och innehåll | Storyplats / trigger | Kontroll / förslag |
 | --- | --- | --- | --- |
-| 01 | **OPEN-000–004:** kapitelkort, ankomst, möte med Nova, motorbåten, gamla folkparken | Hamnen; vid första Akt 3-test- eller framtida legitima kapitelstarten | **A**. Sammanhängande intro, inga quests. |
-| 02 | **OPEN-005 → PARK-001:** promenad mot folkparken och parkens entré | Folkparken | **K?** Förslag: första stadskartan efter OPEN-004, där hamnen och den nyupptäckta folkparken visas och parken är aktiv. Ett tryck på parken spelar båda beats utan extra klick. *Inte ännu godkänt*. |
-| 03 | **PARK-002–008:** bana 7, gamla scenen, stranden, festidé, Henrik, tillstånd och lista | Folkparken (intern rundtur i beatbilder) | **A**. Många scener men EN upptäckt kartplats, inga extra miljörum. |
-| 04 | **PARK-009 → PARK-010:** minigolf, Novas första formulering av familjedagen | Folkparken | **MG** minigolf först; sedan **A** PARK-010. Bevara godkända repliker. Lås inte matchens exakta resultat utan dialog-/resultatkontrakt. |
+| 01 | **OPEN-000–004:** kapitelkort, ankomst, möte med Nova, motorbåten, gamla folkparken | Hamnen; vid första Akt 3-test- eller framtida legitima kapitelstarten | **A**. Intro utan quests. |
+| 02 | **OPEN-005 → PARK-001:** promenad mot folkparken och parkens entré | Folkparken | **K?** Introresan OPEN-005 är questfri. När parken nås går spelet över till **Q-loopen**. Den exakta gränsen för första parkdelen (om PARK-001 är den fria ankomsten eller första intjänade delen) återstår att bestämma. Första kartvisningen efter OPEN-004 är ett förslag, inte godkänt. |
+| 03 | **PARK-002–008:** bana 7, gamla scenen, stranden, festidé, Henrik, tillstånd och lista | Folkparken (intern rundtur i beatbilder) | **Q**. Varje godkänt quest släpper en ny storydel; ännu ej bestämt vilka beat-ID:n som bildar respektive del. Samma kartplats, inga extra miljörum. |
+| 04 | **PARK-009 → PARK-010:** minigolf, Novas första formulering av familjedagen | Folkparken | **Q/MG**: ett intjänat storysegment kan innehålla minigolf; spelet får inte kräva extra quest mitt i matchen. Nästa storydel följer enligt Q-loopen. Resultat/dialogkontrakt öppet. |
 | 05 | **CITY-001–003:** den ljusa retrospelbutiken och vägen hem | Retrospelbutiken (staden) | **K?** Förslag: kartikon för retrobutiken efter PARK-010. **INGEN** hemlig arkad, highscore, NOV eller Rebecka i första besöket! Använd separat senast godkänd CITY-fil. |
-| 06 | **HOME-001–008:** Novas mamma, Mira-kopplingen, hemliga festidén, gamla villan, minnena, skattkistan, tvåhemsschemat | Novas hem hos mamman | **K?** Upplås hemikon efter CITY-003:s inbjudan. De åtta beatsen kan kedjas, med val/pauser inom scen men ingen IRL-questgrind. Mamma och pappa får inte höra om festen. |
+| 06 | **HOME-001–008:** Novas mamma, Mira-kopplingen, hemliga festidén, gamla villan, minnena, skattkistan, tvåhemsschemat | Novas hem hos mamman | **K?/Q**. Upplås hemikon efter CITY-003:s inbjudan. Uppdelning i berättelsedelar bestäms enligt questloopen; inga quests **mitt i** en pågående scen. Mamma och pappa får inte höra om festen. |
 | 07 | **BOAT-001–005:** Barnet + Alve åker hem utan Nova, Alves parallell till stugan, ny vänskap, stor festplan | Från stadens hamn via sjön till Akt 2 | **K/A**. Motorbåten startar återresans författade storysekvens; efter sista båtscenen aktiveras befintlig Akt 2/1-värld. Får ej teleportera bort story eller kräva extra quests. |
 | 08 | **VILLAGE-001–003:** Mira får hälsning från Novas mamma, får veta om hemlig familjefest och ber om lista | Miras butik i byn (Akt 1) | **Storyinteraktion** med Mira. **SHOP** kan introduceras successivt, men exakt katalogupplåsning (första lista här eller senare VILLAGE-009) måste väljas. |
 | 09 | **HUNT-001–006:** Nova kallar över barnen, fontänen, busshållplatsklockan, biblioteket, utsikten och glass | Staden: torget → klockan → biblioteket → utsiktsplats → waterfront | **K + klurigheter**. Förslag på storydriven karta med upptäckta ledtrådsmål och begripliga interaktioner, men inte sex fristående nya mini-engines. **Q?** möjlig naturlig paus *före* nästa Nova-inbjudan, inte mitt i en jakt. |
 | 10 | **PARK-011–014:** Novas nya plan, bordplacering, kompromisser | Folkparken | **K → A**. Spelaren återser parken. Tillåt förslag på placering som får synlig effekt utan att ändra framtida emotionell arc. **Q?** före eller efter samlad sekvens, ej inuti dialogen. |
 | 11 | **PARK-015–018:** Henrik, gamla spelhörnan, val av aktiviteter, 2011 års poängtavla/första dejt | Folkparken | **A/val**. Poängtavlan är central och årtalet 2011 låst. Ingen rewrite av föräldrarnas historia. |
 | 12 | **PARK-019–022:** det gamla shuffleboardbordet, första matchen med Nova, nya 2011-minnen, en revanschidé | Folkparken | **MG** shuffleboard i **PARK-020** (senare i story än minigolf); lokala vinst/förlust-repliker får skilja sig men påverkar inte relation/utfall. |
-| 13 | **DRAMA-001–005:** pappan ringer, Nova blir besviken, ilska, bråk och att hon lämnar parken | Folkparken | **A** utan IRL-quests. Dramat måste spelas i rätt följd, inte upplösas genom köp eller godkänd quest. |
-| 14 | **DRAMA-006–010:** Nova saknas, vid lägenheten, ursäkt och bekännelser som ännu inte avslöjar hela skuldkänslan, en dag utan planering | Novas mammas hem → stadens gator | **K/A**. Kan starta vid aktivt hem; inga godtyckliga questkrav inne i försoningen. Slutar med att Nova visar dem ett hemligt ställe. |
+| 13 | **DRAMA-001–005:** pappan ringer, Nova blir besviken, ilska, bråk och att hon lämnar parken | Folkparken | **Q/A**: questloopen gäller även här mellan lämpligt avgränsade storydelar, men **avbryt aldrig pappasamtal/konfrontation mitt i scenen**. Ingen köpgrind. |
+| 14 | **DRAMA-006–010:** Nova saknas, vid lägenheten, ursäkt och bekännelser som ännu inte avslöjar hela skuldkänslan, en dag utan planering | Novas mammas hem → stadens gator | **K/Q/A**. Normalt 1 quest → 1 storydel, men inte mitt i en pågående försoningsscen. Slutar med att Nova visar dem ett hemligt ställe. |
 | 15 | **ARCADE-001–006:** hemlig arkad, Rebecka/REB, NOV-rekordet, spelval och ny vänskapstradition | Retrospelbutiken, *dolt arkadrum nu avslöjat* | **A / valfri spelinteraktion**. Introducera arkadens extra innehåll först **efter DRAMA-010 och före DRAMA-011**. Rebecka inte Rut. Rekordet är bonus, inte storyspärr. |
 | 16 | **DRAMA-011–015:** båda föräldrarna säger ja till inbjudan, Nova jublande tillbaka, fotot från 2011 och planerna | Meddelande → torget → folkparken | **A**. Festen är fortfarande hemlig för föräldrarna, ingen riktig realtidsdeadline. |
 | 17 | **VILLAGE-004–006:** Novas första båttur till sjösidan, Alves stuga och familjefotot | Stadshamnen → Akt 2-stugan | **K/A**. Nova följer med **först nu**. Stugan är traverserbar befintlig Akt 2-värld, storymoment vid rätt punkt. |
@@ -87,27 +87,20 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 | **Akt 1/2-världens platser** 🌲 | Befintliga och redan spelbara | VILLAGE-001–026 triggas i riktiga byn/stugan, via befintlig world/storyinteraktion, inte via nya stadsikoner. |
 | **Miras butik** 🛒 | Finns i Akt 1, första Act 3-storyinköpskontext i VILLAGE-001–003 | Köp i valfri ordning efter listans upplåsning. Staden ska inte ha separata lamp-/musik-/matbutiker. |
 
-**Förslag för första kartmöte:** direkt efter OPEN-004; hamnen och folkparken synliga, parken aktiv. Klick på folkparken spelar OPEN-005 + PARK-001 utan ny scen. Det är ett förslag från diskussionen, **inte godkänt som låst beslut**.
+**Förslag för första kartmöte:** direkt efter OPEN-004; hamnen och folkparken synliga, parken aktiv. Klick på folkparken spelar questfria OPEN-005 och eventuellt PARK-001 som ankomst. **Detta är inte låst:** var första quest-steget infaller i förhållande till PARK-001 måste väljas när vi delar upp storybitarna.
 
-### 1B. Uppdelning mellan kedjor och questväntan
+### 1B. Questloopen – NYTT LÅST BESLUT 2026-10-11
 
-**Bör få löpa utan IRL-grind mellan beats:**
-- OPEN-000–005 + första parkbesöket till PARK-010.
-- CITY-001–003 + HOME-001–008 och den storymässiga avfärden BOAT-001–005.
-- HUNT-001–006 väl påbörjad; PARK-009 minigolf följt av PARK-010.
-- PARK-015–022 när 2011-poängtavlan/shuffleboard introduceras.
-- DRAMA-001–010; ARCADE-001–006; DRAMA-011–015.
-- Novas första sammanhängande besök i byn VILLAGE-004–026 där det känns dramaturgiskt rimligt (story/interaktionsval inom besöket är okej).
-- REVEAL-001–004 där hon öppnar sig; FAMILY-001–020 samt EPILOG-001–006.
+**Grundregel: INTRO GRATIS, SEDAN 1 QUEST = 1 STORYBIT.**
 
-**Möjliga pauser för IRL-quests (ej fastställda, inga antal):**
-- Efter första hemresan och Miras första briefing före återbesök i staden / HUNT.
-- Mellan skattjakten och senare folkparkplanering.
-- Mellan naturligt avslutade planerings-/restaureringsetapper runt PARK-011–022 och senare återkomst.
-- Under den **långa festförberedelsen**, runt PREP/SECRET, där quests kan driva progress medan Barnet sparar SysselBux och ser parkens utseende växa.
-- Sista förberedelsequestet före FAMILY-001, med **enda obligatoriska köpgrinden**.
+1. **OPEN-000–005** och vägen fram till folkparken är sammanhängande intro, inga IRL-quests.
+2. **Från att spelaren når folkparken** gäller samma grundloop som i SysselCrafts övriga delar: ett **godkänt/claimat verkligt quest** ger **exakt ett nytt narrativt progressionssteg**. Storybiten spelas sedan genom sin dialog och eventuella minispelsaktivitet. När den är klar väntar nästa storydel på nästa quest.
+3. ”Storybit” betyder **ett avsett spel-/berättelseavsnitt**, inte automatiskt en enda dialograd, screenshot eller ett enda numrerat beat-ID. Exakta grupperingar och antal måste bestämmas per beat inför implementering. Denna princip betyder därför **inte** att 139 quests redan beställts.
+4. Även stadsutforskning, HOME, skattjakten, PARK, DRAMA, ARCADE, bybesöken och PREP/SECRET ska följa denna **normala progression** mellan avgränsade storydelar. Minispel får **inte** kräva ett extra quest mitt under en spelomgång, och dramaturgiska samtal ska inte kapas mitt i en replik eller emotionell vändpunkt.
+5. Platsmarkeringen visar var nästa del kan spelas; under questväntan visas återstående framsteg enligt befintlig Act 2-/Runtime 1.1-modell. Claims ger inte dubbla steg och får inte hoppa över osett manus. Sparning och resor mellan kapitel ändrar inte den uppnådda progressionen.
+6. **Undantag som redan beslutats:** efter slutlig fest-/inköpskontroll går **FAMILY-001–020 och EPILOG-001–006** utan nya IRL-questkrav. Innan dess finns exakt en obligatorisk **inköpsgrind** nära sista förberedelsequestet, oberoende av vanliga Q-grindar. Inte flera inköpsspärrar under akten.
 
-**Absolut inte:** krav att köpa alla Miras varor i början, en quest per beat, quests mitt i familjedagen, en IRL-städquest som måste göras för att se Novas känslomässiga upplösning eller ett spelresultat som gör föräldrarna till ett par.
+**Fortfarande öppet:** exakta *storybit*-gränser, total antal quests och vilken första park-scen som räknas till det fria introt. Tidigare förslag om långa questfria partier ända fram till BOAT-005/VILLAGE-003 är uttryckligen förkastat av användaren.
 
 ### 1C. Förberedelse-/inköpsmodell
 
@@ -148,10 +141,10 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 ## 3. Designbeslut att godkänna före implementation
 
 1. **Första kartan efter OPEN-004?** Klick på Folkparken → OPEN-005 och PARK-001, utan mellanlandning.
-2. **Kartklickens granularitet:** Inom en påbörjad storyplats spelas flera godkända beats i en kedja utan att behöva gå tillbaka till kartan efter varje beat. Gäller den samlade första parkdagen och familjedagen.
+2. **Storybitsgränser och kartklick:** Efter parkankomsten gäller 1 godkänt quest → 1 ny storydel. Bestäm om varje storydel innehåller ett eller flera beat-ID:n, och när barnet återgår till kartan. Familjedagen förblir sammanhängande.
 3. **Skattjaktens platspresentation:** tillfälliga ledtrådspins eller steg i en enda jaktvy? Undvik tio permanenta stadsikoner.
 4. **Exakt tid för Miras köpupplåsning:** VILLAGE-003 eller VILLAGE-009; gärna i steg så barnet kan spara SysselBux tidigt.
-5. **Questgrindarnas exakta beats/antal** och om något kan ske parallellt eller om en aktiv location i taget är bättre. Förbjud dubbelförbrukning av claims.
+5. **Questloopen är låst, inte antalet:** Bestäm exakta storydelsgränser och totalantal (1 godkänt quest per storydel) samt om flera aktiva platser får finnas samtidigt. Förbjud dubbelförbrukning av claims.
 6. **Vill vi ha valbara minigame-replay?** och hur PARK-010:s manus om Novas vinst stämmer med spelarens resultat.
 7. **Detaljsekvens för PREP, REVEAL och SECRET** över stad/by/folkpark, och sista questets exakta plats. Allt finns i manuscript, men trigger-/kartplacering är inte spikad.
 8. **Epilogens spelhall**: återspela något minispel eller visa genom Story UI utan en ny motor? Den godkända avslutningen har **ingen Act 4-tågkart-hook**.
@@ -166,4 +159,4 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 - **Slice F:** PREP/REVEAL/SECRET, köpgrind, FAMILY och EPILOG, med full iPhone/save-acceptance.
 - Inga onödiga Vercel-deploys eller GitHub Actions-kostnader. Avsluta varje slice med regressionskontroller, dokumentation och fysisk acceptans när den faktiskt behövs.
 
-**Ägarregel:** Den övergripande kronologin i avsnittet **Godkänt** är låst genom användarens godkännande och GitHub-verifiering. Övriga K?/Q?, kartdetaljer, questantal, triggers och implementeringsordningen är fortsatt diskussionsunderlag. Kalla aldrig dessa detaljer LOCKED utan nytt uttryckligt godkännande.
+**Ägarregel:** Makrokronologin och principen **questfritt intro → ett godkänt quest per ny storydel från folkparken → obruten FAMILY/EPILOG** är låsta genom användarens godkännande och GitHub-verifiering. **Enskilda Q-gränser, antal, beatgruppering, kartdetaljer och triggers är fortfarande förslag.** Kalla aldrig dem LOCKED utan nytt uttryckligt godkännande.
