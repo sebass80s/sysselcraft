@@ -44,7 +44,7 @@ import { GameUiShell } from "../runtime/ui/GameUiShell";
 import { historyEntriesFor } from "../runtime/story/storyHistory";
 import { ACT2_STORY_REGISTRY, ACT2_STORYLINE_IDS, act2HistoryProgress } from "../runtime/story/act2StoryRegistry";
 import { chapterAtStart, chapterCardVisible as deriveChapterCardVisible, chapterUnlocked } from "../runtime/chapter/chapterLifecycle";
-import { chapterRoute, nextChapterDestination } from "../runtime/chapter/chapterRegistry";
+import { chapterRoute } from "../runtime/chapter/chapterRegistry";
 import { deriveChapterRuntimeOverlay } from "../runtime/chapter/chapterRuntimeShell";
 import { deriveAct2RuntimeBlockers } from "../game/act2RuntimeAdapter";
 import { ChapterRuntimeBoundary } from "../runtime/chapter/ChapterRuntimeBoundary";
@@ -268,7 +268,6 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
     historyReplayOpen,
   });
   const runtimeOverlay = deriveChapterRuntimeOverlay(chapterCardVisible, storyUiVisible);
-  const nextChapter = nextChapterDestination("act2", { chapterComplete: state.act2Complete, endCardSeen: state.endCardSeen });
   useEffect(() => {
     if (chapterCardVisible) return beginStoryOverlay();
   }, [chapterCardVisible]);
@@ -715,14 +714,10 @@ export function Act2Runtime({ debug = false, productionEnabled = true }: Act2Run
           onSelect: () => router.push(chapterRoute("act1")),
         },
       ]}
-      contextualActions={state.act2Complete && state.endCardSeen && nextChapter ? (
-        <button
-          className="secondary-button compact act2-chapter3-button"
-          type="button"
-          onClick={() => router.push(nextChapter.route)}
-        >
-          Till kapitel 3 →
-        </button>
+      contextualActions={state.act2Complete && state.endCardSeen ? (
+        <span className="act2-chapter3-button" aria-label="Kapitel 3 kommer snart">
+          Kapitel 3 kommer snart
+        </span>
       ) : undefined}
     />
     <StoryHistoryPanel
