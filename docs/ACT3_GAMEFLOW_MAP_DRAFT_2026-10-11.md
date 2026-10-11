@@ -12,7 +12,7 @@
 - **FINALE:** Efter sista story-/förberedelsequestet och den redan beslutade enda inköpsgrinden hos Mira spelas **`A3-FAMILY-001–020` + `A3-EPILOG-001–006` utan ytterligare IRL-quests**. Inget extra ”107:e quest” för att kontrollera inköpslistan.
 - **RÄKNING:** Dialoginventeringen har 138 unika beat-ID:n och saknar separat godkända `VILLAGE-009`. Tillsammans blir det **139**: 7 gratis startbeats + **106 questlåsta beats** + 26 gratis final-/epilogbeats. **106 godkända inlämningar betyder inte 106 unika sysslor**. Upprepade föräldragodkända sysslor kan fortsätta ge progress via befintliga Quest V2/Runtime 1.1-regler. Ändras manusets beatantal, ändras siffran.
 - **INGEN DUBBELFÖRBRUKNING:** en claim får inte släppa flera beats och flera ackumulerade claims får inte hoppa över osedda beats. Spara progression och aktuell scen över resor mellan kapitel/omstart.
-- **FORTFARANDE ÖPPET:** kartans första visning, ikoner, återbesöksdeadbeats, eventuella replay-val, exakta köp/priser och hur man visar väntan/återupptar båtresor. **Inte öppet:** P001 gratis och 1:1-questgrind per beat därpå.
+- **FORTFARANDE ÖPPET:** exakt första kartvisning, ikonplacering/upplåsningsbeat, deadbeat-repliker, replay-val, köp/priser och hur man visar väntan/återupptar båtresor. **LÅST:** fem stadsikoner enligt 1A, PARK-001 gratis, 1 quest per beat till SECRET-006.
 
 ## Godkänt: hela aktens huvudordning (LOCKED 2026-10-11)
 
@@ -33,7 +33,7 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 13. **FAMILY-001–020**: lyckad familjedag, sanningen om Novas skuldkänslor och det nya familjefotot; **inga IRL-questkrav mitt i finalen**.
 14. **EPILOG-001–006**: några dagar senare, spelhallen och båten, **SLUT PÅ TREDJE KAPITLET** utan tidigare struken Act 4-krok.
 
-**Fortfarande öppet:** kart- och UI-detaljer, köppriser, deadbeats, spelregler och beat-resume. **Beatgrindarnas antal och avgränsning är INTE öppna:** ett quest per beat från PARK-002 till SECRET-006.
+**Fortfarande öppet:** kartlayout och exakt upplåsningstid, köppriser, deadbeat-dialoger, spelregler och beat-resume. **LÅST:** fem kartplatser enligt 1A samt ett quest per beat från PARK-002 till SECRET-006.
 
 ## 0. Grundidé som redan är beslutad
 
@@ -82,21 +82,25 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 | 28 | **FAMILY-015–020:** mamman kommer, Nova berättar om middagsutbrottet, båda föräldrarna tydliggör att det aldrig var hennes fel, nytt foto till två hem | Folkparken | **F:** FAMILY-015–020 utan ytterligare IRL-quests. |
 | 29 | **EPILOG-001–006:** några dagar senare, tillbaka till Rebeckas arkad, nytt spel, familjefotot finns i båda hemmen, bowlingplaner, vännerna skiljs åt vid båten | Hamnen → arkaden → hamnen | **F:** EPILOG-001–006 utan ytterligare IRL-quests. |
 
-### 1A. Visuella kartplatsers föreslagna upplåsning (ej ännu beslutad)
+### 1A. Stadskartans fem platser – LÅST 2026-10-11
 
-| Stadskarteikon | Första relevanta beat / möjligt unlock | Återbesök och regler |
+**Exakt fem typer av klickbara kartikoner, inga separata stadsmarkörer för småscener.** Platser låses upp när berättelsen introducerar dem enligt den redan beslutade principen. Skattjaktsikonen existerar endast under den aktiva jaktsekvensen. Akt 1/2:s riktiga spelvärldar förblir utanför stadskartan.
+
+| Plats / en och samma ikon | Storykoppling | Visning / funktion |
 | --- | --- | --- |
-| **Hamnen** 🚤 | OPEN-001, från början | Motorbåten går till Akt 2. På storytriggad hemresa spelas BOAT-001–005 och därefter befintlig sjövärld. Senare kan kajen ge deadbeat. |
-| **Folkparken** 🌳 | OPEN-004 nämner den; föreslag första tillgång därefter | Aktiv plats för parkbeats, drama, PREP och FAMILY. Samma ikon, **inte** en ny kartplats för bana 7, scen, förråd, spelhörna och strand. |
-| **Retrospelbutiken** 🎮 | CITY-001, tidig stadsdag | Endast butik vid första besöket. Den dolda arkaden är en ny **intern storydel på samma plats** först vid ARCADE-001 (efter DRAMA-010); den får gärna då visas som ny markör i samma ikon. |
-| **Novas hem hos mamman** 🏠 | CITY-003 inbjuder | HOME-001–008, senare DRAMA-007–010. Pappans hem är **omnämnt**, inte automatiskt ett spelbart kartval. Den gamla villan finns i minnen, inte som en bekväm ny teleportikon. |
-| **Torget/fontänen** ⛲ | HUNT-001/002 eller redan vid tidigare stadsbesök (avgörs av innehåll) | Används under HUNT och DRAMA-012; dölj innan det faktiskt blir relevant. |
-| **Ledtrådsplatser i skattjakten** 🕒📚🌄🍦 | HUNT-003–006 | Klockan vid busshållplatsen, biblioteket, utsiktsplatsen och glass/vattenfront. Antingen stegvisa temporära kartmarkörer eller en gemensam **Skattjakt**-progression; inget krav på permanent fyra extra stadsikoner. |
-| **Spelhallens innehåll** 🕹️ | ARCADE-001 | Först senare; **Rebecka + NOV + REB** förekommer inte i den tidiga CITY-001–003-versionen. |
-| **Akt 1/2-världens platser** 🌲 | Befintliga och redan spelbara | VILLAGE-001–026 triggas i riktiga byn/stugan, via befintlig world/storyinteraktion, inte via nya stadsikoner. |
-| **Miras butik** 🛒 | Finns i Akt 1, första Act 3-storyinköpskontext i VILLAGE-001–003 | Köp i valfri ordning efter listans upplåsning. Staden ska inte ha separata lamp-/musik-/matbutiker. |
+| **Folkparken** 🌳 | OPEN-005/PARK-001–022; DRAMA i parken; PREP, REVEAL och FAMILY | Introduceras under OPEN-004–005. PARK-001 är gratis, från PARK-002 ett godkänt quest/beat. Här ryms bana sju, scenen, 2011-poängtavlan, spelhörnan, minigolf och shuffleboard **utan nya ikoner**. |
+| **Hemma hos Novas mamma** 🏠 | HOME-001–008; senare DRAMA-beats vid lägenheten | Egen ikon när Novas mamma/hem introducerats i storyn (CITY-003:s inbjudan). Inte separat ikon för pappans lägenhet eller Novas gamla villa. |
+| **Spelbutiken → Arkaden** 🎮 | Första CITY-001–003, senare ARCADE-001–006 och EPILOG | **Samma enda ikon med dynamiskt namn.** Första besöket visar endast en vanlig retrospelbutik. **Efter DRAMA-010** introduceras Rebeckas hemliga spelhall i ARCADE-001; först **då** får ikonen heta **Arkaden**. Aldrig Rebecka/NOV/REB/highscore eller hemlig arkad i första CITY-besöket. |
+| **Hamnen** 🚤 | OPEN-intro; BOAT-001–005; resor mellan staden och tidigare kapitel; EPILOG | Motorbåt i hamnen är **returknapp till den riktiga Akt 2-kartan** (därifrån Akt 1). Den ska vara tillgänglig även vid väntan på nya IRL-quests. **Vanlig transport får inte konsumera/skip:a BOAT-beats**, som kräver ett separat godkänt quest per beat i ordinarie kronologi. Rutt-/sparpresentation under en storybåtsekvens löses tekniskt senare. |
+| **Skattjakten** 🗺️ | HUNT-001–006 | **Endast aktiv under skattjakten.** En enda tillfällig kartikon för hela jakten, inte separata ikoner för torget, fontänen, busshållplatsens klocka, biblioteket, utsiktsplatsen eller glassstället. Varje HUNT-beat kräver fortfarande **ett godkänt quest**. När HUNT-006 är klart tas ikonen bort. |
 
-**Förslag för första kartmöte:** visa kartan efter OPEN-004 och låt klick på Folkparken spela gratis OPEN-005 och **gratis PARK-001**. **Första questgrinden infaller före PARK-002**, oavsett var kartan visas.
+**Ingen sjätte stadsikon** för torg, bibliotek, skola, den gamla villan, spelhörna, Miras butik, Henning, Linus eller Sol. Torget/stadsgatorna kan finnas i beatbilder och interaktioner utan egna permanenta pins. Bybor och bybutik besöks via **Hamnen → Akt 2 → Akt 1** och deras befintliga world-/storyinteraktioner. Världsbytet får aldrig nollställa story, quest, inköp eller pairing.
+
+**Redan låst globalt:** en aktiv Story-plats markeras tydligt, uppdragsväntan ger samma väntedialog som i Akt 2 och besök till känd inaktiv plats kan ge deadbeat utan progression.
+
+**Ej ännu specificerat:** pixelpositioner/layout i stadsbilden, exakt ikon-appear-beat för alla fem, vilken ikon som markeras under rena sms-/transportbeats, detaljer kring tillfälliga hemresor mitt i BOAT-001–005 och exakt deadbeat-replik. Detta hindrar inte att **antalet platser och deras roller är låsta**.
+
+**Förslag (fortfarande öppet):** visa första stadskartan efter OPEN-004. Då är Hamnen och Folkparken synliga; tryck på parken spelar gratis OPEN-005 och PARK-001. Första questgrinden ligger före PARK-002.
 
 ### 1B. Questloop – alltid ett IRL-quest per individuellt beat
 
@@ -159,4 +163,4 @@ Använd det **senaste låsta kontraktet överst i detta dokument**. Varje nytt g
 - **Slice F:** PREP/REVEAL/SECRET, köpgrind, FAMILY och EPILOG, med full iPhone/save-acceptance.
 - Inga onödiga Vercel-deploys eller GitHub Actions-kostnader. Avsluta varje slice med regressionskontroller, dokumentation och fysisk acceptans när den faktiskt behövs.
 
-**Ägarregel:** Huvudkronologin och **OPEN-000–005 + PARK-001 gratis → exakt 1 godkänt quest per beat från PARK-002 till SECRET-006 → questfri FAMILY/EPILOG** är låsta och dokumenterade. Detaljerna för kart-UX, minispelsregler och köp är förslag. Ingen Act 3 storyruntime är implementerad än.
+**Ägarregel:** Huvudkronologin, **de fem typerna av stadskarteikoner i 1A**, och **OPEN-000–005 + PARK-001 gratis → exakt 1 godkänt quest per beat från PARK-002 till SECRET-006 → questfri FAMILY/EPILOG** är låsta. Exakta ikonpositioner, minispelsregler och köp är fortsatt förslag. Ingen Act 3-storyruntime är implementerad än.
