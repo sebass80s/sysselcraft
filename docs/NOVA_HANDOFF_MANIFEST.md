@@ -19,7 +19,7 @@ Key corrections to prevent regressions:
 - Active place stays marked while waiting on IRL quests. Deadbeats handle revisits. **Motorboat at harbour returns to Act 2 world.**
 - Shopkeeper **Mira alone** sells all mandatory Act 3 purchases; Linus, Sol and Henning help with preparations but are not merchants. The list unlocks in-story; dedicated list button shows missing items.
 - Purchasing is possible almost throughout Act 3. **Do not gate each intermediate beat with purchases.** Check required purchases only before the final quest/festival. Missing goods: Nova says "**Vi måste få klart inköpen innan vi kan starta festen!**" and return to map; continue immediately when purchased.
-- FAMILY/EPILOG remains a continuous narrative with no new real-life quest requirements. **First minigame in story: minigolf PARK-009.** Later: shuffleboard PARK-019–020, plus FAMILY-006 rematch. Earlier recommendation to technically prototype shuffleboard does not override canonical story chronology.
+- FAMILY/EPILOG remains a continuous narrative with no new real-life quest requirements. **First minigame in story: minigolf PARK-009.** Later: shuffleboard introduced A3-PARK-019, first played A3-PARK-020, plus A3-FAMILY-006 rematch. Earlier recommendation to technically prototype shuffleboard does not override canonical story chronology.
 - Counts, prices, exact location→beat unlocks, and minigame rules remain OPEN. Old Act 3 free-roam assumptions are superseded.
 
 **Truth rule:** `spikat` only after decisions are committed and re-fetched; `implemented` only after code/test evidence.
