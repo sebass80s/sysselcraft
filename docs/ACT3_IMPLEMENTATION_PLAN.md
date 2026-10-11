@@ -1,7 +1,7 @@
 # Akt 3 — Implementationsbeslut och plan
 
 
-**Kronologisk helhetskarta (huvudordning + 1:1-quest-beats LÅSTA 2026-10-11):** `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` beskriver hela OPEN→EPILOG. **Användaren har godkänt de stora blockens ordning**, inklusive första stadsdagen → första hemresan utan Nova → skattjakten → 2011-upptäckten → dramat/arkaden → Novas första bybesök → förberedelserna → familjedagen → epilogen. **Platsupplåsningar, detaljerade triggers och IRL-questgrindar är fortfarande DRAFT**, inte nya låsta implementationer.
+**Kronologisk helhetskarta (huvudordning + 1:1-quest-beats LÅSTA 2026-10-11):** `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` beskriver hela OPEN→EPILOG. **Användaren har godkänt de stora blockens ordning**, inklusive första stadsdagen → första hemresan utan Nova → skattjakten → 2011-upptäckten → dramat/arkaden → Novas första bybesök → förberedelserna → familjedagen → epilogen. **Fem stadsplatser och exakt ett IRL-quest per beat är nu LÅSTA**; ikonernas exakta framträdande, pixelpositioner och transportsparning är fortfarande designfrågor, inte implementerade system.
 
 **Status:** PRODUKTBESLUT LÅSTA 2026-10-11. X-porten ligger i kod; övrig stadskarta, berättelse och minispel ÄNNU INTE IMPLEMENTERADE.  
 **Repo/branch:** `sebass80s/sysselcraft` / `nova/runtime-architecture-v1`  
@@ -20,6 +20,20 @@
 - Från hamnen klickar barnet på **motorbåten** för att gå tillbaka till Akt 2:s befintliga spelkarta. Sjöområdet och via det byn i Akt 1 ska fortsatt kunna besökas. Akt 2-kartan ska inte ersättas med statiska Akt 3-platser.
 - Kartmarkörer styrs av **berättelsens tillgänglighet och väntestatus**, inte av vilka butiksköp som saknas. Inga separata kartbutiker för Linus, Sol eller Henning.
 - Om en plats saknar nytt beat väljs lämpligt deadbeat; hur varierade deadbeats ska vara och bildåteranvändning kan preciseras senare utan att ändra navigationsmodellen.
+
+## 1A. Fem stadsplatser och returhamn — LÅST 2026-10-11
+
+Användarens låsta modell är **fem kartikoner**, inte en ikon för varje miljö eller beat:
+
+1. **Folkparken:** park-, Henrik-, minigolf-, shuffleboard-, förberedelse-, drama- och FAMILY-beats.
+2. **Novas mamma / hemma hos Nova:** HOME och besök/samtal vid mammans lägenhet.
+3. **Spelbutiken → Arkaden:** **en och samma platsikon**. Första besöket CITY-001–003 är den vanliga retrospelbutiken, utan arkadspoiler. Först när ARCADE-001 inträffar efter DRAMA-010 får ikonen heta Arkaden och Rebecka/NOV/REB visas. Epilogens arkad återanvänder platsen.
+4. **Hamnen:** klick på **motorbåten** är returväg till verkliga **Akt 2** och därifrån **Akt 1**. Hamnen ska finnas tillgänglig även i questväntan. Vanlig returtransport låser **inte upp, förbrukar eller hoppar över** BOAT-beats; dessa ligger fortfarande i den låsta sekvensen med **1 godkänt quest per beat**.
+5. **Skattjakten:** **en enda tillfällig ikon endast under HUNT-001–006**, försvinner efter HUNT-006. Torget, klockan, biblioteket, utsikten och glassstället är **inte** egna kartikoner. Varje HUNT-beat kräver fortsatt 1 separat quest.
+
+Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta platser syns inte. Inga fler stadsikoner för pappans hem, gamla villan, torget, matinköp, Linus, Sol, Henning eller Mira. Miras köp sker i hennes **befintliga butik i Akt 1**, nåbar via hamnen och tidigare världar.
+
+**Fortfarande öppet:** exakt första kartvisning, ikonernas pixelpositioner och detaljerad per-beat triggrouting, temporära rese-/resumeflöden när BOAT-001–005 spelas. **Fem platser och hamnens returroll är däremot låsta.**
 
 ## 2. Story och questprogression — LÅST
 
