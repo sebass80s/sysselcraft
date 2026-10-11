@@ -12,7 +12,7 @@
 ## 1. Stadskartan och platsnavigation — LÅST
 
 - Akt 3 har **ingen styrbar, fritt utforskbar karta** som Akt 1/2. Den har en **statisk illustrerad stadskarta med klickbara platsikoner**.
-- **Platser som ännu inte introducerats/besökts genom berättelsen syns inte på kartan**. När platsen blir känd dyker dess ikon upp. Exakt upplåsningsbeat per plats fastställs i innehållskonfigurationen.
+- **Progressivt avslöjande LÅST 2026-10-11:** De fem ikonerna är **hela kartans möjliga platser**, inte de fem som visas vid start. **En plats som berättelsen ännu inte har lett spelaren till är helt osynlig, inte grå, låst, frågetecken-markerad eller klickbar**. Ikonen dyker upp först i takt med en explicit storyintroduktion/resa dit; enbart att platsen nämns i dialog räcker inte. Upptäckta permanenta platser behålls synliga vid återbesök och efter omstart. Exakt trigger-beat för varje plats bestäms i innehållskonfigurationen.
 - Ett klick på en plats startar **dess nästa tillgängliga Story-beat direkt**. Inga extra helskärmsmiljöer, ingen gångavatar och inget separat scenrum mellan kartan och beatet.
 - För att fortsätta sagan besöker spelaren den **aktiva platsen** (t.ex. hemma hos Nova för pågående Nova-uppdrag). Aktiv plats är synligt markerad, **även när nästa beat väntar på flera godkända quests**.
 - Besökt men för tillfället inaktiv/färdig plats får ett **deadbeat**: en kort scen med bild/dialog som kan påminna om vad som redan gjorts eller hänvisa vidare till relevant aktiv plats. Detta är inte en ny quest eller progressionshändelse. Deadbeat ska inte konsumera kommande Story-beat.
@@ -34,6 +34,8 @@ Användarens låsta modell är **fem kartikoner**, inte en ikon för varje milj�
 Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta platser syns inte. Inga fler stadsikoner för pappans hem, gamla villan, torget, matinköp, Linus, Sol, Henning eller Mira. Miras köp sker i hennes **befintliga butik i Akt 1**, nåbar via hamnen och tidigare världar.
 
 **Fortfarande öppet:** exakt första kartvisning, ikonernas pixelpositioner och detaljerad per-beat triggrouting, temporära rese-/resumeflöden när BOAT-001–005 spelas. **Fem platser och hamnens returroll är däremot låsta.**
+
+**Synlighetskontrakt (för femplatsskartan):** **Hamnen** är känd från ankomsten; **Folkparken** visas först när Nova leder dit; **Spelbutiken** när storyn för första gången leder dit (byter till **Arkaden** först vid den senare arkad-avslöjningen efter DRAMA-010); **Novas mammas hem** först vid inbjudan/vägen dit; **Skattjakten** endast medan HUNT-001–006 är pågående. **Inget annat visas för tidigt.** Den exakta tekniska triggern per beat är ännu öppen. För upptäckta permanentplatser kvarstår ikonen efteråt, och aktiva platser markeras särskilt.
 
 ## 2. Story och questprogression — LÅST
 
