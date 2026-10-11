@@ -6,6 +6,9 @@ Chapter title: **KAPITEL 3 — På andra sidan sjön**
 
 This document consolidates the currently locked Act 3 story direction from `docs/STORY_DESIGN.md`, the established Act 2 boundary, and the current authored opening direction. It exists so Act 3 can be built without reconstructing canon from chat history.
 
+**IMPLEMENTATION-NAVIGATION DECISIONS (2026-10-11):** See `docs/ACT3_IMPLEMENTATION_PLAN.md` for the now-locked static city map, direct location→beat navigation, deadbeats, Act 2 motorboat return, reused quest wait/progression, Mira-only shopping list, and single purchase check before starting the family day. These decisions are a *plan*, not current implementation; do not silently infer free-roam Act 3 city from earlier scene descriptions.
+
+
 Repository reality and `docs/STORY_DESIGN.md` remain authoritative if a contradiction is found. When this manifest is intentionally changed, update the canonical story document as part of the same change.
 
 
