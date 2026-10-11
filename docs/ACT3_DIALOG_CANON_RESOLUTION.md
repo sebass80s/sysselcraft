@@ -23,7 +23,7 @@
 
 ## Inventering
 
-Inventerade **135** unika ID och **38** ID med dubbla eller fler manusförekomster. `Huvudsektion` visar sista manusplacering, **inte en garanti för godkännande**.
+Inventerade **139** identifierade unika beat-ID:n (2026-10-11), inklusive separat godkända **A3-VILLAGE-009** i 11N. Enligt tabellens förekomstfält har **32** ID:n två eller fler registrerade manusförekomster. `Huvudsektion` visar prioriterad manusplacering, **inte i sig en garanti för godkännande**. Med nu låst progression: **OPEN-000–005 + PARK-001 = 7 gratis**, **PARK-002 till SECRET-006 = 106 beats med exakt ett föräldragodkänt IRL-quest var**, **FAMILY-001–020 och EPILOG-001–006 = 26 questfria finalbeats**. Upprepade uppdrag är tillåtna enligt Quest V2; detta är inte 106 unika sysslor.
 
 | Beat | Förekomster | Senaste manussektion | Käll-/ändringsstatus |
 |---|---:|---|---|
@@ -148,6 +148,7 @@ Inventerade **135** unika ID och **38** ID med dubbla eller fler manusförekomst
 | A3-VILLAGE-006 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
 | A3-VILLAGE-007 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
 | A3-VILLAGE-008 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
+| A3-VILLAGE-009 | 1 | 11N | **LÅST 2026-10-10:** senast reviderad fullständig Mira-dialog i 11N; häfte, 2011 och avslut ”Ja. Det också.” |
 | A3-VILLAGE-010 | 1 | 11AR | LÅST: PDF-original valt 2026-10-10; nyskrivet utkast ersatt |
 | A3-VILLAGE-011 | 1 | 11O | Manusets senaste förekomst |
 | A3-VILLAGE-012 | 1 | 11O | Manusets senaste förekomst |
