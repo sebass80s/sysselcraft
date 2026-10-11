@@ -5732,6 +5732,126 @@ Pappan ler.
 *Scenen slutar på fotografiet från bänken.*
 
 
+## 11ZB. A3-FAMILY-021 — EXTRA AVSLUTSBEAT, DIALOG LÅST 2026-10-12
+
+**Användargodkänt:** detta beat ligger **direkt efter A3-FAMILY-020 och före A3-EPILOG-001**. Det är samma kväll som familjefesten, på vägen hem över sjön. Det ändrar inte den efterföljande epilogens tidsmarkör ”några dagar senare”. Ingen ny IRL-questgrind i FAMILY/EPILOG.
+
+### A3-FAMILY-021 – Vi gjorde vad vi kunde
+
+*Det har blivit kväll.*
+
+*Motorbåten lämnar stadens hamn. Folkparkens ljusslingor syns fortfarande på avstånd och speglar sig i sjön.*
+
+*Barnet sitter vid rodret. Alve sitter bredvid och tittar tillbaka mot staden.*
+
+**Alve:** Det blev inte riktigt som vi tänkte oss.
+
+**Barnet:** Nej.
+
+**Alve:** Jag trodde faktiskt att det skulle fungera.
+
+**Barnet:** Jag också.
+
+*Alve tittar ner på sina händer.*
+
+**Alve:** Vi gjorde ju allt på listan.
+
+**Barnet:** Nästan.
+
+**Alve:** Vad missade vi?
+
+**Barnet:** Ingenting. Din femte glass var inte med på listan.
+
+*Alve ler lite.*
+
+**Alve:** Den borde ha varit det.
+
+*De åker en stund utan att säga något.*
+
+**Alve:** Tror du att Nova kommer vara ledsen länge?
+
+**Barnet:** Jag vet inte.
+
+**Alve:** Jag önskar att vi kunde göra något.
+
+**Barnet:** Vi gjorde ju något.
+
+**Alve:** Jo. Men det blev inte som hon ville.
+
+**Barnet:** Nej. Fast det var en väldigt fin dag.
+
+*Alve tittar tillbaka mot staden.*
+
+**Alve:** Hennes mamma och pappa såg verkligen glada ut.
+
+**Barnet:** Och Nova också. Innan allt det där.
+
+**Alve:** Mm.
+
+*En stund hörs bara motorljudet och vattnet mot båten.*
+
+**Alve:** Det var nog inget vi kunde göra för att få dem att bli tillsammans igen.
+
+**Barnet:** Nej. Det tror inte jag heller.
+
+**Alve:** Men jag är ändå glad att vi försökte.
+
+**Barnet:** Jag med.
+
+**Alve:** Hon är ju vår kompis.
+
+**Barnet:** Ja.
+
+**Alve:** Och en ganska bra kompis faktiskt.
+
+**Barnet:** Ganska?
+
+**Alve:** Okej då. En jättebra kompis.
+
+*Barnet skrattar.*
+
+**Alve:** Det känns ändå bra att vi gjorde vårt bästa för henne.
+
+**Barnet:** Det tycker jag också.
+
+*Alve lutar sig tillbaka och tittar upp mot himlen.*
+
+**Alve:** Du?
+
+**Barnet:** Mm?
+
+**Alve:** Tror du vi får träffa henne snart igen?
+
+**Barnet:** Klart vi får.
+
+**Alve:** Bra.
+
+*Han funderar en stund.*
+
+**Alve:** Nästa gång kanske vi bara kan hitta på något kul.
+
+**Barnet:** Utan en lista?
+
+**Alve:** Ja. Och utan att behöva laga någonting.
+
+**Barnet:** Det låter faktiskt ganska skönt.
+
+*Alve ler.*
+
+**Alve:** Fast vi kan ju köpa glass.
+
+**Barnet:** Du har redan ätit fem!
+
+**Alve:** Ja, idag.
+
+*Barnet börjar skratta.*
+
+*Motorbåten fortsätter över sjön. Bakom dem blir stadens ljus allt mindre.*
+
+*Snart syns bara en rad små ljuspunkter vid stranden.*
+
+*Bilden tonar långsamt ut.*
+
 ## 11AA. A3-FAMILY-014 — FULL REVISED BENCH DIALOGUE
 
 ### A3-FAMILY-014 – Vi stannar här
