@@ -44,10 +44,24 @@ Production rules: `docs/ART_PIPELINE_V2.md`.
 - FAMILY-008–020: Shot contracts **TO_PREPARE** one at a time before generation. Narrative must follow latest canonical full-dialogue transcriptions, not summary markers that state the full dialogues are missing.
 - EPILOG-001–006: Shot contracts **TO_PREPARE**. Check revised closing script, boat continuity and photo continuity first.
 
-## Reference inventory to verify in repo
+## Verified canonical character sheets
 
-- Nova, Alve, Barnet, Mira, Linus, Sol, Henning, Valpen
-- Novas mamma, Novas pappa, Henrik
-- Folkpark, game corner, shuffleboard board, 2011 photo and current festival layout
+Directory: `public/assets/character-sheets/` on branch `nova/runtime-architecture-v1`. Confirmed individually through GitHub repository file API on 2026-10-11.
 
-**Note:** Reference sheets uploaded in the chat are not necessarily tracked in the repository. Populate a verified library only from actual checked-in image files. Do not fabricate file locations.
+| Character | Verified file |
+| --- | --- |
+| Nova | `public/assets/character-sheets/nova.png` |
+| Barnet | `public/assets/character-sheets/barnet.png` |
+| Alve | `public/assets/character-sheets/alve.png` |
+| Mira | `public/assets/character-sheets/mira.png` |
+| Sol | `public/assets/character-sheets/sol.png` |
+| Linus | `public/assets/character-sheets/linus.png` |
+| Henning | `public/assets/character-sheets/henning.png` |
+| Valpen | `public/assets/character-sheets/puppy.png` |
+| Novas mamma | `public/assets/character-sheets/mamma-nova.png` |
+| Novas pappa | `public/assets/character-sheets/pappa-nova.png` |
+| Henrik | `public/assets/character-sheets/henrik.png` |
+
+All eleven paths exist in the repository. File existence is verified, **not** image appearance, direct availability to the image-generation model, or identity fidelity. For FAMILY-007 prioritize loading and visually comparing `nova.png`, `mamma-nova.png`, `pappa-nova.png`, `mira.png`, `alve.png`, and `barnet.png` before generating. Previous attempts remain rejected.
+
+Environmental references for the park, shuffleboard and 2011 props still need asset-path verification separately.
