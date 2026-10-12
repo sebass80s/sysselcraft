@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "beatId": "A3-EPILOG-003",
+  "storyHeading": "### A3-EPILOG-003 –",
+  "verbatimStoryQuotes": [
+    "Nova håller fram spelkontrollen mot Barnet.",
+    "**Nova:** Först Barnet. Sedan du.",
+    "**Rebecka:** En mycket ovanlig taktik."
+  ],
+  "cast": [
+    "nova",
+    "barnet",
+    "alve",
+    "rebecka"
+  ],
+  "requiredVisuals": [
+    "16:9",
+    "arcade interior",
+    "game controller handoff",
+    "Nova",
+    "Barnet",
+    "Alve",
+    "Rebecka",
+    "muted teal sweatshirt",
+    "olive work jacket",
+    "black pixel-invader T-shirt",
+    "red hoodie",
+    "full back view"
+  ],
+  "forbiddenVisuals": [
+    "harbor arrival",
+    "white overalls",
+    "absent Nova",
+    "future family photo",
+    "visible child face",
+    "invented extra characters"
+  ],
+  "finalPrompt": "SysselCraft Art Pipeline 2.2: one 16:9 cinematic, grounded, photo-like SysselCraft story illustration for A3-EPILOG-003 'En utmaning', set INSIDE Rebecka's established vintage arcade interior. Match the approved same-location ARCADE-005 arcade anchor only if its real image is supplied, with old game cabinets, warm machine lights and the established intimate interior. Depict ONE unambiguous moment from the beginning of this beat: game controller handoff, Nova is clearly extending the physical game controller toward Barnet, about to let Barnet play; Alve looks eager to get his turn afterwards, and Rebecka stands nearby amused. Exactly four authored characters, all matched faithfully against their actually attached canonical PNG image references: Nova, a young freckled girl with short straight copper/auburn bob with bangs, muted teal sweatshirt, faded jeans and black headphones at neck; Barnet, a child shown exclusively in a full back view, red hoodie, blue-and-beige mountain-logo cap, bulky worn olive backpack with mountain badge and bottle, blue cargo trousers and rugged shoes; Alve, a freckled ginger-haired boy with olive hoodie, brown cargo shorts, tool belt and boots; Rebecka, the distinctly older red-brown-haired arcade proprietor, hair in the same messy updo as the preceding scene, olive work jacket, black pixel-invader T-shirt, jeans, work belt/bag and red sneakers. Keep Nova and Rebecka unmistakably different in age, hair and wardrobe. Compose camera behind Barnet so that absolutely no facial detail, cheek, eye, side profile or reflection is visible. The controller exchange, not high scores, is the central action. Do not invent readable scores or names on screens; keep distant displays abstract. No people outside the specified cast, no animals, no scene change and no added story event. Preserve realistic body proportions, coherent hands and controller, existing character identities, costumes and the location continuity. Never substitute text descriptions for physical image references."
+}
