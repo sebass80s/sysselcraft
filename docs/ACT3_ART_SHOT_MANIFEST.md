@@ -42,7 +42,7 @@ Production rules: `docs/ART_PIPELINE_V2.md`.
 ## Remaining FAMILY / EPILOG
 
 - FAMILY-008–020: Shot contracts **TO_PREPARE** one at a time before generation. Narrative must follow latest canonical full-dialogue transcriptions, not summary markers that state the full dialogues are missing.
-- EPILOG-001–006: Shot contracts **TO_PREPARE**. Check revised closing script, boat continuity and photo continuity first.
+- EPILOG-001–002 and 004–006: Shot contracts **TO_PREPARE**. EPILOG-003 now has a source-grounded contract in `image-pipeline/contracts/A3-EPILOG-003.json`, **but its actual reference-image inputs, approved arcade anchor and renderer availability are still NOT VERIFIED**. No EPILOG art is approved by this contract. Check revised closing script, boat continuity and photo continuity first.
 
 ## Verified canonical character sheets
 
@@ -76,7 +76,7 @@ Read `docs/ACT3_EPILOG_ART_HANDOVER_2026-10-12.md` **before any EPILOG art gener
 |---|---|---|
 | EPILOG-001 | GENERATED_UNREVIEWED | Latest image showed Barnet strictly from behind and Alve with phone in harbor; user approval not recorded; earlier variants erroneously included Nova or exposed Barnet's face |
 | EPILOG-002 | NEEDS_FIX | Latest image finally inside arcade with Nova, Alve, Barnet and Rebecka, but wrong highscores. Canon is REB **98 500** and NOV **98 450**, precisely 50 difference. No user acceptance recorded |
-| EPILOG-003 | REGENERATE | Latest image omitted Nova (who hands Barnet controller) and changed Rebecka outfit/identity; re-read exact beat and load all four actual visual character refs |
+| EPILOG-003 | REGENERATE · CONTRACT_PREPARED | Latest image omitted Nova and changed Rebecka; exact locked manuscript scene contract now exists. Before any generation, attach real refs for Nova, Barnet, Alve, Rebecka and the approved ARCADE-005 environment anchor |
 | EPILOG-004 | TO_PREPARE | Three children on couch; Nova displays FAMILY-020 photo on phone; bowling/family discussion |
 | EPILOG-005 | TO_PREPARE | Rebecka and Nova challenge at arcade; don't invent minigame result |
 | EPILOG-006 | TO_PREPARE | Friends at harbor, Nova waves as boat leaves; new FAMILY-020 photo on her phone for ending |
