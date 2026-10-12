@@ -65,3 +65,19 @@ Directory: `public/assets/character-sheets/` on branch `nova/runtime-architectur
 All eleven paths exist in the repository. File existence is verified, **not** image appearance, direct availability to the image-generation model, or identity fidelity. For FAMILY-007 prioritize loading and visually comparing `nova.png`, `mamma-nova.png`, `pappa-nova.png`, `mira.png`, `alve.png`, and `barnet.png` before generating. Previous attempts remain rejected.
 
 Environmental references for the park, shuffleboard and 2011 props still need asset-path verification separately.
+
+
+## EPILOG ART INCIDENT UPDATE — 2026-10-12 (authoritative production status)
+
+Read `docs/ACT3_EPILOG_ART_HANDOVER_2026-10-12.md` **before any EPILOG art generation**. Today's attempts repeatedly violated the existing pipeline. All below are **unapproved** unless the user subsequently explicitly accepts them and the actual file is verified.
+
+| Beat | Latest evidenced status | Blocker / exact requirement |
+|---|---|---|
+| EPILOG-001 | GENERATED_UNREVIEWED | Latest image showed Barnet strictly from behind and Alve with phone in harbor; user approval not recorded; earlier variants erroneously included Nova or exposed Barnet's face |
+| EPILOG-002 | NEEDS_FIX | Latest image finally inside arcade with Nova, Alve, Barnet and Rebecka, but wrong highscores. Canon is REB **98 500** and NOV **98 450**, precisely 50 difference. No user acceptance recorded |
+| EPILOG-003 | REGENERATE | Latest image omitted Nova (who hands Barnet controller) and changed Rebecka outfit/identity; re-read exact beat and load all four actual visual character refs |
+| EPILOG-004 | TO_PREPARE | Three children on couch; Nova displays FAMILY-020 photo on phone; bowling/family discussion |
+| EPILOG-005 | TO_PREPARE | Rebecka and Nova challenge at arcade; don't invent minigame result |
+| EPILOG-006 | TO_PREPARE | Friends at harbor, Nova waves as boat leaves; new FAMILY-020 photo on her phone for ending |
+
+**Hard stops:** Never show Barnet face or profile. Identity sheets must truly be visible to generator (uploaded/accessible refs alone are not proof of consumption). Exact script beat and cast/location first. Reject anything that places EPILOG-002 outside arcade or EPILOG-003 without Nova. GitHub upload is user's manual step; no image repo existence verified. 
