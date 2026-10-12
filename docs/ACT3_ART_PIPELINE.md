@@ -349,3 +349,8 @@ Location anchors define place.
 One previous beat defines local continuity.
 QA decides canon.
 Generation only paints.
+
+
+## Mandatory incident lessons — 2026-10-12
+
+Detailed account and exact EPILOG-001–006 shot handover: `docs/ACT3_EPILOG_ART_HANDOVER_2026-10-12.md`. Existing pre-generation gates repeatedly failed operationally despite being specified. **Do not mistake policy text for proof the tool used actual image references.** Acknowledge actual visual inputs; stop if not established. New chat instances must explicitly verify that canonical image bytes are available to the image generator, not merely GitHub/file names in chat. Always re-fetch the current beat from GitHub even for bare `kör art`. For EPILOG-003, Nova HANDS THE CONTROLLER TO BARNET, with Alve and Rebecka present inside arcade. Barnet strict back-view only. If rendered image lacks Nova, it is rejected. No more speculative regeneration loops. 
