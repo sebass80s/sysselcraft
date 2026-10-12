@@ -1,5 +1,8 @@
 # Akt 3 — Implementationsbeslut och plan
 
+**2026-10-12: node-schema framtaget, inte kart-runtime:** Fem platser har normaliserade ankarpositioner och rena synlighets-/bekräftelseregler i src/game/act3CityMapNodes.ts och docs/ACT3_CITY_MAP_NODES.md. Popup efter ikontryck: 'Vi går till parken.' med 'OK' och 'Gå tillbaka'. Exakt discovery-beat och iPhone-positioner är fortfarande öppna. Ren baskarta och fristående SVG:er måste läggas i GitHub innan runtime, annars dubbelritas pins på mockupen. Ingen quest- eller Story Engine-koppling gjord.
+
+
 **Statusuppdatering 2026-10-12 (innehållssteg 1):** docs/ACT3_CONTENT_REGISTRY.md och src/game/act3ContentRegistry.json inventerar 140 kronologiska beats, 139 uppladdade scenbilder och tre okopplade extrabilder. OPEN-000 är kapitelkort. Dialogkällorna är spårbara med drifttest, men line-by-line QA och full runtime-dialogexport återstår. Kartplatstriggers är ännu inte godkända och ligger uttryckligen som null. Stadskarta, storyspelning, questgrindar och minispel är fortfarande EJ IMPLEMENTERADE.
 
 
