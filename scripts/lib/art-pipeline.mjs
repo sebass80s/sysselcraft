@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 export const DEFAULT_REGISTRY = "image-pipeline/character-registry.json";
-export const CANONICAL_SHEET_ROOT = "public/assets/village/character-sheets/";
+export const CANONICAL_SHEET_ROOT = "public/assets/character-sheets/";
 
 export function fail(message) {
   const error = new Error(message);
