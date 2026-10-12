@@ -89,7 +89,7 @@ Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta p
 - Motorbåt från hamn tar tillbaka till befintlig Akt 2-karta utan att förstöra Act 1/2-save eller Act 3-återupptagning.
 - Innan listan introducerats är Act 3-varor inte tillgängliga. Efter introduktion kan köp ske i valfri ordning hos **Mira**. Ägandestatus överlever restart och följer kanonisk butik/wallet.
 - Storyn fortsätter trots ofullständig lista tills **enda slutgrinden** nås. Där visas exakt väntedialog; när sista köp görs återupptas finalen utan att upprepa tidigare quests.
-- FAMILY/EPILOG introducerar inte nya verkliga uppdragsgrindar och tappar aldrig dialogposition vid återstart.
+- FAMILY-001–021 introducerar inte extra verkliga uppdragsgrindar och tappar aldrig dialogposition vid återstart. **Ett separat föräldragodkänt quest efter FAMILY-021** låser upp hela EPILOG-001–006, utan fler quests däremellan.
 
 ## 7. Öppna designfrågor — INTE SPIKADE
 
