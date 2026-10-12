@@ -38,6 +38,6 @@ for(const id of ["nova","barnet","alve","mira","sol","linus","henning","puppy","
  assert.ok(typeof ref.chatLibraryPath==="string" && ref.chatLibraryPath.length>0,`No expected Library locator for ${id}`);
 }
 const pipelineSource=fs.readFileSync("scripts/lib/art-pipeline.mjs","utf8");
-assert.match(pipelineSource,/CANONICAL_SHEET_ROOT = "public\\/assets\\/character-sheets\\/"/);
+assert.ok(pipelineSource.includes('export const CANONICAL_SHEET_ROOT = "public/assets/character-sheets/";'));
 
 console.log("art pipeline 2.1 contract regression: PASS");
