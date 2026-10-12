@@ -1,5 +1,10 @@
 # Act 3 · Story-art shot manifest
 
+## Bildinventering verifierad 2026-10-12 (ersätter äldre påståenden om saknade filer)
+
+Se docs/ACT3_CONTENT_REGISTRY.md. Samtliga 139 beatillustrationer finns nu i GitHub, inklusive FAMILY-021 och OPEN-001–005. OPEN-000 är kapitelkort utan PNG. Tre överblivna bilder är avsiktligt okopplade. FAMILY-015–017 använder avsiktligt samma bild. **Historiska QA-varningar nedan beskriver tidigare bildförsök och betyder inte att dagens PNG-filer saknas.** Filens existens är inte ett automatiskt visuellt godkännande.
+
+
 Status: **WORKING PRODUCTION LEDGER · 2026-10-11**
 Authoritative dialogue: `docs/ACT3_STORY_MANIFEST.md` plus latest explicit overrides and `docs/ACT3_DIALOG_CANON_RESOLUTION.md`.
 Production rules: `docs/ART_PIPELINE_V2.md`.

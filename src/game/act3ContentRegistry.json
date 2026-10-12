@@ -1,0 +1,4156 @@
+{
+  "schemaVersion": 1,
+  "chapterId": "act3",
+  "status": "verified_asset_and_source_inventory_not_runtime_dialogue_export",
+  "authority": [
+    "docs/ACT3_STORY_MANIFEST.md",
+    "docs/ACT3_DIALOG_CANON_RESOLUTION.md",
+    "docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md",
+    "docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md"
+  ],
+  "semantics": {
+    "mapLocationId": "null means unresolved; do not infer runtime navigation from narrativeLocationHint",
+    "narrativeLocationHint": "narrative context only, not a locked city-map icon or trigger",
+    "speakerIds": "speaking characters in selected source, not complete visual cast",
+    "reviewStatus": "explicit_source_override_locked means source choice; not full visual or dialogue QA",
+    "progression": "authoritative parent-approved AND child-claimed quest, never a client-side award"
+  },
+  "summary": {
+    "beats": 140,
+    "illustrations": 139,
+    "chapterCards": 1,
+    "unusedIllustrations": 3,
+    "individuallyQuestLocked": 106,
+    "epilogueQuestGate": 1
+  },
+  "unusedIllustrations": [
+    {
+      "repositoryPath": "public/assets/village/story-moments/act3/open/Golden-Hour Harbor Conversation.png",
+      "reason": "unassigned harbor extra"
+    },
+    {
+      "repositoryPath": "public/assets/village/story-moments/act3/open/Golden-Hour Harbor Encounter.png",
+      "reason": "unassigned harbor extra"
+    },
+    {
+      "repositoryPath": "public/assets/village/story-moments/act3/park/passardennanånstans .png",
+      "reason": "unassigned park extra, user has not assigned a beat"
+    }
+  ],
+  "intentionalImageReuse": [
+    [
+      "A3-FAMILY-015",
+      "A3-FAMILY-016",
+      "A3-FAMILY-017"
+    ]
+  ],
+  "beats": [
+    {
+      "index": 0,
+      "id": "A3-OPEN-000",
+      "title": "Chapter title (implemented)",
+      "group": "OPEN",
+      "image": null,
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-OPEN-000 — Chapter title (implemented)",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "2645e474",
+        "speakerIds": [],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "kapitelkort",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "free_intro",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 1,
+      "id": "A3-OPEN-001",
+      "title": "Hamnen",
+      "group": "OPEN",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/open/OPEN-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/open/OPEN-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-OPEN-001 — Hamnen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "6e459134",
+        "speakerIds": [
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "free_intro",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 2,
+      "id": "A3-OPEN-002",
+      "title": "Tjejen på kajen",
+      "group": "OPEN",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/open/OPEN-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/open/OPEN-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-OPEN-002 — Tjejen på kajen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "a95c028d",
+        "speakerIds": [
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "free_intro",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 3,
+      "id": "A3-OPEN-003",
+      "title": "Båten (med låst subtil föräldrahint)",
+      "group": "OPEN",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/open/OPEN-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/open/OPEN-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-OPEN-003 — Båten (med låst subtil föräldrahint)",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "503890be",
+        "speakerIds": [
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "free_intro",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 4,
+      "id": "A3-OPEN-004",
+      "title": "Den gamla parken",
+      "group": "OPEN",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/open/OPEN-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/open/OPEN-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-OPEN-004 — Den gamla parken",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "a68db241",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "free_intro",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 5,
+      "id": "A3-OPEN-005",
+      "title": "På väg mot parken",
+      "group": "OPEN",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/open/OPEN-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/open/OPEN-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-OPEN-005 — På väg mot parken",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "68ce843f",
+        "speakerIds": [
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "strandpromenaden mot folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "free_intro",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 6,
+      "id": "A3-PARK-001",
+      "title": "Parken",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-001 — Parken",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "f35966ec",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "free_intro",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 7,
+      "id": "A3-PARK-002",
+      "title": "Bana sju",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-002 — Bana sju",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "da09a1b3",
+        "speakerIds": [
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 1
+      }
+    },
+    {
+      "index": 8,
+      "id": "A3-PARK-003",
+      "title": "Den gamla scenen",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-003 — Den gamla scenen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "dbb1a3a2",
+        "speakerIds": [
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 2
+      }
+    },
+    {
+      "index": 9,
+      "id": "A3-PARK-004",
+      "title": "Vid sjön",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-004 — Vid sjön",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "bd9b8ba8",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 3
+      }
+    },
+    {
+      "index": 10,
+      "id": "A3-PARK-005",
+      "title": "En gammal idé",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-005 — En gammal idé",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "ee8d92b9",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 4
+      }
+    },
+    {
+      "index": 11,
+      "id": "A3-PARK-006",
+      "title": "Parkdirektören",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-006 — Parkdirektören",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "0ffbcfb3",
+        "speakerIds": [
+          "Henrik",
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 5
+      }
+    },
+    {
+      "index": 12,
+      "id": "A3-PARK-007",
+      "title": "En riktig folkfest",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-007.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-007.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-007 — En riktig folkfest",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "fd3f068f",
+        "speakerIds": [
+          "Nova",
+          "Henrik",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 6
+      }
+    },
+    {
+      "index": 13,
+      "id": "A3-PARK-008",
+      "title": "Den första planen",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-008.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-008.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-008 — Den första planen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "802d3cd8",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Henrik",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 7
+      }
+    },
+    {
+      "index": 14,
+      "id": "A3-PARK-009",
+      "title": "Utmaningen",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-009.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-009.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-009 — Utmaningen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "4cad56e7",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 8
+      },
+      "minigame": "minigolf"
+    },
+    {
+      "index": 15,
+      "id": "A3-PARK-010",
+      "title": "En speciell dag",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-010.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-010.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-010 — En speciell dag",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "bd0eaac1",
+        "speakerIds": [
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 9
+      }
+    },
+    {
+      "index": 16,
+      "id": "A3-CITY-001",
+      "title": "Stadens bästa ställe",
+      "group": "CITY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/city/CITY-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/city/CITY-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-CITY-001 — Stadens bästa ställe",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "3686f034",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "explicit_source_override_locked"
+      },
+      "narrativeLocationHint": "retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 10
+      }
+    },
+    {
+      "index": 17,
+      "id": "A3-CITY-002",
+      "title": "Gamla favoriter",
+      "group": "CITY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/city/CITY-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/city/CITY-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-CITY-002 — Gamla favoriter",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "e6121dfb",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "explicit_source_override_locked"
+      },
+      "narrativeLocationHint": "retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 11
+      }
+    },
+    {
+      "index": 18,
+      "id": "A3-CITY-003",
+      "title": "Hemvägen",
+      "group": "CITY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/city/CITY-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/city/CITY-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-CITY-003 — Hemvägen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "454acb67",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "explicit_source_override_locked"
+      },
+      "narrativeLocationHint": "stadens gator efter retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 12
+      }
+    },
+    {
+      "index": 19,
+      "id": "A3-HOME-001",
+      "title": "Oväntat besök",
+      "group": "HOME",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/home/HOME-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/home/HOME-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HOME-001 – Oväntat besök",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "04cb5adb",
+        "speakerIds": [
+          "Nova",
+          "Mamma",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas mammas hem och familjeminnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 13
+      }
+    },
+    {
+      "index": 20,
+      "id": "A3-HOME-002",
+      "title": "Mira",
+      "group": "HOME",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/home/HOME-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/home/HOME-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HOME-002 – Mira",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "e5ef02b6",
+        "speakerIds": [
+          "Barnet",
+          "Mamma",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas mammas hem och familjeminnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 14
+      }
+    },
+    {
+      "index": 21,
+      "id": "A3-HOME-003",
+      "title": "Hemligheten",
+      "group": "HOME",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/home/HOME-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/home/HOME-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HOME-003 – Hemligheten",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "4d9da336",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Mamma"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas mammas hem och familjeminnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 15
+      }
+    },
+    {
+      "index": 22,
+      "id": "A3-HOME-004",
+      "title": "Mitt gamla rum",
+      "group": "HOME",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/home/HOME-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/home/HOME-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HOME-004 – Mitt gamla rum",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "3f525e9e",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas mammas hem och familjeminnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 16
+      }
+    },
+    {
+      "index": 23,
+      "id": "A3-HOME-005",
+      "title": "Skattkistan",
+      "group": "HOME",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/home/HOME-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/home/HOME-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HOME-005 – Skattkistan",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "a588f7d8",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas mammas hem och familjeminnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 17
+      }
+    },
+    {
+      "index": 24,
+      "id": "A3-HOME-006",
+      "title": "På kylskåpet",
+      "group": "HOME",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/home/HOME-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/home/HOME-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HOME-006 – På kylskåpet",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "4cf61ce4",
+        "speakerIds": [
+          "Barnet",
+          "Nova",
+          "Mamma"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas mammas hem och familjeminnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 18
+      }
+    },
+    {
+      "index": 25,
+      "id": "A3-HOME-007",
+      "title": "Lite senare",
+      "group": "HOME",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/home/HOME-007.png",
+        "publicUrl": "/assets/village/story-moments/act3/home/HOME-007.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HOME-007 – Lite senare",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "21fd051e",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas mammas hem och familjeminnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 19
+      }
+    },
+    {
+      "index": 26,
+      "id": "A3-HOME-008",
+      "title": "Innan de går",
+      "group": "HOME",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/home/HOME-008.png",
+        "publicUrl": "/assets/village/story-moments/act3/home/HOME-008.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HOME-008 – Innan de går",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "904e7311",
+        "speakerIds": [
+          "Mamma",
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas mammas hem och familjeminnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 20
+      }
+    },
+    {
+      "index": 27,
+      "id": "A3-BOAT-001",
+      "title": "Vilken dag",
+      "group": "BOAT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/boat/BOAT-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/boat/BOAT-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-BOAT-001 – Vilken dag",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "8f6035f5",
+        "speakerIds": [
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen, sjön och Akt 2",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 21
+      }
+    },
+    {
+      "index": 28,
+      "id": "A3-BOAT-002",
+      "title": "Den nya kompisen",
+      "group": "BOAT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/boat/BOAT-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/boat/BOAT-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-BOAT-002 – Den nya kompisen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "7839224b",
+        "speakerIds": [
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen, sjön och Akt 2",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 22
+      }
+    },
+    {
+      "index": 29,
+      "id": "A3-BOAT-003",
+      "title": "Det som inte finns kvar",
+      "group": "BOAT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/boat/BOAT-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/boat/BOAT-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-BOAT-003 – Det som inte finns kvar",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "4b0ff51c",
+        "speakerIds": [
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen, sjön och Akt 2",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 23
+      }
+    },
+    {
+      "index": 30,
+      "id": "A3-BOAT-004",
+      "title": "Den stora planen",
+      "group": "BOAT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/boat/BOAT-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/boat/BOAT-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-BOAT-004 – Den stora planen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "c23ed48a",
+        "speakerIds": [
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen, sjön och Akt 2",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 24
+      }
+    },
+    {
+      "index": 31,
+      "id": "A3-BOAT-005",
+      "title": "Hemma igen",
+      "group": "BOAT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/boat/BOAT-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/boat/BOAT-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-BOAT-005 – Hemma igen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "6f41bccf",
+        "speakerIds": [
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "stadshamnen, sjön och Akt 2",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 25
+      }
+    },
+    {
+      "index": 32,
+      "id": "A3-VILLAGE-001",
+      "title": "En gammal bekant",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-001 – En gammal bekant",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "b2feba83",
+        "speakerIds": [
+          "Alve",
+          "Barnet",
+          "Mira"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Miras butik i Akt 1",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 26
+      }
+    },
+    {
+      "index": 33,
+      "id": "A3-VILLAGE-002",
+      "title": "En hemlig fest",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-002 – En hemlig fest",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "7d079121",
+        "speakerIds": [
+          "Mira",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Miras butik i Akt 1",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 27
+      }
+    },
+    {
+      "index": 34,
+      "id": "A3-VILLAGE-003",
+      "title": "Innan de går",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-003 – Innan de går",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "76eb6d25",
+        "speakerIds": [
+          "Mira",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Miras butik i Akt 1",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 28
+      }
+    },
+    {
+      "index": 35,
+      "id": "A3-HUNT-001",
+      "title": "Ett nytt meddelande",
+      "group": "HUNT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/hunt/HUNT-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/hunt/HUNT-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HUNT-001 – Ett nytt meddelande",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "a7d6fd8b",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "skattjakten genom staden",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 29
+      }
+    },
+    {
+      "index": 36,
+      "id": "A3-HUNT-002",
+      "title": "Torget",
+      "group": "HUNT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/hunt/HUNT-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/hunt/HUNT-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HUNT-002 – Torget",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "4fb1ca55",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "skattjakten genom staden",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 30
+      }
+    },
+    {
+      "index": 37,
+      "id": "A3-HUNT-003",
+      "title": "Klockan",
+      "group": "HUNT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/hunt/HUNT-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/hunt/HUNT-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HUNT-003 – Klockan",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "207d7fb0",
+        "speakerIds": [
+          "Barnet",
+          "Alve",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "skattjakten genom staden",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 31
+      }
+    },
+    {
+      "index": 38,
+      "id": "A3-HUNT-004",
+      "title": "Den som läser hittar",
+      "group": "HUNT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/hunt/HUNT-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/hunt/HUNT-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HUNT-004 – Den som läser hittar",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "4133954b",
+        "speakerIds": [
+          "Barnet",
+          "Alve",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "skattjakten genom staden",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 32
+      }
+    },
+    {
+      "index": 39,
+      "id": "A3-HUNT-005",
+      "title": "En plats ovanför stan",
+      "group": "HUNT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/hunt/HUNT-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/hunt/HUNT-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HUNT-005 – En plats ovanför stan",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "8ff2d10f",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "skattjakten genom staden",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 33
+      }
+    },
+    {
+      "index": 40,
+      "id": "A3-HUNT-006",
+      "title": "Skatten",
+      "group": "HUNT",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/hunt/HUNT-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/hunt/HUNT-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-HUNT-006 – Skatten",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "9133a191",
+        "speakerIds": [
+          "Alve",
+          "Barnet",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "skattjakten genom staden",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 34
+      }
+    },
+    {
+      "index": 41,
+      "id": "A3-PARK-011",
+      "title": "Nova har en plan",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-011.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-011.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-011 – Nova har en plan",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "63ecd0be",
+        "speakerIds": [
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 35
+      }
+    },
+    {
+      "index": 42,
+      "id": "A3-PARK-012",
+      "title": "Fel plats",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-012.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-012.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-012 – Fel plats",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "6d29323a",
+        "speakerIds": [
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 36
+      }
+    },
+    {
+      "index": 43,
+      "id": "A3-PARK-013",
+      "title": "Något som faktiskt är roligt",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-013.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-013.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-013 – Något som faktiskt är roligt",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "0bbd4a82",
+        "speakerIds": [
+          "Alve",
+          "Barnet",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 37
+      }
+    },
+    {
+      "index": 44,
+      "id": "A3-PARK-014",
+      "title": "Det behöver inte vara likadant",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-014.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-014.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-014 – Det behöver inte vara likadant",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "6ab56f68",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 38
+      }
+    },
+    {
+      "index": 45,
+      "id": "A3-PARK-015",
+      "title": "Henrik har en idé",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-015.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-015.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-015 – Henrik har en idé",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "0f079180",
+        "speakerIds": [
+          "Henrik",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 39
+      }
+    },
+    {
+      "index": 46,
+      "id": "A3-PARK-016",
+      "title": "Den gamla spelhörnan",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-016.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-016.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-016 – Den gamla spelhörnan",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "ecfb2bf5",
+        "speakerIds": [
+          "Alve",
+          "Barnet",
+          "Nova",
+          "Henrik"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 40
+      }
+    },
+    {
+      "index": 47,
+      "id": "A3-PARK-017",
+      "title": "Barnet får bestämma",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-017.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-017.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-017 – Barnet får bestämma",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "ae99befe",
+        "speakerIds": [
+          "Henrik",
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 41
+      }
+    },
+    {
+      "index": 48,
+      "id": "A3-PARK-018",
+      "title": "Poängtavlan (ersätter tidigare utkast till beat 018)",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-018.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-018.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PARK-018 – Poängtavlan (ersätter tidigare utkast till beat 018)",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "00d066e9",
+        "speakerIds": [
+          "Henrik",
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 42
+      }
+    },
+    {
+      "index": 49,
+      "id": "A3-PARK-019",
+      "title": "Kan den fortfarande fungera?",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-019.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-019.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "## A3-PARK-019 – Kan den fortfarande fungera?",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "a85deaad",
+        "speakerIds": [
+          "Henrik",
+          "Alve",
+          "Barnet",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 43
+      }
+    },
+    {
+      "index": 50,
+      "id": "A3-PARK-020",
+      "title": "Första matchen",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-020.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-020.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "## A3-PARK-020 – Första matchen",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "eae8fa57",
+        "speakerIds": [
+          "Henrik",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 44
+      },
+      "minigame": "shuffleboard"
+    },
+    {
+      "index": 51,
+      "id": "A3-PARK-021",
+      "title": "Någon minns",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-021.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-021.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "## A3-PARK-021 – Någon minns",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "8a84d549",
+        "speakerIds": [
+          "Henrik",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "explicit_source_override_locked"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 45
+      }
+    },
+    {
+      "index": 52,
+      "id": "A3-PARK-022",
+      "title": "Vi ska göra det ordentligt",
+      "group": "PARK",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/park/PARK-022.png",
+        "publicUrl": "/assets/village/story-moments/act3/park/PARK-022.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "## A3-PARK-022 – Vi ska göra det ordentligt",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "58629880",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve",
+          "Henrik"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 46
+      }
+    },
+    {
+      "index": 53,
+      "id": "A3-DRAMA-001",
+      "title": "Pappa ringer",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-001 – Pappa ringer",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "ad128a4d",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Pappa"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 47
+      }
+    },
+    {
+      "index": 54,
+      "id": "A3-DRAMA-002",
+      "title": "Det är alltid något",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-002 – Det är alltid något",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "7124e57d",
+        "speakerIds": [
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 48
+      }
+    },
+    {
+      "index": 55,
+      "id": "A3-DRAMA-003",
+      "title": "En dålig idé",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-003 – En dålig idé",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "94a1639f",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 49
+      }
+    },
+    {
+      "index": 56,
+      "id": "A3-DRAMA-004",
+      "title": "Gå inte",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-004 – Gå inte",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "c6c79be6",
+        "speakerIds": [
+          "Barnet",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 50
+      }
+    },
+    {
+      "index": 57,
+      "id": "A3-DRAMA-005",
+      "title": "Efteråt",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-005 – Efteråt",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "1a1cf7e1",
+        "speakerIds": [
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 51
+      }
+    },
+    {
+      "index": 58,
+      "id": "A3-DRAMA-006",
+      "title": "Ingen Nova",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-006 – Ingen Nova",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "0a462047",
+        "speakerIds": [
+          "Henrik",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas hem och stadens gator",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 52
+      }
+    },
+    {
+      "index": 59,
+      "id": "A3-DRAMA-007",
+      "title": "Vid lägenheten",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-007.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-007.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-007 – Vid lägenheten",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "89517881",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas hem och stadens gator",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 53
+      }
+    },
+    {
+      "index": 60,
+      "id": "A3-DRAMA-008",
+      "title": "Inte ert fel",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-008.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-008.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-008 – Inte ert fel",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "23e1eb5c",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas hem och stadens gator",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 54
+      }
+    },
+    {
+      "index": 61,
+      "id": "A3-DRAMA-009",
+      "title": "Något hon inte har berättat",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-009.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-009.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-009 – Något hon inte har berättat",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "ae2d2e6d",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas hem och stadens gator",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 55
+      }
+    },
+    {
+      "index": 62,
+      "id": "A3-DRAMA-010",
+      "title": "Ingen plan idag",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-010.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-010.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-010 – Ingen plan idag",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "2bbe6181",
+        "speakerIds": [
+          "Barnet",
+          "Alve",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "Novas hem och stadens gator",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 56
+      }
+    },
+    {
+      "index": 63,
+      "id": "A3-ARCADE-001",
+      "title": "Den hemliga ingången",
+      "group": "ARCADE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/arcade/ARCADE-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/arcade/ARCADE-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-ARCADE-001 – Den hemliga ingången",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "b966dcb1",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "dolda arkaden bakom retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 57
+      }
+    },
+    {
+      "index": 64,
+      "id": "A3-ARCADE-002",
+      "title": "NOV",
+      "group": "ARCADE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/arcade/ARCADE-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/arcade/ARCADE-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-ARCADE-002 – NOV",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "901bef6a",
+        "speakerIds": [
+          "Rebecka",
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "dolda arkaden bakom retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 58
+      }
+    },
+    {
+      "index": 65,
+      "id": "A3-ARCADE-003",
+      "title": "Välj ditt spel",
+      "group": "ARCADE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/arcade/ARCADE-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/arcade/ARCADE-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-ARCADE-003 – Välj ditt spel",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "03d058be",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve",
+          "Rebecka"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "dolda arkaden bakom retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 59
+      }
+    },
+    {
+      "index": 66,
+      "id": "A3-ARCADE-004",
+      "title": "En plats att försvinna till",
+      "group": "ARCADE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/arcade/ARCADE-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/arcade/ARCADE-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-ARCADE-004 – En plats att försvinna till",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "26d5ce07",
+        "speakerIds": [
+          "Rebecka",
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "dolda arkaden bakom retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 60
+      }
+    },
+    {
+      "index": 67,
+      "id": "A3-ARCADE-005",
+      "title": "Den omöjliga maskinen",
+      "group": "ARCADE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/arcade/ARCADE-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/arcade/ARCADE-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-ARCADE-005 – Den omöjliga maskinen",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "ec1079bd",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet",
+          "Rebecka"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "dolda arkaden bakom retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 61
+      }
+    },
+    {
+      "index": 68,
+      "id": "A3-ARCADE-006",
+      "title": "En ny tradition",
+      "group": "ARCADE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/arcade/ARCADE-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/arcade/ARCADE-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-ARCADE-006 – En ny tradition",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "758e0372",
+        "speakerIds": [
+          "Rebecka",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "dolda arkaden bakom retrospelbutiken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 62
+      }
+    },
+    {
+      "index": 69,
+      "id": "A3-DRAMA-011",
+      "title": "Ett meddelande från Nova",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-011.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-011.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-011 – Ett meddelande från Nova",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "d795b872",
+        "speakerIds": [
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "staden och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 63
+      }
+    },
+    {
+      "index": 70,
+      "id": "A3-DRAMA-012",
+      "title": "En väldigt bra dag",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-012.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-012.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-012 – En väldigt bra dag",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "e0497679",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "staden och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 64
+      }
+    },
+    {
+      "index": 71,
+      "id": "A3-DRAMA-013",
+      "title": "Tre olika planer",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-013.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-013.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-013 – Tre olika planer",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "4f111f99",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "staden och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 65
+      }
+    },
+    {
+      "index": 72,
+      "id": "A3-DRAMA-014",
+      "title": "En gammal bild",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-014.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-014.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-014 – En gammal bild",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "9c01c45c",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "staden och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 66
+      }
+    },
+    {
+      "index": 73,
+      "id": "A3-DRAMA-015",
+      "title": "En sak i taget",
+      "group": "DRAMA",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/drama/DRAMA-015.png",
+        "publicUrl": "/assets/village/story-moments/act3/drama/DRAMA-015.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-DRAMA-015 – En sak i taget",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "1d2de476",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "staden och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 67
+      }
+    },
+    {
+      "index": 74,
+      "id": "A3-VILLAGE-004",
+      "title": "Över sjön",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-004 – Över sjön",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "9d283743",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "sjön och Alves stuga",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 68
+      }
+    },
+    {
+      "index": 75,
+      "id": "A3-VILLAGE-005",
+      "title": "Stugan",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-005 – Stugan",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "6ebc45c3",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "sjön och Alves stuga",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 69
+      }
+    },
+    {
+      "index": 76,
+      "id": "A3-VILLAGE-006",
+      "title": "Ett foto på väggen",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-006 – Ett foto på väggen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "bf7858c8",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "sjön och Alves stuga",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 70
+      }
+    },
+    {
+      "index": 77,
+      "id": "A3-VILLAGE-007",
+      "title": "En riktig by",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-007.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-007.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-007 – En riktig by",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "248f0fdc",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 71
+      }
+    },
+    {
+      "index": 78,
+      "id": "A3-VILLAGE-008",
+      "title": "Mira och Nova",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-008.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-008.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-008 – Mira och Nova",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "436bc2cf",
+        "speakerIds": [
+          "Mira",
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 72
+      }
+    },
+    {
+      "index": 79,
+      "id": "A3-VILLAGE-009",
+      "title": "Mira förstår",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-009.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-009.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "## 11N. A3-VILLAGE-009 – Mira förstår — FULLSTÄNDIG DIALOG LÅST",
+        "occurrence": 1,
+        "selection": "standalone_locked_section",
+        "selectedSceneDigestFnv1a32": "808c88d7",
+        "speakerIds": [
+          "Mira",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "explicit_source_override_locked"
+      },
+      "narrativeLocationHint": "byn och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 73
+      }
+    },
+    {
+      "index": 80,
+      "id": "A3-VILLAGE-010",
+      "title": "Någon känner igen Nova",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-010.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-010.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-010 – Någon känner igen Nova",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "76ea7a88",
+        "speakerIds": [
+          "Henning",
+          "Barnet",
+          "Nova",
+          "Alve",
+          "Mira"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 74
+      }
+    },
+    {
+      "index": 81,
+      "id": "A3-VILLAGE-011",
+      "title": "En märklig promenad",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-011.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-011.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-011 – En märklig promenad",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "a653c06d",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet",
+          "Linus"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Linus och Sol",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 75
+      }
+    },
+    {
+      "index": 82,
+      "id": "A3-VILLAGE-012",
+      "title": "Säg inget till Sol",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-012.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-012.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-012 – Säg inget till Sol",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "80480c93",
+        "speakerIds": [
+          "Linus",
+          "Barnet",
+          "Alve",
+          "Nova",
+          "Sol"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Linus och Sol",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 76
+      }
+    },
+    {
+      "index": 83,
+      "id": "A3-VILLAGE-013",
+      "title": "Världens sämsta hemlighet",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-013.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-013.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-013 – Världens sämsta hemlighet",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "31bebe73",
+        "speakerIds": [
+          "Sol",
+          "Linus",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Linus och Sol",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 77
+      }
+    },
+    {
+      "index": 84,
+      "id": "A3-VILLAGE-014",
+      "title": "Den stora räddningsaktionen",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-014.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-014.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-014 – Den stora räddningsaktionen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "37b037e8",
+        "speakerIds": [
+          "Sol",
+          "Linus",
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Linus och Sol",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 78
+      }
+    },
+    {
+      "index": 85,
+      "id": "A3-VILLAGE-015",
+      "title": "Chefen från bänken",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-015.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-015.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-015 – Chefen från bänken",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "e0ec6b1a",
+        "speakerIds": [
+          "Sol",
+          "Linus",
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Linus och Sol",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 79
+      }
+    },
+    {
+      "index": 86,
+      "id": "A3-VILLAGE-016",
+      "title": "Diagnosen",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-016.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-016.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-016 – Diagnosen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "f754636b",
+        "speakerIds": [
+          "Sol",
+          "Linus",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Linus och Sol",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 80
+      }
+    },
+    {
+      "index": 87,
+      "id": "A3-VILLAGE-017",
+      "title": "Ett märkligt ljud",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-017.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-017.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-017 – Ett märkligt ljud",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "e4f8297e",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet",
+          "Sol"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn och Sols hus",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 81
+      }
+    },
+    {
+      "index": 88,
+      "id": "A3-VILLAGE-018",
+      "title": "Upptäckt",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-018.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-018.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-018 – Upptäckt",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "48fc2922",
+        "speakerIds": [
+          "Sol",
+          "Barnet",
+          "Alve",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn och Sols hus",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 82
+      }
+    },
+    {
+      "index": 89,
+      "id": "A3-VILLAGE-019",
+      "title": "Ingen publik, tack",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-019.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-019.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-019 – Ingen publik, tack",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "902e6d1a",
+        "speakerIds": [
+          "Nova",
+          "Sol",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn och Sols hus",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 83
+      }
+    },
+    {
+      "index": 90,
+      "id": "A3-VILLAGE-020",
+      "title": "Den stora duetten",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-020.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-020.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-020 – Den stora duetten",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "df5ca34a",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Sol",
+          "Linus"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn och Sols hus",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 84
+      }
+    },
+    {
+      "index": 91,
+      "id": "A3-VILLAGE-021",
+      "title": "En egen låt",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-021.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-021.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-021 – En egen låt",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "84c9af57",
+        "speakerIds": [
+          "Nova",
+          "Sol",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn och Sols hus",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 85
+      }
+    },
+    {
+      "index": 92,
+      "id": "A3-VILLAGE-022",
+      "title": "En liten omväg",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-022.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-022.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-022 – En liten omväg",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "8d5bd6c9",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "utsikten, sjön och återresan",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 86
+      }
+    },
+    {
+      "index": 93,
+      "id": "A3-VILLAGE-023",
+      "title": "Utsikten",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-023.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-023.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-023 – Utsikten",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "e663d64e",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "utsikten, sjön och återresan",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 87
+      }
+    },
+    {
+      "index": 94,
+      "id": "A3-VILLAGE-024",
+      "title": "Det som blev annorlunda",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-024.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-024.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-024 – Det som blev annorlunda",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "86df1ab8",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "utsikten, sjön och återresan",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 88
+      }
+    },
+    {
+      "index": 95,
+      "id": "A3-VILLAGE-025",
+      "title": "En idé",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-025.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-025.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-025 – En idé",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "d846e4ea",
+        "speakerIds": [
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "utsikten, sjön och återresan",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 89
+      }
+    },
+    {
+      "index": 96,
+      "id": "A3-VILLAGE-026",
+      "title": "På andra sidan",
+      "group": "VILLAGE",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/village/VILLAGE-026.png",
+        "publicUrl": "/assets/village/story-moments/act3/village/VILLAGE-026.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-VILLAGE-026 – På andra sidan",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "4227fc96",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "utsikten, sjön och återresan",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 90
+      }
+    },
+    {
+      "index": 97,
+      "id": "A3-PREP-001",
+      "title": "Det börjar likna något",
+      "group": "PREP",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/prep/PREP-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/prep/PREP-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PREP-001 – Det börjar likna något",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "c3d0c040",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve",
+          "Linus",
+          "Sol",
+          "Henning"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 91
+      }
+    },
+    {
+      "index": 98,
+      "id": "A3-PREP-002",
+      "title": "Det saknas fortfarande saker",
+      "group": "PREP",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/prep/PREP-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/prep/PREP-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PREP-002 – Det saknas fortfarande saker",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "65ebd82e",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve",
+          "Mira",
+          "Linus",
+          "Sol",
+          "Henning"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 92
+      }
+    },
+    {
+      "index": 99,
+      "id": "A3-PREP-003",
+      "title": "En bild som inte stämmer",
+      "group": "PREP",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/prep/PREP-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/prep/PREP-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PREP-003 – En bild som inte stämmer",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "e87ced4d",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 93
+      }
+    },
+    {
+      "index": 100,
+      "id": "A3-PREP-004",
+      "title": "En liten hemlighet",
+      "group": "PREP",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/prep/PREP-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/prep/PREP-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PREP-004 – En liten hemlighet",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "b9f8e3d0",
+        "speakerIds": [
+          "Mira",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 94
+      }
+    },
+    {
+      "index": 101,
+      "id": "A3-PREP-005",
+      "title": "Ett samtal med Mira",
+      "group": "PREP",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/prep/PREP-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/prep/PREP-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PREP-005 – Ett samtal med Mira",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "480775f9",
+        "speakerIds": [
+          "Mira",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 95
+      }
+    },
+    {
+      "index": 102,
+      "id": "A3-PREP-006",
+      "title": "Ett nytt besked",
+      "group": "PREP",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/prep/PREP-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/prep/PREP-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-PREP-006 – Ett nytt besked",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "ff96ce50",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve",
+          "Mira"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken och Miras butik",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 96
+      }
+    },
+    {
+      "index": 103,
+      "id": "A3-REVEAL-001",
+      "title": "Bara vi tre",
+      "group": "REVEAL",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/reveal/REVEAL-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/reveal/REVEAL-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-REVEAL-001 – Bara vi tre",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "23fa01ad",
+        "speakerIds": [
+          "Alve",
+          "Barnet",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 97
+      }
+    },
+    {
+      "index": 104,
+      "id": "A3-REVEAL-002",
+      "title": "Tänk om",
+      "group": "REVEAL",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/reveal/REVEAL-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/reveal/REVEAL-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-REVEAL-002 – Tänk om",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "9235831e",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 98
+      }
+    },
+    {
+      "index": 105,
+      "id": "A3-REVEAL-003",
+      "title": "Operation första dejten",
+      "group": "REVEAL",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/reveal/REVEAL-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/reveal/REVEAL-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-REVEAL-003 – Operation första dejten",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "79849ee6",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 99
+      }
+    },
+    {
+      "index": 106,
+      "id": "A3-REVEAL-004",
+      "title": "Hemligheten",
+      "group": "REVEAL",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/reveal/REVEAL-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/reveal/REVEAL-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-REVEAL-004 – Hemligheten",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "ed8ad30a",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 100
+      }
+    },
+    {
+      "index": 107,
+      "id": "A3-SECRET-001",
+      "title": "En mycket hemlig fråga",
+      "group": "SECRET",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/secret/SECRET-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/secret/SECRET-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-SECRET-001 – En mycket hemlig fråga",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "e9c1346a",
+        "speakerIds": [
+          "Mira",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Miras butik och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 101
+      }
+    },
+    {
+      "index": 108,
+      "id": "A3-SECRET-002",
+      "title": "Fotot avslöjar något",
+      "group": "SECRET",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/secret/SECRET-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/secret/SECRET-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-SECRET-002 – Fotot avslöjar något",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "dfea9713",
+        "speakerIds": [
+          "Mira",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Miras butik och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 102
+      }
+    },
+    {
+      "index": 109,
+      "id": "A3-SECRET-003",
+      "title": "Mira vet",
+      "group": "SECRET",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/secret/SECRET-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/secret/SECRET-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-SECRET-003 – Mira vet",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "c18619ca",
+        "speakerIds": [
+          "Nova",
+          "Mira",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Miras butik och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 103
+      }
+    },
+    {
+      "index": 110,
+      "id": "A3-SECRET-004",
+      "title": "Ett nytt problem",
+      "group": "SECRET",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/secret/SECRET-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/secret/SECRET-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-SECRET-004 – Ett nytt problem",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "7ec030e4",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Miras butik och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 104
+      }
+    },
+    {
+      "index": 111,
+      "id": "A3-SECRET-005",
+      "title": "En överraskning från Sol",
+      "group": "SECRET",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/secret/SECRET-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/secret/SECRET-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-SECRET-005 – En överraskning från Sol",
+        "occurrence": 2,
+        "selection": "latest_full_heading",
+        "selectedSceneDigestFnv1a32": "537223b6",
+        "speakerIds": [
+          "Sol",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Miras butik och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 105
+      }
+    },
+    {
+      "index": 112,
+      "id": "A3-SECRET-006",
+      "title": "Bara en liten sak (full dialogue; user's requested addition)",
+      "group": "SECRET",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/secret/SECRET-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/secret/SECRET-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-SECRET-006 – Bara en liten sak (full dialogue; user's requested addition)",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "54ba093c",
+        "speakerIds": [
+          "Mira",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "byn, Miras butik och folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_claim_per_beat",
+        "questNumber": 106
+      }
+    },
+    {
+      "index": 113,
+      "id": "A3-FAMILY-001",
+      "title": "Allt är klart",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-001 – Allt är klart",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "c416396c",
+        "speakerIds": [
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      },
+      "preBeatGuard": "single_final_story_purchase_gate_and_family_guidance"
+    },
+    {
+      "index": 114,
+      "id": "A3-FAMILY-002",
+      "title": "Henrik tar befälet",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-002 – Henrik tar befälet",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "4e865995",
+        "speakerIds": [
+          "Henrik",
+          "Alve",
+          "Nova",
+          "Sol",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 115,
+      "id": "A3-FAMILY-003",
+      "title": "Den vita skjortan",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-003 – Den vita skjortan",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "ba2b12e4",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve",
+          "Pappa"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 116,
+      "id": "A3-FAMILY-004",
+      "title": "Mamma kommer",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-004 – Mamma kommer",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "cf67e40f",
+        "speakerIds": [
+          "Nova",
+          "Mamma",
+          "Pappa"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 117,
+      "id": "A3-FAMILY-005",
+      "title": "2011",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-005 – 2011",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "de99d6e7",
+        "speakerIds": [
+          "Nova",
+          "Mamma",
+          "Pappa",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 118,
+      "id": "A3-FAMILY-006",
+      "title": "Returmatchen",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-006 – Returmatchen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "f965f228",
+        "speakerIds": [
+          "Pappa",
+          "Mamma",
+          "Nova",
+          "Alve",
+          "Henrik",
+          "Sol"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      },
+      "minigame": "shuffleboard"
+    },
+    {
+      "index": 119,
+      "id": "A3-FAMILY-007",
+      "title": "Det gamla fotografiet",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-007.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-007.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-007 – Det gamla fotografiet",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "362013d2",
+        "speakerIds": [
+          "Mira",
+          "Mamma",
+          "Pappa",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 120,
+      "id": "A3-FAMILY-008",
+      "title": "Världens bästa dag",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-008.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-008.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-008 – Världens bästa dag",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "1d5e6285",
+        "speakerIds": [
+          "Alve",
+          "Barnet",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 121,
+      "id": "A3-FAMILY-009",
+      "title": "Ett sista spel",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-009.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-009.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-009 – Ett sista spel",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "566e7c2d",
+        "speakerIds": [
+          "Henrik",
+          "Nova",
+          "Alve",
+          "Pappa",
+          "Mamma",
+          "Sol"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 122,
+      "id": "A3-FAMILY-010",
+      "title": "Den där vanliga frågan",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-010.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-010.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-010 – Den där vanliga frågan",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "e068d03a",
+        "speakerIds": [
+          "Pappa",
+          "Mamma",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 123,
+      "id": "A3-FAMILY-011",
+      "title": "Men ni hade ju roligt",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-011.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-011.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-011 – Men ni hade ju roligt",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "4fd05ec4",
+        "speakerIds": [
+          "Nova",
+          "Mamma",
+          "Pappa"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 124,
+      "id": "A3-FAMILY-012",
+      "title": "Det blev ju precis rätt",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-012.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-012.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-012 – Det blev ju precis rätt",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "e0f536ee",
+        "speakerIds": [
+          "Nova",
+          "Mamma",
+          "Pappa",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 125,
+      "id": "A3-FAMILY-013",
+      "title": "Mira kommer fram",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-013.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-013.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-013 – Mira kommer fram",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "69791069",
+        "speakerIds": [
+          "Mira",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 126,
+      "id": "A3-FAMILY-014",
+      "title": "Vi stannar här",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-014.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-014.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-014 – Vi stannar här",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "9fff305d",
+        "speakerIds": [
+          "Barnet",
+          "Nova",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 127,
+      "id": "A3-FAMILY-015",
+      "title": "Mamma kommer",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-015.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-015.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-015 – Mamma kommer",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "a9f5ef0e",
+        "speakerIds": [
+          "Mamma",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 128,
+      "id": "A3-FAMILY-016",
+      "title": "Den där kvällen",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-016.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-016.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-016 – Den där kvällen",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "8096cc98",
+        "speakerIds": [
+          "Mamma",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 129,
+      "id": "A3-FAMILY-017",
+      "title": "Det var aldrig ditt fel",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-017.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-017.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-017 – Det var aldrig ditt fel",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "350ac277",
+        "speakerIds": [
+          "Mamma",
+          "Nova"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 130,
+      "id": "A3-FAMILY-018",
+      "title": "Alla listorna",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-018.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-018.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-018 – Alla listorna",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "a97f3be7",
+        "speakerIds": [
+          "Nova",
+          "Mamma"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 131,
+      "id": "A3-FAMILY-019",
+      "title": "Pappa också",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-019.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-019.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-019 – Pappa också",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "c838b047",
+        "speakerIds": [
+          "Pappa",
+          "Nova",
+          "Mamma"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 132,
+      "id": "A3-FAMILY-020",
+      "title": "Ett fotografi till",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-020.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-020.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-020 – Ett fotografi till",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "d2b03dc6",
+        "speakerIds": [
+          "Pappa",
+          "Nova",
+          "Mamma",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "folkparken",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 133,
+      "id": "A3-FAMILY-021",
+      "title": "Vi gjorde vad vi kunde",
+      "group": "FAMILY",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/family/FAMILY-021.png",
+        "publicUrl": "/assets/village/story-moments/act3/family/FAMILY-021.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-FAMILY-021 – Vi gjorde vad vi kunde",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "8dbc6556",
+        "speakerIds": [
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "explicit_source_override_locked"
+      },
+      "narrativeLocationHint": "sjön och stadshamnen",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "family_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 134,
+      "id": "A3-EPILOG-001",
+      "title": "Ett meddelande",
+      "group": "EPILOG",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/epilog/EPILOG-001.png",
+        "publicUrl": "/assets/village/story-moments/act3/epilog/EPILOG-001.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-EPILOG-001 – Ett meddelande",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "4645840f",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "hamnen, arkaden och avskedet",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "one_new_epilogue_claim",
+        "questNumber": 107
+      }
+    },
+    {
+      "index": 135,
+      "id": "A3-EPILOG-002",
+      "title": "Rekordet",
+      "group": "EPILOG",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/epilog/EPILOG-002.png",
+        "publicUrl": "/assets/village/story-moments/act3/epilog/EPILOG-002.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-EPILOG-002 – Rekordet",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "a332feec",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet",
+          "Rebecka"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "hamnen, arkaden och avskedet",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "epilogue_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 136,
+      "id": "A3-EPILOG-003",
+      "title": "En utmaning",
+      "group": "EPILOG",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/epilog/EPILOG-003.png",
+        "publicUrl": "/assets/village/story-moments/act3/epilog/EPILOG-003.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-EPILOG-003 – En utmaning",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "a2f02c26",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve",
+          "Rebecka"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "hamnen, arkaden och avskedet",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "epilogue_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 137,
+      "id": "A3-EPILOG-004",
+      "title": "Två fotografier",
+      "group": "EPILOG",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/epilog/EPILOG-004.png",
+        "publicUrl": "/assets/village/story-moments/act3/epilog/EPILOG-004.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-EPILOG-004 – Två fotografier",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "3a1c3a21",
+        "speakerIds": [
+          "Nova",
+          "Barnet",
+          "Alve"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "hamnen, arkaden och avskedet",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "epilogue_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 138,
+      "id": "A3-EPILOG-005",
+      "title": "En ny utmaning",
+      "group": "EPILOG",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/epilog/EPILOG-005.png",
+        "publicUrl": "/assets/village/story-moments/act3/epilog/EPILOG-005.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-EPILOG-005 – En ny utmaning",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "a7daa33c",
+        "speakerIds": [
+          "Rebecka",
+          "Nova",
+          "Alve",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "hamnen, arkaden och avskedet",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "epilogue_continuation",
+        "questNumber": null
+      }
+    },
+    {
+      "index": 139,
+      "id": "A3-EPILOG-006",
+      "title": "Tre kompisar",
+      "group": "EPILOG",
+      "image": {
+        "repositoryPath": "public/assets/village/story-moments/act3/epilog/EPILOG-006.png",
+        "publicUrl": "/assets/village/story-moments/act3/epilog/EPILOG-006.png"
+      },
+      "script": {
+        "document": "docs/ACT3_STORY_MANIFEST.md",
+        "headingMarker": "### A3-EPILOG-006 – Tre kompisar",
+        "occurrence": 1,
+        "selection": "only_full_heading",
+        "selectedSceneDigestFnv1a32": "721d93e5",
+        "speakerIds": [
+          "Alve",
+          "Nova",
+          "Barnet"
+        ],
+        "reviewStatus": "line_review_before_runtime_export"
+      },
+      "narrativeLocationHint": "hamnen, arkaden och avskedet",
+      "mapLocationId": null,
+      "progression": {
+        "gateKind": "epilogue_continuation",
+        "questNumber": null
+      }
+    }
+  ]
+}

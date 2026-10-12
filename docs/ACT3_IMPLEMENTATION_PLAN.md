@@ -1,5 +1,8 @@
 # Akt 3 — Implementationsbeslut och plan
 
+**Statusuppdatering 2026-10-12 (innehållssteg 1):** docs/ACT3_CONTENT_REGISTRY.md och src/game/act3ContentRegistry.json inventerar 140 kronologiska beats, 139 uppladdade scenbilder och tre okopplade extrabilder. OPEN-000 är kapitelkort. Dialogkällorna är spårbara med drifttest, men line-by-line QA och full runtime-dialogexport återstår. Kartplatstriggers är ännu inte godkända och ligger uttryckligen som null. Stadskarta, storyspelning, questgrindar och minispel är fortfarande EJ IMPLEMENTERADE.
+
+
 
 **Kronologisk helhetskarta (huvudordning + 1:1-quest-beats LÅSTA 2026-10-11):** `docs/ACT3_GAMEFLOW_MAP_DRAFT_2026-10-11.md` beskriver hela OPEN→EPILOG. **Användaren har godkänt de stora blockens ordning**, inklusive första stadsdagen → första hemresan utan Nova → skattjakten → 2011-upptäckten → dramat/arkaden → Novas första bybesök → förberedelserna → familjedagen → epilogen. **Fem stadsplatser och exakt ett IRL-quest per beat är nu LÅSTA**; ikonernas exakta framträdande, pixelpositioner och transportsparning är fortfarande designfrågor, inte implementerade system.
 
