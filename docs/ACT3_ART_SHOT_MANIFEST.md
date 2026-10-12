@@ -46,7 +46,7 @@ Production rules: `docs/ART_PIPELINE_V2.md`.
 
 ## Verified canonical character sheets
 
-Directory: `public/assets/character-sheets/` on branch `nova/runtime-architecture-v1`. Confirmed individually through GitHub repository file API on 2026-10-11.
+Directory: `public/assets/character-sheets/` on branch `nova/runtime-architecture-v1`. Confirmed individually through GitHub repository file API, with Rebecka and the full twelve-character set rechecked on 2026-10-12.
 
 | Character | Verified file |
 | --- | --- |
@@ -61,8 +61,9 @@ Directory: `public/assets/character-sheets/` on branch `nova/runtime-architectur
 | Novas mamma | `public/assets/character-sheets/mamma-nova.png` |
 | Novas pappa | `public/assets/character-sheets/pappa-nova.png` |
 | Henrik | `public/assets/character-sheets/henrik.png` |
+| Rebecka | `public/assets/character-sheets/rebecka.png` |
 
-All eleven paths exist in the repository. File existence is verified, **not** image appearance, direct availability to the image-generation model, or identity fidelity. For FAMILY-007 prioritize loading and visually comparing `nova.png`, `mamma-nova.png`, `pappa-nova.png`, `mira.png`, `alve.png`, and `barnet.png` before generating. Previous attempts remain rejected.
+All twelve paths exist in the repository; Rebecka's file was verified on 2026-10-12. File existence is verified, **not** image appearance, direct availability to the image-generation model, or identity fidelity. For FAMILY-007 prioritize loading and visually comparing `nova.png`, `mamma-nova.png`, `pappa-nova.png`, `mira.png`, `alve.png`, and `barnet.png` before generating. Previous attempts remain rejected.
 
 Environmental references for the park, shuffleboard and 2011 props still need asset-path verification separately.
 
@@ -79,5 +80,7 @@ Read `docs/ACT3_EPILOG_ART_HANDOVER_2026-10-12.md` **before any EPILOG art gener
 | EPILOG-004 | TO_PREPARE | Three children on couch; Nova displays FAMILY-020 photo on phone; bowling/family discussion |
 | EPILOG-005 | TO_PREPARE | Rebecka and Nova challenge at arcade; don't invent minigame result |
 | EPILOG-006 | TO_PREPARE | Friends at harbor, Nova waves as boat leaves; new FAMILY-020 photo on her phone for ending |
+
+**Reference registry correction 2026-10-12:** All twelve sheets are registered under `public/assets/character-sheets/`, including Rebecka, Nova, Alve and Barnet; GitHub presence does not mean renderer image inputs were attached. The original eight are also present under the historical village path with matching blobs. No existing accepted images were changed.
 
 **Hard stops:** Never show Barnet face or profile. Identity sheets must truly be visible to generator (uploaded/accessible refs alone are not proof of consumption). Exact script beat and cast/location first. Reject anything that places EPILOG-002 outside arcade or EPILOG-003 without Nova. GitHub upload is user's manual step; no image repo existence verified. 
