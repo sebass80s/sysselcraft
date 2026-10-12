@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "characterSheetRoot": "public/assets/village/character-sheets",
+  "characterSheetRoot": "public/assets/character-sheets",
   "globalRules": [
     "Use the supplied canonical character sheets as the sole authority for recurring character identity, clothing, proportions and silhouette.",
     "Do not reinterpret recurring characters from runtime sprites, story images or environment references.",
@@ -17,51 +17,71 @@
   "characters": {
     "alve": {
       "displayName": "Alve",
-      "characterSheet": "public/assets/village/character-sheets/alve.png",
+      "characterSheet": "public/assets/character-sheets/alve.png",
       "runwayAssetName": "alve.png (1)",
       "chatLibraryPath": "/SysselCraft/Art References/characters/alve.png"
     },
     "barnet": {
       "displayName": "Barnet",
-      "characterSheet": "public/assets/village/character-sheets/barnet.png",
+      "characterSheet": "public/assets/character-sheets/barnet.png",
       "runwayAssetName": "barnet.png (1)",
       "chatLibraryPath": "/SysselCraft/Art References/characters/barnet.png"
     },
     "henning": {
       "displayName": "Henning",
-      "characterSheet": "public/assets/village/character-sheets/henning.png",
+      "characterSheet": "public/assets/character-sheets/henning.png",
       "runwayAssetName": "henning.png (1)",
       "chatLibraryPath": "/SysselCraft/Art References/characters/henning.png"
     },
     "linus": {
       "displayName": "Linus",
-      "characterSheet": "public/assets/village/character-sheets/linus.png",
+      "characterSheet": "public/assets/character-sheets/linus.png",
       "runwayAssetName": "linus.png (1)",
       "chatLibraryPath": "/SysselCraft/Art References/characters/linus.png"
     },
     "mira": {
       "displayName": "Mira",
-      "characterSheet": "public/assets/village/character-sheets/mira.png",
+      "characterSheet": "public/assets/character-sheets/mira.png",
       "runwayAssetName": "mira.png (1)",
       "chatLibraryPath": "/SysselCraft/Art References/characters/mira.png"
     },
     "nova": {
       "displayName": "Nova",
-      "characterSheet": "public/assets/village/character-sheets/nova.png",
+      "characterSheet": "public/assets/character-sheets/nova.png",
       "runwayAssetName": "nova.png (1)",
       "chatLibraryPath": "/SysselCraft/Art References/characters/nova.png"
     },
     "puppy": {
       "displayName": "Valpen",
-      "characterSheet": "public/assets/village/character-sheets/puppy.png",
+      "characterSheet": "public/assets/character-sheets/puppy.png",
       "runwayAssetName": "puppy.png (1)",
       "chatLibraryPath": "/SysselCraft/Art References/characters/puppy.png"
     },
     "sol": {
       "displayName": "Sol",
-      "characterSheet": "public/assets/village/character-sheets/sol.png",
+      "characterSheet": "public/assets/character-sheets/sol.png",
       "runwayAssetName": "sol.png (1)",
       "chatLibraryPath": "/SysselCraft/Art References/characters/sol.png"
+    },
+    "rebecka": {
+      "displayName": "Rebecka",
+      "characterSheet": "public/assets/character-sheets/rebecka.png",
+      "chatLibraryPath": "/SysselCraft/Art References/characters/rebecka.png"
+    },
+    "mamma-nova": {
+      "displayName": "Novas mamma",
+      "characterSheet": "public/assets/character-sheets/mamma-nova.png",
+      "chatLibraryPath": "/SysselCraft/Art References/characters/mamma-nova.png"
+    },
+    "pappa-nova": {
+      "displayName": "Novas pappa",
+      "characterSheet": "public/assets/character-sheets/pappa-nova.png",
+      "chatLibraryPath": "/SysselCraft/Art References/characters/pappa-nova.png"
+    },
+    "henrik": {
+      "displayName": "Henrik",
+      "characterSheet": "public/assets/character-sheets/henrik.png",
+      "chatLibraryPath": "/SysselCraft/Art References/characters/henrik.png"
     }
   },
   "productionRoute": "renderer-independent",
