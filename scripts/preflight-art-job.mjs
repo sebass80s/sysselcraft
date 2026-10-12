@@ -12,9 +12,11 @@ if(job.version!==2 || !job.beatId || !job.prompt || !job.outputContract?.repoOut
 if(ev.beatId!==job.beatId) block("Beat ID mismatch");
 let story;
 try { story=fs.readFileSync(args.story,"utf8"); } catch(e) { block("Missing canonical story: "+e.message); }
-const heading="### "+job.beatId+" —";
+const headingPrefixes=["### "+job.beatId+" —", "### "+job.beatId+" –"];
+const storyLines=story.split("\n");
+const heading=headingPrefixes.find(h=>storyLines.some(line=>line.startsWith(h+" ")));
+if(!heading) block("Exact story heading missing: "+headingPrefixes.join(" OR "));
 const index=story.indexOf(heading);
-if(index<0) block("Exact story heading missing: "+heading);
 const next=story.indexOf("\n### ",index+heading.length);
 const scene=story.slice(index,next<0?undefined:next);
 if(!Array.isArray(ev.sceneQuotes) || ev.sceneQuotes.length<2 || ev.sceneQuotes.some(q=>typeof q!=="string" || q.trim().length<12 || !scene.includes(q))) block("Verbatim story evidence missing");
