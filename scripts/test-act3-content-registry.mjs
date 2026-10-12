@@ -69,7 +69,15 @@ const all=[];
 function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())walk(p);else if(p.endsWith(".png"))all.push(p)}}
 walk("public/assets/village/story-moments/act3");
 assert.equal(all.length,142);
-assert.deepEqual(all.filter(p=>!paths.has(p)).sort(),extras.slice().sort());
+// macOS may return decomposed Unicode filenames (NFD), while Git keeps NFC.
+// Compare canonical equivalents without weakening the image count/path checks.
+const normalizedFiles=all.map(p=>p.normalize("NFC"));
+assert.equal(new Set(normalizedFiles).size,all.length,"Unicode-equivalent filenames collide");
+assert.deepEqual(
+ normalizedFiles.filter(p=>!paths.has(p)).sort(),
+ extras.map(p=>p.normalize("NFC")).sort(),
+ "Unexpected/missing extra illustrations"
+);
 const duplicate=registry.intentionalImageReuse[0].map(id=>registry.beats.find(r=>r.id===id).image.repositoryPath);
 assert.equal(duplicate.length,3);
 assert.ok(fs.readFileSync(duplicate[0]).equals(fs.readFileSync(duplicate[1])),"FAMILY-015/016 must match");
