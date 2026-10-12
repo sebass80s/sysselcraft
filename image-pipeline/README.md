@@ -95,15 +95,13 @@ Canonical recurring-character sheets are registered in:
 
 `image-pipeline/character-registry.json`
 
-Their repository sources live under:
+Their **canonical** repository sources now live under:
 
-`public/assets/village/character-sheets/`
+`public/assets/character-sheets/`
 
-The same eight canonical sheets are also persisted in ChatGPT Library under:
+The original eight characters also have historical duplicate blobs under `public/assets/village/character-sheets/`; no image files were moved or deleted. All twelve current character sheets (including Rebecka, Novas mamma/pappa and Henrik) were individually verified in the canonical root on 2026-10-12. The registry and the art-job builder now agree on this root.
 
-`/SysselCraft/Art References/characters/`
-
-This means a later ChatGPT conversation can retrieve the real images as image inputs without asking the user to upload them again.
+Library paths under `/SysselCraft/Art References/characters/` are **reference locators, not proof that the images exist there or are attached to a renderer**. Earlier conversations described eight character sheets being saved there, but any new image-production session must establish actual visible image inputs for *every* cast member. Rebecka and other later additions especially require verification, or a reference upload in the active image chat. No silent text-only substitution.
 
 Approved ChatGPT continuity images belong under:
 
