@@ -1235,10 +1235,10 @@ Name: **Henrik Andersson**, around 70, familiar to Nova since early childhood. F
 
 Status: Canonical story direction and approved dialogue; runtime and art not implemented. Follows A3-PARK-010. The full approved lines are in the 2026-10-08 conversation and must not be improvised during implementation.
 
-Sequence:
-- A3-CITY-001 "Stadens bästa ställe": Nova leads Barnet and Alve to a shop selling old games, comics and consoles. She enjoys playing there and shows her mischievous, competitive side.
-- A3-CITY-002 "Utmaningen": A retro arcade machine displays Nova's high score NOV. Barnet challenges her; Alve provides brief comic relief. An additional arcade minigame is NOT an implementation requirement.
-- A3-CITY-003 "Hemvägen": Nova says her parents are divorced and live in different parts of the city; her mother lives a few blocks away and father near the school. She mentions the ordinary inconvenience of possessions split between two homes. She invites the children to her mother's apartment.
+Sequence (overridden by the user-approved full dialogue in section 11AX and `docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md`):
+- A3-CITY-001 "Stadens bästa ställe": Nova leads Barnet and Alve into a bright, cosy retro games shop. Old consoles, games, comics and controllers are in the display; no arcade or highscore appears.
+- A3-CITY-002 "Gamla favoriter": Inside the shop, Nova discusses old games, memories of shopping with her father, an unusual joystick and a pricey collectible. No playable machine, NOV signature, arcade reveal or challenge.
+- A3-CITY-003 "Hemvägen": After leaving the shop, Nova says her parents are divorced, live in separate apartments, and she sometimes forgets belongings between homes. She invites the children to her mother's apartment.
 - A3-HOME-001 "Oväntat besök": Nova brings Barnet and Alve home, introduces them as new friends met at the harbour, says they visited the park and played minigolf, and deliberately does NOT mention the planned family celebration. Her mother offers juice and buns, lovingly teases Nova about her minigolf skill.
 - A3-HOME-002 "Mira": At the kitchen table, Barnet mentions the recently reopened village shop and its shopkeeper Mira. Nova's mother recognizes Mira from when they worked together at a store in the city years ago. They lost touch after Mira moved away. She is surprised to learn Mira moved to the village RECENTLY. She recalls Mira once finding thirty matching chairs for an inauguration. She asks them to send her greetings.
 - A3-HOME-003 "Hemligheten": Nova quietly warns Barnet not to reveal the party. Mira may learn only that it is a surprise and must not tell her mother. No photos before completion. Nova's list of people in the know starts with Nova herself, then Barnet. Her mother hears whispering; Nova covers by claiming Barnet needs more minigolf practice.
@@ -8188,11 +8188,11 @@ Utanför butiken går Barnet, Nova och Alve vidare.
 Nova skrattar och stoppar mobilen i väskan utan att titta på den.
 
 
-## 11AX. A3-CITY-001–002 KOMPLETTERINGAR; A3-CITY-003 GODKÄND ORIGINALDIALOG
+## 11AX. A3-CITY-001–003 — SENAST GODKÄNDA DIALOG 2026-10-10
 
-**Status:** A3-CITY-001–002 är nyskrivna kompletteringar. **A3-CITY-003 är användargodkänd originaldialog** och ersätter den tidigare kompletteringen.
+**Kanonisk ersättning:** Detta är den användargodkända fullständiga dialogen från `docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md`, införd ordagrant utan att ändra replikerna. Äldre CITY-dialog med highscore, NOV eller spelutmaning är upphävd. Rebecka och den dolda arkaden introduceras först efter DRAMA-010 i ARCADE-001–006.
 
-### A3-CITY-001 – Stadens bästa ställe
+### A3-CITY-001 — Stadens bästa ställe
 
 Nova leder Barnet och Alve längs en gata med små affärer.
 
@@ -8202,55 +8202,103 @@ Nova leder Barnet och Alve längs en gata med små affärer.
 
 **Nova:** Du har redan frågat fyra gånger.
 
-De stannar vid en butik vars fönster är fullt av gamla tv-spel, serietidningar och handkontroller.
+De stannar framför en liten butik. I skyltfönstret finns gamla tv-spel, konsoler, serietidningar och handkontroller.
 
 **Barnet:** Oj, vad mycket spel!
 
-**Nova:** Jag vet. Jag älskar gamla spel.
+**Nova:** Jag vet! Det här är en av mina favoritbutiker.
 
-**Alve:** Kan man spela något här?
+**Alve:** Säljer de verkligen så gamla spel?
 
-**Nova:** Vänta bara.
+**Nova:** Japp. Vissa är äldre än vi är.
 
-### A3-CITY-002 – Utmaningen
+**Alve:** Fungerar de fortfarande?
 
-Nova pekar på en spelmaskin inne i butiken. På topplistan står NOV.
+**Nova:** De flesta. Kom, så ska ni få se!
 
-**Barnet:** Är NOV du?
+Nova öppnar dörren och går in.
 
-**Nova:** Japp. Tre bokstäver, det är allt man får.
+### A3-CITY-002 — Gamla favoriter
 
-**Alve:** Jag ska skriva ALV.
+Inne i butiken står hyllor fyllda med spelkartonger, gamla konsoler, filmer och serietidningar. På en vägg hänger handkontroller i olika färger och former.
 
-**Nova:** Då måste du först få poäng.
+Nova går fram till en hylla.
 
-**Alve:** Jag har massor av poäng hemma.
+**Nova:** Kolla här! Det här spelet brukade jag spela med pappa.
 
-**Barnet:** Inte i det här spelet!
+**Barnet:** Vad går det ut på?
 
-Nova räcker över kontrollen.
+**Nova:** Man ska ta sig genom olika banor och samla saker. Och försöka att inte ramla ner i hål.
 
-**Nova:** Vågar du försöka slå mig?
+**Alve:** Det sista brukar vara ganska svårt.
 
-**Barnet:** Självklart.
+**Nova:** För dig, ja.
 
-*Valfri spelutmaning eller kort dialogbaserad spelrunda. Ingen separat spelmotor krävs för just detta besök.*
+Alve hittar en märklig gammal handkontroll med en stor spak och flera knappar.
 
-**Nova:** Okej, nästa gång får du revansch.
+**Alve:** Vad är det här för något?
 
-**Alve:** Och jag vill försöka få in mitt namn!
+**Nova:** En joystick.
 
-### A3-CITY-003 – Hemvägen
+**Alve:** Varför är den så stor?
 
-**KANONISK DIALOG: användargodkänd 2026-10-10.** Den tidigare nyskrivna kompletteringen är borttagen och ersatt med denna originaldialog från `PDF_RECOVERY_A3-CITY.md` (PDF-sida 27). Använd endast denna version.
+**Nova:** För att man byggde saker ordentligt förr.
+
+**Barnet:** Det där lät som något Henrik skulle säga.
+
+Nova skrattar.
+
+**Alve:** Får man använda den till alla spel?
+
+**Nova:** Nej. Bara vissa.
+
+**Alve:** Då var det ju inte särskilt smart.
+
+Nova fortsätter längs hyllorna.
+
+**Nova:** Jag älskar sådana här gamla grejer. Pappa samlar på retrospel. Vi brukade leta efter dem tillsammans.
+
+**Barnet:** Gör ni det fortfarande?
+
+**Nova:** Ibland. Fast inte lika ofta.
+
+Hon hittar en gammal spelkartong och visar upp den.
+
+**Nova:** Den här hade vi hemma! Jag trodde inte att den fanns kvar någonstans.
+
+**Alve:** Ska du köpa den?
+
+Nova tittar på prislappen.
+
+**Nova:** Nej. Inte till det priset.
+
+**Alve:** Hur mycket kostar den?
+
+Nova visar honom.
+
+**Alve:** VA?! För en kartong?
+
+**Nova:** Det är ett spel i också!
+
+**Alve:** Det hoppas jag verkligen.
+
+De fortsätter titta bland hyllorna.
+
+### A3-CITY-003 — Hemvägen
 
 De kommer ut ur spelbutiken en stund senare.
 
-**Nova:** Okej, du var faktiskt ganska bra.
+**Alve:** Jag fattar fortfarande inte att det där gamla spelet var så dyrt.
 
-**Barnet:** Du slog ju mitt rekord direkt.
+**Nova:** Det är ganska ovanligt.
 
-**Nova:** Jag har ett rykte att försvara.
+**Barnet:** Du verkar kunna jättemycket om gamla spel.
+
+**Nova:** Jag har haft en bra lärare.
+
+**Alve:** Din pappa?
+
+**Nova:** Japp.
 
 Nova tittar på mobilen.
 
