@@ -26,4 +26,18 @@ const script=fs.readFileSync("scripts/preflight-art-job.mjs","utf8");
 assert.match(script,/Final renderer prompt differs from LOCKED scene contract/);
 assert.match(script,/approvedFinalPromptSha256/);
 assert.match(script,/attached-to-renderer/);
+// The chapter-three cast must be resolvable from the same verified PNG root.
+const registry=JSON.parse(fs.readFileSync("image-pipeline/character-registry.json","utf8"));
+const canonicalRoot="public/assets/character-sheets";
+assert.equal(registry.characterSheetRoot,canonicalRoot);
+for(const id of ["nova","barnet","alve","mira","sol","linus","henning","puppy","rebecka","mamma-nova","pappa-nova","henrik"]){
+ const ref=registry.characters[id];
+ assert.ok(ref,`Unregistered canonical character: ${id}`);
+ assert.equal(ref.characterSheet,`${canonicalRoot}/${id}.png`);
+ assert.ok(fs.existsSync(ref.characterSheet),`Missing canonical reference PNG for ${id}`);
+ assert.ok(typeof ref.chatLibraryPath==="string" && ref.chatLibraryPath.length>0,`No expected Library locator for ${id}`);
+}
+const pipelineSource=fs.readFileSync("scripts/lib/art-pipeline.mjs","utf8");
+assert.match(pipelineSource,/CANONICAL_SHEET_ROOT = "public\\/assets\\/character-sheets\\/"/);
+
 console.log("art pipeline 2.1 contract regression: PASS");
