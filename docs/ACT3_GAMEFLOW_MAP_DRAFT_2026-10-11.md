@@ -106,7 +106,7 @@ Användaren godkände uttryckligen att denna övergripande ordning ”känns rä
 
 ### 1B. Questloop – alltid ett IRL-quest per individuellt beat
 
-Använd det **senaste låsta kontraktet överst i detta dokument**. Varje nytt godkänt/inlämnat quest kan låsa upp nästa **enskilda beat-ID** från PARK-002 till SECRET-006. Inget beat i denna del är gratis eller grupperas med ett annat beat under samma quest. Spelaren kan genomföra bild, dialog och minispel **inne i** ett redan upplåst beat utan extra quest. FAMILY/EPILOG kräver inga nya quests. Om antalet beat-ID:n ändras ska totalen (nu **106**) räknas om.
+Använd det **senaste låsta kontraktet överst i detta dokument**. Varje nytt godkänt/inlämnat quest kan låsa upp nästa **enskilda beat-ID** från PARK-002 till SECRET-006. Inget beat i denna del är gratis eller grupperas med ett annat beat under samma quest. Spelaren kan genomföra bild, dialog och minispel **inne i** ett redan upplåst beat utan extra quest. FAMILY-001–021 kräver inga nya quests inom finalen. **Ett separat nytt godkänt quest krävs därefter för att låsa upp EPILOG-001–006**, som spelas sammanhängande utan fler quests. Totalt nu **107 godkända questinstanser** (106 individuella + en epiloggrind). Om antalet beat-ID:n ändras måste antalet räknas om.
 
 ### 1C. Förberedelse-/inköpsmodell
 
