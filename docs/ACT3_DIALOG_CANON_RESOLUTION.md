@@ -4,7 +4,7 @@
 
 ## Särskilt låsta overridebeslut
 
-- **A3-CITY-001–003 (2026-10-10):** Ny uttryckligen godkänd fullständig dialog finns i `docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md`. Denna fil **ersätter** äldre CITY-dialoger i `ACT3_STORY_MANIFEST.md`, inklusive CITY-003:s tidigare tävlingsöppning. Första besöket är en ljus retrospelbutik utan highscore eller spelutmaning. Dold ARCADE/Rebecka/NOV kommer efter DRAMA-010 och före DRAMA-011. Använd aldrig äldre CITY-002:s spelmaskinsdialog.
+- **A3-CITY-001–003 (2026-10-10):** Ny uttryckligen godkänd fullständig dialog finns i `docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md` och är nu även införd ordagrant i `ACT3_STORY_MANIFEST.md` avsnitt **11AX**. Denna ersätter äldre CITY-001–003, inklusive CITY-003:s tidigare tävlingsöppning. Första besöket är en ljus retrospelbutik utan highscore eller spelutmaning. Dold ARCADE/Rebecka/NOV kommer efter DRAMA-010 och före DRAMA-011. Använd aldrig äldre CITY-002:s spelmaskinsdialog.
 
 
 - VILLAGE-004–008 och VILLAGE-010: PDF-originalet är godkänt och aktivt i 11AR sedan 2026-10-10. Nyskrivna ersättningar har tagits bort. VILLAGE-009 finns separat i 11N.
@@ -38,9 +38,9 @@ Inventerade **140** identifierade unika beat-ID:n (2026-10-11), inklusive separa
 | A3-BOAT-003 | 1 | 11D | Jämför PDF-original mot senare ändringsbeslut |
 | A3-BOAT-004 | 1 | 11D | Jämför PDF-original mot senare ändringsbeslut |
 | A3-BOAT-005 | 1 | 11D | Jämför PDF-original mot senare ändringsbeslut |
-| A3-CITY-001 | 1 | 11AX | Jämför PDF-original mot senare ändringsbeslut |
-| A3-CITY-002 | 1 | 11AX | Jämför PDF-original mot senare ändringsbeslut |
-| A3-CITY-003 | 1 | 11AX | **LÅST 2026-10-10:** användargodkänd originaldialog från PDF sida 27; äldre nyskriven version borttagen |
+| A3-CITY-001 | 1 | 11AX | **LÅST 2026-10-10:** godkänd butiksscen, ingen arkad eller highscore; ordagrant synkad med separat godkänd fil |
+| A3-CITY-002 | 1 | 11AX | **LÅST 2026-10-10:** Gamla favoriter i retrospelbutiken; ingen NOV-/spelmaskinsutmaning |
+| A3-CITY-003 | 1 | 11AX | **LÅST 2026-10-10:** senare godkänd Hemvägen från separat kanonfil, superseder äldre CITY-003-dialog från PDF |
 | A3-DRAMA-001 | 1 | 11J | Manusets senaste förekomst |
 | A3-DRAMA-002 | 1 | 11J | Manusets senaste förekomst |
 | A3-DRAMA-003 | 1 | 11J | Manusets senaste förekomst |
