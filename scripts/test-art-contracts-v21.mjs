@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 const story=fs.readFileSync("docs/ACT3_STORY_MANIFEST.md","utf8");
-const files=["A3-PARK-002","A3-PARK-003"];
+const files=["A3-PARK-002","A3-PARK-003","A3-EPILOG-003"];
 for(const beatId of files){
  const c=JSON.parse(fs.readFileSync(`image-pipeline/contracts/${beatId}.json`,"utf8"));
  const start=story.indexOf(c.storyHeading);
@@ -10,7 +10,8 @@ for(const beatId of files){
  const end=story.indexOf("\n### ",start+c.storyHeading.length);
  const scene=story.slice(start,end<0?undefined:end);
  assert.ok(c.verbatimStoryQuotes.length>=2 && c.verbatimStoryQuotes.every(q=>scene.includes(q)),`Script evidence drift: ${beatId}`);
- assert.deepEqual([...c.cast].sort(),["alve","barnet","nova"].sort());
+ const expectedCast=beatId==="A3-EPILOG-003" ? ["alve","barnet","nova","rebecka"] : ["alve","barnet","nova"];
+ assert.deepEqual([...c.cast].sort(),expectedCast.sort());
  assert.ok(c.requiredVisuals.every(x=>c.finalPrompt.toLowerCase().includes(x.toLowerCase())),`Missing required visual: ${beatId}`);
  assert.ok(c.forbiddenVisuals.every(x=>!c.finalPrompt.toLowerCase().includes(x.toLowerCase())),`Forbidden visual in prompt: ${beatId}`);
  assert.ok(c.finalPrompt.includes("Barnet") && c.finalPrompt.includes("Nova") && c.finalPrompt.includes("Alve"));
@@ -26,6 +27,7 @@ const script=fs.readFileSync("scripts/preflight-art-job.mjs","utf8");
 assert.match(script,/Final renderer prompt differs from LOCKED scene contract/);
 assert.match(script,/approvedFinalPromptSha256/);
 assert.match(script,/attached-to-renderer/);
+assert.ok(script.includes('const headingPrefixes=["### "+job.beatId+" —", "### "+job.beatId+" –"];'));
 // The chapter-three cast must be resolvable from the same verified PNG root.
 const registry=JSON.parse(fs.readFileSync("image-pipeline/character-registry.json","utf8"));
 const canonicalRoot="public/assets/character-sheets";
