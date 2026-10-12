@@ -59,6 +59,26 @@ for(const n of [19,20,21,22]){
  assert.ok(row.script.headingMarker.startsWith("## "),"Must use restored 11AU dialogue");
 }
 assert.equal(registry.beats.find(r=>r.id==="A3-VILLAGE-009").script.selection,"standalone_locked_section");
+const drama007=registry.beats.find(r=>r.id==="A3-DRAMA-007");
+const drama007Text=selectedScene(drama007);
+const drama007CanonLines=[
+ "Jag behöver ingen hjälp.",
+ "Du behöver inte göra allt själv.",
+ "Det är lätt för dig att säga.",
+ "Jag gjorde typ exakt samma grej.",
+ "Försökte fixa allt själv.",
+ "Inte förrän någon började hjälpa mig.",
+ "Det stod typ still där ute innan han kom.",
+ "Sen kom han genom skogen den där gången och…",
+ "Men jag hade nog fortfarande stått där och slagit snett med hammaren om han inte dykt upp.",
+];
+let lastDramaLine=-1;
+for(const line of drama007CanonLines){
+ const idx=drama007Text.indexOf(line);
+ assert.ok(idx>lastDramaLine, "A3-DRAMA-007 callback missing or out of order: "+line);
+ lastDramaLine=idx;
+}
+assert.ok(!selectedScene(registry.beats.find(r=>r.id==="A3-PREP-003")).includes("Jag gjorde typ exakt samma grej."), "Callback belongs in DRAMA-007, not PREP-003");
 const extras=registry.unusedIllustrations.map(x=>x.repositoryPath);
 assert.deepEqual(extras.slice().sort(),[
  "public/assets/village/story-moments/act3/open/Golden-Hour Harbor Conversation.png",

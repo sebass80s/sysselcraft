@@ -1,5 +1,7 @@
 # Akt 3: Innehållsregister och kodningshandover (2026-10-12)
 
+**Ny dialogkontinuitet 2026-10-12:** `A3-DRAMA-007` har utökats med en användarvald Alve/Nova-dialog om stugan, Barnets hjälp och att inte göra allting själv. Den ligger i det aktiva manusavsnittet, efter återlämnat anteckningsblock. **DRAMA-008 och övriga beats är oförändrade.** Referensdigest för `A3-DRAMA-007` uppdaterades utan att ändra någon quest- eller bildkoppling. Se `ACT3_DIALOG_CANON_RESOLUTION.md`.
+
 **Status:** Maskinläsbar innehålls- och bildinventering verifierad mot GitHub. Detta är INTE en export av färdiggranskade runtime-dialoger. Berättelsen och Runtime 1.1 har inte ändrats.
 
 ## Filer och roller

@@ -2808,6 +2808,53 @@ Nova stänger blocket.
 
 **Nova:** Jag vill inte bli så där arg. Jag var det så ofta förr, känns det som.
 
+Nova ser ner på listorna i anteckningsblocket.
+
+**Barnet:** Vi kan fortfarande hjälpa till med festen.
+
+**Nova:** Jag behöver ingen hjälp.
+
+**Alve:** Du behöver inte göra allt själv.
+
+**Nova:** Det är lätt för dig att säga.
+
+**Alve:** Nä.
+
+Han tittar på Barnet.
+
+**Alve:** Jag gjorde typ exakt samma grej.
+
+**Nova:** Vadå?
+
+**Alve:** Försökte fixa allt själv.
+
+**Nova:** Gick det?
+
+Alve blir tyst en stund.
+
+**Alve:** Inte förrän någon började hjälpa mig.
+
+Nova tittar på Barnet.
+
+**Alve:** Det stod typ still där ute innan han kom.
+
+**Nova:** Var?
+
+**Alve:** Vid sjön. Stugan. Allt.
+
+**Alve:** Sen kom han genom skogen den där gången och…
+
+Alve rycker lite på axlarna.
+
+**Alve:** Sen började saker hända.
+
+**Nova:** För att han fixade allt?
+
+**Alve:** Nä.
+
+**Alve:** Men jag hade nog fortfarande stått där och slagit snett med hammaren om han inte dykt upp.
+
+Nova tittar på Barnet och sedan ner på anteckningsblocket. Hon säger inget på en stund.
 ### A3-DRAMA-008 – Inte ert fel
 
 De sätter sig på en låg mur utanför huset.

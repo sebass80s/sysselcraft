@@ -4,6 +4,8 @@
 
 ## Särskilt låsta overridebeslut
 
+- **A3-DRAMA-007 (2026-10-12, användarvald placering):** Efter att Nova fått tillbaka sitt anteckningsblock och bett om ursäkt berättar Alve kort om hur han försökte rädda sin stuga ensam och att det först lossnade när Barnet kom genom skogen. Dialogblocket från **”Jag behöver ingen hjälp.”** till **”... slagit snett med hammaren om han inte dykt upp.”** är infört **ordagrant från användarens text** i `ACT3_STORY_MANIFEST.md`. En kort uppbyggnad och avslutande scenanvisning är redaktionell. Detta är nu aktiv kanon för DRAMA-007; inga andra DRAMA-beats, bilder, questgrindar eller FAMILY-avslut ändras. Replikerna ska inte av misstag flyttas till PREP-003. Alve berättar konkret, inte som en terapeut, och Nova behåller sin egen senare insikt.
+
 - **A3-CITY-001–003 (2026-10-10):** Ny uttryckligen godkänd fullständig dialog finns i `docs/ACT3_CITY_001_003_GODKAND_2026-10-10.md` och är nu även införd ordagrant i `ACT3_STORY_MANIFEST.md` avsnitt **11AX**. Denna ersätter äldre CITY-001–003, inklusive CITY-003:s tidigare tävlingsöppning. Första besöket är en ljus retrospelbutik utan highscore eller spelutmaning. Dold ARCADE/Rebecka/NOV kommer efter DRAMA-010 och före DRAMA-011. Använd aldrig äldre CITY-002:s spelmaskinsdialog.
 
 
