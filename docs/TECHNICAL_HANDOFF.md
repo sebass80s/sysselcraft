@@ -1714,3 +1714,8 @@ Only remaining Runtime 1.1 gate: physical iPhone update-in-place acceptance with
 - **Mellan FAMILY-021 och EPILOG-001:** barnet måste göra **ett nytt, föräldragodkänt IRL-quest** för att låsa upp epilogen. Det är en separat inlämning och inte återanvändning av den sista questen före familjedagen.
 - **A3-EPILOG-001–006:** efter upplåsning spelas alla sex beats i ett enda sammanhängande svep utan ytterligare quests. Normal sparning/återupptagning ska fortfarande fungera.
 - **Totalen är 107 godkända questinlämningar**: 106 tidigare för PARK-002–SECRET-006 + 1 epiloggrind. Fortfarande **140 beats** totalt, av vilka 106 har individuell questgrind, 6 delar en gemensam questgrind, 21 FAMILY och 7 intro är questfria. Ingen ny story-beat tillkommer.
+
+
+## ACT 3 IMAGE-PRODUCTION HANDOVER 2026-10-12
+
+For art pipeline recovery and status, see `docs/ACT3_EPILOG_ART_HANDOVER_2026-10-12.md` and `docs/ACT3_ART_SHOT_MANIFEST.md`. Absolute hard requirement: Barnet's face NEVER visible, even profile/reflection. Reference inputs must actually be available to image generator, not presumed from repository paths or chat. After repeated wrong scenes, production paused; next outstanding EPILOG-003, EPILOG-002 scoreboard incorrect (REQ REB 98 500, NOV 98 450). No image path or accepted upload verified by GitHub. 
