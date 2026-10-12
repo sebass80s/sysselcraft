@@ -1763,3 +1763,8 @@ När motorbåtens byggprojekt är slutfört och de befintliga slutvillkoren är 
 > Ni kan pausa och fortsätta senare.
 
 Samma trigger exponerar informationen i det kopplade föräldraläget, så att föräldern kan läsa den även senare. Barnet får fortsätta själv. **Detta är dokumenterad design, inte bekräftat implementerad runtime-funktion eller skickad pushnotis.** Akt 3 har motsvarande rekommendation men en separat questgrind före sin epilog; **kopiera inte den grinden till Akt 2**.
+
+
+## URGENT ART HANDOVER — 2026-10-12
+
+Current image-production blocker and full handover: `docs/ACT3_EPILOG_ART_HANDOVER_2026-10-12.md`. **Read that document and `docs/ACT3_ART_PIPELINE.md` BEFORE doing ANY `kör art`.** Today's EPILOG-001–003 image-generation attempts repeatedly broke beat matching, cast accuracy, image-ref use and the absolute Barnet face-hidden rule. No generated art from today's attempts is repo-verified. EPILOG-003 remains REGENERATE (must include Nova giving Barnet controller, Alve and Rebecka; inside arcade); EPILOG-002 latest has wrong scores and no acceptance; EPILOG-001 acceptance unverified. Canonical storyline is untouched. User handles final manual PNG upload to GitHub. NEVER claim image-gen faithfully consumed actual uploaded character references without confirming availability/conditioning. **This is a handover/doc-only checkpoint, not art completion or app implementation.**
