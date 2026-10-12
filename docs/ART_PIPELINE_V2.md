@@ -26,7 +26,7 @@ Scope: cinematic Act 3 story-moment illustrations. This does **not** supersede `
 
 ## Canonical character-library approach
 
-**Verified canonical directory on `nova/runtime-architecture-v1`: `public/assets/character-sheets/`.** All eleven files below were individually checked with GitHub's repository file API on 2026-10-11. Use these existing assets; do not create a duplicate `art-reference/characters` directory.
+**Verified canonical directory on `nova/runtime-architecture-v1`: `public/assets/character-sheets/`.** All twelve files below (including Rebecka) have been verified through GitHub's repository file API, most recently on 2026-10-12. Use these existing assets; do not create a duplicate `art-reference/characters` directory.
 
 | Character | Canonical repository path |
 | --- | --- |
@@ -41,6 +41,7 @@ Scope: cinematic Act 3 story-moment illustrations. This does **not** supersede `
 | Novas mamma | `public/assets/character-sheets/mamma-nova.png` |
 | Novas pappa | `public/assets/character-sheets/pappa-nova.png` |
 | Henrik | `public/assets/character-sheets/henrik.png` |
+| Rebecka | `public/assets/character-sheets/rebecka.png` |
 
 An existing repository file is **not automatically supplied to the image-generation model**. Before any generation, ensure the relevant images are actually passed as visible reference images / edited inputs. If they cannot be loaded in the generation context, report that blocker rather than claiming visual identity is locked. Track wardrobe and moment-specific continuity from the latest accepted frames.
 
