@@ -102,6 +102,11 @@ jobs:
           RUNTIME_BROWSER_URL: http://127.0.0.1:3000
         run: npm run test:act3-city-map-browser
 
+      - name: Act 3 opening story browser regression
+        env:
+          RUNTIME_BROWSER_URL: http://127.0.0.1:3000
+        run: node scripts/test-act3-opening-browser.mjs
+
       - name: Dump server logs on failure
         if: failure()
         run: |
