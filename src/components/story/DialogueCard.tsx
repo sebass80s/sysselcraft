@@ -16,6 +16,8 @@ type DialogueCardProps = {
   nextDisabled?: boolean;
   footer?: ReactNode;
   className?: string;
+  /** The containing native dialog supplies modal semantics. */
+  embedded?: boolean;
 };
 
 export function DialogueCard({
@@ -31,13 +33,14 @@ export function DialogueCard({
   nextDisabled = false,
   footer,
   className = "",
+  embedded = false,
 }: DialogueCardProps) {
   const speakerClass = speakerTone === "default" ? "" : ` ${speakerTone}`;
   return (
     <div
       className={`dialogue-card story-moment-dialogue shared-story-dialogue ${className}`.trim()}
-      role="dialog"
-      aria-modal="true"
+      role={embedded ? undefined : "dialog"}
+      aria-modal={embedded ? undefined : true}
       aria-label={ariaLabel}
     >
       {heading && <h2 className="shared-story-heading">{heading}</h2>}

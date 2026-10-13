@@ -26,12 +26,21 @@ import {
 } from "../runtime/debug/chapterDebugHarness";
 import { ChapterDebugLauncher } from "../runtime/debug/ChapterDebugLauncher";
 import { ChapterDebugPanel } from "../runtime/debug/ChapterDebugPanel";
+import { Act3CityMap } from "./Act3CityMap";
+import type { Act3CityMapVisibilityContext, Act3CityNodeId } from "../game/act3CityMapNodes";
+import styles from "./Act3CityMap.module.css";
 
 type Act3SkeletonProps = {
   debug?: boolean;
 };
 
 const ACT3_DEBUG_LAB_ENABLED = process.env.NODE_ENV !== "production";
+
+// TODO(story integration): supply authored discovery/active state from the chapter
+// adapter once its triggers and persistence migration are approved. No fake progress.
+const INITIAL_MAP_VISIBILITY: Act3CityMapVisibilityContext = {
+  discoveredPermanentIds: [], huntActive: false, arcadeRevealed: false, activeNodeId: null,
+};
 
 function createInitialAct3Context(): Act3DebugContext {
   return {};
@@ -109,9 +118,19 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
 
   async function acknowledgeChapterIntro() {
     const next = { ...state, entered: true };
-    await saveAct3RuntimeState(next);
+    if (!debug) await saveAct3RuntimeState(next);
     setState(next);
     setChapterIntroVisible(false);
+  }
+
+  function confirmCityNode(nodeId: Act3CityNodeId) {
+    if (nodeId === "harbor") {
+      // Ordinary transport only: never consume any BOAT beat or quest evidence.
+      router.push(chapterRoute("act2"));
+      return;
+    }
+    // TODO(story integration): dispatch this typed intent to the shared Story host
+    // for next/wait/deadbeat routing. These nodes are not discoverable in this slice.
   }
 
   if (status !== "active") {
@@ -128,7 +147,7 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
   }
 
   return (
-    <main className="parent-page" data-runtime-proof="act3-chapter-entry">
+    <main className={styles.page} data-runtime-proof="act3-chapter-entry">
       {chapterIntroVisible && (
         <ChapterIntroCard
           chapterLabel="KAPITEL 3"
@@ -138,20 +157,7 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
         />
       )}
 
-      <section style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
-        <p style={{ letterSpacing: ".18em", fontWeight: 800, opacity: .72 }}>KAPITEL 3</p>
-        <h1>På andra sidan sjön</h1>
-        <p>
-          Kapitel 3 är startat. Nästa storybeat är ankomsten till hamnen och mötet med Nova.
-        </p>
-        <button
-          className="secondary-button"
-          type="button"
-          onClick={() => router.push(chapterRoute("act2"))}
-        >
-          ← Tillbaka till sjön
-        </button>
-      </section>
+      {!chapterIntroVisible && <Act3CityMap visibility={INITIAL_MAP_VISIBILITY} onConfirmNode={confirmCityNode} />}
 
       <ChapterDebugPanel
         visible={debug}

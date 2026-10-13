@@ -1,5 +1,7 @@
 # Akt 3 — Implementationsbeslut och plan
 
+**UI-status 2026-10-13 (Issue #9):** Responsiv kartvy och gemensam bekräftelsedialog är implementerade i `Act3CityMap` och kopplade till befintlig `Act3Skeleton`. X-port och kapitelkort kvarstår. Endast hamnen visas tills riktiga discovery-triggers tillförs; OK där öppnar befintliga Akt 2 utan BOAT-progression. Övriga typade platsval har en uttrycklig framtida Story-integrationsgräns. Se [implementation, tester och begränsningar](ACT3_CITY_MAP_UI_VERIFICATION_2026-10-13.md). Äldre förberedelsestatus nedan beskriver läget före UI-slicen. Fysisk iPhone-acceptans återstår.
+
 **Förberedelse 2026-10-13:** Kartgrafiken ligger i repot och för Codex finns exakt assetschema, geometri och testkontrakt i `docs/ACT3_CODEX_MAP_HANDOVER_2026-10-13.md`. Denna status ersätter 2026-10-12-formuleringen om saknade filer; faktisk UI, storyprogress och iPhone-acceptans återstår.
 
 **2026-10-12: node-schema framtaget, inte kart-runtime:** Fem platser har normaliserade ankarpositioner och rena synlighets-/bekräftelseregler i src/game/act3CityMapNodes.ts och docs/ACT3_CITY_MAP_NODES.md. Popup efter ikontryck: 'Vi går till parken.' med 'OK' och 'Gå tillbaka'. Exakt discovery-beat och iPhone-positioner är fortfarande öppna. Ren baskarta och fem separata textlösa SVG:er finns nu i GitHub (uppladdade i commit 49f2fad7). Asset-URL:er och contain/pinspets-geometri är förberedda i kod med isolerade tester, men kartvyn är fortfarande inte byggd. Ingen quest- eller Story Engine-koppling gjord.

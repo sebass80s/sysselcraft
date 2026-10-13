@@ -1,5 +1,7 @@
 # Codex-handover: Akt 3 stadskarta | 2026-10-13
 
+**UI-status 2026-10-13 (Issue #9):** Responsiv kartvy och gemensam bekräftelsedialog är implementerade i `Act3CityMap` och kopplade till befintlig `Act3Skeleton`. X-port och kapitelkort kvarstår. Endast hamnen visas tills riktiga discovery-triggers tillförs; OK där öppnar befintliga Akt 2 utan BOAT-progression. Övriga typade platsval har en uttrycklig framtida Story-integrationsgräns. Se [implementation, tester och begränsningar](ACT3_CITY_MAP_UI_VERIFICATION_2026-10-13.md). Äldre förberedelsestatus nedan beskriver läget före UI-slicen. Fysisk iPhone-acceptans återstår.
+
 ## Handoff
 
 Arbetsuppgift: implementera den klickbara React/Next-kartvyn enligt Issue #9. OBS: arbetet från detta förberedelsepass är **inte** en implementation av UI eller storygates. Koden ska byggas på separat branch med PR-bas nova/runtime-architecture-v1.

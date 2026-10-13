@@ -74,7 +74,7 @@ assert.doesNotMatch(
 );
 assert.match(
   skeletonSource,
-  /onClick=\{\(\) => router\.push\(chapterRoute\("act2"\)\)\}/,
+  /nodeId === "harbor"[\s\S]*router\.push\(chapterRoute\("act2"\)\)/,
   "Act 3 return control must use the shared chapter router instead of a raw native-webview anchor",
 );
 

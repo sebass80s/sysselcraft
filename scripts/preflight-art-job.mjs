@@ -43,7 +43,7 @@ if(job.exactCastOnly!==true || job.wardrobeLock!==true) block("Cast or wardrobe 
 if(job.characters.includes("barnet") && !job.qa?.requiredCheckIds?.includes("barnet-face-hidden")) block("Barnet face-hidden check missing");
 if(!Array.isArray(job.characterRefs) || job.characterRefs.length!==job.characters.length) block("Missing canonical character reference");
 const files=[...job.characterRefs.map(r=>r.repoPath),...(job.propRefs||[]).map(r=>r.repoPath),...(job.environmentReferencePaths||[]),...(job.anchorReferencePaths||[])];
-if ((job.propRefs||[]).some(r=>!job.qa?.requiredCheckIds?.includes("prop-identity"))) block("Canonical prop QA check missing");
+if ((job.propRefs||[]).some(()=>!job.qa?.requiredCheckIds?.includes("prop-identity"))) block("Canonical prop QA check missing");
 if(files.some(p=>!p || !fs.existsSync(p))) block("Missing physical image reference");
 if(!Array.isArray(ev.imageInputs) || ev.imageInputs.length!==files.length) block("Renderer input receipt count mismatch");
 for(let i=0;i<files.length;i++){

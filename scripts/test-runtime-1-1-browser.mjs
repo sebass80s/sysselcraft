@@ -179,7 +179,7 @@ async function enterAct3Chapter(page) {
   await page.getByText("På andra sidan sjön", { exact: true }).first().waitFor();
   await button.click();
   await intro.waitFor({ state: "hidden" });
-  await page.getByRole("heading", { name: "På andra sidan sjön", exact: true }).waitFor();
+  await page.getByRole("region", { name: "Stadskarta", exact: true }).waitFor();
 }
 
 async function enterAct3ViaAdultX(page) {
@@ -293,7 +293,7 @@ try {
     await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
     // A new adult X launch can resume the already saved Act 3 title entry.
     await enterAct3ViaAdultX(page);
-    await page.getByRole("heading", { name: "På andra sidan sjön", exact: true }).waitFor();
+    await page.getByRole("region", { name: "Stadskarta", exact: true }).waitFor();
     assert.equal(
       await page.getByRole("dialog", { name: "Kapitel 3 · På andra sidan sjön", exact: true }).count(),
       0,
@@ -328,7 +328,12 @@ try {
     await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
     await enterAct3ViaAdultX(page);
     await enterAct3Chapter(page);
-    await page.getByRole("button", { name: "← Tillbaka till sjön", exact: true }).click();
+    const storageBefore = await page.evaluate(() => JSON.stringify(localStorage));
+    await page.getByRole("button", { name: "Hamnen", exact: true }).tap();
+    await page.getByRole("button", { name: "Gå tillbaka", exact: true }).tap();
+    assert.equal(await page.evaluate(() => JSON.stringify(localStorage)), storageBefore);
+    await page.getByRole("button", { name: "Hamnen", exact: true }).tap();
+    await page.getByRole("button", { name: "OK", exact: true }).tap();
     await page.waitForURL(/\/act2\/?$/);
     await page.getByLabel("SysselCraft HUD").waitFor();
     assert.deepEqual(errors, []);
@@ -340,7 +345,7 @@ try {
     const context = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
     const { page, errors } = await setupPage(context, { act2State: completedAct2 });
     await page.goto(base + "/act3-test");
-    await page.getByRole("heading", { name: "På andra sidan sjön", exact: true }).waitFor();
+    await page.getByRole("region", { name: "Stadskarta", exact: true }).waitFor();
     await page.getByText("DEBUG · production UI", { exact: true }).waitFor();
     await page.getByText("✅ Chapter entry", { exact: true }).waitFor();
     assert.deepEqual(errors, []);

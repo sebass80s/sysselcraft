@@ -1,5 +1,7 @@
 # Akt 3: Stadskartans node-schema 2026-10-12
 
+**UI-status 2026-10-13 (Issue #9):** Responsiv kartvy och gemensam bekräftelsedialog är implementerade i `Act3CityMap` och kopplade till befintlig `Act3Skeleton`. X-port och kapitelkort kvarstår. Endast hamnen visas tills riktiga discovery-triggers tillförs; OK där öppnar befintliga Akt 2 utan BOAT-progression. Övriga typade platsval har en uttrycklig framtida Story-integrationsgräns. Se [implementation, tester och begränsningar](ACT3_CITY_MAP_UI_VERIFICATION_2026-10-13.md). Äldre förberedelsestatus nedan beskriver läget före UI-slicen. Fysisk iPhone-acceptans återstår.
+
 **ASSET- OCH GEOMETRIVERIFIERING 2026-10-13:** Den rena 1672×941-kartan och alla fem textlösa SVG-filerna finns nu på `nova/runtime-architecture-v1` från uppladdningscommit `49f2fad7`. `src/game/act3CityMapNodes.ts` innehåller faktiska public-URL:er, inte längre null/förslag. SVG:ernas ritade spets ligger på `(62, 102)` i en 124×136-viewBox; den är alltså INTE längst ned i SVG-rutan. Använd `src/game/act3CityMapGeometry.ts` för contain-bounds/letterboxing och marker-tip-geometri eller en geometriskt likvärdig CSS-lösning. Kör `npm run test:act3-city-map-assets` samt `npm run test:act3-city-map-geometry` före UI-PR. Avser inte att UI eller quest/storykopplingen nu är implementerad.
 
 
