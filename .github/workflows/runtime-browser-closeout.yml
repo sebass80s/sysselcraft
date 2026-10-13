@@ -8,6 +8,14 @@ on:
       - "scripts/test-runtime-1-1-browser.mjs"
       - "scripts/test-alpha-runtime.mjs"
       - "src/**"
+  pull_request:
+    branches: [nova/runtime-architecture-v1]
+    paths:
+      - ".github/workflows/runtime-browser-closeout.yml"
+      - "scripts/test-runtime-1-1-browser.mjs"
+      - "scripts/test-act3-city-map-browser.mjs"
+      - "scripts/test-alpha-runtime.mjs"
+      - "src/**"
   workflow_dispatch:
 
 permissions:
@@ -88,6 +96,11 @@ jobs:
         env:
           RUNTIME_BROWSER_URL: http://127.0.0.1:3000
         run: node scripts/test-runtime-1-1-browser.mjs
+
+      - name: Act 3 city-map browser regression
+        env:
+          RUNTIME_BROWSER_URL: http://127.0.0.1:3000
+        run: npm run test:act3-city-map-browser
 
       - name: Dump server logs on failure
         if: failure()

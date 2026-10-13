@@ -1,5 +1,8 @@
 # Akt 3 stadskarta — implementation och verifiering 2026-10-13
 
+**POST-MERGE VERIFICATION 2026-10-13:** PR #10 and #11 have both merged into `nova/runtime-architecture-v1` (map merge commit `6e05ef5c`). Full CI #38434466026: SUCCESS. Runtime Browser Closeout #38434466038: SUCCESS, including existing alpha and Runtime 1.1 browser tests. A subsequent CI workflow enhancement adds pre-merge PR checks targeting the development branch and runs Act 3 city-map browser regression in Runtime Browser Closeout. This enhancement requires its own GitHub Actions result before it is described as green. Physical iPhone/WKWebView validation remains outstanding.
+
+
 Issue #9. Bas: `nova/runtime-architecture-v1` vid `0bdd6c663f8fe19e3a07dad1ef1d32f0ee74163a`. Arbetsbranch: `codex/act3-city-map-ui`.
 
 ## Levererat
