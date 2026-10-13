@@ -1,5 +1,16 @@
 # NOVA → NOVA HANDOFF MANIFEST
 
+## ABSOLUT ARKITEKTURLÅSNING · Runtime 1.1 · Alla framtida akter
+
+**ÖVERORDNAT KRAV, BEKRÄFTAT AV PRODUKTÄGAREN 2026-10-13:** Allt motorbyggande, även nya mekaniker som först används i Akt 3, **MÅSTE vara kompatibelt med och återanvändbart genom Runtime Architecture 1.1** för Akt 4, 5, 6 och senare. Detta är ett **merge-/acceptanskrav**, aldrig ett önskemål. Kanoniskt kontrakt: `docs/RUNTIME_ARCHITECTURE_1_1.md`, särskilt *Fuel principle*, *Stop-the-line engine rule* och *New gameplay belongs in the engine first*.
+
+- Gemensam mekanik ägs och testas av befintligt delat Runtime 1.1-lager: chapter lifecycle, Story, save/migration, backend/quest authority, progression/gates, köp, world/render, debug och framtida minispelsprimitiver. Utöka dessa generiskt om en återanvändbar funktion saknas. Bygg ingen parallell motor inne i `src/game/act3*` eller en kopierad lösning per akt.
+- Kapitel får bara innehålla eget manus, bilder, konfiguration, state-schema och tunna kapiteladaptrar för verkliga skillnader. Ett nytt vanligt beat, questflöde eller minispel ska kunna återanvända samma kontrakt utan ändrad motorkod.
+- **Stop-the-line:** Om Codex eller Nova upptäcker att ett normalt gameplaybehov inte passar i 1.1, **stanna, rapportera gapet, bygg den generella 1.1-kapaciteten och regressionstesta den först**. Ingen lokal genväg för att få en snabb PR.
+- Varje återanvändbar ny mekanik kräver ett fokuserat engine-test samt **fuel-test med minst två oberoende kapitelkonfigurationer**, utöver aktens integrationstest. I PR ska motorkod och kapiteladapter redovisas separat. En kodändring godkänns inte enbart för att Akt 3 fungerar.
+- **Nuvarande Codex-uppgift:** Issue #14 innehåller samma uttryckliga arkitekturgrind. Dessa regler gäller oberoende av uppgift och framtida akt, även när ett enskilt Issue eller en prompt glömmer att upprepa dem.
+
+
 ## NEW ROADMAP LOCK — 2026-10-12: VILLAGE EXPANSION BETWEEN ACT 3 AND ACT 4
 
 **DESIGN ONLY, NOT IMPLEMENTED.** Canonical product decisions are in `docs/VILLAGE_EXPANSION_POST_ACT3_DESIGN.md` and summarized at the top of `docs/STORY_DESIGN.md`. After finishing **Act 3**, build a new left-of-village area where children spend **SysselBux at Mira's shop** on optional buildings (football pitch, ice cream kiosk, playground). Each finished building gives a persistent visual change and **one distinct completion beat**. Example: Linus as comically biased referee in a division-7 football match. This is wholly independent of story progression, and should be developed **before Act 4**. **ADDED 2026-10-12: Some finished buildings offer replayable minigames, and each play costs SysselBux; do not pay out SB or diamonds for minigames.** Building purchase and each game session cost SB separately. **NEW 2026-10-12:** When balance is insufficient to afford a minigame, Linus or another NPC can **occasionally** gift a single free round, subject to non-farmable limits. It waives the play fee without minting SB/diamonds. **Long-term SB relevance is an explicit design goal:** children must have desirable **repeatable SB sinks** beyond one-time buildings/furniture; paid minigame sessions are the first concrete sink. Exact eligibility thresholds, frequency, additional sinks, prices, plot count and scripts remain OPEN. **Do not implement it during Act 3 work.**
