@@ -18,19 +18,19 @@ fs.writeFileSync(input, JSON.stringify({
     {
       sceneId: "TEST-SOL",
       prompt: "Create one test image.",
-      characterSheetPaths: ["public/assets/village/character-sheets/sol.png"],
+      characterSheetPaths: ["public/assets/character-sheets/sol.png"],
       environmentReferencePaths: [],
       anchorReferencePaths: [],
-      referenceImagePaths: ["public/assets/village/character-sheets/sol.png"],
+      referenceImagePaths: ["public/assets/character-sheets/sol.png"],
       qaChecks: ["Sol matches canonical sheet."]
     },
     {
       sceneId: "TEST-MIRA",
       prompt: "Create one test image.",
-      characterSheetPaths: ["public/assets/village/character-sheets/mira.png"],
+      characterSheetPaths: ["public/assets/character-sheets/mira.png"],
       environmentReferencePaths: [],
       anchorReferencePaths: [],
-      referenceImagePaths: ["public/assets/village/character-sheets/mira.png"],
+      referenceImagePaths: ["public/assets/character-sheets/mira.png"],
       qaChecks: ["Mira matches canonical sheet."]
     }
   ]
@@ -72,5 +72,27 @@ const bad = spawnSync(process.execPath, [
 
 assert.notEqual(bad.status, 0);
 assert.match(bad.stderr, /non-canonical character identity reference/);
+
+
+
+// Existing historical duplicate is valid PNG on disk, but no longer the
+// identity authority. Reject it even on a dry-run, before any external API.
+const legacyInput = path.join(temp, "legacy.json");
+fs.writeFileSync(legacyInput, JSON.stringify({
+  tasks: [{
+    sceneId: "LEGACY-SOL",
+    prompt: "Bad historical reference",
+    characterSheetPaths: ["public/assets/village/character-sheets/sol.png"],
+    referenceImagePaths: ["public/assets/village/character-sheets/sol.png"]
+  }]
+}, null, 2));
+const legacy = spawnSync(process.execPath, [
+  path.join(root, "scripts/generate-image-batch.mjs"),
+  `--input=${legacyInput}`,
+  `--out=${path.join(temp, "legacy-out")}`,
+  "--dry-run"
+], { cwd: root, encoding: "utf8" });
+assert.notEqual(legacy.status, 0);
+assert.match(legacy.stderr, /non-canonical character identity reference/);
 
 console.log("image batch generator tests: PASS");
