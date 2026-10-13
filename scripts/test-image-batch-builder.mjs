@@ -97,7 +97,7 @@ function writeJson(file, value) {
     `--approvals=${path.join(temp, "legacy-approvals.json")}`
   ]);
   assert.notEqual(result.status, 0, "Historical village duplicate must not pass identity validation");
-  assert.match(result.stderr, /must use exactly one PNG under public\\/assets\\/character-sheets\\//);
+  assert.match(result.stderr, /must use exactly one PNG under public\/assets\/character-sheets\//);
 }
 
 // 3. Anchor-first: scenes are blocked until the anchor is explicitly approved.
