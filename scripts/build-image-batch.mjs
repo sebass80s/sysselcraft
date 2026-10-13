@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const CANONICAL_SHEET_ROOT = "public/assets/village/character-sheets/";
+const CANONICAL_SHEET_ROOT = "public/assets/character-sheets/";
 
 function fail(message) {
   console.error("\nSYSSSELCRAFT IMAGE BATCH FAILED:\n" + message + "\n");

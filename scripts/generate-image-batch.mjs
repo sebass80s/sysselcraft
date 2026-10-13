@@ -65,7 +65,7 @@ function assertTask(task) {
   }
 
   for (const charSheet of task.characterSheetPaths ?? []) {
-    if (!charSheet.startsWith("public/assets/village/character-sheets/") || !charSheet.endsWith(".png")) {
+    if (!charSheet.startsWith("public/assets/character-sheets/") || !charSheet.endsWith(".png")) {
       fail(`Task ${task.sceneId} contains a non-canonical character identity reference: ${charSheet}`);
     }
   }
