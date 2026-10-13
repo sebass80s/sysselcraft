@@ -159,7 +159,7 @@ export const ACT3_OPENING_BEATS: readonly Act3OpeningBeat[] = [
   },
   {
     "id": "A3-OPEN-003",
-    "title": "Båten (med låst subtil föräldrahint)",
+    "title": "Båten",
     "image": "/assets/village/story-moments/act3/open/OPEN-003.png",
     "sourceDigest": "503890be",
     "lines": [
