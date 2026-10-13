@@ -1,0 +1,24 @@
+.modal {
+  width: min(440px, calc(100% - max(24px, env(safe-area-inset-left)) - max(24px, env(safe-area-inset-right))));
+  max-height: calc(100dvh - max(24px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom)));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #302b20;
+  overflow: auto;
+}
+
+.modal::backdrop { background: rgb(12 26 30 / 55%); }
+
+.modal .card.card {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-height: none;
+  margin: 0;
+  transform: none;
+  background: #fffdf4;
+}
+
+.modal button { min-height: 48px; min-width: 64px; touch-action: manipulation; }
