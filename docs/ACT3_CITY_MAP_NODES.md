@@ -8,7 +8,7 @@ Status: FÖRSLAG TILL KARTKOORDINATER OCH TESTAT RENT DATASKIKT. Användaren har
 ## Referens och källor
 
 Dataskikt: src/game/act3CityMapNodes.ts. Test: scripts/test-act3-city-map-nodes.mjs, via npm run test:act3-city-map-nodes.
-Verifierade assets: public/assets/village/act3-map/city-background.png samt exakt fem textlösa SVG-filer under public/assets/village/act3-map/nodes/. Dessa sex filer laddades upp på branchens HEAD i commit 49f2fad7 och är faktiska runtime-assets.
+Verifierade assets: public/assets/village/act3-map/city-background.png samt exakt fem textlösa SVG-filer under public/assets/village/act3-map/nodes/. Dessa sex filer laddades upp i commit 49f2fad7 och är faktiska runtime-assets.
 Den godkända kartan MED redan målade ikoner är endast en mockup. Runtime måste använda den RENA bakgrunden för att undvika dubbla ikoner.
 
 ## Normaliserade positioner
