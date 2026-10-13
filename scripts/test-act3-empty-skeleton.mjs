@@ -39,12 +39,12 @@ const act3State = loadTsModule("src/game/act3RuntimeState.ts", {
 });
 
 const initial = act3State.createDefaultAct3RuntimeState();
-assert.deepEqual(JSON.parse(JSON.stringify(initial)), { version: 1, entered: false });
+assert.deepEqual(JSON.parse(JSON.stringify(initial)), { version: 2, entered: false, openingBeatIndex: 0, openingLineIndex: 0 });
 assert.deepEqual(
-  JSON.parse(JSON.stringify(act3State.normalizeAct3RuntimeState({ version: 1, entered: true }))),
-  { version: 1, entered: true },
+  JSON.parse(JSON.stringify(act3State.normalizeAct3RuntimeState(act3State.migrateAct3RuntimeState({ version: 1, entered: true })))),
+  { version: 2, entered: true, openingBeatIndex: 0, openingLineIndex: 0 },
 );
-assert.equal(act3State.normalizeAct3RuntimeState({ version: 2, entered: true }), null);
+assert.equal(act3State.normalizeAct3RuntimeState({ version: 3, entered: true }), null);
 
 const stateSource = read("src/game/act3RuntimeState.ts");
 const skeletonSource = read("src/components/Act3Skeleton.tsx");
