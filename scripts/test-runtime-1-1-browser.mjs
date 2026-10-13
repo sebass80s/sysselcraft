@@ -291,12 +291,18 @@ try {
     await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
     await enterAct3ViaAdultX(page);
     await enterAct3Chapter(page);
+    // Persist ONE actual opening story line, not just the intro-card boolean.
+    await page.getByRole("button", { name: "Fortsätt", exact: true }).click();
+    await page.getByText(/Längs kajen ligger segelbåtar/).waitFor();
+    const act3Key = `CapacitorStorage.sysselcraft.act3.runtime.v1.${pairedChildId}`;
+    const savedOpening = await page.evaluate(key => localStorage.getItem(key), act3Key);
+    assert.equal(JSON.parse(savedOpening).openingLineIndex, 1, "Act 3 must persist the current story line per child");
     await page.reload();
     await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
     // A new adult X launch can resume the already saved Act 3 title entry.
     await enterAct3ViaAdultX(page);
     await page.getByRole("dialog", { name: "Hamnen", exact: true }).waitFor();
-    await page.getByText("Motorbåten glider in mellan bryggorna.", { exact: true }).waitFor();
+    await page.getByText(/Längs kajen ligger segelbåtar/).waitFor();
     assert.equal(
       await page.getByRole("dialog", { name: "Kapitel 3 · På andra sidan sjön", exact: true }).count(),
       0,
