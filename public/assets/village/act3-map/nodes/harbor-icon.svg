@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="124" height="136" viewBox="0 0 124 136" role="img" aria-label="harbor">
+  <defs>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+    <linearGradient id="badgeFill" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="100%" stop-color="#F5EFE1"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M62 14 C82 14 98 30 98 50 C98 74 80 88 66 101 C64 103 60 103 58 101 C44 88 26 74 26 50 C26 30 42 14 62 14 Z" fill="#CFE9F3" stroke="#2C6C84" stroke-width="4"/>
+    <circle cx="62" cy="50" r="30" fill="url(#badgeFill)" stroke="#3E8AA8" stroke-width="7"/>
+    <circle cx="52" cy="40" r="5" fill="#ffffff" opacity="0.85"/>
+    <g transform="translate(62 50)">
+      <g transform="translate(0,2)">
+          <path d="M-18 12 H18" stroke="#2C6C84" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M-24 2 L24 2 L16 16 H-16 Z" stroke="#2C6C84" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M0 -24 V2" stroke="#2C6C84" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M0 -22 L14 -4 H0 Z" stroke="#2C6C84" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="#fffdf6" />
+          <path d="M-4 22 C-1 18 4 18 8 22" stroke="#2C6C84" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </g>
+    </g>
+  </g>
+</svg>

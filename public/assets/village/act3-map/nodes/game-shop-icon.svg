@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="124" height="136" viewBox="0 0 124 136" role="img" aria-label="game-shop">
+  <defs>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+    <linearGradient id="badgeFill" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="100%" stop-color="#F5EFE1"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M62 14 C82 14 98 30 98 50 C98 74 80 88 66 101 C64 103 60 103 58 101 C44 88 26 74 26 50 C26 30 42 14 62 14 Z" fill="#E3DDF5" stroke="#5A4890" stroke-width="4"/>
+    <circle cx="62" cy="50" r="30" fill="url(#badgeFill)" stroke="#7762B3" stroke-width="7"/>
+    <circle cx="52" cy="40" r="5" fill="#ffffff" opacity="0.85"/>
+    <g transform="translate(62 50)">
+      <g transform="translate(0,2)">
+          <path d="M-18 -2 C-12 -12 12 -12 18 -2 L22 8 C24 14 20 20 14 20 C10 20 8 18 4 14 H-4 C-8 18 -10 20 -14 20 C-20 20 -24 14 -22 8 Z" stroke="#5A4890" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M-10 5 H-2 M-6 1 V9" stroke="#5A4890" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <circle cx="8" cy="5" r="2.8" fill="#5A4890" />
+          <circle cx="14" cy="10" r="2.8" fill="#5A4890" />
+        </g>
+    </g>
+  </g>
+</svg>

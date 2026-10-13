@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="124" height="136" viewBox="0 0 124 136" role="img" aria-label="treasure-hunt">
+  <defs>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+    <linearGradient id="badgeFill" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="100%" stop-color="#F5EFE1"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M62 14 C82 14 98 30 98 50 C98 74 80 88 66 101 C64 103 60 103 58 101 C44 88 26 74 26 50 C26 30 42 14 62 14 Z" fill="#F5EAC2" stroke="#987623" stroke-width="4"/>
+    <circle cx="62" cy="50" r="30" fill="url(#badgeFill)" stroke="#C39B3A" stroke-width="7"/>
+    <circle cx="52" cy="40" r="5" fill="#ffffff" opacity="0.85"/>
+    <g transform="translate(62 50)">
+      <g transform="translate(0,1)">
+          <circle cx="0" cy="2" r="20" stroke="#987623" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M0 -22 V-28 M0 32 V26 M-24 2 H-30 M30 2 H24" stroke="#987623" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M0 -10 L8 2 L0 14 L-8 2 Z" stroke="#987623" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M0 -10 L8 2" stroke="#987623" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </g>
+    </g>
+  </g>
+</svg>
