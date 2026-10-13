@@ -47,6 +47,12 @@ Gamla/färdiga platser får deadbeat enligt ordinarie Runtime 1.1; oupptäckta p
 
 **Synlighetskontrakt (för femplatsskartan):** **Hamnen** är känd från ankomsten; **Folkparken** visas först när Nova leder dit; **Spelbutiken** när storyn för första gången leder dit (byter till **Arkaden** först vid den senare arkad-avslöjningen efter DRAMA-010); **Novas mammas hem** först vid inbjudan/vägen dit; **Skattjakten** endast medan HUNT-001–006 är pågående. **Inget annat visas för tidigt.** Den exakta tekniska triggern per beat är ännu öppen. För upptäckta permanentplatser kvarstår ikonen efteråt, och aktiva platser markeras särskilt.
 
+### Speltext: Barnet skrivs som ”du” (LÅST 2026-10-13)
+
+**I spelade beattexter tilltalas spelarkaraktären i andra person.** Kanonmanuset använder ofta `Barnet` för huvudkaraktären, men spelaren ska se `du` i löpande berättartext och `Du` som talarnamn. Exempel: `Barnet kastar repet.` → `Du kastar repet.`; `**Barnet:** Vi kan lägga till där borta.` → talaretiketten `Du` och oförändrad replik `Vi kan lägga till där borta.`. Svensk ordföljd och böjning ska vara grammatisk, inte mekanisk strängersättning.
+
+Detta är en **presentationsregel i runtime/export**, inte en omskrivning av originaldialog. Bevara `Barnet` som kanonisk karaktärsidentitet och som internt ID, behåll de godkända manusen och innehållsregistrets digest oförändrade. Inget oavsiktligt byte av talare eller påverkan på Akt 1/2. Kolla med automatiska testfall att både scenanvisningar och talaretiketter återges som `du`/`Du` i OPEN-001–005 och PARK-001. För långsiktig Act 3-runtime gäller samma regel på senare beats.
+
 ## 2. Story och questprogression — LÅST
 
 - Använd **gemensam Runtime 1.1 Story Engine, chapter host, chapter persistence, backend host och progression/project engine**. Ingen ny Act 3-kopia av dialogmotor, questtransport eller sparsystem.
