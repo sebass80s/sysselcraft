@@ -1,11 +1,14 @@
 # Akt 3: Stadskartans node-schema 2026-10-12
 
+**ASSET- OCH GEOMETRIVERIFIERING 2026-10-13:** Den rena 1672×941-kartan och alla fem textlösa SVG-filerna finns nu på `nova/runtime-architecture-v1` från uppladdningscommit `49f2fad7`. `src/game/act3CityMapNodes.ts` innehåller faktiska public-URL:er, inte längre null/förslag. SVG:ernas ritade spets ligger på `(62, 102)` i en 124×136-viewBox; den är alltså INTE längst ned i SVG-rutan. Använd `src/game/act3CityMapGeometry.ts` för contain-bounds/letterboxing och marker-tip-geometri eller en geometriskt likvärdig CSS-lösning. Kör `npm run test:act3-city-map-assets` samt `npm run test:act3-city-map-geometry` före UI-PR. Avser inte att UI eller quest/storykopplingen nu är implementerad.
+
+
 Status: FÖRSLAG TILL KARTKOORDINATER OCH TESTAT RENT DATASKIKT. Användaren har valt den filmiskt illustrerade 16:9-kartan, fristående textlösa SVG-pins och en bekräftelseruta vid ikontryck. Koordinaterna kräver fortfarande visuell kontroll på fysisk iPhone.
 
 ## Referens och källor
 
 Dataskikt: src/game/act3CityMapNodes.ts. Test: scripts/test-act3-city-map-nodes.mjs, via npm run test:act3-city-map-nodes.
-Basbilden utan inbakade pins bör laddas upp till public/assets/village/act3-map/city-background.png, och SVG:erna separat till public/assets/village/act3-map/nodes/. Dessa assets finns INTE ännu i GitHub. Inga sökvägar i schemat utger sig för att vara tillgängliga runtime-assets.
+Verifierade assets: public/assets/village/act3-map/city-background.png samt exakt fem textlösa SVG-filer under public/assets/village/act3-map/nodes/. Dessa sex filer laddades upp på branchens HEAD i commit 49f2fad7 och är faktiska runtime-assets.
 Den godkända kartan MED redan målade ikoner är endast en mockup. Runtime måste använda den RENA bakgrunden för att undvika dubbla ikoner.
 
 ## Normaliserade positioner

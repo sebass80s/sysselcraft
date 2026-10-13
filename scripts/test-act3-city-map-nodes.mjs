@@ -5,7 +5,7 @@ assert.deepEqual(ACT3_CITY_NODES.map(n=>n.id),["harbor","folkpark","nova-home","
 assert.equal(new Set(ACT3_CITY_NODES.map(n=>n.id)).size,5);
 assert.equal(ACT3_CITY_MAP_REFERENCE.width,1672);
 assert.equal(ACT3_CITY_MAP_REFERENCE.height,941);
-assert.equal(ACT3_CITY_MAP_REFERENCE.backgroundPublicUrl,null);
+assert.equal(ACT3_CITY_MAP_REFERENCE.backgroundPublicUrl,"/assets/village/act3-map/city-background.png");
 for(const n of ACT3_CITY_NODES){assert.ok(n.xPct>0&&n.xPct<100,"x "+n.id);assert.ok(n.yPct>0&&n.yPct<100,"y "+n.id);assert.ok(n.confirmText.length>4);}
 const start={discoveredPermanentIds:[],huntActive:false,arcadeRevealed:false,activeNodeId:null};
 assert.deepEqual(getVisibleAct3CityNodes(start).map(n=>n.id),["harbor"]);

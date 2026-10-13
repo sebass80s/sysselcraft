@@ -26,11 +26,25 @@ export type Act3VisibleCityNode = Act3CityMapNode & Readonly<{ active: boolean }
 export const ACT3_CITY_MAP_REFERENCE = {
   width: 1672, height: 941,
   aspect: "landscape-16:9", fit: "contain", markerAnchor: "pin-tip",
-  // Deliberately null: do not load a mockup that has embedded pins!
-  backgroundPublicUrl: null,
-  proposedBackgroundPath: "public/assets/village/act3-map/city-background.png",
-  iconDirectoryProposal: "public/assets/village/act3-map/nodes/",
+  // Verified asset at current branch HEAD. Never use mockup with embedded pins.
+  backgroundPublicUrl: "/assets/village/act3-map/city-background.png",
+  backgroundRepositoryPath: "public/assets/village/act3-map/city-background.png",
+  iconDirectoryRepositoryPath: "public/assets/village/act3-map/nodes/",
+  // The drawn SVG pin tip is at (62,102), not at its 136px bounding-box bottom.
+  pinSvgWidth: 124, pinSvgHeight: 136, pinTipX: 62, pinTipY: 102,
 } as const;
+
+export const ACT3_CITY_ICON_URLS: Readonly<Record<Act3CityMapNode["iconKey"], string>> = {
+  harbor: "/assets/village/act3-map/nodes/harbor-icon.svg",
+  folkpark: "/assets/village/act3-map/nodes/folkpark-icon.svg",
+  home: "/assets/village/act3-map/nodes/home-icon.svg",
+  "game-shop": "/assets/village/act3-map/nodes/game-shop-icon.svg",
+  "treasure-hunt": "/assets/village/act3-map/nodes/treasure-hunt-icon.svg",
+};
+
+export function getAct3CityIconUrl(iconKey: Act3CityMapNode["iconKey"]): string {
+  return ACT3_CITY_ICON_URLS[iconKey];
+}
 export const ACT3_CITY_NODES: readonly Act3CityMapNode[] = [
   { id: "harbor", iconKey: "harbor", xPct: 18.9, yPct: 62.5, visibility: "always-on-city-map", locationRole: "harbor-gateway", label: "Hamnen", confirmText: "Vi går till hamnen." },
   { id: "folkpark", iconKey: "folkpark", xPct: 75.4, yPct: 66.8, visibility: "discovered-by-story", locationRole: "story-location", label: "Folkparken", confirmText: "Vi går till parken." },
