@@ -22,3 +22,7 @@ npm run verify
 ```
 
 These commands must run from a checkout containing the canonical sheet images. If full CI is skipped, report that separately rather than claiming a green full suite.
+
+## Merge verification
+
+The focused fix was merged as PR #11. The next commit initiates repository CI after squash history carried legacy skip-CI tags. The CI result must be taken from GitHub Actions, not inferred from this documentation.
