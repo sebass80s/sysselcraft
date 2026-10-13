@@ -12,12 +12,12 @@ export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3Debug
   debugRoute: "/act3-test",
   createSession() {
     return {
-      state: createDefaultAct3RuntimeState(),
-      context: { childName: "" },
+      state: { ...createDefaultAct3RuntimeState(), entered: true },
+      context: { childName: "Testspelaren" },
       chapterIntroVisible: false,
     };
   },
-  createResetState: createDefaultAct3RuntimeState,
+  createResetState: () => ({ ...createDefaultAct3RuntimeState(), entered: true }),
   inspect(state) {
     return {
       version: state.version,
@@ -30,7 +30,7 @@ export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3Debug
   probes: {
     "chapter-entry"(state) {
       return {
-        ok: state.version === 2 && state.entered === false,
+        ok: state.version === 2 && state.entered === true,
         details: {
           version: state.version,
           entered: state.entered,

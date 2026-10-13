@@ -33,3 +33,5 @@
   background: #ffe285;
   font-size: 16px;
 }
+
+.saveError { position: absolute; z-index: 170; bottom: 5.5rem; left: 50%; transform: translateX(-50%); margin: 0; padding: 0.6rem 1rem; border-radius: 0.5rem; color: #3d1313; background: #fff5ed; font-weight: 700; }
