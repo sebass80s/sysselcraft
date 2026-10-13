@@ -254,3 +254,8 @@ Each chapter still owns:
 Backend authority is unchanged. Quest lifecycle, rewards, wallet, earned-work/progression evidence and backend story ownership are not fabricated or max-merged by local chapter persistence.
 
 Runtime 1.1 backend synchronization/reconciliation is also closed. The shared layer owns polling/subscription lifecycle, cancellation, stale-response safety and canonical backend snapshots. Chapter adapters continue to own chapter-specific selectors and reconciliation policy.
+
+
+### Act 3 first claim gate — 2026-10-13
+
+Payload v3 retains the historical child-scoped `sysselcraft.act3.runtime.v1` key and preserves v1/v2 opening history. Local state owns the read-only backend baseline/high-water evidence and the one reserved claim plus PARK-002 playing/complete cursor. Claim consumption is saved atomically with scene activation, before presentation. Only a fresh validated backend snapshot can activate a beat; approval, cached/offline counts and migration cannot. The backend remains the sole quest/reward/wallet authority. Shared persistence guards every transaction by mounted lifecycle and expected child. See [implementation and verification](ACT3_FIRST_QUEST_BRIDGE_2026-10-13.md).

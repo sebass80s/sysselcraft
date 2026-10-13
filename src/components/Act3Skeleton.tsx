@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
   createDefaultAct3RuntimeState,
   loadAct3RuntimeState,
-  saveAct3RuntimeState,
+  updateAct3RuntimeState,
   ACT3_FREE_OPENING_BEAT_COUNT,
   type Act3RuntimeState,
 } from "../game/act3RuntimeState";
@@ -42,11 +42,21 @@ import { Act3CityMap } from "./Act3CityMap";
 import type { Act3CityNodeId } from "../game/act3CityMapNodes";
 import styles from "./Act3CityMap.module.css";
 
+import { getPairedChildId } from "../backend/childDeviceBinding";
+import { loadPairedClaimEvidence } from "../runtime/backend/pairedClaimEvidence";
+import { useBackendSyncHost } from "../runtime/backend/useBackendSyncHost";
+import { useChapterPersistenceGuard } from "../runtime/save/useChapterPersistenceGuard";
+import { updateChapterFromView } from "../runtime/save/updateChapterFromView";
+import { createClaimGateBridge } from "../runtime/progression/claimGateBridge";
+import { nextClaimGateBeat } from "../runtime/progression/claimGate";
+import { ACT3_FIRST_QUEST_GATE, nextAct3Park002State, previousAct3Park002State } from "../game/act3FirstQuestGate";
+import { ACT3_PARK_002 } from "../game/act3Park002Content";
+
 type Act3SkeletonProps = { debug?: boolean };
 const ACT3_DEBUG_LAB_ENABLED = process.env.NODE_ENV !== "production";
 
 function createInitialAct3Context(): Act3DebugContext {
-  return { childName: "" };
+  return { childName: "", childId: null };
 }
 
 export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
@@ -54,6 +64,7 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
   const previewEntryRef = useRef<boolean | null>(null);
   const [waitingAtPark, setWaitingAtPark] = useState(false);
   const [introSaveError, setIntroSaveError] = useState("");
+  const [backendError, setBackendError] = useState("");
 
   const bootAct3 = useCallback(async ({ debug: debugMode }: ChapterRuntimeBootEnvironment) => {
     if (debugMode) {
@@ -83,14 +94,15 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
 
     // Preview grant is checked BEFORE any child/Act 3 saved data is read.
     // Act 1 is only read for the child's authored introduction of their name.
+    const childId = await getPairedChildId();
     const [act3, act1] = await Promise.all([
-      loadAct3RuntimeState(),
+      loadAct3RuntimeState({ expectedChildId: childId }),
       loadSaveState(),
     ]);
     return {
       accessAllowed: true,
       state: act3,
-      context: { childName: act1?.childName ?? "" },
+      context: { childName: act1?.childName ?? "", childId },
       chapterIntroVisible: !act3.entered,
     };
   }, []);
@@ -111,15 +123,37 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
     ACT3_DEBUG_FIXTURE, "chapter-entry", state, context,
   );
 
+  const guard = useChapterPersistenceGuard(context.childId, status === "active" && !debug);
+  const bridge = useMemo(() => createClaimGateBridge({
+    adapter: ACT3_FIRST_QUEST_GATE,
+    persistence: { update: updateAct3RuntimeState },
+    guard,
+    loadEvidence: loadPairedClaimEvidence,
+  }), [guard]);
+  useBackendSyncHost({
+    active: status === "active" && !debug && ACT3_FIRST_QUEST_GATE.waiting(state),
+    loadSnapshot: bridge.refresh,
+    onSnapshot: (next, control) => {
+      if (control.isActive() && guard().isActive()) { setState(next); setBackendError(""); }
+    },
+    onError: (_error, control) => {
+      if (control.isActive()) setBackendError("Kunde inte kontrollera uppdrag. Kontrollera anslutningen och försök igen.");
+    },
+  });
+
+  async function commitFromView(cursor: (s: Act3RuntimeState) => string, transition: (s: Act3RuntimeState) => Act3RuntimeState) {
+    if (debug) { setState(current => cursor(current) === cursor(state) ? transition(current) : current); return; }
+    const lease = guard();
+    const next = await updateChapterFromView({ update: updateAct3RuntimeState }, state, cursor, transition, lease);
+    if (lease.isActive()) setState(next);
+  }
+
   async function acknowledgeChapterIntro() {
-    const next = { ...state, entered: true };
     try {
-      if (!debug) await saveAct3RuntimeState(next);
-      setState(next);
+      await commitFromView(s => String(s.entered), s => ({ ...s, entered: true }));
       setIntroSaveError("");
       setChapterIntroVisible(false);
     } catch {
-      // Never advance the on-screen chapter if native persistence failed.
       setIntroSaveError("Kunde inte spara. Försök igen.");
     }
   }
@@ -127,21 +161,32 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
   async function advanceOpening() {
     const current = ACT3_OPENING_BEATS[state.openingBeatIndex];
     if (!current) return;
-    const next = nextAct3OpeningState(state, current.lines.length);
-    if (next === state) return;
-    if (!debug) await saveAct3RuntimeState(next);
-    setState(next);
-    if (next.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT) setWaitingAtPark(true);
+    await commitFromView(s => `${s.openingBeatIndex}:${s.openingLineIndex}`,
+      s => nextAct3OpeningState(s, current.lines.length));
+    if (state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT - 1 && state.openingLineIndex === current.lines.length - 1) setWaitingAtPark(true);
   }
 
   async function rewindOpening() {
     const current = ACT3_OPENING_BEATS[state.openingBeatIndex];
     if (!current) return;
-    const next = previousAct3OpeningState(state, current.lines.length);
-    if (next === state) return;
-    if (!debug) await saveAct3RuntimeState(next);
-    setState(next);
+    await commitFromView(s => `${s.openingBeatIndex}:${s.openingLineIndex}`,
+      s => previousAct3OpeningState(s, current.lines.length));
   }
+
+  async function startPark002() {
+    if (debug) return;
+    try {
+      const lease = guard();
+      const next = await bridge.start();
+      if (!lease.isActive()) return;
+      setState(next);
+      setBackendError("");
+      if (next.park002Phase === "playing") setWaitingAtPark(false);
+    } catch {
+      setBackendError("Kunde inte kontrollera eller spara uppdrag. Försök igen.");
+    }
+  }
+  const parkCursor = (s: Act3RuntimeState) => `${s.park002Phase}:${s.park002LineIndex}`;
 
   function confirmCityNode(nodeId: Act3CityNodeId) {
     if (nodeId === "harbor") {
@@ -171,21 +216,23 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
   const playingOpening = !chapterIntroVisible
     && state.entered
     && state.openingBeatIndex < ACT3_FREE_OPENING_BEAT_COUNT;
-  const currentBeat = playingOpening ? ACT3_OPENING_BEATS[state.openingBeatIndex] : null;
+  const playingPark002 = !chapterIntroVisible && state.park002Phase === "playing";
+  const lineIndex = playingPark002 ? state.park002LineIndex : state.openingLineIndex;
+  const currentBeat = playingOpening ? ACT3_OPENING_BEATS[state.openingBeatIndex] : playingPark002 ? ACT3_PARK_002 : null;
   const currentLine = currentBeat
-    ? storyLineAt(currentBeat.lines, state.openingLineIndex)
+    ? storyLineAt(currentBeat.lines, lineIndex)
     : null;
   const storyPresentation: StoryBeatPresentation | null = currentBeat && currentLine
     ? {
-        id: currentBeat.id + ":" + state.openingLineIndex,
+        id: currentBeat.id + ":" + lineIndex,
         image: currentBeat.image,
         heading: currentBeat.title,
         speaker: currentLine.speaker ?? undefined,
         speakerTone: currentLine.speaker === "Du" ? "child"
           : currentLine.speaker ? storySpeakerTone(currentLine.speaker) : "default",
         lines: [renderAct3OpeningText(currentLine.text, context.childName)],
-        nextLabel: state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT - 1
-          && state.openingLineIndex === currentBeat.lines.length - 1
+        nextLabel: (playingPark002 || state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT - 1)
+          && lineIndex === currentBeat.lines.length - 1
           ? "Till kartan" : "Fortsätt",
       }
     : null;
@@ -210,25 +257,36 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
           beat={storyPresentation}
           ariaLabel={currentBeat.title}
           variant="opening"
-          onPrevious={state.openingLineIndex > 0 ? rewindOpening : undefined}
-          onNext={advanceOpening}
+          onPrevious={lineIndex > 0 ? (playingPark002
+            ? () => commitFromView(parkCursor, previousAct3Park002State) : rewindOpening) : undefined}
+          onNext={playingPark002 ? () => commitFromView(parkCursor, nextAct3Park002State) : advanceOpening}
         />
       )}
 
-      {!chapterIntroVisible && openingDone && (
+      {!chapterIntroVisible && openingDone && !playingPark002 && (
         <Act3CityMap visibility={act3OpeningMapVisibility(state)} onConfirmNode={confirmCityNode} />
       )}
-      {!chapterIntroVisible && openingDone && waitingAtPark && (
+      {!chapterIntroVisible && openingDone && !playingPark002 && waitingAtPark && (
         <StoryMoment
           variant="gate"
           heading="Folkparken"
           ariaLabel="Väntar på uppdrag"
           image={ACT3_OPENING_BEATS[ACT3_FREE_OPENING_BEAT_COUNT - 1].image}
-          nextLabel="Till kartan"
-          onNext={() => setWaitingAtPark(false)}
+          previousLabel="Till kartan"
+          onPrevious={() => setWaitingAtPark(false)}
+          nextLabel={state.park002Phase === "complete" || debug ? undefined : "Kontrollera uppdrag"}
+          onNext={state.park002Phase === "complete" || debug ? undefined : startPark002}
         >
-          <p>Du har hittat Folkparken! Nästa del av berättelsen kräver ett nytt uppdrag i verkligheten.</p>
-          <p>I testversionen är kopplingen till godkända uppdrag ännu inte aktiverad. Du kan återvända till kartan, men PARK-002 är låst.</p>
+          {state.park002Phase === "complete" ? <p>Du har spelat klart den här delen av testversionen.</p>
+            : debug ? <p>PARK-002 är låst i det isolerade debugläget.</p>
+            : <>
+              <p>Nästa del av berättelsen kräver ett nytt uppdrag som en vuxen har godkänt och som du har hämtat belöningen för.</p>
+              <p>{state.claimGate.baseline === null ? "Anslut till din kopplade barnenhet för att börja räkna nya uppdrag."
+                : nextClaimGateBeat(state.claimGate, ACT3_FIRST_QUEST_GATE.beatIds, false)
+                  ? "Ett nytt uppdrag finns. Kontrollera uppdrag för att fortsätta."
+                  : "Väntar på ett nytt uppdrag."}</p>
+            </>}
+          {backendError && <p role="alert">{backendError}</p>}
         </StoryMoment>
       )}
 

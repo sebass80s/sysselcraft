@@ -229,3 +229,10 @@ Audit result: **PASS**.
 
 Physical iPhone update-in-place acceptance remains the only gate before real Act 3 gameplay.
 
+
+
+## Reusable claim-gated Story activation — 2026-10-13
+
+`claimGate` and `claimGateBridge` extend the existing authoritative delta/track primitives with strict evidence validation, a single baseline, preserved backlog and atomic one-beat activation. The bridge executes fresh reads inside `ChapterPersistenceHost.update`; `updateChapterFromView` protects concurrent Story cursors, and `useChapterPersistenceGuard` captures non-revivable operation generations. `pairedClaimEvidence` reads raw counts because display normalization is not an authority check. Existing backend sync, persistence and Story engines remain the owners of their mechanics.
+
+Fuel proof: `test:claim-gate` drives the same engine with independent forest and space chapter configurations, plus `test:act3-first-quest` proves the actual PARK-002 adapter. New chapters supply only state/config/content and adapter functions. No Act 3 imports, beat IDs or text enter the shared engine. Details: [Issue #14 report](ACT3_FIRST_QUEST_BRIDGE_2026-10-13.md).

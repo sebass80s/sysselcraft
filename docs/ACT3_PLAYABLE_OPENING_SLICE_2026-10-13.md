@@ -1,5 +1,7 @@
 # Akt 3: Spelbar öppning · arbetsbranch 2026-10-13
 
+**Issue #14, 2026-10-13:** PARK-002 har nu en gemensam Runtime 1.1-grind med strikt backend-evidens och save v3. Se [ansvar, tester och begränsningar](ACT3_FIRST_QUEST_BRIDGE_2026-10-13.md). Äldre beskrivningar av helt stängd PARK-002 nedan avser föregående slice.
+
 ## Scope
 Issue #12: `A3-OPEN-000` remains shared ChapterIntroCard. On a new adult X preview, the six illustrated scenes `A3-OPEN-001–005` and `A3-PARK-001` play one authored paragraph or dialogue utterance at a time using Runtime 1.1 `StoryRunner`/`StoryMoment`/`StoryTranscript`, with the approved images.
 

@@ -107,6 +107,11 @@ jobs:
           RUNTIME_BROWSER_URL: http://127.0.0.1:3000
         run: node scripts/test-act3-opening-browser.mjs
 
+      - name: Act 3 first quest gate browser regression
+        env:
+          RUNTIME_BROWSER_URL: http://127.0.0.1:3000
+        run: node scripts/test-act3-first-quest-browser.mjs
+
       - name: Dump server logs on failure
         if: failure()
         run: |

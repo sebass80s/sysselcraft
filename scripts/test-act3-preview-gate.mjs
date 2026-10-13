@@ -47,6 +47,6 @@ assert.match(adultLauncher, /grantAct3PreviewEntry\(password, window\.sessionSto
 assert.match(act2, /Kapitel 3 kommer snart/, "Normal Act 2 must show the shipping lock");
 assert.doesNotMatch(act2, /Till kapitel 3 →/, "Normal Act 2 may not link to unfinished Act 3");
 assert.match(act3, /consumeAct3PreviewEntry\(window\.sessionStorage\)/, "Production Act 3 consumes the one-use grant");
-assert.ok(act3.indexOf("consumeAct3PreviewEntry") < act3.indexOf("loadAct3RuntimeState(),"), "Unauthorized visits must not read/modify Act 3 saves");
+assert.ok(act3.indexOf("consumeAct3PreviewEntry") < act3.indexOf("loadAct3RuntimeState({ expectedChildId:"), "Unauthorized visits must not read/modify Act 3 saves");
 assert.match(debugRoute, /NODE_ENV !== "production"/, "Developer-only debug page stays disabled in production");
 console.log("PASS: Act 3 can only be previewed through Vuxenläge → X while normal chapter entry remains locked");
