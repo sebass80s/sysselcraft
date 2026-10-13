@@ -36,6 +36,9 @@ try {
   }
   assert.equal(total,139,"No authored opening paragraph or spoken line was skipped");
   await page.getByText(/PARK-002 är låst/).waitFor();
+  // The map lays out its contained background/pins through ResizeObserver;
+  // wait for the actual rendered pins rather than assuming a synchronous paint.
+  await page.locator('[data-act3-node="folkpark"]').waitFor({state:"attached"});
   assert.equal(await page.locator('[data-act3-node]').count(),2,"Only harbor + discovered Folkparken");
   await page.getByRole("button",{name:"Till kartan",exact:true}).click();
   assert.equal(await page.locator('[data-act3-node]').count(),2);
