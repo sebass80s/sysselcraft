@@ -50,7 +50,7 @@ function writeJson(file, value) {
   assert.equal(first.count, 5);
   assert.equal(second.count, 1);
   assert.deepEqual(first.tasks[0].characterSheetPaths, [
-    "public/assets/village/character-sheets/sol.png"
+    "public/assets/character-sheets/sol.png"
   ]);
 }
 
@@ -73,7 +73,31 @@ function writeJson(file, value) {
     `--approvals=${path.join(temp, "bad-approvals.json")}`
   ]);
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /must use exactly one PNG under public\/assets\/village\/character-sheets\//);
+  assert.match(result.stderr, /must use exactly one PNG under public\/assets\/character-sheets\//);
+}
+
+
+
+// 2b. Historical village identity files must remain invalid even if the
+// duplicate exists on disk. Only the current registry root is canonical.
+{
+  const registry = JSON.parse(fs.readFileSync(canonicalRegistry, "utf8"));
+  registry.characters.sol.characterSheet = "public/assets/village/character-sheets/sol.png";
+  const badRegistry = path.join(temp, "legacy-registry.json");
+  const batch = path.join(temp, "legacy-registry-batch.json");
+  writeJson(badRegistry, registry);
+  writeJson(batch, {
+    batchId: "test-legacy-registry",
+    scenes: [{ id: "SCENE-1", characters: ["sol"], prompt: "Test" }]
+  });
+  const result = run([
+    `--registry=${badRegistry}`,
+    `--batch=${batch}`,
+    `--out=${path.join(temp, "legacy-out")}`,
+    `--approvals=${path.join(temp, "legacy-approvals.json")}`
+  ]);
+  assert.notEqual(result.status, 0, "Historical village duplicate must not pass identity validation");
+  assert.match(result.stderr, /must use exactly one PNG under public\\/assets\\/character-sheets\\//);
 }
 
 // 3. Anchor-first: scenes are blocked until the anchor is explicitly approved.
@@ -129,8 +153,8 @@ function writeJson(file, value) {
   const scenes = JSON.parse(fs.readFileSync(path.join(out, "scenes-01.json"), "utf8"));
   assert.deepEqual(scenes.tasks[0].anchorReferencePaths, ["approved/anchor-1.png"]);
   assert.deepEqual(scenes.tasks[0].characterSheetPaths, [
-    "public/assets/village/character-sheets/sol.png",
-    "public/assets/village/character-sheets/alve.png"
+    "public/assets/character-sheets/sol.png",
+    "public/assets/character-sheets/alve.png"
   ]);
 }
 
