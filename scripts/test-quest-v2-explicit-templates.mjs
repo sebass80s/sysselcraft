@@ -40,7 +40,7 @@ const templateUi=ui.split("async function saveDraftAsTemplate(")[1].split("funct
 assert.match(templateUi,/createParentQuestTemplate\(/);
 assert.doesNotMatch(templateUi,/createParentQuestV2\(|reactivateParentQuest\(/,"Creating template cannot send");
 assert.match(ui,/>Skapa mall\s*</);
-assert.match(ui,/>Skicka uppdrag\s*</);
+assert.match(ui,/editingQuestId \? "Spara ändringar" : "Skicka uppdrag"/);
 assert.match(ui,/>Sparade mallar</);
 assert.match(ui,/>Återkommande uppdrag</);
 assert.match(ui,/const scheduledQuests = questDefinitions\.filter\(/);
