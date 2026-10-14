@@ -1,3 +1,5 @@
+
+**iPhone-UX-korrigering 2026-10-14 (stackad efter PR #15):** Vanliga illustrerade Akt 3-beats använder den gemensamma Story-motorn **utan synlig scenrubrik**. Behåll titel som tillgänglighetsnamn och i innehållsregistret. Tjejen på kajen visas som **"Tjejen"** på nameplaten tills hon i A3-OPEN-002 säger "Nova."; först nästa dialograd visas **"Nova"**. Scenanvisningar får inte spoila namnet före introduktionen. Detta är en kapitelspecifik deklarativ reveal-regel ovanpå Runtime 1.1:s gemensamma speaker-identity-presenterare, ingen ny Act 3-dialogmotor eller sparflagga. Manus, digests, bilder, questgrind och save v3 förblir oförändrade.
 # Akt 3 — Implementationsbeslut och plan
 
 **Issue #14, 2026-10-13:** PARK-002 har nu en gemensam Runtime 1.1-grind med strikt backend-evidens och save v3. Se [ansvar, tester och begränsningar](ACT3_FIRST_QUEST_BRIDGE_2026-10-13.md). Äldre beskrivningar av helt stängd PARK-002 nedan avser föregående slice.

@@ -18,6 +18,8 @@ import {
   previousAct3OpeningState,
 } from "../game/act3OpeningProgress";
 import { storyLineAt } from "../runtime/story/storySequence";
+import { storySpeakerDisplayName, storyNarrationDisplayText } from "../runtime/story/speakerIdentity";
+import { ACT3_SPEAKER_REVEALS } from "../game/act3SpeakerReveals";
 import { storySpeakerTone, type StoryBeatPresentation } from "../game/storyEngine";
 import { ACT3_DEBUG_FIXTURE, type Act3DebugContext } from "../game/act3DebugFixture";
 import { consumeAct3PreviewEntry } from "../game/act3PreviewAccess";
@@ -222,15 +224,28 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
   const currentLine = currentBeat
     ? storyLineAt(currentBeat.lines, lineIndex)
     : null;
+  const identityCursor = {
+    beatIndex: playingPark002 ? ACT3_FREE_OPENING_BEAT_COUNT : state.openingBeatIndex,
+    lineIndex,
+  };
+  const nameplate = storySpeakerDisplayName(
+    currentLine?.speaker ?? null, identityCursor, ACT3_SPEAKER_REVEALS,
+  );
+  const lineText = currentLine
+    ? renderAct3OpeningText(currentLine.text, context.childName) : "";
+  const displayText = currentLine?.speaker === null
+    ? storyNarrationDisplayText(lineText, identityCursor, ACT3_SPEAKER_REVEALS)
+    : lineText;
   const storyPresentation: StoryBeatPresentation | null = currentBeat && currentLine
     ? {
         id: currentBeat.id + ":" + lineIndex,
         image: currentBeat.image,
-        heading: currentBeat.title,
-        speaker: currentLine.speaker ?? undefined,
+        // Authored scene title stays available as ariaLabel on StoryRunner,
+        // but ordinary beat dialogue uses the shared title-free DialogueCard.
+        speaker: nameplate ?? undefined,
         speakerTone: currentLine.speaker === "Du" ? "child"
           : currentLine.speaker ? storySpeakerTone(currentLine.speaker) : "default",
-        lines: [renderAct3OpeningText(currentLine.text, context.childName)],
+        lines: [displayText],
         nextLabel: (playingPark002 || state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT - 1)
           && lineIndex === currentBeat.lines.length - 1
           ? "Till kartan" : "Fortsätt",
