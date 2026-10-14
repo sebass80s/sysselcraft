@@ -430,7 +430,7 @@ export default function ParentModePage() {
     }
   }
 
-  function useQuestTemplate(template: ParentQuestDefinition) {
+  function populateFromTemplate(template: ParentQuestDefinition) {
     cancelEdit();
     setDraft({
       title: template.title,
@@ -1069,7 +1069,7 @@ export default function ParentModePage() {
                     <small>{recurrenceLabel(template)} · 💎 {template.reward.diamonds} · 🪙 {template.reward.sysselBux}</small>
                   </div></div>
                   <div className="parent-quest-actions">
-                    <button className="secondary-button compact" disabled={busy} onClick={() => useQuestTemplate(template)}>Använd mall</button>
+                    <button className="secondary-button compact" disabled={busy} onClick={() => populateFromTemplate(template)}>Använd mall</button>
                     <button className="secondary-button compact" disabled={busy} onClick={() => void removeQuestTemplate(template)}>Ta bort mall</button>
                   </div>
                 </article>
