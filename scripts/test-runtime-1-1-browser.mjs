@@ -179,7 +179,9 @@ async function enterAct3Chapter(page) {
   await page.getByText("På andra sidan sjön", { exact: true }).first().waitFor();
   await button.click();
   await intro.waitFor({ state: "hidden" });
-  await page.getByRole("region", { name: "Stadskarta", exact: true }).waitFor();
+  // The playable opening now starts immediately after the chapter card.
+  await page.getByRole("dialog", { name: "Hamnen", exact: true }).waitFor();
+  await page.getByText("Motorbåten glider in mellan bryggorna.", { exact: true }).waitFor();
 }
 
 async function enterAct3ViaAdultX(page) {
@@ -289,11 +291,18 @@ try {
     await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
     await enterAct3ViaAdultX(page);
     await enterAct3Chapter(page);
+    // Persist ONE actual opening story line, not just the intro-card boolean.
+    await page.getByRole("button", { name: "Fortsätt", exact: true }).click();
+    await page.getByText(/Längs kajen ligger segelbåtar/).waitFor();
+    const act3Key = `CapacitorStorage.sysselcraft.act3.runtime.v1.${pairedChildId}`;
+    const savedOpening = await page.evaluate(key => localStorage.getItem(key), act3Key);
+    assert.equal(JSON.parse(savedOpening).openingLineIndex, 1, "Act 3 must persist the current story line per child");
     await page.reload();
     await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
     // A new adult X launch can resume the already saved Act 3 title entry.
     await enterAct3ViaAdultX(page);
-    await page.getByRole("region", { name: "Stadskarta", exact: true }).waitFor();
+    await page.getByRole("dialog", { name: "Hamnen", exact: true }).waitFor();
+    await page.getByText(/Längs kajen ligger segelbåtar/).waitFor();
     assert.equal(
       await page.getByRole("dialog", { name: "Kapitel 3 · På andra sidan sjön", exact: true }).count(),
       0,
@@ -326,8 +335,14 @@ try {
     const { page, errors } = await setupPage(context, { act2State: completedAct2 });
     await page.goto(base + "/act3");
     await page.getByRole("heading", { name: "Kapitel 3 är låst", exact: true }).waitFor();
+    // An isolated synthetic Act 3 save puts this TRANSPORT test after PARK-001.
+    // No quest, wallet or Act 1/2 state is changed by the fixture.
+    await page.evaluate(() => localStorage.setItem(
+      "CapacitorStorage.sysselcraft.act3.runtime.v1",
+      JSON.stringify({ version: 2, entered: true, openingBeatIndex: 6, openingLineIndex: 0 }),
+    ));
     await enterAct3ViaAdultX(page);
-    await enterAct3Chapter(page);
+    await page.getByRole("region", { name: "Stadskarta", exact: true }).waitFor();
     const storageBefore = await page.evaluate(() => JSON.stringify(localStorage));
     await page.getByRole("button", { name: "Hamnen", exact: true }).tap();
     await page.getByRole("button", { name: "Gå tillbaka", exact: true }).tap();
@@ -345,7 +360,7 @@ try {
     const context = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
     const { page, errors } = await setupPage(context, { act2State: completedAct2 });
     await page.goto(base + "/act3-test");
-    await page.getByRole("region", { name: "Stadskarta", exact: true }).waitFor();
+    await page.getByRole("dialog", { name: "Hamnen", exact: true }).waitFor();
     await page.getByText("DEBUG · production UI", { exact: true }).waitFor();
     await page.getByText("✅ Chapter entry", { exact: true }).waitFor();
     assert.deepEqual(errors, []);
