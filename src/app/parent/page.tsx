@@ -11,6 +11,7 @@ import {
 } from "@/backend/auth";
 import {
   archiveParentQuest,
+  cancelParentQuestInstance,
   createChild,
   createChildPairingCode,
   createHousehold,
@@ -450,6 +451,26 @@ export default function ParentModePage() {
       }
       await loadChildQuests(childId);
       setMessage("Uppdraget är borttaget. Historiken är sparad.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte ta bort uppdraget.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function removeQuestInstance(quest: BackendQuest) {
+    if (quest.state !== "available" && quest.state !== "active") return;
+    const confirmed = window.confirm(
+      `Ta bort instansen av "${quest.title}"? Om uppdraget upprepas ligger mallen kvar och nästa tillfälle skapas som vanligt.`,
+    );
+    if (!confirmed) return;
+
+    setBusy(true);
+    setMessage("");
+    try {
+      await cancelParentQuestInstance(quest.instanceId);
+      await loadChildQuests(childId);
+      setMessage("Uppdragsinstansen är borttagen. Uppdragsmallen finns kvar.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Kunde inte ta bort uppdraget.");
     } finally {
@@ -948,6 +969,9 @@ export default function ParentModePage() {
               {available.length ? available.map((quest) => (
                 <article className="parent-quest-card" key={quest.instanceId}>
                   <div><span>❔</span><div><strong>{quest.title}</strong><small>Väntar på att {child?.displayName || "barnet"} tar uppdraget</small></div></div>
+                  <div className="parent-quest-actions">
+                    <button className="secondary-button compact" disabled={busy} onClick={() => void removeQuestInstance(quest)}>Ta bort instans</button>
+                  </div>
                 </article>
               )) : <div className="parent-empty-state">Inga nya uppdrag väntar på att tas.</div>}
             </section>
@@ -960,6 +984,9 @@ export default function ParentModePage() {
               {active.length ? active.map((quest) => (
                 <article className="parent-quest-card" key={quest.instanceId}>
                   <div><span>📜</span><div><strong>{quest.title}</strong><small>{child?.displayName || "Barnet"} har tagit uppdraget</small></div></div>
+                  <div className="parent-quest-actions">
+                    <button className="secondary-button compact" disabled={busy} onClick={() => void removeQuestInstance(quest)}>Ta bort instans</button>
+                  </div>
                 </article>
               )) : <div className="parent-empty-state">Inga uppdrag pågår just nu.</div>}
             </section>
