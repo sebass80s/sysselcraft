@@ -398,6 +398,7 @@ export type Database = {
           approved_by: string | null
           child_id: string
           claimed_at: string | null
+          closed_at: string | null
           created_at: string
           description_snapshot: string
           household_id: string
@@ -417,6 +418,7 @@ export type Database = {
           approved_by?: string | null
           child_id: string
           claimed_at?: string | null
+          closed_at?: string | null
           created_at?: string
           description_snapshot: string
           household_id: string
@@ -436,6 +438,7 @@ export type Database = {
           approved_by?: string | null
           child_id?: string
           claimed_at?: string | null
+          closed_at?: string | null
           created_at?: string
           description_snapshot?: string
           household_id?: string
@@ -532,6 +535,7 @@ export type Database = {
         Returns: undefined
       }
       archive_parent_quest: { Args: { p_quest_id: string }; Returns: undefined }
+      cancel_parent_quest_instance: { Args: { p_instance_id: string }; Returns: undefined }
       claim_quest_reward: {
         Args: { p_instance_id: string }
         Returns: undefined
