@@ -1036,7 +1036,7 @@ export default function ParentModePage() {
                 <article className="parent-quest-card" key={quest.instanceId}>
                   <div><span>❔</span><div><strong>{quest.title}</strong><small>Väntar på att {child?.displayName || "barnet"} tar uppdraget</small></div></div>
                   <div className="parent-quest-actions">
-                    <button className="secondary-button compact" disabled={busy} onClick={() => void removeQuestInstance(quest)}>Ta bort instans</button>
+                    <button className="secondary-button compact" disabled={busy} onClick={() => void removeQuestInstance(quest)}>Ta bort quest</button>
                   </div>
                 </article>
               )) : <div className="parent-empty-state">Inga nya uppdrag väntar på att tas.</div>}
@@ -1051,7 +1051,7 @@ export default function ParentModePage() {
                 <article className="parent-quest-card" key={quest.instanceId}>
                   <div><span>📜</span><div><strong>{quest.title}</strong><small>{child?.displayName || "Barnet"} har tagit uppdraget</small></div></div>
                   <div className="parent-quest-actions">
-                    <button className="secondary-button compact" disabled={busy} onClick={() => void removeQuestInstance(quest)}>Ta bort instans</button>
+                    <button className="secondary-button compact" disabled={busy} onClick={() => void removeQuestInstance(quest)}>Ta bort quest</button>
                   </div>
                 </article>
               )) : <div className="parent-empty-state">Inga uppdrag pågår just nu.</div>}
