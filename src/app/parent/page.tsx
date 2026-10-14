@@ -16,10 +16,13 @@ import {
   createChildPairingCode,
   createHousehold,
   createParentQuestV2,
+  createParentQuestTemplate,
   listChildQuests,
   listChildren,
   listHouseholds,
   listParentQuestDefinitions,
+  listParentQuestTemplates,
+  removeParentQuestTemplate,
   reviewQuest,
   reactivateParentQuest,
   setParentQuestRecurrenceTime,
@@ -66,6 +69,7 @@ export default function ParentModePage() {
   const [children, setChildren] = useState<BackendChild[]>([]);
   const [quests, setQuests] = useState<BackendQuest[]>([]);
   const [questDefinitions, setQuestDefinitions] = useState<ParentQuestDefinition[]>([]);
+  const [questTemplates, setQuestTemplates] = useState<ParentQuestDefinition[]>([]);
   const [householdId, setHouseholdId] = useState("");
   const [childId, setChildId] = useState("");
   const [draft, setDraft] = useState<ParentQuestDraft>(emptyDraft);
@@ -133,6 +137,7 @@ export default function ParentModePage() {
       childRequests.invalidate();
       setQuests([]);
       setQuestDefinitions([]);
+      setQuestTemplates([]);
       return true;
     }
     const current = childRequests.begin();
@@ -144,6 +149,9 @@ export default function ParentModePage() {
       const nextDefinitions = await listParentQuestDefinitions(id);
       if (!current()) return false;
       setQuestDefinitions(nextDefinitions);
+      const nextTemplates = await listParentQuestTemplates(id);
+      if (!current()) return false;
+      setQuestTemplates(nextTemplates);
       return true;
     } catch (error) {
       if (!current()) return false;
@@ -402,6 +410,55 @@ export default function ParentModePage() {
     }
   }
 
+  async function saveDraftAsTemplate() {
+    if (busy || editingQuestId || !householdId || !childId || !isParentQuestDraftReady(draft)
+      || (recurrenceKind === "weekdays" && recurrenceWeekdays.length === 0)) return;
+
+    setBusy(true);
+    setMessage("");
+    try {
+      await createParentQuestTemplate(
+        householdId, childId, draft, recurrenceKind, recurrenceWeekdays,
+        "Europe/Stockholm", recurrenceTime,
+      );
+      await loadChildQuests(childId);
+      setMessage("Mallen är sparad. Inget nytt uppdrag har skickats till barnet. 📌");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte skapa mallen.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function useQuestTemplate(template: ParentQuestDefinition) {
+    cancelEdit();
+    setDraft({
+      title: template.title,
+      description: template.description,
+      progressionClass: template.progressionClass,
+      reward: { ...template.reward },
+    });
+    setRecurrenceKind(template.recurrenceKind);
+    setRecurrenceWeekdays([...template.recurrenceWeekdays]);
+    setRecurrenceTime(template.recurrenceTime || "08:00");
+    setMessage("Mallen är ifylld. Anpassa vid behov och tryck Skicka uppdrag.");
+  }
+
+  async function removeQuestTemplate(template: ParentQuestDefinition) {
+    if (!window.confirm(`Ta bort mallen "${template.title}"? Pågående och återkommande uppdrag fortsätter som vanligt.`)) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      await removeParentQuestTemplate(template.questId);
+      await loadChildQuests(childId);
+      setMessage("Mallen är borttagen. Inga uppdrag har ändrats.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Kunde inte ta bort mallen.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   function beginEditDefinition(definition: ParentQuestDefinition) {
     setEditingQuestId(definition.questId);
     setDraft({
@@ -641,6 +698,7 @@ export default function ParentModePage() {
   const available = quests.filter((quest) => quest.state === "available");
   const active = quests.filter((quest) => quest.state === "active");
   const approved = quests.filter((quest) => quest.state === "approved");
+  const scheduledQuests = questDefinitions.filter((definition) => definition.recurrenceKind !== "once");
   const child = children.find((candidate) => candidate.id === childId);
   const draftReady =
     isParentQuestDraftReady(draft) &&
@@ -892,8 +950,16 @@ export default function ParentModePage() {
                   </label>
                 </div>
                 <button className="primary-button" disabled={busy || !childId || !draftReady}>
-                  {reactivatingQuestId ? "Återaktivera quest" : editingQuestId ? "Spara ändringar" : "Skapa uppdrag"}
+                  {reactivatingQuestId ? "Återaktivera quest" : editingQuestId ? "Spara ändringar" : "Skicka uppdrag"}
                 </button>
+                {!editingQuestId && (
+                  <>
+                    <button type="button" className="secondary-button" disabled={busy || !childId || !draftReady} onClick={() => void saveDraftAsTemplate()}>
+                      Skapa mall
+                    </button>
+                    <small>Skicka uppdrag skickar bara till barnet. Skapa mall sparar för senare bruk utan att skicka något.</small>
+                  </>
+                )}
                 {editingQuestId && (
                   <button
                     type="button"
@@ -993,37 +1059,41 @@ export default function ParentModePage() {
 
             <section className="parent-tool-card">
               <div className="parent-section-heading">
-                <h2>Uppdragsmallar</h2>
-                <span>{questDefinitions.length}</span>
+                <h2>Sparade mallar</h2><span>{questTemplates.length}</span>
               </div>
-              {questDefinitions.length ? (
-                questDefinitions.map((definition) => (
-                  <article className="parent-quest-card" key={definition.questId}>
-                    <div>
-                      <span>📌</span>
-                      <div>
-                        <strong>{definition.title}</strong>
-                        <small>
-                          {recurrenceLabel(definition)} · 💎 {definition.reward.diamonds} · 🪙 {definition.reward.sysselBux}
-                        </small>
-                      </div>
-                    </div>
-                    <div className="parent-quest-actions">
-                      <button className="secondary-button compact" disabled={busy} onClick={() => beginEditDefinition(definition)}>Redigera</button>
-                      <button className="secondary-button compact" disabled={busy} onClick={() => beginReactivateDefinition(definition)}>Återaktivera</button>
-                      <button
-                        className="secondary-button compact"
-                        disabled={busy}
-                        onClick={() => void archiveQuestDefinition(definition)}
-                      >
-                        Ta bort
-                      </button>
-                    </div>
-                  </article>
-                ))
-              ) : (
-                <div className="parent-empty-state">Inga uppdragsmallar ännu.</div>
-              )}
+              <p>Mallar sparas bara när du väljer Skapa mall. Att använda en mall fyller i formuläret, men skickar inget förrän du väljer Skicka uppdrag.</p>
+              {questTemplates.length ? questTemplates.map((template) => (
+                <article className="parent-quest-card" key={template.questId}>
+                  <div><span>📌</span><div>
+                    <strong>{template.title}</strong>
+                    <small>{recurrenceLabel(template)} · 💎 {template.reward.diamonds} · 🪙 {template.reward.sysselBux}</small>
+                  </div></div>
+                  <div className="parent-quest-actions">
+                    <button className="secondary-button compact" disabled={busy} onClick={() => useQuestTemplate(template)}>Använd mall</button>
+                    <button className="secondary-button compact" disabled={busy} onClick={() => void removeQuestTemplate(template)}>Ta bort mall</button>
+                  </div>
+                </article>
+              )) : <div className="parent-empty-state">Inga sparade mallar ännu. Använd Skapa mall när du vill spara ett uppdrag för senare.</div>}
+            </section>
+
+            <section className="parent-tool-card">
+              <div className="parent-section-heading">
+                <h2>Återkommande uppdrag</h2><span>{scheduledQuests.length}</span>
+              </div>
+              <p>Här styr du aktiva dags- och veckoscheman. De behöver inte vara sparade som mallar.</p>
+              {scheduledQuests.length ? scheduledQuests.map((definition) => (
+                <article className="parent-quest-card" key={definition.questId}>
+                  <div><span>🔁</span><div>
+                    <strong>{definition.title}</strong>
+                    <small>{recurrenceLabel(definition)} · 💎 {definition.reward.diamonds} · 🪙 {definition.reward.sysselBux}</small>
+                  </div></div>
+                  <div className="parent-quest-actions">
+                    <button className="secondary-button compact" disabled={busy} onClick={() => beginEditDefinition(definition)}>Redigera schema</button>
+                    <button className="secondary-button compact" disabled={busy} onClick={() => beginReactivateDefinition(definition)}>Återaktivera</button>
+                    <button className="secondary-button compact" disabled={busy} onClick={() => void archiveQuestDefinition(definition)}>Stoppa schema</button>
+                  </div>
+                </article>
+              )) : <div className="parent-empty-state">Inga aktiva återkommande scheman.</div>}
             </section>
 
             <section className="parent-tool-card">
