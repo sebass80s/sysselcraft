@@ -30,7 +30,7 @@ assert.match(parent,/async function removeQuestInstance\(quest: BackendQuest\)/)
 assert.match(parent,/quest\.state !== "available" && quest\.state !== "active"/);
 assert.match(parent,/await cancelParentQuestInstance\(quest\.instanceId\)/);
 assert.match(parent,/await loadChildQuests\(childId\)/);
-assert.equal((parent.match(/>Ta bort instans<\/button>/g)??[]).length,2,"Available and active occurrences removable from parent UI");
+assert.equal((parent.match(/>Ta bort quest<\/button>/g)??[]).length,2,"Available and active occurrences removable from parent UI");
 assert.match(parent,/upprepas ligger mallen kvar/i);
 assert.match(client,/presented\.available, \.\.\.presented\.active, \.\.\.presented\.pending/);
 assert.deepEqual(
