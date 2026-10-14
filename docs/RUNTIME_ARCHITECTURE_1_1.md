@@ -231,6 +231,12 @@ Physical iPhone update-in-place acceptance remains the only gate before real Act
 
 
 
+## Shared Story name revelation and optional headings — 2026-10-14
+
+Runtime 1.1 owns how an authored character's identity becomes visible in Story presentation. The generic `src/runtime/story/speakerIdentity.ts` accepts a chapter-defined introduction cursor and anonymous display name; it derives the nameplate and masks unrevealed identities in narrator text without changing canonical script, source hashes or saved story state. The named character becomes visible only **after** their introduction line. Restart and rewinding derive the same result from the saved Story cursor. A fuel test uses two other fictional chapter configurations, not an Act 3-specific engine branch.
+
+Ordinary illustrated beats can omit `StoryBeatPresentation.heading` to use the existing title-free `StoryRunner` → `StoryMoment` → `DialogueCard`. Keep a descriptive `ariaLabel` even when no heading is displayed. Chapter cards and explicit gate/information modals may retain headings. Act 3's OPEN-001–005, PARK-001 and PARK-002 choose title-free beat presentation; Nova's identity is concealed as "Tjejen" until she finishes introducing herself in OPEN-002. This is a chapter configuration on the shared presentation engine.
+
 ## Reusable claim-gated Story activation — 2026-10-13
 
 `claimGate` and `claimGateBridge` extend the existing authoritative delta/track primitives with strict evidence validation, a single baseline, preserved backlog and atomic one-beat activation. The bridge executes fresh reads inside `ChapterPersistenceHost.update`; `updateChapterFromView` protects concurrent Story cursors, and `useChapterPersistenceGuard` captures non-revivable operation generations. `pairedClaimEvidence` reads raw counts because display normalization is not an authority check. Existing backend sync, persistence and Story engines remain the owners of their mechanics.
