@@ -56,6 +56,7 @@ try {
  for(let index=0;index<beat.lines.length;index++){
   const line=beat.lines[index];
   await page.getByText(line.text,{exact:true}).waitFor();
+  assert.equal(await page.locator(".shared-story-heading").count(),0,"PARK-002 must share title-free story presentation");
   if(line.speaker)assert.equal(await page.locator('.dialogue-speaker').textContent(),line.speaker);
   assert.equal((await saved()).park002LineIndex,index);
   if(index===4){
