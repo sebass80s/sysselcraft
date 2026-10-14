@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import vm from "node:vm";
 import ts from "typescript";
+import {runtimeTestLoader} from "./lib/runtime-test-loader.mjs";
 function load(path, dependencies) {
   const source=fs.readFileSync(path,"utf8");
   const js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
@@ -14,17 +15,17 @@ function load(path, dependencies) {
   return exports;
 }
 let definition;
-const state=load("src/game/act3RuntimeState.ts",{"../runtime/save/chapterPersistence":{
+const state=runtimeTestLoader({"../runtime/save/chapterPersistence":{
   createChapterPersistenceHost(input){definition=input;return {load:async()=>input.createDefaultState(),save:async x=>assert.ok(input.normalize(x)),clear:async()=>{}}}
-}});
+}})("src/game/act3RuntimeState.ts");
 const clean=x=>JSON.parse(JSON.stringify(x));
 const first=state.createDefaultAct3RuntimeState();
-assert.deepEqual(clean(first),{version:2,entered:false,openingBeatIndex:0,openingLineIndex:0});
+assert.deepEqual(clean(first),{version:3,entered:false,openingBeatIndex:0,openingLineIndex:0,claimGate:{baseline:null,consumed:0,observedCount:null,observedAt:null},park002Phase:"waiting",park002LineIndex:0});
 assert.equal(definition.chapterId,"act3");
 assert.equal(definition.storageKey,"sysselcraft.act3.runtime.v1");
-assert.equal(definition.version,2);
+assert.equal(definition.version,3);
 assert.deepEqual(clean(definition.normalize(definition.migrate({version:1,entered:true}))),{
-  version:2,entered:true,openingBeatIndex:0,openingLineIndex:0
+  ...clean(first),entered:true
 });
 assert.deepEqual(clean(definition.normalize(definition.migrate({version:1,entered:false}))),clean(first));
 for (const rejected of [
@@ -37,7 +38,7 @@ for (const rejected of [
 ]){
   assert.equal(state.normalizeAct3RuntimeState(rejected),null,"Rejected invalid/corrupted/future save");
 }
-assert.equal(state.migrateAct3RuntimeState({version:3}).version,3,"Future saves must not be rewritten");
+assert.equal(state.migrateAct3RuntimeState({version:4}).version,4,"Future saves must not be rewritten");
 const story=load("src/runtime/story/storySequence.ts",{});
 const progress=load("src/game/act3OpeningProgress.ts",{
  "../runtime/story/storySequence":story,

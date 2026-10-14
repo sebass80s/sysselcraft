@@ -4,7 +4,7 @@ import {
 } from "./act3RuntimeState";
 import type { ChapterDebugFixture } from "../runtime/debug/chapterDebugHarness";
 
-export type Act3DebugContext = { childName: string };
+export type Act3DebugContext = { childName: string; childId: string | null };
 
 export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3DebugContext> = {
   chapterId: "act3",
@@ -13,7 +13,7 @@ export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3Debug
   createSession() {
     return {
       state: { ...createDefaultAct3RuntimeState(), entered: true },
-      context: { childName: "Testspelaren" },
+      context: { childName: "Testspelaren", childId: null },
       chapterIntroVisible: false,
     };
   },
@@ -30,7 +30,7 @@ export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3Debug
   probes: {
     "chapter-entry"(state) {
       return {
-        ok: state.version === 2 && state.entered === true,
+        ok: state.version === 3 && state.entered === true,
         details: {
           version: state.version,
           entered: state.entered,

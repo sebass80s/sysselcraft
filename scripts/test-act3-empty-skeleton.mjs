@@ -1,25 +1,9 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import vm from "node:vm";
-import ts from "typescript";
+import {runtimeTestLoader} from "./lib/runtime-test-loader.mjs";
 
 function read(path) {
   return fs.readFileSync(new URL("../" + path, import.meta.url), "utf8");
-}
-
-function loadTsModule(path, dependencies = {}) {
-  const exports = {};
-  const code = ts.transpileModule(read(path), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
-  }).outputText;
-  vm.runInNewContext(code, {
-    exports,
-    require(name) {
-      assert.ok(name in dependencies, `Unexpected Act 3 chapter-entry dependency: ${name}`);
-      return dependencies[name];
-    },
-  });
-  return exports;
 }
 
 const persistenceStub = {
@@ -34,15 +18,15 @@ const persistenceStub = {
   },
 };
 
-const act3State = loadTsModule("src/game/act3RuntimeState.ts", {
+const act3State = runtimeTestLoader({
   "../runtime/save/chapterPersistence": persistenceStub,
-});
+})("src/game/act3RuntimeState.ts");
 
 const initial = act3State.createDefaultAct3RuntimeState();
-assert.deepEqual(JSON.parse(JSON.stringify(initial)), { version: 2, entered: false, openingBeatIndex: 0, openingLineIndex: 0 });
+assert.deepEqual(JSON.parse(JSON.stringify(initial)), { version: 3, entered: false, openingBeatIndex: 0, openingLineIndex: 0, claimGate: {baseline:null,consumed:0,observedCount:null,observedAt:null}, park002Phase:"waiting", park002LineIndex:0 });
 assert.deepEqual(
   JSON.parse(JSON.stringify(act3State.normalizeAct3RuntimeState(act3State.migrateAct3RuntimeState({ version: 1, entered: true })))),
-  { version: 2, entered: true, openingBeatIndex: 0, openingLineIndex: 0 },
+  { ...JSON.parse(JSON.stringify(initial)), entered: true },
 );
 assert.equal(act3State.normalizeAct3RuntimeState({ version: 3, entered: true }), null);
 
@@ -61,7 +45,7 @@ assert.match(skeletonSource, /ACT3_DEBUG_FIXTURE/, "Act 3 must use the shared de
 assert.match(skeletonSource, /ChapterRuntimeBoundary/, "Act 3 must use the shared runtime boundary");
 assert.match(skeletonSource, /ChapterIntroCard/, "Act 3 must use the shared chapter intro card");
 assert.match(skeletonSource, /title="På andra sidan sjön"/, "Act 3 must use the locked chapter title");
-assert.match(skeletonSource, /saveAct3RuntimeState\(next\)/, "Act 3 chapter entry must persist through shared chapter persistence");
+assert.match(skeletonSource, /updateChapterFromView/, "Act 3 chapter entry must persist through shared chapter persistence");
 assert.match(
   skeletonSource,
   /consumeAct3PreviewEntry\(window\.sessionStorage\)/,

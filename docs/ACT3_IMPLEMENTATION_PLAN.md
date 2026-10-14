@@ -1,5 +1,7 @@
 # Akt 3 — Implementationsbeslut och plan
 
+**Issue #14, 2026-10-13:** PARK-002 har nu en gemensam Runtime 1.1-grind med strikt backend-evidens och save v3. Se [ansvar, tester och begränsningar](ACT3_FIRST_QUEST_BRIDGE_2026-10-13.md). Äldre beskrivningar av helt stängd PARK-002 nedan avser föregående slice.
+
 **UI-status 2026-10-13 (Issue #9):** Responsiv kartvy och gemensam bekräftelsedialog är implementerade i `Act3CityMap` och kopplade till befintlig `Act3Skeleton`. X-port och kapitelkort kvarstår. Endast hamnen visas tills riktiga discovery-triggers tillförs; OK där öppnar befintliga Akt 2 utan BOAT-progression. Övriga typade platsval har en uttrycklig framtida Story-integrationsgräns. Se [implementation, tester och begränsningar](ACT3_CITY_MAP_UI_VERIFICATION_2026-10-13.md). Äldre förberedelsestatus nedan beskriver läget före UI-slicen. Fysisk iPhone-acceptans återstår.
 
 **Förberedelse 2026-10-13:** Kartgrafiken ligger i repot och för Codex finns exakt assetschema, geometri och testkontrakt i `docs/ACT3_CODEX_MAP_HANDOVER_2026-10-13.md`. Denna status ersätter 2026-10-12-formuleringen om saknade filer; faktisk UI, storyprogress och iPhone-acceptans återstår.
