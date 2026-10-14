@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+const sql=fs.readFileSync("supabase/migrations/20261014_quest_v2_explicit_parent_templates.sql","utf8");
+const ui=fs.readFileSync("src/app/parent/page.tsx","utf8");
+const repo=fs.readFileSync("src/backend/familyRepository.ts","utf8");
+const types=fs.readFileSync("src/backend/database.types.ts","utf8");
+
+assert.match(sql,/add column if not exists saved_as_template boolean not null default false/);
+assert.match(sql,/set saved_as_template = true\s+where template_child_id is not null and saved_as_template = false/,"Old visible templates remain saved");
+const create=sql.split("create or replace function public.create_parent_quest_template_v1")[1].split("create or replace function public.list_parent_quest_templates_v1")[0];
+assert.match(create,/public\.is_household_parent\(p_household_id\)/);
+assert.match(create,/child does not belong to household/);
+assert.match(create,/insert into public\.parent_quests/);
+assert.match(create,/saved_as_template,/);
+assert.match(create,/perform public\.set_parent_quest_recurrence/);
+assert.doesNotMatch(create,/insert into public\.quest_instances|claim_quest_reward|reward_events|child_game_state/i,"Saving a template must never send a quest or award money");
+const list=sql.split("create or replace function public.list_parent_quest_templates_v1")[1].split("create or replace function public.remove_parent_quest_template_v1")[0];
+assert.match(list,/pq\.saved_as_template=true/);
+assert.match(list,/pq\.template_child_id=p_child_id/);
+assert.match(list,/public\.is_household_parent\(pq\.household_id\)/);
+const remove=sql.split("create or replace function public.remove_parent_quest_template_v1")[1];
+assert.match(remove,/public\.is_household_parent\(v_household\)/);
+assert.match(remove,/saved_as_template=false/);
+assert.doesNotMatch(remove,/delete from|update public\.quest_instances|archived_at|reward_events/i,"Removing a template must never alter live quests");
+assert.match(repo,/export async function createParentQuestTemplate/);
+assert.match(repo,/\.rpc\("create_parent_quest_template_v1"/);
+assert.match(repo,/export async function removeParentQuestTemplate/);
+assert.match(repo,/\.rpc\("remove_parent_quest_template_v1"/);
+assert.match(repo,/\.rpc\("create_parent_quest_v2"/,"Actual quest issue still uses existing canonical RPC");
+assert.match(types,/create_parent_quest_template_v1:/);
+assert.match(types,/list_parent_quest_templates_v1:/);
+assert.match(types,/remove_parent_quest_template_v1:/);
+
+const createUi=ui.split("async function submitDraft(")[1].split("async function saveDraftAsTemplate(")[0];
+assert.match(createUi,/createParentQuestV2\(/);
+assert.doesNotMatch(createUi,/createParentQuestTemplate|save.*Template|saved_as_template/i,"Ordinary task sending cannot auto-save");
+const templateUi=ui.split("async function saveDraftAsTemplate(")[1].split("function useQuestTemplate(")[0];
+assert.match(templateUi,/createParentQuestTemplate\(/);
+assert.doesNotMatch(templateUi,/createParentQuestV2\(|reactivateParentQuest\(/,"Creating template cannot send");
+assert.match(ui,/>Skapa mall\s*</);
+assert.match(ui,/>Skicka uppdrag\s*</);
+assert.match(ui,/>Sparade mallar</);
+assert.match(ui,/>Återkommande uppdrag</);
+assert.match(ui,/const scheduledQuests = questDefinitions\.filter\(/);
+assert.match(ui,/questTemplates\.map\(/);
+assert.match(ui,/await removeParentQuestTemplate\(template\.questId\)/);
+assert.match(ui,/await loadChildQuests\(childId\)/,"Parent UI refreshes after changes");
+assert.doesNotMatch(sql,/drop table|delete from public\.quest_instances|update public\.child_game_state|insert into public\.reward_events/i);
+console.log("PASS: explicit Quest V2 template creation never creates an instance; live schedules, legacy templates and child rewards remain distinct");
