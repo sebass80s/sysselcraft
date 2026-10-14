@@ -247,7 +247,7 @@ export async function createParentQuestTemplate(
     p_reward_syssel_bux: quest.reward.sysselBux,
     p_recurrence_kind: recurrenceKind,
     p_recurrence_weekdays: recurrenceWeekdays,
-    p_recurrence_timezone: recurrenceTimezone ?? undefined,
+    p_recurrence_timezone: recurrenceTimezone,
     p_recurrence_time: recurrenceTime,
   });
   if (error) throw error;
