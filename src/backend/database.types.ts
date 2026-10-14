@@ -344,6 +344,9 @@ export type Database = {
           household_id: string
           id: string
           progression_class: string
+          recurrence_time: string
+          saved_as_template: boolean
+          template_child_id: string | null
           recurrence_kind: string
           recurrence_timezone: string | null
           recurrence_weekdays: number[]
@@ -359,6 +362,9 @@ export type Database = {
           household_id: string
           id?: string
           progression_class: string
+          recurrence_time?: string
+          saved_as_template?: boolean
+          template_child_id?: string | null
           recurrence_kind?: string
           recurrence_timezone?: string | null
           recurrence_weekdays?: number[]
@@ -374,6 +380,9 @@ export type Database = {
           household_id?: string
           id?: string
           progression_class?: string
+          recurrence_time?: string
+          saved_as_template?: boolean
+          template_child_id?: string | null
           recurrence_kind?: string
           recurrence_timezone?: string | null
           recurrence_weekdays?: number[]
@@ -570,6 +579,22 @@ export type Database = {
         }
         Returns: string
       }
+      create_parent_quest_template_v1: {
+        Args: {
+          p_household_id: string
+          p_child_id: string
+          p_title: string
+          p_description: string
+          p_progression_class: string
+          p_reward_diamonds: number
+          p_reward_syssel_bux: number
+          p_recurrence_kind: string
+          p_recurrence_weekdays: number[]
+          p_recurrence_timezone: string | null
+          p_recurrence_time: string
+        }
+        Returns: string
+      }
       create_parent_quest_v2: {
         Args: {
           p_child_id: string
@@ -645,6 +670,28 @@ export type Database = {
           reward_syssel_bux: number
           title: string
         }[]
+      }
+      list_parent_quest_templates_v1: {
+        Args: { p_child_id: string }
+        Returns: {
+          child_id: string
+          created_at: string
+          description: string
+          household_id: string
+          progression_class: string
+          quest_id: string
+          recurrence_kind: string
+          recurrence_time: string
+          recurrence_timezone: string
+          recurrence_weekdays: number[]
+          reward_diamonds: number
+          reward_syssel_bux: number
+          title: string
+        }[]
+      }
+      remove_parent_quest_template_v1: {
+        Args: { p_quest_id: string }
+        Returns: undefined
       }
       reactivate_parent_quest: {
         Args: { p_quest_id: string }

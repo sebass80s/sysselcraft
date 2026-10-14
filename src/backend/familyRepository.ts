@@ -223,6 +223,53 @@ export async function listChildQuests(childId: string): Promise<BackendQuest[]> 
   return ((data ?? []) as RpcQuestRow[]).map(mapQuest);
 }
 
+/**
+ * A saved template is a deliberate parent action. The RPC creates a definition
+ * ONLY: no quest instance, no child reward and no recurrent schedule activation.
+ */
+export async function createParentQuestTemplate(
+  householdId: string,
+  childId: string,
+  draft: ParentQuestDraft,
+  recurrenceKind: QuestRecurrenceKind,
+  recurrenceWeekdays: number[] = [],
+  recurrenceTimezone: string | null = null,
+  recurrenceTime = "08:00",
+): Promise<string> {
+  const quest = normalizeParentQuestDraft(draft);
+  const { data, error } = await getSupabaseBrowserClient().rpc("create_parent_quest_template_v1", {
+    p_household_id: householdId,
+    p_child_id: childId,
+    p_title: quest.title,
+    p_description: quest.description,
+    p_progression_class: quest.progressionClass,
+    p_reward_diamonds: quest.reward.diamonds,
+    p_reward_syssel_bux: quest.reward.sysselBux,
+    p_recurrence_kind: recurrenceKind,
+    p_recurrence_weekdays: recurrenceWeekdays,
+    p_recurrence_timezone: recurrenceTimezone,
+    p_recurrence_time: recurrenceTime,
+  });
+  if (error) throw error;
+  return firstRpcId(data, "create_parent_quest_template_v1");
+}
+
+export async function listParentQuestTemplates(childId: string): Promise<ParentQuestDefinition[]> {
+  const { data, error } = await getSupabaseBrowserClient().rpc("list_parent_quest_templates_v1", {
+    p_child_id: childId,
+  });
+  if (error) throw error;
+  return ((data ?? []) as RpcParentQuestDefinitionRow[]).map(mapParentQuestDefinition);
+}
+
+/** Unsave the template only. This must not archive the underlying live schedule. */
+export async function removeParentQuestTemplate(questId: string): Promise<void> {
+  const { error } = await getSupabaseBrowserClient().rpc("remove_parent_quest_template_v1", {
+    p_quest_id: questId,
+  });
+  if (error) throw error;
+}
+
 export async function listParentQuestDefinitions(
   childId: string,
 ): Promise<ParentQuestDefinition[]> {
@@ -231,7 +278,10 @@ export async function listParentQuestDefinitions(
   });
   if (error) throw error;
 
-  return ((data ?? []) as RpcParentQuestDefinitionRow[]).map((row) => {
+  return ((data ?? []) as RpcParentQuestDefinitionRow[]).map(mapParentQuestDefinition);
+}
+
+function mapParentQuestDefinition(row: RpcParentQuestDefinitionRow): ParentQuestDefinition {
     if (!isProgressionClass(row.progression_class)) {
       throw new Error(`Backend returned an invalid progression class for quest ${row.quest_id}.`);
     }
@@ -256,7 +306,6 @@ export async function listParentQuestDefinitions(
       recurrenceTime: row.recurrence_time?.slice(0, 5) || "08:00",
       createdAt: row.created_at,
     };
-  });
 }
 
 export async function setParentQuestRecurrence(

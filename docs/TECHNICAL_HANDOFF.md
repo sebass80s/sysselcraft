@@ -1,5 +1,10 @@
 # Sysselcraft Technical Handoff
 
+## QUEST SYSTEM V2: EXPLICIT PARENT TEMPLATES — 2026-10-14
+
+Current task: [PR #18](https://github.com/sebass80s/sysselcraft/pull/18) is **open/unreleased**. One-off quests must no longer automatically appear as reusable templates. Parent explicitly chooses **`Skapa mall`** to store a reusable template WITHOUT creating child quest instances; **`Skicka uppdrag`** creates a real quest WITHOUT saving a template. **`Använd mall`** fills the form; recurrent schedules remain a distinct management section. Legacy displayed templates remain preserved pending explicit parent cleanup. Code-checkpoint `9625a26c`: full CI #38598284568 SUCCESS, browser #38598284587 SUCCESS. New DDL/RPC is not yet in live Supabase; no Vercel deploy for PR #18. **Next: test migration safely, confirm/approve release, merge PR #18, apply migration, one controlled Vercel deploy, parent-web acceptance.** Canonical handover: `docs/NOVA_HANDOVER_QUEST_V2_EXPLICIT_TEMPLATES_2026-10-14.md`. Absolute Runtime 1.1 engine-first contract remains binding.
+
+
 ## TEMPORARY ACT 3 PREVIEW GATE — 2026-10-11
 
 **Code committed; full verification and preserved-iPhone acceptance still pending.** The canonical implementation/acceptance record is `docs/ACT3_IMPLEMENTATION_PLAN.md` (section `Tillfällig release-spärr och telefon-test`).
