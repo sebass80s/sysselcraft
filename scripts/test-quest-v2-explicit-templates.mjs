@@ -36,7 +36,7 @@ assert.match(types,/remove_parent_quest_template_v1:/);
 const createUi=ui.split("async function submitDraft(")[1].split("async function saveDraftAsTemplate(")[0];
 assert.match(createUi,/createParentQuestV2\(/);
 assert.doesNotMatch(createUi,/createParentQuestTemplate|save.*Template|saved_as_template/i,"Ordinary task sending cannot auto-save");
-const templateUi=ui.split("async function saveDraftAsTemplate(")[1].split("function useQuestTemplate(")[0];
+const templateUi=ui.split("async function saveDraftAsTemplate(")[1].split("function populateFromTemplate(")[0];
 assert.match(templateUi,/createParentQuestTemplate\(/);
 assert.doesNotMatch(templateUi,/createParentQuestV2\(|reactivateParentQuest\(/,"Creating template cannot send");
 assert.match(ui,/>Skapa mall\s*</);
