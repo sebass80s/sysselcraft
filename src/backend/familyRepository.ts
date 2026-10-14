@@ -337,6 +337,14 @@ export async function archiveParentQuest(questId: string): Promise<void> {
   if (error) throw error;
 }
 
+/** Cancel one unsubmitted occurrence, preserving the recurring definition and history. */
+export async function cancelParentQuestInstance(instanceId: string): Promise<void> {
+  const { error } = await getSupabaseBrowserClient().rpc("cancel_parent_quest_instance", {
+    p_instance_id: instanceId,
+  });
+  if (error) throw error;
+}
+
 export async function getBoundChildIdForCurrentSession(): Promise<string | null> {
   const { data, error } = await getSupabaseBrowserClient().rpc("get_bound_child_id");
   if (error) throw error;
