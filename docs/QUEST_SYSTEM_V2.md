@@ -6,6 +6,14 @@ Date: 2026-09-21
 
 This document is canonical for the next quest/backend iteration. It deliberately preserves existing parent-created quests and reward history while simplifying progression and making quests suitable for daily family use.
 
+## 2026-10-14: explicit templates vs. active quests (PR #18 staged)
+
+**LOCKED PRODUCT RULE:** Creating a real quest and saving a reusable template are two separate parent actions. `Skicka uppdrag` sends a quest or configures an active recurrence but does not add it to the template library. `Skapa mall` only saves reusable content and creates no child instance, reward, or game progression. `Använd mall` pre-fills the form; a later deliberate `Skicka uppdrag` is still required. `Sparade mallar` and `Återkommande uppdrag` are separate sections. Removing a template does not stop recurring quests.
+
+The backend still requires an **internal** `parent_quests` definition for every task; that internal row is **not automatically a parent-saved template**. `saved_as_template` defaults to `false`; legacy visible templates are grandfathered so existing library content is not silently lost. New standalone templates store `template_child_id` and have no `quest_instances`; parent-only RPCs create/list/remove them. Original recurring schedules and rewards remain authoritative in shared Quest System V2, reusable across Runtime 1.1 chapters. Design/SQL contract: `docs/QUEST_V2_EXPLICIT_TEMPLATES_2026-10-14.md`. Detailed handover: `docs/NOVA_HANDOVER_QUEST_V2_EXPLICIT_TEMPLATES_2026-10-14.md`.
+
+**Implementation status (not live):** PR #18 open, code checkpoint `9625a26c`; CI #38598284568 and Runtime Browser Closeout #38598284587 SUCCESS. SQL migration and Vercel parent-web deployment for this feature have **NOT** occurred.
+
 ## Product law
 
 > **Föräldern skapar verkligheten. SysselCraft skapar berättelsen.**
