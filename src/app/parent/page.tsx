@@ -290,8 +290,8 @@ export default function ParentModePage() {
     setBusy(true); try { await updateDiamondReward(reward.id,reward.title,reward.description,reward.diamondPrice,!reward.active); await loadDiamondRewards(householdId); } catch(error){setMessage(error instanceof Error?error.message:"Kunde inte ändra belöningen.");} finally{setBusy(false);}
   }
   async function removeReward(reward: DiamondRewardDefinition) {
-    if(!window.confirm(`Arkivera "${reward.title}"? Köphistoriken sparas.`))return;
-    setBusy(true); try{await archiveDiamondReward(reward.id);await loadDiamondRewards(householdId);}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte arkivera belöningen.");}finally{setBusy(false);}
+    if(!window.confirm(`Ta bort "${reward.title}"? Köphistoriken sparas.`))return;
+    setBusy(true); try{await archiveDiamondReward(reward.id);await loadDiamondRewards(householdId);}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte ta bort belöningen.");}finally{setBusy(false);}
   }
   async function deliverReward(id:string){setBusy(true);try{await markDiamondRewardDelivered(id);await loadDiamondRewards(householdId);setMessage("Markerad som levererad. 🎁");}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte markera levererad.");}finally{setBusy(false);}}
   async function refundReward(id:string){if(!window.confirm("Refundera köpet och lämna tillbaka diamanterna?"))return;setBusy(true);try{await refundDiamondReward(id);await loadDiamondRewards(householdId);setMessage("Köpet är refunderat och diamanterna återbetalda.");}catch(error){setMessage(error instanceof Error?error.message:"Kunde inte refundera.");}finally{setBusy(false);}}
@@ -986,7 +986,7 @@ export default function ParentModePage() {
                 <button className="primary-button" disabled={busy || !rewardTitle.trim() || rewardPrice<1}>{editingRewardId?"Spara belöning":"Lägg till hos Mira"}</button>
                 {editingRewardId&&<button type="button" className="secondary-button" onClick={()=>{setEditingRewardId(null);setRewardTitle("");setRewardDescription("");setRewardPrice(1)}}>Avbryt</button>}
               </form>
-              {diamondRewards.map(reward=><article className="parent-quest-card" key={reward.id}><div><span>{reward.active?"💎":"⏸️"}</span><div><strong>{reward.title}</strong><small>{reward.diamondPrice} 💎 · {reward.active?"Tillgänglig hos Mira":"Pausad"}</small></div></div><div className="parent-quest-actions"><button className="secondary-button compact" disabled={busy} onClick={()=>{setEditingRewardId(reward.id);setRewardTitle(reward.title);setRewardDescription(reward.description);setRewardPrice(reward.diamondPrice)}}>Redigera</button><button className="secondary-button compact" disabled={busy} onClick={()=>void toggleReward(reward)}>{reward.active?"Pausa":"Aktivera"}</button><button className="secondary-button compact" disabled={busy} onClick={()=>void removeReward(reward)}>Arkivera</button></div></article>)}
+              {diamondRewards.map(reward=><article className="parent-quest-card" key={reward.id}><div><span>{reward.active?"💎":"⏸️"}</span><div><strong>{reward.title}</strong><small>{reward.diamondPrice} 💎 · {reward.active?"Tillgänglig hos Mira":"Pausad"}</small></div></div><div className="parent-quest-actions"><button className="secondary-button compact" disabled={busy} onClick={()=>{setEditingRewardId(reward.id);setRewardTitle(reward.title);setRewardDescription(reward.description);setRewardPrice(reward.diamondPrice)}}>Redigera</button><button className="secondary-button compact" disabled={busy} onClick={()=>void toggleReward(reward)}>{reward.active?"Pausa":"Aktivera"}</button><button className="secondary-button compact" disabled={busy} onClick={()=>void removeReward(reward)}>Ta bort</button></div></article>)}
             </section>
 
             <section className="parent-tool-card">
