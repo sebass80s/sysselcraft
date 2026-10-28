@@ -10,6 +10,8 @@ export type Act3OpeningBeat = Readonly<{
   title: string;
   image: string;
   sourceDigest: string;
+  /** An authored beat can hand off to a reusable runtime activity. */
+  activity?: "minigolf";
   lines: readonly Act3OpeningLine[];
 }>;
 export const ACT3_OPENING_BEATS: readonly Act3OpeningBeat[] = [
