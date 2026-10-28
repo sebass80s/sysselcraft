@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, nova/local-construction-snapshot, nova/runtime-architecture-v1]
+    branches: [main, nova/local-construction-snapshot, nova/runtime-architecture-v1, 'nova/act3-*']
   pull_request:
     branches: [main, nova/runtime-architecture-v1]
   workflow_dispatch:
