@@ -26,6 +26,16 @@ for(const entered of [false,true]){
  const s=await state.loadAct3RuntimeState(guard);
  assert.equal(s.version,4);assert.equal(s.entered,entered);assert.equal(s.claimGate.baseline,null);
 }
+// A real v3 save that finished PARK-002 must resume at the PARK-003 gate,
+// preserving the consumed first claim without creating a free replay.
+const priorV3={version:3,entered:true,openingBeatIndex:6,openingLineIndex:0,
+ claimGate:{baseline:80,consumed:1,observedCount:83,observedAt:1800000000083},
+ park002Phase:'complete',park002LineIndex:0};
+storage.set(key,JSON.stringify(priorV3));
+const migrated3=await state.loadAct3RuntimeState(guard);
+assert.equal(migrated3.version,4);assert.equal(migrated3.gatedBeatIndex,1);
+assert.equal(migrated3.gatedPhase,'waiting');assert.equal(migrated3.claimGate.consumed,1);
+assert.equal(migrated3.claimGate.baseline,80);
 for(let b=0;b<=6;b++){
  const l=b===6?0:ACT3_OPENING_BEATS[b].lines.length-1;
  storage.set(key,JSON.stringify({version:2,entered:true,openingBeatIndex:b,openingLineIndex:l}));
@@ -108,12 +118,12 @@ paragraphs.forEach((p,i)=>{const m=/^\*\*([^:]+):\*\*\s*(.*)$/s.exec(p);
 assert.ok(beat.lines.some(l=>l.speaker==='Du'));
 const row=JSON.parse(fs.readFileSync('src/game/act3ContentRegistry.json','utf8')).beats.find(b=>b.id===beat.id);
 assert.equal(beat.image,row.image.publicUrl);assert.equal(row.mapLocationId,null);
-const canonical3=/^### A3-PARK-003 — Den gamla scenen\\n([\\s\\S]*?)(?=\\n### )/m.exec(source)[1].trim();
+const canonical3=/^### A3-PARK-003 — Den gamla scenen\n([\s\S]*?)(?=\n### )/m.exec(source)[1].trim();
 let digest3=2166136261;for(let i=0;i<canonical3.length;i++)digest3=Math.imul(digest3^canonical3.charCodeAt(i),16777619)>>>0;
 assert.equal(digest3.toString(16),'dbb1a3a2');assert.equal(park003.sourceDigest,'dbb1a3a2');
-const paragraphs3=canonical3.split(/\\n\\s*\\n/);
+const paragraphs3=canonical3.split(/\n\s*\n/);
 assert.equal(park003.lines.length,paragraphs3.length);
-paragraphs3.forEach((p,i)=>{const m=/^\\*\\*([^:]+):\\*\\*\\s*(.*)$/s.exec(p);
+paragraphs3.forEach((p,i)=>{const m=/^\*\*([^:]+):\*\*\s*(.*)$/s.exec(p);
  assert.equal(park003.lines[i].speaker,m?(m[1]==='Barnet'?'Du':m[1]):null);
  assert.equal(park003.lines[i].text,m?m[2]:p);
 });
