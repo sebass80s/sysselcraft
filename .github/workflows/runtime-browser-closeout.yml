@@ -2,7 +2,7 @@ name: Runtime Browser Closeout
 
 on:
   push:
-    branches: [nova/runtime-architecture-v1]
+    branches: [nova/runtime-architecture-v1, 'nova/act3-*']
     paths:
       - ".github/workflows/runtime-browser-closeout.yml"
       - "scripts/test-runtime-1-1-browser.mjs"
