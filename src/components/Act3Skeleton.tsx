@@ -250,9 +250,11 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
         speakerTone: currentLine.speaker === "Du" ? "child"
           : currentLine.speaker ? storySpeakerTone(currentLine.speaker) : "default",
         lines: [displayText],
-        nextLabel: (playingGated || state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT - 1)
-          && lineIndex === currentBeat.lines.length - 1
-          ? "Till kartan" : "Fortsätt",
+        nextLabel: lineIndex === currentBeat.lines.length - 1 && currentBeat.activity === "minigolf"
+          ? "Spela minigolf"
+          : (playingGated || state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT - 1)
+            && lineIndex === currentBeat.lines.length - 1
+            ? "Till kartan" : "Fortsätt",
       }
     : null;
   const openingDone = state.entered
