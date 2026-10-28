@@ -1,0 +1,22 @@
+{
+  "batches": [
+    {
+      "ids": [
+        "A3-PARK-004",
+        "A3-PARK-005",
+        "A3-PARK-006",
+        "A3-PARK-007",
+        "A3-PARK-008"
+      ],
+      "output": "src/game/act3Park004To008.generated.ts",
+      "exportName": "ACT3_PARK_BATCH_004_008",
+      "narrationOverrides": {
+        "Barnet sätter sig bredvid.": "Du sätter dig bredvid.",
+        "Barnet, Nova och Alve går runt den lilla utomhusscenen.": "Du, Nova och Alve går runt den lilla utomhusscenen.",
+        "Han räcker fram handen till Barnet.": "Han räcker fram handen till dig.",
+        "Nova visar Barnet en lista på mobilen.": "Nova visar dig en lista på mobilen.",
+        "Nova vänder sig mot Barnet.": "Nova vänder sig mot dig."
+      }
+    }
+  ]
+}
