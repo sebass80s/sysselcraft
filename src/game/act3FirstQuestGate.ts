@@ -27,8 +27,7 @@ export function nextAct3GatedState(state: Act3RuntimeState): Act3RuntimeState {
   const step = advanceStoryLine(beat.lines.length, state.gatedLineIndex);
   if (step.type === "line") return { ...state, gatedLineIndex: step.index };
   const nextIndex = state.gatedBeatIndex + 1;
-  return { ...state, gatedBeatIndex: nextIndex, gatedLineIndex: 0,
-    gatedPhase: nextIndex === ACT3_GATED_BEATS.length ? "complete" : "waiting" };
+  return { ...state, gatedBeatIndex: nextIndex, gatedLineIndex: 0, gatedPhase: "waiting" };
 }
 
 export function previousAct3GatedState(state: Act3RuntimeState): Act3RuntimeState {
