@@ -5,7 +5,9 @@ const require=createRequire(import.meta.url);
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const base=process.env.RUNTIME_BROWSER_URL||'http://127.0.0.1:3000';
 assert.ok(['localhost','127.0.0.1'].includes(new URL(base).hostname));
-const {ACT3_PARK_002:beat}=runtimeTestLoader()('src/game/act3Park002Content.ts');
+const loader=runtimeTestLoader();
+const {ACT3_PARK_002:beat}=loader('src/game/act3Park002Content.ts');
+const {ACT3_PARK_003:park003}=loader('src/game/act3Park003Content.ts');
 const child='00000000-0000-4000-8000-000000000014';
 const key=`CapacitorStorage.sysselcraft.act3.runtime.v1.${child}`;
 const browser=await chromium.launch({executablePath:process.env.CHROME_EXECUTABLE||undefined,headless:true});
@@ -39,12 +41,12 @@ try {
  await page.getByRole('heading',{name:'Kapitel 3 är låst'}).waitFor();assert.equal(requests,0,'X gate precedes evidence reads');
  await enter();await page.getByRole('region',{name:'Stadskarta'}).waitFor();
  await until(async()=>(await saved()).claimGate?.baseline===100);
- assert.equal((await saved()).version,3);
+ assert.equal((await saved()).version,4);
  await openPark();
  stamp++;await check();assert.equal((await saved()).claimGate.consumed,0,'Approval-only does not change counter');
- total='101';stamp++;await check();await page.getByRole('dialog',{name:'Väntar på uppdrag'}).getByRole('alert').waitFor();assert.equal((await saved()).park002Phase,'waiting','Malformed evidence rejected');
- total=101;responseChild='other-child';await check();assert.equal((await saved()).park002Phase,'waiting');responseChild=child;
- offline=true;await check();assert.equal((await saved()).park002Phase,'waiting');offline=false;
+ total='101';stamp++;await check();await page.getByRole('dialog',{name:'Väntar på uppdrag'}).getByRole('alert').waitFor();assert.equal((await saved()).gatedPhase,'waiting','Malformed evidence rejected');
+ total=101;responseChild='other-child';await check();assert.equal((await saved()).gatedPhase,'waiting');responseChild=child;
+ offline=true;await check();assert.equal((await saved()).gatedPhase,'waiting');offline=false;
  total=103;stamp++;
  await page.evaluate(()=>window.failChapterWrite=true);await check();await page.getByRole('dialog',{name:'Väntar på uppdrag'}).getByRole('alert').waitFor();
  assert.equal((await saved()).claimGate.consumed,0,'No presentation/consumption after failed write');
@@ -58,7 +60,7 @@ try {
   await page.getByText(line.text,{exact:true}).waitFor();
   assert.equal(await page.locator(".shared-story-heading").count(),0,"PARK-002 must share title-free story presentation");
   if(line.speaker)assert.equal(await page.locator('.dialogue-speaker').textContent(),line.speaker);
-  assert.equal((await saved()).park002LineIndex,index);
+  assert.equal((await saved()).gatedLineIndex,index);
   if(index===4){
    await enter();await page.getByText(line.text,{exact:true}).waitFor();
    assert.equal((await saved()).claimGate.consumed,1,'Reload does not consume twice');
@@ -70,7 +72,34 @@ try {
   await page.getByRole('button',{name:index===beat.lines.length-1?'Till kartan':'Fortsätt',exact:true}).click();
  }
  await page.getByRole('button',{name:'Folkparken',exact:true}).waitFor();
- assert.equal((await saved()).park002Phase,'complete');assert.equal((await saved()).claimGate.consumed,1);
+ assert.equal((await saved()).gatedPhase,'waiting');assert.equal((await saved()).gatedBeatIndex,1);
+ assert.equal((await saved()).claimGate.consumed,1,'Exactly one claim for PARK-002');
+ // More approved/claimed chores in the authoritative backlog must not auto-play the next beat.
+ await openPark();
+ assert.equal((await saved()).gatedPhase,'waiting','No automatic PARK-003 start');
+ await page.getByRole('button',{name:'Kontrollera uppdrag',exact:true}).click();
+ await page.getByRole('dialog',{name:'Den gamla scenen'}).waitFor();
+ assert.equal((await saved()).claimGate.consumed,2,'PARK-003 uses a second distinct claim');
+ assert.equal((await saved()).gatedBeatIndex,1);
+ for(let index=0;index<park003.lines.length;index++){
+  const line=park003.lines[index];
+  await page.getByText(line.text,{exact:true}).waitFor();
+  assert.equal(await page.locator('.shared-story-heading').count(),0,'PARK-003 title must not show');
+  if(line.speaker)assert.equal(await page.locator('.dialogue-speaker').textContent(),line.speaker);
+  assert.equal((await saved()).gatedLineIndex,index,'Persist PARK-003 cursor before display');
+  if(index===4){
+   await enter();await page.getByText(line.text,{exact:true}).waitFor();
+   assert.equal((await saved()).claimGate.consumed,2,'Reload never consumes twice');
+   await page.getByRole('button',{name:'Föregående',exact:true}).click();
+   await page.getByText(park003.lines[index-1].text,{exact:true}).waitFor();
+   await page.getByRole('button',{name:'Fortsätt',exact:true}).click();
+   await page.getByText(line.text,{exact:true}).waitFor();
+  }
+  await page.getByRole('button',{name:index===park003.lines.length-1?'Till kartan':'Fortsätt',exact:true}).click();
+ }
+ await page.getByRole('button',{name:'Folkparken',exact:true}).waitFor();
+ assert.equal((await saved()).gatedPhase,'complete');assert.equal((await saved()).gatedBeatIndex,2);
+ assert.equal((await saved()).claimGate.consumed,2);
  await openPark();await page.getByText('Du har spelat klart den här delen av testversionen.').waitFor();
  assert.equal(await page.getByRole('button',{name:'Kontrollera uppdrag'}).count(),0);
  await page.getByRole('button',{name:'Till kartan',exact:true}).click();
@@ -80,6 +109,6 @@ try {
  await page.getByRole('button',{name:'Hamnen',exact:true}).tap();await page.getByRole('button',{name:'OK',exact:true}).tap();
  await page.waitForURL(/\/act2\/?$/);assert.equal(JSON.stringify(await saved()),before,'Hamn does not consume BOAT or PARK progress');
  assert.deepEqual(errors,[]);
- console.log('PASS: production React PARK-002, X guard, v2 migration, baseline, approval-only/invalid/offline/wrong child/write failure, actual 28 Du paragraphs, reload/previous, one claim, backlog and harbor');
+ console.log('PASS: React PARK-002 and PARK-003, X guard, v2 migration, authority, invalid/offline/write failure, 51 exact paragraphs, two claims, reload/previous, no autoplay and harbor');
  await context.close();
 }finally{await browser.close();}
