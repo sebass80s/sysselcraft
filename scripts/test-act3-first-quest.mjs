@@ -9,7 +9,7 @@ const load=runtimeTestLoader({'@capacitor/preferences':{Preferences:{
  remove:async({key})=>storage.delete(key),
 }}});
 const state=load('src/game/act3RuntimeState.ts');
-const {ACT3_FIRST_QUEST_GATE:adapter,nextAct3GatedState,previousAct3GatedState}=load('src/game/act3FirstQuestGate.ts');
+const {ACT3_FIRST_QUEST_GATE:adapter,nextAct3GatedState,previousAct3GatedState,completeAct3GatedActivity}=load('src/game/act3FirstQuestGate.ts');
 const {createClaimGateBridge}=load('src/runtime/progression/claimGateBridge.ts');
 const {updateChapterFromView}=load('src/runtime/save/updateChapterFromView.ts');
 const {ACT3_PARK_002:beat}=load('src/game/act3Park002Content.ts');
@@ -123,11 +123,53 @@ s=await state.loadAct3RuntimeState();
 assert.equal(s.gatedPhase,'waiting');
 assert.equal(s.gatedBeatIndex,2+batch.length);
 assert.equal(s.claimGate.consumed,2+batch.length);
-const completed=storage.get(key);snapshot=evidence(200);await bridge.refresh();await bridge.start();
-assert.equal(storage.get(key),completed,'No speculative PARK-009/minigolf unlock');
+// The next stage is a minigame, not an ordinary dialogue completion.
+const completed=storage.get(key);snapshot=evidence(87);await bridge.refresh();await bridge.start();
+assert.equal(storage.get(key),completed,'No claim 8, no speculative PARK-009 unlock');
 assert.equal(previousAct3GatedState(s),s);
+snapshot=evidence(88);await bridge.refresh();
+await Promise.all([bridge.start(),bridge.start()]);
+s=await state.loadAct3RuntimeState();
+assert.equal(s.gatedBeatIndex,7);assert.equal(s.gatedPhase,'playing');assert.equal(s.claimGate.consumed,8);
+const park009=load('src/game/act3Park009And010Content.ts').ACT3_PARK_009;
+const park010=load('src/game/act3Park009And010Content.ts').ACT3_PARK_010;
+assert.equal(park009.activity,'minigolf');assert.equal(park010.activity,undefined);
+for(let i=0;i<park009.lines.length;i++){
+ s=await state.loadAct3RuntimeState();
+ await updateChapterFromView(persistence,s,cursor,nextAct3GatedState,guard);
+}
+s=await state.loadAct3RuntimeState();
+assert.equal(s.gatedPhase,'activity','Authored dialogue cannot bypass gameplay');
+assert.equal(s.gatedBeatIndex,7);assert.equal(s.claimGate.consumed,8);
+assert.equal(state.normalizeAct3RuntimeState(s).gatedPhase,'activity');
+const activitySave=storage.get(key);
+await bridge.start();await bridge.refresh();
+assert.equal(storage.get(key),activitySave,'Backend claims cannot skip the active game');
+fail=true;
+await assert.rejects(updateChapterFromView(persistence,s,cursor,completeAct3GatedActivity,guard));
+fail=false;
+assert.equal(storage.get(key),activitySave,'Failed game completion save cannot advance story');
+await Promise.all([updateChapterFromView(persistence,s,cursor,completeAct3GatedActivity,guard),
+ updateChapterFromView(persistence,s,cursor,completeAct3GatedActivity,guard)]);
+s=await state.loadAct3RuntimeState();
+assert.equal(s.gatedBeatIndex,8);assert.equal(s.gatedPhase,'waiting');
+assert.equal(s.claimGate.consumed,8,'Minigolf completion must not cost a second quest');
+await bridge.start();
+assert.equal((await state.loadAct3RuntimeState()).gatedPhase,'waiting','PARK-010 needs next claim');
+snapshot=evidence(89);await bridge.refresh();await bridge.start();
+s=await state.loadAct3RuntimeState();
+assert.equal(s.gatedBeatIndex,8);assert.equal(s.gatedPhase,'playing');assert.equal(s.claimGate.consumed,9);
+for(let i=0;i<park010.lines.length;i++){
+ s=await state.loadAct3RuntimeState();
+ await updateChapterFromView(persistence,s,cursor,nextAct3GatedState,guard);
+}
+s=await state.loadAct3RuntimeState();
+assert.equal(s.gatedBeatIndex,9);assert.equal(s.gatedPhase,'waiting');assert.equal(s.claimGate.consumed,9);
+assert.equal(park010.lines.find(l=>l.text==='Att mamma och pappa har kul tillsammans igen.').speaker,'Nova');
+const postGame=storage.get(key);await bridge.start();
+assert.equal(storage.get(key),postGame,'The authored slice does not advance into CITY-001 yet');
 // Lifecycle and identity changes during a cursor write roll back before presentation.
-const playing={...s,gatedBeatIndex:2+batch.length-1,gatedPhase:'playing',gatedLineIndex:2};await state.saveAct3RuntimeState(playing);
+const playing={...s,gatedBeatIndex:8,gatedPhase:'playing',gatedLineIndex:2};await state.saveAct3RuntimeState(playing);
 staleWrite=()=>{child='b';};await assert.rejects(updateChapterFromView(persistence,playing,cursor,nextAct3GatedState,guard));child='a';
 assert.deepEqual(clean(await state.loadAct3RuntimeState()),clean(playing));
 // Canon QA: entire paragraph inventory and exact speaker/body, not just a digest label.
@@ -155,4 +197,4 @@ paragraphs3.forEach((p,i)=>{const m=/^\*\*([^:]+):\*\*\s*(.*)$/s.exec(p);
 const row3=JSON.parse(fs.readFileSync('src/game/act3ContentRegistry.json','utf8')).beats.find(b=>b.id===park003.id);
 assert.equal(park003.image,row3.image.publicUrl);assert.equal(row3.progression.questNumber,2);
 
-console.log('PASS: reusable Act 3 gated engine, v1-v4 migration, generic 5-beat data batch, 7 distinct claims, no autoplay, write rollback, stale identity and canon');
+console.log('PASS: reusable Act 3 gated engine, v1-v4 migration, generic 5-beat data batch, 9 distinct claims and minigolf transition, no autoplay, write rollback, stale identity and canon');
