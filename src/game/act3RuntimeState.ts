@@ -12,7 +12,7 @@ export type Act3RuntimeState = {
   claimGate: ClaimGateLedger;
   /** First unfinished beat, or ACT3_GATED_BEATS.length after all are complete. */
   gatedBeatIndex: number;
-  gatedPhase: "waiting" | "playing" | "complete";
+  gatedPhase: "waiting" | "playing";
   gatedLineIndex: number;
 };
 // Historical key retained. All prior chapter states migrate in place, per child.
@@ -62,9 +62,10 @@ export function normalizeAct3RuntimeState(value: unknown): Act3RuntimeState | nu
   if (!s.entered && (s.openingBeatIndex !== 0 || s.openingLineIndex !== 0)) return null;
   if (!Number.isSafeInteger(s.gatedBeatIndex) || s.gatedBeatIndex < 0 || s.gatedBeatIndex > ACT3_GATED_BEATS.length) return null;
   if (!Number.isSafeInteger(s.gatedLineIndex) || s.gatedLineIndex < 0) return null;
-  if (!["waiting", "playing", "complete"].includes(s.gatedPhase)) return null;
-  const complete = s.gatedBeatIndex === ACT3_GATED_BEATS.length;
-  if (complete !== (s.gatedPhase === "complete")) return null;
+  if (!["waiting", "playing"].includes(s.gatedPhase)) return null;
+  // The end of the currently authored slice is a waiting cursor, not a stored
+  // "complete" flag. Adding PARK-004 later must NOT invalidate this v4 save.
+  if (s.gatedPhase === "playing" && s.gatedBeatIndex === ACT3_GATED_BEATS.length) return null;
   if (s.gatedPhase === "playing") {
     if (s.gatedLineIndex >= ACT3_GATED_BEATS[s.gatedBeatIndex].lines.length) return null;
   } else if (s.gatedLineIndex !== 0) return null;
