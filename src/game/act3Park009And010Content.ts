@@ -8,6 +8,7 @@ export const ACT3_PARK_009: Act3OpeningBeat = {
   "title": "Utmaningen",
   "image": "/assets/village/story-moments/act3/park/PARK-009.png",
   "sourceDigest": "4cad56e7",
+  "activity": "minigolf",
   "lines": [
     {
       "speaker": null,
