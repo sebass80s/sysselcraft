@@ -30,7 +30,7 @@ export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3Debug
   probes: {
     "chapter-entry"(state) {
       return {
-        ok: state.version === 3 && state.entered === true,
+        ok: state.version === 4 && state.entered === true,
         details: {
           version: state.version,
           entered: state.entered,
