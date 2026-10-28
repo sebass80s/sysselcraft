@@ -13,6 +13,9 @@ export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3Debug
   debugRoute: "/act3-test",
   createSession(params) {
     const playMinigolf = params.get("scene") === "park009";
+    // Direct touch-play on a physical iPhone, without 18 dialogue taps.
+    // Keep ?scene=park009 without play=1 for the complete story → game handoff.
+    const startInGame = playMinigolf && params.get("play") === "1";
     const gameIndex = ACT3_GATED_BEATS.findIndex(beat => beat.id === "A3-PARK-009");
     const state = { ...createDefaultAct3RuntimeState(), entered: true };
     if (playMinigolf && gameIndex >= 0) {
@@ -20,7 +23,7 @@ export const ACT3_DEBUG_FIXTURE: ChapterDebugFixture<Act3RuntimeState, Act3Debug
       // Simulate completed claims locally; never make network/backend calls.
       state.openingBeatIndex = 6;
       state.gatedBeatIndex = gameIndex;
-      state.gatedPhase = "playing";
+      state.gatedPhase = startInGame ? "activity" : "playing";
       state.gatedLineIndex = 0;
       state.claimGate = { baseline: 0, consumed: gameIndex + 1,
         observedCount: gameIndex + 1, observedAt: 1800000000000 };
