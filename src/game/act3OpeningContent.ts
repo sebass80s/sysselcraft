@@ -4,7 +4,7 @@
  * Spoken dialogue is verbatim, except the player-name token and Du speaker label.
  * Narration uses second-person Du/dig. Never edit without source QA.
  */
-export type Act3OpeningLine = Readonly<{speaker: "Du" | "Nova" | "Alve" | null; text: string}>;
+export type Act3OpeningLine = Readonly<{speaker: string | null; text: string}>;
 export type Act3OpeningBeat = Readonly<{
   id: string;
   title: string;
