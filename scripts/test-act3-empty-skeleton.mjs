@@ -23,7 +23,7 @@ const act3State = runtimeTestLoader({
 })("src/game/act3RuntimeState.ts");
 
 const initial = act3State.createDefaultAct3RuntimeState();
-assert.deepEqual(JSON.parse(JSON.stringify(initial)), { version: 3, entered: false, openingBeatIndex: 0, openingLineIndex: 0, claimGate: {baseline:null,consumed:0,observedCount:null,observedAt:null}, park002Phase:"waiting", park002LineIndex:0 });
+assert.deepEqual(JSON.parse(JSON.stringify(initial)), { version: 4, entered: false, openingBeatIndex: 0, openingLineIndex: 0, claimGate: {baseline:null,consumed:0,observedCount:null,observedAt:null}, gatedBeatIndex:0, gatedPhase:"waiting", gatedLineIndex:0 });
 assert.deepEqual(
   JSON.parse(JSON.stringify(act3State.normalizeAct3RuntimeState(act3State.migrateAct3RuntimeState({ version: 1, entered: true })))),
   { ...JSON.parse(JSON.stringify(initial)), entered: true },
