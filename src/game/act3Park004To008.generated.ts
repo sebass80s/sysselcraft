@@ -1,8 +1,9 @@
 /**
- * GENERATED STORY DATA: PARK-004..008. Source: docs/ACT3_STORY_MANIFEST.md
- * Regenerate via scripts/export-act3-park-batch.mjs when canonical dialogue changes.
- * Only narration viewpoint and the Barnet speaker label are transformed for gameplay.
- * No per-beat business logic: Runtime 1.1 quest / save engine owns progression.
+ * GENERATED STORY DATA: A3-PARK-004..A3-PARK-008.
+ * Source: docs/ACT3_STORY_MANIFEST.md, with registry digest assertions.
+ * Regenerate via scripts/export-act3-story-batches.mjs --write.
+ * Only grammatical Du/dig narration and the Barnet speaker are changed.
+ * Runtime 1.1 keeps quest ownership, cursor persistence and presentation.
  */
 import type { Act3OpeningBeat } from "./act3OpeningContent";
 export const ACT3_PARK_BATCH_004_008: readonly Act3OpeningBeat[] = [
