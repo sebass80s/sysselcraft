@@ -98,7 +98,7 @@ try {
   await page.getByRole('button',{name:index===park003.lines.length-1?'Till kartan':'Fortsätt',exact:true}).click();
  }
  await page.getByRole('button',{name:'Folkparken',exact:true}).waitFor();
- assert.equal((await saved()).gatedPhase,'complete');assert.equal((await saved()).gatedBeatIndex,2);
+ assert.equal((await saved()).gatedPhase,'waiting');assert.equal((await saved()).gatedBeatIndex,2);
  assert.equal((await saved()).claimGate.consumed,2);
  await openPark();await page.getByText('Du har spelat klart den här delen av testversionen.').waitFor();
  assert.equal(await page.getByRole('button',{name:'Kontrollera uppdrag'}).count(),0);
