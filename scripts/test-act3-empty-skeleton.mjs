@@ -84,4 +84,23 @@ assert.match(debugRouteSource, /<Act3Skeleton debug \/>/, "debug Act 3 route mus
 assert.match(debugRouteSource, /NODE_ENV !== "production"/, "Act 3 debug lab must remain dev-only");
 assert.match(registrySource, /act3:\s*{[\s\S]*route: "\/act3"[\s\S]*predecessorId: "act2"/, "Act 3 must be registered as the next chapter");
 
+// An isolated real-iPhone touch test opens minigolf directly on /act3-test.
+// Neither a claimed live quest nor a child/account lookup is needed for it.
+const fixture = runtimeTestLoader({
+  "../runtime/save/chapterPersistence": persistenceStub,
+})("src/game/act3DebugFixture.ts").ACT3_DEBUG_FIXTURE;
+const gamePreview = fixture.createSession(new URLSearchParams("scene=park009&play=1"));
+const storyPreview = fixture.createSession(new URLSearchParams("scene=park009"));
+assert.equal(gamePreview.chapterIntroVisible, false);
+assert.equal(gamePreview.state.gatedPhase, "activity");
+assert.equal(gamePreview.state.claimGate.consumed, gamePreview.state.gatedBeatIndex + 1);
+assert.equal(storyPreview.state.gatedPhase, "playing");
+assert.equal(storyPreview.state.gatedBeatIndex, gamePreview.state.gatedBeatIndex);
+assert.ok(act3State.normalizeAct3RuntimeState(gamePreview.state),
+  "Direct minigolf preview must be a valid, isolated Act 3 runtime state");
+assert.equal(gamePreview.context.childId, null,
+  "Debug preview must not use a paired live child");
+assert.match(debugRouteSource, /NODE_ENV !== "production"/,
+  "Phone debug route must remain unavailable in production builds");
+
 console.log("PASS: Act 3 chapter entry uses shared Runtime 1.1 engines without chapter-local engine copies");
