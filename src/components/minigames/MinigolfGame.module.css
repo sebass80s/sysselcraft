@@ -17,7 +17,7 @@
 .instructions { font-size: clamp(11px, 2.4vh, 16px); line-height: 1.25; margin: 0; flex: 1 1 210px; }
 .power { height: 14px; width: clamp(45px, 12vw, 145px); flex: 0 0 auto; border-radius: 12px; overflow: hidden; background: #1e292a; border: 2px solid #b8d3ae; }
 .power span { display: block; height: 100%; background: linear-gradient(90deg, #a9e5a3, #f3bf68, #f08e6b); transition: width .04s linear; }
-.action { border: 2px solid #ffe9ae; border-radius: 10px; background: #f5d889; color: #22352e; font-weight: 800; min-height: 40px; padding: 7px 15px; white-space: nowrap; cursor: pointer; touch-action: none; }
+.action { border: 2px solid #ffe9ae; border-radius: 10px; background: #f5d889; color: #22352e; font-weight: 800; min-height: 40px; padding: 7px 15px; white-space: nowrap; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .action:disabled { opacity: .52; cursor: default; }
 .action:focus-visible, .reset:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .reset { border: 1px solid #b4d0ba; border-radius: 8px; background: #264d42; color: #fff; font-size: 13px; min-height: 38px; padding: 6px 10px; white-space: nowrap; }
