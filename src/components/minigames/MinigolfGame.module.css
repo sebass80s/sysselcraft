@@ -1,0 +1,31 @@
+.overlay {
+  position: absolute; inset: 0; z-index: 92;
+  display: flex; flex-direction: column; align-items: stretch;
+  box-sizing: border-box;
+  padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  background: radial-gradient(ellipse at top, #314c43, #142b2c 70%); color: #fffae9;
+  font-family: system-ui, sans-serif; overflow: hidden;
+}
+.header { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex: 0 0 auto; max-width: 1100px; width: 100%; align-self: center; }
+.header div:first-child { display: flex; flex-direction: column; gap: 1px; }
+.kicker { color: #c2e0bd; font-weight: 750; font-size: clamp(10px, 1.5vh, 13px); letter-spacing: .12em; }
+.heading { font-size: clamp(16px, 3.2vh, 25px); line-height: 1.15; }
+.stroke { white-space: nowrap; padding: 6px 12px; background: rgba(255,255,255,.11); border-radius: 20px; font-size: clamp(12px, 2.6vh, 18px); }
+.course { flex: 1 1 auto; min-height: 80px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.field { width: 100%; height: 100%; max-width: 1100px; max-height: 100%; touch-action: none; cursor: crosshair; user-select: none; }
+.controls { flex: 0 0 auto; min-height: 47px; max-width: 1050px; width: 100%; align-self: center; display: flex; align-items: center; justify-content: center; gap: clamp(6px, 1.5vw, 16px); flex-wrap: nowrap; }
+.instructions { font-size: clamp(11px, 2.4vh, 16px); line-height: 1.25; margin: 0; flex: 1 1 210px; }
+.power { height: 14px; width: clamp(45px, 12vw, 145px); flex: 0 0 auto; border-radius: 12px; overflow: hidden; background: #1e292a; border: 2px solid #b8d3ae; }
+.power span { display: block; height: 100%; background: linear-gradient(90deg, #a9e5a3, #f3bf68, #f08e6b); transition: width .04s linear; }
+.action { border: 2px solid #ffe9ae; border-radius: 10px; background: #f5d889; color: #22352e; font-weight: 800; min-height: 40px; padding: 7px 15px; white-space: nowrap; cursor: pointer; touch-action: none; }
+.action:disabled { opacity: .52; cursor: default; }
+.action:focus-visible, .reset:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.reset { border: 1px solid #b4d0ba; border-radius: 8px; background: #264d42; color: #fff; font-size: 13px; min-height: 38px; padding: 6px 10px; white-space: nowrap; }
+.reset:disabled { opacity: .5; }
+.error { position: absolute; right: 12px; top: 50px; background: #fff2e9; color: #722e20; border-radius: 7px; padding: 8px 12px; font-size: 13px; margin: 0; }
+@media (max-width: 660px) {
+  .instructions { font-size: 11px; flex-basis: 120px; }
+  .reset { font-size: 11px; padding: 4px 6px; }
+  .action { font-size: 12px; padding: 5px 8px; }
+  .power { width: 50px; }
+}
