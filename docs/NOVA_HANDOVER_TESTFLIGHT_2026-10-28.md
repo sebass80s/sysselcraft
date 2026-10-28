@@ -2,7 +2,7 @@
 
 ## Verify reality first
 
-Repo `sebass80s/sysselcraft`; stable integration branch `nova/runtime-architecture-v1`. At the start of this documentation closeout the branch was at `83e8190386c52ee7e0e573350ea8111754592d8d` with CI run [40755280230](https://github.com/sebass80s/sysselcraft/actions/runs/40755280230) still running. **Docs commits advance HEAD.** Verify latest GitHub HEAD, CI and all Act 3 PR status before changing code or deploying.
+Repo `sebass80s/sysselcraft`; stable integration branch `nova/runtime-architecture-v1`. At the start of this documentation closeout the branch was at `83e8190386c52ee7e0e573350ea8111754592d8d` whose CI [40755280230](https://github.com/sebass80s/sysselcraft/actions/runs/40755280230) subsequently passed. **Docs commits advance HEAD.** Verify latest GitHub HEAD, CI and all Act 3 PR status before changing code or deploying.
 
 This is an ongoing project, not a new start. Runtime Architecture 1.1 governs shared gameplay, saving and chapter architecture. Do not create an Act 3-specific parallel engine.
 
@@ -24,6 +24,16 @@ Stable release worktree: `~/Developer/sysselcraft-testflight`. Normal working re
 
 For next TestFlight build: select the stable SHA in an isolated clean worktree, provide the correct local gitignored `.env.local`, run `npm ci` when needed and `npm run ios:sync`, inspect native diffs, open existing `ios/App/App.xcodeproj`, verify signing, increment build number, Archive and distribute to App Store Connect. After processing, add to SysselCraft Alpha and submit for Beta App Review if necessary. Smoke-test in TestFlight before broader invitations; expire broken builds. Never `cap add ios`, uninstall Adam's app, or reset local saves. See `docs/IOS_CHECKPOINT.md`.
 
+## Verified continuation clarification (2026-10-28)
+
+**Do not restart Quest V2.** PR #17 (recurring expiry and parent removal) and PR #18 (explicit `Skapa mall`) are **already merged** into the stable integration branch. The old 2026-10-14 Quest V2 handover is historical and its assertions that PR #18 is open, migration unapplied or deployment pending are stale. Quest V2 is already active in the tested TestFlight 1.0 (2) flow and parent web app.
+
+Build guard commit `83e8190` passed [GitHub CI #40755280230](https://github.com/sebass80s/sysselcraft/actions/runs/40755280230) **SUCCESS**. The follow-up agent also checked rejection of missing variables, malformed URL, HTTP URL, and blank publishable key, plus successful acceptance of synthetic valid configuration. Stable docs HEAD `ed2329b` passed [CI #40755805654](https://github.com/sebass80s/sysselcraft/actions/runs/40755805654) **SUCCESS**. These are historical verified observations; still check latest status before a merge.
+
+Act 3's open stacked PR sequence is **#13 (playable opening) → #15 (first quest gate / PARK-002) → #16 (speaker nameplate and dialogue presentation)**. At the continuation checkpoint, PR #16 was awaiting CI verification on its actual HEAD; do not rebuild or reinvent these implemented layers. Confirm current Actions results and branch heads, then continue **from PARK-003** and remaining approved story beats, not from a new opening or Quest V2 implementation. The local art-pipeline/reference-image discipline remains mandatory.
+
+**Release separation:** Keep stable TestFlight 1.0 (2) untouched while advancing Act 3 branches; do not create a TestFlight upload or deploy on every documentation/code commit. Only intentionally integrate and release after acceptance tests.
+
 ## Act 3 status / next work
 
 Act 3 remains in separate stack/branches (historically `nova/act3-playable-opening`, `codex/act3-first-quest-bridge`, `nova/act3-story-presentation-qa`). The previously reported local Act 3 HEAD was `28ef6c8`, **not a current-HEAD guarantee**. Inspect branches, CI and open PRs to discover what has since changed. Do not merge unfinished content into the stable alpha automatically.
@@ -34,7 +44,7 @@ Quest V2 requirements remain: recurring expired occurrences must not duplicate; 
 
 ## Immediate continuation
 
-1. Recheck stable branch HEAD and CI (especially build guard run 40755280230 and docs commits).
+1. Recheck latest branch HEAD and Actions (known green: build guard CI #40755280230 and stable docs CI #40755805654).
 2. Run a negative local test that `npm run ios:env:check` fails when Supabase public configuration is missing, and a positive test with correct local values. Do not expose key values.
 3. Verify docs and release workflow remain aligned. Avoid unnecessary Vercel deployments.
 4. Inspect Act 3 PR branches and resume the correct current task, independent of stable TestFlight.
