@@ -55,9 +55,15 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
   function aimAt(event: ReactPointerEvent<SVGSVGElement>) {
     if (moving || ball.holed || charging || saving) return;
     const rect = event.currentTarget.getBoundingClientRect();
+    // SVG uses preserveAspectRatio="meet": account for the letterboxing in
+    // landscape layouts, otherwise aim and touch targets don't line up.
+    const scale = Math.min(rect.width / MINI_GOLF_WIDTH, rect.height / MINI_GOLF_HEIGHT);
+    if (!scale) return;
+    const padX = (rect.width - MINI_GOLF_WIDTH * scale) / 2;
+    const padY = (rect.height - MINI_GOLF_HEIGHT * scale) / 2;
     setAim({
-      x: (event.clientX - rect.left) / rect.width * MINI_GOLF_WIDTH,
-      y: (event.clientY - rect.top) / rect.height * MINI_GOLF_HEIGHT,
+      x: Math.min(MINI_GOLF_WIDTH, Math.max(0, (event.clientX - rect.left - padX) / scale)),
+      y: Math.min(MINI_GOLF_HEIGHT, Math.max(0, (event.clientY - rect.top - padY) / scale)),
     });
   }
   function beginCharge() {
@@ -168,7 +174,7 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
       <div className={styles.controls}>
         {ball.holed ? (
           <>
-            <p className={styles.instructions}>I hål på {ball.strokes} {ball.strokes === 1 ? "slag" : "slag"}! Bra spelat.</p>
+            <p className={styles.instructions}>I hål på {ball.strokes} slag! Bra spelat.</p>
             <button type="button" className={styles.action} disabled={saving} onClick={() => void finish()}>
               {saving ? "Sparar…" : "Fortsätt berättelsen"}
             </button>
