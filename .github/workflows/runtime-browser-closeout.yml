@@ -2,10 +2,11 @@ name: Runtime Browser Closeout
 
 on:
   push:
-    branches: [nova/runtime-architecture-v1]
+    branches: [nova/runtime-architecture-v1, 'nova/act3-*']
     paths:
       - ".github/workflows/runtime-browser-closeout.yml"
       - "scripts/test-runtime-1-1-browser.mjs"
+      - "scripts/test-act3-*.mjs"
       - "scripts/test-alpha-runtime.mjs"
       - "src/**"
   pull_request:
@@ -13,6 +14,7 @@ on:
     paths:
       - ".github/workflows/runtime-browser-closeout.yml"
       - "scripts/test-runtime-1-1-browser.mjs"
+      - "scripts/test-act3-*.mjs"
       - "scripts/test-act3-city-map-browser.mjs"
       - "scripts/test-alpha-runtime.mjs"
       - "src/**"

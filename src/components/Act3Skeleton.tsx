@@ -51,8 +51,8 @@ import { useChapterPersistenceGuard } from "../runtime/save/useChapterPersistenc
 import { updateChapterFromView } from "../runtime/save/updateChapterFromView";
 import { createClaimGateBridge } from "../runtime/progression/claimGateBridge";
 import { nextClaimGateBeat } from "../runtime/progression/claimGate";
-import { ACT3_FIRST_QUEST_GATE, nextAct3Park002State, previousAct3Park002State } from "../game/act3FirstQuestGate";
-import { ACT3_PARK_002 } from "../game/act3Park002Content";
+import { ACT3_FIRST_QUEST_GATE, nextAct3GatedState, previousAct3GatedState } from "../game/act3FirstQuestGate";
+import { ACT3_GATED_BEATS } from "../game/act3GatedBeats";
 
 type Act3SkeletonProps = { debug?: boolean };
 const ACT3_DEBUG_LAB_ENABLED = process.env.NODE_ENV !== "production";
@@ -175,7 +175,7 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
       s => previousAct3OpeningState(s, current.lines.length));
   }
 
-  async function startPark002() {
+  async function startNextGatedBeat() {
     if (debug) return;
     try {
       const lease = guard();
@@ -183,12 +183,12 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
       if (!lease.isActive()) return;
       setState(next);
       setBackendError("");
-      if (next.park002Phase === "playing") setWaitingAtPark(false);
+      if (next.gatedPhase === "playing") setWaitingAtPark(false);
     } catch {
       setBackendError("Kunde inte kontrollera eller spara uppdrag. Försök igen.");
     }
   }
-  const parkCursor = (s: Act3RuntimeState) => `${s.park002Phase}:${s.park002LineIndex}`;
+  const gatedCursor = (s: Act3RuntimeState) => `${s.gatedBeatIndex}:${s.gatedPhase}:${s.gatedLineIndex}`;
 
   function confirmCityNode(nodeId: Act3CityNodeId) {
     if (nodeId === "harbor") {
@@ -218,14 +218,15 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
   const playingOpening = !chapterIntroVisible
     && state.entered
     && state.openingBeatIndex < ACT3_FREE_OPENING_BEAT_COUNT;
-  const playingPark002 = !chapterIntroVisible && state.park002Phase === "playing";
-  const lineIndex = playingPark002 ? state.park002LineIndex : state.openingLineIndex;
-  const currentBeat = playingOpening ? ACT3_OPENING_BEATS[state.openingBeatIndex] : playingPark002 ? ACT3_PARK_002 : null;
+  const playingGated = !chapterIntroVisible && state.gatedPhase === "playing";
+  const lineIndex = playingGated ? state.gatedLineIndex : state.openingLineIndex;
+  const currentBeat = playingOpening ? ACT3_OPENING_BEATS[state.openingBeatIndex]
+    : playingGated ? ACT3_GATED_BEATS[state.gatedBeatIndex] : null;
   const currentLine = currentBeat
     ? storyLineAt(currentBeat.lines, lineIndex)
     : null;
   const identityCursor = {
-    beatIndex: playingPark002 ? ACT3_FREE_OPENING_BEAT_COUNT : state.openingBeatIndex,
+    beatIndex: playingGated ? ACT3_FREE_OPENING_BEAT_COUNT + state.gatedBeatIndex : state.openingBeatIndex,
     lineIndex,
   };
   const nameplate = storySpeakerDisplayName(
@@ -246,7 +247,7 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
         speakerTone: currentLine.speaker === "Du" ? "child"
           : currentLine.speaker ? storySpeakerTone(currentLine.speaker) : "default",
         lines: [displayText],
-        nextLabel: (playingPark002 || state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT - 1)
+        nextLabel: (playingGated || state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT - 1)
           && lineIndex === currentBeat.lines.length - 1
           ? "Till kartan" : "Fortsätt",
       }
@@ -272,16 +273,16 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
           beat={storyPresentation}
           ariaLabel={currentBeat.title}
           variant="opening"
-          onPrevious={lineIndex > 0 ? (playingPark002
-            ? () => commitFromView(parkCursor, previousAct3Park002State) : rewindOpening) : undefined}
-          onNext={playingPark002 ? () => commitFromView(parkCursor, nextAct3Park002State) : advanceOpening}
+          onPrevious={lineIndex > 0 ? (playingGated
+            ? () => commitFromView(gatedCursor, previousAct3GatedState) : rewindOpening) : undefined}
+          onNext={playingGated ? () => commitFromView(gatedCursor, nextAct3GatedState) : advanceOpening}
         />
       )}
 
-      {!chapterIntroVisible && openingDone && !playingPark002 && (
+      {!chapterIntroVisible && openingDone && !playingGated && (
         <Act3CityMap visibility={act3OpeningMapVisibility(state)} onConfirmNode={confirmCityNode} />
       )}
-      {!chapterIntroVisible && openingDone && !playingPark002 && waitingAtPark && (
+      {!chapterIntroVisible && openingDone && !playingGated && waitingAtPark && (
         <StoryMoment
           variant="gate"
           heading="Folkparken"
@@ -289,10 +290,10 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
           image={ACT3_OPENING_BEATS[ACT3_FREE_OPENING_BEAT_COUNT - 1].image}
           previousLabel="Till kartan"
           onPrevious={() => setWaitingAtPark(false)}
-          nextLabel={state.park002Phase === "complete" || debug ? undefined : "Kontrollera uppdrag"}
-          onNext={state.park002Phase === "complete" || debug ? undefined : startPark002}
+          nextLabel={state.gatedBeatIndex >= ACT3_GATED_BEATS.length || debug ? undefined : "Kontrollera uppdrag"}
+          onNext={state.gatedBeatIndex >= ACT3_GATED_BEATS.length || debug ? undefined : startNextGatedBeat}
         >
-          {state.park002Phase === "complete" ? <p>Du har spelat klart den här delen av testversionen.</p>
+          {state.gatedBeatIndex >= ACT3_GATED_BEATS.length ? <p>Du har spelat klart den här delen av testversionen.</p>
             : debug ? <p>PARK-002 är låst i det isolerade debugläget.</p>
             : <>
               <p>Nästa del av berättelsen kräver ett nytt uppdrag som en vuxen har godkänt och som du har hämtat belöningen för.</p>

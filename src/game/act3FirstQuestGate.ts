@@ -1,22 +1,38 @@
 import type { ClaimGateAdapter } from "../runtime/progression/claimGateBridge";
 import { advanceStoryLine, previousStoryLineIndex } from "../runtime/story/storySequence";
 import { ACT3_FREE_OPENING_BEAT_COUNT, type Act3RuntimeState } from "./act3RuntimeState";
-import { ACT3_PARK_002 } from "./act3Park002Content";
+import { ACT3_GATED_BEATS } from "./act3GatedBeats";
 
-/** Chapter configuration only: one authored beat, no later story in this slice. */
+/** Chapter-only adapter. Shared claimGateBridge owns fresh evidence and atomic writes. */
 export const ACT3_FIRST_QUEST_GATE: ClaimGateAdapter<Act3RuntimeState, string> = {
-  beatIds: [ACT3_PARK_002.id],
-  waiting: state => state.entered && state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT && state.park002Phase === "waiting",
+  beatIds: ACT3_GATED_BEATS.map(beat => beat.id),
+  waiting: state => state.entered
+    && state.openingBeatIndex === ACT3_FREE_OPENING_BEAT_COUNT
+    && state.gatedPhase === "waiting"
+    && state.gatedBeatIndex < ACT3_GATED_BEATS.length,
   ledger: state => state.claimGate,
   withLedger: (state, claimGate) => ({ ...state, claimGate }),
-  startBeat: state => ({ ...state, park002Phase: "playing", park002LineIndex: 0 }),
+  startBeat: (state, beatId) => {
+    if (ACT3_GATED_BEATS[state.gatedBeatIndex]?.id !== beatId) {
+      throw new Error("Act 3 claim / story cursor mismatch");
+    }
+    return { ...state, gatedPhase: "playing", gatedLineIndex: 0 };
+  },
 };
-export function nextAct3Park002State(state: Act3RuntimeState): Act3RuntimeState {
-  if (state.park002Phase !== "playing") return state;
-  const step = advanceStoryLine(ACT3_PARK_002.lines.length, state.park002LineIndex);
-  return step.type === "line" ? { ...state, park002LineIndex: step.index }
-    : { ...state, park002Phase: "complete", park002LineIndex: 0 };
+
+export function nextAct3GatedState(state: Act3RuntimeState): Act3RuntimeState {
+  if (state.gatedPhase !== "playing") return state;
+  const beat = ACT3_GATED_BEATS[state.gatedBeatIndex];
+  if (!beat) return state;
+  const step = advanceStoryLine(beat.lines.length, state.gatedLineIndex);
+  if (step.type === "line") return { ...state, gatedLineIndex: step.index };
+  const nextIndex = state.gatedBeatIndex + 1;
+  return { ...state, gatedBeatIndex: nextIndex, gatedLineIndex: 0, gatedPhase: "waiting" };
 }
-export function previousAct3Park002State(state: Act3RuntimeState): Act3RuntimeState {
-  return state.park002Phase === "playing" ? { ...state, park002LineIndex: previousStoryLineIndex(ACT3_PARK_002.lines.length, state.park002LineIndex) } : state;
+
+export function previousAct3GatedState(state: Act3RuntimeState): Act3RuntimeState {
+  if (state.gatedPhase !== "playing" || state.gatedLineIndex === 0) return state;
+  return { ...state, gatedLineIndex: previousStoryLineIndex(
+    ACT3_GATED_BEATS[state.gatedBeatIndex].lines.length, state.gatedLineIndex,
+  ) };
 }
