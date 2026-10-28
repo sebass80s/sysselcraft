@@ -100,8 +100,13 @@ try {
  await page.getByRole('button',{name:'Folkparken',exact:true}).waitFor();
  assert.equal((await saved()).gatedPhase,'waiting');assert.equal((await saved()).gatedBeatIndex,2);
  assert.equal((await saved()).claimGate.consumed,2);
- await openPark();await page.getByText('Du har spelat klart den här delen av testversionen.').waitFor();
- assert.equal(await page.getByRole('button',{name:'Kontrollera uppdrag'}).count(),0);
+ // PARK-004..008 run through the same engine; do not add one browser test per beat.
+ // This browser regression checks the established gate, persistence, and harbor
+ // while broad scene acceptance is reserved for a later whole-chapter pass.
+ await openPark();
+ await page.getByRole('dialog',{name:'Väntar på uppdrag'}).waitFor();
+ assert.equal((await saved()).gatedBeatIndex,2);
+ assert.equal((await saved()).claimGate.consumed,2);
  await page.getByRole('button',{name:'Till kartan',exact:true}).click();
  const before=JSON.stringify(await saved());
  await page.getByRole('button',{name:'Hamnen',exact:true}).tap();await page.getByRole('button',{name:'Gå tillbaka',exact:true}).tap();
