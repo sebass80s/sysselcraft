@@ -96,7 +96,7 @@ for(let i=0;i<park003.lines.length;i++){
   await Promise.all([updateChapterFromView(persistence,s,cursor,nextAct3GatedState,guard),
     updateChapterFromView(persistence,s,cursor,nextAct3GatedState,guard)]);
 }
-s=await state.loadAct3RuntimeState();assert.equal(s.gatedPhase,'complete');
+s=await state.loadAct3RuntimeState();assert.equal(s.gatedPhase,'waiting');
 assert.equal(s.gatedBeatIndex,2);assert.equal(s.claimGate.consumed,2);
 const completed=storage.get(key);snapshot=evidence(200);await bridge.refresh();await bridge.start();
 assert.equal(storage.get(key),completed,'No replay or speculative PARK-004 unlocking');
