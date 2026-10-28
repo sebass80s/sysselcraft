@@ -98,11 +98,36 @@ for(let i=0;i<park003.lines.length;i++){
 }
 s=await state.loadAct3RuntimeState();assert.equal(s.gatedPhase,'waiting');
 assert.equal(s.gatedBeatIndex,2);assert.equal(s.claimGate.consumed,2);
+// One engine-level regression for an arbitrary contiguous batch.
+// No separate test logic per PARK-004..008: reuse the same adapter/cursor API.
+const batch=load('src/game/act3Park004To008.generated.ts').ACT3_PARK_BATCH_004_008;
+assert.equal(batch.length,5);
+for(let i=0;i<batch.length;i++){
+ if(i>0){ snapshot=evidence(83+i); await bridge.refresh(); }
+ s=await state.loadAct3RuntimeState();
+ assert.equal(s.gatedBeatIndex,2+i);
+ assert.equal(s.gatedPhase,'waiting');
+ const before=storage.get(key);
+ await bridge.refresh();
+ assert.equal(storage.get(key),before,'Polling never auto-starts the next beat');
+ await Promise.all([bridge.start(),bridge.start()]);
+ s=await state.loadAct3RuntimeState();
+ assert.equal(s.gatedPhase,'playing');
+ assert.equal(s.claimGate.consumed,3+i,'One new claim per beat, despite double click');
+ for(let line=0;line<batch[i].lines.length;line++){
+  s=await state.loadAct3RuntimeState();
+  await updateChapterFromView(persistence,s,cursor,nextAct3GatedState,guard);
+ }
+}
+s=await state.loadAct3RuntimeState();
+assert.equal(s.gatedPhase,'waiting');
+assert.equal(s.gatedBeatIndex,2+batch.length);
+assert.equal(s.claimGate.consumed,2+batch.length);
 const completed=storage.get(key);snapshot=evidence(200);await bridge.refresh();await bridge.start();
-assert.equal(storage.get(key),completed,'No replay or speculative PARK-004 unlocking');
+assert.equal(storage.get(key),completed,'No speculative PARK-009/minigolf unlock');
 assert.equal(previousAct3GatedState(s),s);
 // Lifecycle and identity changes during a cursor write roll back before presentation.
-const playing={...s,gatedBeatIndex:1,gatedPhase:'playing',gatedLineIndex:2};await state.saveAct3RuntimeState(playing);
+const playing={...s,gatedBeatIndex:2+batch.length-1,gatedPhase:'playing',gatedLineIndex:2};await state.saveAct3RuntimeState(playing);
 staleWrite=()=>{child='b';};await assert.rejects(updateChapterFromView(persistence,playing,cursor,nextAct3GatedState,guard));child='a';
 assert.deepEqual(clean(await state.loadAct3RuntimeState()),clean(playing));
 // Canon QA: entire paragraph inventory and exact speaker/body, not just a digest label.
@@ -130,4 +155,4 @@ paragraphs3.forEach((p,i)=>{const m=/^\*\*([^:]+):\*\*\s*(.*)$/s.exec(p);
 const row3=JSON.parse(fs.readFileSync('src/game/act3ContentRegistry.json','utf8')).beats.find(b=>b.id===park003.id);
 assert.equal(park003.image,row3.image.publicUrl);assert.equal(row3.progression.questNumber,2);
 
-console.log('PASS: actual PARK-002 + PARK-003 v1/v2→v4, strict cursors, 2 distinct claims, no autoplay, backend authority, every-line restart/write failure, stale child and complete canon/Du QA');
+console.log('PASS: reusable Act 3 gated engine, v1-v4 migration, generic 5-beat data batch, 7 distinct claims, no autoplay, write rollback, stale identity and canon');
