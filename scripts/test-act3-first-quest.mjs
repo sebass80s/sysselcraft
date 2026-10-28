@@ -165,7 +165,23 @@ for(let i=0;i<park010.lines.length;i++){
 }
 s=await state.loadAct3RuntimeState();
 assert.equal(s.gatedBeatIndex,9);assert.equal(s.gatedPhase,'waiting');assert.equal(s.claimGate.consumed,9);
+const sourceForSpecial=fs.readFileSync('docs/ACT3_STORY_MANIFEST.md','utf8');
 assert.equal(park010.lines.find(l=>l.text==='Att mamma och pappa har kul tillsammans igen.').speaker,'Nova');
+for(const [special,expected] of [[park009,'4cad56e7'],[park010,'bd0eaac1']]){
+ const registry=JSON.parse(fs.readFileSync('src/game/act3ContentRegistry.json','utf8')).beats.find(b=>b.id===special.id);
+ const marker=registry.script.headingMarker;
+ const start=sourceForSpecial.indexOf(marker);
+ assert.ok(start>=0,'Missing canonical minigolf story source');
+ const end=sourceForSpecial.indexOf('\n### ',start+marker.length);
+ const canonicalText=sourceForSpecial.slice(start+marker.length,end<0?sourceForSpecial.length:end).trim();
+ let digest=2166136261;
+ for(let i=0;i<canonicalText.length;i++)digest=Math.imul(digest^canonicalText.charCodeAt(i),16777619)>>>0;
+ assert.equal(digest.toString(16).padStart(8,'0'),expected);
+ assert.equal(special.sourceDigest,expected);
+ assert.ok(special.lines.every(line=>!line.text.startsWith('Gameplay transition')&&!line.text.startsWith('Critical line lock')),
+   'Editorial-only content must not appear as dialogue');
+}
+
 const postGame=storage.get(key);await bridge.start();
 assert.equal(storage.get(key),postGame,'The authored slice does not advance into CITY-001 yet');
 // Lifecycle and identity changes during a cursor write roll back before presentation.
