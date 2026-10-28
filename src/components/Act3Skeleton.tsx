@@ -290,10 +290,10 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
           image={ACT3_OPENING_BEATS[ACT3_FREE_OPENING_BEAT_COUNT - 1].image}
           previousLabel="Till kartan"
           onPrevious={() => setWaitingAtPark(false)}
-          nextLabel={state.gatedPhase === "complete" || debug ? undefined : "Kontrollera uppdrag"}
-          onNext={state.gatedPhase === "complete" || debug ? undefined : startNextGatedBeat}
+          nextLabel={state.gatedBeatIndex >= ACT3_GATED_BEATS.length || debug ? undefined : "Kontrollera uppdrag"}
+          onNext={state.gatedBeatIndex >= ACT3_GATED_BEATS.length || debug ? undefined : startNextGatedBeat}
         >
-          {state.gatedPhase === "complete" ? <p>Du har spelat klart den här delen av testversionen.</p>
+          {state.gatedBeatIndex >= ACT3_GATED_BEATS.length ? <p>Du har spelat klart den här delen av testversionen.</p>
             : debug ? <p>PARK-002 är låst i det isolerade debugläget.</p>
             : <>
               <p>Nästa del av berättelsen kräver ett nytt uppdrag som en vuxen har godkänt och som du har hämtat belöningen för.</p>
