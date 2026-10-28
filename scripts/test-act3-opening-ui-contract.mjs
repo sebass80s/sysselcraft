@@ -7,7 +7,7 @@ const state=read("src/game/act3RuntimeState.ts");
 const progress=read("src/game/act3OpeningProgress.ts");
 const debug=read("src/game/act3DebugFixture.ts");
 const parent=read("src/components/Act2Runtime.tsx");
-assert.match(ui,/<StoryRunner[\s\S]*onNext=\{playingPark002[^}]+nextAct3Park002State[^}]+advanceOpening\}/,"Shared StoryRunner must present Act 3 opening");
+assert.match(ui,/<StoryRunner[\s\S]*onNext=\{playingGated[^}]+nextAct3GatedState[^}]+advanceOpening\}/,"Shared StoryRunner must present Act 3 opening");
 assert.match(ui,/storyLineAt\(currentBeat\.lines, lineIndex\)/);
 assert.match(ui,/speaker: nameplate \?\? undefined/,"Story presentation must use identity-reveal nameplate");
 assert.match(ui,/storySpeakerDisplayName\(/);
