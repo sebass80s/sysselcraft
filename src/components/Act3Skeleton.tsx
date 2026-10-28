@@ -40,6 +40,7 @@ import { ChapterDebugLauncher } from "../runtime/debug/ChapterDebugLauncher";
 import { ChapterDebugPanel } from "../runtime/debug/ChapterDebugPanel";
 import { StoryRunner } from "./story/StoryRunner";
 import { StoryMoment } from "./story/StoryMoment";
+import { MinigolfGame } from "./minigames/MinigolfGame";
 import { Act3CityMap } from "./Act3CityMap";
 import type { Act3CityNodeId } from "../game/act3CityMapNodes";
 import styles from "./Act3CityMap.module.css";
@@ -51,7 +52,7 @@ import { useChapterPersistenceGuard } from "../runtime/save/useChapterPersistenc
 import { updateChapterFromView } from "../runtime/save/updateChapterFromView";
 import { createClaimGateBridge } from "../runtime/progression/claimGateBridge";
 import { nextClaimGateBeat } from "../runtime/progression/claimGate";
-import { ACT3_FIRST_QUEST_GATE, nextAct3GatedState, previousAct3GatedState } from "../game/act3FirstQuestGate";
+import { ACT3_FIRST_QUEST_GATE, nextAct3GatedState, previousAct3GatedState, completeAct3GatedActivity } from "../game/act3FirstQuestGate";
 import { ACT3_GATED_BEATS } from "../game/act3GatedBeats";
 
 type Act3SkeletonProps = { debug?: boolean };
@@ -219,6 +220,8 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
     && state.entered
     && state.openingBeatIndex < ACT3_FREE_OPENING_BEAT_COUNT;
   const playingGated = !chapterIntroVisible && state.gatedPhase === "playing";
+  const playingActivity = !chapterIntroVisible && state.gatedPhase === "activity"
+    && ACT3_GATED_BEATS[state.gatedBeatIndex]?.activity === "minigolf";
   const lineIndex = playingGated ? state.gatedLineIndex : state.openingLineIndex;
   const currentBeat = playingOpening ? ACT3_OPENING_BEATS[state.openingBeatIndex]
     : playingGated ? ACT3_GATED_BEATS[state.gatedBeatIndex] : null;
@@ -279,10 +282,14 @@ export function Act3Skeleton({ debug = false }: Act3SkeletonProps) {
         />
       )}
 
-      {!chapterIntroVisible && openingDone && !playingGated && (
+      {playingActivity && (
+        <MinigolfGame onComplete={() => commitFromView(gatedCursor, completeAct3GatedActivity)} />
+      )}
+
+      {!chapterIntroVisible && openingDone && !playingGated && !playingActivity && (
         <Act3CityMap visibility={act3OpeningMapVisibility(state)} onConfirmNode={confirmCityNode} />
       )}
-      {!chapterIntroVisible && openingDone && !playingGated && waitingAtPark && (
+      {!chapterIntroVisible && openingDone && !playingGated && !playingActivity && waitingAtPark && (
         <StoryMoment
           variant="gate"
           heading="Folkparken"
