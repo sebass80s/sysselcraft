@@ -59,3 +59,28 @@ Act 1 physical/backend work accumulated well beyond the original Recycling check
 This document remains authoritative for its own domain. Current Runtime Architecture 1.1 execution status and continuation order are tracked in `docs/RUNTIME_1_1_HANDOVER_2026-10-06.md`.
 
 Verified Runtime 1.1 docs baseline before this closeout: `eb7df728adea783c676fe697738be62200430fc9`, GitHub Actions #2252 SUCCESS. Runtime items 1–4 are closed; generic chapter persistence is next. This pointer does not change the domain decisions recorded above.
+
+## CURRENT DISTRIBUTION: TestFlight alpha — 2026-10-28
+
+**This section supersedes the historical 7-day/free-signing and routine Xcode-cable distribution instructions above.** The normal iOS beta distribution route is now **Apple TestFlight**, not weekly sideloading. Xcode Run remains an exceptional direct-device debug/recovery option only.
+
+- Apple Developer Program active; app `SysselCraft`; bundle ID `se.sysselcraft.app`.
+- **TestFlight 1.0 (Build 2)** is Apple-approved, in external testing group **SysselCraft Alpha**, and tested successfully on a real iPhone with parent sign-in, Supabase, quest turn-in, parent approval, and rewards. **Build 1 is expired** because its exported web bundle omitted Supabase public config.
+- Stable beta content: Acts 1–2 and Quest V2; **unfinished Act 3 is NOT included**. Do not merge/publish stacked Act 3 PRs as part of maintenance.
+- The parent app is on `https://sysselcraft.vercel.app/parent`. Apple beta review has a separate demo family; never share real family credentials in Git or screenshots.
+- Before installing a new build over Adam's older directly signed app, safeguard/verify his save, backend binding and currencies. Never uninstall to repair signing.
+- iPad orientation metadata was updated in `ios/App/App/Info.plist` for upload acceptance; responsive iPad gameplay itself has not yet been fully verified.
+
+### Release build procedure
+
+Use a **clean, separate worktree** for stable releases rather than the local Act 3 development directory. Ensure its local `.env.local` (never committed) contains valid `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Check the **target Supabase project** before release; a present but incorrect URL/key can still point at the wrong backend.
+
+1. Check branch/HEAD, worktree state, configuration, and CI; use the intended stable commit only. Preserve existing local files, especially `ios/App/App/config.xml`, `Act 3/` and image-pipeline assets.
+2. Run `npm ci` as needed, then **`npm run ios:sync`**. It now runs `npm run ios:env:check` before `next build` and `cap sync ios`, failing if either public Supabase variable is missing/blank or the URL is not HTTPS. Do **not** bypass the guard using direct `npx cap sync` or stale `out/`.
+3. Open `ios/App/App.xcodeproj`; select the paid developer team and Any iOS Device, increment the **build number** (keep marketing version unless intentionally releasing a new version), Product → Archive → Distribute App → App Store Connect.
+4. Once processed, answer export compliance appropriately, add the new build to SysselCraft Alpha, supply brief What to Test notes and submit to external Beta App Review if required.
+5. Validate the new build in TestFlight on a physical device: pairing, quests, approval and reward issuance. Expire faulty old builds. Do not equate an Xcode successful archive with a functional backend integration.
+
+`npm run ios:env:check` checks presence and URL structure, **not live backend connectivity** or correctness of the target project. There is no guarantee that an Xcode-only archive cannot package stale files; release hygiene and a smoke test remain mandatory.
+
+**Build-guard source:** `scripts/check-ios-env.mjs`, `package.json`; stable branch commit `83e8190386c52ee7e0e573350ea8111754592d8d`. At the handover check, [CI run 40755280230](https://github.com/sebass80s/sysselcraft/actions/runs/40755280230) was still in progress; recheck before declaring green.
