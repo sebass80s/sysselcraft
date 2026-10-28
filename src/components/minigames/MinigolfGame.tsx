@@ -23,10 +23,6 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
   const [error, setError] = useState("");
   const downAt = useRef<number | null>(null);
   const pointerId = useRef<number | null>(null);
-  const currentBall = useRef(ball);
-  const currentAim = useRef(aim);
-  currentBall.current = ball;
-  currentAim.current = aim;
   const moving = minigolfMoving(ball);
 
   useEffect(() => {
@@ -77,9 +73,9 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
     downAt.current = null;
     setCharging(false);
     setCharge(0);
-    if (shoot && !currentBall.current.holed && !minigolfMoving(currentBall.current)) {
+    if (shoot && !ball.holed && !minigolfMoving(ball)) {
       const power = Math.min(1, Math.max(0.12, (performance.now() - began) / 1100));
-      setBall(prev => strikeMinigolf(prev, currentAim.current, power));
+      setBall(prev => strikeMinigolf(prev, aim, power));
       setError("");
     }
   }
