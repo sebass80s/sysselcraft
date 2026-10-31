@@ -10,6 +10,8 @@ on:
       - "src/runtime/minigames/**"
       - "src/app/minigolf-test/**"
       - "scripts/test-act3-minigolf-preview-browser.mjs"
+      - "next.config.ts"
+      - "package.json"
 
 permissions:
   contents: read
@@ -38,9 +40,14 @@ jobs:
           else
             npx playwright install chromium
           fi
+      - name: Allow one explicitly detected LAN host in dev
+        run: |
+          LAN_HOST="$(hostname -I | awk '{print $1}')"
+          test -n "$LAN_HOST"
+          echo "SYSSELCRAFT_MINIGOLF_LAN_HOST=$LAN_HOST" >> "$GITHUB_ENV"
       - name: Serve phone test without backend
         run: |
-          npm run dev -- --hostname 127.0.0.1 --port 3000 > /tmp/minigolf-test.log 2>&1 &
+          npm run dev -- --hostname 0.0.0.0 --port 3000 > /tmp/minigolf-test.log 2>&1 &
           for i in {1..60}; do
             if curl -fsS http://127.0.0.1:3000/minigolf-test/ >/dev/null; then exit 0; fi
             sleep 1
