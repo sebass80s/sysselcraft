@@ -1,0 +1,54 @@
+name: Minigolf Touch Acceptance (isolated)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [nova/act3-development]
+    paths:
+      - ".github/workflows/act3-minigolf-touch.yml"
+      - "src/components/minigames/**"
+      - "src/runtime/minigames/**"
+      - "src/app/minigolf-test/**"
+      - "scripts/test-act3-minigolf-preview-browser.mjs"
+
+permissions:
+  contents: read
+
+jobs:
+  touch-test:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://runtime-browser-test.supabase.co
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_runtime_browser_test
+      PLAYWRIGHT_MODULE: playwright
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock playwright@1.56.1
+      - name: Locate browser
+        run: |
+          if command -v google-chrome >/dev/null; then
+            echo "CHROME_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          elif command -v chromium >/dev/null; then
+            echo "CHROME_EXECUTABLE=$(command -v chromium)" >> "$GITHUB_ENV"
+          else
+            npx playwright install chromium
+          fi
+      - name: Serve phone test without backend
+        run: |
+          npm run dev -- --hostname 127.0.0.1 --port 3000 > /tmp/minigolf-test.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/minigolf-test/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/minigolf-test.log
+          exit 1
+      - name: Play minigolf using simulated phone touch
+        run: node scripts/test-act3-minigolf-preview-browser.mjs
+      - name: Log server on error
+        if: failure()
+        run: cat /tmp/minigolf-test.log || true
