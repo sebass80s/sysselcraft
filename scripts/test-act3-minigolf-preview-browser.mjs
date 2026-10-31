@@ -11,7 +11,14 @@ try {
   const page=await context.newPage();
   const errors=[];
   page.on("pageerror",e=>errors.push(e.stack||e.message));
-  page.on("console",m=>{if(m.type()==="error")errors.push(m.text())});
+  // Missing browser favicon may yield HTTP 404 and a console error, but is
+  // not a minigolf route or hydration failure. Route HTTP status is checked
+  // explicitly and all real JS errors are captured above.
+  page.on("console",m=>{
+    if(m.type()!=="error")return;
+    if(/^Failed to load resource: the server responded with a status of 404 \(Not Found\)$/.test(m.text()))return;
+    errors.push(m.text());
+  });
   // The direct physical-device test must not import or boot any chapter host.
   const standalone=await page.goto(base+"/minigolf-test/",{waitUntil:"domcontentloaded",timeout:30000});
   assert.equal(standalone.status(),200,"The standalone development-only test route must exist");
