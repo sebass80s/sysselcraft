@@ -12,6 +12,15 @@ try {
   const errors=[];
   page.on("pageerror",e=>errors.push(e.stack||e.message));
   page.on("console",m=>{if(m.type()==="error")errors.push(m.text())});
+  // The direct physical-device test must not import or boot any chapter host.
+  const standalone=await page.goto(base+"/minigolf-test/",{waitUntil:"domcontentloaded",timeout:30000});
+  assert.equal(standalone.status(),200,"The standalone development-only test route must exist");
+  await page.getByRole("dialog",{name:"Minigolf"}).waitFor({state:"visible",timeout:20000});
+  assert.equal(await page.getByText("Laddar kapitel 3…").count(),0,
+    "The touch lab never renders the chapter loading screen");
+  await page.getByRole("button",{name:/Håll för styrka/}).waitFor({state:"visible"});
+  assert.deepEqual(errors,[],"Standalone phone preview must not throw client errors");
+
   const url=base+"/act3-test/?scene=park009&play=1";
   const response=await page.goto(url,{waitUntil:"domcontentloaded",timeout:30000});
   assert.equal(response.status(),200);
@@ -28,5 +37,5 @@ try {
   assert.equal(await page.getByRole("button",{name:/Håll för styrka/}).count(),1);
   assert.deepEqual(errors,[],"Phone preview must not throw client errors");
   await context.close();
-  console.log("PASS: mobile touch device boots minigolf directly, without chapter loading screen");
+  console.log("PASS: standalone touch lab and Act 3 debug route both boot minigolf on mobile viewport");
 } finally { await browser.close() }
