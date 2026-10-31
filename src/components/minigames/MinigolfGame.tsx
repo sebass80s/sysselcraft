@@ -23,6 +23,9 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
   const [error, setError] = useState("");
   const downAt = useRef<number | null>(null);
   const pointerId = useRef<number | null>(null);
+  // iOS Safari may suppress click or pointerup for a touch-and-hold gesture.
+  // Preserve pointer, touch, and plain click paths without firing twice.
+  const handledRelease = useRef(false);
   const moving = minigolfMoving(ball);
 
   useEffect(() => {
@@ -69,6 +72,7 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
   function beginCharge() {
     if (moving || ball.holed || saving || downAt.current !== null) return false;
     downAt.current = performance.now();
+    handledRelease.current = false;
     setCharge(0);
     setCharging(true);
     return true;
@@ -81,6 +85,7 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
     setCharge(0);
     if (shoot && !ball.holed && !minigolfMoving(ball)) {
       const power = Math.min(1, Math.max(0.12, (performance.now() - began) / 1100));
+      handledRelease.current = true;
       setBall(prev => strikeMinigolf(prev, aim, power));
       setError("");
     }
@@ -88,7 +93,9 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
   function onForceDown(event: ReactPointerEvent<HTMLButtonElement>) {
     if (beginCharge()) {
       pointerId.current = event.pointerId;
-      event.currentTarget.setPointerCapture(event.pointerId);
+      // Pointer capture can fail on older iOS WebKit versions. Touch end and
+      // the native click fallback still need to work if it does.
+      try { event.currentTarget.setPointerCapture(event.pointerId); } catch { /* touch fallback */ }
     }
   }
   function onForceUp(event: ReactPointerEvent<HTMLButtonElement>) {
@@ -100,6 +107,23 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
     if (pointerId.current !== event.pointerId) return;
     pointerId.current = null;
     releaseCharge(false);
+  }
+  function onForceClick() {
+    // A normal tap must also shoot. Some iPhone browsers send click but omit
+    // pointerup/touchend when focus or the browser's gesture recognizer wins.
+    if (handledRelease.current) {
+      handledRelease.current = false;
+      return;
+    }
+    if (ball.holed || minigolfMoving(ball) || saving) return;
+    // Click-only fallback. Hold duration is used when we saw a press-start.
+    const began = downAt.current;
+    downAt.current = null;
+    setCharging(false);
+    setCharge(0);
+    const power = began === null ? .25 : Math.min(1, Math.max(.12, (performance.now() - began) / 1100));
+    setBall(prev => strikeMinigolf(prev, aim, power));
+    setError("");
   }
   function onForceKeyDown(event: ReactKeyboardEvent<HTMLButtonElement>) {
     if (event.key !== " " && event.key !== "Enter") return;
@@ -185,8 +209,11 @@ export function MinigolfGame({ onComplete }: MinigolfGameProps) {
             <div className={styles.power} aria-label={`Slagstyrka ${Math.round(charge*100)} procent`}><span style={{ width:`${Math.round(charge*100)}%` }}/></div>
             <button type="button" className={styles.action} disabled={moving || saving}
               onPointerDown={onForceDown} onPointerUp={onForceUp} onPointerCancel={onForceCancel}
+              onTouchStart={() => { beginCharge(); }} onTouchEnd={() => releaseCharge(true)}
+              onTouchCancel={() => releaseCharge(false)}
+              onClick={onForceClick}
               onKeyDown={onForceKeyDown} onKeyUp={onForceKeyUp} onBlur={() => releaseCharge(false)}>
-              {charging ? "Släpp för att slå" : "Håll för styrka · Slå"}
+              {charging ? "Släpp för att slå" : "Tryck eller håll · Slå"}
             </button>
             <button type="button" className={styles.reset} disabled={moving || saving} onClick={() => {
               releaseCharge(false); setBall(startMinigolf()); setAim({x:610,y:182});setError("");
