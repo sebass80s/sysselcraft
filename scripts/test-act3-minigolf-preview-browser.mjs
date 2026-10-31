@@ -25,7 +25,18 @@ try {
   await page.getByRole("dialog",{name:"Minigolf"}).waitFor({state:"visible",timeout:20000});
   assert.equal(await page.getByText("Laddar kapitel 3…").count(),0,
     "The touch lab never renders the chapter loading screen");
-  await page.getByRole("button",{name:/Håll för styrka/}).waitFor({state:"visible"});
+  const force=page.getByRole("button",{name:/Tryck eller håll/});
+  await force.waitFor({state:"visible"});
+  assert.equal(await force.isDisabled(),false,"Force button starts enabled on mobile");
+  // Do more than looking at the button: a real mobile tap must fire a shot.
+  await force.tap();
+  await page.waitForFunction(() => {
+    const el=document.querySelector('[role="dialog"][aria-label="Minigolf"]');
+    return el?.textContent?.includes("Slag 1");
+  },null,{timeout:7000});
+  assert.equal(await page.locator('[role="dialog"][aria-label="Minigolf"]').count(),1,
+    "The shot stays inside the standalone minigolf component");
+
   assert.deepEqual(errors,[],"Standalone phone preview must not throw client errors");
 
   const url=base+"/act3-test/?scene=park009&play=1";
@@ -41,8 +52,8 @@ try {
     throw error;
   }
   assert.equal(await page.getByText("Laddar kapitel 3…").count(),0);
-  assert.equal(await page.getByRole("button",{name:/Håll för styrka/}).count(),1);
+  assert.equal(await page.getByRole("button",{name:/Tryck eller håll/}).count(),1);
   assert.deepEqual(errors,[],"Phone preview must not throw client errors");
   await context.close();
-  console.log("PASS: standalone touch lab and Act 3 debug route both boot minigolf on mobile viewport");
+  console.log("PASS: mobile tap fires a minigolf shot; standalone touch lab and Act 3 debug route hydrate");
 } finally { await browser.close() }
