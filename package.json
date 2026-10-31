@@ -80,7 +80,7 @@
     "act3:content:check": "node scripts/export-act3-story-batches.mjs --check",
     "act3:content:generate": "node scripts/export-act3-story-batches.mjs --write",
     "test:minigolf-engine": "node scripts/test-minigolf-engine.mjs",
-    "dev:iphone-minigolf": "NEXT_PUBLIC_SUPABASE_URL=https://runtime-browser-test.supabase.co NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_runtime_browser_test next dev --hostname 0.0.0.0 --port 3000"
+    "dev:iphone-minigolf": "SYSSELCRAFT_MINIGOLF_LAN_HOST=\"$(ipconfig getifaddr en0)\" NEXT_PUBLIC_SUPABASE_URL=https://runtime-browser-test.supabase.co NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_runtime_browser_test next dev --hostname 0.0.0.0 --port 3000"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
