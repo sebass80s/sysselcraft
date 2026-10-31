@@ -55,5 +55,27 @@ try {
   assert.equal(await page.getByRole("button",{name:/Tryck eller håll/}).count(),1);
   assert.deepEqual(errors,[],"Phone preview must not throw client errors");
   await context.close();
-  console.log("PASS: mobile tap fires a minigolf shot; standalone touch lab and Act 3 debug route hydrate");
+
+  // Desktop mouse must also work. This prevents a touch-only fix from hiding
+  // a real Mac failure where the button is visible but inert.
+  const desktop=await browser.newContext({viewport:{width:1280,height:720}});
+  const desktopPage=await desktop.newPage();
+  const desktopResponse=await desktopPage.goto(base+"/minigolf-test/",{waitUntil:"domcontentloaded"});
+  assert.equal(desktopResponse.status(),200);
+  const mouseForce=desktopPage.getByRole("button",{name:/Tryck eller håll/});
+  await mouseForce.waitFor({state:"visible"});
+  await mouseForce.click();
+  try {
+    await desktopPage.waitForFunction(() => 
+      document.querySelector('[role="dialog"][aria-label="Minigolf"]')?.textContent?.includes("Slag 1"),
+      null,{timeout:7000});
+  } catch (error) {
+    console.error("Desktop strike failed",{
+      text:(await desktopPage.locator("body").innerText()).slice(0,1000),
+      buttonEnabled:!(await mouseForce.isDisabled()),
+    });
+    throw error;
+  }
+  await desktop.close();
+  console.log("PASS: mobile touch and desktop mouse both strike the ball; chapter/standalone previews hydrate");
 } finally { await browser.close() }
