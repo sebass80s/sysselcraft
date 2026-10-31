@@ -31,9 +31,9 @@ Det visar normalt Macens IP-adress på Wi-Fi (om det blir tomt, identifiera Wi-F
 ## På din iPhone
 
 1. Anslut iPhone och Mac till **samma Wi-Fi**, utan gästnät med klientisolering. Stäng av rotationslåset. Du behöver inte öppna eller logga in i TestFlight.
-2. Öppna Safari och skriv `http://MACENS-IP:3000/act3-test/?scene=park009&play=1` med adressen från kommandot ovan. Detta hoppar direkt till den isolerade minigolfen.
-3. Vill du i stället se hela övergången från Novas dialog: `http://MACENS-IP:3000/act3-test/?scene=park009`. Där kommer först de kanoniska PARK-009-raderna och därefter minigolfen.
-4. Sikta genom att trycka på banan. Håll inne knappen `Håll för styrka · Slå`, släpp för att skjuta. Spela i hålet och använd `Fortsätt berättelsen`. Inga riktiga quests hämtas. Ett omladdat debugtest börjar om testet, utan att röra riktiga saves.
+2. Öppna Safari och skriv `http://MACENS-IP:3000/minigolf-test/` med adressen från kommandot ovan. **Denna fristående debugvy är förstahandsvalet på fysisk iPhone.** Den laddar inte kapitelmotorn alls, och använder samma riktiga React-minigolfkomponent.
+3. Vill du efter touchtestet se hela övergången från Novas dialog: `http://MACENS-IP:3000/act3-test/?scene=park009`. Där kommer de kanoniska PARK-009-raderna och sedan samma minigolf. `/act3-test/?scene=park009&play=1` finns kvar som kapitelintegrerat direktläge, men är inte nödvändigt för första iPhone-touchen.
+4. Sikta genom att trycka på banan. Håll inne knappen `Håll för styrka · Slå`, släpp för att skjuta. Spela i hålet och använd `Fortsätt berättelsen`. Den fristående vyn visar `Banan klar!` och låter dig spela igen. Inga riktiga quests hämtas och inget verkligt save skapas.
 
 **Om sidan inte öppnas:** kontrollera att `next dev` är startad och att iPhone och Mac verkligen ser varandra över Wi-Fi, samt att macOS-brandväggen tillåter inkommande trafik till Node. Använd Macens **lokala IP**, inte `localhost` eller `127.0.0.1` på iPhone.
 
@@ -48,6 +48,6 @@ Det visar normalt Macens IP-adress på Wi-Fi (om det blir tomt, identifiera Wi-F
 
 ## Verifieringar och säkra gränser
 
-Koden testar att `?scene=park009&play=1` ger en valid kapitelstatus i `activity`, att den inte är kopplad till ett barn, att `?scene=park009` börjar med dialogen och att debugvägen är blockerad i produktion. Kapitlets befintliga claim-/save-test äger gränserna till PARK-010. Minigolfens gemensamma fysiktest körs i `npm run verify`.
+Browser-smoketestet måste visa att `/minigolf-test/` öppnas i ett mobilt fönster utan kapitel-laddningsskärm, och att `?scene=park009&play=1` ger en valid kapitelstatus i `activity`, att den inte är kopplad till ett barn, att `?scene=park009` börjar med dialogen och att debugvägen är blockerad i produktion. Kapitlets befintliga claim-/save-test äger gränserna till PARK-010. Minigolfens gemensamma fysiktest körs i `npm run verify`.
 
 Detta är inte en slutlig speldesign eller färdig native QA. **Nästa fysiska native-acceptans** bör göras med separat identifierare och installation för att undvika att ersätta TestFlight-appen.
