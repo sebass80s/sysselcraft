@@ -82,6 +82,12 @@ try {
   if (lanHost) {
     assert.match(lanHost,/^[0-9a-z.:-]+$/i,"LAN test host must be a hostname/IP");
     const lanPage=await desktop.newPage();
+    const lanErrors=[];
+    const lanFailed=[];
+    lanPage.on("pageerror",err=>lanErrors.push(err.stack||err.message));
+    lanPage.on("console",msg=>{if(msg.type()==="error")lanErrors.push(msg.text())});
+    lanPage.on("requestfailed",req=>lanFailed.push({url:req.url(),failure:req.failure()}));
+    lanPage.on("response",resp=>{if(resp.status()>=400)lanFailed.push({status:resp.status(),url:resp.url()})});
     const lanResponse=await lanPage.goto(`http://${lanHost}:3000/minigolf-test/`,{waitUntil:"domcontentloaded"});
     assert.equal(lanResponse.status(),200,"LAN debug page returns HTTP 200");
     const lanButton=lanPage.getByRole("button",{name:/Tryck eller håll/});
@@ -94,6 +100,13 @@ try {
     } catch (error) {
       console.error("LAN-origin button unresponsive",{
         host:lanHost,url:lanPage.url(),body:(await lanPage.locator("body").innerText()).slice(0,1000),
+        environment:await lanPage.evaluate(()=>({
+          isSecureContext:window.isSecureContext,
+          randomUUID:typeof crypto.randomUUID,
+          scriptCount:document.scripts.length,
+          loadedResources:performance.getEntriesByType("resource").filter(x=>x.name.includes("/_next/")).length,
+        })),
+        lanErrors,lanFailed,
       });
       throw error;
     }
