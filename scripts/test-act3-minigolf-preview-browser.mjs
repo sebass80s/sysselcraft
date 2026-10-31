@@ -76,6 +76,29 @@ try {
     });
     throw error;
   }
+  // Next.js may render SSR HTML over an IP address while blocking dev JS
+  // bundles/HMR. A visible button is insufficient: verify a shot on LAN.
+  const lanHost=process.env.SYSSELCRAFT_MINIGOLF_LAN_HOST;
+  if (lanHost) {
+    assert.match(lanHost,/^[0-9a-z.:-]+$/i,"LAN test host must be a hostname/IP");
+    const lanPage=await desktop.newPage();
+    const lanResponse=await lanPage.goto(`http://${lanHost}:3000/minigolf-test/`,{waitUntil:"domcontentloaded"});
+    assert.equal(lanResponse.status(),200,"LAN debug page returns HTTP 200");
+    const lanButton=lanPage.getByRole("button",{name:/Tryck eller håll/});
+    await lanButton.waitFor({state:"visible"});
+    await lanButton.click();
+    try {
+      await lanPage.waitForFunction(() => 
+        document.querySelector('[role="dialog"][aria-label="Minigolf"]')?.textContent?.includes("Slag 1"),
+        null,{timeout:7000});
+    } catch (error) {
+      console.error("LAN-origin button unresponsive",{
+        host:lanHost,url:lanPage.url(),body:(await lanPage.locator("body").innerText()).slice(0,1000),
+      });
+      throw error;
+    }
+    await lanPage.close();
+  }
   await desktop.close();
-  console.log("PASS: mobile touch and desktop mouse both strike the ball; chapter/standalone previews hydrate");
+  console.log("PASS: mobile touch, desktop mouse and LAN-origin mouse all strike the ball");
 } finally { await browser.close() }
