@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
   ...(process.env.NODE_ENV === "development" && minigolfLanHost
-    ? { allowedDevOrigins: [minigolfLanHost] } : {}),
+    ? { allowedDevOrigins: ["localhost", "127.0.0.1", minigolfLanHost] } : {}),
 };
 
 export default nextConfig;
