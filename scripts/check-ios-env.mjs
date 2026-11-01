@@ -1,4 +1,7 @@
-import { loadEnvConfig } from "@next/env";
+import nextEnv from "@next/env";
+
+// @next/env is CommonJS; default import works in Node 22 and Node 26.
+const { loadEnvConfig } = nextEnv;
 
 loadEnvConfig(process.cwd(), false);
 
