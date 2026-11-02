@@ -128,6 +128,51 @@ main { min-height: 100dvh; }
 .parent-status-message { position:sticky; bottom:1rem; margin:1rem 0; padding:.75rem 1rem; background:#31442d; color:#fffdf4; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.16); }
 .parent-page a { color:#3e6438; font-weight:800; }
 
+/* Compact parent dashboard. Visual-only changes, never touch game persistence. */
+.parent-page { padding:clamp(.65rem,2vw,1.4rem); padding-bottom:max(1rem,env(safe-area-inset-bottom)); }
+.parent-dashboard { width:min(940px,100%); }
+.parent-dashboard>header { align-items:center; margin-bottom:.6rem; }
+.parent-dashboard h1 { margin:.1rem 0; font-size:clamp(1.4rem,3vw,1.9rem); }
+.parent-dashboard header p { margin:.2rem 0 0; font-size:.82rem; }
+.parent-tool-card { margin-bottom:.65rem; padding:.75rem .85rem; border-radius:13px; box-shadow:0 4px 14px rgba(45,58,39,.055); }
+.parent-tool-card h2 { margin:0 0 .42rem; font-size:1rem; }
+.parent-tool-card p { margin:.3rem 0 .6rem; font-size:.84rem; line-height:1.4; }
+.parent-family-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; gap:.6rem; align-items:end; }
+.parent-family-row label { display:grid; gap:.25rem; min-width:0; font-size:.78rem; font-weight:800; color:#4b5848; }
+.parent-family-row select { min-width:0; width:100%; min-height:42px; border:1px solid #c8b994; border-radius:9px; padding:.45rem .6rem; background:#fffef9; color:#282219; }
+.parent-family-row button { min-height:42px; }
+.parent-dashboard nav.parent-reward-row { display:flex; flex-wrap:wrap; gap:.4rem; padding:.42rem; }
+.parent-dashboard nav.parent-reward-row button { min-height:42px; flex:1; }
+.parent-inline-actions { display:flex; gap:.45rem; flex-wrap:wrap; margin:.6rem 0; }
+.parent-inline-actions button { min-height:42px; }
+.parent-action-row { display:flex; justify-content:flex-start; margin:.55rem 0; }
+.parent-action-row button { min-height:44px; }
+.parent-list-tabs { display:flex; gap:.3rem; overflow-x:auto; margin:0 0 .6rem; padding:.3rem; border-radius:12px; background:#e8ecde; }
+.parent-list-tabs button { display:flex; flex:1; justify-content:center; align-items:center; gap:.35rem; min-width:max-content; min-height:44px; padding:.42rem .55rem; border:0; border-radius:9px; background:transparent; color:#394a35; font-weight:800; cursor:pointer; font-size:.8rem; }
+.parent-list-tabs button.parent-tab-selected { background:#fffdf4; color:#304b2c; box-shadow:0 1px 4px rgba(32,43,28,.14); }
+.parent-list-tabs button span { font-size:.72rem; color:#586750; }
+.parent-list-tabs button:focus-visible { outline:2px solid #477a3f; outline-offset:-2px; }
+.parent-tool-card .parent-quest-card + .parent-quest-card { margin-top:.4rem; }
+.parent-tool-card .parent-quest-card { display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:.58rem .65rem; border-width:1px; border-radius:10px; }
+.parent-quest-card > div:first-child { flex:1; min-width:0; }
+.parent-quest-card > div:first-child > span { font-size:1.3rem; }
+.parent-quest-card strong { font-size:.9rem; overflow-wrap:anywhere; }
+.parent-quest-card small { font-size:.76rem; }
+.parent-quest-actions { flex-shrink:0; align-items:center; }
+.parent-quest-actions .compact { min-height:40px; }
+.parent-empty-state { padding:.55rem .7rem; font-size:.82rem; }
+.parent-quest-form { gap:.5rem; }
+.parent-quest-form input,.parent-quest-form textarea,.parent-quest-form select { padding:.52rem .6rem; border-width:1px; }
+.parent-quest-form textarea { min-height:68px; }
+.parent-section-heading { margin-bottom:.3rem; }
+@media (max-width:620px) {
+  .parent-family-row { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+  .parent-family-row button { grid-column:1 / -1; }
+  .parent-list-tabs button { flex:0 0 auto; }
+  .parent-tool-card .parent-quest-card { flex-wrap:wrap; }
+  .parent-quest-actions { width:100%; margin-left:0; }
+}
+
 @media (max-width: 700px) and (orientation: landscape) {
   .parent-menu-panel { max-width: 560px; padding: .8rem; }
   .parent-menu-note { margin-bottom: .55rem; }
