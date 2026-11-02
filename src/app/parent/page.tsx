@@ -38,6 +38,8 @@ import { archiveDiamondReward, createDiamondReward, listDiamondRedemptions, list
 const emptyDraft: ParentQuestDraft = {
   title: "",
   description: "",
+  // Legacy backend contract requires a class. Parent no longer chooses one.
+  // World progression and rewards are handled independently of this field.
   progressionClass: "orderEnvironment",
   reward: { diamonds: 1, sysselBux: 10 },
 };
@@ -904,21 +906,6 @@ export default function ParentModePage() {
                     ))}
                   </div>
                 )}
-                <select
-                  value={draft.progressionClass}
-                  onChange={(event) =>
-                    setDraft({
-                      ...draft,
-                      progressionClass: event.target.value as ParentQuestDraft["progressionClass"],
-                    })
-                  }
-                >
-                  <option value="orderEnvironment">Ordning & miljö</option>
-                  <option value="knowledgeCreativity">Kunskap & kreativitet</option>
-                  <option value="wellbeingRoutine">Välmående & rutin</option>
-                  <option value="movementActivity">Rörelse & aktivitet</option>
-                  <option value="community">Gemenskap</option>
-                </select>
                 <div className="parent-reward-row">
                   <label>
                     💎
