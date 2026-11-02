@@ -996,7 +996,21 @@ export default function ParentModePage() {
             </>}
 
             {adminTab === "quests" && <>
-            <section className="parent-tool-card">
+            <nav className="parent-list-tabs" aria-label="Uppdragslistor">
+              {([
+                ["available", "Nya", available.length],
+                ["active", "Pågår", active.length],
+                ["templates", "Mallar", questTemplates.length],
+                ["scheduled", "Scheman", scheduledQuests.length],
+                ["history", "Historik", approved.filter((quest) => !hiddenQuestHistoryIds.has(quest.instanceId)).length],
+              ] as const).map(([tab, label, count]) => (
+                <button key={tab} type="button"
+                  className={questListTab === tab ? "parent-tab-selected" : ""}
+                  aria-pressed={questListTab === tab}
+                  onClick={() => setQuestListTab(tab)}>{label} <span>{count}</span></button>
+              ))}
+            </nav>
+            {questListTab === "available" && <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Nya uppdrag hos barnet</h2>
                 <span>{available.length}</span>
@@ -1009,9 +1023,9 @@ export default function ParentModePage() {
                   </div>
                 </article>
               )) : <div className="parent-empty-state">Inga nya uppdrag väntar på att tas.</div>}
-            </section>
+            </section>}
 
-            <section className="parent-tool-card">
+            {questListTab === "active" && <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Pågår</h2>
                 <span>{active.length}</span>
@@ -1024,9 +1038,9 @@ export default function ParentModePage() {
                   </div>
                 </article>
               )) : <div className="parent-empty-state">Inga uppdrag pågår just nu.</div>}
-            </section>
+            </section>}
 
-            <section className="parent-tool-card">
+            {questListTab === "templates" && <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Sparade mallar</h2><span>{questTemplates.length}</span>
               </div>
@@ -1043,9 +1057,9 @@ export default function ParentModePage() {
                   </div>
                 </article>
               )) : <div className="parent-empty-state">Inga sparade mallar ännu. Använd Skapa mall när du vill spara ett uppdrag för senare.</div>}
-            </section>
+            </section>}
 
-            <section className="parent-tool-card">
+            {questListTab === "scheduled" && <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Återkommande uppdrag</h2><span>{scheduledQuests.length}</span>
               </div>
@@ -1063,9 +1077,9 @@ export default function ParentModePage() {
                   </div>
                 </article>
               )) : <div className="parent-empty-state">Inga aktiva återkommande scheman.</div>}
-            </section>
+            </section>}
 
-            <section className="parent-tool-card">
+            {questListTab === "history" && <section className="parent-tool-card">
               <div className="parent-section-heading">
                 <h2>Senast klara</h2>
                 <span>{approved.filter((quest) => !hiddenQuestHistoryIds.has(quest.instanceId)).length}</span>
@@ -1086,7 +1100,7 @@ export default function ParentModePage() {
               ) : (
                 <div className="parent-empty-state">Historiken fylls på när uppdrag godkänns.</div>
               )}
-            </section>
+            </section>}
             </>}
           </>
         )}
