@@ -104,6 +104,9 @@ export default function ParentModePage() {
   const [rewardPrice, setRewardPrice] = useState(1);
   const [editingRewardId, setEditingRewardId] = useState<string | null>(null);
   const [adminTab, setAdminTab] = useState<"quests" | "rewards">("quests");
+  const [questListTab, setQuestListTab] = useState<"available" | "active" | "templates" | "scheduled" | "history">("available");
+  const [questFormOpen, setQuestFormOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
 
   function clearQuestHistory() {
@@ -443,6 +446,7 @@ export default function ParentModePage() {
     setRecurrenceKind(template.recurrenceKind);
     setRecurrenceWeekdays([...template.recurrenceWeekdays]);
     setRecurrenceTime(template.recurrenceTime || "08:00");
+    setQuestFormOpen(true);
     setMessage("Mallen är ifylld. Anpassa vid behov och tryck Skicka uppdrag.");
   }
 
@@ -463,6 +467,7 @@ export default function ParentModePage() {
 
   function beginEditDefinition(definition: ParentQuestDefinition) {
     setEditingQuestId(definition.questId);
+    setQuestFormOpen(true);
     setDraft({
       title: definition.title,
       description: definition.description,
@@ -709,48 +714,39 @@ export default function ParentModePage() {
   return (
     <main className="parent-page">
       <section className="parent-dashboard">
-        <header>
+        <header className="parent-compact-header">
           <div>
-            <span className="parent-menu-kicker">🏡 Sysselcraft</span>
+            <span className="parent-menu-kicker">🏡 SysselCraft</span>
             <h1>Föräldraläge</h1>
-            <p>Skapa uppdrag och följ vad som händer i byn.</p>
+            <p>{child?.displayName || "Välj barn"} · {pending.length} väntar på godkännande</p>
           </div>
-          <div>
-            <button
-              className="secondary-button compact"
-              disabled={busy}
-              onClick={() => setShowPasswordSetup((visible) => !visible)}
-            >
-              {showPasswordSetup ? "Avbryt lösenord" : "Sätt lösenord"}
-            </button>
-            <button
-              className="secondary-button compact"
-              disabled={busy}
-              onClick={() => void logout()}
-            >
-              Logga ut
-            </button>
-          </div>
+          <button type="button" className="secondary-button compact" aria-expanded={settingsOpen}
+            aria-controls="parent-settings" onClick={() => setSettingsOpen((open) => !open)}>
+            ⚙ Inställningar
+          </button>
         </header>
 
-        {showPasswordSetup && (
-          <section className="parent-tool-card">
-            <h2>Sätt lösenord</h2>
-            <p>Detta sparas av Supabase Auth på ditt befintliga föräldrakonto. Minst 8 tecken.</p>
-            <form onSubmit={savePassword}>
-              <input
-                type="password"
-                autoComplete="new-password"
-                minLength={8}
-                required
-                value={newPassword}
-                onChange={(event) => setNewPassword(event.target.value)}
-                placeholder="Nytt lösenord"
-              />
-              <button className="primary-button" disabled={busy}>Spara lösenord</button>
-            </form>
-          </section>
-        )}
+        {settingsOpen && <section className="parent-tool-card parent-settings" id="parent-settings">
+          <h2>Inställningar & barnets enhet</h2>
+          <p>{available.length} nya · {active.length} pågår · {pending.length} väntar · {approved.length} godkända</p>
+          <div className="parent-inline-actions">
+            <button className="secondary-button compact" onClick={makePairingCode} disabled={busy || !childId}>Koppla barnets enhet</button>
+            <button className="secondary-button compact" disabled={busy} onClick={() => setShowPasswordSetup((visible) => !visible)}>{showPasswordSetup ? "Avbryt lösenord" : "Sätt lösenord"}</button>
+            <button className="secondary-button compact" disabled={busy} onClick={() => void logout()}>Logga ut</button>
+          </div>
+          {pairingCode && <div className="pairing-code">
+            <small>Parningskod, giltig i 15 minuter</small>
+            <strong>{pairingCode.toUpperCase()}</strong>
+            <small>Öppna <b>/pair</b> på barnets enhet.</small>
+          </div>}
+          {showPasswordSetup && <form className="parent-quest-form" onSubmit={savePassword}>
+            <label>Nytt lösenord (minst 8 tecken)
+              <input type="password" autoComplete="new-password" minLength={8} required value={newPassword}
+                onChange={(event) => setNewPassword(event.target.value)} />
+            </label>
+            <button className="primary-button" disabled={busy}>Spara lösenord</button>
+          </form>}
+        </section>}
 
         {households.length === 0 ? (
           <section className="parent-tool-card">
@@ -762,7 +758,7 @@ export default function ParentModePage() {
           </section>
         ) : (
           <>
-            <section className="parent-tool-card parent-quest-form">
+            <section className="parent-tool-card parent-family-row">
               <label>
                 Familj
                 <select
@@ -849,8 +845,17 @@ export default function ParentModePage() {
               )}
             </section>
 
-            <section className="parent-tool-card">
-              <h2>{reactivatingQuestId ? "♻️ Återaktivera quest" : editingQuestId ? "✏️ Redigera uppdrag" : "+ Nytt uppdrag"}</h2>
+            <div className="parent-action-row">
+              <button type="button" className="primary-button" aria-expanded={questFormOpen || Boolean(editingQuestId)}
+                aria-controls="parent-new-quest" onClick={() => {
+                  if (editingQuestId) cancelEdit();
+                  setQuestFormOpen((open) => !open);
+                }}>
+                {questFormOpen || editingQuestId ? "− Dölj formulär" : "+ Nytt uppdrag"}
+              </button>
+            </div>
+            {(questFormOpen || Boolean(editingQuestId)) && <section className="parent-tool-card" id="parent-new-quest">
+              <h2>{reactivatingQuestId ? "♻️ Återaktivera quest" : editingQuestId ? "✏️ Redigera uppdrag" : "Nytt uppdrag"}</h2>
               <form className="parent-quest-form" onSubmit={submitDraft}>
                 <input
                   required
@@ -958,7 +963,7 @@ export default function ParentModePage() {
                   </button>
                 )}
               </form>
-            </section>
+            </section>}
 
             </>}
 
@@ -989,29 +994,6 @@ export default function ParentModePage() {
             </section>
 
             </>}
-
-            <section className="parent-tool-card">
-              <h2>{child?.displayName || "Barn"}</h2>
-              <p>
-                {available.length} nya · {active.length} pågår · {pending.length} väntar · {approved.length} godkända
-              </p>
-              <button
-                className="secondary-button"
-                onClick={makePairingCode}
-                disabled={busy || !childId}
-              >
-                Koppla barnets enhet
-              </button>
-              {pairingCode && (
-                <div className="pairing-code">
-                  <small>Parningskod, giltig i 15 minuter</small>
-                  <strong>{pairingCode.toUpperCase()}</strong>
-                  <small>
-                    Öppna <b>/pair</b> på barnets enhet.
-                  </small>
-                </div>
-              )}
-            </section>
 
             {adminTab === "quests" && <>
             <section className="parent-tool-card">
@@ -1048,7 +1030,7 @@ export default function ParentModePage() {
               <div className="parent-section-heading">
                 <h2>Sparade mallar</h2><span>{questTemplates.length}</span>
               </div>
-              <p>Mallar sparas bara när du väljer Skapa mall. Att använda en mall fyller i formuläret, men skickar inget förrän du väljer Skicka uppdrag.</p>
+              <p>Välj Använd mall för att fylla i formuläret utan att skicka uppdraget.</p>
               {questTemplates.length ? questTemplates.map((template) => (
                 <article className="parent-quest-card" key={template.questId}>
                   <div><span>📌</span><div>
@@ -1067,7 +1049,7 @@ export default function ParentModePage() {
               <div className="parent-section-heading">
                 <h2>Återkommande uppdrag</h2><span>{scheduledQuests.length}</span>
               </div>
-              <p>Här styr du aktiva dags- och veckoscheman. De behöver inte vara sparade som mallar.</p>
+              <p>Hantera dags- och veckoscheman.</p>
               {scheduledQuests.length ? scheduledQuests.map((definition) => (
                 <article className="parent-quest-card" key={definition.questId}>
                   <div><span>🔁</span><div>
